@@ -1,18 +1,18 @@
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -32,17 +32,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -50,20 +50,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -83,17 +83,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -101,20 +101,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -134,17 +134,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -152,20 +152,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -185,17 +185,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -203,20 +203,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -236,17 +236,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -254,20 +254,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -287,17 +287,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -305,20 +305,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -338,17 +338,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -356,20 +356,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -389,17 +389,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -407,20 +407,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -440,17 +440,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -458,20 +458,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -491,17 +491,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -509,20 +509,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -542,17 +542,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -560,20 +560,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -593,17 +593,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -611,20 +611,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -644,17 +644,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -662,20 +662,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -695,17 +695,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -713,20 +713,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -746,17 +746,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -764,20 +764,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -797,17 +797,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -815,20 +815,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -848,17 +848,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -866,20 +866,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -899,17 +899,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -917,20 +917,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -950,17 +950,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -968,20 +968,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1001,17 +1001,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1019,20 +1019,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1052,17 +1052,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1070,20 +1070,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1103,17 +1103,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1121,20 +1121,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1154,17 +1154,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1172,20 +1172,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1205,17 +1205,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1223,20 +1223,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1256,17 +1256,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1274,20 +1274,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1307,17 +1307,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1325,20 +1325,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1358,17 +1358,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1376,20 +1376,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1409,17 +1409,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1427,20 +1427,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1460,17 +1460,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1478,20 +1478,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1511,17 +1511,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1529,20 +1529,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1562,17 +1562,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1580,20 +1580,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1613,17 +1613,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1631,20 +1631,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1664,17 +1664,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1682,20 +1682,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1715,17 +1715,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1733,20 +1733,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1766,17 +1766,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1784,20 +1784,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1817,17 +1817,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1835,20 +1835,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1868,17 +1868,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1886,20 +1886,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1919,17 +1919,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1937,20 +1937,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -1970,17 +1970,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -1988,20 +1988,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2021,17 +2021,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2039,20 +2039,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2072,17 +2072,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2090,20 +2090,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2123,17 +2123,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2141,20 +2141,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2174,17 +2174,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2192,20 +2192,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2225,17 +2225,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2243,20 +2243,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2276,17 +2276,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2294,20 +2294,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2327,17 +2327,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2345,20 +2345,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2378,17 +2378,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2396,20 +2396,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2429,17 +2429,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2447,20 +2447,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2480,17 +2480,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2498,20 +2498,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2531,17 +2531,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2549,20 +2549,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2582,17 +2582,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2600,20 +2600,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2633,17 +2633,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2651,20 +2651,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2684,17 +2684,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2702,20 +2702,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2735,17 +2735,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2753,20 +2753,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2786,17 +2786,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2804,20 +2804,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2837,17 +2837,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2855,20 +2855,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2888,17 +2888,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2906,20 +2906,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2939,17 +2939,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -2957,20 +2957,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -2990,17 +2990,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3008,20 +3008,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3041,17 +3041,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3059,20 +3059,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3092,17 +3092,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3110,20 +3110,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3143,17 +3143,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3161,20 +3161,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3194,17 +3194,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3212,20 +3212,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3245,17 +3245,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3263,20 +3263,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3296,17 +3296,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3314,20 +3314,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3347,17 +3347,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3365,20 +3365,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3398,17 +3398,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3416,20 +3416,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3449,17 +3449,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3467,20 +3467,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3500,17 +3500,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3518,20 +3518,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3551,17 +3551,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3569,20 +3569,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3602,17 +3602,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3620,20 +3620,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3653,17 +3653,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3671,20 +3671,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3704,17 +3704,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3722,20 +3722,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3755,17 +3755,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3773,20 +3773,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3806,17 +3806,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3824,20 +3824,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3857,17 +3857,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3875,20 +3875,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3908,17 +3908,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3926,20 +3926,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -3959,17 +3959,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -3977,20 +3977,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4010,17 +4010,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4028,20 +4028,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4061,17 +4061,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4079,20 +4079,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4112,17 +4112,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4130,20 +4130,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4163,17 +4163,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4181,20 +4181,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4214,17 +4214,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4232,20 +4232,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4265,17 +4265,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4283,20 +4283,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4316,17 +4316,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4334,20 +4334,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4367,17 +4367,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4385,20 +4385,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4418,17 +4418,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4436,20 +4436,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4469,17 +4469,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4487,20 +4487,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4520,17 +4520,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4538,20 +4538,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4571,17 +4571,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4589,20 +4589,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4622,17 +4622,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4640,20 +4640,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4673,17 +4673,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4691,20 +4691,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4724,17 +4724,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4742,20 +4742,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4775,17 +4775,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4793,20 +4793,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4826,17 +4826,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4844,20 +4844,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4877,17 +4877,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4895,20 +4895,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4928,17 +4928,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4946,20 +4946,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -4979,17 +4979,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -4997,20 +4997,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -5030,17 +5030,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;
@@ -5048,20 +5048,20 @@ ORDER BY ss1.ca_county;
 ---
 
 WITH ss AS
-		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_tpcds_1_sales
+			FROM store_tpcds_1_sales, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
-		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
+		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales_tpcds_1
+			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
-SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
-	ss2.store_sales / ss1.store_sales store_q1_q2_increase, ws3.web_sales / ws2.web_sales web_q2_q3_increase,
-	ss3.store_sales / ss2.store_sales store_q2_q3_increase
+SELECT ss1.ca_county, ss1.d_year, ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1 web_q1_q2_increase,
+	ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales store_tpcds_1_q1_q2_increase, ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1 web_q2_q3_increase,
+	ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales store_tpcds_1_q2_q3_increase
 FROM ss ss1, ss ss2, ss ss3, ws ws1, ws ws2, ws ws3
 WHERE ss1.d_qoy = 1
 		AND ss1.d_year = 2000
@@ -5081,17 +5081,17 @@ WHERE ss1.d_qoy = 1
 		AND ws3.d_qoy = 3
 		AND ws3.d_year = 2000
 		AND CASE
-										WHEN ws1.web_sales > 0 THEN ws2.web_sales / ws1.web_sales
+										WHEN ws1.web_sales_tpcds_1 > 0 THEN ws2.web_sales_tpcds_1 / ws1.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss1.store_sales > 0 THEN ss2.store_sales / ss1.store_sales
+																WHEN ss1.store_tpcds_1_sales > 0 THEN ss2.store_tpcds_1_sales / ss1.store_tpcds_1_sales
 																ELSE NULL
 												END
 		AND CASE
-										WHEN ws2.web_sales > 0 THEN ws3.web_sales / ws2.web_sales
+										WHEN ws2.web_sales_tpcds_1 > 0 THEN ws3.web_sales_tpcds_1 / ws2.web_sales_tpcds_1
 										ELSE NULL
 						END > CASE
-																WHEN ss2.store_sales > 0 THEN ss3.store_sales / ss2.store_sales
+																WHEN ss2.store_tpcds_1_sales > 0 THEN ss3.store_tpcds_1_sales / ss2.store_tpcds_1_sales
 																ELSE NULL
 												END
 ORDER BY ss1.ca_county;

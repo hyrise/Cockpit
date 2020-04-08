@@ -1,0 +1,21 @@
+SELECT MIN(cn.name_job_1) AS from_company, MIN(mc.note) AS production_note, MIN(t.title_job_1) AS movie_based_on_book
+FROM company_name_job_1 AS cn, company_type_job_1 AS ct, keyword_job_1 AS k, link_type_job_1 AS lt, movie_companies_job_1 AS mc,
+	movie_keyword_job_1 AS mk, movie_link_job_1 AS ml, title_job_1 AS t
+WHERE cn.country_code != '[pl]'
+		AND (cn.name_job_1 LIKE '20th Century Fox%'
+							OR cn.name_job_1 LIKE 'Twentieth Century Fox%')
+		AND ct.kind != 'production companies'
+		AND ct.kind IS NOT NULL
+		AND k.keyword_job_1 IN ('sequel', 'revenge', 'based-on-novel')
+		AND mc.note IS NOT NULL
+		AND t.production_year > 1950
+		AND lt.id = ml.link_type_job_1_id
+		AND ml.movie_id = t.id
+		AND t.id = mk.movie_id
+		AND mk.keyword_job_1_id = k.id
+		AND t.id = mc.movie_id
+		AND mc.company_type_job_1_id = ct.id
+		AND mc.company_id = cn.id
+		AND ml.movie_id = mk.movie_id
+		AND ml.movie_id = mc.movie_id
+		AND mk.movie_id = mc.movie_id;

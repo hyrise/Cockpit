@@ -1,4 +1,4 @@
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -27,18 +27,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -67,18 +67,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -107,18 +107,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -147,18 +147,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -187,18 +187,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -227,18 +227,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -267,18 +267,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -307,18 +307,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -347,18 +347,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -387,18 +387,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -427,18 +427,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -467,18 +467,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -507,18 +507,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -547,18 +547,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -587,18 +587,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -627,18 +627,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -667,18 +667,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -707,18 +707,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -747,18 +747,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -787,18 +787,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -827,18 +827,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -867,18 +867,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -907,18 +907,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -947,18 +947,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -987,18 +987,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1027,18 +1027,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1067,18 +1067,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1107,18 +1107,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1147,18 +1147,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1187,18 +1187,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1227,18 +1227,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1267,18 +1267,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1307,18 +1307,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1347,18 +1347,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1387,18 +1387,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1427,18 +1427,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1467,18 +1467,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1507,18 +1507,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1547,18 +1547,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1587,18 +1587,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1627,18 +1627,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1667,18 +1667,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1707,18 +1707,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1747,18 +1747,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1787,18 +1787,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1827,18 +1827,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1867,18 +1867,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1907,18 +1907,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1947,18 +1947,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -1987,18 +1987,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2027,18 +2027,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2067,18 +2067,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2107,18 +2107,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2147,18 +2147,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2187,18 +2187,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2227,18 +2227,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2267,18 +2267,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2307,18 +2307,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2347,18 +2347,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2387,18 +2387,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2427,18 +2427,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2467,18 +2467,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2507,18 +2507,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2547,18 +2547,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2587,18 +2587,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2627,18 +2627,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2667,18 +2667,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2707,18 +2707,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2747,18 +2747,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2787,18 +2787,18 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT s_store_name, s_store_id,
+SELECT s_store_tpcds_1_name, s_store_tpcds_1_id,
 	sum(CASE
 									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
@@ -2827,11 +2827,11 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
+FROM date_dim_tpcds_1, store_tpcds_1_sales, store_tpcds_1
 WHERE d_date_sk = ss_sold_date_sk
-		AND s_store_sk = ss_store_sk
+		AND s_store_tpcds_1_sk = ss_store_tpcds_1_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
-GROUP BY s_store_name, s_store_id
-ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
+GROUP BY s_store_tpcds_1_name, s_store_tpcds_1_id
+ORDER BY s_store_tpcds_1_name, s_store_tpcds_1_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;

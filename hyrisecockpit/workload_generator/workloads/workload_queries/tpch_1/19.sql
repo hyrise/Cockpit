@@ -1,6 +1,6 @@
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#43'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -8,7 +8,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#45'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 11
@@ -16,7 +16,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#11'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 24
@@ -28,8 +28,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#23'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -37,7 +37,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#31'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 16
@@ -45,7 +45,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#15'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 20
@@ -57,8 +57,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -66,7 +66,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#23'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 20
@@ -74,7 +74,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#13'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 29
@@ -86,8 +86,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#43'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -95,7 +95,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#11'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 20
@@ -103,7 +103,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#41'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 27
@@ -115,8 +115,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#54'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 9
@@ -124,7 +124,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#25'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 20
@@ -132,7 +132,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#13'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 30
@@ -144,8 +144,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#35'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -153,7 +153,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#45'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 19
@@ -161,7 +161,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#41'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 23
@@ -173,8 +173,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -182,7 +182,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#51'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 10
@@ -190,7 +190,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#54'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 22
@@ -202,8 +202,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#54'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 9
@@ -211,7 +211,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#23'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 13
@@ -219,7 +219,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#41'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 30
@@ -231,8 +231,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3
@@ -240,7 +240,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#11'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 14
@@ -248,7 +248,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#23'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 22
@@ -260,8 +260,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#35'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -269,7 +269,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#44'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 15
@@ -277,7 +277,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#34'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 27
@@ -289,8 +289,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#42'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -298,7 +298,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#41'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 10
@@ -306,7 +306,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#11'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 21
@@ -318,8 +318,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#55'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -327,7 +327,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#44'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 20
@@ -335,7 +335,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#22'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 30
@@ -347,8 +347,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#24'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 10
@@ -356,7 +356,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#53'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 12
@@ -364,7 +364,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#24'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 26
@@ -376,8 +376,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#34'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -385,7 +385,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#33'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 19
@@ -393,7 +393,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#12'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 24
@@ -405,8 +405,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#43'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -414,7 +414,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#55'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 18
@@ -422,7 +422,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#34'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 25
@@ -434,8 +434,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#54'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -443,7 +443,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#54'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 12
@@ -451,7 +451,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#22'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 25
@@ -463,8 +463,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#32'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -472,7 +472,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#24'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 14
@@ -480,7 +480,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#45'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 23
@@ -492,8 +492,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#24'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -501,7 +501,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#23'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 14
@@ -509,7 +509,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#23'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 25
@@ -521,8 +521,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#44'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -530,7 +530,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#44'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 20
@@ -538,7 +538,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#15'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 23
@@ -550,8 +550,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#13'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -559,7 +559,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#21'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 10
@@ -567,7 +567,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#25'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 22
@@ -579,8 +579,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#35'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -588,7 +588,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#21'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 19
@@ -596,7 +596,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#21'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 26
@@ -608,8 +608,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#53'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -617,7 +617,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#14'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 10
@@ -625,7 +625,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#14'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 29
@@ -637,8 +637,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#11'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 10
@@ -646,7 +646,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#53'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 19
@@ -654,7 +654,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#53'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 24
@@ -666,8 +666,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#22'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3
@@ -675,7 +675,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#31'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 17
@@ -683,7 +683,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#14'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 29
@@ -695,8 +695,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#41'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -704,7 +704,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#42'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 16
@@ -712,7 +712,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#13'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 23
@@ -724,8 +724,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 10
@@ -733,7 +733,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#32'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 18
@@ -741,7 +741,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#44'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 29
@@ -753,8 +753,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#12'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3
@@ -762,7 +762,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#43'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 12
@@ -770,7 +770,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#52'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 27
@@ -782,8 +782,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#32'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -791,7 +791,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#33'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 20
@@ -799,7 +799,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#45'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 28
@@ -811,8 +811,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#14'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3
@@ -820,7 +820,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#42'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 19
@@ -828,7 +828,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#14'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 28
@@ -840,8 +840,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#44'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -849,7 +849,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#24'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 17
@@ -857,7 +857,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#13'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 25
@@ -869,8 +869,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#31'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -878,7 +878,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#12'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 16
@@ -886,7 +886,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#55'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 22
@@ -898,8 +898,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#35'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -907,7 +907,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#54'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 11
@@ -915,7 +915,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#41'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 25
@@ -927,8 +927,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#14'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -936,7 +936,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#15'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 19
@@ -944,7 +944,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#52'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 26
@@ -956,8 +956,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#55'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -965,7 +965,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#51'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 16
@@ -973,7 +973,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#41'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 24
@@ -985,8 +985,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 9
@@ -994,7 +994,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#31'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 13
@@ -1002,7 +1002,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#31'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 29
@@ -1014,8 +1014,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#44'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -1023,7 +1023,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#55'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 11
@@ -1031,7 +1031,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#21'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 27
@@ -1043,8 +1043,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -1052,7 +1052,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#24'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 17
@@ -1060,7 +1060,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#22'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 21
@@ -1072,8 +1072,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#13'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -1081,7 +1081,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#11'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 14
@@ -1089,7 +1089,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#44'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 27
@@ -1101,8 +1101,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#41'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -1110,7 +1110,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#31'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 17
@@ -1118,7 +1118,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#24'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 28
@@ -1130,8 +1130,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#23'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 10
@@ -1139,7 +1139,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#35'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 16
@@ -1147,7 +1147,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#51'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 25
@@ -1159,8 +1159,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#34'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3
@@ -1168,7 +1168,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#21'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 20
@@ -1176,7 +1176,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#54'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 20
@@ -1188,8 +1188,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#33'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -1197,7 +1197,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#14'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 16
@@ -1205,7 +1205,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#32'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 23
@@ -1217,8 +1217,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#43'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -1226,7 +1226,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#44'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 18
@@ -1234,7 +1234,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#51'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 25
@@ -1246,8 +1246,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#32'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -1255,7 +1255,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#54'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 20
@@ -1263,7 +1263,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#22'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 22
@@ -1275,8 +1275,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#45'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -1284,7 +1284,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#45'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 13
@@ -1292,7 +1292,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#22'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 25
@@ -1304,8 +1304,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#43'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -1313,7 +1313,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#51'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 13
@@ -1321,7 +1321,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#54'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 21
@@ -1333,8 +1333,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#53'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -1342,7 +1342,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#44'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 13
@@ -1350,7 +1350,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#11'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 23
@@ -1362,8 +1362,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#21'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -1371,7 +1371,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#44'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 14
@@ -1379,7 +1379,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#54'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 25
@@ -1391,8 +1391,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#34'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -1400,7 +1400,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#45'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 11
@@ -1408,7 +1408,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#42'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 30
@@ -1420,8 +1420,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#14'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -1429,7 +1429,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#14'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 18
@@ -1437,7 +1437,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#32'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 22
@@ -1449,8 +1449,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#54'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -1458,7 +1458,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#12'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 12
@@ -1466,7 +1466,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#15'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 29
@@ -1478,8 +1478,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#53'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3
@@ -1487,7 +1487,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#13'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 14
@@ -1495,7 +1495,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#15'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 28
@@ -1507,8 +1507,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#55'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 10
@@ -1516,7 +1516,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#45'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 15
@@ -1524,7 +1524,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#43'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 26
@@ -1536,8 +1536,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#43'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -1545,7 +1545,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#13'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 11
@@ -1553,7 +1553,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#35'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 30
@@ -1565,8 +1565,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -1574,7 +1574,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#42'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 12
@@ -1582,7 +1582,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#15'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 28
@@ -1594,8 +1594,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#52'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -1603,7 +1603,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#21'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 11
@@ -1611,7 +1611,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#45'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 27
@@ -1623,8 +1623,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#25'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -1632,7 +1632,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#11'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 12
@@ -1640,7 +1640,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#21'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 28
@@ -1652,8 +1652,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#44'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -1661,7 +1661,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#14'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 19
@@ -1669,7 +1669,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#11'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 20
@@ -1681,8 +1681,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#42'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -1690,7 +1690,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#43'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 20
@@ -1698,7 +1698,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#13'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 29
@@ -1710,8 +1710,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#11'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3
@@ -1719,7 +1719,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#45'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 19
@@ -1727,7 +1727,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#23'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 28
@@ -1739,8 +1739,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#24'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -1748,7 +1748,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#13'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 19
@@ -1756,7 +1756,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#45'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 27
@@ -1768,8 +1768,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#24'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -1777,7 +1777,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#45'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 10
@@ -1785,7 +1785,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#23'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 23
@@ -1797,8 +1797,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -1806,7 +1806,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#43'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 10
@@ -1814,7 +1814,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#55'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 24
@@ -1826,8 +1826,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#34'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 10
@@ -1835,7 +1835,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#14'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 20
@@ -1843,7 +1843,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#15'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 25
@@ -1855,8 +1855,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#25'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -1864,7 +1864,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#31'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 20
@@ -1872,7 +1872,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#13'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 27
@@ -1884,8 +1884,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#42'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -1893,7 +1893,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#54'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 17
@@ -1901,7 +1901,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#14'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 25
@@ -1913,8 +1913,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#23'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -1922,7 +1922,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#51'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 20
@@ -1930,7 +1930,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#22'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 23
@@ -1942,8 +1942,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#12'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -1951,7 +1951,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#44'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 12
@@ -1959,7 +1959,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#12'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 23
@@ -1971,8 +1971,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 10
@@ -1980,7 +1980,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#43'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 16
@@ -1988,7 +1988,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#54'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 20
@@ -2000,8 +2000,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#42'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -2009,7 +2009,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#15'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 11
@@ -2017,7 +2017,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#34'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 24
@@ -2029,8 +2029,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#33'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -2038,7 +2038,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#14'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 19
@@ -2046,7 +2046,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#22'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 29
@@ -2058,8 +2058,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#24'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -2067,7 +2067,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#53'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 10
@@ -2075,7 +2075,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#33'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 24
@@ -2087,8 +2087,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#44'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -2096,7 +2096,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#15'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 15
@@ -2104,7 +2104,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#51'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 20
@@ -2116,8 +2116,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#21'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -2125,7 +2125,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#44'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 11
@@ -2133,7 +2133,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#32'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 21
@@ -2145,8 +2145,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#21'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -2154,7 +2154,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#14'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 19
@@ -2162,7 +2162,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#41'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 30
@@ -2174,8 +2174,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#42'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -2183,7 +2183,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#21'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 11
@@ -2191,7 +2191,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#25'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 22
@@ -2203,8 +2203,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#21'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -2212,7 +2212,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#53'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 11
@@ -2220,7 +2220,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#21'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 21
@@ -2232,8 +2232,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -2241,7 +2241,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#51'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 16
@@ -2249,7 +2249,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#51'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 23
@@ -2261,8 +2261,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#21'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -2270,7 +2270,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#14'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 13
@@ -2278,7 +2278,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#14'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 21
@@ -2290,8 +2290,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#25'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -2299,7 +2299,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#32'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 11
@@ -2307,7 +2307,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#42'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 27
@@ -2319,8 +2319,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#23'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -2328,7 +2328,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#15'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 15
@@ -2336,7 +2336,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#24'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 28
@@ -2348,8 +2348,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#33'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3
@@ -2357,7 +2357,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#51'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 16
@@ -2365,7 +2365,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#12'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 20
@@ -2377,8 +2377,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#11'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -2386,7 +2386,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#15'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 11
@@ -2394,7 +2394,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#41'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 21
@@ -2406,8 +2406,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#24'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -2415,7 +2415,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#22'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 13
@@ -2423,7 +2423,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#42'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 22
@@ -2435,8 +2435,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#54'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -2444,7 +2444,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#25'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 20
@@ -2452,7 +2452,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#35'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 20
@@ -2464,8 +2464,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#54'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -2473,7 +2473,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#41'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 19
@@ -2481,7 +2481,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#51'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 23
@@ -2493,8 +2493,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#55'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -2502,7 +2502,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#33'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 17
@@ -2510,7 +2510,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#22'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 29
@@ -2522,8 +2522,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#34'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 10
@@ -2531,7 +2531,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#22'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 20
@@ -2539,7 +2539,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#14'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 22
@@ -2551,8 +2551,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#21'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -2560,7 +2560,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#12'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 10
@@ -2568,7 +2568,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#53'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 29
@@ -2580,8 +2580,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#31'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -2589,7 +2589,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#13'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 18
@@ -2597,7 +2597,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#53'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 25
@@ -2609,8 +2609,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#41'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -2618,7 +2618,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#53'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 15
@@ -2626,7 +2626,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#32'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 20
@@ -2638,8 +2638,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#22'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -2647,7 +2647,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#34'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 19
@@ -2655,7 +2655,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#51'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 25
@@ -2667,8 +2667,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#23'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -2676,7 +2676,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#54'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 17
@@ -2684,7 +2684,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#13'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 28
@@ -2696,8 +2696,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#35'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -2705,7 +2705,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#25'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 15
@@ -2713,7 +2713,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#33'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 24
@@ -2725,8 +2725,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#14'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -2734,7 +2734,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#31'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 17
@@ -2742,7 +2742,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#34'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 20
@@ -2754,8 +2754,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#45'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -2763,7 +2763,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#24'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 13
@@ -2771,7 +2771,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#21'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 21
@@ -2783,8 +2783,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#45'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 9
@@ -2792,7 +2792,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#42'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 20
@@ -2800,7 +2800,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#23'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 22
@@ -2812,8 +2812,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#45'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -2821,7 +2821,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#24'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 16
@@ -2829,7 +2829,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#51'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 20
@@ -2841,8 +2841,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#13'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -2850,7 +2850,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#23'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 14
@@ -2858,7 +2858,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#53'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 20
@@ -2870,8 +2870,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+WHERE ((p_part_tpch_1key = l_part_tpch_1key
 								AND p_brand = 'Brand#31'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3
@@ -2879,7 +2879,7 @@ WHERE ((p_partkey = l_partkey
 								AND p_size BETWEEN 1 AND 5
 								AND l_shipmode IN ('AIR', 'AIR REG')
 								AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#55'
 											AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
 											AND l_quantity >= 15
@@ -2887,7 +2887,7 @@ WHERE ((p_partkey = l_partkey
 											AND p_size BETWEEN 1 AND 10
 											AND l_shipmode IN ('AIR', 'AIR REG')
 											AND l_shipinstruct = 'DELIVER IN PERSON')
-							OR (p_partkey = l_partkey
+							OR (p_part_tpch_1key = l_part_tpch_1key
 											AND p_brand = 'Brand#35'
 											AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
 											AND l_quantity >= 30

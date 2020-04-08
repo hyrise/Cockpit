@@ -1,9 +1,9 @@
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -68,11 +68,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -137,11 +137,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -206,11 +206,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -275,11 +275,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -344,11 +344,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -413,11 +413,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -482,11 +482,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -551,11 +551,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -620,11 +620,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -689,11 +689,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -758,11 +758,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -827,11 +827,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -896,11 +896,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -965,11 +965,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -1034,11 +1034,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -1103,11 +1103,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -1172,11 +1172,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -1241,11 +1241,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -1310,11 +1310,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -1379,11 +1379,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -1448,11 +1448,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -1517,11 +1517,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -1586,11 +1586,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -1655,11 +1655,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -1724,11 +1724,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -1793,11 +1793,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -1862,11 +1862,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -1931,11 +1931,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -2000,11 +2000,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -2069,11 +2069,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -2138,11 +2138,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -2207,11 +2207,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -2276,11 +2276,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -2345,11 +2345,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -2414,11 +2414,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -2483,11 +2483,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -2552,11 +2552,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -2621,11 +2621,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -2690,11 +2690,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -2759,11 +2759,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -2828,11 +2828,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -2897,11 +2897,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -2966,11 +2966,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -3035,11 +3035,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -3104,11 +3104,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -3173,11 +3173,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -3242,11 +3242,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -3311,11 +3311,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -3380,11 +3380,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -3449,11 +3449,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -3518,11 +3518,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -3587,11 +3587,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -3656,11 +3656,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -3725,11 +3725,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -3794,11 +3794,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -3863,11 +3863,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -3932,11 +3932,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -4001,11 +4001,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -4070,11 +4070,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -4139,11 +4139,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -4208,11 +4208,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -4277,11 +4277,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -4346,11 +4346,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -4415,11 +4415,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -4484,11 +4484,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -4553,11 +4553,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -4622,11 +4622,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -4691,11 +4691,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -4760,11 +4760,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -4829,11 +4829,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -4898,11 +4898,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -4967,11 +4967,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -5036,11 +5036,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -5105,11 +5105,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -5174,11 +5174,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -5243,11 +5243,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -5312,11 +5312,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -5381,11 +5381,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -5450,11 +5450,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -5519,11 +5519,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -5588,11 +5588,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -5657,11 +5657,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -5726,11 +5726,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -5795,11 +5795,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -5864,11 +5864,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -5933,11 +5933,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -6002,11 +6002,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -6071,11 +6071,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -6140,11 +6140,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -6209,11 +6209,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -6278,11 +6278,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -6347,11 +6347,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -6416,11 +6416,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -6485,11 +6485,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -6554,11 +6554,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -6623,11 +6623,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -6692,11 +6692,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -6761,11 +6761,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'
@@ -6830,11 +6830,11 @@ LIMIT 100;
 ---
 
 SELECT distinct(i_product_name)
-FROM item i1
+FROM item_tpcds_1 i1
 WHERE i_manufact_id BETWEEN 738 AND 738 + 40
 		AND
-				(SELECT count(*) AS item_cnt
-					FROM item
+				(SELECT count(*) AS item_tpcds_1_cnt
+					FROM item_tpcds_1
 					WHERE (i_manufact = i1.i_manufact
 												AND ((i_category = 'Women'
 																		AND (i_color = 'powder'

@@ -1,15 +1,15 @@
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -34,24 +34,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -76,24 +76,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -118,24 +118,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -160,24 +160,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -202,24 +202,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -244,24 +244,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -286,24 +286,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -328,24 +328,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -370,24 +370,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -412,24 +412,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -454,24 +454,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -496,24 +496,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -538,24 +538,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -580,24 +580,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -622,24 +622,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -664,24 +664,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -706,24 +706,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -748,24 +748,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -790,24 +790,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -832,24 +832,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -874,24 +874,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -916,24 +916,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -958,24 +958,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1000,24 +1000,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1042,24 +1042,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1084,24 +1084,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1126,24 +1126,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1168,24 +1168,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1210,24 +1210,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1252,24 +1252,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1294,24 +1294,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1336,24 +1336,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1378,24 +1378,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1420,24 +1420,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1462,24 +1462,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1504,24 +1504,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1546,24 +1546,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1588,24 +1588,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1630,24 +1630,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1672,24 +1672,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1714,24 +1714,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1756,24 +1756,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1798,24 +1798,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1840,24 +1840,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1882,24 +1882,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1924,24 +1924,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -1966,24 +1966,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2008,24 +2008,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2050,24 +2050,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2092,24 +2092,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2134,24 +2134,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2176,24 +2176,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2218,24 +2218,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2260,24 +2260,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2302,24 +2302,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2344,24 +2344,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2386,24 +2386,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2428,24 +2428,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2470,24 +2470,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2512,24 +2512,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2554,24 +2554,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2596,24 +2596,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2638,24 +2638,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2680,24 +2680,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2722,24 +2722,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2764,24 +2764,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2806,24 +2806,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2848,24 +2848,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2890,24 +2890,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2932,24 +2932,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -2974,24 +2974,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3016,24 +3016,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3058,24 +3058,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3100,24 +3100,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3142,24 +3142,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3184,24 +3184,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3226,24 +3226,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3268,24 +3268,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3310,24 +3310,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3352,24 +3352,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3394,24 +3394,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3436,24 +3436,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3478,24 +3478,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3520,24 +3520,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3562,24 +3562,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3604,24 +3604,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3646,24 +3646,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3688,24 +3688,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3730,24 +3730,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3772,24 +3772,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3814,24 +3814,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3856,24 +3856,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3898,24 +3898,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3940,24 +3940,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -3982,24 +3982,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -4024,24 +4024,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -4066,24 +4066,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -4108,24 +4108,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -4150,24 +4150,24 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;
 
 ---
 
-SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
-		AND ws_item_sk = wr_item_sk
+SELECT SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+WHERE ws_web_page_tpcds_1_sk = wp_web_page_tpcds_1_sk
+		AND ws_item_tpcds_1_sk = wr_item_tpcds_1_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND cd1.cd_demo_sk = wr_refunded_cdemo_sk
 		AND cd2.cd_demo_sk = wr_returning_cdemo_sk
 		AND ca_address_sk = wr_refunded_addr_sk
-		AND r_reason_sk = wr_reason_sk
+		AND r_reason_tpcds_1_sk = wr_reason_tpcds_1_sk
 		AND ((cd1.cd_marital_status = 'M'
 								AND cd1.cd_marital_status = cd2.cd_marital_status
 								AND cd1.cd_education_status = 'Advanced Degree'
@@ -4192,6 +4192,6 @@ WHERE ws_web_page_sk = wp_web_page_sk
 							OR (ca_country = 'United States'
 											AND ca_state IN ('LA', 'IA', 'AR')
 											AND ws_net_profit BETWEEN 50 AND 250))
-GROUP BY r_reason_desc
-ORDER BY SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
+GROUP BY r_reason_tpcds_1_desc
+ORDER BY SUBSTR(r_reason_tpcds_1_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
 LIMIT 100;

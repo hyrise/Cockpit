@@ -1,8 +1,8 @@
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -11,17 +11,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -30,17 +30,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -49,17 +49,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -68,17 +68,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -87,17 +87,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -106,17 +106,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -125,17 +125,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -144,17 +144,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -163,17 +163,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -182,17 +182,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -201,17 +201,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -220,17 +220,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -239,17 +239,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -258,17 +258,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -277,17 +277,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -296,17 +296,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -315,17 +315,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -334,17 +334,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -353,17 +353,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -372,17 +372,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -391,17 +391,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -410,17 +410,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -429,17 +429,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -448,17 +448,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -467,17 +467,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -486,17 +486,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -505,17 +505,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -524,17 +524,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -543,17 +543,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -562,17 +562,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -581,17 +581,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -600,17 +600,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -619,17 +619,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -638,17 +638,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -657,17 +657,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -676,17 +676,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -695,17 +695,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -714,17 +714,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -733,17 +733,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -752,17 +752,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -771,17 +771,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -790,17 +790,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -809,17 +809,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -828,17 +828,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -847,17 +847,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -866,17 +866,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -885,17 +885,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -904,17 +904,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -923,17 +923,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -942,17 +942,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -961,17 +961,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -980,17 +980,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -999,17 +999,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1018,17 +1018,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1037,17 +1037,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1056,17 +1056,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1075,17 +1075,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1094,17 +1094,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1113,17 +1113,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1132,17 +1132,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1151,17 +1151,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1170,17 +1170,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1189,17 +1189,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1208,17 +1208,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1227,17 +1227,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1246,17 +1246,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1265,17 +1265,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1284,17 +1284,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1303,17 +1303,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1322,17 +1322,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1341,17 +1341,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1360,17 +1360,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1379,17 +1379,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1398,17 +1398,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1417,17 +1417,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1436,17 +1436,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1455,17 +1455,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1474,17 +1474,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1493,17 +1493,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1512,17 +1512,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1531,17 +1531,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1550,17 +1550,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1569,17 +1569,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1588,17 +1588,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1607,17 +1607,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1626,17 +1626,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1645,17 +1645,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1664,17 +1664,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1683,17 +1683,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1702,17 +1702,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1721,17 +1721,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1740,17 +1740,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1759,17 +1759,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1778,17 +1778,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1797,17 +1797,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1816,17 +1816,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1835,17 +1835,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1854,17 +1854,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1873,17 +1873,17 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;
 
 ---
 
-SELECT i_item_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
+SELECT i_item_tpcds_1_id, avg(cs_quantity) agg1, avg(cs_list_price) agg2, avg(cs_coupon_amt) agg3,
 	avg(cs_sales_price) agg4
-FROM catalog_sales, customer_demographics, date_dim, item, promotion
+FROM catalog_sales_tpcds_1, customer_demographics_tpcds_1, date_dim_tpcds_1, item_tpcds_1, promotion_tpcds_1
 WHERE cs_sold_date_sk = d_date_sk
-		AND cs_item_sk = i_item_sk
+		AND cs_item_tpcds_1_sk = i_item_tpcds_1_sk
 		AND cs_bill_cdemo_sk = cd_demo_sk
 		AND cs_promo_sk = p_promo_sk
 		AND cd_gender = 'M'
@@ -1892,6 +1892,6 @@ WHERE cs_sold_date_sk = d_date_sk
 		AND (p_channel_email = 'N'
 							OR p_channel_event = 'N')
 		AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+GROUP BY i_item_tpcds_1_id
+ORDER BY i_item_tpcds_1_id
 LIMIT 100;

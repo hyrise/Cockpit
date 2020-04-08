@@ -1,5 +1,5 @@
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -12,7 +12,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'FURNITURE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -25,7 +25,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -38,7 +38,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -51,7 +51,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'MACHINERY'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -64,7 +64,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -77,7 +77,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -90,7 +90,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -103,7 +103,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -116,7 +116,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -129,7 +129,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -142,7 +142,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'FURNITURE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -155,7 +155,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -168,7 +168,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -181,7 +181,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -194,7 +194,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -207,7 +207,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -220,7 +220,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -233,7 +233,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -246,7 +246,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'MACHINERY'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -259,7 +259,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -272,7 +272,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'FURNITURE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -285,7 +285,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -298,7 +298,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -311,7 +311,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -324,7 +324,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -337,7 +337,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -350,7 +350,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -363,7 +363,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -376,7 +376,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -389,7 +389,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'MACHINERY'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -402,7 +402,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -415,7 +415,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -428,7 +428,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -441,7 +441,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'FURNITURE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -454,7 +454,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'MACHINERY'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -467,7 +467,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -480,7 +480,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'FURNITURE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -493,7 +493,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -506,7 +506,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -519,7 +519,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -532,7 +532,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'MACHINERY'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -545,7 +545,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -558,7 +558,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'FURNITURE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -571,7 +571,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -584,7 +584,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'FURNITURE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -597,7 +597,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -610,7 +610,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -623,7 +623,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -636,7 +636,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'MACHINERY'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -649,7 +649,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'MACHINERY'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -662,7 +662,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -675,7 +675,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -688,7 +688,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'FURNITURE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -701,7 +701,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -714,7 +714,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -727,7 +727,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -740,7 +740,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -753,7 +753,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -766,7 +766,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -779,7 +779,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -792,7 +792,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'MACHINERY'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -805,7 +805,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -818,7 +818,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -831,7 +831,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -844,7 +844,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'FURNITURE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -857,7 +857,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'FURNITURE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -870,7 +870,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -883,7 +883,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -896,7 +896,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -909,7 +909,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -922,7 +922,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -935,7 +935,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'MACHINERY'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -948,7 +948,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -961,7 +961,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -974,7 +974,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -987,7 +987,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1000,7 +1000,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1013,7 +1013,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'MACHINERY'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1026,7 +1026,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'MACHINERY'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1039,7 +1039,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'MACHINERY'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1052,7 +1052,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1065,7 +1065,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1078,7 +1078,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1091,7 +1091,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'FURNITURE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1104,7 +1104,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1117,7 +1117,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1130,7 +1130,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'MACHINERY'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1143,7 +1143,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'MACHINERY'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1156,7 +1156,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'MACHINERY'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1169,7 +1169,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'MACHINERY'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1182,7 +1182,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'FURNITURE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1195,7 +1195,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'FURNITURE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1208,7 +1208,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'HOUSEHOLD'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1221,7 +1221,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'BUILDING'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1234,7 +1234,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1247,7 +1247,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'MACHINERY'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1260,7 +1260,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'FURNITURE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1273,7 +1273,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
@@ -1286,7 +1286,7 @@ LIMIT 10;
 ---
 
 SELECT l_orderkey, SUM(l_extendedprice * (1 - l_discount)) AS revenue, o_orderdate, o_shippriority
-FROM customer, orders, lineitem
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1
 WHERE c_mktsegment = 'AUTOMOBILE'
 		AND c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
