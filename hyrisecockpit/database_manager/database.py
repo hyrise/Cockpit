@@ -3,7 +3,7 @@
 from multiprocessing import Value
 from typing import Dict, List, Optional
 
-from psycopg2 import pool
+from psycopg2 import DatabaseError, InterfaceError, pool
 
 from .background_scheduler import BackgroundJobManager
 from .cursor import PoolCursor, StorageCursor
@@ -51,6 +51,7 @@ class Database(object):
         )
         self._connection_pool: pool = self.driver.get_connection_pool()
         self._database_blocked: Value = Value("b", False)
+        self._hyrise_active: Value = Value("b", True)
         self._loaded_tables: Dict[
             str, Optional[str]
         ] = self.create_empty_loaded_tables()
@@ -66,6 +67,7 @@ class Database(object):
             self._database_blocked,
             self._connection_pool,
             self._loaded_tables,
+            self._hyrise_active,
             self._worker_pool,
             storage_host,
             storage_password,
@@ -157,6 +159,10 @@ class Database(object):
             if value is not None
         ]
 
+    def get_hyrise_active(self) -> bool:
+        """Return status of hyrise."""
+        return bool(self._hyrise_active.value)
+
     def get_loaded_benchmarks(self) -> List[str]:
         """Get list of all benchmarks which are completely loaded."""
         loaded_benchmarks: List[str] = []
@@ -189,42 +195,51 @@ class Database(object):
     def get_plugins(self) -> Optional[List]:
         """Return all currently activated plugins."""
         if not self._database_blocked.value:
-            with PoolCursor(self._connection_pool) as cur:
-                cur.execute(("SELECT name FROM meta_plugins;"), None)
-                rows = cur.fetchall()
-                result = [row[0] for row in rows] if rows else []
-                return result
-        else:
-            return None
+            try:
+                with PoolCursor(self._connection_pool) as cur:
+                    cur.execute(("SELECT name FROM meta_plugins;"), None)
+                    rows = cur.fetchall()
+                    result = [row[0] for row in rows] if rows else []
+                    return result
+            except (DatabaseError, InterfaceError):
+                return None
+        return None
 
     def set_plugin_setting(self, name: str, value: str) -> bool:
         """Adjust setting for given plugin."""
         if not self._database_blocked.value:
-            with PoolCursor(self._connection_pool) as cur:
-                cur.execute(
-                    "UPDATE meta_settings SET value=%s WHERE name=%s;", (value, name,),
-                )
-            return True
-        else:
-            return False
+            try:
+                with PoolCursor(self._connection_pool) as cur:
+                    cur.execute(
+                        "UPDATE meta_settings SET value=%s WHERE name=%s;",
+                        (value, name,),
+                    )
+                return True
+            except (DatabaseError, InterfaceError):
+                return False
+        return False
 
     def get_plugin_setting(self) -> Optional[List]:
         """Read currently set plugin settings."""
         if not self._database_blocked.value:
-            with PoolCursor(self._connection_pool) as cur:
-                cur.execute("SELECT name, value, description FROM meta_settings;", None)
-                rows = cur.fetchall()
-                result = (
-                    [
-                        {"name": row[0], "value": row[1], "description": row[2]}
-                        for row in rows
-                    ]
-                    if rows
-                    else []
-                )
-            return result
-        else:
-            return None
+            try:
+                with PoolCursor(self._connection_pool) as cur:
+                    cur.execute(
+                        "SELECT name, value, description FROM meta_settings;", None
+                    )
+                    rows = cur.fetchall()
+                    result = (
+                        [
+                            {"name": row[0], "value": row[1], "description": row[2]}
+                            for row in rows
+                        ]
+                        if rows
+                        else []
+                    )
+                return result
+            except (DatabaseError, InterfaceError):
+                return None
+        return None
 
     def close(self) -> None:
         """Close the database."""

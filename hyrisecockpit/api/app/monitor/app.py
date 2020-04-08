@@ -238,6 +238,12 @@ model_database_status = api.clone(
     "Database status",
     model_database,
     {
+        "hyrise_active": fields.Boolean(
+            title="hyrise active status",
+            description="Hyrise is reachable.",
+            required=True,
+            example=True,
+        ),
         "database_blocked_status": fields.Boolean(
             title="Database blocked status",
             description="Database blocked status of databases.",
@@ -489,6 +495,8 @@ class System(Resource):
                         "free": system_value["free_memory"],
                         "used": system_value["used_memory"],
                         "total": system_value["total_memory"],
+                        "percent": system_value["used_memory"]
+                        / system_value["total_memory"],
                     },
                     "database_threads": system_value["database_threads"],
                 }
