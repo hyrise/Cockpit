@@ -1,5 +1,5 @@
 import { useBackendMock } from "../../setup/backendMock";
-import { clickElement } from "../helpers";
+import { clickElement, waitForChartRender } from "../helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
 import { getSelector as getDatabaseSelector } from "../databases/helpers";
 import {
@@ -100,6 +100,7 @@ describe("When opening the plugins overview", () => {
   // test correct plugin settings
   it("will show the correct plugin settings for every active plugin and database", () => {
     cy.setupAppState(backend); // need this for properly open change settings button
+    cy.wait(500);
     clickElement(getViewSelector("pluginOverviewButton"));
     cy.get(getSelector("pluginOverview")).within(() => {
       databases.forEach((database: any, idx: number) => {
