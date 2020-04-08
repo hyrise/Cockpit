@@ -52,3 +52,11 @@ class Driver(object):
     def get_connection_pool(self) -> pool:
         """Return the connection pool."""
         return self._connection_pool
+
+    def get_password(self) -> str:
+        """Return database password."""
+        return self._password
+
+    def get_user(self) -> str:
+        """Return database user."""
+        return self._user

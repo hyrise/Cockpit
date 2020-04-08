@@ -136,6 +136,8 @@ class DatabaseManager(object):
                 "port": database.driver.port,
                 "number_workers": database.number_workers,
                 "dbname": database.driver.dbname,
+                "user": database.driver.get_user(),
+                "password": database.driver.get_password(),
             }
             for id, database in self._databases.items()
         ]
