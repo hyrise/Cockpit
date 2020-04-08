@@ -14,12 +14,11 @@ from hyrisecockpit.api.app.shared import (
     _remove_active_database,
     _send_message,
     db_manager_socket,
-    generator_socket,
     storage_connection,
 )
 from hyrisecockpit.plugins import available_plugins
 from hyrisecockpit.request import Header, Request
-from hyrisecockpit.response import Response, get_error_response, get_response
+from hyrisecockpit.response import Response
 
 api = Namespace("control", description="Control multiple databases at once.")
 
@@ -296,54 +295,6 @@ class Database(Resource):
         response = _send_message(db_manager_socket, message)
         if response["header"]["status"] == 200:
             _remove_active_database(api.payload["id"])
-        return response
-
-
-@api.route("/workload", methods=["POST", "DELETE"])
-class Workload(Resource):
-    """Manages workload generation."""
-
-    def post(self) -> Response:
-        """Start the workload generator."""
-        message = Request(header=Header(message="start worker"), body={})
-        response = _send_message(db_manager_socket, message)
-        if response["header"]["status"] != 200:
-            return get_error_response(
-                400, response["body"].get("error", "Error during starting of worker")
-            )
-
-        message = Request(
-            header=Header(message="start workload"),
-            body={
-                "folder_name": api.payload["folder_name"],
-                "frequency": api.payload.get("frequency", 200),
-            },
-        )
-        response = _send_message(generator_socket, message)
-        if response["header"]["status"] != 200:
-            return get_error_response(
-                400,
-                response["body"].get("error", "Error during starting of the workload"),
-            )
-
-        return get_response(200)
-
-    def delete(self) -> Response:
-        """Stop the workload generator and empty database queues."""
-        message = Request(header=Header(message="stop workload"), body={})
-        response = _send_message(generator_socket, message)
-        if response["header"]["status"] != 200:
-            return get_error_response(
-                400, response["body"].get("error", "Error during stopping of generator")
-            )
-
-        message = Request(header=Header(message="close worker"), body={})
-        response = _send_message(db_manager_socket, message)
-        if response["header"]["status"] != 200:
-            return get_error_response(
-                400, response["body"].get("error", "Error during closing of worker")
-            )
-
         return response
 
 

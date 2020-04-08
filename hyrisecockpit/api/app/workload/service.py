@@ -1,38 +1,30 @@
 """Services used by the Workload controller."""
 from typing import List, Optional
 
-from jsonschema import validate
-from zmq import REQ
-from zmq.decorators import socket
-
-from hyrisecockpit.message import response_schema
+from hyrisecockpit.api.app.shared import (
+    _send_message,
+    db_manager_socket,
+    generator_socket,
+)
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
 from .interface import WorkloadInterface
 from .model import Workload
 
-url = "127.0.0.1:8000"
-
 
 class WorkloadService:
     """Services of the Workload Controller."""
 
     @staticmethod
-    @socket(REQ)
-    def __send_req(message: Request, socket: socket) -> Response:
-        socket.connect(url)
-        socket.send_json(message)
-        response: Response = socket.recv_json()
-        socket.disconnect(url)
-        return response
+    def _send_message_to_dbm(message: Request) -> Response:
+        """Send an IPC message to the database manager."""
+        return _send_message(db_manager_socket, message)
 
     @staticmethod
-    def _send_message(message: Request) -> Response:
-        """Send an IPC message with data to a database interface, return the repsonse."""
-        response = WorkloadService.__send_req(message)
-        validate(instance=response, schema=response_schema)
-        return response
+    def _send_message_to_gen(message: Request) -> Response:
+        """Send an IPC message to the workload generator."""
+        return _send_message(generator_socket, message)
 
     @classmethod
     def get_all(cls) -> List[Workload]:
@@ -40,8 +32,8 @@ class WorkloadService:
 
         Returns a list of all Workloads.
         """
-        response = cls._send_message(
-            Request(header=Header(message="get all workloads"), body={})
+        response = cls._send_message_to_gen(
+            Request(header=Header(message="get all workloads"), body={}),
         )
         return [Workload(**interface) for interface in response["body"]["workloads"]]
 
@@ -52,14 +44,20 @@ class WorkloadService:
         Returns the created Workload.
         Returns None if a Workload with the given ID already exists.
         """
-        response = cls._send_message(
-            Request(header=Header(message="start workload"), body=dict(interface))
+        response = cls._send_message_to_dbm(
+            Request(header=Header(message="start worker"), body={})
         )
-        return (
-            None
-            if response["header"]["status"] == 409
-            else Workload(**response["body"]["workload"])
-        )
+        if response["header"]["status"] == 200:
+            response = cls._send_message_to_gen(
+                Request(header=Header(message="start workload"), body=dict(interface)),
+            )
+            return (
+                None
+                if response["header"]["status"] == 409
+                else Workload(**response["body"]["workload"])
+            )
+        else:
+            return None
 
     @classmethod
     def get_by_id(cls, workload_id: str) -> Optional[Workload]:
@@ -68,10 +66,10 @@ class WorkloadService:
         Returns the Workload with the given ID.
         Returns None if a Workload with the given ID doesn't exist.
         """
-        response = cls._send_message(
+        response = cls._send_message_to_gen(
             Request(
                 header=Header(message="get workload"), body={"workload_id": workload_id}
-            )
+            ),
         )
         return (
             None
@@ -86,17 +84,23 @@ class WorkloadService:
         Returns the workload_id of the deleted Workload.
         Returns None if a Workload with the given ID doesn't exist.
         """
-        response = cls._send_message(
-            Request(
-                header=Header(message="delete workload"),
-                body={"workload_id": workload_id},
+        response = cls._send_message_to_dbm(
+            Request(header=Header(message="close worker"), body={})
+        )
+        if response["header"]["status"] == 200:
+            response = cls._send_message_to_gen(
+                Request(
+                    header=Header(message="delete workload"),
+                    body={"workload_id": workload_id},
+                ),
             )
-        )
-        return (
-            None
-            if response["header"]["status"] == 404
-            else response["body"]["workload_id"]
-        )
+            return (
+                None
+                if response["header"]["status"] == 404
+                else response["body"]["workload_id"]
+            )
+        else:
+            return None
 
     @classmethod
     def update_by_id(
@@ -107,11 +111,11 @@ class WorkloadService:
         Returns the updated Workload.
         Returns None if a Workload with the given ID doesn't exist.
         """
-        response = cls._send_message(
+        response = cls._send_message_to_gen(
             Request(
                 header=Header(message="update workload"),
                 body={"workload_id": workload_id, "workload": dict(interface)},
-            )
+            ),
         )
         return (
             None
