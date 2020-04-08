@@ -1248,10 +1248,10 @@ class TestBackgroundJobManager:
         )
 
         expected: List[str] = [
-            "The Dough Rollers",
-            "Broken Witt Rebels",
-            "Bonny Doon",
-            "Jack White",
+            "The Dough Rollers_alternative",
+            "Broken Witt Rebels_alternative",
+            "Bonny Doon_alternative",
+            "Jack White_alternative",
         ]
 
         assert received == expected
