@@ -137,9 +137,12 @@ class WorkloadGenerator(object):
         return response
 
     def _generate_workload(self) -> None:
-        for workload in self._workloads.values():
+        for folder_name, workload in self._workloads.items():
             response = get_response(200)
-            response["body"]["querylist"] = [tuple(query) for query in workload.get()]
+            response["body"]["querylist"] = [
+                (query.query, query.args, folder_name, query.query_type)
+                for query in workload.get()
+            ]
             self._pub_socket.send_json(response)
 
     def start(self) -> None:

@@ -7,14 +7,16 @@ from typing import Dict, List, Optional
 class WorkloadReader:
     """Reads queries from workloads."""
 
-    location: str = join(dirname(__file__), "workloads", "workload_queries")
+    location: str = join(dirname(__file__), "workloads")
 
     @classmethod
     def __read_query(cls, path_to_file: str) -> List[str]:
         with open(path_to_file, "r") as f:
             raw_queries: str = f.read()
         return [
-            transaction for transaction in raw_queries.split("---") if transaction != ""
+            " ".join(transaction.split())
+            for transaction in raw_queries.split("---")
+            if transaction != ""
         ]
 
     @classmethod
