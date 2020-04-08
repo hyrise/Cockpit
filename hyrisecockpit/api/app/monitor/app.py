@@ -8,57 +8,22 @@ from json import loads
 from time import time, time_ns
 from typing import Any, Dict, List, Union
 
-from flask import Flask
-from flask_cors import CORS
-from flask_restx import Api, Resource, fields
-from influxdb import InfluxDBClient
-from jsonschema import ValidationError, validate
-from zmq import REQ, Context, Socket
+from flask_restx import Namespace, Resource, fields
 
-from hyrisecockpit.message import get_databases_response_schema, response_schema
-from hyrisecockpit.plugins import available_plugins
+from hyrisecockpit.api.app.shared import (
+    _get_active_databases,
+    _send_message,
+    db_manager_socket,
+    storage_connection,
+)
 from hyrisecockpit.request import Header, Request
-from hyrisecockpit.response import Response, get_error_response, get_response
-from hyrisecockpit.settings import (
-    DB_MANAGER_HOST,
-    DB_MANAGER_PORT,
-    GENERATOR_HOST,
-    GENERATOR_PORT,
-    STORAGE_HOST,
-    STORAGE_PASSWORD,
-    STORAGE_PORT,
-    STORAGE_USER,
-)
+from hyrisecockpit.response import Response, get_response
 
-context = Context(io_threads=1)
-
-db_manager_socket = context.socket(REQ)
-db_manager_socket.connect(f"tcp://{DB_MANAGER_HOST}:{DB_MANAGER_PORT}")
-
-generator_socket = context.socket(REQ)
-generator_socket.connect(f"tcp://{GENERATOR_HOST}:{GENERATOR_PORT}")
-
-
-storage_connection = InfluxDBClient(
-    STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD
-)
-
-app = Flask(__name__)
-cors = CORS(app)
-api = Api(
-    app,
-    title="Hyrise Cockpit",
-    description="Monitor and control multiple databases at once.",
-    validate=True,
-)
-
-monitor = api.namespace(
+api = Namespace(
     "monitor", description="Get synchronous data from multiple databases at once."
 )
 
-control = api.namespace("control", description="Control multiple databases at once.")
-
-model_database = monitor.model(
+model_database = api.model(
     "Database",
     {
         "id": fields.String(
@@ -70,7 +35,7 @@ model_database = monitor.model(
     },
 )
 
-model_throughput = monitor.clone(
+model_throughput = api.clone(
     "Throughput",
     model_database,
     {
@@ -83,13 +48,13 @@ model_throughput = monitor.clone(
     },
 )
 
-model_detailed_throughput = monitor.clone(
+model_detailed_throughput = api.clone(
     "Detailed Throughput",
     model_database,
     {
         "detailed_throughput": fields.List(
             fields.Nested(
-                monitor.model(
+                api.model(
                     "Throughput per query",
                     {
                         "workload_type": fields.String(
@@ -118,13 +83,13 @@ model_detailed_throughput = monitor.clone(
     },
 )
 
-model_query_information = monitor.clone(
+model_query_information = api.clone(
     "Detailed Throughput and Latency",
     model_database,
     {
         "detailed_query_information": fields.List(
             fields.Nested(
-                monitor.model(
+                api.model(
                     "Throughput and latency per query",
                     {
                         "workload_type": fields.String(
@@ -159,7 +124,7 @@ model_query_information = monitor.clone(
     },
 )
 
-model_latency = monitor.clone(
+model_latency = api.clone(
     "Latency",
     model_database,
     {
@@ -172,13 +137,13 @@ model_latency = monitor.clone(
     },
 )
 
-model_detailed_latency = monitor.clone(
+model_detailed_latency = api.clone(
     "Detailed Latency",
     model_database,
     {
         "detailed_latency": fields.List(
             fields.Nested(
-                monitor.model(
+                api.model(
                     "Latency per query",
                     {
                         "workload_type": fields.String(
@@ -207,7 +172,7 @@ model_detailed_latency = monitor.clone(
     },
 )
 
-model_queue_length = monitor.clone(
+model_queue_length = api.clone(
     "Queue length",
     model_database,
     {
@@ -220,7 +185,7 @@ model_queue_length = monitor.clone(
     },
 )
 
-model_workload_composition = monitor.model(
+model_workload_composition = api.model(
     "Workload composition",
     {
         "SELECT": fields.Integer(
@@ -250,7 +215,7 @@ model_workload_composition = monitor.model(
     },
 )
 
-model_krueger_data = monitor.clone(
+model_krueger_data = api.clone(
     "Krüger data",
     model_database,
     {
@@ -269,10 +234,16 @@ model_krueger_data = monitor.clone(
     },
 )
 
-model_database_status = monitor.clone(
+model_database_status = api.clone(
     "Database status",
     model_database,
     {
+        "hyrise_active": fields.Boolean(
+            title="hyrise active status",
+            description="Hyrise is reachable.",
+            required=True,
+            example=True,
+        ),
         "database_blocked_status": fields.Boolean(
             title="Database blocked status",
             description="Database blocked status of databases.",
@@ -295,7 +266,7 @@ model_database_status = monitor.clone(
         ),
         "loaded_tables": fields.List(
             fields.Nested(
-                monitor.model(
+                api.model(
                     "Loaded tables",
                     {
                         "table_name": fields.String(
@@ -318,259 +289,19 @@ model_database_status = monitor.clone(
     },
 )
 
-model_data = control.model(
-    "Data",
-    {
-        "folder_name": fields.String(
-            title="Folder name",
-            description="Name of the folder containing the pregenerated tables.",
-            required=True,
-            example="tpch_0.1",
-        )
-    },
-)
 
-model_storage = control.model(
-    "storage",
-    {
-        fields.String(
-            title="Database ID",
-            description="Used to identify a database.",
-            required=True,
-            example="hyrise-1",
-        ): {
-            fields.String(
-                title="Tablename",
-                description="Name of the table.",
-                required=True,
-                example="aka_name",
-            ): {
-                "size": fields.Integer(
-                    title="Size",
-                    description="Estimated size of the table given in bytes.",
-                    required=True,
-                    example="2931788734",
-                ),
-                "number_columns": fields.Integer(
-                    title="Number of columns",
-                    description="Number of columns of the table.",
-                    required=True,
-                    example="112",
-                ),
-                "data": {
-                    "column_name": {
-                        "size": fields.Integer(
-                            title="Size",
-                            description="Estimated size of the column given in bytes.",
-                            required=True,
-                            example="8593371",
-                        ),
-                        "encoding": fields.String(
-                            title="Encoding",
-                            description="Encodings of the column.",
-                            required=True,
-                            example="Dictionary",
-                        ),
-                        "data_type": fields.String(
-                            title="Datatype",
-                            description="Datatype of the column.",
-                            required=True,
-                            example="String",
-                        ),
-                    }
-                },
-            }
-        }
-    },
-)
-
-model_control_database = control.model(
-    "Database",
-    {
-        "id": fields.String(
-            title="Database ID",
-            description="Used to identify a database.",
-            required=True,
-            example="hyrise-1",
-        )
-    },
-)
-
-model_get_database = control.clone(
-    "Get Database",
-    model_control_database,
-    {
-        "host": fields.String(
-            title="Host",
-            description="Host to log in to.",
-            required=True,
-            example="vm.example.com",
-        ),
-        "port": fields.String(
-            title="Port",
-            description="Port of the host to log in to.",
-            required=True,
-            example="1234",
-        ),
-        "number_workers": fields.Integer(
-            title="Number of initial database worker processes.",
-            description="",
-            required=True,
-            example=8,
-        ),
-        "dbname": fields.String(
-            title="",
-            description="Name of the database to log in to.",
-            required=True,
-            example="mydb",
-        ),
-    },
-)
-
-model_add_database = control.clone(
-    "Add Database",
-    model_get_database,
-    {
-        "user": fields.String(
-            title="Username",
-            description="Username used to log in.",
-            required=True,
-            example="user123",
-        ),
-        "password": fields.String(
-            title="Password",
-            description="Password used to log in.",
-            required=True,
-            example="password123",
-        ),
-    },
-)
-
-modelhelper_plugin = fields.String(
-    title="Plugin name",
-    description="Used to identify a plugin.",
-    required=True,
-    example="Clustering",
-)
-
-model_plugin_log = control.clone(
-    "Plugin Log",
-    model_database,
-    {
-        "plugin_log": fields.List(
-            fields.Nested(
-                control.model(
-                    "Plugin Log Entry",
-                    {
-                        "timestamp": fields.Integer(
-                            title="Timestamp",
-                            description="Timestamp in nanoseconds.",
-                            required=True,
-                            example=1583847966784,
-                        ),
-                        "reporter": fields.String(
-                            title="Reporter",
-                            description="Plugin reporting to the log.",
-                            required=True,
-                            example="CompressionPlugin",
-                        ),
-                        "message": fields.String(
-                            title="Message",
-                            description="Message logged.",
-                            required=True,
-                            example="No optimization possible with given parameters!",
-                        ),
-                    },
-                )
-            ),
-            required=True,
-        )
-    },
-)
-
-model_get_all_plugins = control.model(
-    "Available Plugins", {"plugins": fields.List(modelhelper_plugin, required=True,)},
-)
-
-model_get_activated_plugins = control.clone(
-    "Activated Plugins",
-    model_database,
-    {"plugins": fields.List(modelhelper_plugin, required=True,)},
-)
-
-model_activate_plugin = control.clone(
-    "Activate Plugin", model_database, {"plugin": modelhelper_plugin},
-)
-
-model_deactivate_plugin = control.clone(
-    "Deactivate Plugin", model_database, {"plugin": modelhelper_plugin},
-)
-
-model_plugin_setting = control.clone(
-    "Set Plugin Setting",
-    model_database,
-    {
-        "name": fields.String(
-            title="Setting name",
-            description="Name of the setting that shall be set.",
-            required=True,
-            example="CompressionPlugin_MemoryBudget",
-        ),
-        "value": fields.String(
-            title="Setting value",
-            description="Value the setting should have.",
-            required=True,
-            example="5000",
-        ),
-    },
-)
-
-model_get_plugin_setting = control.clone(
-    "Get Plugin Setting",
-    model_plugin_setting,
-    {
-        "description": fields.String(
-            title="Setting description",
-            description="Description of the plugin setting.",
-            required=True,
-            example="The memory budget to target for the Compression...",
-        ),
-    },
-)
-
-
-def _send_message(socket: Socket, message: Request) -> Response:
-    """Send an IPC message with data to a database interface, return the repsonse."""
-    socket.send_json(message)
-    response: Response = socket.recv_json()
-    validate(instance=response, schema=response_schema)
-    return response
-
-
-def _active_databases() -> List[str]:
-    """Get a list of active databases."""
-    response: Response = _send_message(
-        db_manager_socket, {"header": {"message": "get databases"}, "body": {}}
-    )
-    validate(instance=response["body"], schema=get_databases_response_schema)
-    return [database["id"] for database in response["body"]["databases"]]
-
-
-@monitor.route("/throughput")
+@api.route("/throughput")
 class Throughput(Resource):
     """Throughput information of all databases."""
 
-    @monitor.doc(model=[model_throughput])
+    @api.doc(model=[model_throughput])
     def get(self) -> Union[int, Response]:
         """Return throughput information from the stored queries."""
         offset_seconds = 3
         offsetts = (int(time()) - offset_seconds) * 1_000_000_000
 
         throughput: Dict[str, int] = {}
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 "SELECT * FROM throughput WHERE time = $offsetts;",
@@ -587,20 +318,17 @@ class Throughput(Resource):
         return response
 
 
-@monitor.route("/detailed_throughput")
+@api.route("/detailed_throughput")
 class DetailedThroughput(Resource):
     """Detailed throughput information of all databases."""
 
-    @monitor.doc(model=[model_detailed_throughput])
+    @api.doc(model=[model_detailed_throughput])
     def get(self) -> Union[int, List[Dict[str, Any]]]:
         """Return detailed throughput information from the stored queries."""
         currentts = time_ns()
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         response: List[Dict] = []
         for database in active_databases:
             result = storage_connection.query(
@@ -620,20 +348,17 @@ class DetailedThroughput(Resource):
         return response
 
 
-@monitor.route("/detailed_latency")
+@api.route("/detailed_latency")
 class DetailedLatency(Resource):
     """Detailed throughput information of all databases."""
 
-    @monitor.doc(model=[model_detailed_latency])
+    @api.doc(model=[model_detailed_latency])
     def get(self) -> Union[int, List[Dict[str, Any]]]:
         """Return detailed throughput information from the stored queries."""
         currentts = time_ns()
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         response: List[Dict] = []
         for database in active_databases:
             result = storage_connection.query(
@@ -653,20 +378,17 @@ class DetailedLatency(Resource):
         return response
 
 
-@monitor.route("/latency")
+@api.route("/latency")
 class Latency(Resource):
     """Latency information of all databases."""
 
-    @monitor.doc(model=[model_latency])
+    @api.doc(model=[model_latency])
     def get(self) -> Union[int, Response]:
         """Return latency information from the stored queries."""
         offset_seconds = 3
         offsetts = (int(time()) - offset_seconds) * 1_000_000_000
         latency: Dict[str, float] = {}
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 "SELECT * FROM latency WHERE time = $offsetts;",
@@ -683,20 +405,17 @@ class Latency(Resource):
         return response
 
 
-@monitor.route("/detailed_query_information")
+@api.route("/detailed_query_information")
 class DetailedQueryInformation(Resource):
     """Detailed throughput and latency information of all databases."""
 
-    @monitor.doc(model=[model_query_information])
+    @api.doc(model=[model_query_information])
     def get(self) -> Union[int, List[Dict[str, Any]]]:
         """Return detailed throughput and latency information from the stored queries."""
         currentts = time_ns()
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         response: List[Dict] = []
         for database in active_databases:
             result = storage_connection.query(
@@ -718,11 +437,11 @@ class DetailedQueryInformation(Resource):
         return response
 
 
-@monitor.route("/queue_length")
+@api.route("/queue_length")
 class QueueLength(Resource):
     """Queue length information of all databases."""
 
-    @monitor.doc(model=[model_queue_length])
+    @api.doc(model=[model_queue_length])
     def get(self) -> Response:
         """Return queue length information from database manager."""
         return _send_message(
@@ -730,7 +449,7 @@ class QueueLength(Resource):
         )
 
 
-@monitor.route("/failed_tasks")
+@api.route("/failed_tasks")
 class FailedTasks(Resource):
     """Failed tasks information of all databases."""
 
@@ -745,21 +464,18 @@ class FailedTasks(Resource):
                     )["failed_queries", None]
                 ),
             }
-            for database in _active_databases()
+            for database in _get_active_databases()
         ]
 
 
-@monitor.route("/system")
+@api.route("/system")
 class System(Resource):
     """System data information of all databases."""
 
     def get(self) -> Union[int, Response]:
         """Return cpu and memory information for every database and the number of thread it is using from database manager."""
         system: Dict[str, Dict] = {}
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 "SELECT LAST(cpu_count) as cpu_count, * FROM system_data;",
@@ -779,6 +495,8 @@ class System(Resource):
                         "free": system_value["free_memory"],
                         "used": system_value["used_memory"],
                         "total": system_value["total_memory"],
+                        "percent": system_value["used_memory"]
+                        / system_value["total_memory"],
                     },
                     "database_threads": system_value["database_threads"],
                 }
@@ -789,17 +507,14 @@ class System(Resource):
         return response
 
 
-@monitor.route("/chunks")
+@api.route("/chunks")
 class Chunks(Resource):
     """Chunks data information of all databases."""
 
     def get(self) -> Union[int, Response]:
         """Return chunks data information for every database."""
         chunks: Dict[str, Dict] = {}
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 'SELECT LAST("chunks_data_meta_information") FROM chunks_data',
@@ -815,7 +530,7 @@ class Chunks(Resource):
         return response
 
 
-@monitor.route("/storage")
+@api.route("/storage")
 class Storage(Resource):
     """Storage information of all databases."""
 
@@ -823,10 +538,7 @@ class Storage(Resource):
     def get(self) -> Union[int, Response]:
         """Return storage metadata from database manager."""
         storage: Dict[str, Dict] = {}
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 'SELECT LAST("storage_meta_information") FROM storage',
@@ -842,18 +554,15 @@ class Storage(Resource):
         return response
 
 
-@monitor.route("/krueger_data", methods=["GET"])
+@api.route("/krueger_data", methods=["GET"])
 class KruegerData(Resource):
     """Krügergraph data for all workloads."""
 
-    @monitor.doc(model=[model_krueger_data])
+    @api.doc(model=[model_krueger_data])
     def get(self) -> Union[int, List[Dict[str, Dict[str, Dict]]]]:
         """Provide mock data for a Krügergraph."""
         krueger_data: List[Dict] = []
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 'SELECT LAST("executed"), * FROM krueger_data', database=database,
@@ -872,227 +581,13 @@ class KruegerData(Resource):
         return krueger_data
 
 
-@monitor.route("/status", methods=["GET"])
+@api.route("/status", methods=["GET"])
 class ProcessTableStatus(Resource):
     """Database blocked status information of all databases."""
 
-    @monitor.doc(model=[model_database_status])
+    @api.doc(model=[model_database_status])
     def get(self) -> List[Dict]:
         """Return status of databases."""
         return _send_message(
             db_manager_socket, Request(header=Header(message="status"), body={}),
         )["body"]["status"]
-
-
-@control.route("/database", methods=["GET", "POST", "DELETE"])
-class Database(Resource):
-    """Manages databases."""
-
-    @control.doc(model=[model_get_database])
-    def get(self) -> Response:
-        """Get all databases."""
-        message = Request(header=Header(message="get databases"), body={})
-        response = _send_message(db_manager_socket, message)
-        return response["body"]["databases"]
-
-    @control.doc(body=model_add_database)
-    def post(self) -> Response:
-        """Add a database."""
-        message = Request(
-            header=Header(message="add database"),
-            body={
-                "number_workers": control.payload["number_workers"],
-                "id": control.payload["id"],
-                "user": control.payload["user"],
-                "password": control.payload["password"],
-                "host": control.payload["host"],
-                "port": control.payload["port"],
-                "dbname": control.payload["dbname"],
-            },
-        )
-        response = _send_message(db_manager_socket, message)
-        return response
-
-    @control.doc(body=model_control_database)
-    def delete(self) -> Response:
-        """Delete a database."""
-        message = Request(
-            header=Header(message="delete database"),
-            body={"id": control.payload["id"]},
-        )
-        response = _send_message(db_manager_socket, message)
-        return response
-
-
-@control.route("/workload", methods=["POST", "DELETE"])
-class Workload(Resource):
-    """Manages workload generation."""
-
-    def post(self) -> Response:
-        """Start the workload generator."""
-        message = Request(header=Header(message="start worker"), body={})
-        response = _send_message(db_manager_socket, message)
-        if response["header"]["status"] != 200:
-            return get_error_response(
-                400, response["body"].get("error", "Error during starting of worker")
-            )
-
-        message = Request(
-            header=Header(message="start workload"),
-            body={
-                "folder_name": control.payload["folder_name"],
-                "frequency": control.payload.get("frequency", 200),
-            },
-        )
-        response = _send_message(generator_socket, message)
-        if response["header"]["status"] != 200:
-            return get_error_response(
-                400,
-                response["body"].get("error", "Error during starting of the workload"),
-            )
-
-        return get_response(200)
-
-    def delete(self) -> Response:
-        """Stop the workload generator and empty database queues."""
-        message = Request(header=Header(message="stop workload"), body={})
-        response = _send_message(generator_socket, message)
-        if response["header"]["status"] != 200:
-            return get_error_response(
-                400, response["body"].get("error", "Error during stopping of generator")
-            )
-
-        message = Request(header=Header(message="close worker"), body={})
-        response = _send_message(db_manager_socket, message)
-        if response["header"]["status"] != 200:
-            return get_error_response(
-                400, response["body"].get("error", "Error during closing of worker")
-            )
-
-        return response
-
-
-@control.route("/data")
-class Data(Resource):
-    """Manage data in databases."""
-
-    @control.doc(model=[model_data])
-    def get(self) -> List[str]:
-        """Return all pregenerated tables that can be loaded."""
-        return ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
-
-    # @control.doc(body=model_data)
-    def post(self) -> Response:
-        """Load pregenerated tables for all databases."""
-        message = Request(
-            header=Header(message="load data"),
-            body={"folder_name": control.payload["folder_name"]},
-        )
-        response = _send_message(db_manager_socket, message)
-        return response
-
-    @control.doc(body=model_data)
-    def delete(self) -> Response:
-        """Delete pregenerated tables from all databases."""
-        message = Request(
-            header=Header(message="delete data"),
-            body={"folder_name": control.payload["folder_name"]},
-        )
-        response = _send_message(db_manager_socket, message)
-        return response
-
-
-@control.route("/available_plugins")
-class ActivatedPlugin(Resource):
-    """Get all available Plugins."""
-
-    @control.doc(model=model_get_all_plugins)
-    def get(self) -> List[str]:
-        """Return available plugins."""
-        return available_plugins
-
-
-@control.route("/plugin")
-class Plugin(Resource):
-    """Activate, Deactive Plugins, respectively show which ones are activated."""
-
-    @control.doc(model=[model_get_activated_plugins])
-    def get(self) -> Union[Dict, List[Dict[str, List[str]]]]:
-        """Return activated plugins in each database."""
-        message = Request(header=Header(message="get plugins"), body={})
-        response = _send_message(db_manager_socket, message)
-        return response["body"]["plugins"]
-
-    @control.doc(body=model_activate_plugin)
-    def post(self) -> Response:
-        """Activate a plugin in a database."""
-        message = Request(
-            header=Header(message="activate plugin"),
-            body={"id": control.payload["id"], "plugin": control.payload["plugin"]},
-        )
-        response = _send_message(db_manager_socket, message)
-        return response
-
-    @control.doc(body=model_deactivate_plugin)
-    def delete(self) -> Response:
-        """Deactivate a plugin in a database."""
-        message = Request(
-            header=Header(message="deactivate plugin"),
-            body={"id": control.payload["id"], "plugin": control.payload["plugin"]},
-        )
-        response = _send_message(db_manager_socket, message)
-        return response
-
-
-@control.route("/plugin_log")
-class PluginLog(Resource):
-    """Activate, Deactive Plugins, respectively show which ones are activated."""
-
-    @api.doc(model=[model_plugin_log])
-    def get(self) -> List[Dict[str, Union[str, List[Dict[str, Union[str, int]]]]]]:
-        """Return activated plugins in each database."""
-        return [
-            {
-                "id": database,
-                "plugin_log": [
-                    {
-                        "timestamp": row["timestamp"],
-                        "reporter": row["reporter"],
-                        "message": row["message"],
-                    }
-                    for row in list(
-                        storage_connection.query(
-                            "SELECT timestamp, reporter, message from plugin_log;",
-                            database=database,
-                        )["plugin_log", None]
-                    )
-                ],
-            }
-            for database in _active_databases()
-        ]
-
-
-@control.route("/plugin_settings")
-class PluginSettings(Resource):
-    """Set settings for plugins."""
-
-    @control.doc(model=[model_get_plugin_setting])  # TODO: fix model
-    def get(self) -> Response:
-        """Read settings for plugins."""
-        message = Request(header=Header(message="get plugin setting"), body={},)
-        response = _send_message(db_manager_socket, message)
-        return response
-
-    @control.doc(body=model_plugin_setting)
-    def post(self) -> Response:
-        """Set settings for plugins."""
-        message = Request(
-            header=Header(message="set plugin setting"),
-            body={
-                "id": control.payload["id"],
-                "name": control.payload["name"],
-                "value": control.payload["value"],
-            },
-        )
-        response = _send_message(db_manager_socket, message)
-        return response

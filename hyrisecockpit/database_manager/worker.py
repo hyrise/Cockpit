@@ -8,7 +8,7 @@ from queue import Empty
 from time import time_ns
 from typing import Dict, List, Optional, Tuple, Union
 
-from psycopg2 import Error, pool
+from psycopg2 import DatabaseError, InterfaceError, ProgrammingError, pool
 from psycopg2.extensions import AsIs
 from zmq import SUB, SUBSCRIBE, Context
 
@@ -125,7 +125,9 @@ def execute_queries(
                     )
                 except Empty:
                     continue
-                except (ValueError, Error) as e:
+                except (DatabaseError, InterfaceError):
+                    task_queue.put(task)
+                except (ValueError, ProgrammingError) as e:
                     failed_queries.append((time_ns(), worker_id, str(task), str(e)))
 
                 last_batched = log_results(

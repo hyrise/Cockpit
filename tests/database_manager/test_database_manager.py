@@ -456,6 +456,7 @@ class TestDatabaseManager:
         """Call status."""
         database = fake_database()
         database.get_database_blocked.return_value = 0
+        database.get_hyrise_active.return_value = True
         database.get_worker_pool_status.return_value = "closed"
         database.get_loaded_benchmarks.return_value = ["tpch_0.1"]
         database.get_loaded_tables.return_value = [
@@ -466,6 +467,7 @@ class TestDatabaseManager:
         expected_status = [
             {
                 "id": "db1",
+                "hyrise_active": True,
                 "database_blocked_status": 0,
                 "worker_pool_status": "closed",
                 "loaded_benchmarks": ["tpch_0.1"],
