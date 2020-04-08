@@ -20,6 +20,10 @@ export function getSelectorByConfig(elementType: string, id: string): string {
   return `${elementType}[id=${id}]`;
 }
 
+export function waitForChartRender(): void {
+  cy.wait(1000);
+}
+
 // FORMATTING HELPERS
 
 export function roundNumber(

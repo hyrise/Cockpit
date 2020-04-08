@@ -28,13 +28,15 @@ function getInitialNumbers(
   };
 }
 
-export function useBackendMock(
-  numbers: Partial<Record<Entity, number>> = {}
-): {
+export interface Backend {
   start(status?: BackendStatus, delay?: number): void;
   reload(request: Request, id: string, type: "POST" | "DELETE"): void;
   restart(status?: BackendStatus, delay?: number): void;
-} {
+}
+
+export function useBackendMock(
+  numbers: Partial<Record<Entity, number>> = {}
+): Backend {
   const {
     getMockedResponse,
     getMockedPostCallback,

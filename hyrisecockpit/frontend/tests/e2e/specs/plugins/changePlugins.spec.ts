@@ -23,12 +23,10 @@ let databasesActivePlugins: any = [];
 let databasesPluginLogs: any = [];
 let databasesPluginSettings: any = [];
 
-describe("When observing the plugins overview", () => {
+// test plugins overview
+describe("When opening the plugins overview", () => {
   beforeEach(() => {
-    backend.start();
-    cy.visit("/");
-    cy.wait("@" + getGetAlias("database"));
-    cy.get("@" + getGetAlias("database")).should((xhr: any) => {
+    cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
     });
     cy.wait("@" + getGetAlias("available_plugins"));
@@ -104,6 +102,7 @@ describe("When observing the plugins overview", () => {
       });
     });
   });
+
   // test deactivate plugin
   describe("and deactivate a new plugin", () => {
     it("will show this plugin as deactivated", () => {
@@ -159,6 +158,7 @@ describe("When observing the plugins overview", () => {
       });
     });
   });
+
   // test change plugin setting
   describe("and change settings of a active plugin", () => {
     it("will change the settings value", () => {

@@ -79,7 +79,8 @@ export function fakeDatabaseSystemData(): Object {
 function fakeEncodingData(): Object {
   return {
     amount: faker.random.number(),
-    compression: [faker.random.word()]
+    compression: [faker.random.word()],
+    name: faker.random.word()
   };
 }
 

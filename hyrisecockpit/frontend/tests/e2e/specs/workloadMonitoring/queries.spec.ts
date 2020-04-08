@@ -9,12 +9,10 @@ const backend = useBackendMock();
 let databases: any[] = [];
 let data: any = [];
 
-describe("Show detailed query information", () => {
-  beforeEach(() => {
-    backend.start();
-    cy.visit("/");
-    cy.wait("@" + getGetAlias("database"));
-    cy.get("@" + getGetAlias("database")).should((xhr: any) => {
+// test on workload monitoring
+describe("visiting workload monitoring page", () => {
+  before(() => {
+    cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
     });
     testRedirection(
@@ -35,52 +33,27 @@ describe("Show detailed query information", () => {
     );
   });
 
-  describe("observe query information", () => {
-    it("will show correct query information for every database sorted by latency", () => {
-      databases.forEach((database: any, idx: number) => {
-        cy.get(getSelector("queryTable"))
-          .eq(idx)
-          .within(() => {
-            cy.get("table").should((table: any) => {
-              table[0].rows.forEach((row: any, rowIdx: number) => {
-                if (rowIdx !== 0)
-                  assertQueryData(
-                    row.textContent,
-                    data[idx].query_information[rowIdx - 1]
-                  );
-              });
+  // test data
+  it("will show correct query information for every database sorted by latency", () => {
+    databases.forEach((database: any, idx: number) => {
+      cy.get(getSelector("queryTable"))
+        .eq(idx)
+        .within(() => {
+          cy.get("table").should((table: any) => {
+            table[0].rows.forEach((row: any, rowIdx: number) => {
+              if (rowIdx !== 0)
+                assertQueryData(
+                  row.textContent,
+                  data[idx].query_information[rowIdx - 1]
+                );
             });
           });
-      });
+        });
     });
   });
-  describe("searching for a specific query", () => {
-    it("will show only the matching queries", () => {
-      const index = generateRandomInt(0, data[0].query_information.length);
-      databases.forEach((database: any, idx: number) => {
-        cy.get("input")
-          .eq(idx * 3)
-          .click({ force: true })
-          .type(data[idx].query_information[index].query_number);
 
-        cy.get(getSelector("queryTable"))
-          .eq(idx)
-          .within(() => {
-            cy.get("table").should((table: any) => {
-              table[0].rows.forEach((row: any, rowIdx: number) => {
-                if (rowIdx !== 0)
-                  assertQueryData(
-                    row.textContent,
-                    data[idx].query_information[index]
-                  );
-              });
-              expect(table[0].rows.length).to.eq(2);
-            });
-          });
-      });
-    });
-  });
-  describe("changing the sorting order of latency", () => {
+  // test sorting
+  describe("when changing the sorting order of latency", () => {
     it("will sort the queries otherwise", () => {
       databases.forEach((database: any, idx: number) => {
         cy.get("table")
@@ -103,6 +76,42 @@ describe("Show detailed query information", () => {
                     requestData[requestData.length - rowIdx]
                   );
               });
+            });
+          });
+
+        cy.get("table")
+          .eq(idx)
+          .within(() => {
+            cy.get("tr")
+              .contains("latency (in ms)")
+              .click({ force: true });
+          });
+      });
+    });
+  });
+
+  // test searching
+  describe("when searching for a specific query", () => {
+    it("will show only the matching queries", () => {
+      const index = generateRandomInt(0, data[0].query_information.length);
+      databases.forEach((database: any, idx: number) => {
+        cy.get("input")
+          .eq(idx * 3)
+          .click({ force: true })
+          .type(data[idx].query_information[index].query_number);
+
+        cy.get(getSelector("queryTable"))
+          .eq(idx)
+          .within(() => {
+            cy.get("table").should((table: any) => {
+              table[0].rows.forEach((row: any, rowIdx: number) => {
+                if (rowIdx !== 0)
+                  assertQueryData(
+                    row.textContent,
+                    data[idx].query_information[index]
+                  );
+              });
+              expect(table[0].rows.length).to.eq(2);
             });
           });
       });
