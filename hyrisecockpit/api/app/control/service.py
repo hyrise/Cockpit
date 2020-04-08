@@ -12,7 +12,7 @@ from hyrisecockpit.response import Response
 from .interface import DatabaseInterface, DetailedDatabaseInterface
 from .model import DetailedDatabase
 
-url = "127.0.0.1:8000"
+url = "tcp://127.0.0.1:8004"
 
 
 class ControlService:
@@ -62,3 +62,8 @@ class ControlService:
             Request(header=Header(message="delete database"), body=dict(interface))
         )
         return response["header"]["status"]
+
+    @classmethod
+    def get_available_benchmark_tables(cls) -> List[str]:
+        """Return all available benchmarks."""
+        return ["tpch_0.1", "tpch_1", "tpcds_1", "job"]

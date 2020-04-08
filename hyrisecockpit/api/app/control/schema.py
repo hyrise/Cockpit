@@ -1,7 +1,7 @@
 """Schema for control name-space."""
 
 from marshmallow import Schema
-from marshmallow.fields import Integer, String
+from marshmallow.fields import Integer, List, String
 
 
 class DatabaseSchmea(Schema):
@@ -53,4 +53,17 @@ class DetailedDatabaseSchema(DatabaseSchmea):
         description="Password used to log in.",
         required=True,
         example="password123",
+    )
+
+
+class AvailableBenchmarkTablesSchema(Schema):
+    """Schema of Data."""
+
+    folder_names = List(
+        String(
+            title="Folder name",
+            description="Name of the folder containing the pregenerated tables.",
+            required=True,
+            example="tpch_0.1",
+        )
     )

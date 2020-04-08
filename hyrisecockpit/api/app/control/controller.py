@@ -7,7 +7,11 @@ from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 
 from .model import DetailedDatabase
-from .schema import DatabaseSchmea, DetailedDatabaseSchema
+from .schema import (
+    AvailableBenchmarkTablesSchema,
+    DatabaseSchmea,
+    DetailedDatabaseSchema,
+)
 from .service import ControlService
 
 api = Namespace("Control", description="Control multiple databases at once.")
@@ -38,3 +42,13 @@ class Databases(Resource):
         """De-register database."""
         status_code = ControlService.deregister_database(request.parsed_obj)
         return Response(status=status_code)
+
+
+@api.route("/data")
+class Data(Resource):
+    """Manage data in databases."""
+
+    @responds(schema=AvailableBenchmarkTablesSchema, api=api)
+    def get(self) -> List[str]:
+        """Return all pre-generated tables that can be loaded."""
+        return ControlService.get_available_benchmark_tables()
