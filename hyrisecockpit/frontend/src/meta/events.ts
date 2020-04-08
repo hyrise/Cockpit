@@ -86,3 +86,16 @@ export function useDataEvents(): {
   }
   return { emitCPUDataChangedEvent, emitStorageDataChangedEvent };
 }
+
+export function usePluginEvents(): {
+  emitPluginActivatedEvent: (pluginInfo: any) => void;
+  emitPluginDeactivatedEvent: (pluginInfo: any) => void;
+} {
+  function emitPluginActivatedEvent(pluginInfo: any): void {
+    eventBus.$emit("PLUGIN_ACTIVATED", pluginInfo);
+  }
+  function emitPluginDeactivatedEvent(pluginInfo: any): void {
+    eventBus.$emit("PLUGIN_DEACTIVATED", pluginInfo);
+  }
+  return { emitPluginActivatedEvent, emitPluginDeactivatedEvent };
+}

@@ -4,6 +4,7 @@ import { controlBackend } from "../../config";
 import { PluginService } from "../types/services";
 import { eventBus } from "../plugins/eventBus";
 import { usePluginTransformationSevice } from "../services/transformationService";
+import { usePluginEvents } from "../meta/events";
 
 export function usePluginService(): PluginService {
   const plugins = ref<string[]>([]);
@@ -15,6 +16,10 @@ export function usePluginService(): PluginService {
     getPluginLogsData,
     getPluginSettingsData
   } = usePluginTransformationSevice();
+  const {
+    emitPluginActivatedEvent,
+    emitPluginDeactivatedEvent
+  } = usePluginEvents();
 
   getPlugins();
   setInterval(() => getPluginLogs(), 1000);
@@ -44,6 +49,7 @@ export function usePluginService(): PluginService {
         .then(response => {
           getPlugins();
           getPluginSettings();
+          emitPluginActivatedEvent({ id: databaseId, plugin: plugin });
         });
     } else {
       return axios
@@ -53,6 +59,7 @@ export function usePluginService(): PluginService {
         .then(response => {
           getPlugins();
           getPluginSettings();
+          emitPluginDeactivatedEvent({ id: databaseId, plugin: plugin });
         });
     }
   }

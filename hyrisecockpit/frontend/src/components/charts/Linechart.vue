@@ -16,6 +16,8 @@ import { ChartConfiguration } from "../../types/metrics";
 import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
 import { ChartProps, ChartPropsValidation } from "../../types/charts";
 import { useFormatting } from "@/meta/formatting";
+import colors from "vuetify/lib/util/colors";
+import { eventBus } from "@/plugins/eventBus";
 
 interface Props extends ChartProps {
   maxValue: number;
@@ -41,12 +43,24 @@ export default defineComponent({
       "multipleDatabasesAllowed",
       true
     );
+    const { formatDateWithoutMilliSec } = useFormatting();
 
     const { getDataset, getLayout, getOptions } = useLineChartConfiguration(
       context,
       props,
       multipleDatabasesAllowed
     );
+
+    eventBus.$on("PLUGIN_ACTIVATED", (pluginInfo: any) => {
+      Plotly.extendTraces(
+        props.graphId,
+        {
+          y: [[props.maxValue + 1]],
+          x: [[formatDateWithoutMilliSec(new Date())]]
+        },
+        [-1]
+      );
+    });
 
     onMounted(() => {
       Plotly.newPlot(
@@ -77,12 +91,21 @@ export default defineComponent({
     }
 
     function getDatasets(): any[] {
-      return props.selectedDatabases.reduce((result, id): any => {
-        return [
-          ...result,
+      return [
+        ...props.selectedDatabases.map((id: string) =>
           getDataset(props.data[id] ? props.data[id] : [], id)
-        ];
-      }, []);
+        ),
+        {
+          y: [],
+          x: [],
+          type: "bar",
+          name: "plugin events",
+          width: 1,
+          marker: {
+            color: colors.grey.lighten1
+          }
+        }
+      ];
     }
 
     function getMaxDatasetLength(): number {
@@ -94,15 +117,18 @@ export default defineComponent({
     function updateChartDatasets(): void {
       const timestamps = props.timestamps;
       const newData = {
-        y: Object.values(props.selectedDatabases).map(id => props.data[id]),
-        x: Object.values(props.selectedDatabases).map(() => timestamps)
+        y: [
+          ...Object.values(props.selectedDatabases).map(id => props.data[id])
+        ],
+        x: [...Object.values(props.selectedDatabases).map(() => timestamps)]
       };
       const maxSelectedLength = getMaxDatasetLength();
 
       Plotly.update(
         props.graphId,
         newData,
-        getLayout(props.maxValue, Math.min(maxSelectedLength, 30))
+        getLayout(props.maxValue, Math.min(maxSelectedLength, 30)),
+        props.selectedDatabases.map((x, index) => index)
       );
     }
   }
@@ -151,12 +177,13 @@ function useLineChartConfiguration(
     };
   }
 
-  function getDataset(data: number[] = [], databaseId: string = ""): Object {
+  function getDataset(data: number[] = [], databaseId: string = ""): any {
     const database = databases.value.find(
       database => database.id === databaseId
     );
     return {
       y: data,
+      type: "scatter",
       mode: "lines+markers",
       line: database ? { color: database.color } : {},
       name: database ? database.id : {}
