@@ -3,6 +3,7 @@
 Includes the main WorkloadGenerator.
 """
 
+from random import shuffle
 from types import TracebackType
 from typing import Callable, Dict, Optional, Tuple, Type
 
@@ -137,13 +138,15 @@ class WorkloadGenerator(object):
         return response
 
     def _generate_workload(self) -> None:
-        for folder_name, workload in self._workloads.items():
-            response = get_response(200)
-            response["body"]["querylist"] = [
-                (query.query, query.args, folder_name, query.query_type)
-                for query in workload.get()
-            ]
-            self._pub_socket.send_json(response)
+        queries = [
+            (query.query, query.args, folder_name, query.query_type)
+            for folder_name, workload in self._workloads.items()
+            for query in workload.get()
+        ]
+        shuffle(queries)
+        response = get_response(200)
+        response["body"]["querylist"] = queries
+        self._pub_socket.send_json(response)
 
     def start(self) -> None:
         """Start the generator by starting the server."""
