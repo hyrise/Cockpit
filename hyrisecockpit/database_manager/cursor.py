@@ -3,6 +3,8 @@ from types import TracebackType
 from typing import Any, Dict, Iterable, List, Optional, Tuple, Type, TypedDict, Union
 
 from influxdb import InfluxDBClient
+from pandas import DataFrame
+from pandas.io.sql import read_sql_query as read_sql_query_pandas
 from psycopg2 import pool
 
 
@@ -26,9 +28,9 @@ class PoolCursor:
     def __init__(self, connection_pool: pool) -> None:
         """Initialize a PoolCursor."""
         self.pool: pool = connection_pool
-        self.connection = self.pool.getconn()
-        self.connection.set_session(autocommit=True)
-        self.cur = self.connection.cursor()
+        self._connection = self.pool.getconn()
+        self._connection.set_session(autocommit=True)
+        self._cur = self._connection.cursor()
 
     def __enter__(self) -> "PoolCursor":
         """Return self for a context manager."""
@@ -41,23 +43,27 @@ class PoolCursor:
         traceback: Optional[TracebackType],
     ) -> Optional[bool]:
         """Call close with a context manager."""
-        self.cur.close()
-        self.pool.putconn(self.connection)
+        self._cur.close()
+        self.pool.putconn(self._connection)
         return None
 
     def execute(
         self, query: str, parameters: Optional[Tuple[Union[str, int], ...]]
     ) -> None:
         """Execute a query."""
-        return self.cur.execute(query, parameters)
+        return self._cur.execute(query, parameters)
 
     def fetchone(self) -> Tuple[Any, ...]:
         """Fetch one."""
-        return self.cur.fetchone()
+        return self._cur.fetchone()
 
     def fetchall(self) -> List[Tuple[Any, ...]]:
         """Fetch all."""
-        return self.cur.fetchall()
+        return self._cur.fetchall()
+
+    def read_sql_query(self, sql: str) -> DataFrame:
+        """Execute query and return result as data-frame."""
+        return read_sql_query_pandas(sql, self._connection)
 
 
 class StorageCursor:
