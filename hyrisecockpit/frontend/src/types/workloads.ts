@@ -1,4 +1,4 @@
-export type Workload = "tpch01" | "tpch1" | "tpcds" | "job";
+export type Workload = "tpch_0_1" | "tpch_1" | "tpcds_1" | "job_1";
 
 export interface WorkloadProjectionData {
   transferred: string;
@@ -6,8 +6,8 @@ export interface WorkloadProjectionData {
 }
 
 export const availableWorkloads: Workload[] = [
-  "tpch01",
-  "tpch1",
-  "tpcds",
-  "job"
+  "tpch_0_1",
+  "tpch_1",
+  "tpcds_1",
+  "job_1"
 ];

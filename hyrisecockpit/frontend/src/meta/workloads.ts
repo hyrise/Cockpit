@@ -1,20 +1,20 @@
 import { Workload, WorkloadProjectionData } from "../types/workloads";
 
 const workloadProjectionData: Record<Workload, WorkloadProjectionData> = {
-  tpch01: {
-    transferred: "tpch_0.1",
+  tpch_0_1: {
+    transferred: "tpch_0_1",
     displayed: "TPC-H SF 0.1"
   },
-  tpch1: {
+  tpch_1: {
     transferred: "tpch_1",
     displayed: "TPC-H SF 1"
   },
-  tpcds: {
+  tpcds_1: {
     transferred: "tpcds_1",
     displayed: "TPC-DS"
   },
-  job: {
-    transferred: "job",
+  job_1: {
+    transferred: "job_1",
     displayed: "Join Order Benchmark"
   }
 };

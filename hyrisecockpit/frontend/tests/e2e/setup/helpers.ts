@@ -29,7 +29,7 @@ export type Request =
 
 export type BackendStatus = "up" | "down";
 
-export const benchmarks = ["tpch_1", "tpch_0.1", "tpcds_1", "job"];
+export const benchmarks = ["tpch_1", "tpch_0_1", "tpcds_1", "job_1"];
 
 const getAliases: Partial<Record<Request, string>> = {
   database: "getDatabases",

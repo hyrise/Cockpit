@@ -188,10 +188,10 @@ export default defineComponent({
       }
     });
     const switchesLoading: Record<string, boolean> = reactive({
-      tpch01: false,
-      tpch1: false,
-      tpcds: false,
-      job: false
+      tpch_0_1: false,
+      tpch_1: false,
+      tpcds_1: false,
+      job_1: false
     });
     const runningWorkload = ref<boolean>(false);
     const instanceBlocked = ref<boolean>(false);
@@ -285,10 +285,10 @@ export default defineComponent({
       runningWorkload,
       loadingWorkloadData: computed(
         () =>
-          switchesLoading.tpch01 ||
-          switchesLoading.tpch1 ||
-          switchesLoading.tpcds ||
-          switchesLoading.job
+          switchesLoading.tpch_0_1 ||
+          switchesLoading.tpch_1 ||
+          switchesLoading.tpcds_1 ||
+          switchesLoading.job_1
       ),
       instanceBlocked,
       noDatabaseAdded,
