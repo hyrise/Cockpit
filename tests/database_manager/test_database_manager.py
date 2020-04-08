@@ -680,7 +680,7 @@ class TestDatabaseManager:
         }
         database_manager._databases = {}
 
-        expected = get_response(400)
+        expected = get_response(404)
         response = database_manager._call_execute_sql_query(fake_body)
 
         assert expected == response
