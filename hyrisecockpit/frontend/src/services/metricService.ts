@@ -5,6 +5,7 @@ import { MetricService } from "@/types/services";
 import { useUpdatingData } from "../meta/components";
 import { getMetricMetadata } from "../meta/metrics";
 import { useFormatting } from "@/meta/formatting";
+import { isInTestMode } from "@/helpers/methods";
 
 export function useMetricService(metric: Metric): MetricService {
   const queryReadyState = ref(true);
@@ -49,10 +50,11 @@ export function useMetricService(metric: Metric): MetricService {
       } else if (metricMetaData.fetchType === "read") {
         data.value = result;
       }
+      const newTimestamps = result[0]?.[metricMetaData.base]?.map(
+        (entry: any) => entry.timestamp
+      ) ?? [formatDateToNanoSec(currentTimestamp)];
       handleTimestamps(
-        result[0]?.[metricMetaData.base]?.map(
-          (entry: any) => entry.timestamp
-        ) ?? [formatDateToNanoSec(currentTimestamp)]
+        isInTestMode ? [formatDateToNanoSec(currentTimestamp)] : newTimestamps
       );
       const dataCopy = JSON.parse(JSON.stringify(data.value));
       data.value = dataCopy;

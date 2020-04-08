@@ -50,6 +50,7 @@ export function assertLineChartData(
   requestData: any,
   databases: any[]
 ): void {
+  console.log(chartDatasets);
   databases.forEach((database: any) => {
     const chartData: any = chartDatasets.find(
       (data: any) => data.name === database
@@ -73,6 +74,7 @@ export function assertBarChartData(
   requestData: any,
   xaxis: string
 ): void {
+  console.log(chartDatasets);
   Object.keys(requestData).forEach((label: string) => {
     const chartData: any = chartDatasets.find(
       (data: any) => data.name === label

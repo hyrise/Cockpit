@@ -21,7 +21,7 @@ type Database = {
 // TIME
 
 export function fakeTimeStamp(): number {
-  return getNanoSeconds(faker.date.recent());
+  return getNanoSeconds(new Date());
 }
 
 // IDS

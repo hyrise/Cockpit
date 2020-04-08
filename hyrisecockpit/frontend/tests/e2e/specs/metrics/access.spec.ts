@@ -76,7 +76,6 @@ describe("Show access", () => {
           cy.get(getSelector("secondAccessSelect"))
             .eq(idx)
             .click({ force: true });
-          cy.wait(500);
 
           clickContentOfSelect(idx, items[index].toString());
 
@@ -112,9 +111,7 @@ describe("Show access", () => {
           cy.get(getSelector("openDetailed"))
             .eq(idx * 2 + 1)
             .click();
-          cy.wait(500);
           cy.get(getSelectorWithID("firstAccess", database.id)).should("exist");
-          cy.wait(500);
 
           const items = Object.keys(data[databases[0].id]);
           const index = generateRandomInt(0, items.length);
@@ -128,7 +125,6 @@ describe("Show access", () => {
           cy.get(getSelector("firstAccessSelect"))
             .eq(idx)
             .click({ force: true });
-          cy.wait(500);
           clickContentOfSelect(idx, items[index].toString());
 
           cy.get(getSelectorWithID("firstAccess", database.id)).should(
