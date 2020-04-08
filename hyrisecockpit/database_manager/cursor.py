@@ -30,7 +30,7 @@ class PoolCursor:
         self.pool: pool = connection_pool
         self._connection = self.pool.getconn()
         self._connection.set_session(autocommit=True)
-        self._cur = self._connection.cursor()
+        self.cur = self._connection.cursor()
 
     def __enter__(self) -> "PoolCursor":
         """Return self for a context manager."""
@@ -43,7 +43,7 @@ class PoolCursor:
         traceback: Optional[TracebackType],
     ) -> Optional[bool]:
         """Call close with a context manager."""
-        self._cur.close()
+        self.cur.close()
         self.pool.putconn(self._connection)
         return None
 
@@ -51,15 +51,15 @@ class PoolCursor:
         self, query: str, parameters: Optional[Tuple[Union[str, int], ...]]
     ) -> None:
         """Execute a query."""
-        return self._cur.execute(query, parameters)
+        return self.cur.execute(query, parameters)
 
     def fetchone(self) -> Tuple[Any, ...]:
         """Fetch one."""
-        return self._cur.fetchone()
+        return self.cur.fetchone()
 
     def fetchall(self) -> List[Tuple[Any, ...]]:
         """Fetch all."""
-        return self._cur.fetchall()
+        return self.cur.fetchall()
 
     def read_sql_query(self, sql: str) -> DataFrame:
         """Execute query and return result as data-frame."""
