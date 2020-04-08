@@ -17,7 +17,6 @@
         "@vue/composition-api": "^0.4.0",
         "axios": "^0.19.2",
         "core-js": "^3.6.4",
-        "crypto-js": "^4.0.0",
         "faker": "^4.1.0",
         "plotly.js": "^1.52.3",
         "plotly.js-dist": "^1.52.3",

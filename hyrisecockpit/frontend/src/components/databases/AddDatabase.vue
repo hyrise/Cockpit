@@ -189,7 +189,11 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
     if (
       context.root.$databaseController.availableDatabasesById.value.includes(id)
     ) {
-      idError.value = "Id is already taken.";
+      idError.value = "ID is already taken.";
+    } else if (id.length === 0) {
+      idError.value = "Choose an ID";
+    } else if (id.length > 20) {
+      idError.value = "ID is too long";
     } else {
       idError.value = "";
     }
