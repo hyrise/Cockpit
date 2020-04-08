@@ -1,14 +1,20 @@
 """Tests for the cursor module."""
 from typing import Any, Dict, List, Tuple
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
-from pytest import mark
+from pandas import DataFrame
+from pytest import fixture, mark
 
-from hyrisecockpit.database_manager.cursor import StorageCursor
+from hyrisecockpit.database_manager.cursor import PoolCursor, StorageCursor
 
 
 class TestCursor:
     """Tests Cursor classes."""
+
+    @fixture
+    def pool_cursor(self) -> PoolCursor:
+        """Return patched pool cursor object."""
+        return PoolCursor(MagicMock())
 
     @mark.parametrize(
         "queries",
@@ -134,3 +140,65 @@ class TestCursor:
         cursor._connection.write_points.assert_called_once_with(
             [expected_point], database="database"
         )
+
+    def test_initializes_pool_cursor_correctly(self) -> None:
+        """Test initializes pool cursor correctly."""
+        mocked_pool: MagicMock = MagicMock()
+        mocked_connection: MagicMock = MagicMock()
+        mocked_cursor: MagicMock = MagicMock()
+        mocked_connection.cursor.return_value = mocked_cursor
+        mocked_pool.getconn.return_value = mocked_connection
+        pool_cursor: PoolCursor = PoolCursor(mocked_pool)
+
+        mocked_pool.getconn.assert_called_once()
+        mocked_connection.set_session.assert_called_once_with(autocommit=True)
+        mocked_connection.cursor.assert_called_once()
+
+        assert pool_cursor.pool == mocked_pool
+        assert pool_cursor._connection == mocked_connection
+        assert pool_cursor._cur == mocked_cursor
+
+    def test_executes(self, pool_cursor) -> None:
+        """Test execute witch valid pool cursor and no exception."""
+        pool_cursor._cur = MagicMock()
+        pool_cursor._cur.execute.return_value = None
+
+        pool_cursor.execute("query", None)
+
+        pool_cursor._cur.execute.assert_called_once_with("query", None)
+
+    def test_fetches_one(self, pool_cursor) -> None:
+        """Test fetch one witch valid pool cursor and no exception."""
+        pool_cursor._cur = MagicMock()
+        pool_cursor._cur.fetchone.return_value = ("hallo",)
+
+        results: Tuple[Any, ...] = pool_cursor.fetchone()
+
+        assert results == ("hallo",)
+        pool_cursor._cur.fetchone.assert_called_once()
+
+    def test_fetches_all(self, pool_cursor) -> None:
+        """Test fetch all witch valid pool cursor and no exception."""
+        pool_cursor._cur = MagicMock()
+        pool_cursor._cur.fetchall.return_value = [("hallo",), ("world",)]
+
+        results: List[Tuple[Any, ...]] = pool_cursor.fetchall()
+
+        assert results == [("hallo",), ("world",)]
+        pool_cursor._cur.fetchall.assert_called_once()
+
+    @patch("hyrisecockpit.database_manager.cursor.read_sql_query_pandas",)
+    def test_reads_sql_query_pandas(
+        self, mocked_read_sql_query_pandas, pool_cursor
+    ) -> None:
+        """Test read sql query witch valid pool cursor and no exception."""
+        pool_cursor._cur = MagicMock()
+        fake_df: DataFrame = DataFrame({"hallo": [1, 2]})
+        moked_connection: MagicMock = MagicMock()
+        pool_cursor._connection = moked_connection
+        mocked_read_sql_query_pandas.return_value = fake_df
+
+        results: DataFrame = pool_cursor.read_sql_query("query")
+
+        assert results.equals(fake_df)
+        mocked_read_sql_query_pandas.assert_called_once_with("query", moked_connection)
