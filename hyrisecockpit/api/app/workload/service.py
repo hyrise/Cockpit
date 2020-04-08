@@ -9,8 +9,8 @@ from hyrisecockpit.api.app.shared import (
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
-from .interface import WorkloadInterface
-from .model import Workload
+from .interface import DetailedWorkloadInterface, WorkloadInterface
+from .model import DetailedWorkload, Workload
 
 
 class WorkloadService:
@@ -60,7 +60,7 @@ class WorkloadService:
             return None
 
     @classmethod
-    def get_by_id(cls, workload_id: str) -> Optional[Workload]:
+    def get_by_id(cls, folder_name: str) -> Optional[DetailedWorkload]:
         """Get a Workload.
 
         Returns the Workload with the given ID.
@@ -68,20 +68,20 @@ class WorkloadService:
         """
         response = cls._send_message_to_gen(
             Request(
-                header=Header(message="get workload"), body={"workload_id": workload_id}
+                header=Header(message="get workload"), body={"folder_name": folder_name}
             ),
         )
         return (
             None
             if response["header"]["status"] == 404
-            else Workload(**response["body"]["workload"])
+            else DetailedWorkload(**response["body"]["workload"])
         )
 
     @classmethod
-    def delete_by_id(cls, workload_id: str) -> Optional[str]:
+    def delete_by_id(cls, folder_name: str) -> Optional[str]:
         """Delete a Workload.
 
-        Returns the workload_id of the deleted Workload.
+        Returns the folder_name of the deleted Workload.
         Returns None if a Workload with the given ID doesn't exist.
         """
         response = cls._send_message_to_dbm(
@@ -91,21 +91,21 @@ class WorkloadService:
             response = cls._send_message_to_gen(
                 Request(
                     header=Header(message="delete workload"),
-                    body={"workload_id": workload_id},
+                    body={"folder_name": folder_name},
                 ),
             )
             return (
                 None
                 if response["header"]["status"] == 404
-                else response["body"]["workload_id"]
+                else response["body"]["folder_name"]
             )
         else:
             return None
 
     @classmethod
     def update_by_id(
-        cls, workload_id: str, interface: WorkloadInterface
-    ) -> Optional[Workload]:
+        cls, folder_name: str, interface: DetailedWorkloadInterface
+    ) -> Optional[DetailedWorkload]:
         """Update a Workload by ID.
 
         Returns the updated Workload.
@@ -114,11 +114,11 @@ class WorkloadService:
         response = cls._send_message_to_gen(
             Request(
                 header=Header(message="update workload"),
-                body={"workload_id": workload_id, "workload": dict(interface)},
+                body={"folder_name": folder_name, "workload": dict(interface)},
             ),
         )
         return (
             None
             if response["header"]["status"] == 404
-            else Workload(**response["body"]["workload"])
+            else DetailedWorkload(**response["body"]["workload"])
         )
