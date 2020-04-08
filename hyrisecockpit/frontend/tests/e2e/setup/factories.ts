@@ -182,8 +182,8 @@ export function fakeDatabaseChunksData(
 function fakeQueryInformationData(latency: number): Object {
   return {
     benchmark: benchmarks[generateRandomInt(0, benchmarks.length)],
-    query_number: faker.random.number(),
-    throughput: faker.random.number(),
+    query_number: latency / Math.pow(10, 3),
+    throughput: generateRandomInt(0, 100),
     latency: latency
   };
 }
