@@ -11,6 +11,6 @@ BASE_ROUTE: str = "control"
 
 def register_routes(api: Api, app: Flask, root: str) -> None:
     """Register all control routes."""
-    from .app import api as control_api
+    from .controller import api as control_api
 
     api.add_namespace(control_api, path=f"{root}/{BASE_ROUTE}")
