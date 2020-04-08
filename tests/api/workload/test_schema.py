@@ -1,16 +1,45 @@
 """Tests for the Workload schema."""
 
-from pytest import fixture, mark
+from typing import Dict
 
-from hyrisecockpit.api.app.workload.interface import WorkloadInterface
-from hyrisecockpit.api.app.workload.model import Workload
-from hyrisecockpit.api.app.workload.schema import WorkloadSchema
+from pytest import fixture
+
+from hyrisecockpit.api.app.workload.interface import (
+    DetailedWorkloadInterface,
+    WorkloadInterface,
+)
+from hyrisecockpit.api.app.workload.model import DetailedWorkload, Workload
+from hyrisecockpit.api.app.workload.schema import DetailedWorkloadSchema, WorkloadSchema
+
+
+@fixture(params=["tpch_0.1", "job"])
+def folder_name(request) -> str:
+    """Get examples of folder names."""
+    return request.param
+
+
+@fixture(params=[0, 420])
+def frequency(request) -> int:
+    """Get examples of frequencies."""
+    return request.param
+
+
+@fixture(params=[{}, {"01": 0, "23c": 101}])
+def weights(request) -> Dict[str, int]:
+    """Get examples of weights."""
+    return request.param
 
 
 @fixture
 def schema() -> WorkloadSchema:
     """Return a real Workload schema."""
     return WorkloadSchema()
+
+
+@fixture
+def detailed_schema() -> DetailedWorkloadSchema:
+    """Return a real Workload schema."""
+    return DetailedWorkloadSchema()
 
 
 class TestWorkloadSchema:
@@ -20,38 +49,72 @@ class TestWorkloadSchema:
         """A Workload schema can be created."""
         assert schema
 
-    @mark.parametrize("workload_id", ["workload0"])
-    @mark.parametrize("folder_name", ["tpch_0.1", "tpcds_1", "job"])
-    @mark.parametrize("frequency", [0, 1, 100])
     def test_deserializes(
-        self, schema: WorkloadSchema, workload_id: str, folder_name: str, frequency: int
+        self, schema: WorkloadSchema, folder_name: str, frequency: int
     ):
         """A Workload schema can create a Workload model."""
         interface: WorkloadInterface = {
-            "workload_id": workload_id,
             "folder_name": folder_name,
             "frequency": frequency,
         }
         deserialized: interface = schema.load(interface)
         workload = Workload(**deserialized)
-        assert workload_id == workload.workload_id == deserialized["workload_id"]
         assert folder_name == workload.folder_name == deserialized["folder_name"]
         assert frequency == workload.frequency == deserialized["frequency"]
 
-    @mark.parametrize("workload_id", ["workload0"])
-    @mark.parametrize("folder_name", ["tpch_0.1", "tpcds_1", "job"])
-    @mark.parametrize("frequency", [0, 1, 100])
-    def test_serializes(
-        self, schema: WorkloadSchema, workload_id: str, folder_name: str, frequency: int
-    ):
+    def test_serializes(self, schema: WorkloadSchema, folder_name: str, frequency: int):
         """A Workload model can be serialized with a Workload schema."""
         interface: WorkloadInterface = {
-            "workload_id": workload_id,
             "folder_name": folder_name,
             "frequency": frequency,
         }
         workload = Workload(**interface)
         serialized = schema.dump(workload)
-        assert workload_id == workload.workload_id == serialized["workload_id"]
         assert folder_name == workload.folder_name == serialized["folder_name"]
         assert frequency == workload.frequency == serialized["frequency"]
+
+
+class TestDetailedWorkloadSchema:
+    """Tests for the DetailedWorkload schema."""
+
+    def test_creates(self, detailed_schema: DetailedWorkloadSchema):
+        """A DetailedWorkload schema can be created."""
+        assert schema
+
+    def test_deserializes(
+        self,
+        detailed_schema: DetailedWorkloadSchema,
+        folder_name: str,
+        frequency: int,
+        weights: Dict[str, int],
+    ):
+        """A DetailedWorkload schema can create a DetailedWorkload model."""
+        interface: DetailedWorkloadInterface = {
+            "folder_name": folder_name,
+            "frequency": frequency,
+            "weights": weights,
+        }
+        deserialized: DetailedWorkloadInterface = detailed_schema.load(interface)
+        workload = DetailedWorkload(**deserialized)
+        assert folder_name == workload.folder_name == deserialized["folder_name"]
+        assert frequency == workload.frequency == deserialized["frequency"]
+        assert weights == workload.weights == deserialized["weights"]
+
+    def test_serializes(
+        self,
+        detailed_schema: DetailedWorkloadSchema,
+        folder_name: str,
+        frequency: int,
+        weights: Dict[str, int],
+    ):
+        """A DetailedWorkload model can be serialized with a DetailedWorkload schema."""
+        interface: DetailedWorkloadInterface = {
+            "folder_name": folder_name,
+            "frequency": frequency,
+            "weights": weights,
+        }
+        workload = DetailedWorkload(**interface)
+        serialized: DetailedWorkloadInterface = detailed_schema.dump(workload)
+        assert folder_name == workload.folder_name == serialized["folder_name"]
+        assert frequency == workload.frequency == serialized["frequency"]
+        assert weights == workload.weights == serialized["weights"]
