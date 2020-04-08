@@ -9,6 +9,7 @@ from hyrisecockpit.message import response_schema
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
+from .interface import DatabaseInterface, DetailedDatabaseInterface
 from .model import DetailedDatabase
 
 url = "127.0.0.1:8000"
@@ -45,3 +46,19 @@ class ControlService:
         return [
             DetailedDatabase(**interface) for interface in response["body"]["databases"]
         ]
+
+    @classmethod
+    def register_database(cls, interface: DetailedDatabaseInterface) -> int:
+        """Add a database to the manager."""
+        response = cls._send_message(
+            Request(header=Header(message="add database"), body=dict(interface))
+        )
+        return response["header"]["status"]
+
+    @classmethod
+    def deregister_database(cls, interface: DatabaseInterface) -> int:
+        """Remove database from manager."""
+        response = cls._send_message(
+            Request(header=Header(message="delete database"), body=dict(interface))
+        )
+        return response["header"]["status"]

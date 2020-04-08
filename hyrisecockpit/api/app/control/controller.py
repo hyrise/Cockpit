@@ -1,11 +1,13 @@
 """Controllers for multiple databases."""
 from typing import List
 
-from flask_accepts import responds
+from flask import request
+from flask.wrappers import Response
+from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 
 from .model import DetailedDatabase
-from .schema import DetailedDatabaseSchema
+from .schema import DatabaseSchmea, DetailedDatabaseSchema
 from .service import ControlService
 
 api = Namespace("Control", description="Control multiple databases at once.")
@@ -24,3 +26,15 @@ class Databases(Resource):
     def get(self) -> List[DetailedDatabase]:
         """Get all Workloads."""
         return ControlService.get_databases()
+
+    @accepts(schema=DetailedDatabaseSchema, api=api)
+    def post(self) -> Response:
+        """Register new database."""
+        status_code = ControlService.register_database(request.parsed_obj)
+        return Response(status=status_code)
+
+    @accepts(schema=DatabaseSchmea, api=api)
+    def delete(self) -> Response:
+        """De-register database."""
+        status_code = ControlService.deregister_database(request.parsed_obj)
+        return Response(status=status_code)

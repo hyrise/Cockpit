@@ -2,6 +2,20 @@
 from .interface import DetailedDatabaseInterface
 
 
+class Database:
+    """Model of a Database."""
+
+    def __init__(self, id: str):
+        """Initialize a Database model."""
+        self.id: str = id
+
+    def update(self, interface: DetailedDatabaseInterface) -> "Database":
+        """Update attributes of a database model."""
+        for key, value in interface.items():
+            setattr(self, key, value)
+        return self
+
+
 class DetailedDatabase:
     """Model of a detailed Database."""
 

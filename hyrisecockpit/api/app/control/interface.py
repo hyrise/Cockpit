@@ -2,8 +2,14 @@
 from typing import TypedDict
 
 
+class DatabaseInterface(TypedDict, total=False):
+    """Interface of a Database."""
+
+    id: str
+
+
 class DetailedDatabaseInterface(TypedDict, total=False):
-    """Interface of a Workload."""
+    """Interface of a detailed database."""
 
     id: str
     host: str
