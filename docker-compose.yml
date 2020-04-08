@@ -38,8 +38,11 @@ services:
       - "8086:8086"
 
   frontend:
-    image: node:buster
-    command: bash -c "npm install && npm run build"
+    image: frontend:buster
+    build:
+        context: .
+        dockerfile: ./hyrisecockpit/frontend/Dockerfile
+    command: "npm run serve"
     volumes:
       - ./hyrisecockpit/frontend:/usr/local/Cockpit/hyrisecockpit/frontend
     ports:
