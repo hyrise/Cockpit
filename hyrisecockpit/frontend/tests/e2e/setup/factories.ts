@@ -255,3 +255,20 @@ export function fakeDatabasePluginLogs(
     plugin_log: pluginIds.map(id => fakePluginLog(id))
   };
 }
+
+// WORKLOADS
+
+export function fakeDatabaseStatusData(
+  databaseId: string,
+  loadedBenchmarks: string[],
+  state: boolean
+): Object {
+  return {
+    id: databaseId,
+    hyrise_active: true,
+    database_blocked_status: false,
+    worker_pool_status: state ? "running" : "",
+    loaded_benchmarks: loadedBenchmarks,
+    loaded_tables: []
+  };
+}

@@ -9,7 +9,7 @@ import {
 import { getSelector as getViewSelector } from "../views/helpers";
 import {
   getSelector,
-  assertCorrectActivePlugins,
+  assertActivePlugins,
   getChangeSettingsSelector,
   assertRequestValues,
   assertSettingsRequestValues
@@ -84,7 +84,7 @@ describe("When opening the plugins overview", () => {
           cy.wait("@" + getGetAlias("plugin"));
           cy.get("@" + getGetAlias("plugin")).should((xhr: any) => {
             databasesActivePlugins = xhr.response.body;
-            assertCorrectActivePlugins(
+            assertActivePlugins(
               database.id,
               availablePlugins,
               databasesActivePlugins
@@ -140,7 +140,7 @@ describe("When opening the plugins overview", () => {
           cy.wait("@" + getGetAlias("plugin"));
           cy.get("@" + getGetAlias("plugin")).should((xhr: any) => {
             databasesActivePlugins = xhr.response.body;
-            assertCorrectActivePlugins(
+            assertActivePlugins(
               database.id,
               availablePlugins,
               databasesActivePlugins

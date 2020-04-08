@@ -4,10 +4,10 @@ import { getSelector as getViewSelector } from "../views/helpers";
 import { getSelector as getDatabaseSelector } from "../databases/helpers";
 import {
   getSelector,
-  assertCorrectActivePlugins,
-  assertCorrectPlugins,
-  assertCorrectPluginLog,
-  assertCorrectPluginSettings,
+  assertActivePlugins,
+  assertPlugins,
+  assertPluginLog,
+  assertPluginSettings,
   getChangeSettingsSelector
 } from "./helpers";
 import { testElementNoExistence } from "../abstractTests";
@@ -62,8 +62,8 @@ describe("When opening the plugins overview", () => {
         cy.get("button")
           .eq(idx + 1)
           .click();
-        assertCorrectPlugins(availablePlugins);
-        assertCorrectActivePlugins(
+        assertPlugins(availablePlugins);
+        assertActivePlugins(
           database.id,
           availablePlugins,
           databasesActivePlugins
@@ -86,11 +86,7 @@ describe("When opening the plugins overview", () => {
           .contains("Plugin log messages")
           .click();
         cy.get("textarea").then((textarea: any) => {
-          assertCorrectPluginLog(
-            database.id,
-            databasesPluginLogs,
-            textarea[0].value
-          );
+          assertPluginLog(database.id, databasesPluginLogs, textarea[0].value);
         });
         cy.get("button")
           .eq(idx + 1)
@@ -127,7 +123,7 @@ describe("When opening the plugins overview", () => {
           .click();
         cy.get(getChangeSettingsSelector(activePlugins[0].plugin)).click();
 
-        assertCorrectPluginSettings(database.id, databasesPluginSettings);
+        assertPluginSettings(database.id, databasesPluginSettings);
 
         cy.get("button")
           .eq(idx + 1)

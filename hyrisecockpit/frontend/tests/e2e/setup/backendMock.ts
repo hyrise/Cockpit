@@ -2,7 +2,7 @@ import { useMocks } from "./mocks";
 import {
   Entity,
   Request,
-  BackendStatus,
+  BackendState,
   getPostAlias,
   getDeleteAlias,
   getResponseStatus,
@@ -24,14 +24,15 @@ function getInitialNumbers(
     queries: 10,
     plugins: 2,
     activated_plugins: 1,
+    loaded_benchmarks: 1,
     ...numbers
   };
 }
 
 export interface Backend {
-  start(status?: BackendStatus, delay?: number): void;
+  start(status?: BackendState, delay?: number): void;
   reload(request: Request, id: string, type: "POST" | "DELETE"): void;
-  restart(status?: BackendStatus, delay?: number): void;
+  restart(status?: BackendState, delay?: number): void;
 }
 
 export function useBackendMock(
@@ -44,7 +45,7 @@ export function useBackendMock(
     renewMocks
   } = useMocks(getInitialNumbers(numbers));
 
-  function start(status: BackendStatus = "up", delay?: number): void {
+  function start(status: BackendState = "up", delay?: number): void {
     cy.server();
     mockRoutes(getResponseStatus(status), delay);
   }
@@ -55,7 +56,7 @@ export function useBackendMock(
     mockRoutes();
   }
 
-  function restart(status: BackendStatus = "up", delay?: number): void {
+  function restart(status: BackendState = "up", delay?: number): void {
     renewMocks();
     start(status, delay);
   }
@@ -117,6 +118,11 @@ export function useBackendMock(
       "**/monitor/detailed_query_information",
       getGetAlias("detailed_query_information"),
       getMockedResponse("detailed_query_information")
+    );
+    mock(
+      "**/monitor/status",
+      getGetAlias("status"),
+      getMockedResponse("status")
     );
     mock("**/control/data", getGetAlias("data"), getMockedResponse("data"));
     mock(
