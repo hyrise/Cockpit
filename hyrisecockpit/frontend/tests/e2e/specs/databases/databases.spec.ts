@@ -1,6 +1,5 @@
 import { useBackendMock } from "../../setup/backendMock";
 import { clickElement } from "../helpers";
-import { getGetAlias } from "../../setup/helpers";
 import { getSelector as getViewSelector, getRoute } from "../views/helpers";
 import {
   getSelector,
@@ -27,16 +26,14 @@ describe("when observing the database data and details", () => {
   before(() => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
-    });
-    cy.wait("@" + getGetAlias("system"));
-    cy.get("@" + getGetAlias("system")).should((xhr: any) => {
-      databasesSystemData = xhr.response.body.map(
-        (entry: any) => entry.system_data[0]
-      );
-    });
-    cy.wait("@" + getGetAlias("storage"));
-    cy.get("@" + getGetAlias("storage")).should((xhr: any) => {
-      databasesStorageData = Object.values(xhr.response.body.body.storage);
+      cy.setupData("system").then((xhr: any) => {
+        databasesSystemData = xhr.response.body.map(
+          (entry: any) => entry.system_data[0]
+        );
+        cy.setupData("storage").then((xhr: any) => {
+          databasesStorageData = Object.values(xhr.response.body.body.storage);
+        });
+      });
     });
     testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
   });

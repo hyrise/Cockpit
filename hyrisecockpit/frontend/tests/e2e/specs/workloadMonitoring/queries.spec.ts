@@ -1,6 +1,6 @@
 import { testRedirection } from "../abstractTests";
 import { useBackendMock } from "../../setup/backendMock";
-import { getGetAlias, generateRandomInt } from "../../setup/helpers";
+import { generateRandomInt } from "../../setup/helpers";
 import { getSelector as getViewSelector, getRoute } from "../views/helpers";
 import { getSelector, assertQueryData } from "./helpers";
 
@@ -19,18 +19,15 @@ describe("visiting workload monitoring page", () => {
       getViewSelector("workloadMonitoringButton"),
       getRoute("workloadMonitoring")
     );
-    cy.wait("@" + getGetAlias("detailed_query_information"));
-    cy.get("@" + getGetAlias("detailed_query_information")).should(
-      (xhr: any) => {
-        data = [];
-        xhr.response.body.forEach((database: any) => {
-          database.query_information = database.query_information.sort(
-            (query1: any, query2: any) => query2.latency - query1.latency
-          );
-          data.push(database);
-        });
-      }
-    );
+    cy.setupData("detailed_query_information").then((xhr: any) => {
+      data = [];
+      xhr.response.body.forEach((database: any) => {
+        database.query_information = database.query_information.sort(
+          (query1: any, query2: any) => query2.latency - query1.latency
+        );
+        data.push(database);
+      });
+    });
   });
 
   // test data

@@ -1,5 +1,4 @@
 import { useBackendMock } from "../../setup/backendMock";
-import { getGetAlias } from "../../setup/helpers";
 import { getSelector as getViewSelector, getRoute } from "../views/helpers";
 import { testRedirection } from "../abstractTests";
 import { getSelector } from "./helpers";
@@ -24,8 +23,7 @@ describe("visiting the workload monitoring page", () => {
       getViewSelector("workloadMonitoringButton"),
       getRoute("workloadMonitoring")
     );
-    cy.wait("@" + getGetAlias("krueger_data"));
-    cy.get("@" + getGetAlias("krueger_data")).should((xhr: any) => {
+    cy.setupData("krueger_data").then((xhr: any) => {
       data = {};
       xhr.response.body.forEach((database: any) => {
         const entry: any = {};

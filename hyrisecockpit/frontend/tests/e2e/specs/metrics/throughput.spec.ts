@@ -1,5 +1,4 @@
 import { useBackendMock } from "../../setup/backendMock";
-import { getGetAlias } from "../../setup/helpers";
 import { getSelector as getViewSelector, getRoute } from "../views/helpers";
 import { testRedirection } from "../abstractTests";
 import {
@@ -23,8 +22,7 @@ describe("visiting the overview page", () => {
       databases = xhr.response.body;
     });
     testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
-    cy.wait("@" + getGetAlias("throughput"));
-    cy.get("@" + getGetAlias("throughput")).should((xhr: any) => {
+    cy.setupData("throughput").then((xhr: any) => {
       data = assignToObject(xhr.response.body, "throughput");
     });
     waitForChartRender();
@@ -71,8 +69,7 @@ describe("visiting the comparison page", () => {
       getViewSelector("comparisonButton"),
       getRoute("comparison")
     );
-    cy.wait("@" + getGetAlias("throughput"));
-    cy.get("@" + getGetAlias("throughput")).should((xhr: any) => {
+    cy.setupData("throughput").then((xhr: any) => {
       data = assignToObject(xhr.response.body, "throughput");
     });
     waitForChartRender();

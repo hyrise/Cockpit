@@ -38,3 +38,8 @@ Cypress.Commands.add("setupAppState", backend => {
   cy.wait("@" + getGetAlias("database"));
   cy.get("@" + getGetAlias("database"));
 });
+
+Cypress.Commands.add("setupData", request => {
+  cy.wait("@" + getGetAlias(request));
+  cy.get("@" + getGetAlias(request));
+});

@@ -1,6 +1,5 @@
 import { useBackendMock } from "../../setup/backendMock";
 import { clickElement } from "../helpers";
-import { getGetAlias } from "../../setup/helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
 import { getSelector as getDatabaseSelector } from "../databases/helpers";
 import {
@@ -26,22 +25,18 @@ describe("When opening the plugins overview", () => {
   before(() => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
-    });
-    cy.wait("@" + getGetAlias("available_plugins"));
-    cy.get("@" + getGetAlias("available_plugins")).should((xhr: any) => {
-      availablePlugins = xhr.response.body;
-    });
-    cy.wait("@" + getGetAlias("plugin"));
-    cy.get("@" + getGetAlias("plugin")).should((xhr: any) => {
-      databasesActivePlugins = xhr.response.body;
-    });
-    cy.wait("@" + getGetAlias("plugin_log"));
-    cy.get("@" + getGetAlias("plugin_log")).should((xhr: any) => {
-      databasesPluginLogs = xhr.response.body;
-    });
-    cy.wait("@" + getGetAlias("plugin_settings"));
-    cy.get("@" + getGetAlias("plugin_settings")).should((xhr: any) => {
-      databasesPluginSettings = xhr.response.body.body.plugin_settings;
+      cy.setupData("available_plugins").then((xhr: any) => {
+        availablePlugins = xhr.response.body;
+        cy.setupData("plugin").then((xhr: any) => {
+          databasesActivePlugins = xhr.response.body;
+          cy.setupData("plugin_log").then((xhr: any) => {
+            databasesPluginLogs = xhr.response.body;
+            cy.setupData("plugin_settings").then((xhr: any) => {
+              databasesPluginSettings = xhr.response.body.body.plugin_settings;
+            });
+          });
+        });
+      });
     });
   });
 

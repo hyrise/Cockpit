@@ -1,5 +1,5 @@
 import { useBackendMock } from "../../setup/backendMock";
-import { getGetAlias, generateRandomInt } from "../../setup/helpers";
+import { generateRandomInt } from "../../setup/helpers";
 import { getSelector as getViewSelector, getRoute } from "../views/helpers";
 import { testRedirection } from "../abstractTests";
 import {
@@ -52,8 +52,7 @@ describe("visiting the comparison page", () => {
       getViewSelector("comparisonButton"),
       getRoute("comparison")
     );
-    cy.wait("@" + getGetAlias("chunks"));
-    cy.get("@" + getGetAlias("chunks")).should((xhr: any) => {
+    cy.setupData("chunks").then((xhr: any) => {
       data = xhr.response.body.body.chunks_data;
     });
     waitForChartRender();

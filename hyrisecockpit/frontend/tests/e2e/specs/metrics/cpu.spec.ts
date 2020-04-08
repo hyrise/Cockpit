@@ -1,5 +1,4 @@
 import { useBackendMock } from "../../setup/backendMock";
-import { getGetAlias } from "../../setup/helpers";
 import { getSelector as getViewSelector, getRoute } from "../views/helpers";
 import { testRedirection } from "../abstractTests";
 import {
@@ -23,8 +22,7 @@ describe("visiting the overview page", () => {
       databases = xhr.response.body;
     });
     testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
-    cy.wait("@" + getGetAlias("system"));
-    cy.get("@" + getGetAlias("system")).should((xhr: any) => {
+    cy.setupData("system").then((xhr: any) => {
       data = {};
       xhr.response.body.forEach((entry: any) => {
         data[entry.id] = entry.system_data[0].system_data.cpu.cpu_process_usage;
@@ -73,8 +71,7 @@ describe("visiting the comparison page", () => {
       getViewSelector("comparisonButton"),
       getRoute("comparison")
     );
-    cy.wait("@" + getGetAlias("system"));
-    cy.get("@" + getGetAlias("system")).should((xhr: any) => {
+    cy.setupData("system").then((xhr: any) => {
       data = {};
       xhr.response.body.forEach((entry: any) => {
         data[entry.id] = entry.system_data[0].system_data.cpu.cpu_process_usage;

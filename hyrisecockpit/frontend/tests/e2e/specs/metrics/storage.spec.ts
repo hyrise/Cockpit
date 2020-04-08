@@ -1,5 +1,4 @@
 import { useBackendMock } from "../../setup/backendMock";
-import { getGetAlias } from "../../setup/helpers";
 import { getSelector as getViewSelector, getRoute } from "../views/helpers";
 import { testRedirection } from "../abstractTests";
 import {
@@ -50,8 +49,7 @@ describe("visiting the comparison page", () => {
       getViewSelector("comparisonButton"),
       getRoute("comparison")
     );
-    cy.wait("@" + getGetAlias("storage"));
-    cy.get("@" + getGetAlias("storage")).should((xhr: any) => {
+    cy.setupData("storage").then((xhr: any) => {
       data = xhr.response.body.body.storage;
     });
     waitForChartRender();

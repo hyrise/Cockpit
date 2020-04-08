@@ -23,8 +23,7 @@ describe("visiting the overview page", () => {
       databases = xhr.response.body;
     });
     testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
-    cy.wait("@" + getGetAlias("queue_length"));
-    cy.get("@" + getGetAlias("queue_length")).should((xhr: any) => {
+    cy.setupData("queue_length").then((xhr: any) => {
       data = assignToObject(xhr.response.body, "queue_length");
     });
     waitForChartRender();
@@ -71,8 +70,7 @@ describe("visiting the comparison page", () => {
       getViewSelector("comparisonButton"),
       getRoute("comparison")
     );
-    cy.wait("@" + getGetAlias("queue_length"));
-    cy.get("@" + getGetAlias("queue_length")).should((xhr: any) => {
+    cy.setupData("queue_length").then((xhr: any) => {
       data = assignToObject(xhr.response.body, "queue_length");
     });
     waitForChartRender();
