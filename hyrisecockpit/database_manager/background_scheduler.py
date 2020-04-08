@@ -388,8 +388,13 @@ class BackgroundJobManager(object):
         # TODO change absolute to relative path
         return [
             (
-                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                ((name, "as_is"), (folder_name, "as_is"), (name, "as_is"),),
+                "COPY %s_%s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                (
+                    (name, "as_is"),
+                    (folder_name, "as_is"),
+                    (folder_name, "as_is"),
+                    (name, "as_is"),
+                ),
             )
             for name in table_names
         ]
@@ -540,7 +545,7 @@ class BackgroundJobManager(object):
         if table_names is None:
             return []
         else:
-            return table_names
+            return [f"{table_name}_{folder_name}" for table_name in table_names]
 
     def delete_tables(self, folder_name: str) -> bool:
         """Delete tables."""
