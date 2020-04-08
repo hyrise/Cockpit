@@ -3,9 +3,7 @@
 from multiprocessing import Value
 from typing import Dict, List, Optional
 
-
-from psycopg2 import DatabaseError, InterfaceError, pool, Error
-
+from psycopg2 import DatabaseError, Error, InterfaceError, pool
 
 from .background_scheduler import BackgroundJobManager
 from .cursor import PoolCursor, StorageCursor
