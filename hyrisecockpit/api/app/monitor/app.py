@@ -307,6 +307,12 @@ model_system_data = api.clone(
                                                     required=True,
                                                     example=33724911616,
                                                 ),
+                                                "percent": fields.Float(
+                                                    title="Percent of used memory",
+                                                    description="Percent of used memory",
+                                                    required=True,
+                                                    example=10.8125,
+                                                ),
                                             },
                                         )
                                     ),
