@@ -30,10 +30,10 @@ export function useDatabaseService(): DatabaseService {
   }
 
   function getDatabaseColor(databaseID: string): string {
-    const hashedDatabaseID = require("crypto")
-      .createHash("sha1")
-      .update(databaseID)
-      .digest("hex")
+    const crypto = require("crypto-js");
+    const hashedDatabaseID = crypto
+      .SHA1(databaseID)
+      .toString(crypto.enc.Hex)
       .substring(0, 8);
     const index =
       parseInt(hashedDatabaseID, 16) % Object.keys(colorDefinition).length;
