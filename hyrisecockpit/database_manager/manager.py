@@ -183,6 +183,7 @@ class DatabaseManager(object):
         status = [
             {
                 "id": database_id,
+                "hyrise_active": database.get_hyrise_active(),
                 "database_blocked_status": database.get_database_blocked(),
                 "worker_pool_status": database.get_worker_pool_status(),
                 "loaded_benchmarks": database.get_loaded_benchmarks(),

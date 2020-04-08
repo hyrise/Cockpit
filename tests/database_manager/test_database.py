@@ -2,14 +2,13 @@
 
 from collections import Counter
 from multiprocessing.sharedctypes import Synchronized as ValueType
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 from unittest.mock import MagicMock, patch
 
-from psycopg2 import Error, pool
-from pytest import fixture
+from psycopg2 import DatabaseError, InterfaceError, pool, Error
+from pytest import fixture, mark
 
 from hyrisecockpit.database_manager.database import Database
-from hyrisecockpit.database_manager.worker_pool import WorkerPool
 
 database_id: str = "MongoDB forever"
 database_user: str = "Proform"
@@ -70,17 +69,7 @@ def get_fake_pool_cursor_with_rows_to_return(connection_pool: pool) -> MagicMock
     return mocked_context_cur
 
 
-def get_fake_background_job_manager(
-    database_id: str,
-    database_blocked: ValueType,
-    connection_pool: pool,
-    loaded_tables: Dict[str, Optional[str]],
-    worker_pool: WorkerPool,
-    storage_host: str,
-    storage_password: str,
-    storage_port: str,
-    storage_user: str,
-) -> MagicMock:
+def get_fake_background_job_manager(*args) -> MagicMock:
     """Return fake  BackgroundJobManager."""
     mocked_job_manager: MagicMock = MagicMock()
     mocked_job_manager.start.side_effect = None
@@ -131,6 +120,8 @@ class TestDatabase(object):
         assert database._default_tables == default_tables
         assert type(database._number_additional_connections) is int
         assert type(database._database_blocked) is ValueType
+        assert type(database._hyrise_active) is ValueType
+        assert database._hyrise_active.value
         assert not database._database_blocked.value
         database._background_scheduler.start.assert_called_once()  # type: ignore
         database._background_scheduler.load_tables.assert_called_once_with(  # type: ignore
@@ -424,6 +415,14 @@ class TestDatabase(object):
 
         assert expected == received
 
+    def test_gets_hyrise_active(self, database: Database) -> None:
+        """Test get hyrise active status."""
+        database._hyrise_active.value = True
+        result: bool = database.get_hyrise_active()
+
+        assert type(result) is bool
+        assert result
+
     def test_starts_successful_worker(self, database: Database) -> None:
         """Test start of successful worker."""
         mocked_worker_pool: MagicMock = MagicMock()
@@ -515,6 +514,30 @@ class TestDatabase(object):
     @patch(
         "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
     )
+    @mark.parametrize(
+        "exceptions", [DatabaseError(), InterfaceError()],
+    )
+    def test_gets_plugins_when_database_throws_exception(
+        self, database: Database, exceptions
+    ) -> None:
+        """Test get existing plug-ins when database throws exception."""
+
+        def raise_exception(*args):
+            """Throw exception."""
+            raise exceptions
+
+        global mocked_pool_cur
+        mocked_pool_cur.execute.side_effect = raise_exception
+        database._database_blocked.value = False
+        result: Optional[List] = database.get_plugins()
+
+        assert result is None
+
+        mocked_pool_cur = MagicMock()
+
+    @patch(
+        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
+    )
     def test_sets_plugin_setting_when_database_is_unblocked(
         self, database: Database
     ) -> None:
@@ -550,6 +573,30 @@ class TestDatabase(object):
         assert not result
 
         reset_mocked_pool_cursor()
+
+    @patch(
+        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
+    )
+    @mark.parametrize(
+        "exceptions", [DatabaseError(), InterfaceError()],
+    )
+    def test_sets_plugin_settings_when_database_throws_exception(
+        self, database: Database, exceptions
+    ) -> None:
+        """Test sets plug-in settings when database throws exception."""
+
+        def raise_exception(*args):
+            """Throw exception."""
+            raise exceptions
+
+        global mocked_pool_cur
+        mocked_pool_cur.execute.side_effect = raise_exception
+        database._database_blocked.value = False
+        result: bool = database.set_plugin_setting("Eiskaltius", "M. böslich")
+
+        assert not result
+
+        mocked_pool_cur = MagicMock()
 
     @patch(
         "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
@@ -613,6 +660,31 @@ class TestDatabase(object):
 
         assert type(result) is list
         assert result[:] == expected[:]  # type: ignore
+        
+        
+    @patch(
+        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
+    )    
+    @mark.parametrize(
+        "exceptions", [DatabaseError(), InterfaceError()],
+    )
+    def test_gets_plugin_settings_when_database_throws_exception(
+        self, database: Database, exceptions
+    ) -> None:
+        """Test gets plugin settings when database throws exception."""
+
+        def raise_exception(*args):
+            """Throw exception."""
+            raise exceptions
+
+        global mocked_pool_cur
+        mocked_pool_cur.execute.side_effect = raise_exception
+        database._database_blocked.value = False
+        result: Optional[List[Any]] = database.get_plugin_setting()
+
+        assert result is None
+
+        reset_mocked_pool_cursor()
 
     @patch(
         "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
@@ -703,6 +775,8 @@ class TestDatabase(object):
         mocked_pool_cur.execute.assert_not_called()
 
         reset_mocked_pool_cursor()
+        
+
 
     def test_closes_database(self, database: Database) -> None:
         """Test closing of database."""
