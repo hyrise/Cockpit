@@ -52,6 +52,7 @@ def get_mocked_pool_cursor(*args) -> MagicMock:
 def reset_mocked_pool_cursor() -> None:
     """Reset mocked pool cursor."""
     global mocked_pool_cur
+
     mocked_pool_cur = MagicMock()
     mocked_pool_cur.fetchall.return_value = []
 
