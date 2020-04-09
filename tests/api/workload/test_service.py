@@ -1,6 +1,6 @@
 """Tests for the Workload controller."""
 
-from typing import List
+from typing import List, Type
 from unittest.mock import MagicMock
 
 from pytest import fixture, mark
@@ -18,9 +18,9 @@ class TestWorkloadService:
     """Tests for the Workload controller."""
 
     @fixture
-    def service(self) -> WorkloadService:
+    def service(self) -> Type[WorkloadService]:
         """Get a WorkloadService class without IPC."""
-        WorkloadService._send_message = MagicMock()
+        WorkloadService._send_message = MagicMock()  # type: ignore
         return WorkloadService
 
     @mark.parametrize("expected", [interfaces(), []])
@@ -30,9 +30,9 @@ class TestWorkloadService:
         """A Workload service gets all workloads."""
         response = get_response(200)
         response["body"]["workloads"] = expected
-        service._send_message.return_value = response
+        service._send_message.return_value = response  # type: ignore
         result = service.get_all()
-        service._send_message.assert_called_once_with(
+        service._send_message.assert_called_once_with(  # type: ignore
             Request(header=Header(message="get all workloads"), body={})
         )
         assert expected == WorkloadSchema(many=True).dump(result)
@@ -44,9 +44,9 @@ class TestWorkloadService:
         """A Workload service gets all workloads."""
         response = get_response(200)
         response["body"]["workload"] = interface
-        service._send_message.return_value = response
+        service._send_message.return_value = response  # type: ignore
         result = service.create(interface)
-        service._send_message.assert_called_once_with(
+        service._send_message.assert_called_once_with(  # type: ignore
             Request(header=Header(message="start workload"), body=dict(interface))
         )
         assert interface == WorkloadSchema().dump(result)
@@ -56,9 +56,9 @@ class TestWorkloadService:
         self, service: WorkloadService, interface: WorkloadInterface
     ):
         """A Workload service gets all workloads."""
-        service._send_message.return_value = get_response(409)
+        service._send_message.return_value = get_response(409)  # type: ignore
         result = service.create(interface)
-        service._send_message.assert_called_once_with(
+        service._send_message.assert_called_once_with(  # type: ignore
             Request(header=Header(message="start workload"), body=dict(interface))
         )
         assert {} == WorkloadSchema().dump(result)
@@ -70,9 +70,9 @@ class TestWorkloadService:
         """A Workload service gets all workloads."""
         response = get_response(200)
         response["body"]["workload"] = interface
-        service._send_message.return_value = response
+        service._send_message.return_value = response  # type: ignore
         result = service.get_by_id(interface["workload_id"])
-        service._send_message.assert_called_once_with(
+        service._send_message.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="get workload"),
                 body={"workload_id": interface["workload_id"]},
@@ -85,9 +85,9 @@ class TestWorkloadService:
         self, service: WorkloadService, interface: WorkloadInterface
     ):
         """A Workload service gets all workloads."""
-        service._send_message.return_value = get_response(404)
+        service._send_message.return_value = get_response(404)  # type: ignore
         result = service.get_by_id(interface["workload_id"])
-        service._send_message.assert_called_once_with(
+        service._send_message.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="get workload"),
                 body={"workload_id": interface["workload_id"]},
@@ -102,9 +102,9 @@ class TestWorkloadService:
         """A Workload service gets all workloads."""
         response = get_response(200)
         response["body"]["workload_id"] = interface["workload_id"]
-        service._send_message.return_value = response
+        service._send_message.return_value = response  # type: ignore
         result = service.delete_by_id(interface["workload_id"])
-        service._send_message.assert_called_once_with(
+        service._send_message.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="delete workload"),
                 body={"workload_id": interface["workload_id"]},
@@ -117,9 +117,9 @@ class TestWorkloadService:
         self, service: WorkloadService, interface: WorkloadInterface
     ):
         """A Workload service gets all workloads."""
-        service._send_message.return_value = get_response(404)
+        service._send_message.return_value = get_response(404)  # type: ignore
         result = service.delete_by_id(interface["workload_id"])
-        service._send_message.assert_called_once_with(
+        service._send_message.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="delete workload"),
                 body={"workload_id": interface["workload_id"]},
@@ -139,9 +139,9 @@ class TestWorkloadService:
         )
         response = get_response(200)
         response["body"]["workload"] = new_interface
-        service._send_message.return_value = response
+        service._send_message.return_value = response  # type: ignore
         result = service.update_by_id(interface["workload_id"], new_interface)
-        service._send_message.assert_called_once_with(
+        service._send_message.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="update workload"),
                 body={
@@ -162,9 +162,9 @@ class TestWorkloadService:
             folder_name=interface["folder_name"] + "F",
             frequency=interface["frequency"] + 1,
         )
-        service._send_message.return_value = get_response(404)
+        service._send_message.return_value = get_response(404)  # type: ignore
         result = service.update_by_id(interface["workload_id"], new_interface)
-        service._send_message.assert_called_once_with(
+        service._send_message.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="update workload"),
                 body={
