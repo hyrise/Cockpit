@@ -49,6 +49,15 @@ export function getDetailsSelectorWithID(
   );
 }
 
+export function assertDataRequest(url: string, range: number): void {
+  const startIndex = url.indexOf("=") + 1;
+  const endIndex = url.indexOf("=", startIndex) + 1;
+  const startTime = parseInt(url.substring(startIndex, url.indexOf("&")), 10);
+  const endTime = parseInt(url.substring(endIndex), 10);
+
+  expect(endTime - startTime).to.eq(range * Math.pow(10, 9));
+}
+
 export function assertLineChartData(
   chartDatasets: any[],
   requestData: any,
