@@ -190,43 +190,43 @@ class TestCursor:
 
         assert pool_cursor.pool == mocked_pool
         assert pool_cursor._connection == mocked_connection
-        assert pool_cursor._cur == mocked_cursor
+        assert pool_cursor.cur == mocked_cursor
 
     def test_executes(self, pool_cursor) -> None:
         """Test execute witch valid pool cursor and no exception."""
-        pool_cursor._cur = MagicMock()
-        pool_cursor._cur.execute.return_value = None
+        pool_cursor.cur = MagicMock()
+        pool_cursor.cur.execute.return_value = None
 
         pool_cursor.execute("query", None)
 
-        pool_cursor._cur.execute.assert_called_once_with("query", None)
+        pool_cursor.cur.execute.assert_called_once_with("query", None)
 
     def test_fetches_one(self, pool_cursor) -> None:
         """Test fetch one witch valid pool cursor and no exception."""
-        pool_cursor._cur = MagicMock()
-        pool_cursor._cur.fetchone.return_value = ("hallo",)
+        pool_cursor.cur = MagicMock()
+        pool_cursor.cur.fetchone.return_value = ("hallo",)
 
         results: Tuple[Any, ...] = pool_cursor.fetchone()
 
         assert results == ("hallo",)
-        pool_cursor._cur.fetchone.assert_called_once()
+        pool_cursor.cur.fetchone.assert_called_once()
 
     def test_fetches_all(self, pool_cursor) -> None:
         """Test fetch all witch valid pool cursor and no exception."""
-        pool_cursor._cur = MagicMock()
-        pool_cursor._cur.fetchall.return_value = [("hallo",), ("world",)]
+        pool_cursor.cur = MagicMock()
+        pool_cursor.cur.fetchall.return_value = [("hallo",), ("world",)]
 
         results: List[Tuple[Any, ...]] = pool_cursor.fetchall()
 
         assert results == [("hallo",), ("world",)]
-        pool_cursor._cur.fetchall.assert_called_once()
+        pool_cursor.cur.fetchall.assert_called_once()
 
     @patch("hyrisecockpit.database_manager.cursor.read_sql_query_pandas",)
     def test_reads_sql_query_pandas(
         self, mocked_read_sql_query_pandas, pool_cursor
     ) -> None:
         """Test read sql query witch valid pool cursor and no exception."""
-        pool_cursor._cur = MagicMock()
+        pool_cursor.cur = MagicMock()
         fake_df: DataFrame = DataFrame({"hallo": [1, 2]})
         moked_connection: MagicMock = MagicMock()
         pool_cursor._connection = moked_connection
