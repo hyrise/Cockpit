@@ -6,6 +6,7 @@ from zmq import REQ
 from zmq.decorators import socket
 
 from hyrisecockpit.message import response_schema
+from hyrisecockpit.plugins import available_plugins
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
@@ -14,7 +15,7 @@ from .interface import (
     DatabaseInterface,
     DetailedDatabaseInterface,
 )
-from .model import AvailableBenchmarkTables, DetailedDatabase
+from .model import AvailableBenchmarkTables, AvailablePlugins, DetailedDatabase
 
 url = "tcp://127.0.0.1:8004"
 
@@ -90,3 +91,8 @@ class ControlService:
             Request(header=Header(message="delete data"), body=dict(interface))
         )
         return response["header"]["status"]
+
+    @classmethod
+    def available_plugins(cls) -> AvailablePlugins:
+        """Return available plug-ins."""
+        return AvailablePlugins(available_plugins=available_plugins)

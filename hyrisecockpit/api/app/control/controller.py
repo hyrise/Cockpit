@@ -6,9 +6,10 @@ from flask.wrappers import Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 
-from .model import AvailableBenchmarkTables, DetailedDatabase
+from .model import AvailableBenchmarkTables, AvailablePlugins, DetailedDatabase
 from .schema import (
     AvailableBenchmarkTablesSchema,
+    AvailablePluginSchema,
     BenchmarkTablesSchema,
     DatabaseSchmea,
     DetailedDatabaseSchema,
@@ -65,3 +66,13 @@ class Data(Resource):
         """Delete benchmark tables."""
         status_code = ControlService.delete_benchmark_tables(request.parsed_obj)
         return Response(status=status_code)
+
+
+@api.route("/available_plugins")
+class ActivatedPlugin(Resource):
+    """Return available Plug-ins."""
+
+    @responds(schema=AvailablePluginSchema, api=api)
+    def get(self) -> AvailablePlugins:
+        """Get all available plug-ins."""
+        return ControlService.available_plugins()
