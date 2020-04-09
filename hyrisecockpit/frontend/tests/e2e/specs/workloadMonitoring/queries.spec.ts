@@ -96,6 +96,7 @@ describe("visiting workload monitoring page", () => {
           .eq(idx * 3)
           .click({ force: true })
           .type(data[idx].query_information[index].query_number);
+        cy.wait(500);
 
         cy.get(getSelector("queryTable"))
           .eq(idx)
