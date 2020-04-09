@@ -75,6 +75,8 @@ export function checkMultipleMetrics(metric: string): string {
   return metric;
 }
 
+//function testItemVisibility(select: string): void{ }
+
 export function assertItemSelect(
   component: "database" | "metric",
   selected: boolean
@@ -83,11 +85,15 @@ export function assertItemSelect(
     cy.get(getSelector("selectDatabase")).should("not.be.visible", {
       force: true
     });
-    cy.get(getSelector("unselectDatabase")).should("be.visible", {
-      force: true
-    });
+    cy.get(getSelector("unselectDatabase"))
+      .scrollIntoView()
+      .should("be.visible", {
+        force: true
+      });
   } else if (component === "database" && !selected) {
-    cy.get(getSelector("selectDatabase")).should("be.visible", { force: true });
+    cy.get(getSelector("selectDatabase"))
+      .scrollIntoView()
+      .should("be.visible", { force: true });
     cy.get(getSelector("unselectDatabase")).should("not.be.visible", {
       force: true
     });
@@ -95,9 +101,13 @@ export function assertItemSelect(
     cy.get(getSelector("selectMetric")).should("not.be.visible", {
       force: true
     });
-    cy.get(getSelector("unselectMetric")).should("be.visible", { force: true });
+    cy.get(getSelector("unselectMetric"))
+      .scrollIntoView()
+      .should("be.visible", { force: true });
   } else if (component === "metric" && !selected) {
-    cy.get(getSelector("selectMetric")).should("be.visible", { force: true });
+    cy.get(getSelector("selectMetric"))
+      .scrollIntoView()
+      .should("be.visible", { force: true });
     cy.get(getSelector("unselectMetric")).should("not.be.visible", {
       force: true
     });
