@@ -57,7 +57,7 @@ class DetailedDatabaseSchema(DatabaseSchmea):
 
 
 class AvailableBenchmarkTablesSchema(Schema):
-    """Schema of Data."""
+    """Schema of available benchmark tables."""
 
     folder_names = List(
         String(
@@ -66,4 +66,15 @@ class AvailableBenchmarkTablesSchema(Schema):
             required=True,
             example="tpch_0.1",
         )
+    )
+
+
+class BenchmarkTablesSchema(Schema):
+    """Schema of loading benchmark tables."""
+
+    folder_name = String(
+        title="Folder name",
+        description="Name of the folder that includes all benchmark tables.",
+        required=True,
+        example="tpch_0.1",
     )

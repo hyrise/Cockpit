@@ -2,13 +2,13 @@
 from typing import TypedDict
 
 
-class DatabaseInterface(TypedDict, total=False):
+class DatabaseInterface(TypedDict):
     """Interface of a Database."""
 
     id: str
 
 
-class DetailedDatabaseInterface(TypedDict, total=False):
+class DetailedDatabaseInterface(TypedDict):
     """Interface of a detailed database."""
 
     id: str
@@ -18,3 +18,9 @@ class DetailedDatabaseInterface(TypedDict, total=False):
     dbname: str
     user: str
     password: str
+
+
+class BenchmarkTablesInterface(TypedDict):
+    """Interface of benchmark tables to load."""
+
+    folder_name: str

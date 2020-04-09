@@ -9,8 +9,12 @@ from hyrisecockpit.message import response_schema
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
-from .interface import DatabaseInterface, DetailedDatabaseInterface
-from .model import DetailedDatabase
+from .interface import (
+    BenchmarkTablesInterface,
+    DatabaseInterface,
+    DetailedDatabaseInterface,
+)
+from .model import AvailableBenchmarkTables, DetailedDatabase
 
 url = "tcp://127.0.0.1:8004"
 
@@ -25,6 +29,7 @@ class ControlService:
         socket.send_json(message)
         response: Response = socket.recv_json()
         socket.disconnect(url)
+        socket.close()
         return response
 
     @staticmethod
@@ -64,6 +69,24 @@ class ControlService:
         return response["header"]["status"]
 
     @classmethod
-    def get_available_benchmark_tables(cls) -> List[str]:
+    def get_available_benchmark_tables(cls) -> AvailableBenchmarkTables:
         """Return all available benchmarks."""
-        return ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
+        return AvailableBenchmarkTables(
+            folder_names=["tpch_0.1", "tpch_1", "tpcds_1", "job"]
+        )
+
+    @classmethod
+    def load_benchmark_tables(cls, interface: BenchmarkTablesInterface) -> int:
+        """Load tables to database."""
+        response = cls._send_message(
+            Request(header=Header(message="load data"), body=dict(interface))
+        )
+        return response["header"]["status"]
+
+    @classmethod
+    def delete_benchmark_tables(cls, interface: BenchmarkTablesInterface) -> int:
+        """Delete tables to database."""
+        response = cls._send_message(
+            Request(header=Header(message="delete data"), body=dict(interface))
+        )
+        return response["header"]["status"]

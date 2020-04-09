@@ -1,4 +1,6 @@
 """Model of a Workload."""
+from typing import List
+
 from .interface import DetailedDatabaseInterface
 
 
@@ -43,3 +45,11 @@ class DetailedDatabase:
         for key, value in interface.items():
             setattr(self, key, value)
         return self
+
+
+class AvailableBenchmarkTables:
+    """Model for available benchmark tables."""
+
+    def __init__(self, folder_names: List[str]):
+        """Initialize a available benchmark tables model."""
+        self.folder_names: List[str] = folder_names
