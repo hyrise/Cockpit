@@ -1,4 +1,4 @@
-"""Model of a Workload."""
+"""Models of Database name-space."""
 from typing import List
 
 from .interface import DetailedDatabaseInterface
@@ -53,11 +53,3 @@ class AvailableBenchmarkTables:
     def __init__(self, folder_names: List[str]):
         """Initialize a available benchmark tables model."""
         self.folder_names: List[str] = folder_names
-
-
-class AvailablePlugins:
-    """Model for available plug-ins."""
-
-    def __init__(self, available_plugins: List[str]):
-        """Initialize a available plug-ins model."""
-        self.plugins: List[str] = available_plugins

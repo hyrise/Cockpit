@@ -6,20 +6,19 @@ from flask.wrappers import Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 
-from .model import AvailableBenchmarkTables, AvailablePlugins, DetailedDatabase
+from .model import AvailableBenchmarkTables, DetailedDatabase
 from .schema import (
     AvailableBenchmarkTablesSchema,
-    AvailablePluginSchema,
     BenchmarkTablesSchema,
     DatabaseSchmea,
     DetailedDatabaseSchema,
 )
-from .service import ControlService
+from .service import DatabaseService
 
-api = Namespace("Control", description="Control multiple databases at once.")
+api = Namespace("Database", description="Control multiple databases at once.")
 
 
-@api.route("/database")
+@api.route("/")
 class Databases(Resource):
     """Controller for access and register databases."""
 
@@ -31,18 +30,18 @@ class Databases(Resource):
     )
     def get(self) -> List[DetailedDatabase]:
         """Get all Workloads."""
-        return ControlService.get_databases()
+        return DatabaseService.get_databases()
 
     @accepts(schema=DetailedDatabaseSchema, api=api)
     def post(self) -> Response:
         """Register new database."""
-        status_code = ControlService.register_database(request.parsed_obj)
+        status_code = DatabaseService.register_database(request.parsed_obj)
         return Response(status=status_code)
 
     @accepts(schema=DatabaseSchmea, api=api)
     def delete(self) -> Response:
         """De-register database."""
-        status_code = ControlService.deregister_database(request.parsed_obj)
+        status_code = DatabaseService.deregister_database(request.parsed_obj)
         return Response(status=status_code)
 
 
@@ -53,26 +52,16 @@ class Data(Resource):
     @responds(schema=AvailableBenchmarkTablesSchema, api=api)
     def get(self) -> AvailableBenchmarkTables:
         """Return all pre-generated tables that can be loaded."""
-        return ControlService.get_available_benchmark_tables()
+        return DatabaseService.get_available_benchmark_tables()
 
     @accepts(schema=BenchmarkTablesSchema, api=api)
     def post(self) -> Response:
         """Load benchmark tables."""
-        status_code = ControlService.load_benchmark_tables(request.parsed_obj)
+        status_code = DatabaseService.load_benchmark_tables(request.parsed_obj)
         return Response(status=status_code)
 
     @accepts(schema=BenchmarkTablesSchema, api=api)
     def delete(self) -> Response:
         """Delete benchmark tables."""
-        status_code = ControlService.delete_benchmark_tables(request.parsed_obj)
+        status_code = DatabaseService.delete_benchmark_tables(request.parsed_obj)
         return Response(status=status_code)
-
-
-@api.route("/available_plugins")
-class ActivatedPlugin(Resource):
-    """Return available Plug-ins."""
-
-    @responds(schema=AvailablePluginSchema, api=api)
-    def get(self) -> AvailablePlugins:
-        """Get all available plug-ins."""
-        return ControlService.available_plugins()

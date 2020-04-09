@@ -1,4 +1,4 @@
-"""Services used by the control controller."""
+"""Services used by the database controller."""
 from typing import List
 
 from jsonschema import validate
@@ -6,7 +6,6 @@ from zmq import REQ
 from zmq.decorators import socket
 
 from hyrisecockpit.message import response_schema
-from hyrisecockpit.plugins import available_plugins
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
@@ -15,12 +14,12 @@ from .interface import (
     DatabaseInterface,
     DetailedDatabaseInterface,
 )
-from .model import AvailableBenchmarkTables, AvailablePlugins, DetailedDatabase
+from .model import AvailableBenchmarkTables, DetailedDatabase
 
 url = "tcp://127.0.0.1:8004"
 
 
-class ControlService:
+class DatabaseService:
     """Services of the Control Controller."""
 
     @staticmethod
@@ -36,7 +35,7 @@ class ControlService:
     @staticmethod
     def _send_message(message: Request) -> Response:
         """Send an IPC message with data to a database interface, return the repsonse."""
-        response = ControlService.__send_req(message)
+        response = DatabaseService.__send_req(message)
         validate(instance=response, schema=response_schema)
         return response
 
@@ -91,8 +90,3 @@ class ControlService:
             Request(header=Header(message="delete data"), body=dict(interface))
         )
         return response["header"]["status"]
-
-    @classmethod
-    def available_plugins(cls) -> AvailablePlugins:
-        """Return available plug-ins."""
-        return AvailablePlugins(available_plugins=available_plugins)

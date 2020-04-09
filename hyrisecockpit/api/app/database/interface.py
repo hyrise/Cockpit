@@ -1,4 +1,4 @@
-"""Interface of control name-space."""
+"""Interface of Database name-space."""
 from typing import TypedDict
 
 

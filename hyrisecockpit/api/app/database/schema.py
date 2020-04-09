@@ -1,4 +1,4 @@
-"""Schema for control name-space."""
+"""Schema for database name-space."""
 
 from marshmallow import Schema
 from marshmallow.fields import Integer, List, String
@@ -77,17 +77,4 @@ class BenchmarkTablesSchema(Schema):
         description="Name of the folder that includes all benchmark tables.",
         required=True,
         example="tpch_0.1",
-    )
-
-
-class AvailablePluginSchema(Schema):
-    """Schema of available plug-ins."""
-
-    plugins = List(
-        String(
-            title="Plugin name",
-            description="Used to identify a plugin.",
-            required=True,
-            example="Clustering",
-        )
     )
