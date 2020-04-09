@@ -10,5 +10,5 @@
     "videoUploadOnPasses": false,
     "videosFolder": "tests/e2e/videos",
     "viewportWidth": 2000,
-    "viewportHeight": 1320
+    "viewportHeight": 1400
 }
