@@ -89,6 +89,7 @@ class DatabaseManager(object):
                 set_plugin_request_schema,
             ),
             "get plugin setting": (self._call_get_plugin_setting, None),
+            "execute sql query": (self._call_execute_sql_query, None),
         }
 
     def _call_add_database(self, body: Body) -> Response:
@@ -265,6 +266,16 @@ class DatabaseManager(object):
             if not database.close_worker():
                 return get_response(400)
         return get_response(200)
+
+    def _call_execute_sql_query(self, body: Body) -> Response:
+        database_id: str = body["id"]
+        query: str = body["query"]
+        if database_id not in self._databases.keys():
+            return get_response(404)
+        results = self._databases[database_id].execute_sql_query(query)
+        response = get_response(200)
+        response["body"]["results"] = results
+        return response
 
     def start(self) -> None:
         """Start the manager by starting the server."""
