@@ -90,3 +90,19 @@ class DatabaseService:
             Request(header=Header(message="delete data"), body=dict(interface))
         )
         return response["header"]["status"]
+
+    @classmethod
+    def start_worker_pool(cls) -> int:
+        """Start worker pool."""
+        response = cls._send_message(
+            Request(header=Header(message="start worker"), body={})
+        )
+        return response["header"]["status"]
+
+    @classmethod
+    def close_worker_pool(cls) -> int:
+        """Close worker pool."""
+        response = cls._send_message(
+            Request(header=Header(message="close worker"), body={})
+        )
+        return response["header"]["status"]

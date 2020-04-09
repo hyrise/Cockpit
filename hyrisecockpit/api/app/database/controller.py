@@ -45,8 +45,8 @@ class Databases(Resource):
         return Response(status=status_code)
 
 
-@api.route("/data")
-class Data(Resource):
+@api.route("/benchmark_tables")
+class BenchmarkTables(Resource):
     """Manage data in databases."""
 
     @responds(schema=AvailableBenchmarkTablesSchema, api=api)
@@ -64,4 +64,19 @@ class Data(Resource):
     def delete(self) -> Response:
         """Delete benchmark tables."""
         status_code = DatabaseService.delete_benchmark_tables(request.parsed_obj)
+        return Response(status=status_code)
+
+
+@api.route("/worker")
+class Worker(Resource):
+    """Manage start and stop of worker pool at all databases."""
+
+    def post(self) -> Response:
+        """Start worker pool for all databases."""
+        status_code = DatabaseService.start_worker_pool()
+        return Response(status=status_code)
+
+    def delete(self) -> Response:
+        """Start worker pool for all databases."""
+        status_code = DatabaseService.close_worker_pool()
         return Response(status=status_code)
