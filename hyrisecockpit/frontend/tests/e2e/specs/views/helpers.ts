@@ -80,16 +80,26 @@ export function assertItemSelect(
   selected: boolean
 ): void {
   if (component === "database" && selected) {
-    cy.get(getSelector("selectDatabase")).should("not.be.visible");
-    cy.get(getSelector("unselectDatabase")).should("be.visible");
+    cy.get(getSelector("selectDatabase")).should("not.be.visible", {
+      force: true
+    });
+    cy.get(getSelector("unselectDatabase")).should("be.visible", {
+      force: true
+    });
   } else if (component === "database" && !selected) {
-    cy.get(getSelector("selectDatabase")).should("be.visible");
-    cy.get(getSelector("unselectDatabase")).should("not.be.visible");
+    cy.get(getSelector("selectDatabase")).should("be.visible", { force: true });
+    cy.get(getSelector("unselectDatabase")).should("not.be.visible", {
+      force: true
+    });
   } else if (component === "metric" && selected) {
-    cy.get(getSelector("selectMetric")).should("not.be.visible");
-    cy.get(getSelector("unselectMetric")).should("be.visible");
+    cy.get(getSelector("selectMetric")).should("not.be.visible", {
+      force: true
+    });
+    cy.get(getSelector("unselectMetric")).should("be.visible", { force: true });
   } else if (component === "metric" && !selected) {
-    cy.get(getSelector("selectMetric")).should("be.visible");
-    cy.get(getSelector("unselectMetric")).should("not.be.visible");
+    cy.get(getSelector("selectMetric")).should("be.visible", { force: true });
+    cy.get(getSelector("unselectMetric")).should("not.be.visible", {
+      force: true
+    });
   }
 }
