@@ -1,5 +1,11 @@
 import { testRedirection } from "../abstractTests";
-import { getRoute, getSelector, getMetrics, assertItemSelect } from "./helpers";
+import {
+  getRoute,
+  getSelector,
+  getMetrics,
+  assertItemSelect,
+  checkMultipleMetrics
+} from "./helpers";
 import { useBackendMock } from "../../setup/backendMock";
 import { clickElement } from "../helpers";
 import { getSelector as getDatabaseSelector } from "../databases/helpers";
@@ -279,9 +285,12 @@ describe("visiting the comparison page", () => {
     clickElement(getSelector("selectionListButton"));
     cy.get(getSelector("comparisonPage")).within(() => {
       databases.forEach((database: any) => {
-        cy.get(getMetricSelector(metrics[metricIndex], database.id)).should(
-          "not.be.visible"
-        );
+        cy.get(
+          getMetricSelector(
+            checkMultipleMetrics(metrics[metricIndex]),
+            database.id
+          )
+        ).should("not.be.visible");
       });
     });
 
@@ -296,9 +305,12 @@ describe("visiting the comparison page", () => {
     clickElement(getSelector("selectionListButton"));
     cy.get(getSelector("comparisonPage")).within(() => {
       databases.forEach((database: any) => {
-        cy.get(getMetricSelector(metrics[metricIndex], database.id)).should(
-          "be.visible"
-        );
+        cy.get(
+          getMetricSelector(
+            checkMultipleMetrics(metrics[metricIndex]),
+            database.id
+          )
+        ).should("be.visible");
       });
     });
   });

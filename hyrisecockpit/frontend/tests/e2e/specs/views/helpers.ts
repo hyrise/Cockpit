@@ -69,6 +69,12 @@ export function getMetrics(component: string): string[] {
   return metrics[component];
 }
 
+export function checkMultipleMetrics(metric: string): string {
+  if (metric === "storage") return "secondStorage";
+  if (metric === "access") return "secondAccess";
+  return metric;
+}
+
 export function assertItemSelect(
   component: "database" | "metric",
   selected: boolean
