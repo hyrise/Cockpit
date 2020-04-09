@@ -1,7 +1,6 @@
-import { testRedirection } from "../abstractTests";
 import { useBackendMock } from "../../setup/backendMock";
 import { generateRandomInt } from "../../setup/helpers";
-import { getSelector as getViewSelector, getRoute } from "../views/helpers";
+import { getRoute } from "../views/helpers";
 import { getSelector, assertQueryData } from "./helpers";
 
 const backend = useBackendMock();
@@ -15,10 +14,7 @@ describe("visiting workload monitoring page", () => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
     });
-    testRedirection(
-      getViewSelector("workloadMonitoringButton"),
-      getRoute("workloadMonitoring")
-    );
+    cy.visit(getRoute("workloadMonitoring"));
     cy.setupData("detailed_query_information").then((xhr: any) => {
       data = [];
       xhr.response.body.forEach((database: any) => {

@@ -1,6 +1,5 @@
 import { useBackendMock } from "../../setup/backendMock";
-import { getSelector as getViewSelector, getRoute } from "../views/helpers";
-import { testRedirection } from "../abstractTests";
+import { getRoute } from "../views/helpers";
 import {
   getSelector,
   getSelectorWithID,
@@ -21,7 +20,7 @@ describe("visiting the overview page", () => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
     });
-    testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
+    cy.visit(getRoute("overview"));
     cy.setupData("latency").then((xhr: any) => {
       data = {};
       xhr.response.body.forEach((entry: any) => {
@@ -68,10 +67,7 @@ describe("visiting the comparison page", () => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
     });
-    testRedirection(
-      getViewSelector("comparisonButton"),
-      getRoute("comparison")
-    );
+    cy.visit(getRoute("comparison"));
     cy.setupData("latency").then((xhr: any) => {
       data = {};
       xhr.response.body.forEach((entry: any) => {

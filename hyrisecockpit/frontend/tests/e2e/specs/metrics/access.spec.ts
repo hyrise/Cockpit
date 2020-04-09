@@ -1,7 +1,6 @@
 import { useBackendMock } from "../../setup/backendMock";
 import { generateRandomInt } from "../../setup/helpers";
-import { getSelector as getViewSelector, getRoute } from "../views/helpers";
-import { testRedirection } from "../abstractTests";
+import { getRoute } from "../views/helpers";
 import {
   getSelector,
   getSelectorWithID,
@@ -23,7 +22,7 @@ describe("visiting the overview page", () => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
     });
-    testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
+    cy.visit(getRoute("overview"));
     waitForChartRender();
   });
 
@@ -48,10 +47,7 @@ describe("visiting the comparison page", () => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
     });
-    testRedirection(
-      getViewSelector("comparisonButton"),
-      getRoute("comparison")
-    );
+    cy.visit(getRoute("comparison"));
     cy.setupData("chunks").then((xhr: any) => {
       data = xhr.response.body.body.chunks_data;
     });

@@ -1,4 +1,3 @@
-import { testRedirection } from "../abstractTests";
 import {
   getRoute,
   getSelector,
@@ -23,10 +22,7 @@ describe("visiting the workload monitoring page", () => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
     });
-    testRedirection(
-      getSelector("workloadMonitoringButton"),
-      getRoute("workloadMonitoring")
-    );
+    cy.visit(getRoute("workloadMonitoring"));
     clickElement(getSelector("selectionListButton"));
   });
 
@@ -120,7 +116,7 @@ describe("visiting the overview page", () => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
     });
-    testRedirection(getSelector("overviewButton"), getRoute("overview"));
+    cy.visit(getRoute("overview"));
     clickElement(getSelector("selectionListButton"));
   });
 
@@ -214,7 +210,7 @@ describe("visiting the comparison page", () => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
     });
-    testRedirection(getSelector("comparisonButton"), getRoute("comparison"));
+    cy.visit(getRoute("comparison"));
     clickElement(getSelector("selectionListButton"));
   });
 

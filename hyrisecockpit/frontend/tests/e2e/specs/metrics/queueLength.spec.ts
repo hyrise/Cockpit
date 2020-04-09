@@ -1,7 +1,5 @@
 import { useBackendMock } from "../../setup/backendMock";
-import { getGetAlias } from "../../setup/helpers";
-import { getSelector as getViewSelector, getRoute } from "../views/helpers";
-import { testRedirection } from "../abstractTests";
+import { getRoute } from "../views/helpers";
 import {
   getSelector,
   getSelectorWithID,
@@ -22,7 +20,7 @@ describe("visiting the overview page", () => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
     });
-    testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
+    cy.visit(getRoute("overview"));
     cy.setupData("queue_length").then((xhr: any) => {
       data = assignToObject(xhr.response.body, "queue_length");
     });
@@ -66,10 +64,7 @@ describe("visiting the comparison page", () => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
     });
-    testRedirection(
-      getViewSelector("comparisonButton"),
-      getRoute("comparison")
-    );
+    cy.visit(getRoute("comparison"));
     cy.setupData("queue_length").then((xhr: any) => {
       data = assignToObject(xhr.response.body, "queue_length");
     });

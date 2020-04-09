@@ -1,10 +1,10 @@
-import { getSelectorByConfig } from "../helpers";
+import { getSelectorByConfig, clickElement } from "../helpers";
 
 const routes: Record<string, string> = {
-  home: "/",
-  overview: "databases/overview",
-  comparison: "databases/compare",
-  workloadMonitoring: "workload"
+  home: "/#/",
+  overview: "/#/databases/overview",
+  comparison: "/#/databases/compare",
+  workloadMonitoring: "/#/workload"
 };
 
 const selectors: Record<string, string> = {
@@ -67,6 +67,11 @@ export function getRoute(component: string): string {
 
 export function getMetrics(component: string): string[] {
   return metrics[component];
+}
+
+export function testRedirection(selector: string, newRoute: string): void {
+  clickElement(selector);
+  cy.url().should("contain", newRoute);
 }
 
 export function checkMultipleMetrics(metric: string): string {

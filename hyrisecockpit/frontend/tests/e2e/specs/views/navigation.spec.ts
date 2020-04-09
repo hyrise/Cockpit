@@ -1,5 +1,5 @@
-import { testRedirection, testElementTrigger } from "../abstractTests";
-import { getRoute, getSelector } from "./helpers";
+import { testElementTrigger } from "../abstractTests";
+import { getRoute, getSelector, testRedirection } from "./helpers";
 
 describe("Change page routes", () => {
   beforeEach(() => {

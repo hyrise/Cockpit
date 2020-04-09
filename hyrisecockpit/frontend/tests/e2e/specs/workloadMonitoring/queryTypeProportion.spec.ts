@@ -1,6 +1,5 @@
 import { useBackendMock } from "../../setup/backendMock";
-import { getSelector as getViewSelector, getRoute } from "../views/helpers";
-import { testRedirection } from "../abstractTests";
+import { getRoute } from "../views/helpers";
 import { getSelector } from "./helpers";
 import {
   assertBarChartData,
@@ -19,10 +18,7 @@ describe("visiting the workload monitoring page", () => {
     cy.setupAppState(backend).then((xhr: any) => {
       database = xhr.response.body[0];
     });
-    testRedirection(
-      getViewSelector("workloadMonitoringButton"),
-      getRoute("workloadMonitoring")
-    );
+    cy.visit(getRoute("workloadMonitoring"));
     cy.setupData("krueger_data").then((xhr: any) => {
       data = {};
       xhr.response.body.forEach((database: any) => {

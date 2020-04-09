@@ -1,7 +1,6 @@
 import { useBackendMock } from "../../setup/backendMock";
 import { getGetAlias } from "../../setup/helpers";
-import { getSelector as getViewSelector, getRoute } from "../views/helpers";
-import { testRedirection } from "../abstractTests";
+import { getRoute } from "../views/helpers";
 import { assertDataRequest } from "./helpers";
 import { waitForChartRender } from "../helpers";
 
@@ -19,10 +18,7 @@ describe("requesting cpu and ram data", () => {
   // test on comparison
   describe("visiting comparison page", () => {
     it("will request the corect time range", () => {
-      testRedirection(
-        getViewSelector("comparisonButton"),
-        getRoute("comparison")
-      );
+      cy.visit(getRoute("comparison"));
       // test historic data
       cy.wait("@" + getGetAlias("system"));
       cy.get("@" + getGetAlias("system")).then((xhr: any) => {
@@ -48,7 +44,7 @@ describe("requesting cpu and ram data", () => {
   // test on overview
   describe("visiting overview page", () => {
     it("will request the corect time range", () => {
-      testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
+      cy.visit(getRoute("overview"));
       // test historic data
       cy.wait("@" + getGetAlias("system"));
       cy.get("@" + getGetAlias("system")).then((xhr: any) => {
@@ -82,10 +78,7 @@ describe("requesting throughput data", () => {
   // test on comparison
   describe("visiting comparison page", () => {
     it("will request the corect time range", () => {
-      testRedirection(
-        getViewSelector("comparisonButton"),
-        getRoute("comparison")
-      );
+      cy.visit(getRoute("comparison"));
       // test historic data
       cy.wait("@" + getGetAlias("throughput"));
       cy.get("@" + getGetAlias("throughput")).then((xhr: any) => {
@@ -103,7 +96,7 @@ describe("requesting throughput data", () => {
   // test on overview
   describe("visiting overview page", () => {
     it("will request the corect time range", () => {
-      testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
+      cy.visit(getRoute("overview"));
       // test historic data
       cy.wait("@" + getGetAlias("throughput"));
       cy.get("@" + getGetAlias("throughput")).then((xhr: any) => {
@@ -129,10 +122,7 @@ describe("requesting latency data", () => {
   // test on comparison
   describe("visiting comparison page", () => {
     it("will request the corect time range", () => {
-      testRedirection(
-        getViewSelector("comparisonButton"),
-        getRoute("comparison")
-      );
+      cy.visit(getRoute("comparison"));
       // test historic data
       cy.wait("@" + getGetAlias("latency"));
       cy.get("@" + getGetAlias("latency")).then((xhr: any) => {
@@ -150,7 +140,7 @@ describe("requesting latency data", () => {
   // test on overview
   describe("visiting overview page", () => {
     it("will request the corect time range", () => {
-      testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
+      cy.visit(getRoute("overview"));
       // test historic data
       cy.wait("@" + getGetAlias("latency"));
       cy.get("@" + getGetAlias("latency")).then((xhr: any) => {
@@ -176,10 +166,7 @@ describe("requesting queue length data", () => {
   // test on comparison
   describe("visiting comparison page", () => {
     it("will request the corect time range", () => {
-      testRedirection(
-        getViewSelector("comparisonButton"),
-        getRoute("comparison")
-      );
+      cy.visit(getRoute("comparison"));
       // test historic data
       cy.wait("@" + getGetAlias("queue_length"));
       cy.get("@" + getGetAlias("queue_length")).then((xhr: any) => {
@@ -197,7 +184,7 @@ describe("requesting queue length data", () => {
   // test on overview
   describe("visiting overview page", () => {
     it("will request the corect time range", () => {
-      testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
+      cy.visit(getRoute("overview"));
       // test historic data
       cy.wait("@" + getGetAlias("queue_length"));
       cy.get("@" + getGetAlias("queue_length")).then((xhr: any) => {

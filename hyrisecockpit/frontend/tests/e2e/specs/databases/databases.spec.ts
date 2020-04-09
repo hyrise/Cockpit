@@ -10,7 +10,6 @@ import {
   testElementExistence,
   testElementVisibility,
   testElementNoVisibility,
-  testRedirection,
   testMaxDecimalDigits
 } from "../abstractTests";
 
@@ -23,7 +22,7 @@ let databasesSystemData: any[];
 let databasesStorageData: any[];
 
 describe("when observing the database data and details", () => {
-  before(() => {
+  beforeEach(() => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
       cy.setupData("system").then((xhr: any) => {
@@ -35,7 +34,7 @@ describe("when observing the database data and details", () => {
         });
       });
     });
-    testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
+    cy.visit(getRoute("overview"));
   });
 
   // test panel opening
@@ -135,7 +134,7 @@ describe("when observing the database data and details", () => {
             });
         });
       });
-      testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
+      cy.visit(getRoute("overview"));
       clickElement(getViewSelector("databaseListButton"));
       cy.get(getViewSelector("databaseList")).within(() => {
         databases.forEach((database: any, idx: number) => {
@@ -165,7 +164,7 @@ describe("when observing the database data and details", () => {
         cy.get(getSelector("databaseChip")).should("not.exist");
       });
 
-      testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
+      cy.visit(getRoute("overview"));
       cy.get(getSelector("databaseSystemDetails")).should("not.exist");
     });
   });
