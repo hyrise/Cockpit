@@ -75,42 +75,38 @@ export function useBackendMock(
       getMockedResponse("database")
     );
     mock(
-      "**/monitor/system",
+      "**/monitor/system**",
       getGetAlias("system"),
-      getMockedResponse("system"),
-      true
+      getMockedResponse("system")
     );
     mock(
-      "**/monitor/storage",
+      "**/monitor/storage**",
       getGetAlias("storage"),
       getMockedResponse("storage"),
       true
     );
     mock(
-      "**/monitor/throughput",
+      "**/monitor/throughput**",
       getGetAlias("throughput"),
-      getMockedResponse("throughput"),
-      true
+      getMockedResponse("throughput")
     );
     mock(
-      "**/monitor/latency",
+      "**/monitor/latency**",
       getGetAlias("latency"),
-      getMockedResponse("latency"),
-      true
+      getMockedResponse("latency")
     );
     mock(
-      "**/monitor/queue_length",
+      "**/monitor/queue_length**",
       getGetAlias("queue_length"),
-      getMockedResponse("queue_length"),
-      true
+      getMockedResponse("queue_length")
     );
     mock(
-      "**/monitor/krueger_data",
+      "**/monitor/krueger_data**",
       getGetAlias("krueger_data"),
       getMockedResponse("krueger_data")
     );
     mock(
-      "**/monitor/chunks",
+      "**/monitor/chunks**",
       getGetAlias("chunks"),
       getMockedResponse("chunks"),
       true

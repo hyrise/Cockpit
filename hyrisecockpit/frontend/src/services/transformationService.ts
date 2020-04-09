@@ -89,20 +89,22 @@ function getQueryTypeProportionData(data: any, type: string): any {
   ];
 }
 
-function getCPUData(data: any, primaryKey: string = ""): number {
-  return data[primaryKey].cpu.cpu_process_usage;
+function getCPUData(data: any, primaryKey: string = ""): number[] {
+  return data.map((entry: any) => entry[primaryKey].cpu.cpu_process_usage);
 }
 
-function getRAMData(data: any, primaryKey: string = ""): number {
-  return data[primaryKey].memory.percent;
+function getRAMData(data: any, primaryKey: string = ""): number[] {
+  return data.map((entry: any) => entry[primaryKey].memory.percent);
 }
 
-function getReadOnlyData(data: any, primaryKey: string = ""): number {
-  return data[primaryKey];
+function getReadOnlyData(data: any, primaryKey: string = ""): number[] {
+  return data.map((entry: any) => entry[primaryKey]);
 }
 
-function getLatencyData(data: any, primaryKey: string = ""): number {
-  return roundNumber(getReadOnlyData(data, primaryKey), Math.pow(10, 6));
+function getLatencyData(data: any, primaryKey: string = ""): number[] {
+  return getReadOnlyData(data, primaryKey).map((data: number) =>
+    roundNumber(data, Math.pow(10, 6))
+  );
 }
 
 function getStorageData(data: any, primaryKey: string = ""): StorageData {
@@ -293,7 +295,7 @@ export function useDataTransformationHelpers(): {
   }
   function getDatabaseMainMemoryCapacity(data: any): number {
     return roundNumber(
-      data.memory.total,
+      data?.memory?.total ?? 0,
       Math.pow(10, 3),
       1 / Math.pow(10, 6),
       false

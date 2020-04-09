@@ -31,18 +31,14 @@ describe("Show cpu", () => {
       cy.wait("@" + getGetAlias("system"));
       cy.get("@" + getGetAlias("system")).should((xhr: any) => {
         data = {};
-        Object.entries(Object.values(xhr.response.body.body)[0] as any).forEach(
-          ([database, value]: [any, any]) => {
-            const entry: any = {};
-            entry[database] = value.cpu.cpu_process_usage;
-            data = { ...data, ...entry };
-          }
-        );
+        xhr.response.body.forEach((entry: any) => {
+          data[entry.id] =
+            entry.system_data[0].system_data.cpu.cpu_process_usage;
+        });
       });
     });
     describe("observing the chart data", () => {
       it("will show the correct metric data", () => {
-        cy.wait(1000); // wait for data
         cy.get(getSelector("cpu")).should((elements: any) => {
           assertLineChartData(
             elements[0].data,
@@ -54,7 +50,6 @@ describe("Show cpu", () => {
     });
     describe("observing the metric details", () => {
       it("will not show metric details", () => {
-        cy.wait(1000); // wait for data
         databases.forEach((database: any) => {
           cy.get(getDetailsSelectorWithID("cpu", database.id)).should(
             "not.exist"
@@ -84,18 +79,14 @@ describe("Show cpu", () => {
       cy.wait("@" + getGetAlias("system"));
       cy.get("@" + getGetAlias("system")).should((xhr: any) => {
         data = {};
-        Object.entries(Object.values(xhr.response.body.body)[0] as any).forEach(
-          ([database, value]: [any, any]) => {
-            const entry: any = {};
-            entry[database] = value.cpu.cpu_process_usage;
-            data = { ...data, ...entry };
-          }
-        );
+        xhr.response.body.forEach((entry: any) => {
+          data[entry.id] =
+            entry.system_data[0].system_data.cpu.cpu_process_usage;
+        });
       });
     });
     describe("observing the chart data", () => {
       it("will show the correct metric data", () => {
-        cy.wait(1000); // wait for data
         databases.forEach((database: any) => {
           cy.get(getSelectorWithID("cpu", database.id)).should(
             (elements: any) => {
@@ -122,7 +113,7 @@ describe("Show cpu", () => {
     });
     describe("observing the metric details", () => {
       it("will show the correct metric detail data", () => {
-        cy.wait(1500); // wait for data
+        cy.wait(500);
         databases.forEach((database: any) => {
           cy.get(getDetailsSelectorWithID("cpu", database.id))
             .invoke("text")
