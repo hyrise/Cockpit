@@ -1,12 +1,8 @@
 import { testRedirection, testElementTrigger } from "../abstractTests";
 import { getRoute, getSelector } from "./helpers";
-import { useBackendMock } from "../../setup/backendMock";
-
-const backend = useBackendMock();
 
 describe("Change page routes", () => {
   beforeEach(() => {
-    backend.start();
     cy.visit("/");
   });
 
@@ -60,6 +56,20 @@ describe("Change page routes", () => {
       testElementTrigger(
         getSelector("pluginOverviewButton"),
         getSelector("pluginOverview")
+      );
+    });
+  });
+
+  // test selection list
+  describe("when clicking the views settings button", () => {
+    it("will open the selection list", () => {
+      testRedirection(
+        getSelector("workloadMonitoringButton"),
+        getRoute("workloadMonitoring")
+      );
+      testElementTrigger(
+        getSelector("selectionListButton"),
+        getSelector("selectionList")
       );
     });
   });

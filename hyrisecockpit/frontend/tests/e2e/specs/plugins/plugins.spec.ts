@@ -1,5 +1,5 @@
 import { useBackendMock } from "../../setup/backendMock";
-import { clickElement, waitForChartRender } from "../helpers";
+import { clickElement } from "../helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
 import { getSelector as getDatabaseSelector } from "../databases/helpers";
 import {

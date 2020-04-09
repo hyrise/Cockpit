@@ -56,6 +56,7 @@ describe("opening workload generation", () => {
       cy.numberOfRequests(getPostAlias("workload")).should("eq", 0);
     });
   });
+
   // test start, pause and stop workload
   describe("when clicking the start, pause and stop buttons", () => {
     it("will start, pause and stop workload", () => {

@@ -20,9 +20,40 @@ const selectors: Record<string, string> = {
     "workload-generation-button"
   ),
   pluginOverviewButton: getSelectorByConfig("div", "plugin-overview-button"),
+  selectionListButton: getSelectorByConfig("button", "selection-list-button"),
   pluginOverview: getSelectorByConfig("div", "plugin-overview"),
   databaseList: getSelectorByConfig("div", "database-list"),
-  workloadGeneration: getSelectorByConfig("div", "workload-generation")
+  workloadGeneration: getSelectorByConfig("div", "workload-generation"),
+  selectionList: getSelectorByConfig("div", "selection-list"),
+  unselectDatabase: getSelectorByConfig("button", "add-select-database-button"),
+  selectDatabase: getSelectorByConfig(
+    "button",
+    "remove-select-database-button"
+  ),
+  unselectMetric: getSelectorByConfig("button", "add-select-metric-button"),
+  selectMetric: getSelectorByConfig("button", "remove-select-metric-button"),
+  overviewPage: getSelectorByConfig("div", "overview-page"),
+  comparisonPage: getSelectorByConfig("div", "comparison-page"),
+  workloadMonitoringPage: getSelectorByConfig(
+    "div",
+    "workload-monitoring-page"
+  ),
+  metricChip: getSelectorByConfig("span", "metric-chip")
+};
+
+const metrics: Record<string, string[]> = {
+  workloadMonitoring: ["generatedQueryTypeProportion"],
+  comparison: [
+    "throughput",
+    "latency",
+    "queueLength",
+    "cpu",
+    "ram",
+    "storage",
+    "access",
+    "executedQueryTypeProportion"
+  ],
+  overview: ["throughput", "latency", "queueLength", "cpu", "ram"]
 };
 
 export function getSelector(component: string): string {
@@ -31,4 +62,30 @@ export function getSelector(component: string): string {
 
 export function getRoute(component: string): string {
   return routes[component];
+}
+
+export function getMetrics(component: string): string[] {
+  return metrics[component];
+}
+
+export function assertItemSelect(
+  component: "database" | "metric",
+  selected: boolean
+): void {
+  if (component === "database" && selected) {
+    cy.get(getSelector("selectDatabase")).should("not.be.visible");
+    cy.get(getSelector("unselectDatabase")).should("be.visible");
+  }
+  if (component === "database" && !selected) {
+    cy.get(getSelector("selectDatabase")).should("be.visible");
+    cy.get(getSelector("unselectDatabase")).should("not.be.visible");
+  }
+  if (component === "metric" && selected) {
+    cy.get(getSelector("selectMetric")).should("not.be.visible");
+    cy.get(getSelector("unselectMetric")).should("be.visible");
+  }
+  if (component === "metric" && !selected) {
+    cy.get(getSelector("selectMetric")).should("be.visible");
+    cy.get(getSelector("unselectMetric")).should("not.be.visible");
+  }
 }

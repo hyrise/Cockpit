@@ -11,6 +11,10 @@ const selectors: Record<string, { element: string; title: string }> = {
     element: "div",
     title: "executedQueryTypeProportion"
   },
+  generatedQueryTypeProportion: {
+    element: "div",
+    title: "generatedQueryTypeProportion"
+  },
   firstStorage: { element: "div", title: "1storage" },
   secondStorage: { element: "div", title: "2storage" },
   firstAccess: { element: "div", title: "1access" },
@@ -28,10 +32,10 @@ export function getSelector(component: string): string {
   );
 }
 
-export function getSelectorWithID(component: string, id: string): string {
+export function getSelectorWithID(component: string, id?: string): string {
   return getSelectorByConfig(
     selectors[component].element,
-    `${selectors[component].title}-${id}`
+    id ? `${selectors[component].title}-${id}` : `${selectors[component].title}`
   );
 }
 
