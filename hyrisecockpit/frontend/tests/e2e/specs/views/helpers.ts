@@ -38,7 +38,8 @@ const selectors: Record<string, string> = {
     "div",
     "workload-monitoring-page"
   ),
-  metricChip: getSelectorByConfig("span", "metric-chip")
+  metricChip: getSelectorByConfig("span", "metric-chip"),
+  loadingAnimation: getSelectorByConfig("div", "loading-animation")
 };
 
 const metrics: Record<string, string[]> = {
@@ -75,16 +76,13 @@ export function assertItemSelect(
   if (component === "database" && selected) {
     cy.get(getSelector("selectDatabase")).should("not.be.visible");
     cy.get(getSelector("unselectDatabase")).should("be.visible");
-  }
-  if (component === "database" && !selected) {
+  } else if (component === "database" && !selected) {
     cy.get(getSelector("selectDatabase")).should("be.visible");
     cy.get(getSelector("unselectDatabase")).should("not.be.visible");
-  }
-  if (component === "metric" && selected) {
+  } else if (component === "metric" && selected) {
     cy.get(getSelector("selectMetric")).should("not.be.visible");
     cy.get(getSelector("unselectMetric")).should("be.visible");
-  }
-  if (component === "metric" && !selected) {
+  } else if (component === "metric" && !selected) {
     cy.get(getSelector("selectMetric")).should("be.visible");
     cy.get(getSelector("unselectMetric")).should("not.be.visible");
   }
