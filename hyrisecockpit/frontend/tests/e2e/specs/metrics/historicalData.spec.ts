@@ -11,7 +11,7 @@ describe("requesting cpu and ram data", () => {
   beforeEach(() => {
     cy.setupAppState(backend);
     cy.wait("@" + getGetAlias("system"));
-    cy.wait(1000);
+    cy.wait(1500);
   });
 
   // test on comparison
@@ -30,7 +30,7 @@ describe("requesting cpu and ram data", () => {
       cy.get("@" + getGetAlias("system")).then((xhr: any) => {
         assertDataRequest(xhr.url, 30);
       });
-      cy.wait(1000);
+      cy.wait(1500);
       // test current data
       cy.wait("@" + getGetAlias("system"));
       cy.get("@" + getGetAlias("system")).then((xhr: any) => {
@@ -56,7 +56,7 @@ describe("requesting cpu and ram data", () => {
       cy.get("@" + getGetAlias("system")).then((xhr: any) => {
         assertDataRequest(xhr.url, 30);
       });
-      cy.wait(1000);
+      cy.wait(1500);
       // test current data
       cy.wait("@" + getGetAlias("system"));
       cy.get("@" + getGetAlias("system")).then((xhr: any) => {
@@ -88,7 +88,7 @@ describe("requesting throughput data", () => {
       cy.get("@" + getGetAlias("throughput")).then((xhr: any) => {
         assertDataRequest(xhr.url, 30);
       });
-      cy.wait(1000);
+      cy.wait(1500);
       // test current data
       cy.wait("@" + getGetAlias("throughput"));
       cy.get("@" + getGetAlias("throughput")).then((xhr: any) => {
@@ -106,7 +106,7 @@ describe("requesting throughput data", () => {
       cy.get("@" + getGetAlias("throughput")).then((xhr: any) => {
         assertDataRequest(xhr.url, 30);
       });
-      cy.wait(1000);
+      cy.wait(1500);
       // test current data
       cy.wait("@" + getGetAlias("throughput"));
       cy.get("@" + getGetAlias("throughput")).then((xhr: any) => {
@@ -134,7 +134,7 @@ describe("requesting latency data", () => {
       cy.get("@" + getGetAlias("latency")).then((xhr: any) => {
         assertDataRequest(xhr.url, 30);
       });
-      cy.wait(1000);
+      cy.wait(1500);
       // test current data
       cy.wait("@" + getGetAlias("latency"));
       cy.get("@" + getGetAlias("latency")).then((xhr: any) => {
@@ -152,7 +152,7 @@ describe("requesting latency data", () => {
       cy.get("@" + getGetAlias("latency")).then((xhr: any) => {
         assertDataRequest(xhr.url, 30);
       });
-      cy.wait(1000);
+      cy.wait(1500);
       // test current data
       cy.wait("@" + getGetAlias("latency"));
       cy.get("@" + getGetAlias("latency")).then((xhr: any) => {
@@ -180,7 +180,7 @@ describe("requesting queue length data", () => {
       cy.get("@" + getGetAlias("queue_length")).then((xhr: any) => {
         assertDataRequest(xhr.url, 30);
       });
-      cy.wait(1000);
+      cy.wait(1500);
       // test current data
       cy.wait("@" + getGetAlias("queue_length"));
       cy.get("@" + getGetAlias("queue_length")).then((xhr: any) => {
@@ -198,7 +198,7 @@ describe("requesting queue length data", () => {
       cy.get("@" + getGetAlias("queue_length")).then((xhr: any) => {
         assertDataRequest(xhr.url, 30);
       });
-      cy.wait(1000);
+      cy.wait(1500);
       // test current data
       cy.wait("@" + getGetAlias("queue_length"));
       cy.get("@" + getGetAlias("queue_length")).then((xhr: any) => {
