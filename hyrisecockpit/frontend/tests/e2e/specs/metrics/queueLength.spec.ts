@@ -9,6 +9,7 @@ import {
   assertMetricDetails,
   assertLineChartData
 } from "./helpers";
+import { assignToObject } from "../helpers";
 
 const backend = useBackendMock();
 
@@ -30,12 +31,11 @@ describe("Show queue length", () => {
       testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
       cy.wait("@" + getGetAlias("queue_length"));
       cy.get("@" + getGetAlias("queue_length")).should((xhr: any) => {
-        data = Object.values(xhr.response.body.body)[0];
+        data = assignToObject(xhr.response.body, "queue_length");
       });
     });
     describe("observing the chart data", () => {
       it("will show the correct metric data", () => {
-        cy.wait(1000); // wait for data
         cy.get(getSelector("queueLength")).should((elements: any) => {
           assertLineChartData(
             elements[0].data,
@@ -47,7 +47,6 @@ describe("Show queue length", () => {
     });
     describe("observing the metric details", () => {
       it("will not show metric details", () => {
-        cy.wait(1000); // wait for data
         databases.forEach((database: any) => {
           cy.get(getDetailsSelectorWithID("queueLength", database.id)).should(
             "not.exist"
@@ -75,12 +74,11 @@ describe("Show queue length", () => {
       );
       cy.wait("@" + getGetAlias("queue_length"));
       cy.get("@" + getGetAlias("queue_length")).should((xhr: any) => {
-        data = Object.values(xhr.response.body.body)[0];
+        data = assignToObject(xhr.response.body, "queue_length");
       });
     });
     describe("observing the chart data", () => {
       it("will show the correct metric data", () => {
-        cy.wait(1000); // wait for data
         databases.forEach((database: any) => {
           cy.get(getSelectorWithID("queueLength", database.id)).should(
             (elements: any) => {
@@ -110,7 +108,7 @@ describe("Show queue length", () => {
     });
     describe("observing the metric details", () => {
       it("will show the correct metric detail data", () => {
-        cy.wait(1000); // wait for data
+        cy.wait(500);
         databases.forEach((database: any) => {
           cy.get(getDetailsSelectorWithID("queueLength", database.id))
             .invoke("text")

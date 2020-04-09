@@ -39,7 +39,11 @@ import {
 import { Database } from "@/types/database";
 import DatabaseSelection from "@/components/selection/DatabaseSelection.vue";
 import MetricSelection from "@/components/selection/MetricSelection.vue";
-import { useDatabaseEvents, useMetricEvents } from "@/meta/events";
+import {
+  useDatabaseEvents,
+  useMetricEvents,
+  useWindowEvents
+} from "@/meta/events";
 import { PageName } from "@/types/views";
 import { Metric } from "@/types/metrics";
 
@@ -60,6 +64,7 @@ export default defineComponent({
       emitSelectedMetricsChangedWithinEvent,
       emitWatchedMetricsChangedEvent
     } = useMetricEvents();
+    const { emitPageChangedEvent } = useWindowEvents();
 
     const page = computed(() => context.root.$route.name! as PageName);
 
@@ -73,9 +78,15 @@ export default defineComponent({
       () => context.root.$selectionController.selectedMetrics[page.value]
     );
 
-    watch([selectedMetrics, page], () => {
+    watch(selectedMetrics, () => {
       emitWatchedMetricsChangedEvent(selectedMetrics.value as Metric[]);
     });
+
+    watch(page, () => {
+      emitPageChangedEvent(selectedMetrics.value as Metric[]);
+    });
+
+    //TODO: add historic range selection
 
     function handleDatabaseChange(databaseId: string, value: boolean): void {
       emitSelectedDatabasesChangedWithinEvent(page.value, databaseId, value);

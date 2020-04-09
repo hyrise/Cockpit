@@ -1,4 +1,5 @@
 import * as faker from "faker";
+import { fakeTimeStamp } from "./factories";
 
 // REQUEST HELPERS
 
@@ -84,7 +85,25 @@ export function getResponseStatus(backendStatus: BackendStatus): number {
   return responseStatus[backendStatus];
 }
 
-// FAKE DATA HELPERS
+// ASSIGN FAKE DATA HELPERS
+
+export function fakeDataByIdsWithTimestamps(
+  ids: string[],
+  type: string,
+  fakeFunction: () => Object
+): Object[] {
+  return ids.map(id => {
+    return {
+      id,
+      [type]: [
+        {
+          timestamp: fakeTimeStamp(),
+          [type]: fakeFunction()
+        }
+      ]
+    };
+  });
+}
 
 export function fakeDataByIds(
   ids: string[],
@@ -100,6 +119,8 @@ export function assignFakeData(fakeData: any[]): Object {
   });
   return newData;
 }
+
+// FAKE DATA HELPERS
 
 export function generateRandomFloat(min: number, range: number) {
   return Math.random() * range + min;
@@ -129,6 +150,10 @@ export function generateUniqueRandomNumbers(
     available = available.filter(item => item !== index);
   }
   return selected;
+}
+
+export function getNanoSeconds(date: Date): number {
+  return date.getTime() * Math.pow(10, 6);
 }
 
 export function empty(): void {
