@@ -451,15 +451,15 @@ class Throughput(Resource):
     )
     def get(self) -> Union[int, List]:
         """Return throughput information in a given time range."""
-        rough_startts: int = int(request.args.get("startts"))  # type: ignore
-        rough_endts: int = int(request.args.get("endts"))  # type: ignore
+        precise_startts: int = int(request.args.get("startts"))  # type: ignore
+        precise_endts: int = int(request.args.get("endts"))  # type: ignore
 
-        startts_rounded: int = int(rough_startts / 1_000_000_000) * 1_000_000_000
-        endts_rounded: int = int(rough_endts / 1_000_000_000) * 1_000_000_000
+        startts_rounded: int = int(precise_startts / 1_000_000_000) * 1_000_000_000
+        endts_rounded: int = int(precise_endts / 1_000_000_000) * 1_000_000_000
 
         # take nearest whole numbers of seconds
-        startts: int = startts_rounded if rough_startts % 1_000_000_000 == 0 else startts_rounded + 1_000_000_000
-        endts: int = endts_rounded if rough_endts % 1_000_000_000 == 0 else endts_rounded + 1
+        startts: int = startts_rounded if precise_startts % 1_000_000_000 == 0 else startts_rounded + 1_000_000_000
+        endts: int = endts_rounded if precise_endts % 1_000_000_000 == 0 else endts_rounded + 1
 
         response: List = []
         for database in _get_active_databases():
@@ -562,15 +562,15 @@ class Latency(Resource):
     )
     def get(self) -> Union[int, List]:
         """Return latency information in a given time range."""
-        rough_startts: int = int(request.args.get("startts"))  # type: ignore
-        rough_endts: int = int(request.args.get("endts"))  # type: ignore
+        precise_startts: int = int(request.args.get("startts"))  # type: ignore
+        precise_endts: int = int(request.args.get("endts"))  # type: ignore
 
-        startts_rounded: int = int(rough_startts / 1_000_000_000) * 1_000_000_000
-        endts_rounded: int = int(rough_endts / 1_000_000_000) * 1_000_000_000
+        startts_rounded: int = int(precise_startts / 1_000_000_000) * 1_000_000_000
+        endts_rounded: int = int(precise_endts / 1_000_000_000) * 1_000_000_000
 
         # take nearest whole numbers of seconds
-        startts: int = startts_rounded if rough_startts % 1_000_000_000 == 0 else startts_rounded + 1_000_000_000
-        endts: int = endts_rounded if rough_endts % 1_000_000_000 == 0 else endts_rounded + 1
+        startts: int = startts_rounded if precise_startts % 1_000_000_000 == 0 else startts_rounded + 1_000_000_000
+        endts: int = endts_rounded if precise_endts % 1_000_000_000 == 0 else endts_rounded + 1
         response: List = []
 
         for database in _get_active_databases():
