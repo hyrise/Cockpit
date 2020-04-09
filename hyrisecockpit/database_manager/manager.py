@@ -262,6 +262,7 @@ class DatabaseManager(object):
         return get_response(200)
 
     def _call_close_worker(self, body: Body) -> Response:
+        # TODO just close if no workload at all is running
         for database in self._databases.values():
             if not database.close_worker():
                 return get_response(400)
