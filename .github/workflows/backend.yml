@@ -24,3 +24,9 @@ jobs:
     - name: Run all python tests
       run: |
         pipenv run pytest tests/ --cov=hyrisecockpit --cov-fail-under=58
+    - name: Native requirements mirror pipenv requirements
+      run: |
+        pipenv run pipenv_to_requirements -o requirements_temp.txt -f && cmp -s requirements.txt requirements_temp.txt
+    - name: Native requirements-dev mirror pipenv-dev requirements
+      run: |
+        pipenv run pipenv_to_requirements -d requirements-dev_temp.txt -f && cmp -s requirements-dev.txt requirements-dev_temp.txt
