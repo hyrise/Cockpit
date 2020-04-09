@@ -511,7 +511,7 @@ class TestBackgroundJobManager:
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
         get_mocked_storage_cursor,
     )
-    @patch("hyrisecockpit.database_manager.background_scheduler.time", lambda: 42)
+    @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
     def test_logs_updated_system_data(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
@@ -541,7 +541,7 @@ class TestBackgroundJobManager:
         global mocked_storage_cursor
 
         mocked_storage_cursor.log_meta_information.assert_called_once_with(
-            "system_data", fake_system_dict, 42_000_000_000
+            "system_data", fake_system_dict, 42
         )
 
         mocked_storage_cursor = MagicMock()
@@ -1299,3 +1299,28 @@ class TestBackgroundJobManager:
 
         assert result
         assert background_job_manager._database_blocked.value
+
+    @patch("hyrisecockpit.database_manager.background_scheduler.StorageCursor")
+    @patch("hyrisecockpit.database_manager.background_scheduler.time_ns")
+    def test_logs_queue_length(
+        self,
+        mock_time_ns: MagicMock,
+        mock_storage_cursor_constructor: MagicMock,
+        background_job_manager: BackgroundJobManager,
+    ) -> None:
+        """Test logging of the queue length."""
+        mock_time_ns.return_value = 1000
+        mock_storage_cursor = MagicMock()
+        mock_storage_cursor.log_meta_information.return_value = None
+        mock_storage_cursor_constructor.return_value.__enter__.return_value = (
+            mock_storage_cursor
+        )
+        mock_worker_pool = MagicMock()
+        mock_worker_pool.get_queue_length.return_value = 100
+        background_job_manager._worker_pool = mock_worker_pool
+
+        background_job_manager._update_queue_length()
+
+        mock_storage_cursor.log_meta_information.assert_called_once_with(
+            "queue_length", {"queue_length": 100}, 1000
+        )
