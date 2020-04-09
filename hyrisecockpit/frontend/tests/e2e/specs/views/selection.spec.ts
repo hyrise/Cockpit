@@ -49,7 +49,7 @@ describe("visiting the workload monitoring page", () => {
     cy.get(getDatabaseSelector("databaseChip"))
       .eq(databaseIndex)
       .within(() => {
-        cy.get(getSelector("unselectDatabase")).click();
+        cy.get(getSelector("unselectDatabase")).click({ force: true });
         assertItemSelect("database", false);
       });
     clickElement(getSelector("selectionListButton"));
@@ -64,7 +64,7 @@ describe("visiting the workload monitoring page", () => {
     cy.get(getDatabaseSelector("databaseChip"))
       .eq(databaseIndex)
       .within(() => {
-        cy.get(getSelector("selectDatabase")).click();
+        cy.get(getSelector("selectDatabase")).click({ force: true });
         assertItemSelect("database", true);
       });
     clickElement(getSelector("selectionListButton"));
@@ -85,7 +85,7 @@ describe("visiting the workload monitoring page", () => {
     cy.get(getSelector("metricChip"))
       .eq(metricIndex)
       .within(() => {
-        cy.get(getSelector("unselectMetric")).click();
+        cy.get(getSelector("unselectMetric")).click({ force: true });
         assertItemSelect("metric", false);
       });
     clickElement(getSelector("selectionListButton"));
@@ -98,7 +98,7 @@ describe("visiting the workload monitoring page", () => {
     cy.get(getSelector("metricChip"))
       .eq(metricIndex)
       .within(() => {
-        cy.get(getSelector("selectMetric")).click();
+        cy.get(getSelector("selectMetric")).click({ force: true });
         assertItemSelect("metric", true);
       });
     clickElement(getSelector("selectionListButton"));
@@ -143,7 +143,7 @@ describe("visiting the overview page", () => {
     cy.get(getDatabaseSelector("databaseChip"))
       .eq(databaseIndex)
       .within(() => {
-        cy.get(getSelector("unselectDatabase")).click();
+        cy.get(getSelector("unselectDatabase")).click({ force: true });
         assertItemSelect("database", false);
       });
     clickElement(getSelector("selectionListButton"));
@@ -158,7 +158,7 @@ describe("visiting the overview page", () => {
     cy.get(getDatabaseSelector("databaseChip"))
       .eq(databaseIndex)
       .within(() => {
-        cy.get(getSelector("selectDatabase")).click();
+        cy.get(getSelector("selectDatabase")).click({ force: true });
         assertItemSelect("database", true);
       });
     clickElement(getSelector("selectionListButton"));
@@ -179,7 +179,7 @@ describe("visiting the overview page", () => {
     cy.get(getSelector("metricChip"))
       .eq(metricIndex)
       .within(() => {
-        cy.get(getSelector("unselectMetric")).click();
+        cy.get(getSelector("unselectMetric")).click({ force: true });
         assertItemSelect("metric", false);
       });
     clickElement(getSelector("selectionListButton"));
@@ -192,7 +192,7 @@ describe("visiting the overview page", () => {
     cy.get(getSelector("metricChip"))
       .eq(metricIndex)
       .within(() => {
-        cy.get(getSelector("selectMetric")).click();
+        cy.get(getSelector("selectMetric")).click({ force: true });
         assertItemSelect("metric", true);
       });
     clickElement(getSelector("selectionListButton"));
@@ -237,7 +237,7 @@ describe("visiting the comparison page", () => {
     cy.get(getDatabaseSelector("databaseChip"))
       .eq(databaseIndex)
       .within(() => {
-        cy.get(getSelector("unselectDatabase")).click();
+        cy.get(getSelector("unselectDatabase")).click({ force: true });
         assertItemSelect("database", false);
       });
     clickElement(getSelector("selectionListButton"));
@@ -252,7 +252,7 @@ describe("visiting the comparison page", () => {
     cy.get(getDatabaseSelector("databaseChip"))
       .eq(databaseIndex)
       .within(() => {
-        cy.get(getSelector("selectDatabase")).click();
+        cy.get(getSelector("selectDatabase")).click({ force: true });
         assertItemSelect("database", true);
       });
     clickElement(getSelector("selectionListButton"));
@@ -273,7 +273,7 @@ describe("visiting the comparison page", () => {
     cy.get(getSelector("metricChip"))
       .eq(metricIndex)
       .within(() => {
-        cy.get(getSelector("unselectMetric")).click();
+        cy.get(getSelector("unselectMetric")).click({ force: true });
         assertItemSelect("metric", false);
       });
     clickElement(getSelector("selectionListButton"));
@@ -290,7 +290,7 @@ describe("visiting the comparison page", () => {
     cy.get(getSelector("metricChip"))
       .eq(metricIndex)
       .within(() => {
-        cy.get(getSelector("selectMetric")).click();
+        cy.get(getSelector("selectMetric")).click({ force: true });
         assertItemSelect("metric", true);
       });
     clickElement(getSelector("selectionListButton"));
