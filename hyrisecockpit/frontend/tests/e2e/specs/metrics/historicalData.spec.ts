@@ -3,6 +3,7 @@ import { getGetAlias } from "../../setup/helpers";
 import { getSelector as getViewSelector, getRoute } from "../views/helpers";
 import { testRedirection } from "../abstractTests";
 import { assertDataRequest } from "./helpers";
+import { waitForChartRender } from "../helpers";
 
 const backend = useBackendMock();
 
@@ -12,6 +13,7 @@ describe("requesting cpu and ram data", () => {
     cy.setupAppState(backend);
     cy.wait("@" + getGetAlias("system"));
     cy.wait(1500);
+    waitForChartRender();
   });
 
   // test on comparison
@@ -74,6 +76,7 @@ describe("requesting cpu and ram data", () => {
 describe("requesting throughput data", () => {
   beforeEach(() => {
     cy.setupAppState(backend);
+    waitForChartRender();
   });
 
   // test on comparison
@@ -120,6 +123,7 @@ describe("requesting throughput data", () => {
 describe("requesting latency data", () => {
   beforeEach(() => {
     cy.setupAppState(backend);
+    waitForChartRender();
   });
 
   // test on comparison
@@ -166,6 +170,7 @@ describe("requesting latency data", () => {
 describe("requesting queue length data", () => {
   beforeEach(() => {
     cy.setupAppState(backend);
+    waitForChartRender();
   });
 
   // test on comparison

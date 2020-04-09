@@ -75,8 +75,6 @@ export function checkMultipleMetrics(metric: string): string {
   return metric;
 }
 
-//function testItemVisibility(select: string): void{ }
-
 export function assertItemSelect(
   component: "database" | "metric",
   selected: boolean
