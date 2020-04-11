@@ -5,11 +5,13 @@ from pytest import fixture
 
 from hyrisecockpit.api.app.database.interface import (
     AvailableBenchmarkTablesInterface,
+    BenchmarkTablesInterface,
     DatabaseInterface,
     DetailedDatabaseInterface,
 )
 from hyrisecockpit.api.app.database.model import (
     AvailableBenchmarkTables,
+    BenchmarkTables,
     Database,
     DetailedDatabase,
 )
@@ -43,7 +45,7 @@ def database(request) -> Database:
 
 @fixture(params=[database_one_parms, database_two_parms])
 def detailed_database(request) -> DetailedDatabase:
-    """Return a real Database model."""
+    """Return a real detailed Database model."""
     return DetailedDatabase(**request.param)
 
 
@@ -54,8 +56,14 @@ def detailed_database(request) -> DetailedDatabase:
     ]
 )
 def available_benchmark_tables(request) -> AvailableBenchmarkTables:
-    """Return a real Database model."""
+    """Return a real available benchmark tables model."""
     return AvailableBenchmarkTables(folder_names=request.param)
+
+
+@fixture(params=[["where are the tables"], ["Are you there?"]])
+def benchmark_tables(request) -> BenchmarkTables:
+    """Return a real benchmark tables model."""
+    return BenchmarkTables(folder_name=request.param)
 
 
 class TestDatabaseModel:
@@ -68,14 +76,18 @@ class TestDatabaseModel:
     def test_creates_detailed_database(
         self, detailed_database: DetailedDatabase
     ) -> None:
-        """A database model can be created."""
+        """A detailed database model can be created."""
         assert detailed_database
 
     def test_creates_available_benchmark_tables(
         self, available_benchmark_tables: AvailableBenchmarkTables
     ) -> None:
-        """A database model can be created."""
+        """A available benchmark tables model can be created."""
         assert available_benchmark_tables
+
+    def test_creates_benchmark_tables(self, benchmark_tables: BenchmarkTables) -> None:
+        """A benchmark table model can be created."""
+        assert benchmark_tables
 
     def test_updates_database(self, database: Database) -> None:
         """A Database model can be updated."""
@@ -112,3 +124,9 @@ class TestDatabaseModel:
             AvailableBenchmarkTablesInterface(folder_names=new_folder_names)
         )
         assert new_folder_names == available_benchmark_tables.folder_names
+
+    def test_updates_benchmark_tables(self, benchmark_tables: BenchmarkTables) -> None:
+        """A benchmark table model can be updated."""
+        new_folder = "some_creativ_new_folder_name"
+        benchmark_tables.update(BenchmarkTablesInterface(folder_name=new_folder))
+        assert new_folder == benchmark_tables.folder_name
