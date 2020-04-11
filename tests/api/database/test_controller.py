@@ -65,7 +65,7 @@ class TestController:
     @patch("hyrisecockpit.api.app.database.controller.DatabaseService")
     def test_gets_one_databases(
         self, mocked_database_service: MagicMock, client: FlaskClient
-    ):
+    ) -> None:
         """A database controller routes get_databases with one databases correctly."""
         fake_database_one = DetailedDatabase(**fake_database_one_attributes)  # type: ignore
         mocked_database_service.get_databases.return_value = [fake_database_one]
@@ -81,7 +81,7 @@ class TestController:
     @patch("hyrisecockpit.api.app.database.controller.DatabaseService")
     def test_gets_multiple_databases(
         self, mocked_database_service: MagicMock, client: FlaskClient
-    ):
+    ) -> None:
         """A database controller routes get get_databases with multiple databases correctly."""
         fake_database_one = DetailedDatabase(**fake_database_one_attributes)  # type: ignore
         fake_database_two = DetailedDatabase(**fake_database_two_attributes)  # type: ignore
@@ -101,7 +101,7 @@ class TestController:
     @patch("hyrisecockpit.api.app.database.controller.DatabaseService")
     def test_registers_database(
         self, mocked_database_service: MagicMock, client: FlaskClient
-    ):
+    ) -> None:
         """A database controller routes post register_database correctly."""
         mocked_database_service.register_database.return_value = 200
         response = client.post(
@@ -118,7 +118,7 @@ class TestController:
     @patch("hyrisecockpit.api.app.database.controller.DatabaseService")
     def test_deregisters_database(
         self, mocked_database_service: MagicMock, client: FlaskClient
-    ):
+    ) -> None:
         """A database controller routes delete deregister_database correctly."""
         mocked_database_service.deregister_database.return_value = 200
         response = client.delete(
@@ -135,7 +135,7 @@ class TestController:
     @patch("hyrisecockpit.api.app.database.controller.DatabaseService")
     def test_gets_avaible_benchmark_tables(
         self, mocked_database_service: MagicMock, client: FlaskClient
-    ):
+    ) -> None:
         """A database controller routes get benchmark_tables  correctly."""
         benchmark_tables = AvailableBenchmarkTables(
             folder_names=["tpch_0.1", "tpch_1", "tpcds_1", "job"]
@@ -153,7 +153,7 @@ class TestController:
     @patch("hyrisecockpit.api.app.database.controller.DatabaseService")
     def test_loads_benchmark_tables(
         self, mocked_database_service: MagicMock, client: FlaskClient
-    ):
+    ) -> None:
         """A database controller routes post benchmark_tables  correctly."""
         benchmark_tables = {"folder_name": "tpchzzzzz!"}
         mocked_database_service.load_benchmark_tables.return_value = 200
@@ -189,7 +189,7 @@ class TestController:
     @patch("hyrisecockpit.api.app.database.controller.DatabaseService")
     def test_start_worker(
         self, mocked_database_service: MagicMock, client: FlaskClient
-    ):
+    ) -> None:
         """A database controller routes post worker  correctly."""
         mocked_database_service.start_worker_pool.return_value = 200
         response = client.post(
@@ -199,7 +199,9 @@ class TestController:
         assert 200 == response.status_code
 
     @patch("hyrisecockpit.api.app.database.controller.DatabaseService")
-    def test_stop_worker(self, mocked_database_service: MagicMock, client: FlaskClient):
+    def test_stop_worker(
+        self, mocked_database_service: MagicMock, client: FlaskClient
+    ) -> None:
         """A database controller routes post worker  correctly."""
         mocked_database_service.close_worker_pool.return_value = 200
         response = client.delete(
