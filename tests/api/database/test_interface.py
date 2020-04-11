@@ -1,14 +1,19 @@
 """Tests for the database interface."""
-
+from typing import List
 
 from pytest import mark
 
 from hyrisecockpit.api.app.database.interface import (
+    AvailableBenchmarkTablesInterface,
     BenchmarkTablesInterface,
     DatabaseInterface,
     DetailedDatabaseInterface,
 )
-from hyrisecockpit.api.app.database.model import Database, DetailedDatabase
+from hyrisecockpit.api.app.database.model import (
+    AvailableBenchmarkTables,
+    Database,
+    DetailedDatabase,
+)
 
 
 class TestDatabaseInterface:
@@ -54,3 +59,18 @@ class TestDatabaseInterface:
     def test_creates_benchmark_tables_interface(self, attribute: str) -> None:
         """A benchmark tables interface can be created."""
         assert BenchmarkTablesInterface(folder_name=attribute)
+
+    @mark.parametrize("tables", [["nations", "product"], ["just one table"]])
+    def test_creates_available_benchmark_tables_interface(
+        self, tables: List[str]
+    ) -> None:
+        """A available benchmark tables interface can be created."""
+        assert AvailableBenchmarkTablesInterface(folder_names=tables)
+
+    @mark.parametrize("tables", [["nations", "product"], ["just one table"]])
+    def test_creates_available_benchmark_tables_interface_works(
+        self, tables: List[str]
+    ) -> None:
+        """A available benchmark tables interface work."""
+        interface = AvailableBenchmarkTablesInterface(folder_names=tables)
+        assert AvailableBenchmarkTables(**interface)
