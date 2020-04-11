@@ -10,6 +10,7 @@ from hyrisecockpit.api.app.database.interface import (
 )
 from hyrisecockpit.api.app.database.model import (
     AvailableBenchmarkTables,
+    BenchmarkTables,
     Database,
     DetailedDatabase,
 )
@@ -141,9 +142,8 @@ class TestDatabaseSchema:
     ) -> None:
         """A benchmark tables schema can create a database model."""
         benchmark_tables = benchmark_tables_schema.load(benchmark_tables_interface)
-        assert (
-            benchmark_tables["folder_name"] == benchmark_tables_interface["folder_name"]
-        )
+        assert isinstance(benchmark_tables, BenchmarkTables)
+        assert vars(benchmark_tables) == benchmark_tables_interface
 
     @mark.parametrize("database_interface", [{"id": "Tina"}, {"id": "Bibi"}])
     def test_serializes_database(
@@ -198,5 +198,8 @@ class TestDatabaseSchema:
         benchmark_tables_interface: BenchmarkTablesInterface,
     ) -> None:
         """A benchmark_tables dictionary can be serialized with a benchmark tables schema."""
+        benchmark_tables: BenchmarkTables = BenchmarkTables(
+            **benchmark_tables_interface
+        )
         serialized = benchmark_tables_schema.dump(benchmark_tables_interface)
-        assert serialized == benchmark_tables_interface
+        assert vars(benchmark_tables) == serialized == benchmark_tables_interface
