@@ -1,7 +1,13 @@
 """Schema for database name-space."""
 
-from marshmallow import Schema
+from marshmallow import Schema, post_load
 from marshmallow.fields import Integer, List, String
+
+from hyrisecockpit.api.app.database.model import (
+    AvailableBenchmarkTables,
+    Database,
+    DetailedDatabase,
+)
 
 
 class DatabaseSchmea(Schema):
@@ -14,10 +20,21 @@ class DatabaseSchmea(Schema):
         example="hyrise-1",
     )
 
+    @post_load
+    def make_database(self, data, **kwargs):
+        """Return database object."""
+        return Database(**data)
 
-class DetailedDatabaseSchema(DatabaseSchmea):
+
+class DetailedDatabaseSchema(Schema):
     """Schema of a detailed Database."""
 
+    id = String(
+        title="Database ID",
+        description="Used to identify a database.",
+        required=True,
+        example="hyrise-1",
+    )
     host = String(
         title="Host",
         description="Host to log in to.",
@@ -55,6 +72,11 @@ class DetailedDatabaseSchema(DatabaseSchmea):
         example="password123",
     )
 
+    @post_load
+    def make_detailed_database(self, data, **kwargs):
+        """Return detailed database object."""
+        return DetailedDatabase(**data)
+
 
 class AvailableBenchmarkTablesSchema(Schema):
     """Schema of available benchmark tables."""
@@ -67,6 +89,11 @@ class AvailableBenchmarkTablesSchema(Schema):
             example="tpch_0.1",
         )
     )
+
+    @post_load
+    def make_available_benchmark_tables(self, data, **kwargs):
+        """Return available benchmark tables object."""
+        return AvailableBenchmarkTables(**data)
 
 
 class BenchmarkTablesSchema(Schema):
