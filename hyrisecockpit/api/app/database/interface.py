@@ -1,5 +1,5 @@
 """Interface of Database name-space."""
-from typing import TypedDict
+from typing import List, TypedDict
 
 
 class DatabaseInterface(TypedDict):
@@ -24,3 +24,9 @@ class BenchmarkTablesInterface(TypedDict):
     """Interface of benchmark tables to load."""
 
     folder_name: str
+
+
+class AvailableBenchmarkTablesInterface(TypedDict):
+    """Interface of available benchmark tables interface."""
+
+    folder_names: List[str]

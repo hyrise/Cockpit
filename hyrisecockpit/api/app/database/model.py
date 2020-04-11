@@ -1,7 +1,11 @@
 """Models of Database name-space."""
 from typing import List
 
-from .interface import DetailedDatabaseInterface
+from .interface import (
+    AvailableBenchmarkTablesInterface,
+    DatabaseInterface,
+    DetailedDatabaseInterface,
+)
 
 
 class Database:
@@ -11,7 +15,7 @@ class Database:
         """Initialize a Database model."""
         self.id: str = id
 
-    def update(self, interface: DetailedDatabaseInterface) -> "Database":
+    def update(self, interface: DatabaseInterface) -> "Database":
         """Update attributes of a database model."""
         for key, value in interface.items():
             setattr(self, key, value)
@@ -53,3 +57,11 @@ class AvailableBenchmarkTables:
     def __init__(self, folder_names: List[str]):
         """Initialize a available benchmark tables model."""
         self.folder_names: List[str] = folder_names
+
+    def update(
+        self, interface: AvailableBenchmarkTablesInterface
+    ) -> "AvailableBenchmarkTables":
+        """Update attributes of a available benchmark tables model."""
+        for key, value in interface.items():
+            setattr(self, key, value)
+        return self
