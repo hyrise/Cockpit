@@ -22,7 +22,7 @@ class DatabaseService:
     """Services of the Control Controller."""
 
     @staticmethod
-    def _open_socket_connection(url: str) -> Socket:
+    def _open_socket_connection() -> Socket:
         context = Context(io_threads=1)
         socket = context.socket(REQ)
         socket.connect(url)
@@ -35,10 +35,10 @@ class DatabaseService:
 
     @staticmethod
     def _send_req(message: Request) -> Response:
-        socket: Socket = DatabaseService._open_socket_connection(url)
+        socket: Socket = DatabaseService._open_socket_connection()
         socket.send_json(message)
         response: Response = socket.recv_json()
-        DatabaseService._close_socket_connection(url)
+        DatabaseService._close_socket_connection(socket)
         return response
 
     @staticmethod
