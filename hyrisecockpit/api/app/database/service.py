@@ -2,8 +2,7 @@
 from typing import List
 
 from jsonschema import validate
-from zmq import REQ
-from zmq.decorators import socket
+from zmq import REQ, Context, Socket
 
 from hyrisecockpit.message import response_schema
 from hyrisecockpit.request import Header, Request
@@ -23,19 +22,29 @@ class DatabaseService:
     """Services of the Control Controller."""
 
     @staticmethod
-    @socket(REQ)
-    def __send_req(message: Request, socket: socket) -> Response:
+    def _open_socket_connection(url: str) -> Socket:
+        context = Context(io_threads=1)
+        socket = context.socket(REQ)
         socket.connect(url)
-        socket.send_json(message)
-        response: Response = socket.recv_json()
+        return socket
+
+    @staticmethod
+    def _close_socket_connection(socket: Socket) -> None:
         socket.disconnect(url)
         socket.close()
+
+    @staticmethod
+    def _send_req(message: Request) -> Response:
+        socket: Socket = DatabaseService._open_socket_connection(url)
+        socket.send_json(message)
+        response: Response = socket.recv_json()
+        DatabaseService._close_socket_connection(url)
         return response
 
     @staticmethod
     def _send_message(message: Request) -> Response:
         """Send an IPC message with data to a database interface, return the repsonse."""
-        response = DatabaseService.__send_req(message)
+        response = DatabaseService._send_req(message)
         validate(instance=response, schema=response_schema)
         return response
 
