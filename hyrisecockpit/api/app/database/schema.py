@@ -5,6 +5,7 @@ from marshmallow.fields import Integer, List, String
 
 from hyrisecockpit.api.app.database.model import (
     AvailableBenchmarkTables,
+    BenchmarkTables,
     Database,
     DetailedDatabase,
 )
@@ -105,3 +106,8 @@ class BenchmarkTablesSchema(Schema):
         required=True,
         example="tpch_0.1",
     )
+
+    @post_load
+    def make_benchmark_tables(self, data, **kwargs):
+        """Return available benchmark tables object."""
+        return BenchmarkTables(**data)

@@ -3,6 +3,7 @@ from typing import List
 
 from .interface import (
     AvailableBenchmarkTablesInterface,
+    BenchmarkTablesInterface,
     DatabaseInterface,
     DetailedDatabaseInterface,
 )
@@ -62,6 +63,20 @@ class AvailableBenchmarkTables:
         self, interface: AvailableBenchmarkTablesInterface
     ) -> "AvailableBenchmarkTables":
         """Update attributes of a available benchmark tables model."""
+        for key, value in interface.items():
+            setattr(self, key, value)
+        return self
+
+
+class BenchmarkTables:
+    """Model for benchmark tables."""
+
+    def __init__(self, folder_name: str):
+        """Initialize a benchmark tables model."""
+        self.folder_name: str = folder_name
+
+    def update(self, interface: BenchmarkTablesInterface) -> "BenchmarkTables":
+        """Update attributes of a benchmark tables model."""
         for key, value in interface.items():
             setattr(self, key, value)
         return self
