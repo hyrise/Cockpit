@@ -2,8 +2,8 @@
 from typing import List
 
 from jsonschema import validate
-from zmq import REQ, Context, Socket
 
+from hyrisecockpit.api.app.socket_manager import ManagerSocket
 from hyrisecockpit.message import response_schema
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
@@ -15,36 +15,15 @@ from .interface import (
 )
 from .model import AvailableBenchmarkTables, DetailedDatabase
 
-url = "tcp://127.0.0.1:8004"
-
 
 class DatabaseService:
     """Services of the Control Controller."""
 
     @staticmethod
-    def _open_socket_connection() -> Socket:
-        context = Context(io_threads=1)
-        socket = context.socket(REQ)
-        socket.connect(url)
-        return socket
-
-    @staticmethod
-    def _close_socket_connection(socket: Socket) -> None:
-        socket.disconnect(url)
-        socket.close()
-
-    @staticmethod
-    def _send_req(message: Request) -> Response:
-        socket: Socket = DatabaseService._open_socket_connection()
-        socket.send_json(message)
-        response: Response = socket.recv_json()
-        DatabaseService._close_socket_connection(socket)
-        return response
-
-    @staticmethod
     def _send_message(message: Request) -> Response:
-        """Send an IPC message with data to a database interface, return the repsonse."""
-        response = DatabaseService._send_req(message)
+        """Send an IPC message with data to a database interface, return the response."""
+        with ManagerSocket() as socket:  # type: ignore
+            response = socket.send_message(message)
         validate(instance=response, schema=response_schema)
         return response
 
