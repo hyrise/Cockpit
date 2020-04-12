@@ -62,6 +62,18 @@ export default defineComponent({
       );
     });
 
+    eventBus.$on("PLUGIN_DEACTIVATED", (pluginInfo: any) => {
+      Plotly.extendTraces(
+        props.graphId,
+        {
+          y: [[props.maxValue + 1]],
+          x: [[formatDateWithoutMilliSec(new Date())]],
+          textinfo: "text",
+        },
+        [-1]
+      );
+    });
+
     onMounted(() => {
       Plotly.newPlot(
         props.graphId,
@@ -117,10 +129,8 @@ export default defineComponent({
     function updateChartDatasets(): void {
       const timestamps = props.timestamps;
       const newData = {
-        y: [
-          ...Object.values(props.selectedDatabases).map(id => props.data[id])
-        ],
-        x: [...Object.values(props.selectedDatabases).map(() => timestamps)]
+        y: Object.values(props.selectedDatabases).map(id => props.data[id]),
+        x: Object.values(props.selectedDatabases).map(() => timestamps)
       };
       const maxSelectedLength = getMaxDatasetLength();
 
