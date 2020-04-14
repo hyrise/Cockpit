@@ -15,6 +15,7 @@
               Start, pause and stop a workload
             </p>
             <v-slider
+              id="frequency-slider"
               v-model="frequency"
               class="mt-10"
               thumb-label="always"
@@ -23,6 +24,7 @@
               @click="handleWorkloadChange()"
             ></v-slider>
             <v-text-field
+              id="frequency-field"
               v-model="frequency"
               label="Number of queries per second"
               outlined
@@ -47,6 +49,7 @@
             </v-radio-group>
             <v-btn-toggle>
               <v-btn
+                id="start-workload"
                 @click="handleButtonChange('start')"
                 :disabled="buttons.start.loading || !isLoaded(workload)"
                 :loading="buttons.start.loading"
@@ -57,6 +60,7 @@
                 </v-icon>
               </v-btn>
               <v-btn
+                id="pause-workload"
                 @click="handleButtonChange('pause')"
                 :disabled="buttons.pause.loading || !isLoaded(workload)"
                 :loading="buttons.pause.loading"
@@ -67,6 +71,7 @@
                 </v-icon>
               </v-btn>
               <v-btn
+                id="stop-workload"
                 @click="handleButtonChange('stop')"
                 :disabled="buttons.stop.loading || noDatabaseAdded"
                 :loading="buttons.stop.loading"

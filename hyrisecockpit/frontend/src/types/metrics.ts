@@ -77,6 +77,7 @@ export interface MetricMetadata {
   requestTime: number;
   dataType: DataType;
   staticAxesRange?: AxesRange;
+  historic: boolean;
 }
 
 export interface ComparisonMetricData {

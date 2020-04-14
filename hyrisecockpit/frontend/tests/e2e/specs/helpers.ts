@@ -20,6 +20,12 @@ export function getSelectorByConfig(elementType: string, id: string): string {
   return `${elementType}[id=${id}]`;
 }
 
+export function waitForChartRender(): void {
+  cy.wait(1000);
+}
+
+// FORMATTING HELPERS
+
 export function roundNumber(
   data: number,
   ratio: number,
@@ -32,4 +38,12 @@ export function roundNumber(
 
 export function formatDateToHHMMSS(date: Date): string {
   return date.toLocaleTimeString("de-DE");
+}
+
+export function assignToObject(data: any[], type: string): Object {
+  const newData: any = {};
+  data.forEach((entry: any) => {
+    newData[entry.id] = entry[type][0][type];
+  });
+  return newData;
 }

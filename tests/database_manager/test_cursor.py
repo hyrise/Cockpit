@@ -141,6 +141,40 @@ class TestCursor:
             [expected_point], database="database"
         )
 
+    def test_creates_database(self):
+        """Test creating of an Influx database."""
+        cursor = StorageCursor("host", "port", "user", "password", "database")
+        cursor._database = "database_name"
+        cursor._connection = MagicMock()
+        cursor._connection.create_database.return_value = None
+
+        cursor.create_database()
+        cursor._connection.create_database.assert_called_once_with("database_name")
+
+    def test_drops_database(self):
+        """Test dropping of an Influx database."""
+        cursor = StorageCursor("host", "port", "user", "password", "database")
+        cursor._database = "database_name"
+        cursor._connection = MagicMock()
+        cursor._connection.drop_database.return_value = None
+
+        cursor.drop_database()
+        cursor._connection.drop_database.assert_called_once_with("database_name")
+
+    def test_creates_continuous_query(self):
+        """Test creating of a continuous query in Influx database."""
+        cursor = StorageCursor("host", "port", "user", "password", "database")
+        cursor._database = "database_name"
+        cursor._connection = MagicMock()
+        cursor._connection.create_continuous_query.return_value = None
+
+        cursor.create_continuous_query(
+            "query_name", "query statement", "resample_options"
+        )
+        cursor._connection.create_continuous_query.assert_called_once_with(
+            "query_name", "query statement", "database_name", "resample_options"
+        )
+
     def test_initializes_pool_cursor_correctly(self) -> None:
         """Test initializes pool cursor correctly."""
         mocked_pool: MagicMock = MagicMock()
