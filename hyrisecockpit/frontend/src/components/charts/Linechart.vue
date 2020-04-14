@@ -125,7 +125,7 @@ function useLineChartConfiguration(
     return {
       xaxis: {
         title: {
-          text: props.chartConfiguration.xaxis
+          // text: props.chartConfiguration.xaxis
         },
         type: "date",
         tickformat: "%H:%M:%S",
@@ -143,7 +143,7 @@ function useLineChartConfiguration(
       margin: {
         l: 70,
         r: 40,
-        b: 70,
+        b: 30,
         t: 10,
         pad: 0
       },
