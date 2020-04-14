@@ -132,10 +132,10 @@ class DatabaseManager(object):
         databases = [
             {
                 "id": id,
-                "host": database.driver.host,
-                "port": database.driver.port,
+                "host": database.connection_information["host"],
+                "port": database.connection_information["port"],
                 "number_workers": database.number_workers,
-                "dbname": database.driver.dbname,
+                "dbname": database.connection_information["dbname"],
             }
             for id, database in self._databases.items()
         ]

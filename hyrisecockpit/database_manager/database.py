@@ -40,8 +40,16 @@ class Database(object):
         self._storage_port: str = storage_port
         self._storage_user: str = storage_user
 
+        self.connection_information: Dict[str, str] = {
+            "host": host,
+            "port": port,
+            "user": user,
+            "password": password,
+            "dbname": dbname,
+        }
+
         self._connection_factory: ConnectionFactory = ConnectionFactory(
-            user, password, host, port, dbname
+            **self.connection_information
         )
 
         self._database_blocked: Value = Value("b", False)
