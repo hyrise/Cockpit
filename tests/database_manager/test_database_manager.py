@@ -38,8 +38,8 @@ def fake_database(*args) -> MagicMock:
     fake_database.driver.port = 10000
     fake_database.number_workers = 8
     fake_database.close.return_value = None
-    fake_database.driver.get_user.return_value = "Jack Black"
-    fake_database.driver.get_password.return_value = "password1234"
+    fake_database.driver.user.return_value = "Jack Black"
+    fake_database.driver.password.return_value = "password1234"
 
     return fake_database
 
