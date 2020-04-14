@@ -5,7 +5,7 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple, Type, TypedDict, 
 from influxdb import InfluxDBClient
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query as read_sql_query_pandas
-from psycopg2 import pool
+from psycopg2 import connect
 
 
 class PointBase(TypedDict):
@@ -25,15 +25,27 @@ class Point(PointBase, total=False):
 class PoolCursor:
     """Context manager for connections from a pool."""
 
-    def __init__(self, connection_pool: pool) -> None:
+    def __init__(
+        self, host: str, port: str, user: str, password: str, dbname: str
+    ) -> None:
         """Initialize a PoolCursor."""
-        self.pool: pool = connection_pool
-        self._connection = self.pool.getconn()
-        self._connection.set_session(autocommit=True)
-        self.cur = self._connection.cursor()
+        self._user: str = user
+        self._password: str = password
+        self._host: str = host
+        self._port: str = port
+        self._dbname: str = dbname
 
     def __enter__(self) -> "PoolCursor":
         """Return self for a context manager."""
+        self._connection = connect(
+            host=self._host,
+            port=self._port,
+            user=self._user,
+            password=self._password,
+            dbname=self._dbname,
+        )
+        self._connection.set_session(autocommit=True)
+        self._cur = self._connection.cursor()
         return self
 
     def __exit__(
@@ -43,27 +55,51 @@ class PoolCursor:
         traceback: Optional[TracebackType],
     ) -> Optional[bool]:
         """Call close with a context manager."""
-        self.cur.close()
-        self.pool.putconn(self._connection)
+        self._cur.close()
+        self._connection.close()
         return None
 
     def execute(
         self, query: str, parameters: Optional[Tuple[Union[str, int], ...]]
     ) -> None:
         """Execute a query."""
-        return self.cur.execute(query, parameters)
+        return self._cur.execute(query, parameters)
 
     def fetchone(self) -> Tuple[Any, ...]:
         """Fetch one."""
-        return self.cur.fetchone()
+        return self._cur.fetchone()
 
     def fetchall(self) -> List[Tuple[Any, ...]]:
         """Fetch all."""
-        return self.cur.fetchall()
+        return self._cur.fetchall()
+
+    def fetch_column_names(self) -> List[str]:
+        """Return column names."""
+        return [col[0] for col in self._cur.description]
 
     def read_sql_query(self, sql: str) -> DataFrame:
         """Execute query and return result as data-frame."""
         return read_sql_query_pandas(sql, self._connection)
+
+
+class ConnectionFactory:
+    """Factory for creating cursors."""
+
+    def __init__(
+        self, user: str, password: str, host: str, port: str, dbname: str,
+    ):
+        """Initialize the connection attributes."""
+        self._user: str = user
+        self._password: str = password
+        self._host: str = host
+        self._port: str = port
+        self._dbname: str = dbname
+
+    def create_cursor(self) -> PoolCursor:
+        """Create new PoolCurosr."""
+        return PoolCursor(
+            self._host, self._port, self._user, self._password, self._dbname
+        )
 
 
 class StorageCursor:
