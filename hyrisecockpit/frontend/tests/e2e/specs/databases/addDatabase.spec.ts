@@ -94,6 +94,7 @@ describe("When adding a new database", () => {
       backend.reload("database", newDatabase.host, "DELETE");
     });
   });
+
   // test advanced save
   describe("and clicking the save button with advanced data", () => {
     it("will add a new database with the correct data", () => {
@@ -177,11 +178,12 @@ describe("When adding a new database", () => {
       testElementNoVisibility(getSelector("passwordInput"));
     });
   });
+
   // test non-unique ID
   describe("and trying to add a database with already used ID", () => {
     it("will add an error message", () => {
       backend.reload("database", newDatabase.id, "POST");
-      cy.visit("/");
+      cy.reload();
 
       clickElement(getViewSelector("databaseListButton"));
       clickElement(getSelector("addDatabaseButton"));
@@ -198,7 +200,7 @@ describe("When adding a new database", () => {
         .clear()
         .type(newDatabase.number_workers.toString());
 
-      cy.contains("Id is already taken.");
+      cy.contains("ID is already taken.");
       testButtonIsDisabled(getSelector("saveDatabaseButton"));
 
       backend.reload("database", newDatabase.host, "DELETE");

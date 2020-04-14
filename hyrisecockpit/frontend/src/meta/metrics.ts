@@ -20,7 +20,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "chunks",
     component: "Access",
     requestTime: 5000,
-    dataType: "interval"
+    dataType: "interval",
+    historic: false
   },
   cpu: {
     fetchType: "modify",
@@ -30,6 +31,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     component: "CPU",
     requestTime: 1000,
     dataType: "interval",
+    historic: true,
     staticAxesRange: {
       y: { max: 100 }
     }
@@ -41,7 +43,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "latency",
     component: "Latency",
     requestTime: 1000,
-    dataType: "interval"
+    dataType: "interval",
+    historic: true
   },
   executedQueryTypeProportion: {
     fetchType: "read",
@@ -50,7 +53,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "krueger_data",
     component: "QueryTypeProportion",
     requestTime: 5000,
-    dataType: "interval"
+    dataType: "interval",
+    historic: false
   },
   generatedQueryTypeProportion: {
     fetchType: "read",
@@ -61,7 +65,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "krueger_data",
     component: "QueryTypeProportion",
     requestTime: 5000,
-    dataType: "interval"
+    dataType: "interval",
+    historic: false
   },
   queueLength: {
     fetchType: "modify",
@@ -70,7 +75,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "queue_length",
     component: "QueueLength",
     requestTime: 1000,
-    dataType: "interval"
+    dataType: "interval",
+    historic: true
   },
   ram: {
     fetchType: "modify",
@@ -80,6 +86,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     component: "RAM",
     requestTime: 1000,
     dataType: "interval",
+    historic: true,
     staticAxesRange: {
       y: { max: 100 }
     }
@@ -91,7 +98,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "storage",
     component: "Storage",
     requestTime: 5000,
-    dataType: "snapshot"
+    dataType: "snapshot",
+    historic: false
   },
   throughput: {
     fetchType: "modify",
@@ -100,7 +108,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "throughput",
     component: "Throughput",
     requestTime: 1000,
-    dataType: "interval"
+    dataType: "interval",
+    historic: true
   }
 };
 

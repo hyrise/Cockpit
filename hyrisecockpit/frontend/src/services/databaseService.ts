@@ -3,14 +3,16 @@ import {
   DatabaseCPUResponse,
   DatabaseStorageResponse,
   DatabaseResponse
-} from "../types/database";
+} from "@/types/database";
 import axios from "axios";
-import { colorDefinition } from "../meta/colors";
+import { colorDefinition } from "@/meta/colors";
 import { monitorBackend, controlBackend } from "../../config";
-import { useDataTransformationHelpers } from "./transformationService";
-import { useDatabaseEvents } from "../meta/events";
+import { useDataTransformationHelpers } from "@/services/transformationService";
+import { useDatabaseEvents } from "@/meta/events";
+import { useFormatting } from "@/meta/formatting";
 
 export function useDatabaseService(): DatabaseService {
+  const { formatDateToNanoSec, subSeconds } = useFormatting();
   const {
     emitDatabaseAddedEvent,
     emitDatabaseRemovedEvent
@@ -48,11 +50,17 @@ export function useDatabaseService(): DatabaseService {
     DatabaseCPUResponse[]
   > {
     let databasesWithCPUInformation: DatabaseCPUResponse[] = [];
-    await axios.get(monitorBackend + "system").then(response => {
-      databasesWithCPUInformation = getCPUInformation(
-        response.data.body.system_data
-      );
-    });
+    const currentDate = new Date();
+    await axios
+      .get(monitorBackend + "system", {
+        params: {
+          startts: formatDateToNanoSec(subSeconds(currentDate, 1)),
+          endts: formatDateToNanoSec(currentDate)
+        }
+      })
+      .then(response => {
+        databasesWithCPUInformation = getCPUInformation(response.data);
+      });
     return databasesWithCPUInformation;
   }
 
@@ -70,7 +78,7 @@ export function useDatabaseService(): DatabaseService {
 
   function getDatabasesInformation(response: any): DatabaseResponse[] {
     const databases: DatabaseResponse[] = [];
-    Object.values(response).forEach((data: any) => {
+    response.forEach((data: any) => {
       databases.push({
         id: data.id,
         host: data.host,
@@ -82,11 +90,13 @@ export function useDatabaseService(): DatabaseService {
 
   function getCPUInformation(response: any): DatabaseCPUResponse[] {
     const databasesWithCPUInformation: DatabaseCPUResponse[] = [];
-    Object.entries(response).forEach(([id, data]: [string, any]) => {
+    response.forEach((databaseData: any) => {
+      const cpuData =
+        databaseData.system_data[databaseData.system_data.length - 1] || [];
       databasesWithCPUInformation.push({
-        id: id,
-        numberOfCPUs: data.cpu.cpu_count,
-        memoryCapacity: getDatabaseMainMemoryCapacity(data)
+        id: databaseData.id,
+        numberOfCPUs: cpuData?.system_data?.cpu?.cpu_count ?? 0,
+        memoryCapacity: getDatabaseMainMemoryCapacity(cpuData.system_data)
       } as DatabaseCPUResponse);
     });
     return databasesWithCPUInformation;

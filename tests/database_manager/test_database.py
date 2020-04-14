@@ -5,7 +5,7 @@ from multiprocessing.sharedctypes import Synchronized as ValueType
 from typing import Any, Dict, List, Optional
 from unittest.mock import MagicMock, patch
 
-from psycopg2 import DatabaseError, InterfaceError, pool
+from psycopg2 import DatabaseError, Error, InterfaceError, pool
 from pytest import fixture, mark
 
 from hyrisecockpit.database_manager.database import Database
@@ -683,7 +683,97 @@ class TestDatabase(object):
 
         assert result is None
 
-        mocked_pool_cur = MagicMock()
+        reset_mocked_pool_cursor()
+
+    @patch(
+        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
+    )
+    def test_executes_sql_query(self, database: Database) -> None:
+        """Test execute sql query."""
+        database._database_blocked.value = False
+        database._id = "Identification?"
+        global mocked_pool_cur
+        mocked_pool_cur.fetchall.return_value = [
+            (
+                "I'm planning to make a film series on databases",
+                "I've got the first part ready, but I can't think of a SQL.",
+                None,
+                42,
+            )
+        ]
+        mocked_pool_cur.cur.description = (
+            ("bad", "encoding",),
+            ("joke", "encoding",),
+        )
+
+        expected = {
+            "id": "Identification?",
+            "successful": True,
+            "results": [
+                [
+                    "I'm planning to make a film series on databases",
+                    "I've got the first part ready, but I can't think of a SQL.",
+                    "None",
+                    "42",
+                ]
+            ],
+            "col_names": ["bad", "joke"],
+            "error_message": "",
+        }
+
+        result = database.execute_sql_query("SELECT funny FROM not_funny")
+
+        assert expected == result
+
+        reset_mocked_pool_cursor()
+
+    @patch(
+        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
+    )
+    def test_executes_sql_query_with_throwing_exception(
+        self, database: Database
+    ) -> None:
+        """Test execute sql query with throwing exception."""
+
+        def raise_exception(*args) -> Exception:
+            """Throw exception."""
+            raise Error
+
+        database._database_blocked.value = False
+        database._id = "Identification?"
+        global mocked_pool_cur
+        mocked_pool_cur.execute.side_effect = raise_exception
+
+        expected = {
+            "id": "Identification?",
+            "successful": False,
+            "results": [],
+            "col_names": [],
+            "error_message": "",
+        }
+
+        result = database.execute_sql_query("SELECT funny FROM not_funny")
+
+        assert expected == result
+
+        reset_mocked_pool_cursor()
+
+    @patch(
+        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
+    )
+    def test_executes_sql_query_while_database_is_blocked(
+        self, database: Database
+    ) -> None:
+        """Test execute sql query while database is blocked."""
+        global mocked_pool_cur
+
+        database._database_blocked.value = True
+        result = database.execute_sql_query("SELECT funny FROM not_funny")
+
+        assert result is None
+        mocked_pool_cur.execute.assert_not_called()
+
+        reset_mocked_pool_cursor()
 
     def test_closes_database(self, database: Database) -> None:
         """Test closing of database."""
@@ -703,3 +793,38 @@ class TestDatabase(object):
         mocked_worker_pool.terminate.assert_called_once()
         mocked_background_scheduler.close.assert_called_once()
         mocked_connection_pool.closeall.assert_called_once()
+
+    @patch("hyrisecockpit.database_manager.database.StorageCursor")
+    def test_initializes_influx(
+        self, mock_storage_cursor_constructor: MagicMock, database: Database
+    ) -> None:
+        """Test intialization of the corresponding influx database."""
+        mock_storage_cursor = MagicMock()
+        mock_storage_cursor.create_database.return_value = None
+        mock_storage_cursor.drop_database.return_value = None
+        mock_storage_cursor.create_continuous_query.return_value = None
+        mock_storage_cursor_constructor.return_value.__enter__.return_value = (
+            mock_storage_cursor
+        )
+
+        throughput_query = """SELECT count("latency") AS "throughput"
+                INTO "throughput"
+                FROM "successful_queries"
+                GROUP BY time(1s)"""
+        latency_query = """SELECT mean("latency") AS "latency"
+                INTO "latency"
+                FROM "successful_queries"
+                GROUP BY time(1s)"""
+        resample_options = "EVERY 1s FOR 5s"
+
+        database._initialize_influx()
+
+        mock_storage_cursor_constructor.assert_called_once()
+        mock_storage_cursor.drop_database.assert_called_once()
+        mock_storage_cursor.create_database.assert_called_once()
+        mock_storage_cursor.create_continuous_query.assert_any_call(
+            "throughput_calculation", throughput_query, resample_options
+        )
+        mock_storage_cursor.create_continuous_query.assert_any_call(
+            "latency_calculation", latency_query, resample_options
+        )

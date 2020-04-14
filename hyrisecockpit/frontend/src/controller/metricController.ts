@@ -3,6 +3,7 @@ import { useMetricService } from "@/services/metricService";
 import { Metric, availableMetrics, MetricController } from "@/types/metrics";
 import { MetricService } from "@/types/services";
 import { getMetricRequestTime } from "@/meta/metrics";
+import { useFormatting } from "@/meta/formatting";
 
 type Interval = {
   id: number | undefined;
@@ -11,10 +12,26 @@ type Interval = {
 };
 
 export function useMetricController(): MetricController {
+  const { subSeconds } = useFormatting();
+
   eventBus.$on("WATCHED_METRICS_CHANGED", (payload: Metric[]) => {
     stop();
-    start(payload);
+    start(payload || []);
   });
+
+  eventBus.$on("PAGE_CHANGED", (payload: Metric[]) => {
+    const currentDate = new Date();
+    stop();
+    start(payload || [], new Date(subSeconds(currentDate, 30)), currentDate);
+  });
+
+  eventBus.$on(
+    "HISTORIC_RANGE_CHANGED",
+    (payload: { metrics: Metric[]; start: Date; end: Date }) => {
+      stop();
+      start(payload.metrics || [], payload.start, payload.end); //TODO: fire only once when watching historic data
+    }
+  );
 
   const metricServices = setupServices();
 
@@ -46,13 +63,13 @@ export function useMetricController(): MetricController {
     return intervals;
   }
 
-  function start(metrics: Metric[]): void {
+  function start(metrics: Metric[], start?: Date, end?: Date): void {
     metrics.forEach(metric => {
-      metricServices[metric].getDataIfReady,
-        (metricIntervals[metric].id = setInterval(
-          metricServices[metric].getDataIfReady,
-          metricIntervals[metric].time
-        ));
+      metricServices[metric].getDataIfReady(start, end);
+      metricIntervals[metric].id = setInterval(
+        metricServices[metric].getDataIfReady,
+        metricIntervals[metric].time
+      );
       metricIntervals[metric].runningState = true;
     });
   }
