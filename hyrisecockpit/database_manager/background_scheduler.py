@@ -242,7 +242,7 @@ class BackgroundJobManager(object):
     def _update_plugin_log(self) -> None:
         """Update plugin log."""
         currentts = time_ns()
-        startts = currentts - 1_000_000_000
+        startts = currentts - 2_000_000_000
 
         log_df = self._sql_to_data_frame(
             f"SELECT * FROM meta_log WHERE 'timestamp' >= {startts} AND 'timestamp' < {currentts};",
