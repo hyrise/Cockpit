@@ -123,10 +123,8 @@ function useLineChartConfiguration(
   function getLayout(yMax: number, xMin: number = 1): Object {
     const currentTime = formatDateWithoutMilliSec(new Date()).getTime();
     return {
+      height: multipleDatabasesAllowed ? 300 : 225,
       xaxis: {
-        title: {
-          // text: props.chartConfiguration.xaxis
-        },
         type: "date",
         tickformat: "%H:%M:%S",
         range: [currentTime - (xMin - 1) * 1000, currentTime]
@@ -158,7 +156,7 @@ function useLineChartConfiguration(
     return {
       y: data,
       mode: "lines+markers",
-      fill: 'tonexty',
+      fill: "tonexty",
       line: database ? { color: database.color } : {},
       name: database ? database.id : {}
     };
