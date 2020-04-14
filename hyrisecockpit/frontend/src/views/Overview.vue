@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="overview-page">
     <linear-loader
       :conditions="[$databaseController.databasesUpdated]"
       :evaluations="[false]"
