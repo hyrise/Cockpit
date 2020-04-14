@@ -10,7 +10,8 @@ export type Entity =
   | "chunks"
   | "queries"
   | "plugins"
-  | "activated_plugins";
+  | "activated_plugins"
+  | "loaded_benchmarks";
 export type Request =
   | "database"
   | "system"
@@ -26,11 +27,14 @@ export type Request =
   | "plugin"
   | "plugin_settings"
   | "plugin_log"
-  | "workload";
+  | "workload"
+  | "status";
 
-export type BackendStatus = "up" | "down";
+export type BackendState = "up" | "down";
 
-export const benchmarks = ["tpch_1", "tpch_0.1", "tpcds_1", "job"];
+export type DatabaseState = "workloadRunning";
+
+export const benchmarks = ["tpch_0.1", "tpch_1", "tpcds_1", "job"];
 
 const getAliases: Partial<Record<Request, string>> = {
   database: "getDatabases",
@@ -46,7 +50,8 @@ const getAliases: Partial<Record<Request, string>> = {
   available_plugins: "getAvailablePLugins",
   plugin: "getPlugin",
   plugin_settings: "getPluginSettings",
-  plugin_log: "getPluginLog"
+  plugin_log: "getPluginLog",
+  status: "getDatabaseWorkloadState"
 };
 
 const postAliases: Partial<Record<Request, string>> = {
@@ -64,7 +69,7 @@ const deleteAliases: Partial<Record<Request, string>> = {
   workload: "stopWorkload"
 };
 
-const responseStatus: Record<BackendStatus, number> = {
+const responseStatus: Record<BackendState, number> = {
   up: 200,
   down: 500
 };
@@ -81,8 +86,8 @@ export function getDeleteAlias(request: Request): string {
   return deleteAliases[request]!;
 }
 
-export function getResponseStatus(backendStatus: BackendStatus): number {
-  return responseStatus[backendStatus];
+export function getResponseStatus(BackendState: BackendState): number {
+  return responseStatus[BackendState];
 }
 
 // ASSIGN FAKE DATA HELPERS

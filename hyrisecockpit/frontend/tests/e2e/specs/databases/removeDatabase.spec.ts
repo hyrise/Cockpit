@@ -1,6 +1,6 @@
 import { useBackendMock } from "../../setup/backendMock";
 import { clickElement } from "../helpers";
-import { getGetAlias, getDeleteAlias } from "../../setup/helpers";
+import { getDeleteAlias } from "../../setup/helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
 import { getSelector, assertDeleteValues } from "./helpers";
 import { fakeId } from "../../setup/factories";
@@ -18,10 +18,7 @@ let databaseId: string = "";
 
 describe("When removing a database", () => {
   beforeEach(() => {
-    backend.start();
-    cy.visit("/");
-    cy.wait("@" + getGetAlias("database"));
-    cy.get("@" + getGetAlias("database")).should((xhr: any) => {
+    cy.setupAppState(backend).then((xhr: any) => {
       databaseId = xhr.response.body[0].id;
     });
   });
@@ -55,7 +52,7 @@ describe("When removing a database", () => {
     it("will always select the clicked database to be removed", () => {
       const secondDatabaseId = fakeId("database-");
       backend.reload("database", secondDatabaseId, "POST");
-      cy.visit("/");
+      cy.reload();
 
       clickElement(getViewSelector("databaseListButton"));
       testContentExistence(databaseId);

@@ -11,6 +11,10 @@ const selectors: Record<string, { element: string; title: string }> = {
     element: "div",
     title: "executedQueryTypeProportion"
   },
+  generatedQueryTypeProportion: {
+    element: "div",
+    title: "generatedQueryTypeProportion"
+  },
   firstStorage: { element: "div", title: "1storage" },
   secondStorage: { element: "div", title: "2storage" },
   firstAccess: { element: "div", title: "1access" },
@@ -28,10 +32,10 @@ export function getSelector(component: string): string {
   );
 }
 
-export function getSelectorWithID(component: string, id: string): string {
+export function getSelectorWithID(component: string, id?: string): string {
   return getSelectorByConfig(
     selectors[component].element,
-    `${selectors[component].title}-${id}`
+    id ? `${selectors[component].title}-${id}` : `${selectors[component].title}`
   );
 }
 
@@ -45,12 +49,20 @@ export function getDetailsSelectorWithID(
   );
 }
 
+export function assertDataRequest(url: string, range: number): void {
+  const startIndex = url.indexOf("=") + 1;
+  const endIndex = url.indexOf("=", startIndex) + 1;
+  const startTime = parseInt(url.substring(startIndex, url.indexOf("&")), 10);
+  const endTime = parseInt(url.substring(endIndex), 10);
+
+  expect(endTime - startTime).to.eq(range * Math.pow(10, 9));
+}
+
 export function assertLineChartData(
   chartDatasets: any[],
   requestData: any,
   databases: any[]
 ): void {
-  console.log(chartDatasets);
   databases.forEach((database: any) => {
     const chartData: any = chartDatasets.find(
       (data: any) => data.name === database
@@ -74,7 +86,6 @@ export function assertBarChartData(
   requestData: any,
   xaxis: string
 ): void {
-  console.log(chartDatasets);
   Object.keys(requestData).forEach((label: string) => {
     const chartData: any = chartDatasets.find(
       (data: any) => data.name === label
@@ -87,11 +98,7 @@ export function assertBarChartData(
   });
 }
 
-export function assertHeatMapData(
-  chartDatasets: any,
-  database: string,
-  requestData?: any
-): void {
+export function assertHeatMapData(chartDatasets: any, requestData?: any): void {
   if (!requestData) {
     expect(chartDatasets.x).to.eql([]);
     expect(chartDatasets.y).to.eql([]);
@@ -135,10 +142,11 @@ export function assertTreeMapData(
       expect(chartDatasets.text[i].dataType).to.eq(
         "data type: " + data.data_type
       );
-      // TODO: enable this if encoding was updated
-      // expect(chartDatasets.text[i].encoding).to.eq(
-      //   "encoding: " + data.encoding
-      // );
+      expect(chartDatasets.text[i].encoding).to.include(data.encoding[0].name);
+      expect(chartDatasets.text[i].encoding).to.include(
+        data.encoding[0].compression[0]
+      );
+      expect(chartDatasets.text[i].encoding).to.include("100%");
       testMaxDecimalDigits(chartDatasets.text[i].percentOfDatabase, 3);
       testMaxDecimalDigits(chartDatasets.text[i].percentOfTable, 3);
       i++;

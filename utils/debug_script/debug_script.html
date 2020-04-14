@@ -70,6 +70,24 @@
             return await response.json(); // parses JSON response into native JavaScript objects
         }
 
+        async function getData(url = '', type = 'GET') {
+            // Default options are marked with *
+            const response = await fetch(url, {
+                method: type, // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                headers: {
+                  'Content-Type': 'application/json'
+
+                  // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: 'follow', // manual, *follow, error
+                referrer: 'no-referrer', // no-referrer, *client
+            });
+            return await response.json(); // parses JSON response into native JavaScript objects
+        }
+
         function createDatabaseDomElement(database_id){
             let database_elem = document.createElement("div");
             database_elem.setAttribute("id", database_id);
@@ -166,32 +184,50 @@
         } 
 
         async function updateThroughput(url){
-            const response = await fetch(url);
-            let data = await response.json()
-            let databases = data["body"]["throughput"]
+            time_stamp = (Math.round((new Date()).getTime() / 1000) - 3);
+            start_time_stamp = (time_stamp - 1) * 1_000_000_000;
+            end_time_stamp = time_stamp * 1_000_000_000;
+            parametrized_url =  url + "?startts=" + start_time_stamp + "&endts=" + end_time_stamp;
+            let response = await getData(url=parametrized_url);
             let active_datases = Array.from(active_databases.keys());
-            for (let database_id in databases){
-                if(active_datases.includes(database_id)){
-                    let value = databases[database_id];
-                    active_databases.get(database_id)["throughput"] = value;
-                    document.getElementById(database_id+"_throughput").innerHTML = ("Throughput: " + value);
+            let obj_keys = Object.keys(response);
+            for (let key in obj_keys){
+                let database = response[key];
+                if(active_datases.includes(database["id"])){
+                    throughput_keys =  Object.keys(database["throughput"])
+                    let throughput = 0;
+                    for (let throughput_key in throughput_keys){
+                        throughput = database["throughput"][throughput_key]["throughput"] + throughput;
+                    }
+                    throughput = Math.round(throughput / database["throughput"].length);
+                    active_databases.get(database["id"])["throughput"] = throughput;
+                    document.getElementById(database["id"]+"_throughput").innerHTML = ("Throughput: " + throughput);
                 }
             }
         } 
 
         async function updateQueueLength(url){
-            const response = await fetch(url);
-            let data = await response.json()
-            let databases = data["body"]["queue_length"]
+            time_stamp = (Math.round((new Date()).getTime() / 1000) - 3);
+            start_time_stamp = (time_stamp - 1) * 1_000_000_000;
+            end_time_stamp = time_stamp * 1_000_000_000;
+            parametrized_url =  url + "?startts=" + start_time_stamp + "&endts=" + end_time_stamp;
+            let response = await getData(url=parametrized_url);
             let active_datases = Array.from(active_databases.keys());
-            for (let database_id in databases){
-                if(active_datases.includes(database_id)){
-                    let value = databases[database_id];
-                    active_databases.get(database_id)["queue_length"] = value;
-                    document.getElementById(database_id+"_queue_length").innerHTML = ("Queuelength: " + value);
+            let obj_keys = Object.keys(response);
+            for (let key in obj_keys){
+                let database = response[key];
+                if(active_datases.includes(database["id"])){
+                    queue_length_keys =  Object.keys(database["queue_length"]);
+                    let queue_length = 0;
+                    for (let queue_length_key in queue_length_keys){
+                        queue_length = database["queue_length"][queue_length_key]["queue_length"] + queue_length;
+                    }
+                    queue_length = Math.round(queue_length / database["queue_length"].length)
+                    active_databases.get(database["id"])["queue_length"] = queue_length;
+                    document.getElementById(database["id"]+"_queue_length").innerHTML = ("Queuelength: " + queue_length);
                 }
             }
-        }      
+        }   
 
         async function execute_workload(json){
             const response = await postData(MONITOR_URL + '/control/workload', json, 'POST');
