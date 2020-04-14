@@ -79,7 +79,8 @@ export function fakeDatabaseSystemData(): Object {
 function fakeEncodingData(): Object {
   return {
     amount: faker.random.number(),
-    compression: [faker.random.word()]
+    compression: [faker.random.word()],
+    name: faker.random.word()
   };
 }
 
@@ -181,8 +182,8 @@ export function fakeDatabaseChunksData(
 function fakeQueryInformationData(latency: number): Object {
   return {
     benchmark: benchmarks[generateRandomInt(0, benchmarks.length)],
-    query_number: faker.random.number(),
-    throughput: faker.random.number(),
+    query_number: latency / Math.pow(10, 3),
+    throughput: generateRandomInt(0, 100),
     latency: latency
   };
 }
@@ -252,5 +253,22 @@ export function fakeDatabasePluginLogs(
   return {
     id: databaseId,
     plugin_log: pluginIds.map(id => fakePluginLog(id))
+  };
+}
+
+// WORKLOADS
+
+export function fakeDatabaseStatusData(
+  databaseId: string,
+  loadedBenchmarks: string[],
+  state: boolean
+): Object {
+  return {
+    id: databaseId,
+    hyrise_active: true,
+    database_blocked_status: false,
+    worker_pool_status: state ? "running" : "",
+    loaded_benchmarks: loadedBenchmarks,
+    loaded_tables: []
   };
 }
