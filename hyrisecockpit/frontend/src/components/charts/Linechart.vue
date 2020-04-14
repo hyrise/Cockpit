@@ -137,12 +137,12 @@ function useLineChartConfiguration(
       },
       autosize: true,
       showlegend: multipleDatabasesAllowed,
-      legend: { x: 0, y: 1.3 },
+      legend: { x: 0, y: 1.1, orientation: "h"},
       margin: {
         l: 70,
         r: 40,
         b: 30,
-        t: 10,
+        t: multipleDatabasesAllowed ? 0 : 10,
         pad: 0
       },
       paper_bgcolor: "rgba(0,0,0,0)"
