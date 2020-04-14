@@ -30,9 +30,11 @@ const metricEventMap: Partial<Record<Metric, (data: any) => void>> = {
   storage: emitStorageDataChangedEvent
 };
 
-export function useUpdatingData(data: any, metric: Metric): void {
-  if (Object.keys(data).length) {
-    if (metricEventMap[metric]) metricEventMap[metric]!(data);
+export function useUpdatingData(data: any, metrics: Metric[]): void {
+  if (Object.values(data).length) {
+    metrics.forEach(metric => {
+      if (metricEventMap[metric]) metricEventMap[metric]!(data);
+    });
   }
 }
 

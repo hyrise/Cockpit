@@ -1,4 +1,5 @@
 import { eventBus } from "@/plugins/eventBus";
+import { computed } from "@vue/composition-api";
 import { useMetricService } from "@/services/metricService";
 import { Metric, availableMetrics, MetricController } from "@/types/metrics";
 import { MetricService } from "@/types/services";
@@ -46,7 +47,7 @@ export function useMetricController(): MetricController {
   function setupServices(): Record<Metric, MetricService> {
     const services: any = {};
     availableMetrics.forEach(metric => {
-      services[metric] = useMetricService(metric);
+      services[metric] = useMetricService([metric]);
     });
     return services;
   }
@@ -87,8 +88,10 @@ export function useMetricController(): MetricController {
 
   function mapToData(services: Record<Metric, MetricService>): void {
     Object.entries(services).forEach(([metric, service]) => {
-      data[metric as Metric] = service.data;
-      maxValueData[metric as Metric] = service.maxValue;
+      data[metric as Metric] = computed(() => service.data.value[metric]);
+      maxValueData[metric as Metric] = computed(
+        () => service.maxValues.value[metric as Metric]
+      );
       timestamps[metric as Metric] = service.timestamps;
     });
   }

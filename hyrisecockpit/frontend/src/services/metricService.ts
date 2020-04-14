@@ -7,22 +7,38 @@ import { getMetricMetadata } from "../meta/metrics";
 import { useFormatting } from "@/meta/formatting";
 import { isInTestMode } from "@/helpers/methods";
 
-export function useMetricService(metric: Metric): MetricService {
+// fetch data for all metrics with same endpoint
+export function useMetricService(metrics: Metric[]): MetricService {
   const queryReadyState = ref(true);
-  const data = ref<any>({});
+  const data = ref<any>(initializeData());
   const timestamps = ref<Date[]>([]);
-  const metricMetaData = getMetricMetadata(metric);
-  const maxValue = computed(
-    () =>
-      metricMetaData.staticAxesRange?.y?.max ||
-      Object.values(data.value).reduce(
-        (max: number, dataSet: any) => Math.max(...dataSet, max),
-        0
-      )
+  const metricsMetaData = metrics.map(metric => getMetricMetadata(metric));
+  const metricInfo = metricsMetaData[0];
+  const maxValues = computed(
+    (): Record<Metric, number> => {
+      const newValues: Record<Metric, number> = {} as Record<Metric, number>;
+      metrics.forEach((metric, idx) => {
+        newValues[metric] =
+          metricsMetaData[idx].staticAxesRange?.y?.max ||
+          Object.values(data.value[metric]).reduce(
+            (max: number, dataSet: any) => Math.max(...dataSet, max),
+            0
+          );
+      });
+      return newValues;
+    }
   );
   const historicFetching = ref(false);
 
   const { subSeconds, formatDateToNanoSec } = useFormatting();
+
+  function initializeData(): Object {
+    const newData: any = {};
+    metrics.forEach(metric => {
+      newData[metric] = {};
+    });
+    return newData;
+  }
 
   function getData(start?: Date, end?: Date): void {
     queryReadyState.value = false;
@@ -36,21 +52,25 @@ export function useMetricService(metric: Metric): MetricService {
       : formatDateToNanoSec(currentTimestamp);
 
     fetchData(startTime, endTime).then(result => {
-      useUpdatingData(result, metric);
-      if (metricMetaData.fetchType === "modify") {
-        result.forEach((data: any) => {
-          handleDataChange(
-            data.id,
-            metricMetaData.transformationService(
-              data[metricMetaData.base],
-              metricMetaData.base
-            )
-          );
-        });
-      } else if (metricMetaData.fetchType === "read") {
-        data.value = result;
-      }
-      const newTimestamps = result[0]?.[metricMetaData.base]?.map(
+      useUpdatingData(result, metrics);
+      metrics.forEach((metric, idx) => {
+        if (metricsMetaData[idx].fetchType === "modify") {
+          result.forEach((data: any) => {
+            handleDataChange(
+              data.id,
+              metricsMetaData[idx].transformationService(
+                data[metricInfo.base],
+                metricInfo.base
+              ),
+              metric
+            );
+          });
+        } else if (metricsMetaData[idx].fetchType === "read") {
+          data.value = result;
+        }
+      });
+
+      const newTimestamps = result[0]?.[metricInfo.base]?.map(
         (entry: any) => entry.timestamp
       ) ?? [formatDateToNanoSec(currentTimestamp)];
       handleTimestamps(
@@ -65,7 +85,7 @@ export function useMetricService(metric: Metric): MetricService {
   function fetchData(start: number, end: number): Promise<any> {
     return new Promise((resolve, reject) => {
       axios
-        .get(metricMetaData.endpoint, {
+        .get(metricInfo.endpoint, {
           params: {
             startts: start,
             endts: end
@@ -73,13 +93,13 @@ export function useMetricService(metric: Metric): MetricService {
         })
         .then(response => {
           if (
-            metricMetaData.component === "QueryTypeProportion" ||
-            metricMetaData.historic
+            metricInfo.component === "QueryTypeProportion" ||
+            metricInfo.historic
           ) {
             //TODO: just for debug: adapt response in backend to pass data in body and divided for db instances
             resolve(response.data);
           } else {
-            resolve(response.data.body[metricMetaData.base]);
+            resolve(response.data.body[metricInfo.base]);
           }
         })
         .catch(error => {
@@ -89,13 +109,17 @@ export function useMetricService(metric: Metric): MetricService {
     });
   }
 
-  function handleDataChange(databaseId: string, newData: number[]): void {
-    if (!data.value[databaseId]) {
-      data.value[databaseId] = [];
+  function handleDataChange(
+    databaseId: string,
+    newData: number[],
+    metric: Metric
+  ): void {
+    if (!data.value[metric][databaseId]) {
+      data.value[metric][databaseId] = [];
     }
-    data.value[databaseId] = historicFetching.value
+    data.value[metric][databaseId] = historicFetching.value
       ? handleHistoricDataPoints(newData)
-      : handleCurrentDataPoints(data.value[databaseId], newData);
+      : handleCurrentDataPoints(data.value[metric][databaseId], newData);
   }
 
   function handleTimestamps(newTimestamps: number[]): void {
@@ -130,5 +154,5 @@ export function useMetricService(metric: Metric): MetricService {
     }
   }
 
-  return { data, getDataIfReady, maxValue, timestamps };
+  return { data, getDataIfReady, maxValues, timestamps };
 }
