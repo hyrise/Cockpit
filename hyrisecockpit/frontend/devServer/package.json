@@ -4,7 +4,7 @@
     "description": "",
     "main": "dist/debugServer/src/server.js",
     "scripts": {
-        "start": "tsc &&  node dist/debugServer/src/server.js",
+        "start": "tsc &&  node dist/devServer/src/server.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
