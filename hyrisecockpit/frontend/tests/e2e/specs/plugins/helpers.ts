@@ -17,7 +17,7 @@ export function getChangeSettingsSelector(plugin: string): string {
   return getSelectorByConfig("button", `${plugin}-change-button`);
 }
 
-export function assertCorrectActivePlugins(
+export function assertActivePlugins(
   database: string,
   availablePlugins: any[],
   activePluginData: any[]
@@ -37,13 +37,13 @@ export function assertCorrectActivePlugins(
   });
 }
 
-export function assertCorrectPlugins(availablePlugins: any[]): void {
+export function assertPlugins(availablePlugins: any[]): void {
   availablePlugins.forEach((plugin: any) => {
     cy.contains(plugin);
   });
 }
 
-export function assertCorrectPluginLog(
+export function assertPluginLog(
   database: string,
   pluginLogs: any[],
   content: string
@@ -62,7 +62,7 @@ export function assertCorrectPluginLog(
   });
 }
 
-export function assertCorrectPluginSettings(
+export function assertPluginSettings(
   database: string,
   pluginSettings: any[]
 ): void {
