@@ -7,7 +7,7 @@
       :key="database"
       :style="{
         color: valueColor[database],
-        fontSize: '18px',
+        fontSize: '20px',
         fontWeight: 'bold',
         top: idx * 5 + 12.5 + '%'
       }"

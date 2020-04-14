@@ -1,17 +1,21 @@
 <template>
   <v-card :id="`${tileDatabase}-${metric}-tile`">
-    <v-card-title>
+    <v-card-title class="card-title">
       <v-container fluid>
         <v-row no-gutters>
-          <v-col class="database-title">
-            <database-chip v-if="!!tileDatabase" :database-id="tileDatabase" />
-          </v-col>
           <v-col class="metric-title">
             <div>{{ getMetricTitle(metric) }}</div>
+            <time-interval :metric="metric" />
             <!--  Think about where to add this  <metric-description-tooltip :metric="metric" /> -->
           </v-col>
-          <v-col class="metric-description">
-            <time-interval :metric="metric" />
+          <v-col class="metric-description"> </v-col>
+          <v-spacer />
+          <v-col class="database-title">
+            <database-chip
+              class="database-chip"
+              v-if="!!tileDatabase"
+              :database-id="tileDatabase"
+            />
           </v-col>
         </v-row>
       </v-container>
@@ -88,15 +92,22 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.card-title {
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
+}
 .database-title {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
+.database-chip {
+  margin-left: auto;
+}
 .metric-title {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
   white-space: nowrap;
 }
 .metric-description {
