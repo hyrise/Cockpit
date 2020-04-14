@@ -8,7 +8,6 @@
             <time-interval :metric="metric" />
             <!--  Think about where to add this  <metric-description-tooltip :metric="metric" /> -->
           </v-col>
-          <v-col class="metric-description"> </v-col>
           <v-spacer />
           <v-col class="database-title">
             <database-chip
@@ -112,7 +111,7 @@ export default defineComponent({
 }
 .metric-description {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-end;
 }
 </style>
