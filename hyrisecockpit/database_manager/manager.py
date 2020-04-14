@@ -14,8 +14,8 @@ from hyrisecockpit.request import Body
 from hyrisecockpit.response import Response, get_error_response, get_response
 from hyrisecockpit.server import Server
 
+from .cursor import PoolCursor
 from .database import Database
-from .driver import Driver
 
 
 class DatabaseManager(object):
@@ -100,7 +100,7 @@ class DatabaseManager(object):
         port = body["port"]
         dbname = body["dbname"]
         number_workers = body["number_workers"]
-        if not Driver.validate_connection(
+        if not PoolCursor.validate_connection(
             user, password, host, port, dbname
         ):  # TODO move to Database
             return get_response(400)

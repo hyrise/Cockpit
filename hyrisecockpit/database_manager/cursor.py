@@ -5,7 +5,7 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple, Type, TypedDict, 
 from influxdb import InfluxDBClient
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query as read_sql_query_pandas
-from psycopg2 import connect
+from psycopg2 import Error, connect
 
 
 class PointBase(TypedDict):
@@ -80,6 +80,19 @@ class PoolCursor:
     def read_sql_query(self, sql: str) -> DataFrame:
         """Execute query and return result as data-frame."""
         return read_sql_query_pandas(sql, self._connection)
+
+    @classmethod
+    def validate_connection(
+        cls, user: str, password: str, host: str, port: str, dbname: str
+    ) -> bool:
+        """Validate whether a connection can be established."""
+        try:
+            connect(
+                user=user, password=password, host=host, port=port, dbname=dbname,
+            ).close()
+        except Error:
+            return False
+        return True
 
 
 class ConnectionFactory:
