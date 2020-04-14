@@ -14,6 +14,7 @@ import {
 import {
   assignFakeData,
   fakeDataByIds,
+  fakeDataByIdsWithTimestamps,
   generateUniqueRandomNumbers,
   Entity,
   Request,
@@ -88,26 +89,26 @@ export function useMocks(
         )
       )
     };
-    responseMocks.system = {
-      system_data: assignFakeData(
-        fakeDataByIds(mockedIds.databases, fakeDatabaseSystemData)
-      )
-    };
-    responseMocks.throughput = {
-      throughput: assignFakeData(
-        fakeDataByIds(mockedIds.databases, fakeNumberData)
-      )
-    };
-    responseMocks.latency = {
-      latency: assignFakeData(
-        fakeDataByIds(mockedIds.databases, fakeNumberData)
-      )
-    };
-    responseMocks.queue_length = {
-      queue_length: assignFakeData(
-        fakeDataByIds(mockedIds.databases, fakeNumberData)
-      )
-    };
+    responseMocks.system = fakeDataByIdsWithTimestamps(
+      mockedIds.databases,
+      "system_data",
+      fakeDatabaseSystemData
+    );
+    responseMocks.throughput = fakeDataByIdsWithTimestamps(
+      mockedIds.databases,
+      "throughput",
+      fakeNumberData
+    );
+    responseMocks.latency = fakeDataByIdsWithTimestamps(
+      mockedIds.databases,
+      "latency",
+      fakeNumberData
+    );
+    responseMocks.queue_length = fakeDataByIdsWithTimestamps(
+      mockedIds.databases,
+      "queue_length",
+      fakeNumberData
+    );
     responseMocks.krueger_data = fakeDataByIds(
       mockedIds.databases,
       fakeKruegerData

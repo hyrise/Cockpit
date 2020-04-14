@@ -38,7 +38,7 @@ describe("Show query type proportion", () => {
 
   describe("observing the chart data", () => {
     it("will show the correct metric data", () => {
-      cy.wait(1000); // wait for data
+      cy.wait(1000);
       cy.get(getSelector("generatedQueryTypeProportion")).should(
         (elements: any) => {
           assertBarChartData(elements[0].data, data[database.id], "generated");
@@ -48,6 +48,7 @@ describe("Show query type proportion", () => {
   });
   describe("observing the chart layout", () => {
     it("will show the correct range and title", () => {
+      cy.wait(1000);
       cy.get(getSelector("generatedQueryTypeProportion")).should(
         (elements: any) => {
           const layout = elements[0].layout;

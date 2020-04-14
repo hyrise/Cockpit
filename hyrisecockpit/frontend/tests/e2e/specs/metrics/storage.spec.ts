@@ -57,7 +57,6 @@ describe("Show storage", () => {
     });
     describe("observing the chart data", () => {
       it("will show the correct metric data", () => {
-        cy.wait(5500); // wait for data
         databases.forEach((database: any) => {
           cy.get(getSelectorWithID("secondStorage", database.id)).should(
             (elements: any) => {
@@ -91,11 +90,9 @@ describe("Show storage", () => {
           cy.get(getSelector("openDetailed"))
             .eq(idx * 2)
             .click();
-          cy.wait(500);
           cy.get(getSelectorWithID("firstStorage", database.id)).should(
             "exist"
           );
-          cy.wait(500);
           cy.get(getSelectorWithID("firstStorage", database.id)).should(
             (elements: any) => {
               assertTreeMapData(

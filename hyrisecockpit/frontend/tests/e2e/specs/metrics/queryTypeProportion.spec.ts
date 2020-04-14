@@ -62,7 +62,6 @@ describe("Show query type proportion", () => {
     });
     describe("observing the chart data", () => {
       it("will show the correct metric data", () => {
-        cy.wait(1000); // wait for data
         databases.forEach((database: any) => {
           cy.get(
             getSelectorWithID("executedQueryTypeProportion", database.id)

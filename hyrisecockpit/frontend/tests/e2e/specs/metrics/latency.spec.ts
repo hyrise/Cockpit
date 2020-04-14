@@ -32,18 +32,16 @@ describe("Show latency", () => {
       cy.wait("@" + getGetAlias("latency"));
       cy.get("@" + getGetAlias("latency")).should((xhr: any) => {
         data = {};
-        Object.entries(Object.values(xhr.response.body.body)[0] as any).forEach(
-          ([database, value]: [any, any]) => {
-            const entry: any = {};
-            entry[database] = roundNumber(value, Math.pow(10, 6));
-            data = { ...data, ...entry };
-          }
-        );
+        xhr.response.body.forEach((entry: any) => {
+          data[entry.id] = roundNumber(
+            entry.latency[0].latency,
+            Math.pow(10, 6)
+          );
+        });
       });
     });
     describe("observing the chart data", () => {
       it("will show the correct metric data", () => {
-        cy.wait(1000); // wait for data
         cy.get(getSelector("latency")).should((elements: any) => {
           assertLineChartData(
             elements[0].data,
@@ -55,7 +53,6 @@ describe("Show latency", () => {
     });
     describe("observing the metric details", () => {
       it("will not show metric details", () => {
-        cy.wait(1000); // wait for data
         databases.forEach((database: any) => {
           cy.get(getDetailsSelectorWithID("latency", database.id)).should(
             "not.exist"
@@ -84,18 +81,16 @@ describe("Show latency", () => {
       cy.wait("@" + getGetAlias("latency"));
       cy.get("@" + getGetAlias("latency")).should((xhr: any) => {
         data = {};
-        Object.entries(Object.values(xhr.response.body.body)[0] as any).forEach(
-          ([database, value]: [any, any]) => {
-            const entry: any = {};
-            entry[database] = roundNumber(value, Math.pow(10, 6));
-            data = { ...data, ...entry };
-          }
-        );
+        xhr.response.body.forEach((entry: any) => {
+          data[entry.id] = roundNumber(
+            entry.latency[0].latency,
+            Math.pow(10, 6)
+          );
+        });
       });
     });
     describe("observing the chart data", () => {
       it("will show the correct metric data", () => {
-        cy.wait(1000); // wait for data
         databases.forEach((database: any) => {
           cy.get(getSelectorWithID("latency", database.id)).should(
             (elements: any) => {
@@ -125,7 +120,7 @@ describe("Show latency", () => {
     });
     describe("observing the metric details", () => {
       it("will show the correct metric detail data", () => {
-        cy.wait(1000); // wait for data
+        cy.wait(500);
         databases.forEach((database: any) => {
           cy.get(getDetailsSelectorWithID("latency", database.id))
             .invoke("text")
