@@ -200,7 +200,7 @@ describe("When adding a new database", () => {
         .clear()
         .type(newDatabase.number_workers.toString());
 
-      cy.contains("Id is already taken.");
+      cy.contains("ID is already taken.");
       testButtonIsDisabled(getSelector("saveDatabaseButton"));
 
       backend.reload("database", newDatabase.host, "DELETE");
