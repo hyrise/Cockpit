@@ -43,7 +43,6 @@ describe("visiting the overview page", () => {
     cy.get(getSelector("throughput")).should((elements: any) => {
       const layout = elements[0].layout;
       expect(layout.yaxis.title.text).to.eq("Number of queries");
-      expect(layout.xaxis.title.text).to.eq("Timestamps");
       expect(layout.yaxis.range[0]).to.eq(0);
     });
   });
@@ -90,7 +89,6 @@ describe("visiting the comparison page", () => {
         (elements: any) => {
           const layout = elements[0].layout;
           expect(layout.yaxis.title.text).to.eq("Number of queries");
-          expect(layout.xaxis.title.text).to.eq("Timestamps");
           expect(layout.yaxis.range[0]).to.eq(0);
 
           if (maxValue) expect(maxValue).to.eq(layout.yaxis.range[1]);
