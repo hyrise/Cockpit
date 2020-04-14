@@ -78,6 +78,7 @@ describe("Show query type proportion", () => {
             getSelectorWithID("executedQueryTypeProportion", database.id)
           ).should((elements: any) => {
             const layout = elements[0].layout;
+            expect(layout.xaxis.title.text).to.eq("Workload");
             expect(layout.yaxis.title.text).to.eq("Proportion of queries in %");
             expect(layout.yaxis.range[0]).to.eq(0);
             expect(layout.yaxis.range[1]).to.be.at.least(
