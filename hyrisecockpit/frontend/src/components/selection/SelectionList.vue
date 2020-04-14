@@ -1,5 +1,5 @@
 <template>
-  <v-card class="selection-list">
+  <v-card id="selection-list" class="selection-list">
     <v-card-title>
       <div class="selection">{{ pageName }}</div>
     </v-card-title>

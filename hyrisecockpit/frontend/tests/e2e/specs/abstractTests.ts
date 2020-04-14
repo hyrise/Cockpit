@@ -55,10 +55,3 @@ export function testElementTrigger(
   clickElement(rootSelector);
   getElement(triggeredSelector);
 }
-
-// URL
-
-export function testRedirection(selector: string, newRoute: string): void {
-  clickElement(selector);
-  cy.url().should("contain", newRoute);
-}
