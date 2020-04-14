@@ -11,7 +11,7 @@ from hyrisecockpit.api.app.database.model import (
 )
 
 
-class DatabaseSchmea(Schema):
+class DatabaseSchema(Schema):
     """Schema of a Database."""
 
     id = String(

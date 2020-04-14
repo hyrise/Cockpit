@@ -8,10 +8,9 @@ class DatabaseInterface(TypedDict):
     id: str
 
 
-class DetailedDatabaseInterface(TypedDict):
+class DetailedDatabaseInterface(DatabaseInterface):
     """Interface of a detailed database."""
 
-    id: str
     host: str
     port: str
     number_workers: int

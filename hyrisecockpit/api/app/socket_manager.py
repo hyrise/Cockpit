@@ -42,7 +42,7 @@ class BaseSocket:
 
 
 class GeneratorSocket:
-    """GeneratorSocket that sands request to the generator."""
+    """GeneratorSocket that sends requests to the generator."""
 
     def __init__(self):
         """Initialize a GeneratorSocket."""
@@ -71,7 +71,7 @@ class GeneratorSocket:
 
 
 class ManagerSocket:
-    """ManagerSocket that sands request to the Manager."""
+    """ManagerSocket that sends requests to the Manager."""
 
     def __init__(self):
         """Initialize a ManagerSocket."""

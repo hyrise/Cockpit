@@ -17,7 +17,7 @@ from hyrisecockpit.api.app.database.model import (
 from hyrisecockpit.api.app.database.schema import (
     AvailableBenchmarkTablesSchema,
     BenchmarkTablesSchema,
-    DatabaseSchmea,
+    DatabaseSchema,
     DetailedDatabaseSchema,
 )
 
@@ -43,9 +43,9 @@ database_two_parms = {
 
 
 @fixture
-def database_schema() -> DatabaseSchmea:
+def database_schema() -> DatabaseSchema:
     """Return a real database schema."""
-    return DatabaseSchmea()
+    return DatabaseSchema()
 
 
 @fixture
@@ -69,7 +69,7 @@ def benchmark_tables_schema() -> BenchmarkTablesSchema:
 class TestDatabaseSchema:
     """Tests for the database schema's."""
 
-    def test_creates_database_schema(self, database_schema: DatabaseSchmea) -> None:
+    def test_creates_database_schema(self, database_schema: DatabaseSchema) -> None:
         """A database schema can be created."""
         assert database_schema
 
@@ -83,7 +83,7 @@ class TestDatabaseSchema:
         self, available_benchmark_tables_schema: AvailableBenchmarkTablesSchema
     ) -> None:
         """A available benchmark tables schema can be created."""
-        assert AvailableBenchmarkTablesSchema
+        assert available_benchmark_tables_schema
 
     def test_creates_benchmark_tables_schema(
         self, benchmark_tables_schema: BenchmarkTablesSchema
@@ -93,7 +93,7 @@ class TestDatabaseSchema:
 
     @mark.parametrize("database_id", ["Tina", "Bibi"])
     def test_deserializes_database_schema(
-        self, database_schema: DatabaseSchmea, database_id: str
+        self, database_schema: DatabaseSchema, database_id: str
     ) -> None:
         """A database schema can create a database model."""
         interface: DatabaseInterface = {"id": database_id}
@@ -147,7 +147,7 @@ class TestDatabaseSchema:
 
     @mark.parametrize("database_interface", [{"id": "Tina"}, {"id": "Bibi"}])
     def test_serializes_database(
-        self, database_schema: DatabaseSchmea, database_interface: DatabaseInterface
+        self, database_schema: DatabaseSchema, database_interface: DatabaseInterface
     ) -> None:
         """A database model can be serialized with a database schema."""
         database: Database = Database(**database_interface)

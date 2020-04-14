@@ -6,11 +6,16 @@ from flask.wrappers import Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 
+from .interface import (
+    BenchmarkTablesInterface,
+    DatabaseInterface,
+    DetailedDatabaseInterface,
+)
 from .model import AvailableBenchmarkTables, DetailedDatabase
 from .schema import (
     AvailableBenchmarkTablesSchema,
     BenchmarkTablesSchema,
-    DatabaseSchmea,
+    DatabaseSchema,
     DetailedDatabaseSchema,
 )
 from .service import DatabaseService
@@ -29,19 +34,21 @@ class Databases(Resource):
         api=api,
     )
     def get(self) -> List[DetailedDatabase]:
-        """Get all Workloads."""
+        """Get all databases."""
         return DatabaseService.get_databases()
 
     @accepts(schema=DetailedDatabaseSchema, api=api)
     def post(self) -> Response:
         """Register new database."""
-        status_code = DatabaseService.register_database(request.parsed_obj)
+        interface: DetailedDatabaseInterface = request.parsed_obj
+        status_code = DatabaseService.register_database(interface)
         return Response(status=status_code)
 
-    @accepts(schema=DatabaseSchmea, api=api)
+    @accepts(schema=DatabaseSchema, api=api)
     def delete(self) -> Response:
         """De-register database."""
-        status_code = DatabaseService.deregister_database(request.parsed_obj)
+        interface: DatabaseInterface = request.parsed_obj
+        status_code = DatabaseService.deregister_database(interface)
         return Response(status=status_code)
 
 
@@ -57,13 +64,15 @@ class BenchmarkTables(Resource):
     @accepts(schema=BenchmarkTablesSchema, api=api)
     def post(self) -> Response:
         """Load benchmark tables."""
-        status_code = DatabaseService.load_benchmark_tables(request.parsed_obj)
+        interface: BenchmarkTablesInterface = request.parsed_obj
+        status_code = DatabaseService.load_benchmark_tables(interface)
         return Response(status=status_code)
 
     @accepts(schema=BenchmarkTablesSchema, api=api)
     def delete(self) -> Response:
         """Delete benchmark tables."""
-        status_code = DatabaseService.delete_benchmark_tables(request.parsed_obj)
+        interface: BenchmarkTablesInterface = request.parsed_obj
+        status_code = DatabaseService.delete_benchmark_tables(interface)
         return Response(status=status_code)
 
 
