@@ -5,7 +5,11 @@ from unittest.mock import MagicMock, patch
 from pandas import DataFrame
 from pytest import fixture, mark
 
-from hyrisecockpit.database_manager.cursor import PoolCursor, StorageCursor
+from hyrisecockpit.database_manager.cursor import (
+    ConnectionFactory,
+    PoolCursor,
+    StorageCursor,
+)
 
 
 class TestCursor:
@@ -245,6 +249,15 @@ class TestCursor:
         assert results == [("hallo",), ("world",)]
         pool_cursor._cur.fetchall.assert_called_once()
 
+    def test_fetches_column_names(self, pool_cursor) -> None:
+        """Test fetches column names (in case you're not sure)."""
+        pool_cursor._cur = MagicMock()
+        pool_cursor._cur.description = [("hallo", "encoding",), ("world", "encoding",)]
+
+        results: List[str] = pool_cursor.fetch_column_names()
+
+        assert results == ["hallo", "world"]
+
     @patch("hyrisecockpit.database_manager.cursor.read_sql_query_pandas",)
     def test_reads_sql_query_pandas(
         self, mocked_read_sql_query_pandas, pool_cursor
@@ -260,3 +273,42 @@ class TestCursor:
 
         assert results.equals(fake_df)
         mocked_read_sql_query_pandas.assert_called_once_with("query", moked_connection)
+
+    def test_connection_factory_initializes(self) -> None:
+        """Test initialization of ConnectionFactory."""
+        fake_user: str = "user"
+        fake_password: str = "password"
+        fake_host: str = "host"
+        fake_port: str = "port"
+        fake_dbname: str = "dbname"
+
+        factory = ConnectionFactory(
+            fake_user, fake_password, fake_host, fake_port, fake_dbname
+        )
+
+        assert factory._user == "user"
+        assert factory._password == "password"
+        assert factory._host == "host"
+        assert factory._port == "port"
+        assert factory._dbname == "dbname"
+
+    @patch("hyrisecockpit.database_manager.cursor.PoolCursor",)
+    def test_create_cursor(self, mock_pool_cursor_constructor: MagicMock) -> None:
+        """Test creation of PoolCursor."""
+        fake_user: str = "user"
+        fake_password: str = "password"
+        fake_host: str = "host"
+        fake_port: str = "port"
+        fake_dbname: str = "dbname"
+
+        mock_cursor = MagicMock()
+        mock_pool_cursor_constructor.return_value = mock_cursor
+        factory = ConnectionFactory(
+            fake_user, fake_password, fake_host, fake_port, fake_dbname
+        )
+        cursor = factory.create_cursor()
+
+        assert cursor == mock_cursor
+        mock_pool_cursor_constructor.assert_called_once_with(
+            "host", "port", "user", "password", "dbname"
+        )
