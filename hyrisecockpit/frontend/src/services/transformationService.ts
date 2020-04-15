@@ -319,12 +319,12 @@ export function usePluginTransformationSevice(): any {
     return data.reduce((result: string[], currentDatabase: any) => {
       return currentDatabase.plugins
         ? [
-          ...result,
-          ...currentDatabase.plugins.map(
-            (plugin: string) =>
-              currentDatabase.id + "_" + plugin.replace("Plugin", "")
-          )
-        ]
+            ...result,
+            ...currentDatabase.plugins.map(
+              (plugin: string) =>
+                currentDatabase.id + "_" + plugin.replace("Plugin", "")
+            )
+          ]
         : result;
     }, []);
   }
@@ -358,9 +358,9 @@ export function usePluginTransformationSevice(): any {
             );
             allSettings[pluginName]
               ? (allSettings[pluginName] = [
-                ...allSettings[pluginName],
-                currentSetting
-              ])
+                  ...allSettings[pluginName],
+                  currentSetting
+                ])
               : (allSettings[pluginName] = [currentSetting]);
             return allSettings;
           },
