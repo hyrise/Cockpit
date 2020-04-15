@@ -13,8 +13,6 @@ import { useFormatting } from "@/meta/formatting";
 
 export function useDatabaseService(): DatabaseService {
   const { formatDateToNanoSec, subSeconds } = useFormatting();
-  const colors = Object.values(colorDefinition);
-  let usedColors: any = 0;
   const {
     emitDatabaseAddedEvent,
     emitDatabaseRemovedEvent
@@ -33,9 +31,18 @@ export function useDatabaseService(): DatabaseService {
     return databases;
   }
 
-  function getDatabaseColor(): string {
-    const color = colors[usedColors];
-    usedColors += 1;
+  function getDatabaseColor(databaseID: string): string {
+    let hashedDatabaseID = 0;
+    Object.values(databaseID).forEach((symbol: any) => {
+      hashedDatabaseID =
+        (hashedDatabaseID << 5) -
+        hashedDatabaseID +
+        databaseID.charCodeAt(symbol);
+      hashedDatabaseID = hashedDatabaseID & hashedDatabaseID;
+    });
+    const index =
+      Math.abs(hashedDatabaseID) % Object.keys(colorDefinition).length;
+    let color = Object.values(colorDefinition)[index];
     return color;
   }
 
@@ -123,14 +130,9 @@ export function useDatabaseService(): DatabaseService {
       });
   }
 
-  function resetColors(): void {
-    usedColors = 0;
-  }
-
   return {
     addDatabase,
     removeDatabase,
-    resetColors,
     fetchDatabases,
     fetchDatabasesCPUInformation,
     fetchDatabasesStorageInformation,
