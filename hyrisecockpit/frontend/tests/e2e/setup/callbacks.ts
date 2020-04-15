@@ -56,7 +56,7 @@ export function useCallbacks(
   }
 
   function removeTable(id: string): void {
-    addFunction("loaded_benchmarks", id);
+    removeFunction("loaded_benchmarks", id);
     renewFunction();
   }
 
