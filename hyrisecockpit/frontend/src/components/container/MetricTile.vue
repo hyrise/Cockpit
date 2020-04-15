@@ -1,6 +1,6 @@
 <template>
   <v-card :id="`${tileDatabase}-${metric}-tile`">
-    <v-card-title class="card-title">
+    <v-card-title class="card-title" :ref="`${tileDatabase}-${metric}-title`">
       <v-container fluid>
         <v-row no-gutters>
           <v-col class="metric-title">
@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, SetupContext } from "@vue/composition-api";
+import { defineComponent, SetupContext, onMounted } from "@vue/composition-api";
 import Throughput from "@/components/metrics/Throughput.vue";
 import CPU from "@/components/metrics/CPU.vue";
 import Latency from "@/components/metrics/Latency.vue";
@@ -97,7 +97,7 @@ export default defineComponent({
 }
 .database-title {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: flex-start;
 }
 .database-chip {

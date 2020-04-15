@@ -9,7 +9,7 @@
         color: valueColor[database],
         fontSize: '20px',
         fontWeight: 'bold',
-        top: idx * 22 + 12 + 'px'
+        top: idx * 22 + 14 + 'px'
       }"
     >
       {{ formatNumberWithCommas(currentValue[database]) }} {{ unit }}

@@ -156,7 +156,7 @@ function useLineChartConfiguration(
     return {
       y: data,
       mode: "lines+markers",
-      fill: "tonexty",
+      fill: multipleDatabasesAllowed || "tonexty",
       line: database ? { color: database.color } : {},
       name: database ? database.id : {}
     };
