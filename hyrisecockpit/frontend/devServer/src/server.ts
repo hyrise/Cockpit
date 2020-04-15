@@ -1,7 +1,10 @@
+/* eslint-disable prettier/prettier */
 import { Entity, Request } from "../../tests/e2e/setup/helpers";
 import { useMocks } from "../../tests/e2e/setup/mocks";
 
 import express from "express";
+
+import bodyParser from "body-parser";
 
 const server = express();
 const mocks = useMocks(getInitialNumbers({}));
@@ -26,6 +29,18 @@ server.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}.`);
 });
 
+server.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  next();
+});
+
+server.use(bodyParser.json());
+
 server.get("/", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.json("This is just a development server with mocked data!");
@@ -48,6 +63,14 @@ mockGetRoute("plugin_settings", "control", true);
 mockGetRoute("plugin_log", "control");
 
 mockPostRoute("database", "control");
+mockPostRoute("data", "control");
+mockPostRoute("workload", "control");
+mockPostRoute("plugin", "control");
+
+mockDeleteRoute("database", "control");
+mockDeleteRoute("data", "control");
+mockDeleteRoute("workload", "control");
+mockDeleteRoute("plugin", "control");
 
 function mockGetRoute(
   request: Request,
@@ -56,7 +79,6 @@ function mockGetRoute(
 ): void {
   server.get(`/${backendRoute}/${request}`, (req, res) => {
     logRequest(req, res);
-    res.header("Access-Control-Allow-Origin", "*");
     const response = withBody
       ? { body: mocks.getMockedResponse(request) }
       : mocks.getMockedResponse(request);
@@ -66,13 +88,9 @@ function mockGetRoute(
 
 function logRequest(req, res): void {
   console.log(
-    new Date().toLocaleTimeString() +
-    " - " +
-    req.url +
-    " - " +
-    req.method +
-    " - " +
-    res.statusCode
+    `${new Date().toLocaleTimeString()} - ${req.method} - ${res.statusCode} - ${
+    req.url
+    }`
   );
 }
 
@@ -82,9 +100,30 @@ function mockPostRoute(
 ): void {
   server.post(`/${backendRoute}/${request}`, (req, res) => {
     logRequest(req, res);
-    console.log(req.body);
-
-    res.header("Access-Control-Allow-Origin", "*");
+    mocks.getMockedPostCallback(request)(handleRequestBody(request, req));
     res.send({});
   });
+}
+
+function mockDeleteRoute(
+  request: Request,
+  backendRoute: "control" | "monitor"
+): void {
+  server.delete(`/${backendRoute}/${request}`, (req, res) => {
+    logRequest(req, res);
+    mocks.getMockedDeleteCallback(request)(handleRequestBody(request, req));
+    res.send({});
+  });
+}
+
+function handleRequestBody(request: Request, req): string {
+  let id = "";
+  if (request === "database") {
+    id = req.body.id;
+  } else if (request === "data") {
+    id = req.body.folder_name;
+  } else if (request === "plugin") {
+    id = req.body.plugin;
+  }
+  return id;
 }
