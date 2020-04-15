@@ -19,22 +19,17 @@ export function useDatabaseController(): DatabaseController {
 
   eventBus.$on(["DATABASE_ADDED", "DATABASE_REMOVED"], () => {
     databasesUpdated.value = false;
-    databaseService.resetColors();
     updateDatabases();
   });
 
   eventBus.$on("STORAGE_DATA_CHANGED", (data: any) => {
-    if (!allDatabasesExist(Object.keys(data))) {
-      //updateDatabases();
-    } else {
+    if (allDatabasesExist(Object.keys(data))) {
       updateDatabaseStorageInformation(data);
     }
   });
 
   eventBus.$on("CPU_DATA_CHANGED", (data: any) => {
-    if (!allDatabasesExist(data.map((entry: any) => entry.id))) {
-      //updateDatabases();
-    } else {
+    if (allDatabasesExist(Object.keys(data))) {
       updateDatabaseCPUInformation(data);
     }
   });
@@ -77,7 +72,7 @@ export function useDatabaseController(): DatabaseController {
     );
     return reactive({
       id: database.id,
-      color: databaseService.getDatabaseColor(),
+      color: databaseService.getDatabaseColor(database.id),
       systemDetails: {
         host: database.host,
         memoryCapacity: cpuInformation!.memoryCapacity,

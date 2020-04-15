@@ -1,17 +1,20 @@
 <template>
   <v-card :id="`${tileDatabase}-${metric}-tile`">
-    <v-card-title>
+    <v-card-title class="card-title" :ref="`${tileDatabase}-${metric}-title`">
       <v-container fluid>
         <v-row no-gutters>
-          <v-col class="database-title">
-            <database-chip v-if="!!tileDatabase" :database-id="tileDatabase" />
-          </v-col>
           <v-col class="metric-title">
             <div>{{ getMetricTitle(metric) }}</div>
+            <time-interval :metric="metric" />
             <!--  Think about where to add this  <metric-description-tooltip :metric="metric" /> -->
           </v-col>
-          <v-col class="metric-description">
-            <time-interval :metric="metric" />
+          <v-spacer />
+          <v-col class="database-title">
+            <database-chip
+              class="database-chip"
+              v-if="!!tileDatabase"
+              :database-id="tileDatabase"
+            />
           </v-col>
         </v-row>
       </v-container>
@@ -28,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, SetupContext } from "@vue/composition-api";
+import { defineComponent, SetupContext, onMounted } from "@vue/composition-api";
 import Throughput from "@/components/metrics/Throughput.vue";
 import CPU from "@/components/metrics/CPU.vue";
 import Latency from "@/components/metrics/Latency.vue";
@@ -37,6 +40,7 @@ import QueueLength from "@/components/metrics/QueueLength.vue";
 import QueryTypeProportion from "@/components/metrics/QueryTypeProportion.vue";
 import Storage from "@/components/metrics/Storage.vue";
 import Access from "@/components/metrics/Access.vue";
+import MemoryFootprint from "@/components/metrics/MemoryFootprint.vue";
 import { getMetricTitle, getMetricComponent } from "../../meta/metrics";
 import {
   Metric,
@@ -69,6 +73,7 @@ export default defineComponent({
     QueryTypeProportion,
     Access,
     Storage,
+    MemoryFootprint,
     TimeInterval
   },
   props: {
@@ -88,20 +93,27 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.card-title {
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
+}
 .database-title {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: flex-start;
+}
+.database-chip {
+  margin-left: auto;
 }
 .metric-title {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
   white-space: nowrap;
 }
 .metric-description {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-end;
 }
 </style>
