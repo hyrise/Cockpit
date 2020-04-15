@@ -37,6 +37,7 @@ import QueueLength from "@/components/metrics/QueueLength.vue";
 import QueryTypeProportion from "@/components/metrics/QueryTypeProportion.vue";
 import Storage from "@/components/metrics/Storage.vue";
 import Access from "@/components/metrics/Access.vue";
+import MemoryFootprint from "@/components/metrics/MemoryFootprint.vue";
 import { getMetricTitle, getMetricComponent } from "../../meta/metrics";
 import {
   Metric,
@@ -69,6 +70,7 @@ export default defineComponent({
     QueryTypeProportion,
     Access,
     Storage,
+    MemoryFootprint,
     TimeInterval
   },
   props: {

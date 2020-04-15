@@ -41,7 +41,6 @@ export default defineComponent({
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
     const data = context.root.$metricController.data[props.metric];
-    console.log("qt", data);
     const transformedData = ref<any>([]);
     const metricMeta = getMetricMetadata(props.metric);
 

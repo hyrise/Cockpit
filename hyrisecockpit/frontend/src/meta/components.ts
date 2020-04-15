@@ -12,12 +12,6 @@ export function useLineChartComponent(
   props: MetricProps,
   context: SetupContext
 ): ComparisonMetricData {
-  watch(
-    () => context.root.$metricController.maxValueData[props.metric],
-    (prev, next) => {
-      console.log("max2", prev, next);
-    }
-  );
   return {
     data: context.root.$metricController.data[props.metric],
     chartConfiguration: getMetricChartConfiguration(props.metric),

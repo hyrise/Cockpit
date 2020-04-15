@@ -1,25 +1,21 @@
-import { ref, computed, reactive, watch } from "@vue/composition-api";
+import { ref, reactive } from "@vue/composition-api";
 import axios from "axios";
 import { Metric } from "@/types/metrics";
 import { MetricService } from "@/types/services";
 import { useUpdatingData } from "../meta/components";
 import { getMetricMetadata } from "../meta/metrics";
 import { useFormatting } from "@/meta/formatting";
-import { isInTestMode } from "@/helpers/methods";
+import { isInTestMode } from "../../config";
 import Vue from "vue";
 
 // fetch data for all metrics with same endpoint
 export function useMetricService(metrics: Metric[]): MetricService {
   const queryReadyState = ref(true);
-  let data: any = initializeData({});
-  console.log("init data");
+  const data: any = initializeData({});
   const timestamps = ref<Date[]>([]);
   const metricsMetaData = metrics.map(metric => getMetricMetadata(metric));
   const metricInfo = metricsMetaData[0];
-  const maxValues: Record<Metric, number> = initializeData(0) as Record<
-    Metric,
-    number
-  >;
+  const maxValues = initializeData(0) as Record<Metric, number>;
   const historicFetching = ref(false);
 
   const { subSeconds, formatDateToNanoSec } = useFormatting();
@@ -32,7 +28,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
     return newData;
   }
 
-  function handleMaxValues(data: any, metric: Metric, idx: number): number {
+  function handleMaxValues(data: any, idx: number): number {
     return (
       metricsMetaData[idx].staticAxesRange?.y?.max ||
       Object.values(data).reduce(
@@ -57,22 +53,33 @@ export function useMetricService(metrics: Metric[]): MetricService {
       useUpdatingData(result, metrics);
       metrics.forEach((metric, idx) => {
         if (metricsMetaData[idx].fetchType === "modify") {
-          console.log("added");
-          result.forEach((data: any) => {
-            handleDataChange(
-              data.id,
-              metricsMetaData[idx].transformationService(
-                data[metricInfo.base],
-                metricInfo.base
-              ),
-              metric
-            );
-          });
+          // damn backend
+          if (!Array.isArray(result)) {
+            Object.entries(result).forEach(([id, data]: [string, any]) => {
+              handleDataChange(
+                id,
+                metricsMetaData[idx].transformationService(data),
+                metric
+              );
+            });
+          } else {
+            result.forEach((data: any) => {
+              handleDataChange(
+                data.id,
+                metricsMetaData[idx].transformationService(
+                  data[metricInfo.base],
+                  metricInfo.base
+                ),
+                metric
+              );
+            });
+          }
         } else if (metricsMetaData[idx].fetchType === "read") {
-          Vue.set(data, metric, result);
+          data[metric] = result;
         }
         Vue.set(data, metric, JSON.parse(JSON.stringify(data[metric])));
-        Vue.set(maxValues, metric, handleMaxValues(data[metric], metric, idx));
+        if (metricsMetaData[idx].fetchType === "modify")
+          Vue.set(maxValues, metric, handleMaxValues(data[metric], idx));
       });
 
       const newTimestamps = result[0]?.[metricInfo.base]?.map(
@@ -86,11 +93,6 @@ export function useMetricService(metrics: Metric[]): MetricService {
       queryReadyState.value = true;
     });
   }
-
-  watch(
-    () => maxValues,
-    () => console.log("max", maxValues)
-  );
 
   function fetchData(start: number, end: number): Promise<any> {
     return new Promise((resolve, reject) => {
