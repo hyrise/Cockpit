@@ -35,6 +35,19 @@ npm run test:e2e
 npm run test:e2e:headless
 ```
 
+### Run development backend server 
+```
+cd Cockpit/hyrisecockpit/frontend/devServer
+```
+```
+npm install
+```
+```
+npm start
+```
+To use this server in your frontend app: replace the backend url with: `http://127.0.0.1:3000/`
+
+
 ### Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
