@@ -52,7 +52,7 @@ describe("requesting cpu and ram data", () => {
   });
 });
 
-// test cpu and ram
+// test memory footprint
 describe("requesting memory footprint data", () => {
   beforeEach(() => {
     cy.setupAppState(backend);
