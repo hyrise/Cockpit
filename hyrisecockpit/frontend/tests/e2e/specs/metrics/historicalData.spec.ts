@@ -24,16 +24,8 @@ describe("requesting cpu and ram data", () => {
       cy.get("@" + getGetAlias("system")).then((xhr: any) => {
         assertDataRequest(xhr.url, 30);
       });
-      cy.wait("@" + getGetAlias("system"));
-      cy.get("@" + getGetAlias("system")).then((xhr: any) => {
-        assertDataRequest(xhr.url, 30);
-      });
       cy.wait(1500);
       // test current data
-      cy.wait("@" + getGetAlias("system"));
-      cy.get("@" + getGetAlias("system")).then((xhr: any) => {
-        assertDataRequest(xhr.url, 1);
-      });
       cy.wait("@" + getGetAlias("system"));
       cy.get("@" + getGetAlias("system")).then((xhr: any) => {
         assertDataRequest(xhr.url, 1);
@@ -50,18 +42,56 @@ describe("requesting cpu and ram data", () => {
       cy.get("@" + getGetAlias("system")).then((xhr: any) => {
         assertDataRequest(xhr.url, 30);
       });
-      cy.wait("@" + getGetAlias("system"));
-      cy.get("@" + getGetAlias("system")).then((xhr: any) => {
-        assertDataRequest(xhr.url, 30);
-      });
       cy.wait(1500);
       // test current data
       cy.wait("@" + getGetAlias("system"));
       cy.get("@" + getGetAlias("system")).then((xhr: any) => {
         assertDataRequest(xhr.url, 1);
       });
-      cy.wait("@" + getGetAlias("system"));
-      cy.get("@" + getGetAlias("system")).then((xhr: any) => {
+    });
+  });
+});
+
+// test cpu and ram
+describe("requesting memory footprint data", () => {
+  beforeEach(() => {
+    cy.setupAppState(backend);
+    cy.wait("@" + getGetAlias("storage"));
+    cy.wait(1500);
+    waitForChartRender();
+  });
+
+  // test on comparison
+  describe("visiting comparison page", () => {
+    it("will request the corect time range", () => {
+      cy.visit(getRoute("comparison"));
+      // test historic data
+      cy.wait("@" + getGetAlias("storage"));
+      cy.get("@" + getGetAlias("storage")).then((xhr: any) => {
+        assertDataRequest(xhr.url, 30);
+      });
+      cy.wait(1500);
+      // test current data
+      cy.wait("@" + getGetAlias("storage"));
+      cy.get("@" + getGetAlias("storage")).then((xhr: any) => {
+        assertDataRequest(xhr.url, 1);
+      });
+    });
+  });
+
+  // test on overview
+  describe("visiting overview page", () => {
+    it("will request the corect time range", () => {
+      cy.visit(getRoute("overview"));
+      // test historic data
+      cy.wait("@" + getGetAlias("storage"));
+      cy.get("@" + getGetAlias("storage")).then((xhr: any) => {
+        assertDataRequest(xhr.url, 30);
+      });
+      cy.wait(1500);
+      // test current data
+      cy.wait("@" + getGetAlias("storage"));
+      cy.get("@" + getGetAlias("storage")).then((xhr: any) => {
         assertDataRequest(xhr.url, 1);
       });
     });
