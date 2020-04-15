@@ -244,7 +244,9 @@ class TestBackgroundJobManager:
         """Test read sql query and return empty dataframe."""
         background_job_manager._database_blocked.value = True
 
-        result: DataFrame = background_job_manager._sql_to_data_frame("select ...")
+        result: DataFrame = background_job_manager._sql_to_data_frame(
+            "select ...", None
+        )
 
         global mocked_pool_cursor
         mocked_pool_cursor.read_sql_query.assert_not_called()
@@ -263,10 +265,10 @@ class TestBackgroundJobManager:
         """Test read sql query and return dataframe."""
         background_job_manager._database_blocked.value = False
 
-        background_job_manager._sql_to_data_frame("select ...")
+        background_job_manager._sql_to_data_frame("select ...", None)
 
         global mocked_pool_cursor
-        mocked_pool_cursor.read_sql_query.assert_called_once_with("select ...")
+        mocked_pool_cursor.read_sql_query.assert_called_once_with("select ...", None)
 
         mocked_pool_cursor = MagicMock()
 
@@ -289,7 +291,9 @@ class TestBackgroundJobManager:
         global mocked_pool_cursor
         mocked_pool_cursor.read_sql_query.side_effect = raise_exception
 
-        result: DataFrame = background_job_manager._sql_to_data_frame("select ...")
+        result: DataFrame = background_job_manager._sql_to_data_frame(
+            "select ...", None
+        )
 
         assert isinstance(result, DataframeType)
         assert result.empty

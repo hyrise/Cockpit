@@ -232,7 +232,9 @@ class TestCursor:
         pool_cursor._connection = moked_connection
         mocked_read_sql_query_pandas.return_value = fake_df
 
-        results: DataFrame = pool_cursor.read_sql_query("query")
+        results: DataFrame = pool_cursor.read_sql_query("query", None)
 
         assert results.equals(fake_df)
-        mocked_read_sql_query_pandas.assert_called_once_with("query", moked_connection)
+        mocked_read_sql_query_pandas.assert_called_once_with(
+            "query", moked_connection, params=None
+        )
