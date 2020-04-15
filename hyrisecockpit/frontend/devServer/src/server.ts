@@ -1,19 +1,21 @@
+import { Entity, Request } from "../../tests/e2e/setup/helpers";
 import { useMocks } from "../../tests/e2e/setup/mocks";
 
 import express from "express";
+
 const server = express();
 const mocks = useMocks(getInitialNumbers({}));
 
-function getInitialNumbers(numbers) {
+function getInitialNumbers(numbers: Partial<Record<Entity, number>>) {
   return {
-    databases: 1,
-    tables: 2,
-    columns: 2,
-    chunks: 2,
-    queries: 10,
-    plugins: 2,
     activated_plugins: 1,
+    chunks: 2,
+    columns: 2,
+    databases: 2,
     loaded_benchmarks: 1,
+    plugins: 2,
+    queries: 10,
+    tables: 2,
     ...numbers
   };
 }
@@ -29,77 +31,60 @@ server.get("/", (req, res) => {
   res.json("This is just a development server with mocked data!");
 });
 
-server.get("/control/database", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send(mocks.getMockedResponse("database"));
-});
+mockGetRoute("database", "control");
+mockGetRoute("system", "monitor");
+mockGetRoute("storage", "monitor", true);
+mockGetRoute("throughput", "monitor");
+mockGetRoute("latency", "monitor");
+mockGetRoute("queue_length", "monitor");
+mockGetRoute("krueger_data", "monitor");
+mockGetRoute("chunks", "monitor", true);
+mockGetRoute("detailed_query_information", "monitor");
+mockGetRoute("status", "monitor");
+mockGetRoute("data", "control");
+mockGetRoute("available_plugins", "control");
+mockGetRoute("plugin", "control");
+mockGetRoute("plugin_settings", "control", true);
+mockGetRoute("plugin_log", "control");
 
-server.get("/monitor/system", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send(mocks.getMockedResponse("system"));
-});
+mockPostRoute("database", "control");
 
-server.get("/monitor/storage", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send({ body: mocks.getMockedResponse("storage") });
-});
+function mockGetRoute(
+  request: Request,
+  backendRoute: "control" | "monitor",
+  withBody: boolean = false
+): void {
+  server.get(`/${backendRoute}/${request}`, (req, res) => {
+    logRequest(req, res);
+    res.header("Access-Control-Allow-Origin", "*");
+    const response = withBody
+      ? { body: mocks.getMockedResponse(request) }
+      : mocks.getMockedResponse(request);
+    res.send(response);
+  });
+}
 
-server.get("/monitor/throughput", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send(mocks.getMockedResponse("throughput"));
-});
+function logRequest(req, res): void {
+  console.log(
+    new Date().toLocaleTimeString() +
+    " - " +
+    req.url +
+    " - " +
+    req.method +
+    " - " +
+    res.statusCode
+  );
+}
 
-server.get("/monitor/latency", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send(mocks.getMockedResponse("latency"));
-});
+function mockPostRoute(
+  request: Request,
+  backendRoute: "control" | "monitor"
+): void {
+  server.post(`/${backendRoute}/${request}`, (req, res) => {
+    logRequest(req, res);
+    console.log(req.body);
 
-server.get("/monitor/queue_length", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send(mocks.getMockedResponse("queue_length"));
-});
-
-server.get("/monitor/krueger_data", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send(mocks.getMockedResponse("krueger_data"));
-});
-
-server.get("/monitor/chunks", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send({ body: mocks.getMockedResponse("chunks") });
-});
-
-server.get("/monitor/detailed_query_information", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send(mocks.getMockedResponse("detailed_query_information"));
-});
-
-server.get("/monitor/status", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send(mocks.getMockedResponse("status"));
-});
-
-server.get("/control/data", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send(mocks.getMockedResponse("data"));
-});
-
-server.get("/control/available_plugins", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send(mocks.getMockedResponse("available_plugins"));
-});
-
-server.get("/control/plugin", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send(mocks.getMockedResponse("plugin"));
-});
-
-server.get("/control/plugin_settings", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send({ body: mocks.getMockedResponse("plugin_settings") });
-});
-
-server.get("/control/plugin_log", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send(mocks.getMockedResponse("plugin_log"));
-});
+    res.header("Access-Control-Allow-Origin", "*");
+    res.send({});
+  });
+}
