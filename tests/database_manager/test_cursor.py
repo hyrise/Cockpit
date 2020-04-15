@@ -14,7 +14,14 @@ class TestCursor:
     @fixture
     def pool_cursor(self) -> PoolCursor:
         """Return patched pool cursor object."""
-        return PoolCursor(MagicMock())
+        fake_connection_information: Dict[str, str] = {
+            "host": "lowrise",
+            "port": "666",
+            "user": "Eiskaltius",
+            "password": "boeslich",
+            "dbname": "Mike der Schlitzer",
+        }
+        return PoolCursor(**fake_connection_information)
 
     @mark.parametrize(
         "queries",
@@ -175,51 +182,68 @@ class TestCursor:
             "query_name", "query statement", "database_name", "resample_options"
         )
 
-    def test_initializes_pool_cursor_correctly(self) -> None:
+    @patch("hyrisecockpit.database_manager.cursor.connect")
+    def test_initializes_pool_cursor_correctly(self, mock_connect: MagicMock) -> None:
         """Test initializes pool cursor correctly."""
-        mocked_pool: MagicMock = MagicMock()
-        mocked_connection: MagicMock = MagicMock()
-        mocked_cursor: MagicMock = MagicMock()
+        mocked_cursor = MagicMock()
+        mocked_connection = MagicMock()
         mocked_connection.cursor.return_value = mocked_cursor
-        mocked_pool.getconn.return_value = mocked_connection
-        pool_cursor: PoolCursor = PoolCursor(mocked_pool)
+        mock_connect.return_value = mocked_connection
 
-        mocked_pool.getconn.assert_called_once()
+        fake_connection_information: Dict[str, str] = {
+            "host": "lowrise",
+            "port": "666",
+            "user": "Eiskaltius",
+            "password": "boeslich",
+            "dbname": "Mike der Schlitzer",
+        }
+
+        pool_cursor: PoolCursor = PoolCursor(**fake_connection_information)
+
+        with pool_cursor:
+            pass
+
+        mock_connect.assert_called_once_with(
+            host="lowrise",
+            port="666",
+            user="Eiskaltius",
+            password="boeslich",
+            dbname="Mike der Schlitzer",
+        )
         mocked_connection.set_session.assert_called_once_with(autocommit=True)
         mocked_connection.cursor.assert_called_once()
 
-        assert pool_cursor.pool == mocked_pool
-        assert pool_cursor._connection == mocked_connection
-        assert pool_cursor.cur == mocked_cursor
+        mocked_cursor.close.assert_called_once()
+        mocked_connection.close.assert_called_once()
 
     def test_executes(self, pool_cursor) -> None:
         """Test execute witch valid pool cursor and no exception."""
-        pool_cursor.cur = MagicMock()
-        pool_cursor.cur.execute.return_value = None
+        pool_cursor._cur = MagicMock()
+        pool_cursor._cur.execute.return_value = None
 
         pool_cursor.execute("query", None)
 
-        pool_cursor.cur.execute.assert_called_once_with("query", None)
+        pool_cursor._cur.execute.assert_called_once_with("query", None)
 
     def test_fetches_one(self, pool_cursor) -> None:
         """Test fetch one witch valid pool cursor and no exception."""
-        pool_cursor.cur = MagicMock()
-        pool_cursor.cur.fetchone.return_value = ("hallo",)
+        pool_cursor._cur = MagicMock()
+        pool_cursor._cur.fetchone.return_value = ("hallo",)
 
         results: Tuple[Any, ...] = pool_cursor.fetchone()
 
         assert results == ("hallo",)
-        pool_cursor.cur.fetchone.assert_called_once()
+        pool_cursor._cur.fetchone.assert_called_once()
 
     def test_fetches_all(self, pool_cursor) -> None:
         """Test fetch all witch valid pool cursor and no exception."""
-        pool_cursor.cur = MagicMock()
-        pool_cursor.cur.fetchall.return_value = [("hallo",), ("world",)]
+        pool_cursor._cur = MagicMock()
+        pool_cursor._cur.fetchall.return_value = [("hallo",), ("world",)]
 
         results: List[Tuple[Any, ...]] = pool_cursor.fetchall()
 
         assert results == [("hallo",), ("world",)]
-        pool_cursor.cur.fetchall.assert_called_once()
+        pool_cursor._cur.fetchall.assert_called_once()
 
     @patch("hyrisecockpit.database_manager.cursor.read_sql_query_pandas",)
     def test_reads_sql_query_pandas(
