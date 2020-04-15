@@ -86,19 +86,12 @@ export function useMetricController(): MetricController {
     });
   }
 
-  watch(
-    () => data["cpu"],
-    () => {
-      console.log("cpu", data["cpu"]);
-    }
-  );
-
   function mapToData(services: Record<Metric, MetricService>): void {
     Object.entries(services).forEach(([metric, service]) => {
-      console.log(metric, service.maxValues.value[metric]);
+      console.log(metric, service.maxValues[metric as Metric]);
       data[metric as Metric] = computed(() => service.data[metric]);
       maxValueData[metric as Metric] = computed(
-        () => service.maxValues.value[metric as Metric]
+        () => service.maxValues[metric as Metric]
       );
       timestamps[metric as Metric] = service.timestamps;
     });

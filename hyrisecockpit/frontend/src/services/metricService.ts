@@ -11,35 +11,35 @@ import Vue from "vue";
 // fetch data for all metrics with same endpoint
 export function useMetricService(metrics: Metric[]): MetricService {
   const queryReadyState = ref(true);
-  let data: any = initializeData();
+  let data: any = initializeData({});
   console.log("init data");
   const timestamps = ref<Date[]>([]);
   const metricsMetaData = metrics.map(metric => getMetricMetadata(metric));
   const metricInfo = metricsMetaData[0];
-  const maxValues = computed(
-    (): Record<Metric, number> => {
-      const newValues: Record<Metric, number> = {} as Record<Metric, number>;
-      metrics.forEach((metric, idx) => {
-        newValues[metric] =
-          metricsMetaData[idx].staticAxesRange?.y?.max ||
-          Object.values(data[metric]).reduce(
-            (max: number, dataSet: any) => Math.max(...dataSet, max),
-            0
-          );
-      });
-      return newValues;
-    }
-  );
+  const maxValues: Record<Metric, number> = initializeData(0) as Record<
+    Metric,
+    number
+  >;
   const historicFetching = ref(false);
 
   const { subSeconds, formatDateToNanoSec } = useFormatting();
 
-  function initializeData(): Object {
+  function initializeData(value: any): Object {
     const newData: any = reactive({});
     metrics.forEach(metric => {
-      Vue.set(newData, metric, {});
+      Vue.set(newData, metric, value);
     });
     return newData;
+  }
+
+  function handleMaxValues(data: any, metric: Metric, idx: number): number {
+    return (
+      metricsMetaData[idx].staticAxesRange?.y?.max ||
+      Object.values(data).reduce(
+        (max: number, dataSet: any) => Math.max(...dataSet, max),
+        0
+      )
+    );
   }
 
   function getData(start?: Date, end?: Date): void {
@@ -71,23 +71,25 @@ export function useMetricService(metrics: Metric[]): MetricService {
         } else if (metricsMetaData[idx].fetchType === "read") {
           Vue.set(data, metric, result);
         }
-        const dataCopy = JSON.parse(JSON.stringify(data[metric]));
-        Vue.set(data, metric, dataCopy);
+        Vue.set(data, metric, JSON.parse(JSON.stringify(data[metric])));
+        Vue.set(maxValues, metric, handleMaxValues(data[metric], metric, idx));
       });
 
       const newTimestamps = result[0]?.[metricInfo.base]?.map(
         (entry: any) => entry.timestamp
       ) ?? [formatDateToNanoSec(currentTimestamp)];
       handleTimestamps(
-        isInTestMode ? [formatDateToNanoSec(currentTimestamp)] : newTimestamps
+        isInTestMode
+          ? [formatDateToNanoSec(subSeconds(currentTimestamp, 1))]
+          : newTimestamps
       );
       queryReadyState.value = true;
     });
   }
 
   watch(
-    () => maxValues.value,
-    () => console.log("max", maxValues.value)
+    () => maxValues,
+    () => console.log("max", maxValues)
   );
 
   function fetchData(start: number, end: number): Promise<any> {
