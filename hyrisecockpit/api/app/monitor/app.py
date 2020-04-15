@@ -5,10 +5,12 @@ If run as a module, a flask server application will be started.
 """
 
 from json import loads
-from time import time, time_ns
+from time import time_ns
 from typing import Any, Dict, List, Union
 
+from flask import request
 from flask_restx import Namespace, Resource, fields
+from iso8601 import parse_date
 
 from hyrisecockpit.api.app.shared import (
     _get_active_databases,
@@ -39,12 +41,28 @@ model_throughput = api.clone(
     "Throughput",
     model_database,
     {
-        "throughput": fields.Integer(
-            title="Throughput",
-            description="Query throughput of a given time interval.",
+        "throughput": fields.List(
+            fields.Nested(
+                api.model(
+                    "Throughput values",
+                    {
+                        "timestamp": fields.Integer(
+                            title="Timestamp",
+                            description="Timestamp in nanoseconds since epoch",
+                            required=True,
+                            example=1585762457000000000,
+                        ),
+                        "throughput": fields.Integer(
+                            title="Throughput",
+                            description="Throughput value",
+                            required=True,
+                            example=273,
+                        ),
+                    },
+                )
+            ),
             required=True,
-            example=7381,
-        )
+        ),
     },
 )
 
@@ -128,12 +146,28 @@ model_latency = api.clone(
     "Latency",
     model_database,
     {
-        "latency": fields.Float(
-            title="Latency",
-            description="Average query latency (ns) of a given time interval.",
+        "latency": fields.List(
+            fields.Nested(
+                api.model(
+                    "Latency values",
+                    {
+                        "timestamp": fields.Integer(
+                            title="Timestamp",
+                            description="Timestamp in nanoseconds since epoch",
+                            required=True,
+                            example=1585762457000000000,
+                        ),
+                        "latency": fields.Float(
+                            title="Latency",
+                            description="Average latency value in nanoseconds",
+                            required=True,
+                            example=66064020.96710526,
+                        ),
+                    },
+                )
+            ),
             required=True,
-            example=923.263,
-        )
+        ),
     },
 )
 
@@ -176,12 +210,126 @@ model_queue_length = api.clone(
     "Queue length",
     model_database,
     {
-        "queue_length": fields.Integer(
-            title="Queue length",
-            description="Query queue length of a database at a given point in time.",
+        "queue_length": fields.List(
+            fields.Nested(
+                api.model(
+                    "Queue_length values",
+                    {
+                        "timestamp": fields.Integer(
+                            title="Timestamp",
+                            description="Timestamp in nanoseconds since epoch",
+                            required=True,
+                            example=1585762457000000000,
+                        ),
+                        "queue_length": fields.Integer(
+                            title="Queue length",
+                            description="Queue_length",
+                            required=True,
+                            example=450,
+                        ),
+                    },
+                )
+            ),
             required=True,
-            example=18623,
-        )
+        ),
+    },
+)
+
+model_system_data = api.clone(
+    "System data",
+    model_database,
+    {
+        "system_data": fields.List(
+            fields.Nested(
+                api.model(
+                    "System data values",
+                    {
+                        "timestamp": fields.Integer(
+                            title="Timestamp",
+                            description="Timestamp in nanoseconds since epoch",
+                            required=True,
+                            example=1585762457000000000,
+                        ),
+                        "system_data": fields.Nested(
+                            api.model(
+                                "System data for the provided timestamp",
+                                {
+                                    "cpu": fields.Nested(
+                                        api.model(
+                                            "CPU data values",
+                                            {
+                                                "cpu_system_usage": fields.Float(
+                                                    title="CPU system usage",
+                                                    description="CPU system usage in %",
+                                                    required=True,
+                                                    example=0.458248466,
+                                                ),
+                                                "cpu_process_usage": fields.Float(
+                                                    title="CPU process usage",
+                                                    description="CPU process usage in %",
+                                                    required=True,
+                                                    example=10.8125,
+                                                ),
+                                                "cpu_count": fields.Integer(
+                                                    title="Number CPUs",
+                                                    description="Number CPUs",
+                                                    required=True,
+                                                    example=16,
+                                                ),
+                                                "cpu_clock_speed": fields.Integer(
+                                                    title="CPU clock speed",
+                                                    description="CPU frequency",
+                                                    required=True,
+                                                    example=2600,
+                                                ),
+                                            },
+                                        )
+                                    ),
+                                    "memory": fields.Nested(
+                                        api.model(
+                                            "Main memory data",
+                                            {
+                                                "free": fields.Integer(
+                                                    title="Free memory",
+                                                    description="Number of free bytes",
+                                                    required=True,
+                                                    example=13030227968,
+                                                ),
+                                                "used": fields.Integer(
+                                                    title="Used memory",
+                                                    description="Number of used bytes",
+                                                    required=True,
+                                                    example=579780000,
+                                                ),
+                                                "total": fields.Integer(
+                                                    title="Total memory",
+                                                    description="Total number of memory bytes",
+                                                    required=True,
+                                                    example=33724911616,
+                                                ),
+                                                "percent": fields.Float(
+                                                    title="Percent of used memory",
+                                                    description="Percent of used memory",
+                                                    required=True,
+                                                    example=10.8125,
+                                                ),
+                                            },
+                                        )
+                                    ),
+                                    "database_threads": fields.Integer(
+                                        title="Database threads",
+                                        description="Number of database threads",
+                                        required=True,
+                                        example=16,
+                                    ),
+                                },
+                            )
+                        ),
+                    },
+                )
+            ),
+            required=True,
+        ),
     },
 )
 
@@ -294,27 +442,50 @@ model_database_status = api.clone(
 class Throughput(Resource):
     """Throughput information of all databases."""
 
-    @api.doc(model=[model_throughput])
-    def get(self) -> Union[int, Response]:
-        """Return throughput information from the stored queries."""
-        offset_seconds = 3
-        offsetts = (int(time()) - offset_seconds) * 1_000_000_000
+    @api.doc(
+        model=[model_throughput],
+        params={
+            "startts": "Start of a time interval",
+            "endts": "End of a time interval",
+        },
+    )
+    def get(self) -> Union[int, List]:
+        """Return throughput information in a given time range."""
+        precise_startts: int = int(request.args.get("startts"))  # type: ignore
+        precise_endts: int = int(request.args.get("endts"))  # type: ignore
 
-        throughput: Dict[str, int] = {}
-        active_databases = _get_active_databases()
-        for database in active_databases:
+        startts_rounded: int = int(precise_startts / 1_000_000_000) * 1_000_000_000
+        endts_rounded: int = int(precise_endts / 1_000_000_000) * 1_000_000_000
+
+        # take nearest whole numbers of seconds
+        startts: int = startts_rounded if precise_startts % 1_000_000_000 == 0 else startts_rounded + 1_000_000_000
+        endts: int = endts_rounded if precise_endts % 1_000_000_000 == 0 else endts_rounded + 1
+
+        response: List = []
+        for database in _get_active_databases():
+            database_data: Dict[str, Union[str, List]] = {
+                "id": database,
+            }
+
             result = storage_connection.query(
-                "SELECT * FROM throughput WHERE time = $offsetts;",
+                "SELECT * FROM throughput WHERE time >= $startts AND time < $endts;",
                 database=database,
-                bind_params={"offsetts": offsetts},
+                bind_params={"startts": startts, "endts": endts},
             )
-            throughput_value = list(result["throughput", None])
-            if len(throughput_value) > 0:
-                throughput[database] = list(result["throughput", None])[0]["throughput"]
-            else:
-                throughput[database] = 0
-        response = get_response(200)
-        response["body"]["throughput"] = throughput
+            throughput_rows: List = list(result["throughput", None])
+            throughput: List[Dict[str, int]] = []
+            for timestamp in range(startts, endts, 1_000_000_000):
+                throughput_value = 0
+                for row in throughput_rows:
+                    if int(parse_date(row["time"]).timestamp() * 1e9) == timestamp:
+                        throughput_value = row["throughput"]
+                        break
+                throughput.append(
+                    {"timestamp": timestamp, "throughput": throughput_value}
+                )
+
+            database_data["throughput"] = throughput
+            response.append(database_data)
         return response
 
 
@@ -382,26 +553,48 @@ class DetailedLatency(Resource):
 class Latency(Resource):
     """Latency information of all databases."""
 
-    @api.doc(model=[model_latency])
-    def get(self) -> Union[int, Response]:
-        """Return latency information from the stored queries."""
-        offset_seconds = 3
-        offsetts = (int(time()) - offset_seconds) * 1_000_000_000
-        latency: Dict[str, float] = {}
-        active_databases = _get_active_databases()
-        for database in active_databases:
+    @api.doc(
+        model=[model_latency],
+        params={
+            "startts": "Start of a time interval",
+            "endts": "End of a time interval",
+        },
+    )
+    def get(self) -> Union[int, List]:
+        """Return latency information in a given time range."""
+        precise_startts: int = int(request.args.get("startts"))  # type: ignore
+        precise_endts: int = int(request.args.get("endts"))  # type: ignore
+
+        startts_rounded: int = int(precise_startts / 1_000_000_000) * 1_000_000_000
+        endts_rounded: int = int(precise_endts / 1_000_000_000) * 1_000_000_000
+
+        # take nearest whole numbers of seconds
+        startts: int = startts_rounded if precise_startts % 1_000_000_000 == 0 else startts_rounded + 1_000_000_000
+        endts: int = endts_rounded if precise_endts % 1_000_000_000 == 0 else endts_rounded + 1
+        response: List = []
+
+        for database in _get_active_databases():
+            database_data: Dict[str, Union[str, List]] = {
+                "id": database,
+            }
+
             result = storage_connection.query(
-                "SELECT * FROM latency WHERE time = $offsetts;",
+                "SELECT * FROM latency WHERE time >= $startts AND time < $endts;",
                 database=database,
-                bind_params={"offsetts": offsetts},
+                bind_params={"startts": startts, "endts": endts},
             )
-            latency_value = list(result["latency", None])
-            if len(latency_value) > 0:
-                latency[database] = list(result["latency", None])[0]["latency"]
-            else:
-                latency[database] = 0
-        response = get_response(200)
-        response["body"]["latency"] = latency
+            latency_rows: List = list(result["latency", None])
+            latency: List[Dict[str, int]] = []
+            for timestamp in range(startts, endts, 1_000_000_000):
+                latency_value = 0
+                for row in latency_rows:
+                    if int(parse_date(row["time"]).timestamp() * 1e9) == timestamp:
+                        latency_value = row["latency"]
+                        break
+                latency.append({"timestamp": timestamp, "latency": latency_value})
+
+            database_data["latency"] = latency
+            response.append(database_data)
         return response
 
 
@@ -441,12 +634,40 @@ class DetailedQueryInformation(Resource):
 class QueueLength(Resource):
     """Queue length information of all databases."""
 
-    @api.doc(model=[model_queue_length])
-    def get(self) -> Response:
-        """Return queue length information from database manager."""
-        return _send_message(
-            db_manager_socket, {"header": {"message": "queue length"}, "body": {}}
-        )
+    @api.doc(
+        model=[model_queue_length],
+        params={
+            "startts": "Start of a time interval",
+            "endts": "End of a time interval",
+        },
+    )
+    def get(self) -> Union[int, List]:
+        """Return queue length information in a given time range."""
+        startts: int = int(request.args.get("startts"))  # type: ignore
+        endts: int = int(request.args.get("endts"))  # type: ignore
+
+        response: List = []
+        for database in _get_active_databases():
+            database_data: Dict[str, Union[str, List]] = {
+                "id": database,
+            }
+
+            result = storage_connection.query(
+                "SELECT * FROM queue_length WHERE time >= $startts AND time < $endts;",
+                database=database,
+                bind_params={"startts": startts, "endts": endts},
+            )
+            queue_length_rows: List = list(result["queue_length", None])
+            queue_length: List[Dict[str, int]] = [
+                {
+                    "timestamp": int(parse_date(row["time"]).timestamp() * 1e9),
+                    "queue_length": row["queue_length"],
+                }
+                for row in queue_length_rows
+            ]
+            database_data["queue_length"] = queue_length
+            response.append(database_data)
+        return response
 
 
 @api.route("/failed_tasks")
@@ -472,38 +693,53 @@ class FailedTasks(Resource):
 class System(Resource):
     """System data information of all databases."""
 
-    def get(self) -> Union[int, Response]:
-        """Return cpu and memory information for every database and the number of thread it is using from database manager."""
-        system: Dict[str, Dict] = {}
-        active_databases = _get_active_databases()
-        for database in active_databases:
+    @api.doc(
+        model=[model_system_data],
+        params={
+            "startts": "Start of a time interval",
+            "endts": "End of a time interval",
+        },
+    )
+    def get(self) -> Union[int, List]:
+        """Return cpu and memory information for every database and the number of threads it is using from database manager."""
+        startts: int = int(request.args.get("startts"))  # type: ignore
+        endts: int = int(request.args.get("endts"))  # type: ignore
+
+        response: List = []
+        for database in _get_active_databases():
+            database_data: Dict[str, Union[str, List]] = {
+                "id": database,
+            }
+
             result = storage_connection.query(
-                "SELECT LAST(cpu_count) as cpu_count, * FROM system_data;",
+                "SELECT * FROM system_data WHERE time >= $startts AND time < $endts;",
                 database=database,
+                bind_params={"startts": startts, "endts": endts},
             )
-            system_values = list(result["system_data", None])
-            if len(system_values) > 0:
-                system_value: Dict[str, Union[int, float]] = system_values[0]
-                system[database] = {
-                    "cpu": {
-                        "cpu_system_usage": system_value["cpu_system_usage"],
-                        "cpu_process_usage": system_value["cpu_process_usage"],
-                        "cpu_count": system_value["cpu_count"],
-                        "cpu_clock_speed": system_value["cpu_clock_speed"],
+            system_data_rows: List = list(result["system_data", None])
+            system_data: List[Dict[str, Union[int, Dict]]] = [
+                {
+                    "timestamp": int(parse_date(row["time"]).timestamp() * 1e9),
+                    "system_data": {
+                        "cpu": {
+                            "cpu_system_usage": row["cpu_system_usage"],
+                            "cpu_process_usage": row["cpu_process_usage"],
+                            "cpu_count": row["cpu_count"],
+                            "cpu_clock_speed": row["cpu_clock_speed"],
+                        },
+                        "memory": {
+                            "free": row["free_memory"],
+                            "used": row["used_memory"],
+                            "total": row["total_memory"],
+                            "percent": row["used_memory"] / row["total_memory"],
+                        },
+                        "database_threads": row["database_threads"],
                     },
-                    "memory": {
-                        "free": system_value["free_memory"],
-                        "used": system_value["used_memory"],
-                        "total": system_value["total_memory"],
-                        "percent": system_value["used_memory"]
-                        / system_value["total_memory"],
-                    },
-                    "database_threads": system_value["database_threads"],
                 }
-            else:
-                system[database] = {}
-        response = get_response(200)
-        response["body"]["system_data"] = system
+                for row in system_data_rows
+            ]
+            database_data["system_data"] = system_data
+            response.append(database_data)
         return response
 
 

@@ -1,6 +1,5 @@
 import { useBackendMock } from "../../setup/backendMock";
 import { clickElement } from "../helpers";
-import { getGetAlias } from "../../setup/helpers";
 import { getSelector as getViewSelector, getRoute } from "../views/helpers";
 import {
   getSelector,
@@ -11,7 +10,6 @@ import {
   testElementExistence,
   testElementVisibility,
   testElementNoVisibility,
-  testRedirection,
   testMaxDecimalDigits
 } from "../abstractTests";
 
@@ -23,34 +21,75 @@ let databases: any = [];
 let databasesSystemData: any[];
 let databasesStorageData: any[];
 
-describe("When observing the database details", () => {
+describe("when observing the database data and details", () => {
   beforeEach(() => {
-    backend.start();
-    cy.visit("/");
-    cy.wait("@" + getGetAlias("database"));
-    cy.get("@" + getGetAlias("database")).should((xhr: any) => {
+    cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
+      cy.setupData("system").then((xhr: any) => {
+        databasesSystemData = xhr.response.body.map(
+          (entry: any) => entry.system_data[0]
+        );
+        cy.setupData("storage").then((xhr: any) => {
+          databasesStorageData = Object.values(xhr.response.body.body.storage);
+        });
+      });
     });
-    cy.wait("@" + getGetAlias("system"));
-    cy.get("@" + getGetAlias("system")).should((xhr: any) => {
-      databasesSystemData = Object.values(xhr.response.body.body.system_data);
-    });
-    cy.wait("@" + getGetAlias("storage"));
-    cy.get("@" + getGetAlias("storage")).should((xhr: any) => {
-      databasesStorageData = Object.values(xhr.response.body.body.storage);
-    });
-    testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
+    cy.visit(getRoute("overview"));
   });
 
   // test panel opening
-  describe("and just visiting the view", () => {
-    it("will directly show the details panel", () => {
-      testElementExistence(getSelector("databaseSystemDetails"));
-      testElementVisibility(getSelector("databaseSystemDetails"));
+  it("will directly show the details panel", () => {
+    testElementExistence(getSelector("databaseSystemDetails"));
+    testElementVisibility(getSelector("databaseSystemDetails"));
+  });
+
+  // test showing correct data
+  it("will show the correct system details for every database", () => {
+    // test correct data existence
+    databases.forEach((database: any, idx: number) => {
+      cy.get(getSelector("idDetails"))
+        .eq(idx)
+        .contains(database.id);
+      cy.get(getSelector("hostDetails"))
+        .eq(idx)
+        .contains(database.host);
+      cy.get(getSelector("workerDetails"))
+        .eq(idx)
+        .contains(database.number_workers);
+      cy.get(getSelector("cpuDetails"))
+        .eq(idx)
+        .contains(
+          databasesSystemData[idx].system_data.cpu.cpu_count.toString()
+        );
+      cy.get(getSelector("memoryCapacityDetails"))
+        .eq(idx)
+        .contains(
+          getDatabaseMainMemoryCapacity(databasesSystemData[idx].system_data)
+        );
+      cy.get(getSelector("memoryFootprintDetails"))
+        .eq(idx)
+        .contains(getDatabaseMemoryFootprint(databasesStorageData[idx]));
+    });
+
+    // test correct rounding
+    databases.forEach((database: any, idx: number) => {
+      cy.get(getSelector("memoryCapacityDetails"))
+        .eq(idx)
+        .invoke("text")
+        .then((text: any) => {
+          testMaxDecimalDigits(text, 3);
+        });
+      cy.get(getSelector("memoryFootprintDetails"))
+        .eq(idx)
+        .invoke("text")
+        .then((text: any) => {
+          testMaxDecimalDigits(text, 3);
+        });
     });
   });
+
   // test panel closing
-  describe("and clicking the panel two times", () => {
+  describe("when clicking the panel two times", () => {
     it("will close the details and open it again", () => {
       cy.get(getSelector("databaseDetailsPanel")).within(() => {
         cy.get("button").click();
@@ -65,7 +104,7 @@ describe("When observing the database details", () => {
   });
 
   // test correct number of databases
-  describe("and clicking the database list button", () => {
+  describe("when clicking the database list button", () => {
     it("will show the correct number of databases", () => {
       cy.get(getSelector("numberOfDatabases")).contains(
         databases.length.toString()
@@ -82,7 +121,7 @@ describe("When observing the database details", () => {
   });
 
   // test correct database colors
-  describe("and changing routes", () => {
+  describe("when changing routes", () => {
     it("will show the same database colors", () => {
       const colors: string[] = [];
       clickElement(getViewSelector("databaseListButton"));
@@ -95,9 +134,7 @@ describe("When observing the database details", () => {
             });
         });
       });
-      cy.visit(getRoute("home"));
-      cy.wait(100);
-      testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
+      cy.visit(getRoute("overview"));
       clickElement(getViewSelector("databaseListButton"));
       cy.get(getViewSelector("databaseList")).within(() => {
         databases.forEach((database: any, idx: number) => {
@@ -111,51 +148,8 @@ describe("When observing the database details", () => {
     });
   });
 
-  // test showing correct data
-  describe("and just visiting the view", () => {
-    it("will show the correct system details for every database", () => {
-      // test correct data existence
-      databases.forEach((database: any, idx: number) => {
-        cy.get(getSelector("idDetails"))
-          .eq(idx)
-          .contains(database.id);
-        cy.get(getSelector("hostDetails"))
-          .eq(idx)
-          .contains(database.host);
-        cy.get(getSelector("workerDetails"))
-          .eq(idx)
-          .contains(database.number_workers);
-        cy.get(getSelector("cpuDetails"))
-          .eq(idx)
-          .contains(databasesSystemData[idx].cpu.cpu_count.toString());
-        cy.get(getSelector("memoryCapacityDetails"))
-          .eq(idx)
-          .contains(getDatabaseMainMemoryCapacity(databasesSystemData[idx]));
-        cy.get(getSelector("memoryFootprintDetails"))
-          .eq(idx)
-          .contains(getDatabaseMemoryFootprint(databasesStorageData[idx]));
-      });
-
-      // test correct rounding
-      databases.forEach((database: any, idx: number) => {
-        cy.get(getSelector("memoryCapacityDetails"))
-          .eq(idx)
-          .invoke("text")
-          .then((text: any) => {
-            testMaxDecimalDigits(text, 3);
-          });
-        cy.get(getSelector("memoryFootprintDetails"))
-          .eq(idx)
-          .invoke("text")
-          .then((text: any) => {
-            testMaxDecimalDigits(text, 3);
-          });
-      });
-    });
-  });
-
   // test empty databases
-  describe("and just visiting the view with no databases added", () => {
+  describe("when no databases has been added", () => {
     it("will show empty database list and details", () => {
       backend = useBackendMock({
         databases: 0
@@ -170,7 +164,7 @@ describe("When observing the database details", () => {
         cy.get(getSelector("databaseChip")).should("not.exist");
       });
 
-      testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
+      cy.visit(getRoute("overview"));
       cy.get(getSelector("databaseSystemDetails")).should("not.exist");
     });
   });

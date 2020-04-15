@@ -5,6 +5,7 @@ import {
   generateRandomInt,
   generateRandomNumbers,
   generateUniqueRandomNumbers,
+  getNanoSeconds,
   benchmarks
 } from "./helpers";
 
@@ -16,6 +17,12 @@ type Database = {
   number_workers: number;
   dbname: string;
 };
+
+// TIME
+
+export function fakeTimeStamp(): number {
+  return getNanoSeconds(new Date());
+}
 
 // IDS
 
@@ -49,9 +56,8 @@ export function fakeDatabaseData(
 
 // SYSTEM DATA
 
-export function fakeDatabaseSystemData(databaseId: string): Object {
-  const systemData: any = {};
-  systemData[databaseId] = {
+export function fakeDatabaseSystemData(): Object {
+  return {
     cpu: {
       cpu_system_usage: generateRandomFloat(0, 100),
       cpu_process_usage: generateRandomFloat(0, 100),
@@ -66,7 +72,6 @@ export function fakeDatabaseSystemData(databaseId: string): Object {
     },
     database_threads: faker.random.number()
   };
-  return systemData;
 }
 
 // STORAGE DATA
@@ -74,7 +79,8 @@ export function fakeDatabaseSystemData(databaseId: string): Object {
 function fakeEncodingData(): Object {
   return {
     amount: faker.random.number(),
-    compression: [faker.random.word()]
+    compression: [faker.random.word()],
+    name: faker.random.word()
   };
 }
 
@@ -112,10 +118,8 @@ export function fakeDatabaseStorageData(
 
 // GENERIC NUMBER DATA
 
-export function fakeNumberData(databaseId: string): Object {
-  const data: any = {};
-  data[databaseId] = faker.random.number();
-  return data;
+export function fakeNumberData(): Object {
+  return faker.random.number();
 }
 
 // QUERY TYPE PROPORTION DATA
@@ -178,8 +182,8 @@ export function fakeDatabaseChunksData(
 function fakeQueryInformationData(latency: number): Object {
   return {
     benchmark: benchmarks[generateRandomInt(0, benchmarks.length)],
-    query_number: faker.random.number(),
-    throughput: faker.random.number(),
+    query_number: latency / Math.pow(10, 3),
+    throughput: generateRandomInt(0, 100),
     latency: latency
   };
 }
@@ -249,5 +253,22 @@ export function fakeDatabasePluginLogs(
   return {
     id: databaseId,
     plugin_log: pluginIds.map(id => fakePluginLog(id))
+  };
+}
+
+// WORKLOADS
+
+export function fakeDatabaseStatusData(
+  databaseId: string,
+  loadedBenchmarks: string[],
+  state: boolean
+): Object {
+  return {
+    id: databaseId,
+    hyrise_active: true,
+    database_blocked_status: false,
+    worker_pool_status: state ? "running" : "",
+    loaded_benchmarks: loadedBenchmarks,
+    loaded_tables: []
   };
 }

@@ -7,9 +7,9 @@
       :key="database"
       :style="{
         color: valueColor[database],
-        fontSize: '18px',
+        fontSize: '20px',
         fontWeight: 'bold',
-        top: idx * 5 + 12.5 + '%'
+        top: idx * 22 + 14 + 'px'
       }"
     >
       {{ formatNumberWithCommas(currentValue[database]) }} {{ unit }}

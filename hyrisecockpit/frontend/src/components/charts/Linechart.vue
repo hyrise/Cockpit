@@ -159,10 +159,8 @@ function useLineChartConfiguration(
   function getLayout(yMax: number, xMin: number = 1): Object {
     const currentTime = formatDateWithoutMilliSec(new Date()).getTime();
     return {
+      height: multipleDatabasesAllowed ? 300 : 225,
       xaxis: {
-        title: {
-          text: props.chartConfiguration.xaxis
-        },
         type: "date",
         tickformat: "%H:%M:%S",
         range: [currentTime - (xMin - 1) * 1000, currentTime]
@@ -175,12 +173,12 @@ function useLineChartConfiguration(
       },
       autosize: true,
       showlegend: multipleDatabasesAllowed,
-      legend: { x: 0, y: 1.3 },
+      legend: { x: 0, y: 1.1, orientation: "h" },
       margin: {
         l: 70,
         r: 40,
-        b: 70,
-        t: 10,
+        b: 30,
+        t: multipleDatabasesAllowed ? 0 : 10,
         pad: 0
       },
       paper_bgcolor: "rgba(0,0,0,0)"
@@ -195,6 +193,7 @@ function useLineChartConfiguration(
       y: data,
       type: "scatter",
       mode: "lines+markers",
+      fill: multipleDatabasesAllowed || "tonexty",
       line: database ? { color: database.color } : {},
       name: database ? database.id : {}
     };
