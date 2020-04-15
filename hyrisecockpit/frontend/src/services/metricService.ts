@@ -1,28 +1,42 @@
-import { ref, computed } from "@vue/composition-api";
+import { ref, reactive } from "@vue/composition-api";
 import axios from "axios";
 import { Metric } from "@/types/metrics";
 import { MetricService } from "@/types/services";
 import { useUpdatingData } from "../meta/components";
 import { getMetricMetadata } from "../meta/metrics";
 import { useFormatting } from "@/meta/formatting";
-import { isInTestMode } from "@/helpers/methods";
+import { isInTestMode } from "../../config";
+import Vue from "vue";
 
-export function useMetricService(metric: Metric): MetricService {
+// fetch data for all metrics with same endpoint
+export function useMetricService(metrics: Metric[]): MetricService {
   const queryReadyState = ref(true);
-  const data = ref<any>({});
+  const data: any = initializeData({});
   const timestamps = ref<Date[]>([]);
-  const metricMetaData = getMetricMetadata(metric);
-  const maxValue = computed(
-    () =>
-      metricMetaData.staticAxesRange?.y?.max ||
-      Object.values(data.value).reduce(
-        (max: number, dataSet: any) => Math.max(...dataSet, max),
-        0
-      )
-  );
+  const metricsMetaData = metrics.map(metric => getMetricMetadata(metric));
+  const metricInfo = metricsMetaData[0];
+  const maxValues = initializeData(0) as Record<Metric, number>;
   const historicFetching = ref(false);
 
   const { subSeconds, formatDateToNanoSec } = useFormatting();
+
+  function initializeData(value: any): Object {
+    const newData: any = reactive({});
+    metrics.forEach(metric => {
+      Vue.set(newData, metric, value);
+    });
+    return newData;
+  }
+
+  function handleMaxValues(data: any, idx: number): number {
+    return (
+      metricsMetaData[idx].staticAxesRange?.y?.max ||
+      Object.values(data).reduce(
+        (max: number, dataSet: any) => Math.max(...dataSet, max),
+        0
+      )
+    );
+  }
 
   function getData(start?: Date, end?: Date): void {
     queryReadyState.value = false;
@@ -36,28 +50,46 @@ export function useMetricService(metric: Metric): MetricService {
       : formatDateToNanoSec(currentTimestamp);
 
     fetchData(startTime, endTime).then(result => {
-      useUpdatingData(result, metric);
-      if (metricMetaData.fetchType === "modify") {
-        result.forEach((data: any) => {
-          handleDataChange(
-            data.id,
-            metricMetaData.transformationService(
-              data[metricMetaData.base],
-              metricMetaData.base
-            )
-          );
-        });
-      } else if (metricMetaData.fetchType === "read") {
-        data.value = result;
-      }
-      const newTimestamps = result[0]?.[metricMetaData.base]?.map(
+      useUpdatingData(result, metrics);
+      metrics.forEach((metric, idx) => {
+        if (metricsMetaData[idx].fetchType === "modify") {
+          // damn backend
+          if (!Array.isArray(result)) {
+            Object.entries(result).forEach(([id, data]: [string, any]) => {
+              handleDataChange(
+                id,
+                metricsMetaData[idx].transformationService(data),
+                metric
+              );
+            });
+          } else {
+            result.forEach((data: any) => {
+              handleDataChange(
+                data.id,
+                metricsMetaData[idx].transformationService(
+                  data[metricInfo.base],
+                  metricInfo.base
+                ),
+                metric
+              );
+            });
+          }
+        } else if (metricsMetaData[idx].fetchType === "read") {
+          data[metric] = result;
+        }
+        Vue.set(data, metric, JSON.parse(JSON.stringify(data[metric])));
+        if (metricsMetaData[idx].fetchType === "modify")
+          Vue.set(maxValues, metric, handleMaxValues(data[metric], idx));
+      });
+
+      const newTimestamps = result[0]?.[metricInfo.base]?.map(
         (entry: any) => entry.timestamp
       ) ?? [formatDateToNanoSec(currentTimestamp)];
       handleTimestamps(
-        isInTestMode ? [formatDateToNanoSec(currentTimestamp)] : newTimestamps
+        isInTestMode
+          ? [formatDateToNanoSec(subSeconds(currentTimestamp, 1))]
+          : newTimestamps
       );
-      const dataCopy = JSON.parse(JSON.stringify(data.value));
-      data.value = dataCopy;
       queryReadyState.value = true;
     });
   }
@@ -65,7 +97,7 @@ export function useMetricService(metric: Metric): MetricService {
   function fetchData(start: number, end: number): Promise<any> {
     return new Promise((resolve, reject) => {
       axios
-        .get(metricMetaData.endpoint, {
+        .get(metricInfo.endpoint, {
           params: {
             startts: start,
             endts: end
@@ -73,13 +105,13 @@ export function useMetricService(metric: Metric): MetricService {
         })
         .then(response => {
           if (
-            metricMetaData.component === "QueryTypeProportion" ||
-            metricMetaData.historic
+            metricInfo.component === "QueryTypeProportion" ||
+            metricInfo.historic
           ) {
             //TODO: just for debug: adapt response in backend to pass data in body and divided for db instances
             resolve(response.data);
           } else {
-            resolve(response.data.body[metricMetaData.base]);
+            resolve(response.data.body[metricInfo.base]);
           }
         })
         .catch(error => {
@@ -89,13 +121,17 @@ export function useMetricService(metric: Metric): MetricService {
     });
   }
 
-  function handleDataChange(databaseId: string, newData: number[]): void {
-    if (!data.value[databaseId]) {
-      data.value[databaseId] = [];
+  function handleDataChange(
+    databaseId: string,
+    newData: number[],
+    metric: Metric
+  ): void {
+    if (!data[metric][databaseId]) {
+      data[metric][databaseId] = [];
     }
-    data.value[databaseId] = historicFetching.value
+    data[metric][databaseId] = historicFetching.value
       ? handleHistoricDataPoints(newData)
-      : handleCurrentDataPoints(data.value[databaseId], newData);
+      : handleCurrentDataPoints(data[metric][databaseId], newData);
   }
 
   function handleTimestamps(newTimestamps: number[]): void {
@@ -130,5 +166,5 @@ export function useMetricService(metric: Metric): MetricService {
     }
   }
 
-  return { data, getDataIfReady, maxValue, timestamps };
+  return { data, getDataIfReady, maxValues, timestamps };
 }
