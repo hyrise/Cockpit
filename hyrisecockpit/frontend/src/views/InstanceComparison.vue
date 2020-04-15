@@ -5,10 +5,7 @@
       :evaluations="[false]"
     />
     <div v-if="$databaseController.databasesUpdated.value" class="mx-6">
-      <database-details-panel
-        v-if="selectedDatabases.length"
-        :selected-databases="selectedDatabases"
-      />
+      <database-system-details :selected-databases="selectedDatabases" />
       <unselected-warning :condition="selectedDatabases">
         <template #message>
           No databases selected.
@@ -46,14 +43,14 @@ import { Database } from "../types/database";
 import { useSelectionHandling } from "@/meta/selection";
 import LinearLoader from "../components/alerts/LinearLoader.vue";
 import UnselectedWarning from "@/components/alerts/UnselectedWarning.vue";
-import DatabaseDetailsPanel from "../components/details/DatabaseDetailsPanel.vue";
+import DatabaseSystemDetails from "../components/details/DatabaseSystemDetails.vue";
 
 export default defineComponent({
   components: {
     MetricsComparisonTable,
-    DatabaseDetailsPanel,
     LinearLoader,
-    UnselectedWarning
+    UnselectedWarning,
+    DatabaseSystemDetails
   },
   setup(props: {}, context: SetupContext): MetricViewData {
     return {
