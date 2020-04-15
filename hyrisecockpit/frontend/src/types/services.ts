@@ -3,7 +3,7 @@ import { Workload } from "./workloads";
 import { Metric } from "./metrics";
 
 export interface MetricService {
-  data: Ref<any>;
+  data: any;
   getDataIfReady: (start?: Date, end?: Date) => void;
   maxValues: Ref<Record<Metric, number>>;
   timestamps: Ref<any>;

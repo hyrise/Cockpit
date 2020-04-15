@@ -64,6 +64,7 @@ export default defineComponent({
 
     watch(data, () => {
       if (Object.keys(data.value).length) {
+        console.log(data);
         storageData.value = metricMeta.transformationService(
           data.value,
           props.selectedDatabases[0]

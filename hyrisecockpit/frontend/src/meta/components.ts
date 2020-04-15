@@ -1,4 +1,4 @@
-import { SetupContext, Ref, computed } from "@vue/composition-api";
+import { SetupContext, Ref, computed, watch } from "@vue/composition-api";
 import { MetricProps, ComparisonMetricData, Metric } from "@/types/metrics";
 import { useDataEvents } from "@/meta/events";
 import {
@@ -12,6 +12,12 @@ export function useLineChartComponent(
   props: MetricProps,
   context: SetupContext
 ): ComparisonMetricData {
+  watch(
+    () => context.root.$metricController.maxValueData[props.metric],
+    (prev, next) => {
+      console.log("max2", prev, next);
+    }
+  );
   return {
     data: context.root.$metricController.data[props.metric],
     chartConfiguration: getMetricChartConfiguration(props.metric),

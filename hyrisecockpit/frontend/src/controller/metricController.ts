@@ -1,5 +1,5 @@
 import { eventBus } from "@/plugins/eventBus";
-import { computed } from "@vue/composition-api";
+import { computed, watch } from "@vue/composition-api";
 import { useMetricService } from "@/services/metricService";
 import { Metric, availableMetrics, MetricController } from "@/types/metrics";
 import { MetricService } from "@/types/services";
@@ -86,9 +86,17 @@ export function useMetricController(): MetricController {
     });
   }
 
+  watch(
+    () => data["cpu"],
+    () => {
+      console.log("cpu", data["cpu"]);
+    }
+  );
+
   function mapToData(services: Record<Metric, MetricService>): void {
     Object.entries(services).forEach(([metric, service]) => {
-      data[metric as Metric] = computed(() => service.data.value[metric]);
+      console.log(metric, service.maxValues.value[metric]);
+      data[metric as Metric] = computed(() => service.data[metric]);
       maxValueData[metric as Metric] = computed(
         () => service.maxValues.value[metric as Metric]
       );

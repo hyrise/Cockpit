@@ -41,17 +41,21 @@ export default defineComponent({
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
     const data = context.root.$metricController.data[props.metric];
+    console.log("qt", data);
     const transformedData = ref<any>([]);
     const metricMeta = getMetricMetadata(props.metric);
 
-    watch(data, () => {
-      if (Object.keys(data.value).length) {
-        transformedData.value = metricMeta.transformationService(
-          data.value,
-          props.selectedDatabases[0]
-        );
+    watch(
+      () => data.value,
+      () => {
+        if (Object.keys(data.value).length) {
+          transformedData.value = metricMeta.transformationService(
+            data.value,
+            props.selectedDatabases[0]
+          );
+        }
       }
-    });
+    );
 
     return {
       transformedData,
