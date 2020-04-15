@@ -1,9 +1,5 @@
 <template>
-  <v-card flat>
-    <v-card-title class="py-2 px-2">
-      <b class="interval secondary--text">{{ interval }}</b>
-    </v-card-title>
-  </v-card>
+  <b class="interval secondary--text">{{ interval }}</b>
 </template>
 
 <script lang="ts">
@@ -42,7 +38,6 @@ export default defineComponent({
 </script>
 <style scoped>
 .interval {
-  margin-left: 10px;
   font-size: 14px;
   word-break: normal;
   line-height: normal;
