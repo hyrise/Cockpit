@@ -166,7 +166,7 @@ class BackgroundJobManager(object):
                 time_stamp,
             )
 
-    def _sql_to_data_frame(self, sql: str, params: Optional[Dict]) -> DataFrame:
+    def _sql_to_data_frame(self, sql: str, params: Optional[Tuple]) -> DataFrame:
         if self._database_blocked.value:
             return DataFrame()
         try:
@@ -245,10 +245,8 @@ class BackgroundJobManager(object):
         startts = endts - 2_000_000_000
 
         log_df = self._sql_to_data_frame(
-            (
-                "SELECT * FROM meta_log WHERE 'timestamp' >= startts AND 'timestamp' < endts;"
-            ),
-            params={"startts": startts, "endts": endts},
+            "SELECT * FROM meta_log WHERE 'timestamp' >= %s AND 'timestamp' < %s;",
+            params=(startts, endts),
         )
 
         if log_df.empty:
