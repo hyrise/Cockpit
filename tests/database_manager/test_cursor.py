@@ -236,5 +236,5 @@ class TestCursor:
 
         assert results.equals(fake_df)
         mocked_read_sql_query_pandas.assert_called_once_with(
-            "query", moked_connection, params=None
+            "query", mocked_connection, params=None
         )
