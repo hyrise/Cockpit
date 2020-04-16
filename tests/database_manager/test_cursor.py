@@ -228,8 +228,8 @@ class TestCursor:
         """Test read sql query witch valid pool cursor and no exception."""
         pool_cursor.cur = MagicMock()
         fake_df: DataFrame = DataFrame({"hallo": [1, 2]})
-        moked_connection: MagicMock = MagicMock()
-        pool_cursor._connection = moked_connection
+        mocked_connection: MagicMock = MagicMock()
+        pool_cursor._connection = mocked_connection
         mocked_read_sql_query_pandas.return_value = fake_df
 
         results: DataFrame = pool_cursor.read_sql_query("query", None)
