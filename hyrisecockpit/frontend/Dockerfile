@@ -1,7 +1,9 @@
 # https://github.com/hyrise/hyrise/wiki/Docker-Image
-FROM node:buster
+FROM node:alpine
 LABEL maintainer="upigorsch@me.com"
 
 WORKDIR /usr/local/Cockpit/hyrisecockpit/frontend
 COPY hyrisecockpit/frontend .
-RUN npm install
+RUN npm install serve \
+	&& npm install \
+	&& npm run build
