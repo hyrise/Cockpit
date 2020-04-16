@@ -56,6 +56,11 @@ class CockpitBackend:
         url = f"http://{self._backend_host}:{self._backend_port}/monitor/{property}"
         return get(url, timeout=REQUEST_TIMEOUT).json()
 
+    def get_historical_monitor_property(self, property: str, startts: int, endts: int):
+        """Get monitor property."""
+        url = f"http://{self._backend_host}:{self._backend_port}/monitor/{property}?startts={startts}&endts={endts}"
+        return get(url, timeout=REQUEST_TIMEOUT).json()
+
     def get_control_property(self, property: str):
         """Get control property."""
         url = f"http://{self._backend_host}:{self._backend_port}/control/{property}"

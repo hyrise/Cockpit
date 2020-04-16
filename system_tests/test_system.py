@@ -1,6 +1,6 @@
 """Module for system tests."""
 
-from time import sleep
+from time import sleep, time_ns
 
 from influxdb import InfluxDBClient
 
@@ -59,6 +59,7 @@ class TestSystem:
         """Check if database has successfully load default tables."""
         expected_status = {
             "id": database_id,
+            "hyrise_active": True,
             "database_blocked_status": False,
             "worker_pool_status": "closed",
             "loaded_benchmarks": ["tpch_0.1"],
@@ -80,20 +81,20 @@ class TestSystem:
     def test_database_manager_initialization(self):
         """Ensure initialized database manager has no monitor metrics."""
         metrics = [
-            "throughput",
-            "latency",
-            "queue_length",
+            # "throughput",
+            # "latency",
+            # "queue_length",
+            # "system",
             "chunks",
             "storage",
-            "system",
         ]
         metrics_attributes = [
-            "throughput",
-            "latency",
-            "queue_length",
+            # "throughput",
+            # "latency",
+            # "queue_length",
+            # "system_data",
             "chunks_data",
             "storage",
-            "system_data",
         ]
 
         for i in range(len(metrics)):
@@ -125,7 +126,7 @@ class TestSystem:
             {
                 "id": "test_database1",
                 "host": DATABASE_HOST,
-                "port": "5432",
+                "port": DATABASE_PORT,
                 "number_workers": 8,
                 "dbname": "postgres",
             }
@@ -157,12 +158,18 @@ class TestSystem:
         response = self.backend.start_workload("tpch_0.1", 300)
         assert response == get_response(200)  # nosec
 
-        sleep(4.0)  # wait for query executions
+        sleep(5.0)  # wait for query executions
 
         metrics = ["throughput", "latency", "queue_length"]
         for metric in metrics:
-            response = self.backend.get_monitor_property(metric)
-            assert response["body"][metric]["test_database1"] > 0  # nosec
+            timestamp: int = time_ns()
+            offset: int = 3_000_000_000
+            startts: int = timestamp - offset - 1_000_000_000
+            endts: int = timestamp - offset
+            response = self.backend.get_historical_monitor_property(
+                metric, startts, endts
+            )
+            assert response[0][metric][0][metric] > 0  # nosec
 
         response = self.backend.stop_workload()
         assert response == get_response(200)  # nosec
