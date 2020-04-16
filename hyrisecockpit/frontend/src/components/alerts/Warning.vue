@@ -25,7 +25,7 @@ interface Props {
 }
 
 export default defineComponent({
-  name: "UnselectedWarning",
+  name: "Warning",
   props: {
     condition: {
       type: Array,

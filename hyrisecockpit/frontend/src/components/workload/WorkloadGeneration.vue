@@ -9,22 +9,22 @@
         <v-icon @click="closeWorkloadDialog()">mdi-close</v-icon>
       </v-system-bar>
       <v-card-text>
-        <unselected-warning
+        <warning
           v-if="noDatabaseAdded"
           class="mt-2 pt-2 mb-0 pb-2 primary--text"
         >
           <template #message>
             No database added.
           </template>
-        </unselected-warning>
+        </warning>
         <div v-if="instanceBlocked.val">
-          <unselected-warning
+          <warning
             class="mt-2 pt-2 mb-0 pb-2 primary--text"
             v-for="instance in instanceBlocked.name"
             :key="instance"
           >
             <template #message> {{ instance }} is blocked. </template>
-          </unselected-warning>
+          </warning>
         </div>
         <v-row>
           <v-col max-width="300px">
@@ -141,7 +141,7 @@ import {
   getDisplayedWorkload,
   getWorkloadFromTransferred
 } from "../../meta/workloads";
-import UnselectedWarning from "../alerts/UnselectedWarning.vue";
+import Warning from "../alerts/Warning.vue";
 
 interface Props {
   open: boolean;
@@ -166,7 +166,7 @@ interface Data {
 }
 export default defineComponent({
   components: {
-    UnselectedWarning
+    Warning
   },
   props: {
     open: {
