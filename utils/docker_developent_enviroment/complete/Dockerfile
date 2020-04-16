@@ -22,7 +22,12 @@ RUN apt-get -y install vim  && \
 #----------------#
 
 # Install all packages for Pyenv
+RUN apt-get -y install python3
+RUN apt -y install python3-pip
 RUN apt install liblzma-dev
+RUN pip3 install --upgrade pip
+RUN pip3 install pylzma
+
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git \
     make \
     build-essential \
@@ -50,9 +55,8 @@ RUN apt-get install -y locales
 RUN locale-gen en_US.UTF-8
 
 # Install pipenv
+RUN pip install --upgrade pip
 RUN apt-get -y install libpq-dev
-RUN pip install --upgrade pipi
-RUN pip install pylzma
 RUN pip install pipenv
 RUN apt-get install -y wget
 
@@ -77,8 +81,6 @@ RUN rm nodesource_setup.sh
 
 RUN     wget -nv https://dl.influxdata.com/influxdb/releases/influxdb_${INFLUXDB_VERSION}_amd64.deb && \
             dpkg -i influxdb_${INFLUXDB_VERSION}_amd64.deb && rm influxdb_${INFLUXDB_VERSION}_amd64.deb
-
-
 
 #-----------------#
 # Set UP Hyrise   #
