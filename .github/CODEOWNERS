@@ -8,7 +8,11 @@
 /* @caterinamandel98 @cH3n7i @fabianhe
 /.github/ @caterinamandel98 @cH3n7i @fabianhe
 /docker/ @caterinamandel98 @cH3n7i @fabianhe
+/docker-compose.yml  @caterinamandel98 @cH3n7i @fabianhe
 /hyrise/ @caterinamandel98 @cH3n7i @fabianhe
+/hyrisecockpit/api/Dockerfile @caterinamandel98 @cH3n7i @fabianhe
+/hyrisecockpit/database_manager/Dockerfile @caterinamandel98 @cH3n7i @fabianhe
+/hyrisecockpit/workload_generator/Dockerfile @caterinamandel98 @cH3n7i @fabianhe
 /hyrisecockpit/frontend/Dockerfile @caterinamandel98 @cH3n7i @fabianhe
 
 # Backend
