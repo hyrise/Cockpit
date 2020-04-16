@@ -9,6 +9,23 @@
         <v-icon @click="closeWorkloadDialog()">mdi-close</v-icon>
       </v-system-bar>
       <v-card-text>
+        <unselected-warning
+          v-if="noDatabaseAdded"
+          class="mt-2 pt-2 mb-0 pb-2 primary--text"
+        >
+          <template #message>
+            No database added.
+          </template>
+        </unselected-warning>
+        <div v-if="instanceBlocked.val">
+          <unselected-warning
+            class="mt-2 pt-2 mb-0 pb-2 primary--text"
+            v-for="instance in instanceBlocked.name"
+            :key="instance"
+          >
+            <template #message> {{ instance }} is blocked. </template>
+          </unselected-warning>
+        </div>
         <v-row>
           <v-col max-width="300px">
             <p class="subtitle-1 font-weight-medium">
@@ -41,9 +58,7 @@
                 :key="workload"
                 :label="getDisplayedWorkload(workload)"
                 :value="workload"
-                :disabled="
-                  !isLoaded(workload) || loadingWorkloadData || instanceBlocked
-                "
+                :disabled="!isLoaded(workload) || isDisabled()"
               >
               </v-radio>
             </v-radio-group>
@@ -51,7 +66,9 @@
               <v-btn
                 id="start-workload"
                 @click="handleButtonChange('start')"
-                :disabled="buttons.start.loading || !isLoaded(workload)"
+                :disabled="
+                  buttons.start.loading || !isLoaded(workload) || isDisabled()
+                "
                 :loading="buttons.start.loading"
                 :style="{ color: buttons.start.active ? 'green' : '' }"
               >
@@ -62,7 +79,9 @@
               <v-btn
                 id="pause-workload"
                 @click="handleButtonChange('pause')"
-                :disabled="buttons.pause.loading || !isLoaded(workload)"
+                :disabled="
+                  buttons.pause.loading || !isLoaded(workload) || isDisabled()
+                "
                 :loading="buttons.pause.loading"
                 :style="{ color: buttons.pause.active ? 'blue' : '' }"
               >
@@ -73,7 +92,7 @@
               <v-btn
                 id="stop-workload"
                 @click="handleButtonChange('stop')"
-                :disabled="buttons.stop.loading || noDatabaseAdded"
+                :disabled="buttons.stop.loading || isDisabled()"
                 :loading="buttons.stop.loading"
                 :style="{ color: buttons.stop.active ? 'red' : '' }"
               >
@@ -88,14 +107,6 @@
             <p class="subtitle-1 font-weight-medium">
               Load and remove generated data into/from instances
             </p>
-            <v-alert
-              v-if="noDatabaseAdded"
-              class="alert pt-2 pb-2 primary--text"
-              type="warning"
-              color="warning"
-            >
-              <slot>No database added </slot>
-            </v-alert>
             <v-switch
               class="mt-0 pt-0"
               v-model="workloadData"
@@ -105,12 +116,7 @@
               :value="workload"
               @change="handleWorkloadDataChange(workload)"
               :loading="switchesLoading[workload]"
-              :disabled="
-                runningWorkload ||
-                  loadingWorkloadData ||
-                  instanceBlocked ||
-                  noDatabaseAdded
-              "
+              :disabled="runningWorkload || isDisabled()"
             >
             </v-switch>
           </v-col>
@@ -135,6 +141,7 @@ import {
   getDisplayedWorkload,
   getWorkloadFromTransferred
 } from "../../meta/workloads";
+import UnselectedWarning from "../alerts/UnselectedWarning.vue";
 
 interface Props {
   open: boolean;
@@ -147,17 +154,20 @@ interface Data {
   buttons: Record<string, { active: boolean; loading: boolean }>;
   switchesLoading: Record<string, boolean>;
   runningWorkload: Ref<boolean>;
-  loadingWorkloadData: Ref<boolean>;
-  instanceBlocked: Ref<boolean>;
+  instanceBlocked: { name: string[]; val: boolean };
   noDatabaseAdded: Ref<boolean>;
   getDisplayedWorkload: (workload: Workload) => string;
   isLoaded: (workload: Workload) => boolean;
+  isDisabled: () => boolean;
   handleButtonChange: (button: string) => void;
   handleWorkloadChange: () => void;
   handleWorkloadDataChange: (workload: Workload) => void;
   closeWorkloadDialog: () => void;
 }
 export default defineComponent({
+  components: {
+    UnselectedWarning
+  },
   props: {
     open: {
       type: Boolean,
@@ -199,7 +209,10 @@ export default defineComponent({
       job: false
     });
     const runningWorkload = ref<boolean>(false);
-    const instanceBlocked = ref<boolean>(false);
+    const instanceBlocked: { name: string[]; val: boolean } = reactive({
+      name: [],
+      val: false
+    });
     const noDatabaseAdded = ref<boolean>(false);
 
     function closeWorkloadDialog(): void {
@@ -230,42 +243,50 @@ export default defineComponent({
     function isLoaded(workload: Workload): boolean {
       return workloadData.value.includes(workload);
     }
+    function isDisabled(): boolean {
+      return (
+        noDatabaseAdded.value ||
+        instanceBlocked.val ||
+        switchesLoading.tpch01 ||
+        switchesLoading.tpch1 ||
+        switchesLoading.tpcds ||
+        switchesLoading.job
+      );
+    }
     function handleWorkloadChange(): void {
       if (buttons.start.active) {
         handleButtonChange("start");
       }
     }
-    let changeWorkloadData = true;
     function handleWorkloadDataChange(workload: Workload): void {
       switchesLoading[workload] = true;
-      changeWorkloadData = false;
       if (isLoaded(workload)) {
-        loadWorkloadData(workload).then(() => {
-          changeWorkloadData = true;
-        });
+        loadWorkloadData(workload);
       } else {
-        deleteWorkloadData(workload).then(() => {
-          changeWorkloadData = true;
-        });
+        deleteWorkloadData(workload);
       }
     }
     function updateWorkloadInformation(): void {
       getLoadedWorkloadData().then((response: any) => {
         if (response.data.length !== 0) {
           noDatabaseAdded.value = false;
+          instanceBlocked.name = [];
           let loadedWorkloadData: string[] = response.data[0].loaded_benchmarks;
           Object.values(response.data).forEach((instance: any) => {
             loadedWorkloadData = loadedWorkloadData.filter((benchmark: any) =>
               instance.loaded_benchmarks.includes(benchmark)
             );
+            if (instance.database_blocked_status === true) {
+              instanceBlocked.name.push(instance.id);
+            }
           });
-          instanceBlocked.value = Object.values(response.data).some(
+          instanceBlocked.val = Object.values(response.data).some(
             (instance: any) => instance.database_blocked_status === true
           );
           runningWorkload.value = Object.values(response.data).some(
             (instance: any) => instance.worker_pool_status === "running"
           );
-          if (!instanceBlocked.value && changeWorkloadData) {
+          if (!instanceBlocked.val) {
             Object.values(availableWorkloads).forEach((workload: Workload) => {
               switchesLoading[workload] = false;
             });
@@ -288,17 +309,11 @@ export default defineComponent({
       buttons,
       switchesLoading,
       runningWorkload,
-      loadingWorkloadData: computed(
-        () =>
-          switchesLoading.tpch01 ||
-          switchesLoading.tpch1 ||
-          switchesLoading.tpcds ||
-          switchesLoading.job
-      ),
       instanceBlocked,
       noDatabaseAdded,
       getDisplayedWorkload,
       isLoaded,
+      isDisabled,
       handleButtonChange,
       handleWorkloadChange,
       handleWorkloadDataChange,
