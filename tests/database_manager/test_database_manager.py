@@ -33,9 +33,14 @@ def fake_server_constructor(*args) -> MagicMock:
 def fake_database(*args) -> MagicMock:
     """Fake server."""
     fake_database = MagicMock()
-    fake_database.driver.dbname = "database_name"
-    fake_database.driver.host = "database_host"
-    fake_database.driver.port = 10000
+    mocked_connection_information = {
+        "id": "database_id",
+        "host": "database_host",
+        "port": "10000",
+        "dbname": "database_name",
+    }
+
+    fake_database.connection_information = mocked_connection_information
     fake_database.number_workers = 8
     fake_database.close.return_value = None
 
@@ -206,7 +211,7 @@ class TestDatabaseManager:
         for call in database_manager._get_server_calls().keys():
             assert call in calls
 
-    @patch("hyrisecockpit.database_manager.manager.Driver.validate_connection")
+    @patch("hyrisecockpit.database_manager.manager.PoolCursor.validate_connection")
     @patch("hyrisecockpit.database_manager.manager.Database")
     def test_call_add_database(
         self,
@@ -245,7 +250,7 @@ class TestDatabaseManager:
         assert response == get_response(200)
         assert "database_id" in database_manager._databases.keys()
 
-    @patch("hyrisecockpit.database_manager.manager.Driver.validate_connection")
+    @patch("hyrisecockpit.database_manager.manager.PoolCursor.validate_connection")
     @patch("hyrisecockpit.database_manager.manager.Database")
     def test_call_add_database_with_invalid_connection(
         self,
@@ -270,7 +275,7 @@ class TestDatabaseManager:
         assert response == get_response(400)
         assert "database_id" not in database_manager._databases.keys()
 
-    @patch("hyrisecockpit.database_manager.manager.Driver.validate_connection")
+    @patch("hyrisecockpit.database_manager.manager.PoolCursor.validate_connection")
     @patch("hyrisecockpit.database_manager.manager.Database")
     def test_call_add_existing_database(
         self,
@@ -285,7 +290,7 @@ class TestDatabaseManager:
             "user": "admin",
             "password": "12345678",
             "host": "database_host",
-            "port": 5432,
+            "port": "5432",
             "dbname": "database_name",
             "number_workers": 8,
         }
@@ -304,7 +309,7 @@ class TestDatabaseManager:
             {
                 "id": "db1",
                 "host": "database_host",
-                "port": 10000,
+                "port": "10000",
                 "number_workers": 8,
                 "dbname": "database_name",
             }
