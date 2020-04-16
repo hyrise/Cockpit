@@ -9,11 +9,10 @@
       :key="database.id"
     >
       <v-container fluid>
-        
         <v-row id="database-id" justify="center" class="top-entry" no-gutters>
           <database-chip :database-id="database.id" />
         </v-row>
-       
+
         <v-divider class="divider" />
 
         <v-row no-gutters>
@@ -134,5 +133,4 @@ export default defineComponent({
 .entry.col {
   max-width: 40%;
 }
-
 </style>
