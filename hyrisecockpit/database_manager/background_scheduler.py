@@ -246,7 +246,7 @@ class BackgroundJobManager(object):
 
         log_df = self._sql_to_data_frame(
             (
-                "SELECT * FROM meta_log WHERE 'timestamp' >= startts AND 'timestamp' < entts;"
+                "SELECT * FROM meta_log WHERE 'timestamp' >= startts AND 'timestamp' < endts;"
             ),
             params={"startts": startts, "endts": endts},
         )
