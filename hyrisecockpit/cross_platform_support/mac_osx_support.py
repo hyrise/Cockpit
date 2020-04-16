@@ -1,6 +1,7 @@
 """This model adjust libraries to work for mac osx."""
 
 from multiprocessing import Process, Queue, Value
+from unittest.mock import MagicMock
 
 from psycopg2 import DatabaseError, InterfaceError, ProgrammingError
 from psycopg2.extensions import AsIs
@@ -51,6 +52,10 @@ class MacQueue:
         """Reliable implementation of multiprocessing empty."""
         return not self.qsize()
 
+    def close(self):
+        """Clsoe queue."""
+        self.queue.close()
+
 
 def format_query_parameters(parameters):
     """Format Query parameters."""
@@ -100,3 +105,11 @@ class LoadingTabbleProcess:
     def terminate(self):
         """Terminate process."""
         self.process.terminate()
+
+
+class PickableMacMock(MagicMock):
+    """Wrapper for MagicMock to make it pickable."""
+
+    def __reduce__(self):
+        """Make it useable in threaded context."""
+        return (MagicMock, ())
