@@ -81,18 +81,10 @@ class TestSystem:
     def test_database_manager_initialization(self):
         """Ensure initialized database manager has no monitor metrics."""
         metrics = [
-            # "throughput",
-            # "latency",
-            # "queue_length",
-            # "system",
             "chunks",
             "storage",
         ]
         metrics_attributes = [
-            # "throughput",
-            # "latency",
-            # "queue_length",
-            # "system_data",
             "chunks_data",
             "storage",
         ]
@@ -103,6 +95,17 @@ class TestSystem:
 
         available_datasets = self.backend.get_control_property("data")
         available_databases = self.backend.get_control_property("database")
+
+        historical_metrics = ["throughput", "latency", "queue_length", "system"]
+        for metric in historical_metrics:
+            timestamp: int = time_ns()
+            offset: int = 3_000_000_000
+            startts: int = timestamp - offset - 1_000_000_000
+            endts: int = timestamp - offset
+            response = self.backend.get_historical_monitor_property(
+                metric, startts, endts
+            )
+            assert response == []  # nosec
 
         assert available_datasets == [  # nosec
             "tpch_0.1",
