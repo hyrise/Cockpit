@@ -3,22 +3,25 @@
     <v-card
       id="database-system-details"
       class="card"
+      :color="database.color"
       :style="databaseFlex"
       v-for="database in databases"
       :key="database.id"
     >
       <v-container fluid>
+        
         <v-row id="database-id" justify="center" class="top-entry" no-gutters>
           <database-chip :database-id="database.id" />
         </v-row>
+       
         <v-divider class="divider" />
 
         <v-row no-gutters>
-          <v-col class="entry" offset="0" max-width="20">
+          <v-col class="entry">
             <v-icon left> mdi-desktop-classic</v-icon>
             <small>Host:</small>
           </v-col>
-          <v-col id="database-host" class="entry body-2" offset="0">
+          <v-col id="database-host" class="entry body-2">
             {{ database.systemDetails.host }}
           </v-col>
         </v-row>
