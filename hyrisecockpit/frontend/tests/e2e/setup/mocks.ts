@@ -9,15 +9,18 @@ import {
   fakeDatabasePluginsData,
   fakeDatabasePluginSettings,
   fakeDatabasePluginLogs,
+  fakeDatabaseStatusData,
   fakeIds
 } from "./factories";
 import {
   assignFakeData,
   fakeDataByIds,
+  fakeDataByIdsWithTimestamps,
   generateUniqueRandomNumbers,
   Entity,
   Request,
   benchmarks,
+  DatabaseState,
   empty
 } from "./helpers";
 import { useCallbacks } from "./callbacks";
@@ -33,9 +36,11 @@ export function useMocks(
   getMockedPostCallback: (request: Request) => (id: string) => void;
   getMockedDeleteCallback: (request: Request) => (id: string) => void;
 } {
+  let mockedState: Record<DatabaseState, boolean> = { workloadRunning: false };
   const callbacks = useCallbacks(
     addMockedId,
     removeMockedId,
+    changeMockedState,
     renewMockResponses
   );
   let mockedIds: Record<Entity, string[]> = mockIds();
@@ -59,18 +64,22 @@ export function useMocks(
   }
 
   function mockIds(): Record<Entity, string[]> {
-    const plugins = fakeIds(numbers.plugins, "plugin-");
+    const plugins = fakeIds(numbers.plugins, "plugin");
     return {
-      databases: fakeIds(numbers.databases, "database-"),
-      tables: fakeIds(numbers.tables, "table-"),
-      columns: fakeIds(numbers.columns, "column-"),
+      databases: fakeIds(numbers.databases, "database"),
+      tables: fakeIds(numbers.tables, "table"),
+      columns: fakeIds(numbers.columns, "column"),
       chunks: [],
       queries: [],
       plugins: plugins,
       activated_plugins: generateUniqueRandomNumbers(
         numbers.activated_plugins,
         plugins.length
-      ).map(index => plugins[index])
+      ).map(index => plugins[index]),
+      loaded_benchmarks: generateUniqueRandomNumbers(
+        numbers.loaded_benchmarks,
+        benchmarks.length
+      ).map(index => benchmarks[index])
     };
   }
 
@@ -88,26 +97,26 @@ export function useMocks(
         )
       )
     };
-    responseMocks.system = {
-      system_data: assignFakeData(
-        fakeDataByIds(mockedIds.databases, fakeDatabaseSystemData)
-      )
-    };
-    responseMocks.throughput = {
-      throughput: assignFakeData(
-        fakeDataByIds(mockedIds.databases, fakeNumberData)
-      )
-    };
-    responseMocks.latency = {
-      latency: assignFakeData(
-        fakeDataByIds(mockedIds.databases, fakeNumberData)
-      )
-    };
-    responseMocks.queue_length = {
-      queue_length: assignFakeData(
-        fakeDataByIds(mockedIds.databases, fakeNumberData)
-      )
-    };
+    responseMocks.system = fakeDataByIdsWithTimestamps(
+      mockedIds.databases,
+      "system_data",
+      fakeDatabaseSystemData
+    );
+    responseMocks.throughput = fakeDataByIdsWithTimestamps(
+      mockedIds.databases,
+      "throughput",
+      fakeNumberData
+    );
+    responseMocks.latency = fakeDataByIdsWithTimestamps(
+      mockedIds.databases,
+      "latency",
+      fakeNumberData
+    );
+    responseMocks.queue_length = fakeDataByIdsWithTimestamps(
+      mockedIds.databases,
+      "queue_length",
+      fakeNumberData
+    );
     responseMocks.krueger_data = fakeDataByIds(
       mockedIds.databases,
       fakeKruegerData
@@ -129,6 +138,13 @@ export function useMocks(
     );
     //TODO: handle loaded tables for every database
     responseMocks.data = benchmarks;
+    responseMocks.status = mockedIds.databases.map(id =>
+      fakeDatabaseStatusData(
+        id,
+        mockedIds.loaded_benchmarks,
+        mockedState.workloadRunning
+      )
+    );
     responseMocks.available_plugins = mockedIds.plugins;
     // NOTE: currently all databases have the same plugins activated
     responseMocks.plugin = mockedIds.databases.map(id =>
@@ -146,6 +162,10 @@ export function useMocks(
     return responseMocks as Record<Request, any>;
   }
 
+  function changeMockedState(state: DatabaseState, value: boolean): void {
+    mockedState[state] = value;
+  }
+
   function addMockedId(entity: Entity, id: string): void {
     mockedIds[entity].push(id);
   }
@@ -157,10 +177,11 @@ export function useMocks(
   }
 
   function mockPostCallbacks(): Partial<Record<Request, (id: string) => void>> {
-    //TODO: add callbacks here
     const postCallbackMocks: Partial<Record<Request, (id: string) => void>> = {
-      database: callbacks.handleAddDatabase,
-      plugin: callbacks.handleAddActivePlugin
+      database: callbacks.addDatabase,
+      plugin: callbacks.activatePlugin,
+      workload: callbacks.startWorkload,
+      data: callbacks.loadTable
     };
 
     return postCallbackMocks;
@@ -169,13 +190,14 @@ export function useMocks(
   function mockDeleteCallbacks(): Partial<
     Record<Request, (id: string) => void>
   > {
-    //TODO: add callbacks here
     const deleteCallbackMocks: Partial<Record<
       Request,
       (id: string) => void
     >> = {
-      database: callbacks.handleRemoveDatabase,
-      plugin: callbacks.handleRemoveActivePlugin
+      database: callbacks.removeDatabase,
+      plugin: callbacks.deactivatePlugin,
+      workload: callbacks.stopWorkload,
+      data: callbacks.removeTable
     };
 
     return deleteCallbackMocks;

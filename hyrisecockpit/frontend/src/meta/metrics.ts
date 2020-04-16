@@ -20,7 +20,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "chunks",
     component: "Access",
     requestTime: 5000,
-    dataType: "interval"
+    dataType: "interval",
+    historic: false
   },
   cpu: {
     fetchType: "modify",
@@ -30,6 +31,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     component: "CPU",
     requestTime: 1000,
     dataType: "interval",
+    historic: true,
     staticAxesRange: {
       y: { max: 100 }
     }
@@ -41,7 +43,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "latency",
     component: "Latency",
     requestTime: 1000,
-    dataType: "interval"
+    dataType: "interval",
+    historic: true
   },
   executedQueryTypeProportion: {
     fetchType: "read",
@@ -50,7 +53,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "krueger_data",
     component: "QueryTypeProportion",
     requestTime: 5000,
-    dataType: "interval"
+    dataType: "interval",
+    historic: false
   },
   generatedQueryTypeProportion: {
     fetchType: "read",
@@ -61,7 +65,18 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "krueger_data",
     component: "QueryTypeProportion",
     requestTime: 5000,
-    dataType: "interval"
+    dataType: "interval",
+    historic: false
+  },
+  memoryFootprint: {
+    fetchType: "modify",
+    transformationService: useDataTransformation("memoryFootprint"),
+    base: "storage",
+    endpoint: monitorBackend + "storage",
+    component: "MemoryFootprint",
+    requestTime: 1000,
+    dataType: "interval",
+    historic: true
   },
   queueLength: {
     fetchType: "modify",
@@ -70,7 +85,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "queue_length",
     component: "QueueLength",
     requestTime: 1000,
-    dataType: "interval"
+    dataType: "interval",
+    historic: true
   },
   ram: {
     fetchType: "modify",
@@ -80,6 +96,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     component: "RAM",
     requestTime: 1000,
     dataType: "interval",
+    historic: true,
     staticAxesRange: {
       y: { max: 100 }
     }
@@ -91,7 +108,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "storage",
     component: "Storage",
     requestTime: 5000,
-    dataType: "snapshot"
+    dataType: "snapshot",
+    historic: false
   },
   throughput: {
     fetchType: "modify",
@@ -100,7 +118,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "throughput",
     component: "Throughput",
     requestTime: 1000,
-    dataType: "interval"
+    dataType: "interval",
+    historic: true
   }
 };
 
@@ -142,6 +161,11 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
     xaxis: "Workload",
     yaxis: "Proportion of queries in %"
   },
+  memoryFootprint: {
+    title: "Memory Footprint",
+    xaxis: timeLabel,
+    yaxis: "Memory Footprint in MB"
+  },
   latency: {
     title: "Latency",
     xaxis: timeLabel,
@@ -167,7 +191,7 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
   }
 };
 
-const metricDescription: Record<Metric, string> = {
+const metricDescription: Partial<Record<Metric, string>> = {
   access:
     "Number of accesses  <br/> separated by chunk and column  <br/> of the selected table.",
   cpu: "Current processor workload.",
@@ -196,6 +220,11 @@ const metricDetailsConfiguration: Partial<Record<
     border: 100,
     unit: "ms",
     stateOrder: getMetricValueStateOrder("asc")
+  },
+  memoryFootprint: {
+    border: 1,
+    unit: "MB",
+    stateOrder: getMetricValueStateOrder("desc")
   },
   queueLength: {
     border: 20000,
@@ -255,7 +284,7 @@ export function getMetricChartConfiguration(
 }
 
 export function getMetricDescription(metric: Metric): string {
-  return metricDescription[metric];
+  return metricDescription[metric]!;
 }
 
 export function getMetricDetailsConfiguration(

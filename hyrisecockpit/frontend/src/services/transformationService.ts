@@ -14,6 +14,7 @@ const transformationServiceMap: Record<Metric, TransformationService> = {
   latency: getLatencyData,
   executedQueryTypeProportion: getExecutedQueryTypeProportionData,
   generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
+  memoryFootprint: getMemoryFootprint,
   queueLength: getReadOnlyData,
   ram: getRAMData,
   storage: getStorageData,
@@ -21,6 +22,10 @@ const transformationServiceMap: Record<Metric, TransformationService> = {
 };
 
 const { roundNumber } = useFormatting();
+const {
+  getTableMemoryFootprint,
+  getDatabaseMemoryFootprint
+} = useDataTransformationHelpers();
 
 export function useDataTransformation(metric: Metric): TransformationService {
   return transformationServiceMap[metric];
@@ -89,28 +94,29 @@ function getQueryTypeProportionData(data: any, type: string): any {
   ];
 }
 
-function getCPUData(data: any, primaryKey: string = ""): number {
-  return data[primaryKey].cpu.cpu_process_usage;
+function getCPUData(data: any, primaryKey: string = ""): number[] {
+  return data.map((entry: any) => entry[primaryKey].cpu.cpu_process_usage);
 }
 
-function getRAMData(data: any, primaryKey: string = ""): number {
-  return data[primaryKey].memory.percent;
+function getRAMData(data: any, primaryKey: string = ""): number[] {
+  return data.map((entry: any) => entry[primaryKey].memory.percent);
 }
 
-function getReadOnlyData(data: any, primaryKey: string = ""): number {
-  return data[primaryKey];
+function getReadOnlyData(data: any, primaryKey: string = ""): number[] {
+  return data.map((entry: any) => entry[primaryKey]);
 }
 
-function getLatencyData(data: any, primaryKey: string = ""): number {
-  return roundNumber(getReadOnlyData(data, primaryKey), Math.pow(10, 6));
+function getLatencyData(data: any, primaryKey: string = ""): number[] {
+  return getReadOnlyData(data, primaryKey).map((data: number) =>
+    roundNumber(data, Math.pow(10, 6))
+  );
+}
+
+function getMemoryFootprint(data: any): number[] {
+  return [getDatabaseMemoryFootprint(data)];
 }
 
 function getStorageData(data: any, primaryKey: string = ""): StorageData {
-  const {
-    getTableMemoryFootprint,
-    getDatabaseMemoryFootprint
-  } = useDataTransformationHelpers();
-
   //TODO: this can be replaced when the size entry of the returned data of every table is fixed from the backend
   const totalDatabaseMemory = getDatabaseMemoryFootprint(data[primaryKey]);
 
@@ -293,7 +299,7 @@ export function useDataTransformationHelpers(): {
   }
   function getDatabaseMainMemoryCapacity(data: any): number {
     return roundNumber(
-      data.memory.total,
+      data?.memory?.total ?? 0,
       Math.pow(10, 3),
       1 / Math.pow(10, 6),
       false

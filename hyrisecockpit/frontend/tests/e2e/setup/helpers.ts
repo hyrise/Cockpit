@@ -1,4 +1,5 @@
 import * as faker from "faker";
+import { fakeTimeStamp } from "./factories";
 
 // REQUEST HELPERS
 
@@ -9,7 +10,8 @@ export type Entity =
   | "chunks"
   | "queries"
   | "plugins"
-  | "activated_plugins";
+  | "activated_plugins"
+  | "loaded_benchmarks";
 export type Request =
   | "database"
   | "system"
@@ -25,11 +27,14 @@ export type Request =
   | "plugin"
   | "plugin_settings"
   | "plugin_log"
-  | "workload";
+  | "workload"
+  | "status";
 
-export type BackendStatus = "up" | "down";
+export type BackendState = "up" | "down";
 
-export const benchmarks = ["tpch_1", "tpch_0.1", "tpcds_1", "job"];
+export type DatabaseState = "workloadRunning";
+
+export const benchmarks = ["tpch_0.1", "tpch_1", "tpcds_1", "job"];
 
 const getAliases: Partial<Record<Request, string>> = {
   database: "getDatabases",
@@ -45,7 +50,8 @@ const getAliases: Partial<Record<Request, string>> = {
   available_plugins: "getAvailablePLugins",
   plugin: "getPlugin",
   plugin_settings: "getPluginSettings",
-  plugin_log: "getPluginLog"
+  plugin_log: "getPluginLog",
+  status: "getDatabaseWorkloadState"
 };
 
 const postAliases: Partial<Record<Request, string>> = {
@@ -63,7 +69,7 @@ const deleteAliases: Partial<Record<Request, string>> = {
   workload: "stopWorkload"
 };
 
-const responseStatus: Record<BackendStatus, number> = {
+const responseStatus: Record<BackendState, number> = {
   up: 200,
   down: 500
 };
@@ -80,11 +86,29 @@ export function getDeleteAlias(request: Request): string {
   return deleteAliases[request]!;
 }
 
-export function getResponseStatus(backendStatus: BackendStatus): number {
-  return responseStatus[backendStatus];
+export function getResponseStatus(BackendState: BackendState): number {
+  return responseStatus[BackendState];
 }
 
-// FAKE DATA HELPERS
+// ASSIGN FAKE DATA HELPERS
+
+export function fakeDataByIdsWithTimestamps(
+  ids: string[],
+  type: string,
+  fakeFunction: () => Object
+): Object[] {
+  return ids.map(id => {
+    return {
+      id,
+      [type]: [
+        {
+          timestamp: fakeTimeStamp(),
+          [type]: fakeFunction()
+        }
+      ]
+    };
+  });
+}
 
 export function fakeDataByIds(
   ids: string[],
@@ -100,6 +124,8 @@ export function assignFakeData(fakeData: any[]): Object {
   });
   return newData;
 }
+
+// FAKE DATA HELPERS
 
 export function generateRandomFloat(min: number, range: number) {
   return Math.random() * range + min;
@@ -129,6 +155,10 @@ export function generateUniqueRandomNumbers(
     available = available.filter(item => item !== index);
   }
   return selected;
+}
+
+export function getNanoSeconds(date: Date): number {
+  return date.getTime() * Math.pow(10, 6);
 }
 
 export function empty(): void {
