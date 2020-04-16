@@ -1,8 +1,7 @@
 """The BackgroundJobManager is managing the background jobs for the apscheduler."""
-
 from copy import deepcopy
 from json import dumps
-from multiprocessing import Process, Value
+from sys import platform
 from time import time_ns
 from typing import Any, Dict, List, Optional, Tuple, TypedDict, Union
 
@@ -14,6 +13,14 @@ from psycopg2.extensions import AsIs
 from .cursor import ConnectionFactory, StorageCursor
 from .table_names import table_names as _table_names
 from .worker_pool import WorkerPool
+
+if platform.startswith("linux"):
+    from multiprocessing import Process, Value
+elif platform.startswith("darwin"):
+    from multiprocessing import Value
+    from hyrisecockpit.cross_platform_support.mac_osx_support import (  # type: ignore
+        LoadingTabbleProcess as Process,
+    )
 
 
 class Encoding(TypedDict):
@@ -417,10 +424,19 @@ class BackgroundJobManager(object):
 
     def _execute_queries_parallel(self, table_names, queries, folder_name) -> None:
         success_flags: List[Value] = [Value("b", False) for _ in queries]
-        processes: List[Process] = [
-            Process(target=self._execute_table_query, args=(query, success_flag),)
-            for query, success_flag in zip(queries, success_flags)
-        ]
+        if platform.startswith("darwin"):
+            processes: List[Process] = [
+                Process(  # type: ignore
+                    connection_factory=self._connection_factory,
+                    args=(query, success_flag),
+                )
+                for query, success_flag in zip(queries, success_flags)
+            ]
+        else:
+            processes: List[Process] = [  # type: ignore
+                Process(target=self._execute_table_query, args=(query, success_flag),)
+                for query, success_flag in zip(queries, success_flags)
+            ]
         for process in processes:
             process.start()
         for process in processes:
