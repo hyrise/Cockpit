@@ -64,11 +64,11 @@ export function useMocks(
   }
 
   function mockIds(): Record<Entity, string[]> {
-    const plugins = fakeIds(numbers.plugins, "plugin-");
+    const plugins = fakeIds(numbers.plugins, "plugin");
     return {
-      databases: fakeIds(numbers.databases, "database-"),
-      tables: fakeIds(numbers.tables, "table-"),
-      columns: fakeIds(numbers.columns, "column-"),
+      databases: fakeIds(numbers.databases, "database"),
+      tables: fakeIds(numbers.tables, "table"),
+      columns: fakeIds(numbers.columns, "column"),
       chunks: [],
       queries: [],
       plugins: plugins,

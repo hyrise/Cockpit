@@ -14,6 +14,7 @@ const transformationServiceMap: Record<Metric, TransformationService> = {
   latency: getLatencyData,
   executedQueryTypeProportion: getExecutedQueryTypeProportionData,
   generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
+  memoryFootprint: getMemoryFootprint,
   queueLength: getReadOnlyData,
   ram: getRAMData,
   storage: getStorageData,
@@ -21,6 +22,10 @@ const transformationServiceMap: Record<Metric, TransformationService> = {
 };
 
 const { roundNumber } = useFormatting();
+const {
+  getTableMemoryFootprint,
+  getDatabaseMemoryFootprint
+} = useDataTransformationHelpers();
 
 export function useDataTransformation(metric: Metric): TransformationService {
   return transformationServiceMap[metric];
@@ -107,12 +112,11 @@ function getLatencyData(data: any, primaryKey: string = ""): number[] {
   );
 }
 
-function getStorageData(data: any, primaryKey: string = ""): StorageData {
-  const {
-    getTableMemoryFootprint,
-    getDatabaseMemoryFootprint
-  } = useDataTransformationHelpers();
+function getMemoryFootprint(data: any): number[] {
+  return [getDatabaseMemoryFootprint(data)];
+}
 
+function getStorageData(data: any, primaryKey: string = ""): StorageData {
   //TODO: this can be replaced when the size entry of the returned data of every table is fixed from the backend
   const totalDatabaseMemory = getDatabaseMemoryFootprint(data[primaryKey]);
 

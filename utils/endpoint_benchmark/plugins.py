@@ -1,8 +1,8 @@
 """Module for managing benchmark plug-ins."""
 import pprint
 import subprocess  # nosec
-import time
 from multiprocessing import Process
+from time import sleep, time_ns
 
 import requests
 
@@ -12,6 +12,8 @@ from utils.endpoint_benchmark.print_colors import (
     print_yellow,
 )
 
+paramater_endpoints = ["queue_length", "throughput", "latency", "system"]
+
 
 def wrk_background_process(url, duration):
     """Background process to execute wrk."""
@@ -20,6 +22,16 @@ def wrk_background_process(url, duration):
     )
     print(sub_process.stdout.decode("utf-8"))
     print(sub_process.stderr.decode("utf-8"))
+
+
+def check_for_parameter(endpoint):
+    """Check if endpoint need parameters."""
+    if endpoint in paramater_endpoints:
+        timestamp = time_ns() - 3_000_000_000
+        endts = timestamp
+        startts = timestamp - 1_000_000_000
+        endpoint = f"{endpoint}?startts={startts}&endts={endts}"
+    return endpoint
 
 
 class MultiProcessWrkPlugin:
@@ -36,7 +48,7 @@ class MultiProcessWrkPlugin:
             Process(
                 target=wrk_background_process,
                 args=(
-                    f"{self._backend_url}/{endpoint_type}/{end_point}",
+                    f"{self._backend_url}/{endpoint_type}/{check_for_parameter(end_point)}",
                     self._configuration["time"],
                 ),
             )
@@ -82,7 +94,7 @@ class WrkPlugin:
                     "-t1",
                     "-c1",
                     f"-d{self._configuration['time']}s",
-                    f"{self._backend_url}/{endpoint_type}/{end_point}",
+                    f"{self._backend_url}/{endpoint_type}/{check_for_parameter(end_point)}",
                 ],
                 capture_output=True,
             )
@@ -109,7 +121,7 @@ class DisplayReply:
             f"endpoints_{endpoint_type}"
         ]:
             endpoint_output[end_point] = requests.get(
-                f"{self._backend_url}/{endpoint_type}/{end_point}"
+                f"{self._backend_url}/{endpoint_type}/{check_for_parameter(end_point)}"
             ).json()
             if not endpoint_output[end_point]:
                 endpoint_output[end_point] = {}
@@ -132,7 +144,7 @@ class DisplayReply:
             if output_control:
                 print_purple(f"\nControl")
                 self._display_endpoint_output(output_control)
-            time.sleep(self._configuration["time"])
+            sleep(self._configuration["time"])
 
 
 class PluginManager:
