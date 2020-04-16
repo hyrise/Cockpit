@@ -11,7 +11,7 @@ class SharedCounter:
 
     def __init__(self, n=0):
         """Initialize for SharedCounter."""
-        self.count = Value("i", n)
+        self.count = Value("d", n)
 
     def increment(self, n=1):
         """Increment the counter by n (default = 1)."""
@@ -34,17 +34,18 @@ class MacQueue:
 
     def put(self, *args, **kwargs):
         """Put element on Queue."""
-        self.size.increment(1)
         self.queue.put(*args, **kwargs)
+        self.size.increment(1)
 
     def get(self, *args, **kwargs):
         """Get element from Queue."""
+        element = self.queue.get(*args, **kwargs)
         self.size.increment(-1)
-        return self.queue.get(*args, **kwargs)
+        return element
 
     def qsize(self):
         """Reliable implementation of multiprocessing qsize."""
-        return self.size.value
+        return round(self.size.value)
 
     def empty(self):
         """Reliable implementation of multiprocessing empty."""
