@@ -40,8 +40,6 @@ services:
         dockerfile: ./hyrisecockpit/frontend/Dockerfile
     working_dir: "/usr/local/Cockpit/hyrisecockpit/frontend"
     command: "serve -s dist"
-    volumes:
-      - ./hyrisecockpit/frontend:/usr/local/Cockpit/hyrisecockpit/frontend
     ports:
       - "8080:8080"
   
