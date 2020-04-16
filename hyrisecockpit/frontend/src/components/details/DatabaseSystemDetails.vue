@@ -63,9 +63,6 @@
             {{ database.systemDetails.numberOfWorkers }}
           </v-col>
         </v-row>
-        <!-- <v-col>
-            <img src="../../assets/images/hpi_logo_bw.png" />
-          </v-col> -->
       </v-container>
     </v-card>
   </div>
@@ -120,7 +117,7 @@ export default defineComponent({
 }
 .entry {
   margin-top: 0%;
-  margin-left: 2%;
+  margin-left: 0%;
 }
 .top-entry {
   margin-left: 0%;
@@ -134,4 +131,8 @@ export default defineComponent({
   margin-top: 0.5%;
   margin-bottom: 1%;
 }
+.entry.col {
+  max-width: 40%;
+}
+
 </style>
