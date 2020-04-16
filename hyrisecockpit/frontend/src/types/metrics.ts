@@ -12,7 +12,8 @@ export type Metric =
   | "ram"
   | "queueLength"
   | "executedQueryTypeProportion"
-  | "generatedQueryTypeProportion";
+  | "generatedQueryTypeProportion"
+  | "memoryFootprint";
 
 export interface MetricController {
   data: Record<Metric, Ref<any>>;
@@ -30,7 +31,8 @@ export const availableMetrics: Metric[] = [
   "ram",
   "queueLength",
   "executedQueryTypeProportion",
-  "generatedQueryTypeProportion"
+  "generatedQueryTypeProportion",
+  "memoryFootprint"
 ];
 
 export const instanceMetrics: Metric[] = ["storage", "access"];
@@ -41,6 +43,7 @@ export const comparisonMetrics: Metric[] = [
   "queueLength",
   "cpu",
   "ram",
+  "memoryFootprint",
   "storage",
   "access",
   "executedQueryTypeProportion"
@@ -50,7 +53,8 @@ export const overviewMetrics: Metric[] = [
   "latency",
   "queueLength",
   "cpu",
-  "ram"
+  "ram",
+  "memoryFootprint"
 ];
 
 export const workloadMetrics: Metric[] = ["generatedQueryTypeProportion"];

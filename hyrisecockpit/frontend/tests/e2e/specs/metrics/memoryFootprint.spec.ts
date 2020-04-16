@@ -4,10 +4,11 @@ import {
   getSelector,
   getSelectorWithID,
   getDetailsSelectorWithID,
-  assertLineChartData,
-  assertMetricDetails
+  assertMetricDetails,
+  assertLineChartData
 } from "./helpers";
-import { assignToObject, waitForChartRender } from "../helpers";
+import { waitForChartRender } from "../helpers";
+import { getDatabaseMemoryFootprint } from "../databases/helpers";
 
 const backend = useBackendMock();
 
@@ -21,28 +22,31 @@ describe("visiting the overview page", () => {
       databases = xhr.response.body;
     });
     cy.visit(getRoute("overview"));
-    cy.setupData("throughput").then((xhr: any) => {
-      data = assignToObject(xhr.response.body, "throughput");
+    cy.setupData("storage").then((xhr: any) => {
+      data = Object.values(xhr.response.body.body.storage).map(entry =>
+        getDatabaseMemoryFootprint(entry)
+      );
     });
     waitForChartRender();
   });
 
   // test data
   it("will show the correct metric data", () => {
-    cy.get(getSelector("throughput")).should((elements: any) => {
+    cy.get(getSelector("memoryFootprint")).should((elements: any) => {
       assertLineChartData(
         elements[0].data,
         data,
-        databases.map(db => db.id)
+        databases.map(db => db.id),
+        true
       );
     });
   });
 
   // test layout
   it("will show the correct range and title", () => {
-    cy.get(getSelector("throughput")).should((elements: any) => {
+    cy.get(getSelector("memoryFootprint")).should((elements: any) => {
       const layout = elements[0].layout;
-      expect(layout.yaxis.title.text).to.eq("Number of queries");
+      expect(layout.yaxis.title.text).to.eq("Memory Footprint in MB");
       expect(layout.yaxis.range[0]).to.eq(0);
     });
   });
@@ -50,22 +54,24 @@ describe("visiting the overview page", () => {
   // test details
   it("will not show metric details", () => {
     databases.forEach((database: any) => {
-      cy.get(getDetailsSelectorWithID("throughput", database.id)).should(
+      cy.get(getDetailsSelectorWithID("memoryFootprint", database.id)).should(
         "not.exist"
       );
     });
   });
 });
 
-// test on overview
+// test on comparison
 describe("visiting the comparison page", () => {
   before(() => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
     });
     cy.visit(getRoute("comparison"));
-    cy.setupData("throughput").then((xhr: any) => {
-      data = assignToObject(xhr.response.body, "throughput");
+    cy.setupData("storage").then((xhr: any) => {
+      data = Object.values(xhr.response.body.body.storage).map(entry =>
+        getDatabaseMemoryFootprint(entry)
+      );
     });
     waitForChartRender();
   });
@@ -73,9 +79,9 @@ describe("visiting the comparison page", () => {
   // test data
   it("will show the correct metric data", () => {
     databases.forEach((database: any) => {
-      cy.get(getSelectorWithID("throughput", database.id)).should(
+      cy.get(getSelectorWithID("memoryFootprint", database.id)).should(
         (elements: any) => {
-          assertLineChartData(elements[0].data, data, [database.id]);
+          assertLineChartData(elements[0].data, data, [database.id], true);
         }
       );
     });
@@ -83,16 +89,12 @@ describe("visiting the comparison page", () => {
 
   // test layout
   it("will show the correct range and title", () => {
-    let maxValue: number | undefined = undefined;
     databases.forEach((database: any) => {
-      cy.get(getSelectorWithID("throughput", database.id)).should(
+      cy.get(getSelectorWithID("memoryFootprint", database.id)).should(
         (elements: any) => {
           const layout = elements[0].layout;
-          expect(layout.yaxis.title.text).to.eq("Number of queries");
+          expect(layout.yaxis.title.text).to.eq("Memory Footprint in MB");
           expect(layout.yaxis.range[0]).to.eq(0);
-
-          if (maxValue) expect(maxValue).to.eq(layout.yaxis.range[1]);
-          maxValue = layout.yaxis.range[1];
         }
       );
     });
@@ -100,11 +102,11 @@ describe("visiting the comparison page", () => {
 
   // test details
   it("will show the correct metric detail data", () => {
-    databases.forEach((database: any) => {
-      cy.get(getDetailsSelectorWithID("throughput", database.id))
+    databases.forEach((database: any, idx) => {
+      cy.get(getDetailsSelectorWithID("memoryFootprint", database.id))
         .invoke("text")
         .then((text: any) => {
-          assertMetricDetails(text, data[database.id]);
+          assertMetricDetails(text, data[idx]);
         });
     });
   });

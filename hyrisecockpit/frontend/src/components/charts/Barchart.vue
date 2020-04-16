@@ -56,10 +56,11 @@ function useBarChartConfiguration(
         l: 70,
         r: 40,
         b: 70,
-        t: 20,
+        t: 30,
         pad: 0
       },
-      paper_bgcolor: "rgba(0,0,0,0)"
+      paper_bgcolor: "rgba(0,0,0,0)",
+      plot_bgcolor: "rgba(0,0,0,0)"
     };
   }
 

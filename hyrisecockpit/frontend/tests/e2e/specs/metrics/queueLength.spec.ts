@@ -42,7 +42,6 @@ describe("visiting the overview page", () => {
   it("will show the correct range and title", () => {
     cy.get(getSelector("queueLength")).should((elements: any) => {
       const layout = elements[0].layout;
-      expect(layout.xaxis.title.text).to.eq("Timestamps");
       expect(layout.yaxis.title.text).to.eq("Number of queries");
       expect(layout.yaxis.range[0]).to.eq(0);
     });
@@ -89,7 +88,6 @@ describe("visiting the comparison page", () => {
       cy.get(getSelectorWithID("queueLength", database.id)).should(
         (elements: any) => {
           const layout = elements[0].layout;
-          expect(layout.xaxis.title.text).to.eq("Timestamps");
           expect(layout.yaxis.title.text).to.eq("Number of queries");
           expect(layout.yaxis.range[0]).to.eq(0);
 

@@ -50,11 +50,19 @@ const metrics: Record<string, string[]> = {
     "queueLength",
     "cpu",
     "ram",
+    "memoryFootprint",
     "storage",
     "access",
     "executedQueryTypeProportion"
   ],
-  overview: ["throughput", "latency", "queueLength", "cpu", "ram"]
+  overview: [
+    "throughput",
+    "latency",
+    "queueLength",
+    "cpu",
+    "ram",
+    "memoryFootprint"
+  ]
 };
 
 export function getSelector(component: string): string {
