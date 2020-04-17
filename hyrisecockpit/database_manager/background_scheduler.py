@@ -8,10 +8,10 @@ from typing import Any, Dict, List, Optional, Tuple, TypedDict, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
-from psycopg2 import DatabaseError, InterfaceError, ProgrammingError, pool
+from psycopg2 import DatabaseError, InterfaceError, ProgrammingError
 from psycopg2.extensions import AsIs
 
-from .cursor import PoolCursor, StorageCursor
+from .cursor import ConnectionFactory, StorageCursor
 from .table_names import table_names as _table_names
 from .worker_pool import WorkerPool
 
@@ -50,7 +50,7 @@ class BackgroundJobManager(object):
         self,
         database_id: str,
         database_blocked: Value,
-        connection_pool: pool,
+        connection_factory: ConnectionFactory,
         loaded_tables: Dict[str, Optional[str]],
         hyrise_active: Value,
         worker_pool: WorkerPool,
@@ -62,7 +62,7 @@ class BackgroundJobManager(object):
         """Initialize BackgroundJobManager object."""
         self._database_id: str = database_id
         self._database_blocked: Value = database_blocked
-        self._connection_pool: pool = connection_pool
+        self._connection_factory: ConnectionFactory = connection_factory
         self._worker_pool: WorkerPool = worker_pool
         self._storage_host: str = storage_host
         self._storage_password: str = storage_password
@@ -116,7 +116,7 @@ class BackgroundJobManager(object):
     def _ping_hyrise(self) -> None:
         """Check in interval if hyrise is still alive."""
         try:
-            with PoolCursor(self._connection_pool) as cur:
+            with self._connection_factory.create_cursor() as cur:
                 cur.execute("SELECT 1;", None)
                 self._hyrise_active.value = True
         except (DatabaseError, InterfaceError):
@@ -170,7 +170,7 @@ class BackgroundJobManager(object):
         if self._database_blocked.value:
             return DataFrame()
         try:
-            with PoolCursor(self._connection_pool) as cur:
+            with self._connection_factory.create_cursor() as cur:
                 return cur.read_sql_query(sql, params)
         except (DatabaseError, InterfaceError):
             return DataFrame()
@@ -417,7 +417,7 @@ class BackgroundJobManager(object):
         query, parameters = query_tuple
         formatted_parameters = self._format_query_parameters(parameters)
         try:
-            with PoolCursor(self._connection_pool) as cur:
+            with self._connection_factory.create_cursor() as cur:
                 cur.execute(query, formatted_parameters)
                 success_flag.value = True
         except (DatabaseError, InterfaceError, ProgrammingError):
@@ -475,7 +475,7 @@ class BackgroundJobManager(object):
 
     def _activate_plugin_job(self, plugin: str) -> None:
         try:
-            with PoolCursor(self._connection_pool) as cur:
+            with self._connection_factory.create_cursor() as cur:
                 cur.execute(
                     (
                         "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
@@ -495,7 +495,7 @@ class BackgroundJobManager(object):
 
     def _deactivate_plugin_job(self, plugin: str) -> None:
         try:
-            with PoolCursor(self._connection_pool) as cur:
+            with self._connection_factory.create_cursor() as cur:
                 cur.execute(
                     ("DELETE FROM meta_plugins WHERE name='%sPlugin';"), (AsIs(plugin),)
                 )
@@ -515,7 +515,7 @@ class BackgroundJobManager(object):
         existing_tables: List = []
         not_existing_tables: List = []
         try:
-            with PoolCursor(self._connection_pool) as cur:
+            with self._connection_factory.create_cursor() as cur:
                 cur.execute("SELECT table_name FROM meta_tables;", None)
                 results = cur.fetchall()
                 loaded_tables = [row[0] for row in results]

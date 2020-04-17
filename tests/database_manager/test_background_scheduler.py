@@ -195,101 +195,100 @@ class TestBackgroundJobManager:
         background_job_manager._update_queue_length_job.remove.assert_called_once()
         mock_scheduler.shutdown.assert_called_once()
 
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
-        get_mocked_pool_cursor,
-    )
     def test_pings_hyrise_if_hyrise_alive(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test handling of valid connection."""
-        global mocked_pool_cursor
+        mock_cursor = MagicMock()
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        background_job_manager._connection_factory = mock_connection_factory
+
         background_job_manager._ping_hyrise()
 
-        mocked_pool_cursor.execute.assert_called_once_with("SELECT 1;", None)
+        mock_cursor.execute.assert_called_once_with("SELECT 1;", None)
         assert background_job_manager._hyrise_active.value
-        mocked_pool_cursor = MagicMock()
 
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
-        get_mocked_pool_cursor,
-    )
     @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
+        "exception", [DatabaseError(), InterfaceError()],
     )
     def test_pings_hyrise_if_hyrise_dead(
-        self, background_job_manager: BackgroundJobManager, exceptions
+        self, background_job_manager: BackgroundJobManager, exception
     ) -> None:
         """Test handling of not valid connection."""
 
         def raise_exception(*args) -> Exception:
             """Throw exception."""
-            raise exceptions
+            raise exception
 
-        global mocked_pool_cursor
-        mocked_pool_cursor.execute.side_effect = raise_exception
+        mock_cursor = MagicMock()
+        mock_cursor.execute.side_effect = raise_exception
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        background_job_manager._connection_factory = mock_connection_factory
 
         background_job_manager._ping_hyrise()
-
         assert not background_job_manager._hyrise_active.value
-        mocked_pool_cursor = MagicMock()
 
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
-        get_mocked_pool_cursor,
-    )
     def test_converts_sql_to_data_frame_if_database_is_blocked(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test read sql query and return empty dataframe."""
+        mock_cursor = MagicMock()
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        background_job_manager._connection_factory = mock_connection_factory
         background_job_manager._database_blocked.value = True
 
         result: DataFrame = background_job_manager._sql_to_data_frame(
             "select ...", None
         )
 
-        global mocked_pool_cursor
-        mocked_pool_cursor.read_sql_query.assert_not_called()
+        mock_cursor.read_sql_query.assert_not_called()
         assert isinstance(result, DataframeType)
         assert result.empty
 
-        mocked_pool_cursor = MagicMock()
-
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
-        get_mocked_pool_cursor,
-    )
     def test_converts_sql_to_data_frame_if_database_is_not_blocked(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test read sql query and return dataframe."""
+        mock_cursor = MagicMock()
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        background_job_manager._connection_factory = mock_connection_factory
         background_job_manager._database_blocked.value = False
 
         background_job_manager._sql_to_data_frame("select ...", None)
 
-        global mocked_pool_cursor
-        mocked_pool_cursor.read_sql_query.assert_called_once_with("select ...", None)
+        mock_cursor.read_sql_query.assert_called_once_with("select ...", None)
 
-        mocked_pool_cursor = MagicMock()
-
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
-        get_mocked_pool_cursor,
-    )
     @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
+        "exception", [DatabaseError(), InterfaceError()],
     )
     def test_converts_sql_to_data_frame_if_database_throws_exception(
-        self, background_job_manager: BackgroundJobManager, exceptions
+        self, background_job_manager: BackgroundJobManager, exception
     ) -> None:
         """Test read sql query in the case that database throws exception."""
 
         def raise_exception(*args):
             """Throw exception."""
-            raise exceptions
+            raise exception
 
-        global mocked_pool_cursor
-        mocked_pool_cursor.read_sql_query.side_effect = raise_exception
+        mock_cursor = MagicMock()
+        mock_cursor.read_sql_query.side_effect = raise_exception
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        background_job_manager._connection_factory = mock_connection_factory
 
         result: DataFrame = background_job_manager._sql_to_data_frame(
             "select ...", None
@@ -297,8 +296,6 @@ class TestBackgroundJobManager:
 
         assert isinstance(result, DataframeType)
         assert result.empty
-
-        mocked_pool_cursor = MagicMock()
 
     def test_successfully_creates_chunks_data_frame(
         self, background_job_manager: BackgroundJobManager
@@ -750,14 +747,18 @@ class TestBackgroundJobManager:
         """Test doesn't format when there are no parameters."""
         assert background_job_manager._format_query_parameters(None) is None
 
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
-        get_mocked_pool_cursor,
-    )
     def test_successfully_executes_table_query(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully executes table queries."""
+        mock_cursor = MagicMock()
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        background_job_manager._connection_factory = mock_connection_factory
+        background_job_manager._database_blocked.value = True
+
         mocked_format_query_parameters: MagicMock = MagicMock()
         mocked_format_query_parameters.return_value = (
             "keep",
@@ -774,18 +775,12 @@ class TestBackgroundJobManager:
         success_flag: Value = Value("b", 0)
         background_job_manager._execute_table_query(query_tuple, success_flag)
 
-        global mocked_pool_cursor
-        mocked_pool_cursor.execute.assert_called_once_with(
+        mock_cursor.execute.assert_called_once_with(
             "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
             ("keep", "hyriseDown", "keep",),
         )
+        assert success_flag.value
 
-        mocked_pool_cursor = MagicMock()
-
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
-        get_mocked_pool_cursor,
-    )
     @mark.parametrize(
         "exceptions", [DatabaseError(), InterfaceError()],
     )
@@ -797,6 +792,15 @@ class TestBackgroundJobManager:
         def raise_exception(*args):
             """Throw exception."""
             raise exceptions
+
+        mock_cursor = MagicMock()
+        mock_cursor.execute.side_effect = raise_exception
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        background_job_manager._connection_factory = mock_connection_factory
+        background_job_manager._database_blocked.value = False
 
         mocked_format_query_parameters: MagicMock = MagicMock()
         mocked_format_query_parameters.return_value = (
@@ -811,15 +815,14 @@ class TestBackgroundJobManager:
             ("keep", "hyriseDown", "keep",),
         )
 
-        global mocked_pool_cursor
-        mocked_pool_cursor.execute.side_effect = raise_exception
-
         success_flag: Value = Value("b", False)
         background_job_manager._execute_table_query(query_tuple, success_flag)
 
+        mock_cursor.execute.assert_called_once_with(
+            "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+            ("keep", "hyriseDown", "keep",),
+        )
         assert not success_flag.value
-
-        mocked_pool_cursor = MagicMock()
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.Process",
@@ -1029,10 +1032,6 @@ class TestBackgroundJobManager:
         assert background_job_manager._database_blocked.value
 
     @patch(
-        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
-        get_mocked_pool_cursor,
-    )
-    @patch(
         "hyrisecockpit.database_manager.background_scheduler.AsIs",
         lambda plugin: f"AsIs({plugin})",
     )
@@ -1040,23 +1039,21 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully executes plugin activating query."""
-        background_job_manager._activate_plugin_job("plugin")
+        mock_cursor = MagicMock()
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        background_job_manager._connection_factory = mock_connection_factory
+        background_job_manager._database_blocked.value = False
 
-        global mocked_pool_cursor
+        background_job_manager._activate_plugin_job("plugin")
 
         expected_query: str = "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
         expected_parameter: Tuple[str] = ("AsIs(plugin)",)
 
-        mocked_pool_cursor.execute.assert_called_once_with(
-            expected_query, expected_parameter
-        )
+        mock_cursor.execute.assert_called_once_with(expected_query, expected_parameter)
 
-        mocked_pool_cursor = MagicMock()
-
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
-        get_mocked_pool_cursor,
-    )
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.AsIs",
         lambda plugin: f"AsIs({plugin})",
@@ -1065,18 +1062,20 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully executes plugin deactivating query."""
-        background_job_manager._deactivate_plugin_job("plugin")
+        mock_cursor = MagicMock()
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        background_job_manager._connection_factory = mock_connection_factory
+        background_job_manager._database_blocked.value = False
 
-        global mocked_pool_cursor
+        background_job_manager._deactivate_plugin_job("plugin")
 
         expected_query: str = "DELETE FROM meta_plugins WHERE name='%sPlugin';"
         expected_parameter: Tuple[str] = ("AsIs(plugin)",)
 
-        mocked_pool_cursor.execute.assert_called_once_with(
-            expected_query, expected_parameter
-        )
-
-        mocked_pool_cursor = MagicMock()
+        mock_cursor.execute.assert_called_once_with(expected_query, expected_parameter)
 
     def test_successfully_adds_plugin_activating_job(
         self, background_job_manager: BackgroundJobManager
@@ -1106,17 +1105,19 @@ class TestBackgroundJobManager:
         )
         assert result
 
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
-        get_mocked_pool_cursor,
-    )
     def test_get_existing_tables(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test gets existing tables."""
-        global mocked_pool_cursor
+        mock_cursor = MagicMock()
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        background_job_manager._connection_factory = mock_connection_factory
+        background_job_manager._database_blocked.value = True
 
-        mocked_pool_cursor.fetchall.return_value = [("table_name",)]
+        mock_cursor.fetchall.return_value = [("table_name",)]
 
         result: Dict[
             str, List[Optional[str]]
@@ -1131,12 +1132,6 @@ class TestBackgroundJobManager:
 
         assert result == expected
 
-        mocked_pool_cursor = MagicMock()
-
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
-        get_mocked_pool_cursor,
-    )
     @mark.parametrize(
         "exceptions", [DatabaseError(), InterfaceError()],
     )
@@ -1149,8 +1144,14 @@ class TestBackgroundJobManager:
             """Throw exception."""
             raise exceptions
 
-        global mocked_pool_cursor
-        mocked_pool_cursor.execute.side_effect = raise_exception
+        mock_cursor = MagicMock()
+        mock_cursor.execute.side_effect = raise_exception
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        background_job_manager._connection_factory = mock_connection_factory
+        background_job_manager._database_blocked.value = True
 
         result: Dict[
             str, List[Optional[str]]
@@ -1164,8 +1165,6 @@ class TestBackgroundJobManager:
         }
 
         assert result == expected
-
-        mocked_pool_cursor = MagicMock()
 
     def test_successfully_generates_table_dropping_queries(
         self, background_job_manager: BackgroundJobManager
