@@ -3,6 +3,7 @@ from typing import List
 
 from jsonschema import validate
 
+from hyrisecockpit.api.app.shared import _add_active_database, _remove_active_database
 from hyrisecockpit.api.app.socket_manager import ManagerSocket
 from hyrisecockpit.message import response_schema
 from hyrisecockpit.request import Header, Request
@@ -46,6 +47,7 @@ class DatabaseService:
         response = cls._send_message(
             Request(header=Header(message="add database"), body=dict(interface))
         )
+        _add_active_database(interface["id"])
         return response["header"]["status"]
 
     @classmethod
@@ -54,6 +56,7 @@ class DatabaseService:
         response = cls._send_message(
             Request(header=Header(message="delete database"), body=dict(interface))
         )
+        _remove_active_database(interface["id"])
         return response["header"]["status"]
 
     @classmethod
