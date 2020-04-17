@@ -45,14 +45,16 @@ class ArgumentParser:
 def start_hyriseserver():
     """Start hyrise server."""
     hyrise_one_prosess = Popen(  # nosec
-        ["./hyrise_server/hyrise/cmake-build-release/hyriseServer"],
+        ["./hyriseServer"],
+        cwd="/hyrise_server/hyrise/cmake-build-release",
         stderr=DEVNULL,
         stdout=DEVNULL,
     )
     subprocesses.append(hyrise_one_prosess)
     sleep(0.5)
     hyrise_two_prosess = Popen(  # nosec
-        ["./hyrise_server/hyrise_two/cmake-build-release/hyriseServer"],
+        ["./hyriseServer"],
+        cwd="/hyrise_server/hyrise_two/cmake-build-release",
         stderr=DEVNULL,
         stdout=DEVNULL,
     )
@@ -86,7 +88,7 @@ def start_backend():
     sleep(0.5)
 
 
-def close_components(self) -> None:
+def close_components() -> None:
     """Close main cockpit components."""
     for i in range(len(subprocesses)):
         subprocesses[i].send_signal(signal.SIGINT)
