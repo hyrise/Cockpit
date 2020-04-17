@@ -1,18 +1,14 @@
 """The WorkerPool object represents the workers."""
+from multiprocessing import Event, Process, Value
 from multiprocessing.synchronize import Event as EventType
-from sys import platform
 from typing import List, Optional
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
+from hyrisecockpit.cross_platform_support.multiprocessing_support import Queue
+
 from .cursor import ConnectionFactory
 from .worker import execute_queries, fill_queue
-
-if platform.startswith("linux"):
-    from multiprocessing import Event, Process, Queue, Value
-elif platform.startswith("darwin"):
-    from multiprocessing import Event, Process, Value
-    from hyrisecockpit.cross_platform_support.mac_osx_support import MacQueue as Queue  # type: ignore
 
 
 class WorkerPool:

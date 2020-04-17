@@ -1,6 +1,7 @@
 """The BackgroundJobManager is managing the background jobs for the apscheduler."""
 from copy import deepcopy
 from json import dumps
+from multiprocessing import Value
 from sys import platform
 from time import time_ns
 from typing import Any, Dict, List, Optional, Tuple, TypedDict, Union
@@ -10,17 +11,11 @@ from pandas import DataFrame
 from psycopg2 import DatabaseError, InterfaceError, ProgrammingError
 from psycopg2.extensions import AsIs
 
+from hyrisecockpit.cross_platform_support.multiprocessing_support import Process
+
 from .cursor import ConnectionFactory, StorageCursor
 from .table_names import table_names as _table_names
 from .worker_pool import WorkerPool
-
-if platform.startswith("linux"):
-    from multiprocessing import Process, Value
-elif platform.startswith("darwin"):
-    from multiprocessing import Value
-    from hyrisecockpit.cross_platform_support.mac_osx_support import (  # type: ignore
-        LoadingTabbleProcess as Process,
-    )
 
 
 class Encoding(TypedDict):
@@ -426,7 +421,7 @@ class BackgroundJobManager(object):
         success_flags: List[Value] = [Value("b", False) for _ in queries]
         if platform.startswith("darwin"):
             processes: List[Process] = [
-                Process(  # type: ignore
+                Process(
                     connection_factory=self._connection_factory,
                     args=(query, success_flag),
                 )

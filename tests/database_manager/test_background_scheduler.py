@@ -5,25 +5,18 @@ from multiprocessing import Value
 from multiprocessing.sharedctypes import Synchronized as ValueType
 from sys import platform
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from unittest.mock import call, patch
 
 from pandas import DataFrame
 from pandas.core.frame import DataFrame as DataframeType
 from psycopg2 import DatabaseError, InterfaceError
 from pytest import fixture, mark
 
+from hyrisecockpit.cross_platform_support.testing_support import MagicMock
 from hyrisecockpit.database_manager.background_scheduler import (
     BackgroundJobManager,
     StorageDataType,
 )
-
-if platform.startswith("linux"):
-    from unittest.mock import MagicMock, call, patch
-elif platform.startswith("darwin"):
-    from unittest.mock import call, patch
-    from hyrisecockpit.cross_platform_support.mac_osx_support import (  # type: ignore
-        PickableMacMock as MagicMock,
-    )
-
 
 database_id: str = "MongoDB"
 get_database_blocked: Callable[[], Value] = lambda: Value("b", False)  # noqa: E731
