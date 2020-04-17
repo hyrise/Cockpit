@@ -2,7 +2,12 @@ FROM ubuntu:latest
 
 MAINTAINER Alexander Dubrawski "dubrawski.alexander@gmail.com"
 
+ENV INFLUXDB_VERSION 1.7.10
 ENV PYTHON_VERSION 3.8.2
+ENV CMAKE_VERSION 3.17
+ENV CMAKE_BUILD 3.17.1
+ENV HYRISE_BRANCH https://github.com/hyrise/hyrise.git
+ENV HYRISE_COMMIT 8133ca9f214041099d0b909f6119ad08b29281e6
 
 ENV TZ=Europe/Berlin
 

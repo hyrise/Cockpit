@@ -7,6 +7,7 @@ ENV PYTHON_VERSION 3.8.2
 ENV CMAKE_VERSION 3.17
 ENV CMAKE_BUILD 3.17.1
 ENV HYRISE_BRANCH https://github.com/hyrise/hyrise.git
+ENV HYRISE_COMMIT 8133ca9f214041099d0b909f6119ad08b29281e6
 
 ENV TZ=Europe/Berlin
 
@@ -110,7 +111,7 @@ RUN mkdir hyrise_server
 
 #Install Hyrise
 RUN cd hyrise_server && git clone --recursive ${HYRISE_BRANCH}
-RUN cd hyrise_server/hyrise && git checkout bensk1/storage_manager_multithreaded_table_ops
+RUN cd hyrise_server/hyrise && git checkout ${HYRISE_COMMIT}
 RUN cd hyrise_server && touch install_dependencies.sh
 ADD install_dependencies.sh hyrise_server/hyrise/install_dependencies.sh
 RUN ["chmod", "+x", "hyrise_server/hyrise/install_dependencies.sh"]
