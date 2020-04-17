@@ -9,7 +9,9 @@ def register_routes(api: Api, app: Flask, root: str = "/api") -> None:
     from .workload import register_routes as attach_workload
     from .database import register_routes as attach_database
     from .monitor import register_routes as attach_monitor
+    from .control import register_routes as attach_control
 
     attach_workload(api, app, root)
     attach_database(api, app, root)
     attach_monitor(api, app, root)
+    attach_control(api, app, root)
