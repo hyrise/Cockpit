@@ -272,8 +272,10 @@ class TestCursor:
         results: DataFrame = pool_cursor.read_sql_query("query", None)
 
         assert results.equals(fake_df)
-        
-        mocked_read_sql_query_pandas.assert_called_once_with("query", mocked_connection, params=None)
+
+        mocked_read_sql_query_pandas.assert_called_once_with(
+            "query", mocked_connection, params=None
+        )
 
     def test_connection_factory_initializes(self) -> None:
         """Test initialization of ConnectionFactory."""
