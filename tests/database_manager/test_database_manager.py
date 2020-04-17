@@ -38,13 +38,13 @@ def fake_database(*args) -> MagicMock:
         "host": "database_host",
         "port": "10000",
         "dbname": "database_name",
+        "user": "Jack Black",
+        "password": "password1234",
     }
 
     fake_database.connection_information = mocked_connection_information
     fake_database.number_workers = 8
     fake_database.close.return_value = None
-    fake_database.driver.user.return_value = "Jack Black"
-    fake_database.driver.password.return_value = "password1234"
 
     return fake_database
 
