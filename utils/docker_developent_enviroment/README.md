@@ -74,6 +74,10 @@ If you don't want to do step 6 every time you are starting a container you can m
 You can open a sub shell via: 
 `docker exec -it cockpit_container` 
 
+You can use git inside the container and you text editor on the mounted volume (/path/to/cloned/Cockpit)
+If you want to use your git conficts from your local machine: 
+
+https://stackoverflow.com/questions/52819584/copying-local-git-config-into-docker-container
 
 ## Boot Tool
 
