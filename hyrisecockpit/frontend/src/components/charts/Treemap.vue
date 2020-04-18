@@ -8,7 +8,7 @@ import * as Plotly from "plotly.js";
 import { ChartConfiguration, StorageData } from "../../types/metrics";
 import { ChartProps, ChartPropsValidation } from "../../types/charts";
 import { useChartReactivity } from "../../meta/charts";
-import { colorDefinition } from "../../meta/colors";
+import { colorValueDefinition, colorDefinition } from "../../meta/colors";
 
 interface Props extends ChartProps {
   autosize: boolean;
@@ -98,7 +98,7 @@ function useTreemapConfiguration(
           "<br>%{text.dataType} <br>%{text.encoding}<extra></extra>",
         texttemplate:
           "<b>%{label}</b> <br>size:%{text.size} <br>%{text.dataType} <br>%{text.encoding}",
-        outsidetextfont: { size: 20, color: colorDefinition.darkblue },
+        outsidetextfont: { size: 20, color: colorValueDefinition.primary },
         marker: { line: { width: 2 } },
         pathbar: { visible: false }
       }
