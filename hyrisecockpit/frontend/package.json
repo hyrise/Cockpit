@@ -5,6 +5,7 @@
     "scripts": {
         "serve": "vue-cli-service serve --host 0.0.0.0",
         "build": "vue-cli-service build",
+        "build:min": "vue-cli-service build --skip-plugins e2e-cypress",
         "test:e2e": "vue-cli-service test:e2e",
         "test:e2e:headless": "vue-cli-service test:e2e --headless",
         "lint": "vue-cli-service lint"
