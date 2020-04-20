@@ -26,7 +26,7 @@ import {
   onMounted,
   computed,
   Ref,
-  ref
+  ref,
 } from "@vue/composition-api";
 
 interface Props {
@@ -41,17 +41,17 @@ export default defineComponent({
   props: {
     logText: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   setup(props: Props, context: SetupContext): Data {
     return {
       logMessages: computed(() => {
         if (props.logText == "") return "No messages";
         return props.logText;
-      })
+      }),
     };
-  }
+  },
 });
 </script>
 <style>

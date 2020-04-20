@@ -43,7 +43,7 @@ import {
   watch,
   Ref,
   ref,
-  onMounted
+  onMounted,
 } from "@vue/composition-api";
 
 interface Data {
@@ -54,9 +54,9 @@ export default defineComponent({
   name: "MetricDetailedView",
   setup(props: {}, context: SetupContext): Data {
     return {
-      showDialog: ref(false)
+      showDialog: ref(false),
     };
-  }
+  },
 });
 </script>
 <style scoped>

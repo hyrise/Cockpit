@@ -10,6 +10,6 @@ export function useUpdatingDatabases(
       context.root.$databaseController.getDatabasesByIds(
         props.selectedDatabases
       )
-    )
+    ),
   };
 }

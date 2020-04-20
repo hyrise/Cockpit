@@ -9,7 +9,7 @@
         color: valueColor[database],
         fontSize: '20px',
         fontWeight: 'bold',
-        top: idx * 22 + 14 + 'px'
+        top: idx * 22 + 14 + 'px',
       }"
     >
       {{ formatNumberWithCommas(currentValue[database]) }} {{ unit }}
@@ -24,17 +24,17 @@ import {
   onMounted,
   computed,
   Ref,
-  ref
+  ref,
 } from "@vue/composition-api";
 import {
   getMetricDetailColor,
-  getMetricDetailsConfiguration
+  getMetricDetailsConfiguration,
 } from "@/meta/metrics";
 import {
   MetricValueState,
   MetricValueStateOrder,
   Metric,
-  MetricDetailsConfiguration
+  MetricDetailsConfiguration,
 } from "@/types/metrics";
 import { useFormatting } from "@/meta/formatting";
 
@@ -55,16 +55,16 @@ export default defineComponent({
   props: {
     metric: {
       type: String,
-      default: null
+      default: null,
     },
     databases: {
       type: Array,
-      default: null
+      default: null,
     },
     decimalDigits: {
       type: Number,
-      default: 2
-    }
+      default: 2,
+    },
   },
   setup(props: Props, context: SetupContext): Data {
     const metricDetailsConfig = getMetricDetailsConfiguration(props.metric)!;
@@ -74,9 +74,9 @@ export default defineComponent({
       currentValue,
       ...useMetricColors(currentValue, metricDetailsConfig),
       formatNumberWithCommas: useFormatting().formatNumberWithCommas,
-      unit: metricDetailsConfig.unit
+      unit: metricDetailsConfig.unit,
     };
-  }
+  },
 });
 
 interface MetricValueData {
@@ -103,7 +103,7 @@ function useMetricValues(props: Props, context: SetupContext): MetricValueData {
         },
         {} as Record<string, number>
       );
-    })
+    }),
   };
 }
 
@@ -134,7 +134,7 @@ function useMetricColors(
         },
         {} as Record<string, string>
       );
-    })
+    }),
   };
 }
 </script>

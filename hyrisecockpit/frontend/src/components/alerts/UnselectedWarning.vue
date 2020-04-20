@@ -13,7 +13,7 @@ import {
   defineComponent,
   SetupContext,
   computed,
-  Ref
+  Ref,
 } from "@vue/composition-api";
 
 interface Data {
@@ -29,14 +29,14 @@ export default defineComponent({
   props: {
     condition: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   setup(props: Props, context: SetupContext): Data {
     return {
-      show: computed(() => !props.condition.length)
+      show: computed(() => !props.condition.length),
     };
-  }
+  },
 });
 </script>
 <style scoped>

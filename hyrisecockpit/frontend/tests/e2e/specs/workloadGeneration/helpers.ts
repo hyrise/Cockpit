@@ -6,7 +6,7 @@ const selectors: Record<string, string> = {
   frequencyField: getSelectorByConfig("input", "frequency-field"),
   startButton: getSelectorByConfig("button", "start-workload"),
   pauseButton: getSelectorByConfig("button", "pause-workload"),
-  stopButton: getSelectorByConfig("button", "stop-workload")
+  stopButton: getSelectorByConfig("button", "stop-workload"),
 };
 
 export function getSelector(component: string): string {
@@ -60,13 +60,9 @@ export function assertButtonState(
 ): void {
   benchmarks.forEach((benchmark: string, idx: number) => {
     if (disabled) {
-      cy.get(`input[type=${type}]`)
-        .eq(idx)
-        .should("be.disabled");
+      cy.get(`input[type=${type}]`).eq(idx).should("be.disabled");
     } else {
-      cy.get(`input[type=${type}]`)
-        .eq(idx)
-        .should("not.be.disabled");
+      cy.get(`input[type=${type}]`).eq(idx).should("not.be.disabled");
     }
   });
 }

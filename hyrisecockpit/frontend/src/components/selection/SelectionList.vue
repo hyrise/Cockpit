@@ -33,7 +33,7 @@ import {
   reactive,
   Ref,
   ref,
-  onMounted
+  onMounted,
 } from "@vue/composition-api";
 
 import { Database } from "@/types/database";
@@ -42,7 +42,7 @@ import MetricSelection from "@/components/selection/MetricSelection.vue";
 import {
   useDatabaseEvents,
   useMetricEvents,
-  useWindowEvents
+  useWindowEvents,
 } from "@/meta/events";
 import { PageName } from "@/types/views";
 import { Metric } from "@/types/metrics";
@@ -62,7 +62,7 @@ export default defineComponent({
     const { emitSelectedDatabasesChangedWithinEvent } = useDatabaseEvents();
     const {
       emitSelectedMetricsChangedWithinEvent,
-      emitWatchedMetricsChangedEvent
+      emitWatchedMetricsChangedEvent,
     } = useMetricEvents();
     const { emitPageChangedEvent } = useWindowEvents();
 
@@ -103,9 +103,9 @@ export default defineComponent({
       selectedMetrics,
       pageName: computed(
         () => page.value[0].toUpperCase() + page.value.substring(1)
-      )
+      ),
     };
-  }
+  },
 });
 </script>
 <style scoped>
