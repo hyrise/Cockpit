@@ -28,7 +28,7 @@ import {
   onMounted,
   computed,
   Ref,
-  ref
+  ref,
 } from "@vue/composition-api";
 
 interface Props {
@@ -46,16 +46,16 @@ export default defineComponent({
   props: {
     accordion: {
       type: Boolean,
-      default: false
+      default: false,
     },
     headerColor: {
       type: String,
-      default: "primary"
+      default: "primary",
     },
     showPanel: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   setup(props: Props, context: SetupContext): Data {
     return {
@@ -67,12 +67,12 @@ export default defineComponent({
           if (props.showPanel) return 0;
           return;
         },
-        set: val => {
+        set: (val) => {
           return val;
-        }
-      })
+        },
+      }),
     };
-  }
+  },
 });
 </script>
 <style>

@@ -14,7 +14,7 @@ import {
   onMounted,
   computed,
   Ref,
-  ref
+  ref,
 } from "@vue/composition-api";
 import { getMetricDescription } from "../../meta/metrics";
 import { Metric } from "../../types/metrics";
@@ -31,13 +31,13 @@ export default defineComponent({
   props: {
     metric: {
       type: String,
-      default: null
-    }
+      default: null,
+    },
   },
   setup(props: Props, context: SetupContext): Data {
     return {
-      metricDescription: ref(getMetricDescription(props.metric))
+      metricDescription: ref(getMetricDescription(props.metric)),
     };
-  }
+  },
 });
 </script>

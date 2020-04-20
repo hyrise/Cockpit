@@ -53,7 +53,7 @@ import {
   computed,
   Ref,
   ref,
-  watch
+  watch,
 } from "@vue/composition-api";
 import Heatmap from "../charts/Heatmap.vue";
 import MetricDetailedView from "@/components/details/MetricDetailedView.vue";
@@ -61,12 +61,12 @@ import {
   MetricProps,
   MetricPropsValidation,
   ChartConfiguration,
-  AccessData
+  AccessData,
 } from "../../types/metrics";
 import { useUpdatingDatabases } from "../../meta/databases";
 import {
   getMetricChartConfiguration,
-  getMetricMetadata
+  getMetricMetadata,
 } from "../../meta/metrics";
 
 interface Data {
@@ -80,7 +80,7 @@ export default defineComponent({
   name: "Access",
   components: {
     Heatmap,
-    MetricDetailedView
+    MetricDetailedView,
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
@@ -106,9 +106,9 @@ export default defineComponent({
       chartConfiguration: getMetricChartConfiguration(props.metric),
       tables: computed(() => watchedDatabase.tables),
       accessData,
-      selectedTable
+      selectedTable,
     };
-  }
+  },
 });
 </script>
 <style scoped>

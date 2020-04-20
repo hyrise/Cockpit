@@ -10,14 +10,14 @@ export function useWorkloadService(): WorkloadService {
   }
   async function loadWorkloadData(workload: Workload): Promise<void> {
     return axios.post(`${controlBackend}data`, {
-      folder_name: getTransferredWorkload(workload)
+      folder_name: getTransferredWorkload(workload),
     });
   }
   async function deleteWorkloadData(workload: Workload): Promise<void> {
     return axios.delete(`${controlBackend}data`, {
       data: {
-        folder_name: getTransferredWorkload(workload)
-      }
+        folder_name: getTransferredWorkload(workload),
+      },
     });
   }
 
@@ -27,7 +27,7 @@ export function useWorkloadService(): WorkloadService {
   ): Promise<void> {
     return axios.post(`${controlBackend}workload`, {
       folder_name: getTransferredWorkload(workload),
-      frequency: frequency
+      frequency: frequency,
     });
   }
   async function stopWorkload(): Promise<void> {
@@ -39,6 +39,6 @@ export function useWorkloadService(): WorkloadService {
     loadWorkloadData,
     deleteWorkloadData,
     startWorkload,
-    stopWorkload
+    stopWorkload,
   };
 }

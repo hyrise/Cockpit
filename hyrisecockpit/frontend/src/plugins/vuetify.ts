@@ -15,12 +15,12 @@ export default new Vuetify({
         background: colors.shades.white,
         success: colorDefinition.green,
         error: colorDefinition.red,
-        warning: colorDefinition.orange
+        warning: colorDefinition.orange,
       },
       dark: {
         primary: colors.orange.darken2,
-        background: colors.grey.darken4
-      }
-    }
-  }
+        background: colors.grey.darken4,
+      },
+    },
+  },
 });
