@@ -8,7 +8,7 @@ from requests import delete, get, post
 
 from system_tests.settings import BACKEND_HOST, BACKEND_PORT
 
-REQUEST_TIMEOUT = 1.0
+REQUEST_TIMEOUT = 5.0
 
 
 class CockpitBackend:
