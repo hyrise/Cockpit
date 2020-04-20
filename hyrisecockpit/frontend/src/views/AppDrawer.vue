@@ -14,7 +14,7 @@
       <v-divider />
       <v-list-item color="#02789D" input-value="true" dense>
         <v-list-item-content>
-          <v-list-item-title class="body-2">Views</v-list-item-title>
+          <v-list-item-title class="body-2">Metrics</v-list-item-title>
         </v-list-item-content>
         <v-list-item-icon>
           <v-icon
@@ -29,7 +29,7 @@
 
       <v-list-item id="overview-button" :to="{ name: 'overview' }" dense>
         <v-list-item-icon class="mr-2">
-          <v-icon>mdi-speedometer</v-icon>
+          <v-icon>mdi-database-search</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>
@@ -41,12 +41,12 @@
 
       <v-list-item id="comparison-button" :to="{ name: 'comparison' }" dense>
         <v-list-item-icon class="mr-2">
-          <v-icon>mdi-database-search</v-icon>
+          <v-icon>mdi-chart-line</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>
           <v-list-item-title class="body-2 font-weight-light"
-            >System Comparison</v-list-item-title
+            >Comparison</v-list-item-title
           >
         </v-list-item-content>
       </v-list-item>
@@ -57,7 +57,7 @@
         dense
       >
         <v-list-item-icon class="mr-2">
-          <v-icon>mdi-align-vertical-bottom</v-icon>
+          <v-icon>mdi-chart-bar</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>
@@ -73,39 +73,6 @@
           <v-list-item-title class="body-2">Settings</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-
-      <v-menu bottom offset-x>
-        <template v-slot:activator="{ on: menu }">
-          <v-list-item
-            id="database-list-button"
-            v-on="{ ...menu }"
-            @click="$emit('closeSelection')"
-            dense
-          >
-            <v-list-item-icon class="mr-2">
-              <v-icon>mdi-database</v-icon>
-            </v-list-item-icon>
-            <v-badge
-              id="number-of-databases"
-              color="secondary primary--text"
-              :content="databaseCount"
-              offset-y="1"
-              offset-x="40"
-            >
-            </v-badge>
-
-            <v-list-item-content>
-              <v-list-item-title class="body-2 font-weight-light"
-                >Databases</v-list-item-title
-              >
-            </v-list-item-content>
-          </v-list-item>
-        </template>
-        <available-databases-list
-          @addDatabase="showAddDatabaseDialog = true"
-          @removeDatabase="handleDatabaseDeletion"
-        />
-      </v-menu>
 
       <workload-generation
         :open="showWorkloadDialog"
@@ -128,6 +95,22 @@
         </v-list-item-content>
       </v-list-item>
 
+      <v-list-item
+        id="plugin-overview-button"
+        @click="$emit('openPlugins')"
+        dense
+      >
+        <v-list-item-icon class="mr-2">
+          <v-icon>mdi-tune</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title class="body-2 font-weight-light"
+            >Plugins</v-list-item-title
+          >
+        </v-list-item-content>
+      </v-list-item>
+
       <add-database
         :open="showAddDatabaseDialog"
         @close="showAddDatabaseDialog = false"
@@ -138,21 +121,38 @@
         @close="showRemoveDatabaseDialog = false"
       />
 
-      <v-list-item
-        id="plugin-overview-button"
-        @click="$emit('openPlugins')"
-        dense
-      >
-        <v-list-item-icon class="mr-2">
-          <v-icon>mdi-alpha-p-box</v-icon>
-        </v-list-item-icon>
-
-        <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light"
-            >Plugins</v-list-item-title
+      <v-menu bottom offset-x>
+        <template v-slot:activator="{ on: menu }">
+          <v-list-item
+            id="database-list-button"
+            v-on="{ ...menu }"
+            @click="$emit('closeSelection')"
+            dense
           >
-        </v-list-item-content>
-      </v-list-item>
+            <v-list-item-icon class="mr-2">
+              <v-icon>mdi-database-sync</v-icon>
+            </v-list-item-icon>
+            <v-badge
+              id="number-of-databases"
+              color="secondary primary--text"
+              :content="databaseCount"
+              offset-y="1"
+              offset-x="40"
+            >
+            </v-badge>
+
+            <v-list-item-content>
+              <v-list-item-title class="body-2 font-weight-light"
+                >Databases</v-list-item-title
+              >
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+        <available-databases-list
+          @addDatabase="showAddDatabaseDialog = true"
+          @removeDatabase="handleDatabaseDeletion"
+        />
+      </v-menu>
     </v-list>
     <v-divider />
     <v-footer absolute class="font-weight-medium mb-1" color="grey lighten-3">
