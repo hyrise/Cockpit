@@ -77,9 +77,9 @@ class PoolCursor:
         """Return column names."""
         return [col[0] for col in self._cur.description]
 
-    def read_sql_query(self, sql: str) -> DataFrame:
+    def read_sql_query(self, sql: str, params: Optional[Tuple]) -> DataFrame:
         """Execute query and return result as data-frame."""
-        return read_sql_query_pandas(sql, self._connection)
+        return read_sql_query_pandas(sql, self._connection, params=params)
 
     @classmethod
     def validate_connection(
