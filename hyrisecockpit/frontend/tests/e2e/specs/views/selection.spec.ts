@@ -3,7 +3,7 @@ import {
   getSelector,
   getMetrics,
   assertItemSelect,
-  checkMultipleMetrics
+  checkMultipleMetrics,
 } from "./helpers";
 import { useBackendMock } from "../../setup/backendMock";
 import { clickElement } from "../helpers";

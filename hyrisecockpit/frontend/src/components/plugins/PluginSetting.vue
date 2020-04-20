@@ -32,7 +32,7 @@ import {
   onMounted,
   computed,
   Ref,
-  ref
+  ref,
 } from "@vue/composition-api";
 
 interface Props {
@@ -56,16 +56,16 @@ export default defineComponent({
   props: {
     databaseId: {
       type: String,
-      default: ""
+      default: "",
     },
     pluginId: {
       type: String,
-      default: ""
+      default: "",
     },
     setting: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
   setup(props: Props, context: SetupContext): Data {
     const { updatePluginSettings } = context.root.$pluginService;
@@ -75,7 +75,7 @@ export default defineComponent({
     );
 
     return { updatePluginSettings, value, pluginName };
-  }
+  },
 });
 </script>
 <style>

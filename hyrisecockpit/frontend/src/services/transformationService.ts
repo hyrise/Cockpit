@@ -2,7 +2,7 @@ import {
   Metric,
   StorageData,
   TreemapDescription,
-  AccessData
+  AccessData,
 } from "../types/metrics";
 import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
@@ -18,13 +18,13 @@ const transformationServiceMap: Record<Metric, TransformationService> = {
   queueLength: getReadOnlyData,
   ram: getRAMData,
   storage: getStorageData,
-  throughput: getReadOnlyData
+  throughput: getReadOnlyData,
 };
 
 const { roundNumber } = useFormatting();
 const {
   getTableMemoryFootprint,
-  getDatabaseMemoryFootprint
+  getDatabaseMemoryFootprint,
 } = useDataTransformationHelpers();
 
 export function useDataTransformation(metric: Metric): TransformationService {
@@ -129,8 +129,8 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
       encoding: "",
       dataType: "",
       percentOfDatabase: "100% of total footprint",
-      percentOfTable: ""
-    }
+      percentOfTable: "",
+    },
   ];
 
   function getRoundedData(value: number): number {
@@ -194,7 +194,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
           getTableMemoryFootprint(tableData.data),
           totalDatabaseMemory
         )} % of total footprint`,
-        percentOfTable: `100 % of ${table}`
+        percentOfTable: `100 % of ${table}`,
       });
       Object.entries(tableData.data).forEach(
         ([attribute, attributeData]: [string, any]) => {
@@ -213,7 +213,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
             percentOfTable: `${getPercentage(
               getRoundedData(attributeData.size),
               getTableMemoryFootprint(tableData.data)
-            )} % of ${table}`
+            )} % of ${table}`,
           });
         }
       );
@@ -224,7 +224,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
     parents,
     labels,
     sizes,
-    descriptions
+    descriptions,
   };
 }
 
@@ -260,7 +260,7 @@ function getAccessData(
     descriptions.push(availableColumns);
 
     const chunk: number[] = [];
-    dataByColumns.forEach(column => {
+    dataByColumns.forEach((column) => {
       chunk.push(column[i]);
     });
     dataByChunks.push(chunk);
@@ -308,7 +308,7 @@ export function useDataTransformationHelpers(): {
   return {
     getDatabaseMemoryFootprint,
     getDatabaseMainMemoryCapacity,
-    getTableMemoryFootprint
+    getTableMemoryFootprint,
   };
 }
 
@@ -323,7 +323,7 @@ export function usePluginTransformationSevice(): any {
             ...currentDatabase.plugins.map(
               (plugin: string) =>
                 currentDatabase.id + "_" + plugin.replace("Plugin", "")
-            )
+            ),
           ]
         : result;
     }, []);
@@ -359,7 +359,7 @@ export function usePluginTransformationSevice(): any {
             allSettings[pluginName]
               ? (allSettings[pluginName] = [
                   ...allSettings[pluginName],
-                  currentSetting
+                  currentSetting,
                 ])
               : (allSettings[pluginName] = [currentSetting]);
             return allSettings;
@@ -374,6 +374,6 @@ export function usePluginTransformationSevice(): any {
   return {
     getActivePluginData,
     getPluginLogsData,
-    getPluginSettingsData
+    getPluginSettingsData,
   };
 }

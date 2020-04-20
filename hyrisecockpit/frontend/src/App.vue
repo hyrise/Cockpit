@@ -19,7 +19,7 @@ import {
   defineComponent,
   ref,
   Ref,
-  computed
+  computed,
 } from "@vue/composition-api";
 import AppDrawer from "./views/AppDrawer.vue";
 import PluginsOverview from "./components/plugins/PluginsOverview.vue";
@@ -36,7 +36,7 @@ export default defineComponent({
   components: {
     AppDrawer,
     PluginsOverview,
-    SelectionList
+    SelectionList,
   },
   setup(props: {}, context: SetupContext): Data {
     const showPluginEditor = ref<boolean>(false);
@@ -53,9 +53,9 @@ export default defineComponent({
       togglePluginEditor,
       showPluginEditor,
       showSelectionList,
-      toggleSelectionList
+      toggleSelectionList,
     };
-  }
+  },
 });
 </script>
 <style scoped>

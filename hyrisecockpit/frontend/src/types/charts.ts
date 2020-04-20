@@ -11,22 +11,22 @@ export interface ChartProps {
 export const ChartPropsValidation = {
   data: {
     type: [Object, Array],
-    default: {}
+    default: {},
   },
   selectedDatabases: {
     type: Array,
-    default: null
+    default: null,
   },
   graphId: {
     type: String,
-    default: null
+    default: null,
   },
   maxChartWidth: {
     type: Number,
-    default: 0
+    default: 0,
   },
   chartConfiguration: {
     type: Object,
-    default: null
-  }
+    default: null,
+  },
 };
