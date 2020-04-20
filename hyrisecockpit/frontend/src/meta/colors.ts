@@ -31,5 +31,5 @@ export const colorDefinition: Record<Colors, Hex> = {
   darkorange: "#ff7f00",
   darkgreen: "#33a02c",
   darkred: "#e31a1c",
-  darkviolet: "#6a3d9a"
+  darkviolet: "#6a3d9a",
 };

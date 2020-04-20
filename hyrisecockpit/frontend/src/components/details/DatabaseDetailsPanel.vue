@@ -28,14 +28,14 @@ export default defineComponent({
   props: {
     selectedDatabases: {
       type: Array,
-      default: null
-    }
+      default: null,
+    },
   },
   components: { DatabaseSystemDetails, PanelTemplate },
   setup(props: Props, context: SetupContext): Data {
     return {
-      showDetailsPanel: ref(true)
+      showDetailsPanel: ref(true),
     };
-  }
+  },
 });
 </script>

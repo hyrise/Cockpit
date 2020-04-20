@@ -2,11 +2,11 @@ import { useMocks } from "./mocks";
 import {
   Entity,
   Request,
-  BackendStatus,
+  BackendState,
   getPostAlias,
   getDeleteAlias,
   getResponseStatus,
-  getGetAlias
+  getGetAlias,
 } from "./helpers";
 
 /* backend with mocked routes */
@@ -24,25 +24,28 @@ function getInitialNumbers(
     queries: 10,
     plugins: 2,
     activated_plugins: 1,
-    ...numbers
+    loaded_benchmarks: 1,
+    ...numbers,
   };
+}
+
+export interface Backend {
+  start(status?: BackendState, delay?: number): void;
+  reload(request: Request, id: string, type: "POST" | "DELETE"): void;
+  restart(status?: BackendState, delay?: number): void;
 }
 
 export function useBackendMock(
   numbers: Partial<Record<Entity, number>> = {}
-): {
-  start(status?: BackendStatus, delay?: number): void;
-  reload(request: Request, id: string, type: "POST" | "DELETE"): void;
-  restart(status?: BackendStatus, delay?: number): void;
-} {
+): Backend {
   const {
     getMockedResponse,
     getMockedPostCallback,
     getMockedDeleteCallback,
-    renewMocks
+    renewMocks,
   } = useMocks(getInitialNumbers(numbers));
 
-  function start(status: BackendStatus = "up", delay?: number): void {
+  function start(status: BackendState = "up", delay?: number): void {
     cy.server();
     mockRoutes(getResponseStatus(status), delay);
   }
@@ -53,7 +56,7 @@ export function useBackendMock(
     mockRoutes();
   }
 
-  function restart(status: BackendStatus = "up", delay?: number): void {
+  function restart(status: BackendState = "up", delay?: number): void {
     renewMocks();
     start(status, delay);
   }
@@ -75,42 +78,38 @@ export function useBackendMock(
       getMockedResponse("database")
     );
     mock(
-      "**/monitor/system",
+      "**/monitor/system**",
       getGetAlias("system"),
-      getMockedResponse("system"),
-      true
+      getMockedResponse("system")
     );
     mock(
-      "**/monitor/storage",
+      "**/monitor/storage**",
       getGetAlias("storage"),
       getMockedResponse("storage"),
       true
     );
     mock(
-      "**/monitor/throughput",
+      "**/monitor/throughput**",
       getGetAlias("throughput"),
-      getMockedResponse("throughput"),
-      true
+      getMockedResponse("throughput")
     );
     mock(
-      "**/monitor/latency",
+      "**/monitor/latency**",
       getGetAlias("latency"),
-      getMockedResponse("latency"),
-      true
+      getMockedResponse("latency")
     );
     mock(
-      "**/monitor/queue_length",
+      "**/monitor/queue_length**",
       getGetAlias("queue_length"),
-      getMockedResponse("queue_length"),
-      true
+      getMockedResponse("queue_length")
     );
     mock(
-      "**/monitor/krueger_data",
+      "**/monitor/krueger_data**",
       getGetAlias("krueger_data"),
       getMockedResponse("krueger_data")
     );
     mock(
-      "**/monitor/chunks",
+      "**/monitor/chunks**",
       getGetAlias("chunks"),
       getMockedResponse("chunks"),
       true
@@ -119,6 +118,11 @@ export function useBackendMock(
       "**/monitor/detailed_query_information",
       getGetAlias("detailed_query_information"),
       getMockedResponse("detailed_query_information")
+    );
+    mock(
+      "**/monitor/status",
+      getGetAlias("status"),
+      getMockedResponse("status")
     );
     mock("**/control/data", getGetAlias("data"), getMockedResponse("data"));
     mock(
@@ -162,7 +166,7 @@ export function useBackendMock(
   return {
     restart,
     start,
-    reload
+    reload,
   };
 }
 
@@ -193,7 +197,7 @@ function useRouteMocking(
       url: url,
       status: status,
       response: withBody ? { body: response } : response,
-      delay: delay
+      delay: delay,
     };
   }
 

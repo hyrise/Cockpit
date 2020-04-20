@@ -26,14 +26,36 @@ export function useMetricEvents(): {
     emitSelectedMetricsChangedEvent();
     eventBus.$emit(`SELECTED_METRICS_CHANGED_ON_${page.toUpperCase()}`, {
       metric,
-      value
+      value,
     });
   }
   return {
     emitWatchedMetricsChangedEvent,
     emitSelectedMetricsChangedEvent,
-    emitSelectedMetricsChangedWithinEvent
+    emitSelectedMetricsChangedWithinEvent,
   };
+}
+
+export function useWindowEvents(): {
+  emitPageChangedEvent: (metrics: Metric[]) => void;
+  emitHistoricRangeChangedEvent: (
+    metrics: Metric[],
+    start: Date,
+    end: Date
+  ) => void;
+} {
+  function emitPageChangedEvent(metrics: Metric[]): void {
+    eventBus.$emit("PAGE_CHANGED", metrics);
+  }
+  function emitHistoricRangeChangedEvent(
+    metrics: Metric[],
+    start: Date,
+    end: Date
+  ): void {
+    eventBus.$emit("HISTORIC_RANGE_CHANGED", { metrics, start, end });
+  }
+
+  return { emitPageChangedEvent, emitHistoricRangeChangedEvent };
 }
 
 export function useDatabaseEvents(): {
@@ -57,7 +79,7 @@ export function useDatabaseEvents(): {
     emitSelectedDatabasesChangedEvent();
     eventBus.$emit(`SELECTED_DATABASES_CHANGED_ON_${page.toUpperCase()}`, {
       database,
-      value
+      value,
     });
   }
   function emitDatabaseAddedEvent(): void {
@@ -70,7 +92,7 @@ export function useDatabaseEvents(): {
     emitSelectedDatabasesChangedEvent,
     emitSelectedDatabasesChangedWithinEvent,
     emitDatabaseAddedEvent,
-    emitDatabaseRemovedEvent
+    emitDatabaseRemovedEvent,
   };
 }
 

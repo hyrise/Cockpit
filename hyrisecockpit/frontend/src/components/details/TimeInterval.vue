@@ -1,9 +1,5 @@
 <template>
-  <v-card flat>
-    <v-card-title class="py-2 px-2">
-      <b class="interval secondary--text">{{ interval }}</b>
-    </v-card-title>
-  </v-card>
+  <b class="interval secondary--text">{{ interval }}</b>
 </template>
 
 <script lang="ts">
@@ -13,7 +9,7 @@ import {
   onMounted,
   computed,
   Ref,
-  ref
+  ref,
 } from "@vue/composition-api";
 import { Metric } from "@/types/metrics";
 import { useUpdatingInterval } from "@/meta/components";
@@ -30,19 +26,18 @@ export default defineComponent({
   props: {
     metric: {
       type: String,
-      default: null
-    }
+      default: null,
+    },
   },
   setup(props: Props, context: SetupContext): Data {
     return {
-      interval: useUpdatingInterval(context, props.metric)
+      interval: useUpdatingInterval(context, props.metric),
     };
-  }
+  },
 });
 </script>
 <style scoped>
 .interval {
-  margin-left: 10px;
   font-size: 14px;
   word-break: normal;
   line-height: normal;

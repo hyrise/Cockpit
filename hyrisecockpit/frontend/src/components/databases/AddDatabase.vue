@@ -129,7 +129,7 @@ import {
   computed,
   Ref,
   ref,
-  watch
+  watch,
 } from "@vue/composition-api";
 import { useDatabaseService } from "@/services/databaseService";
 
@@ -144,16 +144,16 @@ export default defineComponent({
   props: {
     open: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   setup(props: Props, context: SetupContext): Data {
     const showAdvanced = ref(false);
     return {
       ...useDatabaseCreation(context),
-      showAdvanced
+      showAdvanced,
     };
-  }
+  },
 });
 
 interface DatabaseCreationData {
@@ -185,11 +185,13 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
     if (!id.value.length || id.value === prevHost) id.value = host;
   });
 
-  watch(id, id => {
+  watch(id, (id) => {
     if (
       context.root.$databaseController.availableDatabasesById.value.includes(id)
     ) {
-      idError.value = "Id is already taken.";
+      idError.value = "ID is already taken.";
+    } else if (id.length === 0) {
+      idError.value = "Choose an Id";
     } else {
       idError.value = "";
     }
@@ -213,7 +215,7 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
       password: password.value,
       host: host.value,
       port: port.value,
-      dbname: dbname.value
+      dbname: dbname.value,
     });
     resetValues();
   }
@@ -232,7 +234,7 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
     dbname,
     createNewDatabase,
     closeDialog,
-    idError
+    idError,
   };
 }
 </script>

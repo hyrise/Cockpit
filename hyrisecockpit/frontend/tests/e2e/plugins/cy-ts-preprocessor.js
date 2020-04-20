@@ -3,7 +3,7 @@ const webpack = require("@cypress/webpack-preprocessor");
 
 const webpackOptions = {
   resolve: {
-    extensions: [".mjs", ".ts", ".js"]
+    extensions: [".mjs", ".ts", ".js"],
   },
   module: {
     rules: [
@@ -11,20 +11,20 @@ const webpackOptions = {
         test: /\.ts$/,
         loader: "ts-loader",
         exclude: [/node_modules/],
-        options: { transpileOnly: true }
+        options: { transpileOnly: true },
       },
       {
         // fixes https://github.com/graphql/graphql-js/issues/1272
         test: /\.mjs$/,
         include: /node_modules/,
-        type: "javascript/auto"
-      }
-    ]
-  }
+        type: "javascript/auto",
+      },
+    ],
+  },
 };
 
 const options = {
-  webpackOptions
+  webpackOptions,
 };
 
 module.exports = webpack(options);

@@ -43,7 +43,7 @@ const selectors: Record<string, string> = {
   cpuDetails: getSelectorByConfig("div", "database-number-cpus"),
   workerDetails: getSelectorByConfig("div", "database-number-workers"),
   numberOfDatabases: getSelectorByConfig("span", "number-of-databases"),
-  databaseChip: getSelectorByConfig("span", "database-chip")
+  databaseChip: getSelectorByConfig("span", "database-chip"),
 };
 
 export function getSelector(component: string): string {
