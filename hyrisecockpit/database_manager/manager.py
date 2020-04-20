@@ -136,6 +136,8 @@ class DatabaseManager(object):
                 "port": database.connection_information["port"],
                 "number_workers": database.number_workers,
                 "dbname": database.connection_information["dbname"],
+                "user": database.connection_information["user"],
+                "password": database.connection_information["password"],
             }
             for id, database in self._databases.items()
         ]
