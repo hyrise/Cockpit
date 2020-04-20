@@ -38,7 +38,7 @@ import {
   computed,
   Ref,
   ref,
-  watch
+  watch,
 } from "@vue/composition-api";
 import { useDatabaseService } from "@/services/databaseService";
 import DatabaseChip from "@/components/details/DatabaseChip.vue";
@@ -55,15 +55,15 @@ export default defineComponent({
   props: {
     open: {
       type: Boolean,
-      default: null
+      default: null,
     },
     databaseId: {
       type: String,
-      default: null
-    }
+      default: null,
+    },
   },
   components: {
-    DatabaseChip
+    DatabaseChip,
   },
   setup(props: Props, context: SetupContext): Data {
     const databaseService = useDatabaseService();
@@ -73,7 +73,7 @@ export default defineComponent({
       databaseService.removeDatabase(props.databaseId);
     }
     return { onRemoveDatabase };
-  }
+  },
 });
 </script>
 <style scoped></style>

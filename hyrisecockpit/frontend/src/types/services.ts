@@ -1,10 +1,11 @@
 import { Ref } from "@vue/composition-api";
 import { Workload } from "./workloads";
+import { Metric } from "./metrics";
 
 export interface MetricService {
-  data: Ref<any>;
-  getDataIfReady: () => void;
-  maxValue: Ref<Number>;
+  data: any;
+  getDataIfReady: (start?: Date, end?: Date) => void;
+  maxValues: Record<Metric, number>;
   timestamps: Ref<any>;
 }
 

@@ -2,7 +2,7 @@ import {
   Metric,
   StorageData,
   TreemapDescription,
-  AccessData
+  AccessData,
 } from "../types/metrics";
 import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
@@ -14,13 +14,18 @@ const transformationServiceMap: Record<Metric, TransformationService> = {
   latency: getLatencyData,
   executedQueryTypeProportion: getExecutedQueryTypeProportionData,
   generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
+  memoryFootprint: getMemoryFootprint,
   queueLength: getReadOnlyData,
   ram: getRAMData,
   storage: getStorageData,
-  throughput: getReadOnlyData
+  throughput: getReadOnlyData,
 };
 
 const { roundNumber } = useFormatting();
+const {
+  getTableMemoryFootprint,
+  getDatabaseMemoryFootprint,
+} = useDataTransformationHelpers();
 
 export function useDataTransformation(metric: Metric): TransformationService {
   return transformationServiceMap[metric];
@@ -56,8 +61,8 @@ function getQueryTypeProportionData(data: any, type: string): any {
       name: "UPDATE",
       type: "bar",
       marker: {
-        color: colorDefinition.green
-      }
+        color: colorDefinition.green,
+      },
     },
     {
       x: [type],
@@ -65,8 +70,8 @@ function getQueryTypeProportionData(data: any, type: string): any {
       name: "SELECT",
       type: "bar",
       marker: {
-        color: colorDefinition.blue
-      }
+        color: colorDefinition.blue,
+      },
     },
     {
       x: [type],
@@ -74,8 +79,8 @@ function getQueryTypeProportionData(data: any, type: string): any {
       name: "INSERT",
       type: "bar",
       marker: {
-        color: colorDefinition.orange
-      }
+        color: colorDefinition.orange,
+      },
     },
     {
       x: [type],
@@ -83,34 +88,35 @@ function getQueryTypeProportionData(data: any, type: string): any {
       name: "DELETE",
       type: "bar",
       marker: {
-        color: colorDefinition.red
-      }
-    }
+        color: colorDefinition.red,
+      },
+    },
   ];
 }
 
-function getCPUData(data: any, primaryKey: string = ""): number {
-  return data[primaryKey].cpu.cpu_process_usage;
+function getCPUData(data: any, primaryKey: string = ""): number[] {
+  return data.map((entry: any) => entry[primaryKey].cpu.cpu_process_usage);
 }
 
-function getRAMData(data: any, primaryKey: string = ""): number {
-  return data[primaryKey].memory.percent;
+function getRAMData(data: any, primaryKey: string = ""): number[] {
+  return data.map((entry: any) => entry[primaryKey].memory.percent);
 }
 
-function getReadOnlyData(data: any, primaryKey: string = ""): number {
-  return data[primaryKey];
+function getReadOnlyData(data: any, primaryKey: string = ""): number[] {
+  return data.map((entry: any) => entry[primaryKey]);
 }
 
-function getLatencyData(data: any, primaryKey: string = ""): number {
-  return roundNumber(getReadOnlyData(data, primaryKey), Math.pow(10, 6));
+function getLatencyData(data: any, primaryKey: string = ""): number[] {
+  return getReadOnlyData(data, primaryKey).map((data: number) =>
+    roundNumber(data, Math.pow(10, 6))
+  );
+}
+
+function getMemoryFootprint(data: any): number[] {
+  return [getDatabaseMemoryFootprint(data)];
 }
 
 function getStorageData(data: any, primaryKey: string = ""): StorageData {
-  const {
-    getTableMemoryFootprint,
-    getDatabaseMemoryFootprint
-  } = useDataTransformationHelpers();
-
   //TODO: this can be replaced when the size entry of the returned data of every table is fixed from the backend
   const totalDatabaseMemory = getDatabaseMemoryFootprint(data[primaryKey]);
 
@@ -123,8 +129,8 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
       encoding: "",
       dataType: "",
       percentOfDatabase: "100% of total footprint",
-      percentOfTable: ""
-    }
+      percentOfTable: "",
+    },
   ];
 
   function getRoundedData(value: number): number {
@@ -188,7 +194,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
           getTableMemoryFootprint(tableData.data),
           totalDatabaseMemory
         )} % of total footprint`,
-        percentOfTable: `100 % of ${table}`
+        percentOfTable: `100 % of ${table}`,
       });
       Object.entries(tableData.data).forEach(
         ([attribute, attributeData]: [string, any]) => {
@@ -207,7 +213,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
             percentOfTable: `${getPercentage(
               getRoundedData(attributeData.size),
               getTableMemoryFootprint(tableData.data)
-            )} % of ${table}`
+            )} % of ${table}`,
           });
         }
       );
@@ -218,7 +224,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
     parents,
     labels,
     sizes,
-    descriptions
+    descriptions,
   };
 }
 
@@ -254,7 +260,7 @@ function getAccessData(
     descriptions.push(availableColumns);
 
     const chunk: number[] = [];
-    dataByColumns.forEach(column => {
+    dataByColumns.forEach((column) => {
       chunk.push(column[i]);
     });
     dataByChunks.push(chunk);
@@ -293,7 +299,7 @@ export function useDataTransformationHelpers(): {
   }
   function getDatabaseMainMemoryCapacity(data: any): number {
     return roundNumber(
-      data.memory.total,
+      data?.memory?.total ?? 0,
       Math.pow(10, 3),
       1 / Math.pow(10, 6),
       false
@@ -302,7 +308,7 @@ export function useDataTransformationHelpers(): {
   return {
     getDatabaseMemoryFootprint,
     getDatabaseMainMemoryCapacity,
-    getTableMemoryFootprint
+    getTableMemoryFootprint,
   };
 }
 
@@ -317,7 +323,7 @@ export function usePluginTransformationSevice(): any {
             ...currentDatabase.plugins.map(
               (plugin: string) =>
                 currentDatabase.id + "_" + plugin.replace("Plugin", "")
-            )
+            ),
           ]
         : result;
     }, []);
@@ -353,7 +359,7 @@ export function usePluginTransformationSevice(): any {
             allSettings[pluginName]
               ? (allSettings[pluginName] = [
                   ...allSettings[pluginName],
-                  currentSetting
+                  currentSetting,
                 ])
               : (allSettings[pluginName] = [currentSetting]);
             return allSettings;
@@ -368,6 +374,6 @@ export function usePluginTransformationSevice(): any {
   return {
     getActivePluginData,
     getPluginLogsData,
-    getPluginSettingsData
+    getPluginSettingsData,
   };
 }

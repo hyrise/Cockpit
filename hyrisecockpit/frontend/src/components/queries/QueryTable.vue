@@ -28,11 +28,11 @@ import {
   SetupContext,
   Ref,
   ref,
-  computed
+  computed,
 } from "@vue/composition-api";
 import {
   DetailedQueryInformation,
-  DisplayedQueryInformation
+  DisplayedQueryInformation,
 } from "@/types/queries";
 import DatabaseChip from "@/components/details/DatabaseChip.vue";
 import { useFormatting } from "@/meta/formatting";
@@ -53,19 +53,19 @@ export default defineComponent({
   props: {
     queries: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     databaseId: {
       type: String,
-      default: null
+      default: null,
     },
     loading: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   components: {
-    DatabaseChip
+    DatabaseChip,
   },
   setup(props: Props, context: SetupContext): Data {
     const { formatDisplayedQueries } = useQueryFormatting();
@@ -74,19 +74,19 @@ export default defineComponent({
       {
         text: "Query number",
         align: "start",
-        value: "queryNumber"
+        value: "queryNumber",
       },
       { text: "Workload type", value: "workloadType" },
       { text: "Average latency (in ms)", value: "latency" },
-      { text: "Average throughput (in q/s)", value: "throughput" }
+      { text: "Average throughput (in q/s)", value: "throughput" },
     ];
 
     return {
       searchQueries: ref(""),
       headers,
-      displayedQueries: computed(() => formatDisplayedQueries(props.queries))
+      displayedQueries: computed(() => formatDisplayedQueries(props.queries)),
     };
-  }
+  },
 });
 
 function useQueryFormatting(): {
@@ -108,7 +108,7 @@ function useQueryFormatting(): {
   function formatDisplayedQueries(
     queries: DetailedQueryInformation[]
   ): DisplayedQueryInformation[] {
-    return sortQueries(queries).map(query => {
+    return sortQueries(queries).map((query) => {
       return { ...query, latency: formatNumberWithCommas(query.latency) };
     });
   }

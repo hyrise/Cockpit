@@ -15,6 +15,7 @@
               Start, pause and stop a workload
             </p>
             <v-slider
+              id="frequency-slider"
               v-model="frequency"
               class="mt-10"
               thumb-label="always"
@@ -23,6 +24,7 @@
               @click="handleWorkloadChange()"
             ></v-slider>
             <v-text-field
+              id="frequency-field"
               v-model="frequency"
               label="Number of queries per second"
               outlined
@@ -47,6 +49,7 @@
             </v-radio-group>
             <v-btn-toggle>
               <v-btn
+                id="start-workload"
                 @click="handleButtonChange('start')"
                 :disabled="buttons.start.loading || !isLoaded(workload)"
                 :loading="buttons.start.loading"
@@ -57,6 +60,7 @@
                 </v-icon>
               </v-btn>
               <v-btn
+                id="pause-workload"
                 @click="handleButtonChange('pause')"
                 :disabled="buttons.pause.loading || !isLoaded(workload)"
                 :loading="buttons.pause.loading"
@@ -67,6 +71,7 @@
                 </v-icon>
               </v-btn>
               <v-btn
+                id="stop-workload"
                 @click="handleButtonChange('stop')"
                 :disabled="buttons.stop.loading || noDatabaseAdded"
                 :loading="buttons.stop.loading"
@@ -102,9 +107,9 @@
               :loading="switchesLoading[workload]"
               :disabled="
                 runningWorkload ||
-                  loadingWorkloadData ||
-                  instanceBlocked ||
-                  noDatabaseAdded
+                loadingWorkloadData ||
+                instanceBlocked ||
+                noDatabaseAdded
               "
             >
             </v-switch>
@@ -122,13 +127,13 @@ import {
   ref,
   Ref,
   reactive,
-  computed
+  computed,
 } from "@vue/composition-api";
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
 import {
   getDisplayedWorkload,
-  getWorkloadFromTransferred
+  getWorkloadFromTransferred,
 } from "../../meta/workloads";
 
 interface Props {
@@ -156,8 +161,8 @@ export default defineComponent({
   props: {
     open: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   setup(props: {}, context: SetupContext): Data {
     const frequency = ref<number>(200);
@@ -168,7 +173,7 @@ export default defineComponent({
       loadWorkloadData,
       deleteWorkloadData,
       startWorkload,
-      stopWorkload
+      stopWorkload,
     } = useWorkloadService();
     const buttons: Record<
       string,
@@ -176,22 +181,22 @@ export default defineComponent({
     > = reactive({
       start: {
         active: false,
-        loading: false
+        loading: false,
       },
       pause: {
         active: false,
-        loading: false
+        loading: false,
       },
       stop: {
         active: false,
-        loading: false
-      }
+        loading: false,
+      },
     });
     const switchesLoading: Record<string, boolean> = reactive({
       tpch01: false,
       tpch1: false,
       tpcds: false,
-      job: false
+      job: false,
     });
     const runningWorkload = ref<boolean>(false);
     const instanceBlocked = ref<boolean>(false);
@@ -297,8 +302,8 @@ export default defineComponent({
       handleButtonChange,
       handleWorkloadChange,
       handleWorkloadDataChange,
-      closeWorkloadDialog
+      closeWorkloadDialog,
     };
-  }
+  },
 });
 </script>

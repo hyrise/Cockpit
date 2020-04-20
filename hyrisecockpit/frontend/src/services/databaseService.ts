@@ -2,38 +2,47 @@ import {
   DatabaseService,
   DatabaseCPUResponse,
   DatabaseStorageResponse,
-  DatabaseResponse
-} from "../types/database";
+  DatabaseResponse,
+} from "@/types/database";
 import axios from "axios";
-import { colorDefinition } from "../meta/colors";
+import { colorDefinition } from "@/meta/colors";
 import { monitorBackend, controlBackend } from "../../config";
-import { useDataTransformationHelpers } from "./transformationService";
-import { useDatabaseEvents } from "../meta/events";
+import { useDataTransformationHelpers } from "@/services/transformationService";
+import { useDatabaseEvents } from "@/meta/events";
+import { useFormatting } from "@/meta/formatting";
 
 export function useDatabaseService(): DatabaseService {
-  const colors = Object.values(colorDefinition);
-  let usedColors: any = 0;
+  const { formatDateToNanoSec, subSeconds } = useFormatting();
   const {
     emitDatabaseAddedEvent,
-    emitDatabaseRemovedEvent
+    emitDatabaseRemovedEvent,
   } = useDatabaseEvents();
 
   const {
     getDatabaseMemoryFootprint,
-    getDatabaseMainMemoryCapacity
+    getDatabaseMainMemoryCapacity,
   } = useDataTransformationHelpers();
 
   async function fetchDatabases(): Promise<DatabaseResponse[]> {
     let databases: DatabaseResponse[] = [];
-    await axios.get(controlBackend + "database").then(response => {
+    await axios.get(controlBackend + "database").then((response) => {
       databases = getDatabasesInformation(response.data);
     });
     return databases;
   }
 
-  function getDatabaseColor(): string {
-    const color = colors[usedColors];
-    usedColors += 1;
+  function getDatabaseColor(databaseID: string): string {
+    let hashedDatabaseID = 0;
+    Object.values(databaseID).forEach((symbol: any) => {
+      hashedDatabaseID =
+        (hashedDatabaseID << 5) -
+        hashedDatabaseID +
+        databaseID.charCodeAt(symbol);
+      hashedDatabaseID = hashedDatabaseID & hashedDatabaseID;
+    });
+    const index =
+      Math.abs(hashedDatabaseID) % Object.keys(colorDefinition).length;
+    let color = Object.values(colorDefinition)[index];
     return color;
   }
 
@@ -41,11 +50,17 @@ export function useDatabaseService(): DatabaseService {
     DatabaseCPUResponse[]
   > {
     let databasesWithCPUInformation: DatabaseCPUResponse[] = [];
-    await axios.get(monitorBackend + "system").then(response => {
-      databasesWithCPUInformation = getCPUInformation(
-        response.data.body.system_data
-      );
-    });
+    const currentDate = new Date();
+    await axios
+      .get(monitorBackend + "system", {
+        params: {
+          startts: formatDateToNanoSec(subSeconds(currentDate, 1)),
+          endts: formatDateToNanoSec(currentDate),
+        },
+      })
+      .then((response) => {
+        databasesWithCPUInformation = getCPUInformation(response.data);
+      });
     return databasesWithCPUInformation;
   }
 
@@ -53,7 +68,7 @@ export function useDatabaseService(): DatabaseService {
     DatabaseStorageResponse[]
   > {
     let databasesWithStorageInformation: DatabaseStorageResponse[] = [];
-    await axios.get(monitorBackend + "storage").then(response => {
+    await axios.get(monitorBackend + "storage").then((response) => {
       databasesWithStorageInformation = getStorageInformation(
         response.data.body.storage
       );
@@ -63,11 +78,11 @@ export function useDatabaseService(): DatabaseService {
 
   function getDatabasesInformation(response: any): DatabaseResponse[] {
     const databases: DatabaseResponse[] = [];
-    Object.values(response).forEach((data: any) => {
+    response.forEach((data: any) => {
       databases.push({
         id: data.id,
         host: data.host,
-        numberOfWorkers: data.number_workers
+        numberOfWorkers: data.number_workers,
       } as DatabaseResponse);
     });
     return databases;
@@ -75,11 +90,13 @@ export function useDatabaseService(): DatabaseService {
 
   function getCPUInformation(response: any): DatabaseCPUResponse[] {
     const databasesWithCPUInformation: DatabaseCPUResponse[] = [];
-    Object.entries(response).forEach(([id, data]: [string, any]) => {
+    response.forEach((databaseData: any) => {
+      const cpuData =
+        databaseData.system_data[databaseData.system_data.length - 1] || [];
       databasesWithCPUInformation.push({
-        id: id,
-        numberOfCPUs: data.cpu.cpu_count,
-        memoryCapacity: getDatabaseMainMemoryCapacity(data)
+        id: databaseData.id,
+        numberOfCPUs: cpuData?.system_data?.cpu?.cpu_count ?? 0,
+        memoryCapacity: getDatabaseMainMemoryCapacity(cpuData.system_data),
       } as DatabaseCPUResponse);
     });
     return databasesWithCPUInformation;
@@ -91,7 +108,7 @@ export function useDatabaseService(): DatabaseService {
       databasesWithStorageInformation.push({
         id: id,
         memoryFootprint: getDatabaseMemoryFootprint(data),
-        tables: Object.keys(data)
+        tables: Object.keys(data),
       } as DatabaseStorageResponse);
     });
     return databasesWithStorageInformation;
@@ -106,26 +123,21 @@ export function useDatabaseService(): DatabaseService {
   function removeDatabase(databaseId: string): void {
     axios
       .delete(controlBackend + "database", {
-        data: { id: databaseId }
+        data: { id: databaseId },
       })
       .then(() => {
         emitDatabaseRemovedEvent();
       });
   }
 
-  function resetColors(): void {
-    usedColors = 0;
-  }
-
   return {
     addDatabase,
     removeDatabase,
-    resetColors,
     fetchDatabases,
     fetchDatabasesCPUInformation,
     fetchDatabasesStorageInformation,
     getDatabaseColor,
     getCPUInformation,
-    getStorageInformation
+    getStorageInformation,
   };
 }

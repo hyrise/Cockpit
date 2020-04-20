@@ -36,7 +36,7 @@ class TestWorkerPool(object):
     def worker_pool(self) -> WorkerPool:
         """Get a new WorkerPool."""
         return WorkerPool(
-            connection_pool=None,
+            connection_factory=None,  # type: ignore
             number_worker=number_worker,
             database_id=database_id,
             workload_publisher_url=workload_publisher_url,
@@ -45,8 +45,8 @@ class TestWorkerPool(object):
 
     def test_initializes_worker_pool(self, worker_pool: WorkerPool) -> None:
         """Test initialization of worker pool attributes."""
-        assert worker_pool._connection_pool is None
-        assert worker_pool._number_worker == number_worker
+        assert worker_pool._connection_factory is None
+        assert worker_pool._number_worker == number_worker  # type: ignore
         assert worker_pool._database_id == database_id
         assert type(worker_pool._database_blocked) is ValueType
         assert worker_pool._workload_publisher_url == workload_publisher_url
@@ -69,18 +69,44 @@ class TestWorkerPool(object):
         assert len(events) == number_worker
         assert all(type(event) is EventType for event in events)
 
-    @patch(
-        "hyrisecockpit.database_manager.worker_pool.execute_queries",
-        lambda *args: "fake_execute_queries_worker",
-    )
-    def test_generats_execute_task_worker(self, worker_pool: WorkerPool) -> None:
+    @patch("hyrisecockpit.database_manager.worker_pool.Process",)
+    @patch("hyrisecockpit.database_manager.worker_pool.execute_queries",)
+    def test_generates_execute_task_worker(
+        self,
+        mock_execute_queries,
+        mock_process_constructor: MagicMock,
+        worker_pool: WorkerPool,
+    ) -> None:
         """Check if enough processes of type process are generated."""
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value = "mock_cursor"
+        worker_pool._connection_factory = mock_connection_factory
+        worker_pool._task_queue = "queue"  # type: ignore
+        worker_pool._database_id = "database_id"
+        worker_pool._continue_execution_flag = "Flag"  # type: ignore
+        worker_pool._worker_wait_for_exit_event = "wait for exit event"  # type: ignore
+
         worker_pool._execute_task_worker_done_event = [
             "fake_execute_queries_worker" for _ in range(number_worker)  # type: ignore
         ]
         processes: List[Process] = worker_pool._generate_execute_task_worker()
+
         assert len(processes) == number_worker
-        assert all(type(process) is ProcessType for process in processes)
+        for i in range(number_worker):
+            mock_process_constructor.assert_any_call(
+                target=mock_execute_queries,
+                args=(
+                    i,
+                    "queue",
+                    "mock_cursor",
+                    "Flag",
+                    "database_id",
+                    "fake_execute_queries_worker",
+                    "wait for exit event",
+                ),
+            )
+
+        mock_connection_factory.create_cursor.assert_called()
 
     @patch(
         "hyrisecockpit.database_manager.worker_pool.execute_queries",

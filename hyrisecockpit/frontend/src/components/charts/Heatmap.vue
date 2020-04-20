@@ -19,9 +19,9 @@ export default defineComponent({
   props: {
     autosize: {
       type: Boolean,
-      default: true
+      default: true,
     },
-    ...ChartPropsValidation
+    ...ChartPropsValidation,
   },
   setup(props: Props, context: SetupContext): void {
     const { getDataset, getLayout, getOptions } = useHeatMapConfiguration(
@@ -39,7 +39,7 @@ export default defineComponent({
       Plotly.addTraces(props.graphId, getDataset(props.data));
       Plotly.deleteTraces(props.graphId, 0);
     }
-  }
+  },
 });
 
 function useHeatMapConfiguration(
@@ -55,14 +55,14 @@ function useHeatMapConfiguration(
       xaxis: {
         rangemode: "tozero",
         title: {
-          text: chartConfiguration.xaxis
-        }
+          text: chartConfiguration.xaxis,
+        },
       },
       yaxis: {
         rangemode: "tozero",
         title: {
-          text: chartConfiguration.yaxis
-        }
+          text: chartConfiguration.yaxis,
+        },
       },
       autosize: autosize,
       width: autosize ? 0 : 1400,
@@ -72,8 +72,8 @@ function useHeatMapConfiguration(
         r: 50,
         b: 100,
         t: 50,
-        pad: 10
-      }
+        pad: 10,
+      },
     };
   }
 
@@ -82,7 +82,7 @@ function useHeatMapConfiguration(
       dataByChunks: [],
       descriptions: [],
       chunks: [],
-      columns: []
+      columns: [],
     }
   ): Object {
     return {
@@ -96,11 +96,11 @@ function useHeatMapConfiguration(
         [0.25, colorDefinition.blue],
         [0.5, "#F5F5F5"],
         [0.75, colorDefinition.orange],
-        [1, colorDefinition.darkorange]
+        [1, colorDefinition.darkorange],
       ],
       hovermode: "closest",
       hovertemplate:
-        "<b>column: %{text}</b> <br><b>chunk: %{y}</b> <br>%{z} accesses <extra></extra>"
+        "<b>column: %{text}</b> <br><b>chunk: %{y}</b> <br>%{z} accesses <extra></extra>",
     };
   }
   function getOptions(): Object {

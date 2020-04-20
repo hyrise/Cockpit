@@ -27,7 +27,7 @@ import {
   reactive,
   Ref,
   ref,
-  onMounted
+  onMounted,
 } from "@vue/composition-api";
 
 import { Database } from "@/types/database";
@@ -48,8 +48,8 @@ export default defineComponent({
   props: {
     initialDatabases: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
 
   components: { DatabaseChip },
@@ -72,7 +72,7 @@ export default defineComponent({
       () => props.initialDatabases,
       () => {
         const newSelected: Record<string, boolean> = {};
-        Object.keys(selectedDatabases.value).forEach(database => {
+        Object.keys(selectedDatabases.value).forEach((database) => {
           newSelected[database] = props.initialDatabases.includes(database);
         });
         selectedDatabases.value = JSON.parse(JSON.stringify(newSelected));
@@ -88,8 +88,8 @@ export default defineComponent({
         () => context.root.$databaseController.availableDatabasesById.value
       ),
       handleDatabaseSelection,
-      selectedDatabases
+      selectedDatabases,
     };
-  }
+  },
 });
 </script>
