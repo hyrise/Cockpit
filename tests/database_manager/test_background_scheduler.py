@@ -248,7 +248,9 @@ class TestBackgroundJobManager:
         background_job_manager._connection_factory = mock_connection_factory
         background_job_manager._database_blocked.value = True
 
-        result: DataFrame = background_job_manager._sql_to_data_frame("select ...")
+        result: DataFrame = background_job_manager._sql_to_data_frame(
+            "select ...", None
+        )
 
         mock_cursor.read_sql_query.assert_not_called()
         assert isinstance(result, DataframeType)
@@ -266,9 +268,9 @@ class TestBackgroundJobManager:
         background_job_manager._connection_factory = mock_connection_factory
         background_job_manager._database_blocked.value = False
 
-        background_job_manager._sql_to_data_frame("select ...")
+        background_job_manager._sql_to_data_frame("select ...", None)
 
-        mock_cursor.read_sql_query.assert_called_once_with("select ...")
+        mock_cursor.read_sql_query.assert_called_once_with("select ...", None)
 
     @mark.parametrize(
         "exception", [DatabaseError(), InterfaceError()],
@@ -290,7 +292,9 @@ class TestBackgroundJobManager:
         )
         background_job_manager._connection_factory = mock_connection_factory
 
-        result: DataFrame = background_job_manager._sql_to_data_frame("select ...")
+        result: DataFrame = background_job_manager._sql_to_data_frame(
+            "select ...", None
+        )
 
         assert isinstance(result, DataframeType)
         assert result.empty
