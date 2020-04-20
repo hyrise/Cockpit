@@ -15,15 +15,15 @@ const routes = [
   {
     name: "comparison",
     path: "/databases/compare",
-    component: InstanceComparison
+    component: InstanceComparison,
   },
   {
     name: "overview",
     path: "/databases/overview",
-    component: Overview
-  }
+    component: Overview,
+  },
 ];
 
 export default new VueRouter({
-  routes
+  routes,
 });

@@ -8,7 +8,7 @@ import {
   Metric,
   comparisonMetrics,
   overviewMetrics,
-  workloadMetrics
+  workloadMetrics,
 } from "@/types/metrics";
 import { useSorting } from "@/meta/formatting";
 
@@ -22,17 +22,17 @@ export function useSelectionController(): SelectionController {
   const selectedDatabases = reactive<Record<PageName, string[]>>({
     comparison: [] as string[],
     overview: [] as string[],
-    workload: [] as string[]
+    workload: [] as string[],
   });
   const availableMetrics = reactive<Record<PageName, Metric[]>>({
     comparison: comparisonMetrics,
     overview: overviewMetrics,
-    workload: workloadMetrics
+    workload: workloadMetrics,
   });
   const selectedMetrics = reactive<Record<PageName, Metric[]>>({
     comparison: comparisonMetrics,
     overview: overviewMetrics,
-    workload: workloadMetrics
+    workload: workloadMetrics,
   });
 
   watch(
@@ -44,7 +44,7 @@ export function useSelectionController(): SelectionController {
     }
   );
 
-  pages.forEach(page => {
+  pages.forEach((page) => {
     // database events
     eventBus.$on(
       `SELECTED_DATABASES_CHANGED_ON_${page.toUpperCase()}`,
@@ -57,7 +57,7 @@ export function useSelectionController(): SelectionController {
           );
         } else {
           selectedDatabases[page] = selectedDatabases[page].filter(
-            current => current !== payload.database
+            (current) => current !== payload.database
           );
         }
       }
@@ -75,7 +75,7 @@ export function useSelectionController(): SelectionController {
           );
         } else {
           selectedMetrics[page] = selectedMetrics[page].filter(
-            current => current !== payload.metric
+            (current) => current !== payload.metric
           );
         }
       }

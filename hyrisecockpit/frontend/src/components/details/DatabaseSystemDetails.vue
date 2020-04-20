@@ -75,7 +75,7 @@ import {
   onMounted,
   computed,
   Ref,
-  ref
+  ref,
 } from "@vue/composition-api";
 import { Database } from "@/types/database";
 import { useUpdatingDatabases } from "@/meta/databases";
@@ -95,18 +95,18 @@ export default defineComponent({
   props: {
     selectedDatabases: {
       type: Array,
-      default: null
-    }
+      default: null,
+    },
   },
   components: {
-    DatabaseChip
+    DatabaseChip,
   },
   setup(props: Props, context: SetupContext): Data {
     return {
       ...useUpdatingDatabases(props, context),
-      ...useDatabaseFlex(props)
+      ...useDatabaseFlex(props),
     };
-  }
+  },
 });
 </script>
 <style>

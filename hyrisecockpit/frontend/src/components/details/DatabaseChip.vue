@@ -48,7 +48,7 @@ import {
   Ref,
   ref,
   computed,
-  watch
+  watch,
 } from "@vue/composition-api";
 import { Database } from "@/types/database";
 import { useSelectableItem } from "@/meta/selection";
@@ -71,29 +71,29 @@ export default defineComponent({
   props: {
     databaseId: {
       type: String,
-      default: null
+      default: null,
     },
     closable: {
       type: Boolean,
-      default: false
+      default: false,
     },
     selectable: {
       type: Boolean,
-      default: false
+      default: false,
     },
     selected: {
       type: Boolean,
-      default: undefined
-    }
+      default: undefined,
+    },
   },
   setup(props: Props, context: SetupContext): Data {
     return {
       database: computed(() =>
         context.root.$databaseController.getDatabaseById(props.databaseId)
       ),
-      ...useSelectableItem(context)
+      ...useSelectableItem(context),
     };
-  }
+  },
 });
 </script>
 <style scoped></style>

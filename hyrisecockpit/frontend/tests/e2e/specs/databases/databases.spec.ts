@@ -4,17 +4,17 @@ import { getSelector as getViewSelector, getRoute } from "../views/helpers";
 import {
   getSelector,
   getDatabaseMainMemoryCapacity,
-  getDatabaseMemoryFootprint
+  getDatabaseMemoryFootprint,
 } from "./helpers";
 import {
   testElementExistence,
   testElementVisibility,
   testElementNoVisibility,
-  testMaxDecimalDigits
+  testMaxDecimalDigits,
 } from "../abstractTests";
 
 let backend = useBackendMock({
-  databases: 2
+  databases: 2,
 });
 
 let databases: any = [];
@@ -47,12 +47,8 @@ describe("when observing the database data and details", () => {
   it("will show the correct system details for every database", () => {
     // test correct data existence
     databases.forEach((database: any, idx: number) => {
-      cy.get(getSelector("idDetails"))
-        .eq(idx)
-        .contains(database.id);
-      cy.get(getSelector("hostDetails"))
-        .eq(idx)
-        .contains(database.host);
+      cy.get(getSelector("idDetails")).eq(idx).contains(database.id);
+      cy.get(getSelector("hostDetails")).eq(idx).contains(database.host);
       cy.get(getSelector("workerDetails"))
         .eq(idx)
         .contains(database.number_workers);
@@ -112,9 +108,7 @@ describe("when observing the database data and details", () => {
       clickElement(getViewSelector("databaseListButton"));
       cy.get(getViewSelector("databaseList")).within(() => {
         databases.forEach((database: any, idx: number) => {
-          cy.get(getSelector("databaseChip"))
-            .eq(idx)
-            .contains(database.id);
+          cy.get(getSelector("databaseChip")).eq(idx).contains(database.id);
         });
       });
     });
@@ -152,7 +146,7 @@ describe("when observing the database data and details", () => {
   describe("when no databases has been added", () => {
     it("will show empty database list and details", () => {
       backend = useBackendMock({
-        databases: 0
+        databases: 0,
       });
       backend.restart();
       cy.visit("/");

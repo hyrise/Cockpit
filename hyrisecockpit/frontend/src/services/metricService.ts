@@ -13,7 +13,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
   const queryReadyState = ref(true);
   const data: any = initializeData({});
   const timestamps = ref<Date[]>([]);
-  const metricsMetaData = metrics.map(metric => getMetricMetadata(metric));
+  const metricsMetaData = metrics.map((metric) => getMetricMetadata(metric));
   const metricInfo = metricsMetaData[0];
   const maxValues = initializeData(0) as Record<Metric, number>;
   const historicFetching = ref(false);
@@ -22,7 +22,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
 
   function initializeData(value: any): Object {
     const newData: any = reactive({});
-    metrics.forEach(metric => {
+    metrics.forEach((metric) => {
       Vue.set(newData, metric, value);
     });
     return newData;
@@ -49,7 +49,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
       ? formatDateToNanoSec(end)
       : formatDateToNanoSec(currentTimestamp);
 
-    fetchData(startTime, endTime).then(result => {
+    fetchData(startTime, endTime).then((result) => {
       useUpdatingData(result, metrics);
       metrics.forEach((metric, idx) => {
         if (metricsMetaData[idx].fetchType === "modify") {
@@ -100,10 +100,10 @@ export function useMetricService(metrics: Metric[]): MetricService {
         .get(metricInfo.endpoint, {
           params: {
             startts: start,
-            endts: end
-          }
+            endts: end,
+          },
         })
-        .then(response => {
+        .then((response) => {
           if (
             metricInfo.component === "QueryTypeProportion" ||
             metricInfo.historic
@@ -114,7 +114,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
             resolve(response.data.body[metricInfo.base]);
           }
         })
-        .catch(error => {
+        .catch((error) => {
           queryReadyState.value = true;
           reject(error);
         });
@@ -136,7 +136,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
 
   function handleTimestamps(newTimestamps: number[]): void {
     const dates = newTimestamps.map(
-      timestamp => new Date(timestamp / Math.pow(10, 6))
+      (timestamp) => new Date(timestamp / Math.pow(10, 6))
     );
     timestamps.value = historicFetching.value
       ? handleHistoricDataPoints(dates)

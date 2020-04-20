@@ -17,17 +17,17 @@ import {
   computed,
   Ref,
   ref,
-  watch
+  watch,
 } from "@vue/composition-api";
 import Barchart from "../charts/Barchart.vue";
 import {
   MetricProps,
   MetricPropsValidation,
-  ChartConfiguration
+  ChartConfiguration,
 } from "../../types/metrics";
 import {
   getMetricChartConfiguration,
-  getMetricMetadata
+  getMetricMetadata,
 } from "../../meta/metrics";
 
 interface Data {
@@ -58,9 +58,9 @@ export default defineComponent({
 
     return {
       transformedData,
-      chartConfiguration: getMetricChartConfiguration(props.metric)
+      chartConfiguration: getMetricChartConfiguration(props.metric),
     };
-  }
+  },
 });
 </script>
 <style scoped>

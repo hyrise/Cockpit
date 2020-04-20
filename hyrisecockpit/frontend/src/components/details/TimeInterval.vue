@@ -9,7 +9,7 @@ import {
   onMounted,
   computed,
   Ref,
-  ref
+  ref,
 } from "@vue/composition-api";
 import { Metric } from "@/types/metrics";
 import { useUpdatingInterval } from "@/meta/components";
@@ -26,14 +26,14 @@ export default defineComponent({
   props: {
     metric: {
       type: String,
-      default: null
-    }
+      default: null,
+    },
   },
   setup(props: Props, context: SetupContext): Data {
     return {
-      interval: useUpdatingInterval(context, props.metric)
+      interval: useUpdatingInterval(context, props.metric),
     };
-  }
+  },
 });
 </script>
 <style scoped>
