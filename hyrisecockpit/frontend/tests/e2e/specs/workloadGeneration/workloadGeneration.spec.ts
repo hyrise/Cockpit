@@ -1,6 +1,6 @@
 import { clickElement } from "../helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
-import { useBackendMock } from "../../setup/backendMock";
+import { useBackendMock, mockBackend } from "../../setup/backendMock";
 import {
   generateRandomInt,
   getPostAlias,
@@ -18,7 +18,7 @@ import {
   assertChangedTable,
 } from "./helpers";
 
-let backend = useBackendMock();
+let backend = mockBackend();
 
 let statusData: any[] = [];
 

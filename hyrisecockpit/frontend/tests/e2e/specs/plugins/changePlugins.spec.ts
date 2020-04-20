@@ -1,4 +1,4 @@
-import { useBackendMock } from "../../setup/backendMock";
+import { useBackendMock, mockBackend } from "../../setup/backendMock";
 import { clickElement } from "../helpers";
 import {
   getGetAlias,
@@ -15,7 +15,7 @@ import {
   assertSettingsRequestValues,
 } from "./helpers";
 
-let backend = useBackendMock({ plugins: 3 });
+let backend = mockBackend({ plugins: 3 });
 
 let databases: any = [];
 let availablePlugins: any = [];

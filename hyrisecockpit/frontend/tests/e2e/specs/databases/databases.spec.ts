@@ -1,4 +1,4 @@
-import { useBackendMock } from "../../setup/backendMock";
+import { useBackendMock, mockBackend } from "../../setup/backendMock";
 import { clickElement } from "../helpers";
 import { getSelector as getViewSelector, getRoute } from "../views/helpers";
 import {
@@ -13,7 +13,7 @@ import {
   testMaxDecimalDigits,
 } from "../abstractTests";
 
-let backend = useBackendMock({
+let backend = mockBackend({
   databases: 2,
 });
 
@@ -41,6 +41,21 @@ describe("when observing the database data and details", () => {
   it("will directly show the details panel", () => {
     testElementExistence(getSelector("databaseSystemDetails"));
     testElementVisibility(getSelector("databaseSystemDetails"));
+  });
+
+  // test correct number of databases
+  describe("when clicking the database list button", () => {
+    it("will show the correct number of databases", () => {
+      cy.get(getSelector("numberOfDatabases")).contains(
+        databases.length.toString()
+      );
+      clickElement(getViewSelector("databaseListButton"));
+      cy.get(getViewSelector("databaseList")).within(() => {
+        databases.forEach((database: any, idx: number) => {
+          cy.get(getSelector("databaseChip")).eq(idx).contains(database.id);
+        });
+      });
+    });
   });
 
   // test showing correct data
@@ -99,21 +114,6 @@ describe("when observing the database data and details", () => {
     });
   });
 
-  // test correct number of databases
-  describe("when clicking the database list button", () => {
-    it("will show the correct number of databases", () => {
-      cy.get(getSelector("numberOfDatabases")).contains(
-        databases.length.toString()
-      );
-      clickElement(getViewSelector("databaseListButton"));
-      cy.get(getViewSelector("databaseList")).within(() => {
-        databases.forEach((database: any, idx: number) => {
-          cy.get(getSelector("databaseChip")).eq(idx).contains(database.id);
-        });
-      });
-    });
-  });
-
   // test correct database colors
   describe("when changing routes", () => {
     it("will show the same database colors", () => {
@@ -143,9 +143,9 @@ describe("when observing the database data and details", () => {
   });
 
   // test empty databases
-  describe("when no databases has been added", () => {
+  describe("when no database has been added", () => {
     it("will show empty database list and details", () => {
-      backend = useBackendMock({
+      backend = mockBackend({
         databases: 0,
       });
       backend.restart();

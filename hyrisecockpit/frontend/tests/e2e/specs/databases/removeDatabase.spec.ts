@@ -1,4 +1,4 @@
-import { useBackendMock } from "../../setup/backendMock";
+import { useBackendMock, mockBackend } from "../../setup/backendMock";
 import { clickElement } from "../helpers";
 import { getDeleteAlias } from "../../setup/helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
@@ -12,7 +12,7 @@ import {
   testElementNoVisibility,
 } from "../abstractTests";
 
-const backend = useBackendMock();
+const backend = mockBackend();
 
 let databaseId: string = "";
 
@@ -50,7 +50,7 @@ describe("When removing a database", () => {
   // test multiple
   describe("and clicking the remove and cancel button multiple times", () => {
     it("will always select the clicked database to be removed", () => {
-      const secondDatabaseId = fakeId("database-");
+      const secondDatabaseId = fakeId("database-", 2);
       backend.reload("database", secondDatabaseId, "POST");
       cy.reload();
 

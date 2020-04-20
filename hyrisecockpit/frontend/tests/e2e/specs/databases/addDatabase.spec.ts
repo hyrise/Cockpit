@@ -1,4 +1,4 @@
-import { useBackendMock } from "../../setup/backendMock";
+import { useBackendMock, mockBackend } from "../../setup/backendMock";
 import { clickElement } from "../helpers";
 import { getPostAlias } from "../../setup/helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
@@ -19,10 +19,10 @@ import {
   testButtonIsDisabled,
 } from "../abstractTests";
 
-const backend = useBackendMock();
+const backend = mockBackend();
 
 const newDatabase: DatabaseData = fakeDatabaseData(
-  fakeId("database-")
+  fakeId("database-", 2)
 ) as DatabaseData;
 
 describe("When adding a new database", () => {

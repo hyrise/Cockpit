@@ -9,10 +9,6 @@ import {
   getGetAlias,
 } from "./helpers";
 
-/* backend with mocked routes */
-
-//NOTE: only used routes are mocked yet
-
 function getInitialNumbers(
   numbers: Partial<Record<Entity, number>>
 ): Record<Entity, number> {
@@ -35,7 +31,76 @@ export interface Backend {
   restart(status?: BackendState, delay?: number): void;
 }
 
+/* return mocked backend, only if requests should be mocked inside cypress */
 export function useBackendMock(
+  numbers: Partial<Record<Entity, number>> = {}
+): Backend {
+  function start(): void {
+    cy.server();
+    mockRoutes();
+    return;
+  }
+
+  function reload(): void {
+    return;
+  }
+
+  function restart(): void {
+    cy.server();
+    mockRoutes();
+    return;
+  }
+
+  function mockRoutes(): void {
+    /* GET */
+    cy.route("GET", "**/control/database").as(getGetAlias("database"));
+    cy.route("GET", "**/monitor/system**").as(getGetAlias("system"));
+    cy.route("GET", "**/monitor/storage**").as(getGetAlias("storage"));
+    cy.route("GET", "**/monitor/throughput**").as(getGetAlias("throughput"));
+    cy.route("GET", "**/monitor/latency**").as(getGetAlias("latency"));
+    cy.route("GET", "**/monitor/queue_length**").as(
+      getGetAlias("queue_length")
+    );
+    cy.route("GET", "**/monitor/krueger_data**").as(
+      getGetAlias("krueger_data")
+    );
+    cy.route("GET", "**/monitor/chunks**").as(getGetAlias("chunks"));
+    cy.route("GET", "**/monitor/detailed_query_information").as(
+      getGetAlias("detailed_query_information")
+    );
+    cy.route("GET", "**/monitor/status").as(getGetAlias("status"));
+    cy.route("GET", "**/control/data").as(getGetAlias("data"));
+    cy.route("GET", "**/control/available_plugins").as(
+      getGetAlias("available_plugins")
+    );
+    cy.route("GET", "**/control/plugin").as(getGetAlias("plugin"));
+    cy.route("GET", "**/control/plugin_settings").as(
+      getGetAlias("plugin_settings")
+    );
+    cy.route("GET", "**/control/plugin_log").as(getGetAlias("plugin_log"));
+
+    /* POST */
+    cy.route("POST", "**/control/database").as(getPostAlias("database"));
+    cy.route("POST", "**/control/data").as(getPostAlias("data"));
+    cy.route("POST", "**/control/plugin").as(getPostAlias("plugin"));
+    cy.route("POST", "**/control/plugin_settings").as(
+      getPostAlias("plugin_settings")
+    );
+    cy.route("POST", "**/control/workload").as(getPostAlias("workload"));
+
+    /* DELETE */
+    cy.route("DELETE", "**/control/database").as(getDeleteAlias("database"));
+    cy.route("DELETE", "**/control/data").as(getDeleteAlias("data"));
+    cy.route("DELETE", "**/control/plugin").as(getDeleteAlias("plugin"));
+    cy.route("DELETE", "**/control/workload").as(getDeleteAlias("workload"));
+  }
+
+  if (Cypress.env("stubless")) return { start, reload, restart };
+  return mockBackend(numbers);
+}
+
+/* backend with mocked routes */
+export function mockBackend(
   numbers: Partial<Record<Entity, number>> = {}
 ): Backend {
   const {
