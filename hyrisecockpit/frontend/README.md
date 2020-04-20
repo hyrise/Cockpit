@@ -34,6 +34,13 @@ npm run test:e2e
 ```
 npm run test:e2e:headless
 ```
+### Deploy with minimal dependencies
+```
+npm install --no-optional
+```
+```
+npm run deploy
+```
 
 ### Run development backend server 
 ```

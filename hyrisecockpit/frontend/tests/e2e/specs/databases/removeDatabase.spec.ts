@@ -9,7 +9,7 @@ import {
   testContentNoExistence,
   testElementExistence,
   testElementVisibility,
-  testElementNoVisibility
+  testElementNoVisibility,
 } from "../abstractTests";
 
 const backend = useBackendMock();
@@ -58,28 +58,20 @@ describe("When removing a database", () => {
       testContentExistence(databaseId);
       testContentExistence(secondDatabaseId);
 
-      cy.get(getSelector("removeDatabaseButton"))
-        .first()
-        .click();
+      cy.get(getSelector("removeDatabaseButton")).first().click();
 
       cy.get(getSelector("removeDatabase")).within(() => {
         cy.get("span").contains(databaseId);
-        cy.get("span")
-          .contains(secondDatabaseId)
-          .should("not.exist");
+        cy.get("span").contains(secondDatabaseId).should("not.exist");
       });
       clickElement(getSelector("cancelRemoveDatabaseButton"));
 
       clickElement(getViewSelector("databaseListButton"));
-      cy.get(getSelector("removeDatabaseButton"))
-        .last()
-        .click();
+      cy.get(getSelector("removeDatabaseButton")).last().click();
 
       cy.get(getSelector("removeDatabase")).within(() => {
         cy.get("span").contains(secondDatabaseId);
-        cy.get("span")
-          .contains(databaseId)
-          .should("not.exist");
+        cy.get("span").contains(databaseId).should("not.exist");
       });
 
       backend.reload("database", secondDatabaseId, "DELETE");

@@ -25,13 +25,13 @@ import {
   computed,
   Ref,
   ref,
-  watch
+  watch,
 } from "@vue/composition-api";
 import Linechart from "../charts/Linechart.vue";
 import {
   MetricProps,
   MetricPropsValidation,
-  ComparisonMetricData
+  ComparisonMetricData,
 } from "../../types/metrics";
 import MetricDetails from "../details/MetricDetails.vue";
 import { useLineChartComponent } from "../../meta/components";
@@ -42,8 +42,8 @@ export default defineComponent({
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     return {
-      ...useLineChartComponent(props, context)
+      ...useLineChartComponent(props, context),
     };
-  }
+  },
 });
 </script>

@@ -46,9 +46,9 @@ export function useMetricController(): MetricController {
 
   function setupServices(): Record<Metric, MetricService> {
     const services: any = {};
-    getMetricsByEndpoint(availableMetrics).forEach(metrics => {
+    getMetricsByEndpoint(availableMetrics).forEach((metrics) => {
       const metricService = useMetricService(metrics);
-      metrics.forEach(metric => {
+      metrics.forEach((metric) => {
         services[metric] = metricService;
       });
     });
@@ -58,9 +58,9 @@ export function useMetricController(): MetricController {
   function getMetricsByEndpoint(newMetrics: Metric[]): Metric[][] {
     return newMetrics.reduce(
       (metricsByEndpoint: Metric[][], metric: Metric) => {
-        const correspondingMetrics = metricsByEndpoint.find(metrics =>
+        const correspondingMetrics = metricsByEndpoint.find((metrics) =>
           metrics
-            .map(detectedMetric => getMetricMetadata(detectedMetric).endpoint)
+            .map((detectedMetric) => getMetricMetadata(detectedMetric).endpoint)
             .includes(getMetricMetadata(metric).endpoint)
         );
         if (correspondingMetrics) {
@@ -76,18 +76,18 @@ export function useMetricController(): MetricController {
 
   function setupIntervals(): Record<Metric, Interval> {
     const intervals: any = {};
-    availableMetrics.forEach(metric => {
+    availableMetrics.forEach((metric) => {
       intervals[metric] = {
         id: undefined,
         runningState: false,
-        time: getMetricRequestTime(metric)
+        time: getMetricRequestTime(metric),
       };
     });
     return intervals;
   }
 
   function start(newMetrics: Metric[], start?: Date, end?: Date): void {
-    getMetricsByEndpoint(newMetrics).forEach(metrics => {
+    getMetricsByEndpoint(newMetrics).forEach((metrics) => {
       const metric = metrics[0];
       metricServices[metric].getDataIfReady(start, end);
       metricIntervals[metric].id = setInterval(
@@ -100,9 +100,9 @@ export function useMetricController(): MetricController {
 
   function stop(): void {
     const runningIntervals = Object.values(metricIntervals).filter(
-      interval => interval.runningState == true
+      (interval) => interval.runningState == true
     );
-    runningIntervals.forEach(interval => {
+    runningIntervals.forEach((interval) => {
       clearInterval(interval.id);
       interval.id = undefined;
       interval.runningState = false;

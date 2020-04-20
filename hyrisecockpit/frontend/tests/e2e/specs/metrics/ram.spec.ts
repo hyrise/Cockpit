@@ -5,7 +5,7 @@ import {
   getSelectorWithID,
   getDetailsSelectorWithID,
   assertMetricDetails,
-  assertLineChartData
+  assertLineChartData,
 } from "./helpers";
 import { waitForChartRender } from "../helpers";
 
@@ -36,7 +36,7 @@ describe("visiting the overview page", () => {
       assertLineChartData(
         elements[0].data,
         data,
-        databases.map(db => db.id)
+        databases.map((db) => db.id)
       );
     });
   });

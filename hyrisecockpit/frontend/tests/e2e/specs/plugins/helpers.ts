@@ -6,7 +6,7 @@ const selectors: Record<string, string> = {
   settingValue: getSelectorByConfig("input", "setting-value"),
   settingDescription: getSelectorByConfig("span", "setting-description"),
   settingHelpIcon: getSelectorByConfig("button", "setting-help-icon"),
-  saveSettingsButton: getSelectorByConfig("button", "setting-save")
+  saveSettingsButton: getSelectorByConfig("button", "setting-save"),
 };
 
 export function getSelector(component: string): string {

@@ -32,7 +32,7 @@ export const availableMetrics: Metric[] = [
   "queueLength",
   "executedQueryTypeProportion",
   "generatedQueryTypeProportion",
-  "memoryFootprint"
+  "memoryFootprint",
 ];
 
 export const instanceMetrics: Metric[] = ["storage", "access"];
@@ -46,7 +46,7 @@ export const comparisonMetrics: Metric[] = [
   "memoryFootprint",
   "storage",
   "access",
-  "executedQueryTypeProportion"
+  "executedQueryTypeProportion",
 ];
 export const overviewMetrics: Metric[] = [
   "throughput",
@@ -54,7 +54,7 @@ export const overviewMetrics: Metric[] = [
   "queueLength",
   "cpu",
   "ram",
-  "memoryFootprint"
+  "memoryFootprint",
 ];
 
 export const workloadMetrics: Metric[] = ["generatedQueryTypeProportion"];
@@ -102,24 +102,24 @@ export interface MetricProps {
 export const MetricPropsValidation = {
   metric: {
     type: String,
-    default: null
+    default: null,
   },
   selectedDatabases: {
     type: Array,
-    default: null
+    default: null,
   },
   showDetails: {
     type: Boolean,
-    default: null
+    default: null,
   },
   graphId: {
     type: String,
-    default: null
+    default: null,
   },
   maxChartWidth: {
     type: Number,
-    default: 0
-  }
+    default: 0,
+  },
 };
 
 export type ChartConfiguration = {

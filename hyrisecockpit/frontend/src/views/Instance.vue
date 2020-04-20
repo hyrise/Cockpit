@@ -29,7 +29,7 @@ import {
   SetupContext,
   Ref,
   ref,
-  onMounted
+  onMounted,
 } from "@vue/composition-api";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { getMetricMetadata, getMetricComponent } from "../meta/metrics";
@@ -37,7 +37,7 @@ import {
   Metric,
   MetricMetadata,
   overviewMetrics,
-  instanceMetrics
+  instanceMetrics,
 } from "../types/metrics";
 import Storage from "../components/metrics/Storage.vue";
 import Access from "../components/metrics/Access.vue";
@@ -60,7 +60,7 @@ export default defineComponent({
     Storage,
     Access,
     QueryTypeProportion,
-    LinearLoader
+    LinearLoader,
   },
   setup(props: {}, context: SetupContext): Data {
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
@@ -73,9 +73,9 @@ export default defineComponent({
       getMetricComponent,
       watchedInstances: ref([context.root.$route.params.id]),
       overviewMetrics,
-      instanceMetrics
+      instanceMetrics,
     };
-  }
+  },
 });
 </script>
 <style scoped>
