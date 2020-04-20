@@ -9,6 +9,11 @@
         <v-icon @click="closeWorkloadDialog()">mdi-close</v-icon>
       </v-system-bar>
       <v-card-text>
+        <warning v-if="hyriseNotActive" class="mt-4 mb-0 py-2 primary--text">
+          <template #message>
+            Hyrise is not active
+          </template>
+        </warning>
         <warning v-if="noDatabaseAdded" class="mt-4 mb-0 py-2 primary--text">
           <template #message>
             No database added
@@ -17,7 +22,7 @@
         <v-row>
           <v-chip
             class="mt-4 mb-0 mx-2 py-2 white--text"
-            v-for="instance in instanceBlocked.name"
+            v-for="instance in blockedInstances"
             :key="instance"
             :color="useDatabaseService().getDatabaseColor(instance)"
           >
@@ -156,8 +161,9 @@ interface Data {
   buttons: Record<string, { active: boolean; loading: boolean }>;
   switchesLoading: Record<string, boolean>;
   runningWorkload: Ref<boolean>;
-  instanceBlocked: { name: string[]; val: boolean };
+  blockedInstances: Ref<string[]>;
   noDatabaseAdded: Ref<boolean>;
+  hyriseNotActive: Ref<boolean>;
   getDisplayedWorkload: (workload: Workload) => string;
   useDatabaseService: () => void;
   isLoaded: (workload: Workload) => boolean;
@@ -212,11 +218,9 @@ export default defineComponent({
       job: false,
     });
     const runningWorkload = ref<boolean>(false);
-    const instanceBlocked: { name: string[]; val: boolean } = reactive({
-      name: [],
-      val: false,
-    });
+    const blockedInstances = ref<string[]>([]);
     const noDatabaseAdded = ref<boolean>(false);
+    const hyriseNotActive = ref<boolean>(false);
 
     function closeWorkloadDialog(): void {
       context.emit("close");
@@ -249,7 +253,7 @@ export default defineComponent({
     function isDisabled(): boolean {
       return (
         noDatabaseAdded.value ||
-        instanceBlocked.val ||
+        blockedInstances.value.length !== 0 ||
         switchesLoading.tpch01 ||
         switchesLoading.tpch1 ||
         switchesLoading.tpcds ||
@@ -279,23 +283,23 @@ export default defineComponent({
       getLoadedWorkloadData().then((response: any) => {
         if (response.data.length !== 0) {
           noDatabaseAdded.value = false;
-          instanceBlocked.name = [];
+          blockedInstances.value = [];
           let loadedWorkloadData: string[] = response.data[0].loaded_benchmarks;
           Object.values(response.data).forEach((instance: any) => {
             loadedWorkloadData = loadedWorkloadData.filter((benchmark: any) =>
               instance.loaded_benchmarks.includes(benchmark)
             );
             if (instance.database_blocked_status === true) {
-              instanceBlocked.name.push(instance.id);
+              blockedInstances.value.push(instance.id);
             }
           });
-          instanceBlocked.val = Object.values(response.data).some(
-            (instance: any) => instance.database_blocked_status === true
-          );
           runningWorkload.value = Object.values(response.data).some(
             (instance: any) => instance.worker_pool_status === "running"
           );
-          if (!instanceBlocked.val && changeWorkloadData) {
+          hyriseNotActive.value = Object.values(response.data).some(
+            (instance: any) => instance.hyrise_active === false
+          );
+          if (blockedInstances.value.length === 0 && changeWorkloadData) {
             Object.values(availableWorkloads).forEach((workload: Workload) => {
               switchesLoading[workload] = false;
             });
@@ -318,8 +322,9 @@ export default defineComponent({
       buttons,
       switchesLoading,
       runningWorkload,
-      instanceBlocked,
+      blockedInstances,
       noDatabaseAdded,
+      hyriseNotActive,
       getDisplayedWorkload,
       useDatabaseService,
       isLoaded,
