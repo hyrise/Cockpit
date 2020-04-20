@@ -8,7 +8,7 @@ from queue import Empty
 from time import time_ns
 from typing import Dict, List, Optional, Tuple, Union
 
-from psycopg2 import DatabaseError, InterfaceError, ProgrammingError, pool
+from psycopg2 import DatabaseError, InterfaceError, ProgrammingError
 from psycopg2.extensions import AsIs
 from zmq import SUB, SUBSCRIBE, Context
 
@@ -91,14 +91,14 @@ def log_results(
 def execute_queries(
     worker_id: str,
     task_queue: Queue,
-    connection_pool: pool,
+    cur: PoolCursor,
     continue_execution_flag: Value,
     database_id: str,
     i_am_done_event: EventType,
     worker_wait_for_exit_event: EventType,
 ) -> None:
     """Define workers work loop."""
-    with PoolCursor(connection_pool) as cur:
+    with cur:
         with StorageCursor(
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
         ) as log:
