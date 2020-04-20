@@ -15,6 +15,7 @@ from hyrisecockpit.api.app.database.model import (
 )
 from hyrisecockpit.api.app.database.schema import DetailedDatabaseSchema
 from hyrisecockpit.api.app.database.service import DatabaseService
+from hyrisecockpit.api.app.shared import _add_active_database, _get_active_databases
 from hyrisecockpit.request import Header, Request
 
 mocked_socket = MagicMock()
@@ -111,12 +112,14 @@ class TestDatabaseService:
         mocked_database_service._send_message.assert_called_once_with(  # type: ignore
             Request(header=Header(message="add database"), body=dict(interface))
         )
+        assert "hycrash" in _get_active_databases()
         assert response == 42
 
     def test_deregisters_database(
         self, mocked_database_service: DatabaseService
     ) -> None:
         """A database service deregisters a database."""
+        _add_active_database("lowrise")
         interface = DatabaseInterface(id="lowrise",)
         fake_response = {"header": {"status": 42}}
         mocked_database_service._send_message.return_value = fake_response  # type: ignore
