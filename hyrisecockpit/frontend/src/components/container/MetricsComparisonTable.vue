@@ -29,7 +29,7 @@ import {
   ref,
   onMounted,
   computed,
-  provide
+  provide,
 } from "@vue/composition-api";
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
 import { useDatabaseFlex } from "../../meta/components";
@@ -42,7 +42,7 @@ interface Data {
 
 export default defineComponent({
   components: {
-    MetricTile
+    MetricTile,
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
@@ -61,9 +61,9 @@ export default defineComponent({
 
     return {
       ...useDatabaseFlex(props),
-      maxChartWidth
+      maxChartWidth,
     };
-  }
+  },
 });
 </script>
 <style scoped>

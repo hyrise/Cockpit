@@ -52,9 +52,7 @@ describe("visiting workload monitoring page", () => {
         cy.get("table")
           .eq(idx)
           .within(() => {
-            cy.get("tr")
-              .contains("latency (in ms)")
-              .click({ force: true });
+            cy.get("tr").contains("latency (in ms)").click({ force: true });
           });
 
         cy.get(getSelector("queryTable"))
@@ -75,9 +73,7 @@ describe("visiting workload monitoring page", () => {
         cy.get("table")
           .eq(idx)
           .within(() => {
-            cy.get("tr")
-              .contains("latency (in ms)")
-              .click({ force: true });
+            cy.get("tr").contains("latency (in ms)").click({ force: true });
           });
       });
     });

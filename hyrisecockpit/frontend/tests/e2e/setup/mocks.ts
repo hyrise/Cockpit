@@ -10,7 +10,7 @@ import {
   fakeDatabasePluginSettings,
   fakeDatabasePluginLogs,
   fakeDatabaseStatusData,
-  fakeIds
+  fakeIds,
 } from "./factories";
 import {
   assignFakeData,
@@ -21,7 +21,7 @@ import {
   Request,
   benchmarks,
   DatabaseState,
-  empty
+  empty,
 } from "./helpers";
 import { useCallbacks } from "./callbacks";
 
@@ -75,11 +75,11 @@ export function useMocks(
       activated_plugins: generateUniqueRandomNumbers(
         numbers.activated_plugins,
         plugins.length
-      ).map(index => plugins[index]),
+      ).map((index) => plugins[index]),
       loaded_benchmarks: generateUniqueRandomNumbers(
         numbers.loaded_benchmarks,
         benchmarks.length
-      ).map(index => benchmarks[index])
+      ).map((index) => benchmarks[index]),
     };
   }
 
@@ -92,10 +92,10 @@ export function useMocks(
     );
     responseMocks.storage = {
       storage: assignFakeData(
-        mockedIds.databases.map(id =>
+        mockedIds.databases.map((id) =>
           fakeDatabaseStorageData(id, mockedIds.tables, mockedIds.columns)
         )
-      )
+      ),
     };
     responseMocks.system = fakeDataByIdsWithTimestamps(
       mockedIds.databases,
@@ -123,7 +123,7 @@ export function useMocks(
     );
     responseMocks.chunks = {
       chunks_data: assignFakeData(
-        mockedIds.databases.map(id =>
+        mockedIds.databases.map((id) =>
           fakeDatabaseChunksData(
             id,
             mockedIds.tables,
@@ -131,14 +131,14 @@ export function useMocks(
             numbers.chunks
           )
         )
-      )
+      ),
     };
-    responseMocks.detailed_query_information = mockedIds.databases.map(id =>
+    responseMocks.detailed_query_information = mockedIds.databases.map((id) =>
       fakeDatabaseQueryInformationData(id, numbers.queries)
     );
     //TODO: handle loaded tables for every database
     responseMocks.data = benchmarks;
-    responseMocks.status = mockedIds.databases.map(id =>
+    responseMocks.status = mockedIds.databases.map((id) =>
       fakeDatabaseStatusData(
         id,
         mockedIds.loaded_benchmarks,
@@ -147,16 +147,16 @@ export function useMocks(
     );
     responseMocks.available_plugins = mockedIds.plugins;
     // NOTE: currently all databases have the same plugins activated
-    responseMocks.plugin = mockedIds.databases.map(id =>
+    responseMocks.plugin = mockedIds.databases.map((id) =>
       fakeDatabasePluginsData(id, mockedIds.activated_plugins)
     );
     responseMocks.plugin_settings = {
-      plugin_settings: mockedIds.databases.map(id =>
+      plugin_settings: mockedIds.databases.map((id) =>
         fakeDatabasePluginSettings(id, mockedIds.activated_plugins)
-      )
+      ),
     };
     // NOTE: currently all databases have exactly one log entry
-    responseMocks.plugin_log = mockedIds.databases.map(id =>
+    responseMocks.plugin_log = mockedIds.databases.map((id) =>
       fakeDatabasePluginLogs(id, mockedIds.plugins)
     );
     return responseMocks as Record<Request, any>;
@@ -172,7 +172,7 @@ export function useMocks(
 
   function removeMockedId(entity: Entity, id: string): void {
     mockedIds[entity] = mockedIds[entity].filter(
-      availableId => availableId !== id
+      (availableId) => availableId !== id
     );
   }
 
@@ -181,7 +181,7 @@ export function useMocks(
       database: callbacks.addDatabase,
       plugin: callbacks.activatePlugin,
       workload: callbacks.startWorkload,
-      data: callbacks.loadTable
+      data: callbacks.loadTable,
     };
 
     return postCallbackMocks;
@@ -197,7 +197,7 @@ export function useMocks(
       database: callbacks.removeDatabase,
       plugin: callbacks.deactivatePlugin,
       workload: callbacks.stopWorkload,
-      data: callbacks.removeTable
+      data: callbacks.removeTable,
     };
 
     return deleteCallbackMocks;
@@ -220,6 +220,6 @@ export function useMocks(
     renewMockResponses,
     getMockedResponse,
     getMockedPostCallback,
-    getMockedDeleteCallback
+    getMockedDeleteCallback,
   };
 }

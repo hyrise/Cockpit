@@ -45,7 +45,7 @@ import { getMetricTitle, getMetricComponent } from "../../meta/metrics";
 import {
   Metric,
   MetricProps,
-  MetricPropsValidation
+  MetricPropsValidation,
 } from "../../types/metrics";
 import { Database } from "../../types/database";
 import MetricDescriptionTooltip from "@/components/details/MetricDescriptionTooltip.vue";
@@ -74,22 +74,22 @@ export default defineComponent({
     Access,
     Storage,
     MemoryFootprint,
-    TimeInterval
+    TimeInterval,
   },
   props: {
     tileDatabase: {
       type: String,
-      default: null
+      default: null,
     },
-    ...MetricPropsValidation
+    ...MetricPropsValidation,
   },
   setup(props: Props, context: SetupContext): Data {
     const { getDatabasesByIds } = context.root.$databaseController;
     return {
       getMetricTitle,
-      getMetricComponent
+      getMetricComponent,
     };
-  }
+  },
 });
 </script>
 <style scoped>

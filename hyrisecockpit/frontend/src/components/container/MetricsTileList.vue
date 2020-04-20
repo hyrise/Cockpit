@@ -21,12 +21,12 @@ interface Data {}
 
 export default defineComponent({
   components: {
-    MetricTile
+    MetricTile,
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
     return {};
-  }
+  },
 });
 </script>
 <style scoped>
