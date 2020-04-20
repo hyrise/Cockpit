@@ -126,7 +126,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
 const metricDetailColor: Record<MetricValueState, string> = {
   average: colorValueDefinition.orange,
   high: colorValueDefinition.green,
-  low: colorValueDefinition.red
+  low: colorValueDefinition.red,
 };
 
 const metricValueStateOrder: Record<

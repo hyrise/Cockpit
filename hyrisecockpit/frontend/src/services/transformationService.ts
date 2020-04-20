@@ -61,8 +61,8 @@ function getQueryTypeProportionData(data: any, type: string): any {
       name: "UPDATE",
       type: "bar",
       marker: {
-        color: colorValueDefinition.green
-      }
+        color: colorValueDefinition.green,
+      },
     },
     {
       x: [type],
@@ -70,8 +70,8 @@ function getQueryTypeProportionData(data: any, type: string): any {
       name: "SELECT",
       type: "bar",
       marker: {
-        color: colorValueDefinition.blue
-      }
+        color: colorValueDefinition.blue,
+      },
     },
     {
       x: [type],
@@ -79,8 +79,8 @@ function getQueryTypeProportionData(data: any, type: string): any {
       name: "INSERT",
       type: "bar",
       marker: {
-        color: colorValueDefinition.orange
-      }
+        color: colorValueDefinition.orange,
+      },
     },
     {
       x: [type],
@@ -88,9 +88,9 @@ function getQueryTypeProportionData(data: any, type: string): any {
       name: "DELETE",
       type: "bar",
       marker: {
-        color: colorValueDefinition.red
-      }
-    }
+        color: colorValueDefinition.red,
+      },
+    },
   ];
 }
 
