@@ -10,8 +10,6 @@ from hyrisecockpit.api.app import create_app
 from hyrisecockpit.api.app.database import BASE_ROUTE
 from hyrisecockpit.api.app.database.model import (
     AvailableBenchmarkTables,
-    BenchmarkTables,
-    Database,
     DetailedDatabase,
 )
 from hyrisecockpit.api.app.database.schema import (
@@ -112,7 +110,7 @@ class TestController:
         )
         mocked_database_service.register_database.assert_called_once()
         args = mocked_database_service.register_database.call_args_list
-        assert isinstance(args[0][0][0], DetailedDatabase)
+        assert args[0][0][0] == fake_database_one_attributes
         assert 200 == response.status_code
 
     @patch("hyrisecockpit.api.app.database.controller.DatabaseService")
@@ -129,7 +127,7 @@ class TestController:
         )
         mocked_database_service.deregister_database.assert_called_once()
         args = mocked_database_service.deregister_database.call_args_list
-        assert isinstance(args[0][0][0], Database)
+        assert args[0][0][0] == {"id": "hmmmmmmmm?"}
         assert 200 == response.status_code
 
     @patch("hyrisecockpit.api.app.database.controller.DatabaseService")
@@ -165,7 +163,7 @@ class TestController:
         )
         mocked_database_service.load_benchmark_tables.assert_called_once()
         args = mocked_database_service.load_benchmark_tables.call_args_list
-        assert isinstance(args[0][0][0], BenchmarkTables)
+        assert args[0][0][0] == benchmark_tables
         assert 200 == response.status_code
 
     @patch("hyrisecockpit.api.app.database.controller.DatabaseService")
@@ -183,7 +181,7 @@ class TestController:
         )
         mocked_database_service.delete_benchmark_tables.assert_called_once()
         args = mocked_database_service.delete_benchmark_tables.call_args_list
-        assert isinstance(args[0][0][0], BenchmarkTables)
+        assert args[0][0][0] == benchmark_tables
         assert 200 == response.status_code
 
     @patch("hyrisecockpit.api.app.database.controller.DatabaseService")
