@@ -5,7 +5,7 @@ import {
   getSelectorWithID,
   getDetailsSelectorWithID,
   assertMetricDetails,
-  assertLineChartData
+  assertLineChartData,
 } from "./helpers";
 import { waitForChartRender } from "../helpers";
 import { getDatabaseMemoryFootprint } from "../databases/helpers";
@@ -23,7 +23,7 @@ describe("visiting the overview page", () => {
     });
     cy.visit(getRoute("overview"));
     cy.setupData("storage").then((xhr: any) => {
-      data = Object.values(xhr.response.body.body.storage).map(entry =>
+      data = Object.values(xhr.response.body.body.storage).map((entry) =>
         getDatabaseMemoryFootprint(entry)
       );
     });
@@ -36,7 +36,7 @@ describe("visiting the overview page", () => {
       assertLineChartData(
         elements[0].data,
         data,
-        databases.map(db => db.id),
+        databases.map((db) => db.id),
         true
       );
     });
@@ -69,7 +69,7 @@ describe("visiting the comparison page", () => {
     });
     cy.visit(getRoute("comparison"));
     cy.setupData("storage").then((xhr: any) => {
-      data = Object.values(xhr.response.body.body.storage).map(entry =>
+      data = Object.values(xhr.response.body.body.storage).map((entry) =>
         getDatabaseMemoryFootprint(entry)
       );
     });

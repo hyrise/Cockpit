@@ -20,5 +20,5 @@ Vue.prototype.$selectionController = useSelectionController();
 new Vue({
   vuetify,
   router: vueRouter,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount("#app");

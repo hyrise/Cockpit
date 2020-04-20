@@ -26,7 +26,7 @@ import {
   reactive,
   Ref,
   ref,
-  onMounted
+  onMounted,
 } from "@vue/composition-api";
 
 import MetricChip from "@/components/details/MetricChip.vue";
@@ -47,12 +47,12 @@ export default defineComponent({
   props: {
     initialMetrics: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     availableMetrics: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   components: { MetricChip },
   setup(props: Props, context: SetupContext): Data {
@@ -69,7 +69,7 @@ export default defineComponent({
       () => props.initialMetrics,
       () => {
         const newSelected: Record<string, boolean> = {};
-        Object.keys(selectedMetrics.value).forEach(database => {
+        Object.keys(selectedMetrics.value).forEach((database) => {
           newSelected[database] = props.initialMetrics.includes(database);
         });
         selectedMetrics.value = JSON.parse(JSON.stringify(newSelected));
@@ -78,7 +78,7 @@ export default defineComponent({
 
     function initializeMetrics(): Record<Metric, boolean> {
       const newSelected: any = {};
-      props.availableMetrics.forEach(metric => {
+      props.availableMetrics.forEach((metric) => {
         newSelected[metric] = true;
       });
       return newSelected;
@@ -90,8 +90,8 @@ export default defineComponent({
 
     return {
       handleMetricSelection,
-      selectedMetrics
+      selectedMetrics,
     };
-  }
+  },
 });
 </script>

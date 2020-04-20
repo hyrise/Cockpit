@@ -39,7 +39,7 @@ import {
   defineComponent,
   ref,
   Ref,
-  computed
+  computed,
 } from "@vue/composition-api";
 import { Database } from "@/types/database";
 import DatabaseChip from "@/components/details/DatabaseChip.vue";
@@ -50,19 +50,19 @@ interface Data {
 
 export default defineComponent({
   components: {
-    DatabaseChip
+    DatabaseChip,
   },
   setup(props: {}, context: SetupContext): Data {
     const {
       getDatabasesByIds,
-      availableDatabasesById
+      availableDatabasesById,
     } = context.root.$databaseController;
     return {
       databases: computed(() =>
         getDatabasesByIds(availableDatabasesById.value as string[])
-      )
+      ),
     };
-  }
+  },
 });
 </script>
 <style scoped>

@@ -37,7 +37,7 @@ import {
   computed,
   Ref,
   ref,
-  onMounted
+  onMounted,
 } from "@vue/composition-api";
 import MetricsComparisonTable from "../components/container/MetricsComparisonTable.vue";
 import { Metric, comparisonMetrics } from "../types/metrics";
@@ -53,14 +53,14 @@ export default defineComponent({
     MetricsComparisonTable,
     DatabaseDetailsPanel,
     LinearLoader,
-    Warning
+    Warning,
   },
   setup(props: {}, context: SetupContext): MetricViewData {
     return {
       watchedMetrics: comparisonMetrics,
-      ...useSelectionHandling(context, "comparison")
+      ...useSelectionHandling(context, "comparison"),
     };
-  }
+  },
 });
 </script>
 <style scoped>

@@ -134,14 +134,14 @@ import {
   ref,
   Ref,
   reactive,
-  computed
+  computed,
 } from "@vue/composition-api";
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
 import { useDatabaseService } from "../../services/databaseService";
 import {
   getDisplayedWorkload,
-  getWorkloadFromTransferred
+  getWorkloadFromTransferred,
 } from "../../meta/workloads";
 import Warning from "../alerts/Warning.vue";
 
@@ -169,13 +169,13 @@ interface Data {
 }
 export default defineComponent({
   components: {
-    Warning
+    Warning,
   },
   props: {
     open: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   setup(props: {}, context: SetupContext): Data {
     const frequency = ref<number>(200);
@@ -186,7 +186,7 @@ export default defineComponent({
       loadWorkloadData,
       deleteWorkloadData,
       startWorkload,
-      stopWorkload
+      stopWorkload,
     } = useWorkloadService();
     const buttons: Record<
       string,
@@ -194,27 +194,27 @@ export default defineComponent({
     > = reactive({
       start: {
         active: false,
-        loading: false
+        loading: false,
       },
       pause: {
         active: false,
-        loading: false
+        loading: false,
       },
       stop: {
         active: false,
-        loading: false
-      }
+        loading: false,
+      },
     });
     const switchesLoading: Record<string, boolean> = reactive({
       tpch01: false,
       tpch1: false,
       tpcds: false,
-      job: false
+      job: false,
     });
     const runningWorkload = ref<boolean>(false);
     const instanceBlocked: { name: string[]; val: boolean } = reactive({
       name: [],
-      val: false
+      val: false,
     });
     const noDatabaseAdded = ref<boolean>(false);
 
@@ -327,8 +327,8 @@ export default defineComponent({
       handleButtonChange,
       handleWorkloadChange,
       handleWorkloadDataChange,
-      closeWorkloadDialog
+      closeWorkloadDialog,
     };
-  }
+  },
 });
 </script>

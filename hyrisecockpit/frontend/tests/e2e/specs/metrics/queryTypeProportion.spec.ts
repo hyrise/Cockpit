@@ -4,7 +4,7 @@ import {
   getSelector,
   getSelectorWithID,
   getDetailsSelectorWithID,
-  assertBarChartData
+  assertBarChartData,
 } from "./helpers";
 import { waitForChartRender } from "../helpers";
 

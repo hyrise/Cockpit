@@ -74,7 +74,7 @@ import {
   computed,
   Ref,
   ref,
-  reactive
+  reactive,
 } from "@vue/composition-api";
 import { Database } from "../../types/database";
 import PluginsLog from "./PluginsLog.vue";
@@ -109,13 +109,13 @@ export default defineComponent({
   components: {
     PluginsLog,
     PluginSetting,
-    DatabaseChip
+    DatabaseChip,
   },
   props: {
     onClose: {
       type: Function,
-      default: null
-    }
+      default: null,
+    },
   },
   setup(props: Props, context: SetupContext): Data {
     var { availableDatabasesById } = context.root.$databaseController;
@@ -129,7 +129,7 @@ export default defineComponent({
       activePlugins,
       updatePlugins,
       pluginLogs,
-      pluginSettings
+      pluginSettings,
     } = context.root.$pluginService;
 
     const showSettings: any = reactive({});
@@ -145,7 +145,7 @@ export default defineComponent({
       pluginId: string
     ): boolean {
       return (
-        activePlugins.value.find(x => x === databseId + "_" + pluginId) &&
+        activePlugins.value.find((x) => x === databseId + "_" + pluginId) &&
         pluginSettings.value[databseId] &&
         pluginSettings.value[databseId][pluginId]
       );
@@ -184,9 +184,9 @@ export default defineComponent({
       showSettings,
       toggleSettingsView,
       pluginSettings,
-      canSettingsBeChanged
+      canSettingsBeChanged,
     };
-  }
+  },
 });
 </script>
 <style>

@@ -4,7 +4,7 @@ import {
   getSelector,
   getSelectorWithID,
   getDetailsSelectorWithID,
-  assertTreeMapData
+  assertTreeMapData,
 } from "./helpers";
 import { waitForChartRender } from "../helpers";
 
@@ -97,9 +97,7 @@ describe("visiting the comparison page", () => {
             );
           }
         );
-        cy.get(getSelector("closeDetailed"))
-          .eq(idx)
-          .click();
+        cy.get(getSelector("closeDetailed")).eq(idx).click();
         cy.get(getSelectorWithID("firstStorage", database.id)).should(
           "not.be.visible"
         );

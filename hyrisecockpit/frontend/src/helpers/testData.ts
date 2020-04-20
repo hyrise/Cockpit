@@ -24,21 +24,21 @@ export function useGeneratingTestData(): {
                 c_acctbal: {
                   data_type: "float",
                   encoding: ["Dictionary"],
-                  size: 589828
+                  size: 589828,
                 },
                 c_address: {
                   data_type: "string",
                   encoding: ["Dictionary"],
-                  size: 3300064
+                  size: 3300064,
                 },
                 c_comment: {
                   data_type: "string",
                   encoding: ["Dictionary"],
-                  size: 3299864
-                }
+                  size: 3299864,
+                },
               },
               number_columns: 3,
-              size: 7189756
+              size: 7189756,
             },
 
             lineitem: {
@@ -46,26 +46,26 @@ export function useGeneratingTestData(): {
                 l_comment: {
                   data_type: "string",
                   encoding: ["LZ4"],
-                  size: 29715756
+                  size: 29715756,
                 },
                 l_commitdate: {
                   data_type: "string",
                   encoding: ["Dictionary"],
-                  size: 5504031
+                  size: 5504031,
                 },
                 l_discount: {
                   data_type: "float",
                   encoding: ["Dictionary"],
-                  size: 3002911
-                }
+                  size: 3002911,
+                },
               },
               number_columns: 3,
-              size: 38222698
-            }
-          }
-        }
+              size: 38222698,
+            },
+          },
+        },
       },
-      header: { message: "OK", status: 200 }
+      header: { message: "OK", status: 200 },
     };
     return json;
   }
@@ -83,7 +83,7 @@ export function useGeneratingTestData(): {
               c_mktsegment: [0, 1],
               c_name: [0, 0],
               c_nationkey: [31, 54],
-              c_phone: [0, 0]
+              c_phone: [0, 0],
             },
             lineitem: {
               l_comment: [
@@ -116,7 +116,7 @@ export function useGeneratingTestData(): {
                 0,
                 0,
                 0,
-                0
+                0,
               ],
               l_commitdate: [
                 0,
@@ -148,7 +148,7 @@ export function useGeneratingTestData(): {
                 0,
                 0,
                 0,
-                0
+                0,
               ],
               l_discount: [
                 18,
@@ -180,7 +180,7 @@ export function useGeneratingTestData(): {
                 0,
                 0,
                 0,
-                0
+                0,
               ],
               l_extendedprice: [
                 0,
@@ -212,7 +212,7 @@ export function useGeneratingTestData(): {
                 0,
                 92,
                 19,
-                0
+                0,
               ],
               l_linenumber: [
                 25,
@@ -244,7 +244,7 @@ export function useGeneratingTestData(): {
                 0,
                 0,
                 0,
-                0
+                0,
               ],
               l_linestatus: [
                 0,
@@ -276,7 +276,7 @@ export function useGeneratingTestData(): {
                 0,
                 0,
                 55,
-                0
+                0,
               ],
               l_orderkey: [
                 0,
@@ -308,7 +308,7 @@ export function useGeneratingTestData(): {
                 0,
                 0,
                 22,
-                0
+                0,
               ],
               l_partkey: [
                 0,
@@ -340,7 +340,7 @@ export function useGeneratingTestData(): {
                 0,
                 88,
                 0,
-                26
+                26,
               ],
               l_quantity: [
                 0,
@@ -372,7 +372,7 @@ export function useGeneratingTestData(): {
                 0,
                 0,
                 0,
-                62
+                62,
               ],
               l_receiptdate: [
                 0,
@@ -404,7 +404,7 @@ export function useGeneratingTestData(): {
                 73,
                 0,
                 0,
-                0
+                0,
               ],
               l_returnflag: [
                 0,
@@ -436,7 +436,7 @@ export function useGeneratingTestData(): {
                 62,
                 0,
                 11,
-                0
+                0,
               ],
               l_shipdate: [
                 68,
@@ -468,7 +468,7 @@ export function useGeneratingTestData(): {
                 0,
                 1,
                 0,
-                0
+                0,
               ],
               l_shipinstruct: [
                 0,
@@ -500,7 +500,7 @@ export function useGeneratingTestData(): {
                 0,
                 0,
                 8,
-                0
+                0,
               ],
               l_shipmode: [
                 0,
@@ -532,7 +532,7 @@ export function useGeneratingTestData(): {
                 0,
                 0,
                 0,
-                0
+                0,
               ],
               l_suppkey: [
                 93,
@@ -564,7 +564,7 @@ export function useGeneratingTestData(): {
                 0,
                 0,
                 0,
-                33
+                33,
               ],
               l_tax: [
                 0,
@@ -596,14 +596,14 @@ export function useGeneratingTestData(): {
                 25,
                 0,
                 0,
-                24
-              ]
+                24,
+              ],
             },
             nation: {
               n_comment: [0],
               n_name: [0],
               n_nationkey: [0],
-              n_regionkey: [0]
+              n_regionkey: [0],
             },
             orders: {
               o_clerk: [0, 0, 0, 0, 97, 0, 12, 0],
@@ -614,7 +614,7 @@ export function useGeneratingTestData(): {
               o_orderpriority: [0, 70, 0, 0, 0, 0, 0, 0],
               o_orderstatus: [0, 0, 0, 0, 83, 0, 0, 0],
               o_shippriority: [0, 0, 35, 99, 34, 0, 0, 1],
-              o_totalprice: [0, 0, 0, 0, 0, 0, 0, 33]
+              o_totalprice: [0, 0, 0, 0, 0, 0, 0, 33],
             },
             part: {
               p_brand: [0],
@@ -625,14 +625,14 @@ export function useGeneratingTestData(): {
               p_partkey: [0],
               p_retailsize: [0],
               p_size: [10],
-              p_type: [0]
+              p_type: [0],
             },
             partsupp: {
               ps_availqty: [0, 0, 0, 0],
               ps_comment: [53, 0, 0, 0],
               ps_partkey: [0, 0, 0, 77],
               ps_suppkey: [0, 0, 0, 0],
-              ps_supplycost: [0, 0, 0, 0]
+              ps_supplycost: [0, 0, 0, 0],
             },
             region: { r_comment: [0], r_name: [60], r_regionkey: [76] },
             supplier: {
@@ -642,12 +642,12 @@ export function useGeneratingTestData(): {
               s_name: [0],
               s_nationkey: [0],
               s_phone: [0],
-              s_suppkey: [0]
-            }
-          }
-        }
+              s_suppkey: [0],
+            },
+          },
+        },
       },
-      header: { message: "OK", status: 200 }
+      header: { message: "OK", status: 200 },
     };
   }
 
@@ -671,7 +671,7 @@ export function useGeneratingTestData(): {
             84.7,
             32.6,
             50.8,
-            17.0
+            17.0,
           ],
           memory: {
             active: 3657117696,
@@ -683,8 +683,8 @@ export function useGeneratingTestData(): {
             percent: 32.1,
             shared: 1149366272,
             total: 12469334016,
-            used: 2525601792
-          }
+            used: 2525601792,
+          },
         },
         york: {
           cpu: [
@@ -703,7 +703,7 @@ export function useGeneratingTestData(): {
             48.1,
             86.6,
             36.8,
-            90.3
+            90.3,
           ],
           memory: {
             active: 3657117696,
@@ -715,10 +715,10 @@ export function useGeneratingTestData(): {
             percent: 32.1,
             shared: 1149366272,
             total: 12469334016,
-            used: 2525601792
-          }
-        }
-      }
+            used: 2525601792,
+          },
+        },
+      },
     };
   }
 
@@ -726,6 +726,6 @@ export function useGeneratingTestData(): {
     generateThroughputData,
     generateStorageData,
     generateCPUData,
-    generateAccessData
+    generateAccessData,
   };
 }

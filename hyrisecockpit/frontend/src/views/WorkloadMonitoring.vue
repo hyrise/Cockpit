@@ -44,7 +44,7 @@ import {
   onMounted,
   Ref,
   ref,
-  watch
+  watch,
 } from "@vue/composition-api";
 import { Metric, workloadMetrics } from "../types/metrics";
 import { useMetricEvents } from "../meta/events";
@@ -69,7 +69,7 @@ export default defineComponent({
     LinearLoader,
     DatabaseQueryTables,
     Warning,
-    SelectionList
+    SelectionList,
   },
   setup(props: Props, context: SetupContext): Data {
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
@@ -79,7 +79,7 @@ export default defineComponent({
     watch(databasesUpdated, () => {
       if (databasesUpdated.value) {
         watchedInstances.value = [
-          context.root.$databaseController.availableDatabasesById.value[0]
+          context.root.$databaseController.availableDatabasesById.value[0],
         ];
       }
     });
@@ -91,9 +91,9 @@ export default defineComponent({
     return {
       watchedInstances,
       watchedMetrics: workloadMetrics,
-      ...useSelectionHandling(context, "workload")
+      ...useSelectionHandling(context, "workload"),
     };
-  }
+  },
 });
 </script>
 <style scoped>

@@ -29,7 +29,7 @@ import {
   SetupContext,
   Ref,
   ref,
-  onUnmounted
+  onUnmounted,
 } from "@vue/composition-api";
 import { DetailedQueryInformation } from "@/types/queries";
 import QueryTable from "@/components/queries/QueryTable.vue";
@@ -46,13 +46,13 @@ interface Data {
 
 export default defineComponent({
   components: {
-    QueryTable
+    QueryTable,
   },
   props: {
     selectedDatabases: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   setup(props: Props, context: SetupContext): Data {
     const queryService = useQueryService();
@@ -63,7 +63,7 @@ export default defineComponent({
 
     function updateQueryInformation(): void {
       loading.value = true;
-      queryService.getDetailedQueryInformation().then(queryInfo => {
+      queryService.getDetailedQueryInformation().then((queryInfo) => {
         queries.value = queryInfo;
         loading.value = false;
       });
@@ -77,9 +77,9 @@ export default defineComponent({
 
     return {
       queries,
-      loading
+      loading,
     };
-  }
+  },
 });
 </script>
 <style scoped>
