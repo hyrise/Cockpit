@@ -84,7 +84,7 @@ class TestWorkerPool(object):
         mock_connection_factory = MagicMock()
         mock_connection_factory.create_cursor.return_value = "mock_cursor"
         worker_pool._connection_factory = mock_connection_factory
-        worker_pool._task_queue = "queue"  # type: ignore
+        worker_pool._task_queue = "queue"
         worker_pool._database_id = "database_id"
         worker_pool._continue_execution_flag = "Flag"  # type: ignore
         worker_pool._worker_wait_for_exit_event = "wait for exit event"  # type: ignore
