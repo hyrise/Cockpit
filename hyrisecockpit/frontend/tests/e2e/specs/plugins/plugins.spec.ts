@@ -8,7 +8,7 @@ import {
   assertPlugins,
   assertPluginLog,
   assertPluginSettings,
-  getChangeSettingsSelector
+  getChangeSettingsSelector,
 } from "./helpers";
 import { testElementNoExistence } from "../abstractTests";
 
@@ -82,9 +82,7 @@ describe("When opening the plugins overview", () => {
         cy.get("button")
           .eq(idx + 1)
           .click();
-        cy.get("button")
-          .contains("Plugin log messages")
-          .click();
+        cy.get("button").contains("Plugin log messages").click();
         cy.get("textarea").then((textarea: any) => {
           assertPluginLog(database.id, databasesPluginLogs, textarea[0].value);
         });
@@ -112,7 +110,7 @@ describe("When opening the plugins overview", () => {
             if (pluginData.plugins.includes(plugin)) {
               activePlugins.push({
                 plugin: plugin,
-                idx: idx
+                idx: idx,
               });
             }
             return activePlugins;

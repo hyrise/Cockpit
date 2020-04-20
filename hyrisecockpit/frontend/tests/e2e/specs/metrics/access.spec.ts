@@ -5,7 +5,7 @@ import {
   getSelector,
   getSelectorWithID,
   getDetailsSelectorWithID,
-  assertHeatMapData
+  assertHeatMapData,
 } from "./helpers";
 import { clickContentOfSelect, waitForChartRender } from "../helpers";
 
@@ -137,9 +137,7 @@ describe("visiting the comparison page", () => {
           }
         );
 
-        cy.get(getSelector("closeDetailed"))
-          .eq(idx)
-          .click();
+        cy.get(getSelector("closeDetailed")).eq(idx).click();
         cy.get(getSelectorWithID("firstAccess", database.id)).should(
           "not.be.visible"
         );

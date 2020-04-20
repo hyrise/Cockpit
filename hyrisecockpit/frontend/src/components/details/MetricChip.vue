@@ -24,7 +24,7 @@ import {
   Ref,
   ref,
   computed,
-  watch
+  watch,
 } from "@vue/composition-api";
 import { Database } from "@/types/database";
 import { Metric } from "@/types/metrics";
@@ -47,19 +47,19 @@ export default defineComponent({
   props: {
     metric: {
       type: String,
-      default: null
+      default: null,
     },
     selected: {
       type: Boolean,
-      default: undefined
-    }
+      default: undefined,
+    },
   },
   setup(props: Props, context: SetupContext): Data {
     return {
       getMetricTitle,
-      ...useSelectableItem(context)
+      ...useSelectableItem(context),
     };
-  }
+  },
 });
 </script>
 <style scoped></style>

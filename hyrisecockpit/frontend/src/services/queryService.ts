@@ -33,7 +33,7 @@ export function useQueryService(): {
                   queryNumber: query.query_number,
                   workloadType: getDisplayedFromTransferred(query.benchmark),
                   latency: roundNumber(query.latency, Math.pow(10, 6)),
-                  throughput: query.throughput
+                  throughput: query.throughput,
                 };
               }
             );

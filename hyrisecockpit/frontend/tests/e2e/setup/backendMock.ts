@@ -6,7 +6,7 @@ import {
   getPostAlias,
   getDeleteAlias,
   getResponseStatus,
-  getGetAlias
+  getGetAlias,
 } from "./helpers";
 
 /* backend with mocked routes */
@@ -25,7 +25,7 @@ function getInitialNumbers(
     plugins: 2,
     activated_plugins: 1,
     loaded_benchmarks: 1,
-    ...numbers
+    ...numbers,
   };
 }
 
@@ -42,7 +42,7 @@ export function useBackendMock(
     getMockedResponse,
     getMockedPostCallback,
     getMockedDeleteCallback,
-    renewMocks
+    renewMocks,
   } = useMocks(getInitialNumbers(numbers));
 
   function start(status: BackendState = "up", delay?: number): void {
@@ -166,7 +166,7 @@ export function useBackendMock(
   return {
     restart,
     start,
-    reload
+    reload,
   };
 }
 
@@ -197,7 +197,7 @@ function useRouteMocking(
       url: url,
       status: status,
       response: withBody ? { body: response } : response,
-      delay: delay
+      delay: delay,
     };
   }
 
