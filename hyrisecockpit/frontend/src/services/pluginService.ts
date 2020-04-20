@@ -13,7 +13,7 @@ export function usePluginService(): PluginService {
   const {
     getActivePluginData,
     getPluginLogsData,
-    getPluginSettingsData
+    getPluginSettingsData,
   } = usePluginTransformationSevice();
 
   getPlugins();
@@ -26,12 +26,14 @@ export function usePluginService(): PluginService {
   });
 
   function getPlugins(): void {
-    axios.get(controlBackend + "available_plugins").then(allPluginsResponse => {
-      plugins.value = allPluginsResponse.data;
-      axios.get(controlBackend + "plugin").then(activePluginsResponse => {
-        activePlugins.value = getActivePluginData(activePluginsResponse.data);
+    axios
+      .get(controlBackend + "available_plugins")
+      .then((allPluginsResponse) => {
+        plugins.value = allPluginsResponse.data;
+        axios.get(controlBackend + "plugin").then((activePluginsResponse) => {
+          activePlugins.value = getActivePluginData(activePluginsResponse.data);
+        });
       });
-    });
   }
 
   function updatePlugins(databaseId: string, plugin: string): Promise<void> {
@@ -41,16 +43,16 @@ export function usePluginService(): PluginService {
     if (isActivated) {
       return axios
         .post(controlBackend + "plugin", { id: databaseId, plugin: plugin })
-        .then(response => {
+        .then((response) => {
           getPlugins();
           getPluginSettings();
         });
     } else {
       return axios
         .delete(controlBackend + "plugin", {
-          data: { id: databaseId, plugin: plugin }
+          data: { id: databaseId, plugin: plugin },
         })
-        .then(response => {
+        .then((response) => {
           getPlugins();
           getPluginSettings();
         });
@@ -58,13 +60,13 @@ export function usePluginService(): PluginService {
   }
 
   function getPluginLogs(): Promise<void> {
-    return axios.get(controlBackend + "plugin_log").then(response => {
+    return axios.get(controlBackend + "plugin_log").then((response) => {
       pluginLogs.value = getPluginLogsData(response.data);
     });
   }
 
   function getPluginSettings(): void {
-    axios.get(controlBackend + "plugin_settings").then(response => {
+    axios.get(controlBackend + "plugin_settings").then((response) => {
       pluginSettings.value = getPluginSettingsData(
         response.data.body.plugin_settings
       );
@@ -80,9 +82,9 @@ export function usePluginService(): PluginService {
       .post(controlBackend + "plugin_settings", {
         id: databaseId,
         name: settingId,
-        value: settingValue
+        value: settingValue,
       })
-      .then(response => {
+      .then((response) => {
         getPluginSettings();
       });
   }
@@ -93,6 +95,6 @@ export function usePluginService(): PluginService {
     updatePlugins,
     pluginLogs,
     pluginSettings,
-    updatePluginSettings
+    updatePluginSettings,
   };
 }

@@ -3,7 +3,7 @@ import { getRoute } from "../views/helpers";
 import { getSelector } from "./helpers";
 import {
   assertBarChartData,
-  getDetailsSelectorWithID
+  getDetailsSelectorWithID,
 } from "../metrics/helpers";
 import { waitForChartRender } from "../helpers";
 

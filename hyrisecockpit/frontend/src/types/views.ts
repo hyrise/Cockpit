@@ -18,14 +18,14 @@ export interface ContainerProps {
 export const ContainerPropsValidation = {
   selectedDatabases: {
     type: Array,
-    default: null
+    default: null,
   },
   selectedMetrics: {
     type: Array,
-    default: null
+    default: null,
   },
   showDetails: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 };

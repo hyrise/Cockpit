@@ -4,7 +4,7 @@ import {
   Database,
   DatabaseCPUResponse,
   DatabaseStorageResponse,
-  DatabaseResponse
+  DatabaseResponse,
 } from "@/types/database";
 import { useDatabaseService } from "@/services/databaseService";
 import { ref, reactive, computed } from "@vue/composition-api";
@@ -36,14 +36,14 @@ export function useDatabaseController(): DatabaseController {
 
   function updateDatabases(): void {
     const updatedDatabases: Database[] = [];
-    databaseService.fetchDatabases().then(currentDatabases => {
+    databaseService.fetchDatabases().then((currentDatabases) => {
       databaseService
         .fetchDatabasesCPUInformation()
-        .then(databasesWithCPUInformation => {
+        .then((databasesWithCPUInformation) => {
           databaseService
             .fetchDatabasesStorageInformation()
-            .then(databasesWithStorageInformation => {
-              currentDatabases.forEach(database => {
+            .then((databasesWithStorageInformation) => {
+              currentDatabases.forEach((database) => {
                 updatedDatabases.push(
                   getDatabaseInformation(
                     database,
@@ -65,10 +65,10 @@ export function useDatabaseController(): DatabaseController {
     databasesStorageInformation: DatabaseStorageResponse[]
   ): Database {
     const cpuInformation = databasesCPUInformation.find(
-      object => object.id === database.id
+      (object) => object.id === database.id
     );
     const storageInformation = databasesStorageInformation.find(
-      object => object.id === database.id
+      (object) => object.id === database.id
     );
     return reactive({
       id: database.id,
@@ -78,22 +78,22 @@ export function useDatabaseController(): DatabaseController {
         memoryCapacity: cpuInformation!.memoryCapacity,
         memoryFootprint: storageInformation!.memoryFootprint,
         numberOfCPUs: cpuInformation!.numberOfCPUs,
-        numberOfWorkers: database.numberOfWorkers
+        numberOfWorkers: database.numberOfWorkers,
       },
-      tables: storageInformation!.tables
+      tables: storageInformation!.tables,
     } as Database);
   }
 
   function getDatabaseById(id: string): Database {
-    return databases.value.find(database => database.id === id)!;
+    return databases.value.find((database) => database.id === id)!;
   }
 
   function getDatabasesByIds(ids: string[]): Database[] {
-    return ids.map(id => getDatabaseById(id));
+    return ids.map((id) => getDatabaseById(id));
   }
 
   function updateDatabaseCPUInformation(data: any): void {
-    databaseService.getCPUInformation(data).forEach(cpuInfo => {
+    databaseService.getCPUInformation(data).forEach((cpuInfo) => {
       const database = getDatabaseById(cpuInfo.id);
       if (database.systemDetails.memoryCapacity !== cpuInfo.memoryCapacity)
         database.systemDetails.memoryCapacity = cpuInfo.memoryCapacity;
@@ -104,7 +104,7 @@ export function useDatabaseController(): DatabaseController {
   }
 
   function updateDatabaseStorageInformation(data: any): void {
-    databaseService.getStorageInformation(data).forEach(storageInfo => {
+    databaseService.getStorageInformation(data).forEach((storageInfo) => {
       const database = getDatabaseById(storageInfo.id);
       if (
         database.systemDetails.memoryFootprint !== storageInfo.memoryFootprint
@@ -127,9 +127,9 @@ export function useDatabaseController(): DatabaseController {
   return {
     databasesUpdated,
     availableDatabasesById: computed(() =>
-      databases.value.map(database => database.id)
+      databases.value.map((database) => database.id)
     ),
     getDatabasesByIds,
-    getDatabaseById
+    getDatabaseById,
   };
 }

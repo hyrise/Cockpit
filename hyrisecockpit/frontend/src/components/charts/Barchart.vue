@@ -26,7 +26,7 @@ export default defineComponent({
     function updateChartDatasets(): void {
       Plotly.react(props.graphId, props.data, getLayout(), getOptions());
     }
-  }
+  },
 });
 
 function useBarChartConfiguration(
@@ -40,15 +40,15 @@ function useBarChartConfiguration(
     return {
       xaxis: {
         title: {
-          text: chartConfiguration.xaxis
+          text: chartConfiguration.xaxis,
         },
-        rangemode: "tozero"
+        rangemode: "tozero",
       },
       yaxis: {
         title: {
-          text: chartConfiguration.yaxis
+          text: chartConfiguration.yaxis,
         },
-        rangemode: "tozero"
+        rangemode: "tozero",
       },
       barmode: "stack",
       autosize: true,
@@ -57,10 +57,10 @@ function useBarChartConfiguration(
         r: 40,
         b: 70,
         t: 30,
-        pad: 0
+        pad: 0,
       },
       paper_bgcolor: "rgba(0,0,0,0)",
-      plot_bgcolor: "rgba(0,0,0,0)"
+      plot_bgcolor: "rgba(0,0,0,0)",
     };
   }
 

@@ -51,7 +51,7 @@ const getAliases: Partial<Record<Request, string>> = {
   plugin: "getPlugin",
   plugin_settings: "getPluginSettings",
   plugin_log: "getPluginLog",
-  status: "getDatabaseWorkloadState"
+  status: "getDatabaseWorkloadState",
 };
 
 const postAliases: Partial<Record<Request, string>> = {
@@ -59,19 +59,19 @@ const postAliases: Partial<Record<Request, string>> = {
   data: "loadTables",
   plugin: "activatePlugin",
   plugin_settings: "setPluginSettings",
-  workload: "startWorkload"
+  workload: "startWorkload",
 };
 
 const deleteAliases: Partial<Record<Request, string>> = {
   database: "removeDatabase",
   data: "removeTables",
   plugin: "deactivatePlugin",
-  workload: "stopWorkload"
+  workload: "stopWorkload",
 };
 
 const responseStatus: Record<BackendState, number> = {
   up: 200,
-  down: 500
+  down: 500,
 };
 
 export function getGetAlias(request: Request): string {
@@ -97,15 +97,15 @@ export function fakeDataByIdsWithTimestamps(
   type: string,
   fakeFunction: () => Object
 ): Object[] {
-  return ids.map(id => {
+  return ids.map((id) => {
     return {
       id,
       [type]: [
         {
           timestamp: fakeTimeStamp(),
-          [type]: fakeFunction()
-        }
-      ]
+          [type]: fakeFunction(),
+        },
+      ],
     };
   });
 }
@@ -114,12 +114,12 @@ export function fakeDataByIds(
   ids: string[],
   fakeFunction: (id: string) => Object
 ): Object[] {
-  return ids.map(id => fakeFunction(id));
+  return ids.map((id) => fakeFunction(id));
 }
 
 export function assignFakeData(fakeData: any[]): Object {
   let newData = {};
-  fakeData.forEach(data => {
+  fakeData.forEach((data) => {
     newData = { ...newData, ...data };
   });
   return newData;
@@ -152,7 +152,7 @@ export function generateUniqueRandomNumbers(
   for (let i = 0; i < length; i++) {
     let index = selectRandomItem(available);
     selected.push(index);
-    available = available.filter(item => item !== index);
+    available = available.filter((item) => item !== index);
   }
   return selected;
 }
