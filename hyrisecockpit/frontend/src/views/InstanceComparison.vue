@@ -50,7 +50,7 @@ export default defineComponent({
     MetricsComparisonTable,
     LinearLoader,
     UnselectedWarning,
-    DatabaseSystemDetails
+    DatabaseSystemDetails,
   },
   setup(props: {}, context: SetupContext): MetricViewData {
     return {
