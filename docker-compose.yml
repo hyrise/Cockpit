@@ -39,9 +39,7 @@ services:
         context: .
         dockerfile: ./hyrisecockpit/frontend/Dockerfile
     working_dir: "/usr/local/Cockpit/hyrisecockpit/frontend"
-    command: "serve -s dist"
-    ports:
-      - "8080:8080"
+    command: "npm run deploy"
   
   hyrise:
     image: hyrise:bensk1_multithreaded
