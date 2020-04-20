@@ -47,7 +47,6 @@ class TestSystem:
     def clean_influx(self):
         """Delete Influx databases which were created while executing of the tests."""
         influx_client.drop_database("test_database1")
-        influx_client.drop_database("test_database2")
 
     def check_stderr(self):
         """Check standard error output of the components."""
