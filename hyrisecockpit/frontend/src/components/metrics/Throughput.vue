@@ -6,6 +6,7 @@
       :databases="selectedDatabases"
     />
     <Linechart
+      :pluginEventData="pluginEventData"
       :selected-databases="selectedDatabases"
       :data="data"
       :graph-id="graphId || 'throughput'"
@@ -40,9 +41,12 @@ export default defineComponent({
   name: "Throughput",
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
-  setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
+  setup(props: MetricProps, context: SetupContext): any {
+    const { pluginEventData } = context.root.$pluginService;
+
     return {
-      ...useLineChartComponent(props, context)
+      ...useLineChartComponent(props, context),
+      pluginEventData
     };
   }
 });

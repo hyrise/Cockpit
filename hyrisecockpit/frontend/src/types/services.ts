@@ -25,6 +25,7 @@ export interface PluginService {
     settingId: string,
     settingValue: string
   ) => void;
+  pluginEventData: Ref<any>;
 }
 
 export interface WorkloadService {

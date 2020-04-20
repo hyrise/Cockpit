@@ -8,6 +8,7 @@ import {
   SetupContext,
   onMounted,
   watch,
+  computed,
   inject
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
@@ -34,10 +35,15 @@ export default defineComponent({
       type: Array,
       default: null
     },
+    pluginEventData: {
+      type: Object,
+      default: null
+    },
     ...ChartPropsValidation
   },
   setup(props: Props, context: SetupContext): void {
     const { databasesUpdated } = context.root.$databaseController;
+    const { pluginEventData } = context.root.$pluginService;
     const { updateLayout } = useResizingOnChange(props);
     const multipleDatabasesAllowed = inject<boolean>(
       "multipleDatabasesAllowed",
@@ -51,28 +57,17 @@ export default defineComponent({
       multipleDatabasesAllowed
     );
 
-    eventBus.$on("PLUGIN_ACTIVATED", (pluginInfo: any) => {
-      Plotly.extendTraces(
-        props.graphId,
-        {
-          y: [[props.maxValue + 1]],
-          x: [[formatDateWithoutMilliSec(new Date())]]
-        },
-        [-1]
-      );
-    });
-
-    eventBus.$on("PLUGIN_DEACTIVATED", (pluginInfo: any) => {
-      Plotly.extendTraces(
-        props.graphId,
-        {
-          y: [[props.maxValue + 1]],
-          x: [[formatDateWithoutMilliSec(new Date())]],
-          textinfo: "text",
-        },
-        [-1]
-      );
-    });
+    // eventBus.$on("PLUGIN_DEACTIVATED", (pluginInfo: any) => {
+    //   Plotly.extendTraces(
+    //     props.graphId,
+    //     {
+    //       y: [[props.maxValue + 1]],
+    //       x: [[formatDateWithoutMilliSec(new Date())]],
+    //       textinfo: "text"
+    //     },
+    //     [-1]
+    //   );
+    // });
 
     onMounted(() => {
       Plotly.newPlot(
@@ -88,6 +83,32 @@ export default defineComponent({
         () => {
           if (databasesUpdated.value && multipleDatabasesAllowed) {
             handleDatabaseChange();
+          }
+        }
+      );
+
+      watch(
+        () => props.pluginEventData,
+        () => {
+          if(props.pluginEventData){
+            
+          const currentPluginEventData = props.pluginEventData[props.selectedDatabases[0]];
+          if(currentPluginEventData) {
+            Plotly.restyle(
+              props.graphId,
+              {
+                y: 
+                  currentPluginEventData.timestamps.map(
+                    x => props.maxValue+1
+                  )
+                ,
+                x: currentPluginEventData.timestamps.map(
+                    x => new Date().getTime()
+                  )
+              },
+              [0]
+            );
+          }
           }
         }
       );

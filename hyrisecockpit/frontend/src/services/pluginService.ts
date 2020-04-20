@@ -10,11 +10,13 @@ export function usePluginService(): PluginService {
   const plugins = ref<string[]>([]);
   const activePlugins = ref<string[]>([]);
   const pluginLogs = ref<any>({});
+  const pluginEventData = ref<any>({});
   const pluginSettings = ref<any>({});
   const {
     getActivePluginData,
     getPluginLogsData,
-    getPluginSettingsData
+    getPluginSettingsData,
+    getPluginEventData
   } = usePluginTransformationSevice();
   const {
     emitPluginActivatedEvent,
@@ -67,6 +69,7 @@ export function usePluginService(): PluginService {
   function getPluginLogs(): Promise<void> {
     return axios.get(controlBackend + "plugin_log").then(response => {
       pluginLogs.value = getPluginLogsData(response.data);
+      pluginEventData.value = getPluginEventData(response.data);
     });
   }
 
@@ -100,6 +103,7 @@ export function usePluginService(): PluginService {
     updatePlugins,
     pluginLogs,
     pluginSettings,
-    updatePluginSettings
+    updatePluginSettings,
+    pluginEventData
   };
 }

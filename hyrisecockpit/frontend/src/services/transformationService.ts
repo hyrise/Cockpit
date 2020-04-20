@@ -342,6 +342,29 @@ export function usePluginTransformationSevice(): any {
     }, {});
   }
 
+  function getPluginEventData(data: any): any {
+    return data.reduce((result: any, currentDatabase: any) => {
+      result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
+        (databaseEvents: any, currentLog: any) => {
+          return {
+            timestamps: [
+              ...databaseEvents.timestamps,
+              new Date(parseInt(currentLog.timestamp))
+            ],
+            events: [
+              ...databaseEvents.events,
+              `${currentLog.reporter} [${formatDateToHHMMSS(
+                new Date(parseInt(currentLog.timestamp))
+              )}]: ${currentLog.message}\n`
+            ]
+          };
+        },
+        { timestamps: [], events: [] }
+      );
+      return result;
+    }, {});
+  }
+
   function getPluginSettingsData(data: any): any {
     return data.reduce((result: any, currentDatabase: any) => {
       const allDatabaseSettings =
@@ -370,6 +393,7 @@ export function usePluginTransformationSevice(): any {
   return {
     getActivePluginData,
     getPluginLogsData,
-    getPluginSettingsData
+    getPluginSettingsData,
+    getPluginEventData
   };
 }
