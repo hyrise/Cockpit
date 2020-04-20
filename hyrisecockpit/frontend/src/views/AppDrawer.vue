@@ -1,20 +1,18 @@
 <template>
-  <v-navigation-drawer app fixed width="180">
+  <v-navigation-drawer app fixed width="200" color="grey lighten-3">
     <v-list>
-      <v-list-item two-line class="my-0">
-        <v-list-item-avatar tile class="mt-0 mr-2">
+      <v-list-item dense flat>
+        <v-list-item-avatar tile size="50" class="ml-0 mt-0 mb-4">
           <img src="../../src/assets/images/hyrise_logo.png" />
         </v-list-item-avatar>
-        <v-list-item-content>
-          <v-list-item-title class="body-2 mb-2 font-weight-light"
-            >COCKPIT</v-list-item-title
-          >
-        </v-list-item-content>
+        <img
+          class="mb-1"
+          height="23"
+          src="../../src/assets/images/cockpit_logo.png"
+        />
       </v-list-item>
-
       <v-divider />
-
-      <v-list-item color="#02789D" input-value="true">
+      <v-list-item color="#02789D" input-value="true" dense>
         <v-list-item-content>
           <v-list-item-title class="body-2">Views</v-list-item-title>
         </v-list-item-content>
@@ -28,9 +26,8 @@
           >
         </v-list-item-icon>
       </v-list-item>
-      <v-divider />
 
-      <v-list-item id="overview-button" :to="{ name: 'overview' }">
+      <v-list-item id="overview-button" :to="{ name: 'overview' }" dense>
         <v-list-item-icon class="mr-2">
           <v-icon>mdi-speedometer</v-icon>
         </v-list-item-icon>
@@ -42,37 +39,40 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item id="comparison-button" :to="{ name: 'comparison' }">
+      <v-list-item id="comparison-button" :to="{ name: 'comparison' }" dense>
         <v-list-item-icon class="mr-2">
           <v-icon>mdi-database-search</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>
           <v-list-item-title class="body-2 font-weight-light"
-            >Comparison</v-list-item-title
+            >System Comparison</v-list-item-title
           >
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item id="workload-monitoring-button" :to="{ name: 'workload' }">
+      <v-list-item
+        id="workload-monitoring-button"
+        :to="{ name: 'workload' }"
+        dense
+      >
         <v-list-item-icon class="mr-2">
           <v-icon>mdi-align-vertical-bottom</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>
           <v-list-item-title class="body-2 font-weight-light"
-            >Workload Metrics</v-list-item-title
+            >Workload Analysis</v-list-item-title
           >
         </v-list-item-content>
       </v-list-item>
 
       <v-divider />
-      <v-list-item color="#02789D" input-value="true">
+      <v-list-item color="#02789D" input-value="true" dense>
         <v-list-item-content>
           <v-list-item-title class="body-2">Settings</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-divider />
 
       <v-menu bottom offset-x>
         <template v-slot:activator="{ on: menu }">
@@ -80,6 +80,7 @@
             id="database-list-button"
             v-on="{ ...menu }"
             @click="$emit('closeSelection')"
+            dense
           >
             <v-list-item-icon class="mr-2">
               <v-icon>mdi-database</v-icon>
@@ -90,7 +91,6 @@
               :content="databaseCount"
               offset-y="1"
               offset-x="40"
-              bordered
             >
             </v-badge>
 
@@ -115,6 +115,7 @@
       <v-list-item
         id="workload-generation-button"
         @click="showWorkloadDialog = true"
+        dense
       >
         <v-list-item-icon class="mr-2">
           <v-icon>mdi-account-cog</v-icon>
@@ -137,7 +138,11 @@
         @close="showRemoveDatabaseDialog = false"
       />
 
-      <v-list-item id="plugin-overview-button" @click="$emit('openPlugins')">
+      <v-list-item
+        id="plugin-overview-button"
+        @click="$emit('openPlugins')"
+        dense
+      >
         <v-list-item-icon class="mr-2">
           <v-icon>mdi-alpha-p-box</v-icon>
         </v-list-item-icon>
@@ -150,8 +155,7 @@
       </v-list-item>
     </v-list>
     <v-divider />
-
-    <v-footer absolute class="font-weight-medium">
+    <v-footer absolute class="font-weight-medium mb-1" color="grey lighten-3">
       <v-img
         src="../../src/assets/images/hpi_logo_bw.png"
         max-width="80"
