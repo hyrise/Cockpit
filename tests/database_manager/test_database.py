@@ -5,7 +5,7 @@ from multiprocessing.sharedctypes import Synchronized as ValueType
 from typing import Any, Dict, List, Optional
 from unittest.mock import MagicMock, patch
 
-from psycopg2 import DatabaseError, Error, InterfaceError, pool
+from psycopg2 import DatabaseError, Error, InterfaceError
 from pytest import fixture, mark
 
 from hyrisecockpit.database_manager.database import Database
@@ -42,33 +42,6 @@ def get_fake_tables() -> Dict:
     return fake_dict
 
 
-def get_mocked_pool_cursor(*args) -> MagicMock:
-    """Return fake PoolCursor."""
-    mocked_context_cur: MagicMock = MagicMock()
-    mocked_context_cur.__enter__.return_value = mocked_pool_cur
-    return mocked_context_cur
-
-
-def reset_mocked_pool_cursor() -> None:
-    """Reset mocked pool cursor."""
-    global mocked_pool_cur
-    mocked_pool_cur = MagicMock()
-    mocked_pool_cur.fetchall.return_value = []
-
-
-def get_fake_pool_cursor_with_rows_to_return(connection_pool: pool) -> MagicMock:
-    """Return fake PoolCursor with return value for fetch all."""
-    mocked_context_cur: MagicMock = MagicMock()
-    mocked_cur: MagicMock = MagicMock()
-    mocked_cur.execute.return_value = None
-    mocked_cur.fetchall.return_value = [
-        ("Hildegunst von Mythenmetz", "Lindwurm", "sprachliche Begabung",),
-        ("Rumo von Zamonien", "Wolpertinger", "gute Schachspieler und gute Kämpfer",),
-    ]
-    mocked_context_cur.__enter__.return_value = mocked_cur
-    return mocked_context_cur
-
-
 def get_fake_background_job_manager(*args) -> MagicMock:
     """Return fake  BackgroundJobManager."""
     mocked_job_manager: MagicMock = MagicMock()
@@ -86,7 +59,7 @@ class TestDatabase(object):
         get_fake_background_job_manager,
     )
     @patch("hyrisecockpit.database_manager.database.WorkerPool", MagicMock())
-    @patch("hyrisecockpit.database_manager.database.Driver", MagicMock())
+    @patch("hyrisecockpit.database_manager.database.ConnectionFactory", MagicMock())
     @patch(
         "hyrisecockpit.database_manager.database.Database.create_empty_loaded_tables",
         MagicMock(),
@@ -118,7 +91,6 @@ class TestDatabase(object):
         assert database._id == database_id
         assert database.number_workers == number_workers
         assert database._default_tables == default_tables
-        assert type(database._number_additional_connections) is int
         assert type(database._database_blocked) is ValueType
         assert type(database._hyrise_active) is ValueType
         assert database._hyrise_active.value
@@ -467,53 +439,69 @@ class TestDatabase(object):
         assert type(result) is bool
         assert not result
 
-    @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
-    )
     def test_gets_plugins_when_database_unblocked_and_no_plugins_exists(
         self, database: Database
     ) -> None:
         """Test get not existing plug-ins."""
+        mock_cursor = MagicMock()
+        mock_cursor.fetchall.return_value = []
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        database._connection_factory = mock_connection_factory
         database._database_blocked.value = False
+
         result: Optional[List] = database.get_plugins()
 
-        global mocked_pool_cur
-        mocked_pool_cur.execute.assert_called_once_with(
+        mock_cursor.execute.assert_called_once_with(
             ("SELECT name FROM meta_plugins;"), None
         )
         assert type(result) is list
         assert result == []
 
-        reset_mocked_pool_cursor()
-
-    @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
-    )
     def test_gets_plugins_when_database_blocked(self, database: Database) -> None:
         """Test get plug-ins when database is blocked."""
+        mock_cursor = MagicMock()
+        mock_cursor.fetchall.return_value = []
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        database._connection_factory = mock_connection_factory
         database._database_blocked.value = True
+
         result: Optional[List] = database.get_plugins()
 
-        assert not result
+        assert result is None
+        mock_cursor.fetchall.assert_not_called()
 
-    @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor",
-        get_fake_pool_cursor_with_rows_to_return,
-    )
     def test_gets_plugins_when_database_unblocked_and_plugins_exists(
         self, database: Database
     ) -> None:
         """Test get existing plug-ins."""
+        mock_cursor = MagicMock()
+        mock_cursor.fetchall.return_value = [
+            ("Hildegunst von Mythenmetz", "Lindwurm", "sprachliche Begabung",),
+            (
+                "Rumo von Zamonien",
+                "Wolpertinger",
+                "gute Schachspieler und gute Kämpfer",
+            ),
+        ]
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        database._connection_factory = mock_connection_factory
         database._database_blocked.value = False
+
         expected: List[str] = ["Hildegunst von Mythenmetz", "Rumo von Zamonien"]
         result: Optional[List] = database.get_plugins()
 
         assert type(result) is list
         assert Counter(result) == Counter(expected)
 
-    @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
-    )
     @mark.parametrize(
         "exceptions", [DatabaseError(), InterfaceError()],
     )
@@ -526,27 +514,34 @@ class TestDatabase(object):
             """Throw exception."""
             raise exceptions
 
-        global mocked_pool_cur
-        mocked_pool_cur.execute.side_effect = raise_exception
+        mock_cursor = MagicMock()
+        mock_cursor.execute.side_effect = raise_exception
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        database._connection_factory = mock_connection_factory
         database._database_blocked.value = False
+
         result: Optional[List] = database.get_plugins()
 
         assert result is None
 
-        mocked_pool_cur = MagicMock()
-
-    @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
-    )
     def test_sets_plugin_setting_when_database_is_unblocked(
         self, database: Database
     ) -> None:
         """Test set plug-in setting while the database is not blocked."""
+        mock_cursor = MagicMock()
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        database._connection_factory = mock_connection_factory
         database._database_blocked.value = False
+
         result: bool = database.set_plugin_setting("M. böslich", "Eiskaltius")
 
-        global mocked_pool_cur
-        mocked_pool_cur.execute.assert_called_once_with(
+        mock_cursor.execute.assert_called_once_with(
             "UPDATE meta_settings SET value=%s WHERE name=%s;",
             ("Eiskaltius", "M. böslich",),
         )
@@ -554,29 +549,25 @@ class TestDatabase(object):
         assert type(result) is bool
         assert result
 
-        reset_mocked_pool_cursor()
-
-    @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
-    )
     def test_set_plugin_settings_when_database_blocked(
         self, database: Database
     ) -> None:
         """Test set plug-in setting while the database is blocked."""
+        mock_cursor = MagicMock()
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        database._connection_factory = mock_connection_factory
         database._database_blocked.value = True
+
         result: bool = database.set_plugin_setting("Eiskaltius", "M. böslich")
 
-        global mocked_pool_cur
-        mocked_pool_cur.execute.assert_not_called()
+        mock_cursor.execute.assert_not_called()
 
         assert type(result) is bool
         assert not result
 
-        reset_mocked_pool_cursor()
-
-    @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
-    )
     @mark.parametrize(
         "exceptions", [DatabaseError(), InterfaceError()],
     )
@@ -589,61 +580,80 @@ class TestDatabase(object):
             """Throw exception."""
             raise exceptions
 
-        global mocked_pool_cur
-        mocked_pool_cur.execute.side_effect = raise_exception
+        mock_cursor = MagicMock()
+        mock_cursor.side_effect = raise_exception
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        database._connection_factory = mock_connection_factory
+        database._database_blocked.value = True
+
+        mock_cursor.execute.side_effect = raise_exception
         database._database_blocked.value = False
         result: bool = database.set_plugin_setting("Eiskaltius", "M. böslich")
 
         assert not result
 
-        mocked_pool_cur = MagicMock()
-
-    @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
-    )
     def test_gets_plugins_settings_when_database_unblocked_and_no_plugins_exists(
         self, database: Database
     ) -> None:
         """Test get not existing plug-ins settings."""
+        mock_cursor = MagicMock()
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        database._connection_factory = mock_connection_factory
         database._database_blocked.value = False
+
         result: Optional[List] = database.get_plugin_setting()
 
-        global mocked_pool_cur
-        mocked_pool_cur.execute.assert_called_once_with(
+        mock_cursor.execute.assert_called_once_with(
             "SELECT name, value, description FROM meta_settings;", None
         )
 
         assert type(result) is list
         assert result == []
 
-        reset_mocked_pool_cursor()
-
-    @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
-    )
     def test_gets_plugins_settings_when_database_blocked(
         self, database: Database
     ) -> None:
         """Test get plug-ins settings when database is blocked."""
+        mock_cursor = MagicMock()
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        database._connection_factory = mock_connection_factory
         database._database_blocked.value = True
+
         result: Optional[List] = database.get_plugin_setting()
 
-        global mocked_pool_cur
-        mocked_pool_cur.execute.assert_not_called()
+        mock_cursor.execute.assert_not_called()
 
         assert not result
 
-        reset_mocked_pool_cursor()
-
-    @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor",
-        get_fake_pool_cursor_with_rows_to_return,
-    )
     def test_gets_plugins_settings_when_database_unblocked_and_plugins_exists(
         self, database: Database
     ) -> None:
         """Test get existing plug-ins settings."""
+        mock_cursor = MagicMock()
+        mock_cursor.fetchall.return_value = [
+            ("Hildegunst von Mythenmetz", "Lindwurm", "sprachliche Begabung"),
+            (
+                "Rumo von Zamonien",
+                "Wolpertinger",
+                "gute Schachspieler und gute Kämpfer",
+            ),
+        ]
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        database._connection_factory = mock_connection_factory
         database._database_blocked.value = False
+
         expected_plugin_one: Dict[str, str] = {
             "name": "Hildegunst von Mythenmetz",
             "value": "Lindwurm",
@@ -661,9 +671,6 @@ class TestDatabase(object):
         assert type(result) is list
         assert result[:] == expected[:]  # type: ignore
 
-    @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
-    )
     @mark.parametrize(
         "exceptions", [DatabaseError(), InterfaceError()],
     )
@@ -676,24 +683,31 @@ class TestDatabase(object):
             """Throw exception."""
             raise exceptions
 
-        global mocked_pool_cur
-        mocked_pool_cur.execute.side_effect = raise_exception
+        mock_cursor = MagicMock()
+        mock_cursor.execute.side_effect = raise_exception
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        database._connection_factory = mock_connection_factory
         database._database_blocked.value = False
+
         result: Optional[List[Any]] = database.get_plugin_setting()
 
         assert result is None
 
-        reset_mocked_pool_cursor()
-
-    @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
-    )
     def test_executes_sql_query(self, database: Database) -> None:
         """Test execute sql query."""
+        mock_cursor = MagicMock()
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        database._connection_factory = mock_connection_factory
         database._database_blocked.value = False
+
         database._id = "Identification?"
-        global mocked_pool_cur
-        mocked_pool_cur.fetchall.return_value = [
+        mock_cursor.fetchall.return_value = [
             (
                 "I'm planning to make a film series on databases",
                 "I've got the first part ready, but I can't think of a SQL.",
@@ -701,10 +715,7 @@ class TestDatabase(object):
                 42,
             )
         ]
-        mocked_pool_cur.cur.description = (
-            ("bad", "encoding",),
-            ("joke", "encoding",),
-        )
+        mock_cursor.fetch_column_names.return_value = ["bad", "joke"]
 
         expected = {
             "id": "Identification?",
@@ -725,11 +736,6 @@ class TestDatabase(object):
 
         assert expected == result
 
-        reset_mocked_pool_cursor()
-
-    @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
-    )
     def test_executes_sql_query_with_throwing_exception(
         self, database: Database
     ) -> None:
@@ -739,10 +745,17 @@ class TestDatabase(object):
             """Throw exception."""
             raise Error
 
+        mock_cursor = MagicMock()
+        mock_cursor.side_effect = raise_exception
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        database._connection_factory = mock_connection_factory
         database._database_blocked.value = False
+
         database._id = "Identification?"
-        global mocked_pool_cur
-        mocked_pool_cur.execute.side_effect = raise_exception
+        mock_cursor.execute.side_effect = raise_exception
 
         expected = {
             "id": "Identification?",
@@ -756,24 +769,22 @@ class TestDatabase(object):
 
         assert expected == result
 
-        reset_mocked_pool_cursor()
-
-    @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
-    )
     def test_executes_sql_query_while_database_is_blocked(
         self, database: Database
     ) -> None:
         """Test execute sql query while database is blocked."""
-        global mocked_pool_cur
-
+        mock_cursor = MagicMock()
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        database._connection_factory = mock_connection_factory
         database._database_blocked.value = True
+
         result = database.execute_sql_query("SELECT funny FROM not_funny")
 
         assert result is None
-        mocked_pool_cur.execute.assert_not_called()
-
-        reset_mocked_pool_cursor()
+        mock_cursor.execute.assert_not_called()
 
     def test_closes_database(self, database: Database) -> None:
         """Test closing of database."""
@@ -781,15 +792,45 @@ class TestDatabase(object):
         mocked_worker_pool.terminate.return_value = None
         mocked_background_scheduler: MagicMock = MagicMock()
         mocked_background_scheduler.close.return_value = None
-        mocked_connection_pool: MagicMock = MagicMock()
-        mocked_connection_pool.closeall.return_value = None
 
         database._worker_pool = mocked_worker_pool
         database._background_scheduler = mocked_background_scheduler
-        database._connection_pool = mocked_connection_pool
-
         database.close()
 
         mocked_worker_pool.terminate.assert_called_once()
         mocked_background_scheduler.close.assert_called_once()
-        mocked_connection_pool.closeall.assert_called_once()
+
+    @patch("hyrisecockpit.database_manager.database.StorageCursor")
+    def test_initializes_influx(
+        self, mock_storage_cursor_constructor: MagicMock, database: Database
+    ) -> None:
+        """Test intialization of the corresponding influx database."""
+        mock_storage_cursor = MagicMock()
+        mock_storage_cursor.create_database.return_value = None
+        mock_storage_cursor.drop_database.return_value = None
+        mock_storage_cursor.create_continuous_query.return_value = None
+        mock_storage_cursor_constructor.return_value.__enter__.return_value = (
+            mock_storage_cursor
+        )
+
+        throughput_query = """SELECT count("latency") AS "throughput"
+                INTO "throughput"
+                FROM "successful_queries"
+                GROUP BY time(1s)"""
+        latency_query = """SELECT mean("latency") AS "latency"
+                INTO "latency"
+                FROM "successful_queries"
+                GROUP BY time(1s)"""
+        resample_options = "EVERY 1s FOR 5s"
+
+        database._initialize_influx()
+
+        mock_storage_cursor_constructor.assert_called_once()
+        mock_storage_cursor.drop_database.assert_called_once()
+        mock_storage_cursor.create_database.assert_called_once()
+        mock_storage_cursor.create_continuous_query.assert_any_call(
+            "throughput_calculation", throughput_query, resample_options
+        )
+        mock_storage_cursor.create_continuous_query.assert_any_call(
+            "latency_calculation", latency_query, resample_options
+        )

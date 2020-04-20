@@ -8,5 +8,7 @@
     "testFiles": "*/*spec.ts",
     "video": false,
     "videoUploadOnPasses": false,
-    "videosFolder": "tests/e2e/videos"
+    "videosFolder": "tests/e2e/videos",
+    "viewportWidth": 2000,
+    "viewportHeight": 1400
 }

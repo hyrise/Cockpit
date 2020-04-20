@@ -4,15 +4,15 @@ import {
   getGetAlias,
   getPostAlias,
   getDeleteAlias,
-  generateRandomInt
+  generateRandomInt,
 } from "../../setup/helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
 import {
   getSelector,
-  assertCorrectActivePlugins,
+  assertActivePlugins,
   getChangeSettingsSelector,
   assertRequestValues,
-  assertSettingsRequestValues
+  assertSettingsRequestValues,
 } from "./helpers";
 
 let backend = useBackendMock({ plugins: 3 });
@@ -23,29 +23,23 @@ let databasesActivePlugins: any = [];
 let databasesPluginLogs: any = [];
 let databasesPluginSettings: any = [];
 
-describe("When observing the plugins overview", () => {
+// test plugins overview
+describe("When opening the plugins overview", () => {
   beforeEach(() => {
-    backend.start();
-    cy.visit("/");
-    cy.wait("@" + getGetAlias("database"));
-    cy.get("@" + getGetAlias("database")).should((xhr: any) => {
+    cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
-    });
-    cy.wait("@" + getGetAlias("available_plugins"));
-    cy.get("@" + getGetAlias("available_plugins")).should((xhr: any) => {
-      availablePlugins = xhr.response.body;
-    });
-    cy.wait("@" + getGetAlias("plugin"));
-    cy.get("@" + getGetAlias("plugin")).should((xhr: any) => {
-      databasesActivePlugins = xhr.response.body;
-    });
-    cy.wait("@" + getGetAlias("plugin_log"));
-    cy.get("@" + getGetAlias("plugin_log")).should((xhr: any) => {
-      databasesPluginLogs = xhr.response.body;
-    });
-    cy.wait("@" + getGetAlias("plugin_settings"));
-    cy.get("@" + getGetAlias("plugin_settings")).should((xhr: any) => {
-      databasesPluginSettings = xhr.response.body.body.plugin_settings;
+      cy.setupData("available_plugins").then((xhr: any) => {
+        availablePlugins = xhr.response.body;
+        cy.setupData("plugin").then((xhr: any) => {
+          databasesActivePlugins = xhr.response.body;
+          cy.setupData("plugin_log").then((xhr: any) => {
+            databasesPluginLogs = xhr.response.body;
+            cy.setupData("plugin_settings").then((xhr: any) => {
+              databasesPluginSettings = xhr.response.body.body.plugin_settings;
+            });
+          });
+        });
+      });
     });
   });
 
@@ -90,7 +84,7 @@ describe("When observing the plugins overview", () => {
           cy.wait("@" + getGetAlias("plugin"));
           cy.get("@" + getGetAlias("plugin")).should((xhr: any) => {
             databasesActivePlugins = xhr.response.body;
-            assertCorrectActivePlugins(
+            assertActivePlugins(
               database.id,
               availablePlugins,
               databasesActivePlugins
@@ -104,6 +98,7 @@ describe("When observing the plugins overview", () => {
       });
     });
   });
+
   // test deactivate plugin
   describe("and deactivate a new plugin", () => {
     it("will show this plugin as deactivated", () => {
@@ -145,7 +140,7 @@ describe("When observing the plugins overview", () => {
           cy.wait("@" + getGetAlias("plugin"));
           cy.get("@" + getGetAlias("plugin")).should((xhr: any) => {
             databasesActivePlugins = xhr.response.body;
-            assertCorrectActivePlugins(
+            assertActivePlugins(
               database.id,
               availablePlugins,
               databasesActivePlugins
@@ -159,6 +154,7 @@ describe("When observing the plugins overview", () => {
       });
     });
   });
+
   // test change plugin setting
   describe("and change settings of a active plugin", () => {
     it("will change the settings value", () => {
@@ -182,7 +178,7 @@ describe("When observing the plugins overview", () => {
                 activePlugins.push({
                   plugin: plugin,
                   idx: idx,
-                  name: pluginSetting.name
+                  name: pluginSetting.name,
                 });
               }
               return activePlugins;
@@ -193,9 +189,7 @@ describe("When observing the plugins overview", () => {
             .eq(idx + 1)
             .click();
           cy.get(getChangeSettingsSelector(activePlugins[0].plugin)).click();
-          cy.get(getSelector("settingValue"))
-            .clear()
-            .type(newValue.toString());
+          cy.get(getSelector("settingValue")).clear().type(newValue.toString());
           cy.get(getSelector("saveSettingsButton")).click();
           cy.wait("@" + getPostAlias("plugin_settings"));
           cy.get("@" + getPostAlias("plugin_settings")).should((xhr: any) => {

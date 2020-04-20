@@ -5,7 +5,8 @@ import {
   generateRandomInt,
   generateRandomNumbers,
   generateUniqueRandomNumbers,
-  benchmarks
+  getNanoSeconds,
+  benchmarks,
 } from "./helpers";
 
 /* factories to fake all request data */
@@ -17,14 +18,20 @@ type Database = {
   dbname: string;
 };
 
+// TIME
+
+export function fakeTimeStamp(): number {
+  return getNanoSeconds(new Date());
+}
+
 // IDS
 
-export function fakeId(prefix: string): string {
-  return prefix + faker.random.uuid();
+export function fakeId(prefix: string, key: number): string {
+  return `${prefix}-${key}`;
 }
 
 export function fakeIds(length: number, prefix: string = ""): string[] {
-  return [...Array(length).keys()].map(() => fakeId(prefix));
+  return [...Array(length).keys()].map((key) => fakeId(prefix, key));
 }
 
 // DATABASES
@@ -36,37 +43,35 @@ export function fakeDatabaseData(
   if (predefined)
     return {
       id: databaseId,
-      ...predefined
+      ...predefined,
     };
   return {
     id: databaseId,
     host: faker.random.word(),
     port: faker.random.number().toString(),
     number_workers: faker.random.number(),
-    dbname: faker.database.engine()
+    dbname: faker.database.engine(),
   };
 }
 
 // SYSTEM DATA
 
-export function fakeDatabaseSystemData(databaseId: string): Object {
-  const systemData: any = {};
-  systemData[databaseId] = {
+export function fakeDatabaseSystemData(): Object {
+  return {
     cpu: {
       cpu_system_usage: generateRandomFloat(0, 100),
       cpu_process_usage: generateRandomFloat(0, 100),
       cpu_count: faker.random.number(),
-      cpu_clock_speed: faker.random.number()
+      cpu_clock_speed: faker.random.number(),
     },
     memory: {
       free: generateRandomInt(Math.pow(10, 8), Math.pow(10, 8)),
       used: generateRandomInt(Math.pow(10, 8), Math.pow(10, 8)),
       total: generateRandomInt(Math.pow(10, 9), Math.pow(10, 10)),
-      percent: generateRandomFloat(0, 100)
+      percent: generateRandomFloat(0, 100),
     },
-    database_threads: faker.random.number()
+    database_threads: faker.random.number(),
   };
-  return systemData;
 }
 
 // STORAGE DATA
@@ -74,7 +79,8 @@ export function fakeDatabaseSystemData(databaseId: string): Object {
 function fakeEncodingData(): Object {
   return {
     amount: faker.random.number(),
-    compression: [faker.random.word()]
+    compression: [faker.random.word()],
+    name: faker.random.word(),
   };
 }
 
@@ -83,7 +89,7 @@ function fakeColumnStorageData(columnId: string): Object {
   storageData[columnId] = {
     size: faker.random.number(),
     data_type: faker.database.type(),
-    encoding: [fakeEncodingData()]
+    encoding: [fakeEncodingData()],
   };
   return storageData;
 }
@@ -93,7 +99,7 @@ function fakeTableStorageData(tableId: string, columnIds: string[]): Object {
   storageData[tableId] = {
     size: faker.random.number(),
     number_columns: columnIds.length,
-    data: assignFakeData(columnIds.map(id => fakeColumnStorageData(id)))
+    data: assignFakeData(columnIds.map((id) => fakeColumnStorageData(id))),
   };
   return storageData;
 }
@@ -105,17 +111,15 @@ export function fakeDatabaseStorageData(
 ): Object {
   const storageData: any = {};
   storageData[databaseId] = assignFakeData(
-    tableIds.map(id => fakeTableStorageData(id, columnIds))
+    tableIds.map((id) => fakeTableStorageData(id, columnIds))
   );
   return storageData;
 }
 
 // GENERIC NUMBER DATA
 
-export function fakeNumberData(databaseId: string): Object {
-  const data: any = {};
-  data[databaseId] = faker.random.number();
-  return data;
+export function fakeNumberData(): Object {
+  return faker.random.number();
 }
 
 // QUERY TYPE PROPORTION DATA
@@ -125,7 +129,7 @@ function fakeQueryTypeProportion(): Object {
     SELECT: generateRandomInt(0, 100),
     INSERT: generateRandomInt(0, 100),
     UPDATE: generateRandomInt(0, 100),
-    DELETE: generateRandomInt(0, 100)
+    DELETE: generateRandomInt(0, 100),
   };
 }
 
@@ -133,7 +137,7 @@ export function fakeKruegerData(datebaseId: string): Object {
   return {
     id: datebaseId,
     executed: fakeQueryTypeProportion(),
-    generated: fakeQueryTypeProportion()
+    generated: fakeQueryTypeProportion(),
   };
 }
 
@@ -155,7 +159,7 @@ function fakeTableChunksData(
 ): Object {
   const data: any = {};
   data[tableId] = assignFakeData(
-    columnIds.map(id => fakeColumnChunksData(id, numberOfChunks))
+    columnIds.map((id) => fakeColumnChunksData(id, numberOfChunks))
   );
   return data;
 }
@@ -168,7 +172,7 @@ export function fakeDatabaseChunksData(
 ): Object {
   const data: any = {};
   data[databaseId] = assignFakeData(
-    tableIds.map(id => fakeTableChunksData(id, columnIds, numberOfChunks))
+    tableIds.map((id) => fakeTableChunksData(id, columnIds, numberOfChunks))
   );
   return data;
 }
@@ -178,9 +182,9 @@ export function fakeDatabaseChunksData(
 function fakeQueryInformationData(latency: number): Object {
   return {
     benchmark: benchmarks[generateRandomInt(0, benchmarks.length)],
-    query_number: faker.random.number(),
-    throughput: faker.random.number(),
-    latency: latency
+    query_number: latency / Math.pow(10, 3),
+    throughput: generateRandomInt(0, 100),
+    latency: latency,
   };
 }
 
@@ -197,7 +201,7 @@ export function fakeDatabaseQueryInformationData(
     id: databaseId,
     query_information: [...Array(numberOfQueries).keys()].map((idx: number) =>
       fakeQueryInformationData(latencyData[idx] * Math.pow(10, 6))
-    )
+    ),
   };
 }
 
@@ -220,7 +224,7 @@ function fakePluginSetting(plugin: string): PluginSetting {
   return {
     name: plugin + "Plugin_" + faker.random.word(),
     value: faker.random.number(),
-    description: faker.random.words()
+    description: faker.random.words(),
   };
 }
 
@@ -230,7 +234,7 @@ export function fakeDatabasePluginSettings(
 ): Object {
   return {
     id: databaseId,
-    plugin_settings: plugins.map(plugin => fakePluginSetting(plugin))
+    plugin_settings: plugins.map((plugin) => fakePluginSetting(plugin)),
   };
 }
 
@@ -238,7 +242,7 @@ function fakePluginLog(pluginId: string): Object {
   return {
     timestamp: faker.date.past().getTime(),
     reporter: pluginId,
-    message: faker.random.words()
+    message: faker.random.words(),
   };
 }
 
@@ -248,6 +252,23 @@ export function fakeDatabasePluginLogs(
 ): Object {
   return {
     id: databaseId,
-    plugin_log: pluginIds.map(id => fakePluginLog(id))
+    plugin_log: pluginIds.map((id) => fakePluginLog(id)),
+  };
+}
+
+// WORKLOADS
+
+export function fakeDatabaseStatusData(
+  databaseId: string,
+  loadedBenchmarks: string[],
+  state: boolean
+): Object {
+  return {
+    id: databaseId,
+    hyrise_active: true,
+    database_blocked_status: false,
+    worker_pool_status: state ? "running" : "",
+    loaded_benchmarks: loadedBenchmarks,
+    loaded_tables: [],
   };
 }

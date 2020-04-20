@@ -12,7 +12,8 @@ export type Metric =
   | "ram"
   | "queueLength"
   | "executedQueryTypeProportion"
-  | "generatedQueryTypeProportion";
+  | "generatedQueryTypeProportion"
+  | "memoryFootprint";
 
 export interface MetricController {
   data: Record<Metric, Ref<any>>;
@@ -30,7 +31,8 @@ export const availableMetrics: Metric[] = [
   "ram",
   "queueLength",
   "executedQueryTypeProportion",
-  "generatedQueryTypeProportion"
+  "generatedQueryTypeProportion",
+  "memoryFootprint",
 ];
 
 export const instanceMetrics: Metric[] = ["storage", "access"];
@@ -41,16 +43,18 @@ export const comparisonMetrics: Metric[] = [
   "queueLength",
   "cpu",
   "ram",
+  "memoryFootprint",
   "storage",
   "access",
-  "executedQueryTypeProportion"
+  "executedQueryTypeProportion",
 ];
 export const overviewMetrics: Metric[] = [
   "throughput",
   "latency",
   "queueLength",
   "cpu",
-  "ram"
+  "ram",
+  "memoryFootprint",
 ];
 
 export const workloadMetrics: Metric[] = ["generatedQueryTypeProportion"];
@@ -77,6 +81,7 @@ export interface MetricMetadata {
   requestTime: number;
   dataType: DataType;
   staticAxesRange?: AxesRange;
+  historic: boolean;
 }
 
 export interface ComparisonMetricData {
@@ -97,24 +102,24 @@ export interface MetricProps {
 export const MetricPropsValidation = {
   metric: {
     type: String,
-    default: null
+    default: null,
   },
   selectedDatabases: {
     type: Array,
-    default: null
+    default: null,
   },
   showDetails: {
     type: Boolean,
-    default: null
+    default: null,
   },
   graphId: {
     type: String,
-    default: null
+    default: null,
   },
   maxChartWidth: {
     type: Number,
-    default: 0
-  }
+    default: 0,
+  },
 };
 
 export type ChartConfiguration = {

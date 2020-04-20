@@ -2,38 +2,34 @@ version: "3.5"
 
 services:
   backend:
-    image: cockpit:3.8.2
-    build: .
-    working_dir: /usr/local/Cockpit
+    image: cockpit-backend:3.8.2
+    build: 
+      context: .
+      dockerfile: ./hyrisecockpit/api/Dockerfile
     command: "cockpit-backend"
     volumes:
       - .:/usr/local/Cockpit
-    ports:
-      - "8000:8000"
 
   manager:
-    image: cockpit:3.8.2
-    working_dir: /usr/local/Cockpit
+    image: cockpit-manager:3.8.2
+    build: 
+      context: .
+      dockerfile: ./hyrisecockpit/database_manager/Dockerfile
     command: "cockpit-manager"
     volumes:
       - .:/usr/local/Cockpit
-    ports:
-      - "8001:8001"
-
+    
   generator:
-    image: cockpit:3.8.2
-    working_dir: /usr/local/Cockpit
+    image: cockpit-generator:3.8.2
+    build: 
+      context: .
+      dockerfile: ./hyrisecockpit/workload_generator/Dockerfile
     command: "cockpit-generator"
     volumes:
       - .:/usr/local/Cockpit
-    ports:
-      - "8002:8002"
-      - "8003:8003"
-      
+          
   influxdb:
     image: influxdb:alpine
-    volumes:
-      - /tmp/cockpit/influxdb:/var/lib/influxdb
     ports:
       - "8086:8086"
 
@@ -42,11 +38,8 @@ services:
     build:
         context: .
         dockerfile: ./hyrisecockpit/frontend/Dockerfile
-    command: "npm run serve"
-    volumes:
-      - ./hyrisecockpit/frontend:/usr/local/Cockpit/hyrisecockpit/frontend
-    ports:
-      - "8080:8080"
+    working_dir: "/usr/local/Cockpit/hyrisecockpit/frontend"
+    command: "npm run deploy"
   
   hyrise:
     image: hyrise:bensk1_multithreaded

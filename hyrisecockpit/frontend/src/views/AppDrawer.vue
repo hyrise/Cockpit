@@ -168,7 +168,7 @@ import {
   defineComponent,
   ref,
   Ref,
-  computed
+  computed,
 } from "@vue/composition-api";
 import AddDatabase from "@/components/databases/AddDatabase.vue";
 import RemoveDatabase from "@/components/databases/RemoveDatabase.vue";
@@ -191,7 +191,7 @@ export default defineComponent({
     WorkloadGeneration,
     AddDatabase,
     AvailableDatabasesList,
-    RemoveDatabase
+    RemoveDatabase,
   },
   setup(props: {}, context: SetupContext): Data {
     const showRemoveDatabaseDialog = ref(false);
@@ -209,9 +209,9 @@ export default defineComponent({
         context.root.$databaseController.availableDatabasesById.value.length.toString()
       ),
       handleDatabaseDeletion,
-      removedDatabaseId
+      removedDatabaseId,
     };
-  }
+  },
 });
 </script>
 <style scoped>

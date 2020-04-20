@@ -6,7 +6,7 @@ import {
   MetricValueStateOrder,
   MetricDetailsConfiguration,
   ChartConfiguration,
-  DataType
+  DataType,
 } from "@/types/metrics";
 import { useDataTransformation } from "@/services/transformationService";
 import { colorDefinition } from "./colors";
@@ -20,7 +20,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "chunks",
     component: "Access",
     requestTime: 5000,
-    dataType: "interval"
+    dataType: "interval",
+    historic: false,
   },
   cpu: {
     fetchType: "modify",
@@ -30,9 +31,10 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     component: "CPU",
     requestTime: 1000,
     dataType: "interval",
+    historic: true,
     staticAxesRange: {
-      y: { max: 100 }
-    }
+      y: { max: 100 },
+    },
   },
   latency: {
     fetchType: "modify",
@@ -41,7 +43,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "latency",
     component: "Latency",
     requestTime: 1000,
-    dataType: "interval"
+    dataType: "interval",
+    historic: true,
   },
   executedQueryTypeProportion: {
     fetchType: "read",
@@ -50,7 +53,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "krueger_data",
     component: "QueryTypeProportion",
     requestTime: 5000,
-    dataType: "interval"
+    dataType: "interval",
+    historic: false,
   },
   generatedQueryTypeProportion: {
     fetchType: "read",
@@ -61,7 +65,18 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "krueger_data",
     component: "QueryTypeProportion",
     requestTime: 5000,
-    dataType: "interval"
+    dataType: "interval",
+    historic: false,
+  },
+  memoryFootprint: {
+    fetchType: "modify",
+    transformationService: useDataTransformation("memoryFootprint"),
+    base: "storage",
+    endpoint: monitorBackend + "storage",
+    component: "MemoryFootprint",
+    requestTime: 1000,
+    dataType: "interval",
+    historic: true,
   },
   queueLength: {
     fetchType: "modify",
@@ -70,7 +85,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "queue_length",
     component: "QueueLength",
     requestTime: 1000,
-    dataType: "interval"
+    dataType: "interval",
+    historic: true,
   },
   ram: {
     fetchType: "modify",
@@ -80,9 +96,10 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     component: "RAM",
     requestTime: 1000,
     dataType: "interval",
+    historic: true,
     staticAxesRange: {
-      y: { max: 100 }
-    }
+      y: { max: 100 },
+    },
   },
   storage: {
     fetchType: "read",
@@ -91,7 +108,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "storage",
     component: "Storage",
     requestTime: 5000,
-    dataType: "snapshot"
+    dataType: "snapshot",
+    historic: false,
   },
   throughput: {
     fetchType: "modify",
@@ -100,14 +118,15 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "throughput",
     component: "Throughput",
     requestTime: 1000,
-    dataType: "interval"
-  }
+    dataType: "interval",
+    historic: true,
+  },
 };
 
 const metricDetailColor: Record<MetricValueState, string> = {
   average: colorDefinition.orange,
   high: colorDefinition.green,
-  low: colorDefinition.red
+  low: colorDefinition.red,
 };
 
 const metricValueStateOrder: Record<
@@ -115,7 +134,7 @@ const metricValueStateOrder: Record<
   MetricValueState[]
 > = {
   asc: ["low", "average", "high"],
-  desc: ["high", "average", "low"]
+  desc: ["high", "average", "low"],
 };
 
 const timeLabel = "Timestamps";
@@ -125,49 +144,54 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
   access: {
     title: "Access Frequency",
     xaxis: "Columns",
-    yaxis: "Chunks"
+    yaxis: "Chunks",
   },
   cpu: {
     title: "CPU",
     xaxis: timeLabel,
-    yaxis: "Workload in %"
+    yaxis: "Workload in %",
   },
   executedQueryTypeProportion: {
     title: "Query Type Proportion",
     xaxis: "Workload",
-    yaxis: "Proportion of queries in %"
+    yaxis: "Proportion of queries in %",
   },
   generatedQueryTypeProportion: {
     title: "Query Type Proportion",
     xaxis: "Workload",
-    yaxis: "Proportion of queries in %"
+    yaxis: "Proportion of queries in %",
+  },
+  memoryFootprint: {
+    title: "Memory Footprint",
+    xaxis: timeLabel,
+    yaxis: "Memory Footprint in MB",
   },
   latency: {
     title: "Latency",
     xaxis: timeLabel,
-    yaxis: "Latency in ms"
+    yaxis: "Latency in ms",
   },
   queueLength: {
     title: "Queue Length",
     xaxis: timeLabel,
-    yaxis: queryLabel
+    yaxis: queryLabel,
   },
   ram: {
     title: "RAM",
     xaxis: timeLabel,
-    yaxis: "Memory usage in %"
+    yaxis: "Memory usage in %",
   },
   storage: {
-    title: "Storage"
+    title: "Storage",
   },
   throughput: {
     title: "Throughput",
     xaxis: timeLabel,
-    yaxis: queryLabel
-  }
+    yaxis: queryLabel,
+  },
 };
 
-const metricDescription: Record<Metric, string> = {
+const metricDescription: Partial<Record<Metric, string>> = {
   access:
     "Number of accesses  <br/> separated by chunk and column  <br/> of the selected table.",
   cpu: "Current processor workload.",
@@ -180,7 +204,7 @@ const metricDescription: Record<Metric, string> = {
     "Length of the queue <br/> containing queries which <br/> have to be processed by workers ",
   ram: "Current memory usage of <br/>  the database instance in percent",
   storage: "Sizes of the tables and <br/> columns currently available.",
-  throughput: "Number of queries <br/> processed in the last second."
+  throughput: "Number of queries <br/> processed in the last second.",
 };
 
 const metricDetailsConfiguration: Partial<Record<
@@ -190,28 +214,33 @@ const metricDetailsConfiguration: Partial<Record<
   cpu: {
     border: 100,
     unit: "%",
-    stateOrder: getMetricValueStateOrder("asc")
+    stateOrder: getMetricValueStateOrder("asc"),
   },
   latency: {
     border: 100,
     unit: "ms",
-    stateOrder: getMetricValueStateOrder("asc")
+    stateOrder: getMetricValueStateOrder("asc"),
+  },
+  memoryFootprint: {
+    border: 1,
+    unit: "MB",
+    stateOrder: getMetricValueStateOrder("desc"),
   },
   queueLength: {
     border: 20000,
     unit: "q",
-    stateOrder: getMetricValueStateOrder("asc")
+    stateOrder: getMetricValueStateOrder("asc"),
   },
   ram: {
     border: 100,
     unit: "%",
-    stateOrder: getMetricValueStateOrder("asc")
+    stateOrder: getMetricValueStateOrder("asc"),
   },
   throughput: {
     border: 10000,
     unit: "q/s",
-    stateOrder: getMetricValueStateOrder("desc")
-  }
+    stateOrder: getMetricValueStateOrder("desc"),
+  },
 };
 
 export function getMetricMetadata(metric: Metric): MetricMetadata {
@@ -255,7 +284,7 @@ export function getMetricChartConfiguration(
 }
 
 export function getMetricDescription(metric: Metric): string {
-  return metricDescription[metric];
+  return metricDescription[metric]!;
 }
 
 export function getMetricDetailsConfiguration(
