@@ -58,7 +58,7 @@ export function useFormatting(): {
     roundNumber,
     formatDateToHHMMSS,
     formatDateToNanoSec,
-    subSeconds
+    subSeconds,
   };
 }
 
@@ -67,9 +67,9 @@ export function useSorting(): {
 } {
   function sortElements<T>(selected: T[], available: T[]): T[] {
     const sorted: T[] = [];
-    available.forEach(availableElement => {
+    available.forEach((availableElement) => {
       const relatedSelectedElement = selected.find(
-        selectedElement => selectedElement === availableElement
+        (selectedElement) => selectedElement === availableElement
       );
       if (relatedSelectedElement) sorted.push(relatedSelectedElement);
     });

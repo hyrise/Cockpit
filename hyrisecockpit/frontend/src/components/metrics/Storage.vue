@@ -30,7 +30,7 @@ import {
   SetupContext,
   watch,
   Ref,
-  ref
+  ref,
 } from "@vue/composition-api";
 import Treemap from "../charts/Treemap.vue";
 import MetricDetailedView from "@/components/details/MetricDetailedView.vue";
@@ -38,11 +38,11 @@ import {
   MetricProps,
   MetricPropsValidation,
   ChartConfiguration,
-  StorageData
+  StorageData,
 } from "../../types/metrics";
 import {
   getMetricChartConfiguration,
-  getMetricMetadata
+  getMetricMetadata,
 } from "../../meta/metrics";
 
 interface Data {
@@ -54,7 +54,7 @@ export default defineComponent({
   name: "Storage",
   components: {
     Treemap,
-    MetricDetailedView
+    MetricDetailedView,
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
@@ -73,8 +73,8 @@ export default defineComponent({
 
     return {
       storageData,
-      chartConfiguration: getMetricChartConfiguration(props.metric)
+      chartConfiguration: getMetricChartConfiguration(props.metric),
     };
-  }
+  },
 });
 </script>

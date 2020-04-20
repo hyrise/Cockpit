@@ -68,6 +68,6 @@ export function useCallbacks(
     startWorkload,
     stopWorkload,
     loadTable,
-    removeTable
+    removeTable,
   };
 }

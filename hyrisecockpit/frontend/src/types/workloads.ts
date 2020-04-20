@@ -9,5 +9,5 @@ export const availableWorkloads: Workload[] = [
   "tpch01",
   "tpch1",
   "tpcds",
-  "job"
+  "job",
 ];
