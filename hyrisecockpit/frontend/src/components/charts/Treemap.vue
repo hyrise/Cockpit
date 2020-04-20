@@ -8,7 +8,10 @@ import * as Plotly from "plotly.js";
 import { ChartConfiguration, StorageData } from "../../types/metrics";
 import { ChartProps, ChartPropsValidation } from "../../types/charts";
 import { useChartReactivity } from "../../meta/charts";
-import { colorValueDefinition, colorDefinition } from "../../meta/colors";
+import {
+  colorTreemapDefinition,
+  colorValueDefinition,
+} from "../../meta/colors";
 
 interface Props extends ChartProps {
   autosize: boolean;
@@ -18,9 +21,9 @@ export default defineComponent({
   props: {
     autosize: {
       type: Boolean,
-      default: true
+      default: true,
     },
-    ...ChartPropsValidation
+    ...ChartPropsValidation,
   },
   setup(props: Props, context: SetupContext) {
     const { getLayout, getDataset, getOptions } = useTreemapConfiguration(
@@ -44,10 +47,10 @@ export default defineComponent({
     function updateLayout(): void {
       Plotly.relayout(props.graphId, {
         width: 0.8 * props.maxChartWidth,
-        height: (0.8 * props.maxChartWidth) / getHeightFactor(props.autosize)
+        height: (0.8 * props.maxChartWidth) / getHeightFactor(props.autosize),
       });
     }
-  }
+  },
 });
 function useTreemapConfiguration(
   props: Props
@@ -65,22 +68,22 @@ function useTreemapConfiguration(
           x: 0.25,
           xanchor: "center",
           y: 1.1,
-          yanchor: "bottom"
-        }
+          yanchor: "bottom",
+        },
       ],
       autosize: props.autosize,
       width: props.autosize ? 0 : 1400,
       height: props.autosize ? 0 : 700,
       hovermode: "closest",
       hoverlabel: { bgcolor: "#FFF" },
-      treemapcolorway: Object.values(colorDefinition),
+      treemapcolorway: Object.values(colorTreemapDefinition),
       margin: {
         l: 0,
         r: 0,
         b: 20,
         t: 0,
-        pad: 0
-      }
+        pad: 0,
+      },
     };
   }
   function getDataset(
@@ -98,10 +101,10 @@ function useTreemapConfiguration(
           "<br>%{text.dataType} <br>%{text.encoding}<extra></extra>",
         texttemplate:
           "<b>%{label}</b> <br>size:%{text.size} <br>%{text.dataType} <br>%{text.encoding}",
-        outsidetextfont: { size: 20, color: colorValueDefinition.primary },
+        outsidetextfont: { size: 20, color: colorValueDefinition.darkgrey },
         marker: { line: { width: 2 } },
-        pathbar: { visible: false }
-      }
+        pathbar: { visible: false },
+      },
     ];
   }
   function getOptions(): Object {
