@@ -9,23 +9,24 @@
         <v-icon @click="closeWorkloadDialog()">mdi-close</v-icon>
       </v-system-bar>
       <v-card-text>
-        <warning
-          v-if="noDatabaseAdded"
-          class="mt-2 pt-2 mb-0 pb-2 primary--text"
-        >
+        <warning v-if="noDatabaseAdded" class="mt-4 mb-0 py-2 primary--text">
           <template #message>
-            No database added.
+            No database added
           </template>
         </warning>
-        <div v-if="instanceBlocked.val">
-          <warning
-            class="mt-2 pt-2 mb-0 pb-2 primary--text"
+        <v-row>
+          <v-chip
+            class="mt-4 mb-0 mx-2 py-2 white--text"
             v-for="instance in instanceBlocked.name"
             :key="instance"
+            :color="useDatabaseService().getDatabaseColor(instance)"
           >
-            <template #message> {{ instance }} is blocked. </template>
-          </warning>
-        </div>
+            <v-icon>
+              mdi-exclamation
+            </v-icon>
+            <span> {{ instance }} is blocked </span>
+          </v-chip>
+        </v-row>
         <v-row>
           <v-col max-width="300px">
             <p class="subtitle-1 font-weight-medium">
@@ -137,6 +138,7 @@ import {
 } from "@vue/composition-api";
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
+import { useDatabaseService } from "../../services/databaseService";
 import {
   getDisplayedWorkload,
   getWorkloadFromTransferred
@@ -157,6 +159,7 @@ interface Data {
   instanceBlocked: { name: string[]; val: boolean };
   noDatabaseAdded: Ref<boolean>;
   getDisplayedWorkload: (workload: Workload) => string;
+  useDatabaseService: () => void;
   isLoaded: (workload: Workload) => boolean;
   isDisabled: () => boolean;
   handleButtonChange: (button: string) => void;
@@ -258,12 +261,18 @@ export default defineComponent({
         handleButtonChange("start");
       }
     }
+    let changeWorkloadData = true;
     function handleWorkloadDataChange(workload: Workload): void {
       switchesLoading[workload] = true;
+      changeWorkloadData = false;
       if (isLoaded(workload)) {
-        loadWorkloadData(workload);
+        loadWorkloadData(workload).then(() => {
+          changeWorkloadData = true;
+        });
       } else {
-        deleteWorkloadData(workload);
+        deleteWorkloadData(workload).then(() => {
+          changeWorkloadData = true;
+        });
       }
     }
     function updateWorkloadInformation(): void {
@@ -286,7 +295,7 @@ export default defineComponent({
           runningWorkload.value = Object.values(response.data).some(
             (instance: any) => instance.worker_pool_status === "running"
           );
-          if (!instanceBlocked.val) {
+          if (!instanceBlocked.val && changeWorkloadData) {
             Object.values(availableWorkloads).forEach((workload: Workload) => {
               switchesLoading[workload] = false;
             });
@@ -312,6 +321,7 @@ export default defineComponent({
       instanceBlocked,
       noDatabaseAdded,
       getDisplayedWorkload,
+      useDatabaseService,
       isLoaded,
       isDisabled,
       handleButtonChange,
