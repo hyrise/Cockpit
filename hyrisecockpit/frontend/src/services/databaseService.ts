@@ -130,6 +130,13 @@ export function useDatabaseService(): DatabaseService {
       });
   }
 
+  function postSQLQuery(databaseId: string, sqlQuery: string): Promise<any> {
+    return axios.post(controlBackend + "sql", {
+        id: databaseId,
+        query: sqlQuery,
+    });
+  }
+
   return {
     addDatabase,
     removeDatabase,
@@ -139,5 +146,6 @@ export function useDatabaseService(): DatabaseService {
     getDatabaseColor,
     getCPUInformation,
     getStorageInformation,
+    postSQLQuery,
   };
 }
