@@ -5,6 +5,7 @@
       :evaluations="[false]"
     />
     <div class="mx-6">
+      <status-warning />
       <database-query-tables :selected-databases="selectedDatabases" />
       <warning :condition="selectedDatabases">
         <template #message>
@@ -54,6 +55,7 @@ import DatabaseQueryTables from "@/components/queries/DatabaseQueryTables.vue";
 import { MetricViewData } from "../types/views";
 import { useSelectionHandling } from "@/meta/selection";
 import Warning from "@/components/alerts/Warning.vue";
+import StatusWarning from "@/components/alerts/StatusWarning.vue";
 import MetricTile from "@/components/container/MetricTile.vue";
 import SelectionList from "@/components/selection/SelectionList.vue";
 
@@ -69,6 +71,7 @@ export default defineComponent({
     LinearLoader,
     DatabaseQueryTables,
     Warning,
+    StatusWarning,
     SelectionList,
   },
   setup(props: Props, context: SetupContext): Data {

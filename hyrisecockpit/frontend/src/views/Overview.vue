@@ -5,6 +5,7 @@
       :evaluations="[false]"
     />
     <div v-if="$databaseController.databasesUpdated.value" class="mx-6">
+      <status-warning />
       <database-details-panel
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"
@@ -47,6 +48,7 @@ import { useSelectionHandling } from "@/meta/selection";
 import DatabaseDetailsPanel from "../components/details/DatabaseDetailsPanel.vue";
 import LinearLoader from "../components/alerts/LinearLoader.vue";
 import Warning from "@/components/alerts/Warning.vue";
+import StatusWarning from "@/components/alerts/StatusWarning.vue";
 
 export default defineComponent({
   components: {
@@ -54,6 +56,7 @@ export default defineComponent({
     DatabaseDetailsPanel,
     LinearLoader,
     Warning,
+    StatusWarning,
   },
   setup(props: {}, context: SetupContext): MetricViewData {
     return {

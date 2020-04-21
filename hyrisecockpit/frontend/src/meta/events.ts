@@ -62,6 +62,12 @@ export function useDatabaseEvents(): {
   emitSelectedDatabasesChangedEvent: (databases?: string[]) => void;
   emitDatabaseAddedEvent: () => void;
   emitDatabaseRemovedEvent: () => void;
+  emitNoDatabaseEvent: () => void;
+  emitDatabaseStatusEvent: (
+    database: string,
+    blocked: boolean,
+    active: boolean
+  ) => void;
   emitSelectedDatabasesChangedWithinEvent: (
     page: PageName,
     database: string,
@@ -88,11 +94,23 @@ export function useDatabaseEvents(): {
   function emitDatabaseRemovedEvent(): void {
     eventBus.$emit("DATABASE_REMOVED");
   }
+  function emitNoDatabaseEvent(): void {
+    eventBus.$emit("NO_DATABASE");
+  }
+  function emitDatabaseStatusEvent(
+    database: string,
+    blocked: boolean,
+    active: boolean
+  ): void {
+    eventBus.$emit("DATABASE_STATUS", database, blocked, active);
+  }
   return {
     emitSelectedDatabasesChangedEvent,
     emitSelectedDatabasesChangedWithinEvent,
     emitDatabaseAddedEvent,
     emitDatabaseRemovedEvent,
+    emitNoDatabaseEvent,
+    emitDatabaseStatusEvent,
   };
 }
 

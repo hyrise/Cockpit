@@ -15,11 +15,18 @@ export interface Database {
   tables: string[];
 }
 
+export interface DatabaseStatus {
+  noDatabase: boolean;
+  blockedDatabases: string[];
+  inactiveDatabases: string[];
+}
+
 export interface DatabaseController {
   databasesUpdated: Ref<boolean>;
   availableDatabasesById: Ref<readonly string[]>;
   getDatabasesByIds: (ids: string[]) => Database[];
   getDatabaseById: (id: string) => Database;
+  getDatabaseStatusInformation: () => DatabaseStatus;
 }
 
 export interface DatabaseService {

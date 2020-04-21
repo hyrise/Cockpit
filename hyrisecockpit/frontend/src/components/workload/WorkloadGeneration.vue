@@ -9,31 +9,9 @@
         <v-icon @click="closeWorkloadDialog()">mdi-close</v-icon>
       </v-system-bar>
       <v-card-text>
-        <warning v-if="hyriseNotActive" class="mt-4 mb-0 py-2 primary--text">
-          <template #message>
-            Hyrise is not active
-          </template>
-        </warning>
-        <warning v-if="noDatabaseAdded" class="mt-4 mb-0 py-2 primary--text">
-          <template #message>
-            No database added
-          </template>
-        </warning>
+        <status-warning />
         <v-row>
-          <v-chip
-            class="mt-4 mb-0 mx-2 py-2 white--text"
-            v-for="instance in blockedInstances"
-            :key="instance"
-            :color="useDatabaseService().getDatabaseColor(instance)"
-          >
-            <v-icon>
-              mdi-exclamation
-            </v-icon>
-            <span> {{ instance }} is blocked </span>
-          </v-chip>
-        </v-row>
-        <v-row>
-          <v-col max-width="300px">
+          <v-col class="pt-2">
             <p class="subtitle-1 font-weight-medium">
               Start, pause and stop a workload
             </p>
@@ -109,7 +87,7 @@
             </v-btn-toggle>
           </v-col>
           <v-divider vertical class="ml-4 mr-4" />
-          <v-col>
+          <v-col class="pt-2">
             <p class="subtitle-1 font-weight-medium">
               Load and remove generated data into/from instances
             </p>
@@ -144,11 +122,12 @@ import {
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
 import { useDatabaseService } from "../../services/databaseService";
+import { useDatabaseEvents } from "../../meta/events";
 import {
   getDisplayedWorkload,
   getWorkloadFromTransferred,
 } from "../../meta/workloads";
-import Warning from "../alerts/Warning.vue";
+import StatusWarning from "../alerts/StatusWarning.vue";
 
 interface Props {
   open: boolean;
@@ -161,9 +140,6 @@ interface Data {
   buttons: Record<string, { active: boolean; loading: boolean }>;
   switchesLoading: Record<string, boolean>;
   runningWorkload: Ref<boolean>;
-  blockedInstances: Ref<string[]>;
-  noDatabaseAdded: Ref<boolean>;
-  hyriseNotActive: Ref<boolean>;
   getDisplayedWorkload: (workload: Workload) => string;
   useDatabaseService: () => void;
   isLoaded: (workload: Workload) => boolean;
@@ -175,7 +151,7 @@ interface Data {
 }
 export default defineComponent({
   components: {
-    Warning,
+    StatusWarning,
   },
   props: {
     open: {
@@ -218,9 +194,12 @@ export default defineComponent({
       job: false,
     });
     const runningWorkload = ref<boolean>(false);
-    const blockedInstances = ref<string[]>([]);
-    const noDatabaseAdded = ref<boolean>(false);
-    const hyriseNotActive = ref<boolean>(false);
+    let disabled: boolean = false;
+    let changeWorkloadData: boolean = true;
+    const {
+      emitNoDatabaseEvent,
+      emitDatabaseStatusEvent,
+    } = useDatabaseEvents();
 
     function closeWorkloadDialog(): void {
       context.emit("close");
@@ -252,8 +231,7 @@ export default defineComponent({
     }
     function isDisabled(): boolean {
       return (
-        noDatabaseAdded.value ||
-        blockedInstances.value.length !== 0 ||
+        disabled ||
         switchesLoading.tpch01 ||
         switchesLoading.tpch1 ||
         switchesLoading.tpcds ||
@@ -265,7 +243,6 @@ export default defineComponent({
         handleButtonChange("start");
       }
     }
-    let changeWorkloadData = true;
     function handleWorkloadDataChange(workload: Workload): void {
       switchesLoading[workload] = true;
       changeWorkloadData = false;
@@ -282,24 +259,26 @@ export default defineComponent({
     function updateWorkloadInformation(): void {
       getLoadedWorkloadData().then((response: any) => {
         if (response.data.length !== 0) {
-          noDatabaseAdded.value = false;
-          blockedInstances.value = [];
           let loadedWorkloadData: string[] = response.data[0].loaded_benchmarks;
-          Object.values(response.data).forEach((instance: any) => {
+          Object.values(response.data).forEach((database: any) => {
             loadedWorkloadData = loadedWorkloadData.filter((benchmark: any) =>
-              instance.loaded_benchmarks.includes(benchmark)
+              database.loaded_benchmarks.includes(benchmark)
             );
-            if (instance.database_blocked_status === true) {
-              blockedInstances.value.push(instance.id);
-            }
+            emitDatabaseStatusEvent(
+              database.id,
+              database.database_blocked_status,
+              database.hyrise_active
+            );
           });
           runningWorkload.value = Object.values(response.data).some(
-            (instance: any) => instance.worker_pool_status === "running"
+            (database: any) => database.worker_pool_status === "running"
           );
-          hyriseNotActive.value = Object.values(response.data).some(
-            (instance: any) => instance.hyrise_active === false
+          disabled = Object.values(response.data).some(
+            (database: any) =>
+              database.database_blocked_status === true ||
+              database.hyrise_active === false
           );
-          if (blockedInstances.value.length === 0 && changeWorkloadData) {
+          if (!disabled && changeWorkloadData) {
             Object.values(availableWorkloads).forEach((workload: Workload) => {
               switchesLoading[workload] = false;
             });
@@ -309,7 +288,8 @@ export default defineComponent({
             });
           }
         } else {
-          noDatabaseAdded.value = true;
+          disabled = true;
+          emitNoDatabaseEvent();
         }
       });
     }
@@ -322,9 +302,6 @@ export default defineComponent({
       buttons,
       switchesLoading,
       runningWorkload,
-      blockedInstances,
-      noDatabaseAdded,
-      hyriseNotActive,
       getDisplayedWorkload,
       useDatabaseService,
       isLoaded,
