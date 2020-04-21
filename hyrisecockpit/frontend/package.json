@@ -11,7 +11,8 @@
         "test:e2e:headless": "vue-cli-service test:e2e --headless",
         "test:e2e:stubless": "vue-cli-service test:e2e --env stubless=true",
         "test:e2e:headless:stubless": "vue-cli-service test:e2e --headless --env stubless=true",
-        "lint": "vue-cli-service lint"
+        "lint": "vue-cli-service lint",
+        "start:dev": "cd devServer/ ; npm start"
     },
     "dependencies": {
         "@types/faker": "^4.1.11",
