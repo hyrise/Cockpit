@@ -29,7 +29,7 @@ server.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}.`);
 });
 
-server.use((req, res, next) => {
+server.use((_, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -41,12 +41,12 @@ server.use((req, res, next) => {
 
 server.use(bodyParser.json());
 
-server.get("/", (req, res) => {
+server.get("/", (_, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.json("This is just a development server with mocked data!");
 });
 
-mockGetRoute("database", "control");
+mockGetRoute("database/", "control");
 mockGetRoute("system", "monitor");
 mockGetRoute("storage", "monitor", true);
 mockGetRoute("throughput", "monitor");
@@ -56,28 +56,30 @@ mockGetRoute("krueger_data", "monitor");
 mockGetRoute("chunks", "monitor", true);
 mockGetRoute("detailed_query_information", "monitor");
 mockGetRoute("status", "monitor");
-mockGetRoute("data", "control");
+mockGetRoute("database/benchmark_tables", "control");
 mockGetRoute("available_plugins", "control");
 mockGetRoute("plugin", "control");
 mockGetRoute("plugin_settings", "control", true);
 mockGetRoute("plugin_log", "control");
 
-mockPostRoute("database", "control");
-mockPostRoute("data", "control");
+mockPostRoute("database/", "control");
+mockPostRoute("database/benchmark_tables", "control");
 mockPostRoute("workload", "control");
 mockPostRoute("plugin", "control");
 
-mockDeleteRoute("database", "control");
-mockDeleteRoute("data", "control");
+mockDeleteRoute("database/", "control");
+mockDeleteRoute("database/benchmark_tables", "control");
 mockDeleteRoute("workload", "control");
 mockDeleteRoute("plugin", "control");
 
 function mockGetRoute(
-  request: Request,
+  route: string,
   backendRoute: "control" | "monitor",
   withBody: boolean = false
 ): void {
-  server.get(`/${backendRoute}/${request}`, (req, res) => {
+  const request = getRequestOfRoute(route);
+  console.log(request);
+  server.get(`/${backendRoute}/${route}`, (req, res) => {
     logRequest(req, res);
     const response = withBody
       ? { body: mocks.getMockedResponse(request) }
@@ -95,10 +97,11 @@ function logRequest(req, res): void {
 }
 
 function mockPostRoute(
-  request: Request,
+  route: string,
   backendRoute: "control" | "monitor"
 ): void {
-  server.post(`/${backendRoute}/${request}`, (req, res) => {
+  const request = getRequestOfRoute(route);
+  server.post(`/${backendRoute}/${route}`, (req, res) => {
     logRequest(req, res);
     mocks.getMockedPostCallback(request)(handleRequestBody(request, req));
     res.send({});
@@ -106,10 +109,11 @@ function mockPostRoute(
 }
 
 function mockDeleteRoute(
-  request: Request,
+  route: string,
   backendRoute: "control" | "monitor"
 ): void {
-  server.delete(`/${backendRoute}/${request}`, (req, res) => {
+  const request = getRequestOfRoute(route);
+  server.delete(`/${backendRoute}/${route}`, (req, res) => {
     logRequest(req, res);
     mocks.getMockedDeleteCallback(request)(handleRequestBody(request, req));
     res.send({});
@@ -120,10 +124,22 @@ function handleRequestBody(request: Request, req): string {
   let id = "";
   if (request === "database") {
     id = req.body.id;
-  } else if (request === "data") {
+  } else if (request === "benchmark_tables") {
     id = req.body.folder_name;
   } else if (request === "plugin") {
     id = req.body.plugin;
   }
   return id;
+}
+
+function getRequestOfRoute(route: string): Request {
+  const split = route.split("/");
+  if (split.length === 1) {
+    return split[0] as Request;
+  } else {
+    if (split[split.length - 1] === "") {
+      return split[split.length - 2] as Request;
+    }
+    return split[split.length - 1] as Request;
+  }
 }

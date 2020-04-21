@@ -9,12 +9,12 @@ export function useWorkloadService(): WorkloadService {
     return axios.get(`${monitorBackend}status`);
   }
   async function loadWorkloadData(workload: Workload): Promise<void> {
-    return axios.post(`${controlBackend}data`, {
+    return axios.post(`${controlBackend}database/benchmark_tables`, {
       folder_name: getTransferredWorkload(workload),
     });
   }
   async function deleteWorkloadData(workload: Workload): Promise<void> {
-    return axios.delete(`${controlBackend}data`, {
+    return axios.delete(`${controlBackend}database/benchmark_tables`, {
       data: {
         folder_name: getTransferredWorkload(workload),
       },
