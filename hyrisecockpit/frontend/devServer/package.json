@@ -5,7 +5,9 @@
     "main": "dist/devServer/src/server.js",
     "scripts": {
         "start": "tsc &&  node dist/devServer/src/server.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start:quiet": "tsc && QUIET=true node dist/devServer/src/server.js ",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint": "tslint --fix src/*"
     },
     "author": "",
     "license": "ISC",

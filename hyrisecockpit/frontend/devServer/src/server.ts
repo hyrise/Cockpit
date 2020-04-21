@@ -19,7 +19,7 @@ function getInitialNumbers(numbers: Partial<Record<Entity, number>>) {
     plugins: 2,
     queries: 10,
     tables: 2,
-    ...numbers
+    ...numbers,
   };
 }
 
@@ -33,7 +33,7 @@ server.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept",
   );
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
   next();
@@ -75,7 +75,7 @@ mockDeleteRoute("plugin", "control");
 function mockGetRoute(
   request: Request,
   backendRoute: "control" | "monitor",
-  withBody: boolean = false
+  withBody: boolean = false,
 ): void {
   server.get(`/${backendRoute}/${request}`, (req, res) => {
     logRequest(req, res);
@@ -87,16 +87,18 @@ function mockGetRoute(
 }
 
 function logRequest(req, res): void {
-  console.log(
-    `${new Date().toLocaleTimeString()} - ${req.method} - ${res.statusCode} - ${
-    req.url
-    }`
-  );
+  if (!process.env.QUIET) {
+    console.log(
+      `${new Date().toLocaleTimeString()} - ${req.method} - ${
+        res.statusCode
+      } - ${req.url}`,
+    );
+  }
 }
 
 function mockPostRoute(
   request: Request,
-  backendRoute: "control" | "monitor"
+  backendRoute: "control" | "monitor",
 ): void {
   server.post(`/${backendRoute}/${request}`, (req, res) => {
     logRequest(req, res);
@@ -107,7 +109,7 @@ function mockPostRoute(
 
 function mockDeleteRoute(
   request: Request,
-  backendRoute: "control" | "monitor"
+  backendRoute: "control" | "monitor",
 ): void {
   server.delete(`/${backendRoute}/${request}`, (req, res) => {
     logRequest(req, res);
