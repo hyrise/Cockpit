@@ -78,7 +78,6 @@ function mockGetRoute(
   withBody: boolean = false
 ): void {
   const request = getRequestOfRoute(route);
-  console.log(request);
   server.get(`/${backendRoute}/${route}`, (req, res) => {
     logRequest(req, res);
     const response = withBody
