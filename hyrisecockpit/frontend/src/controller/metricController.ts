@@ -86,14 +86,9 @@ export function useMetricController(): MetricController {
     return intervals;
   }
 
-<<<<<<< HEAD
-  function start(metrics: Metric[], start?: Date, end?: Date): void {
-    metrics.forEach((metric) => {
-=======
   function start(newMetrics: Metric[], start?: Date, end?: Date): void {
     getMetricsByEndpoint(newMetrics).forEach((metrics) => {
       const metric = metrics[0];
->>>>>>> dev
       metricServices[metric].getDataIfReady(start, end);
       metricIntervals[metric].id = setInterval(
         metricServices[metric].getDataIfReady,
