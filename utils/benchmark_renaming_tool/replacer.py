@@ -1,5 +1,4 @@
 """This module todo."""
-import re
 from os import fsencode, listdir
 
 from utils.benchmark_renaming_tool.table_names import table_names as tables
@@ -41,7 +40,7 @@ class Replacer:
                 f"Workload {self.workload} directory is empty"
             )
 
-    def replace(self, pattern, file_names):
+    def replace(self, file_names):
         """Replace table names."""
         for file_name in file_names:
             with open(
@@ -53,7 +52,44 @@ class Replacer:
 
             for old_table_name, new_table_name in self.replacement_dict.items():
                 new_queries = new_queries.replace(
-                    f" {old_table_name}", f" {new_table_name}"
+                    f" {old_table_name},", f" {new_table_name},"
+                )
+                new_queries = new_queries.replace(
+                    f" {old_table_name}\n", f" {new_table_name}\n "
+                )
+                new_queries = new_queries.replace(
+                    f" {old_table_name} ", f" {new_table_name} "
+                )
+                # TODO: separate TPCDS from TPCH handling
+                new_queries = new_queries.replace(
+                    f" {old_table_name}.", f" {new_table_name}."
+                )
+                new_queries = new_queries.replace(
+                    f" {old_table_name}.", f" {new_table_name}."
+                )
+                new_queries = new_queries.replace(
+                    f"({old_table_name}.", f"({new_table_name}."
+                )
+                new_queries = new_queries.replace(
+                    f"{old_table_name})", f"{new_table_name})"
+                )
+                new_queries = new_queries.replace(
+                    f"\n{old_table_name},", f"\n{new_table_name},"
+                )
+                new_queries = new_queries.replace(
+                    f"\n{old_table_name}\n", f"\n{new_table_name}\n"
+                )
+                new_queries = new_queries.replace(
+                    f"\n{old_table_name} ", f"\n{new_table_name} "
+                )
+                new_queries = new_queries.replace(
+                    f"\t{old_table_name},", f"\t{new_table_name},"
+                )
+                new_queries = new_queries.replace(
+                    f"\t{old_table_name}\n", f"\t{new_table_name}\n"
+                )
+                new_queries = new_queries.replace(
+                    f"\t{old_table_name} ", f"\t{new_table_name} "
                 )
 
             with open(
@@ -69,18 +105,16 @@ class Replacer:
         except BaseException:
             return
 
-        pattern = re.compile("|".join(self.replacement_dict.keys()))
-
         file_names = self._get_file_names(
             f"{self.path_to_original}/{self.workload}_{self.scale}"
         )
 
         if self.path_to_original != self.path_to_new:
-            self.replace(pattern, file_names)
+            self.replace(file_names)
         else:
             print_red(
                 "Destination and source are the same. Files will be irrevocable overwritten.\n"
             )
             answer = input("Do you want to continue? [Y/N]  ").upper()  # nosec
             if answer == "Y":
-                self.replace(pattern, file_names)
+                self.replace(file_names)
