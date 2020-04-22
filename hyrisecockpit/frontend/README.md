@@ -34,6 +34,26 @@ npm run test:e2e
 ```
 npm run test:e2e:headless
 ```
+### Deploy with minimal dependencies
+```
+npm install --no-optional
+```
+```
+npm run deploy
+```
+
+### Run development backend server 
+```
+cd Cockpit/hyrisecockpit/frontend/devServer
+```
+```
+npm install
+```
+```
+npm start
+```
+To use this server in your frontend app: replace the backend url with: `http://127.0.0.1:3000/`
+
 
 ### Customize configuration
 

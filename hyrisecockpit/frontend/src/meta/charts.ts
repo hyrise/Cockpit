@@ -12,8 +12,8 @@ export function useChartReactivity(
 
   function isValidData(data: any): boolean {
     return Array.isArray(data)
-      ? props.data.length !== 0 && databasesUpdated.value
-      : Object.keys(props.data).length !== 0 && databasesUpdated.value;
+      ? data.length !== 0 && databasesUpdated.value
+      : Object.keys(data).length !== 0 && databasesUpdated.value;
   }
 
   function isValidLayout(width: number): boolean {

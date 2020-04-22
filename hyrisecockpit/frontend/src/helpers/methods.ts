@@ -8,5 +8,3 @@ export function equals(array1: string[], array2: string[]): boolean {
   );
   return true;
 }
-
-export const isInTestMode: boolean = (window as any).Cypress;

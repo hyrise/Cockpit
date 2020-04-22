@@ -26,12 +26,12 @@ export function fakeTimeStamp(): number {
 
 // IDS
 
-export function fakeId(prefix: string): string {
-  return prefix + faker.random.uuid();
+export function fakeId(prefix: string, key: number): string {
+  return `${prefix}-${key}`;
 }
 
 export function fakeIds(length: number, prefix: string = ""): string[] {
-  return [...Array(length).keys()].map(() => fakeId(prefix));
+  return [...Array(length).keys()].map((key) => fakeId(prefix, key));
 }
 
 // DATABASES
