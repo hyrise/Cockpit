@@ -2,19 +2,19 @@ import axios from "axios";
 import { Workload } from "@/types/workloads";
 import { getTransferredWorkload } from "@/meta/workloads";
 import { WorkloadService } from "../types/services";
-import { controlBackend, monitorBackend } from "../../config";
+import { controlBackend, monitorBackend, backendUrl } from "../../config";
 
 export function useWorkloadService(): WorkloadService {
   async function getLoadedWorkloadData(): Promise<string[]> {
     return axios.get(`${monitorBackend}status`);
   }
   async function loadWorkloadData(workload: Workload): Promise<void> {
-    return axios.post(`${controlBackend}data`, {
+    return axios.post(`${controlBackend}database/benchmark_tables`, {
       folder_name: getTransferredWorkload(workload),
     });
   }
   async function deleteWorkloadData(workload: Workload): Promise<void> {
-    return axios.delete(`${controlBackend}data`, {
+    return axios.delete(`${controlBackend}database/benchmark_tables`, {
       data: {
         folder_name: getTransferredWorkload(workload),
       },
@@ -25,13 +25,13 @@ export function useWorkloadService(): WorkloadService {
     workload: Workload,
     frequency: number
   ): Promise<void> {
-    return axios.post(`${controlBackend}workload`, {
+    return axios.post(`${backendUrl}workload/`, {
       folder_name: getTransferredWorkload(workload),
       frequency: frequency,
     });
   }
   async function stopWorkload(): Promise<void> {
-    return axios.delete(`${controlBackend}workload`);
+    return axios.delete(`${backendUrl}workload/`);
   }
 
   return {
