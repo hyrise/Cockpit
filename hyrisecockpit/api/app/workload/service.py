@@ -1,11 +1,7 @@
 """Services used by the Workload controller."""
 from typing import List, Optional
 
-from hyrisecockpit.api.app.shared import (
-    _send_message,
-    db_manager_socket,
-    generator_socket,
-)
+from hyrisecockpit.api.app.socket_manager import GeneratorSocket, ManagerSocket
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
@@ -19,12 +15,14 @@ class WorkloadService:
     @staticmethod
     def _send_message_to_dbm(message: Request) -> Response:
         """Send an IPC message to the database manager."""
-        return _send_message(db_manager_socket, message)
+        with ManagerSocket() as socket:
+            return socket.send_message(message)
 
     @staticmethod
     def _send_message_to_gen(message: Request) -> Response:
         """Send an IPC message to the workload generator."""
-        return _send_message(generator_socket, message)
+        with GeneratorSocket() as socket:
+            return socket.send_message(message)
 
     @classmethod
     def get_all(cls) -> List[Workload]:

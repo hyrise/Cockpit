@@ -17,7 +17,6 @@ from hyrisecockpit.response import get_response
 from .data import detailed_interfaces, interfaces
 
 
-@mark.skip(reason="The socket is not mocked, a real socket will be opened.")
 class TestWorkloadService:
     """Tests for the Workload controller."""
 
