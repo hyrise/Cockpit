@@ -47,11 +47,15 @@ class Replacer:
             with open(
                 f"{self.path_to_original}/{self.workload}_{self.scale}/{file_name}", "r"
             ) as f_read:
-                row_queries = f_read.read()
+                queries = f_read.read()
 
-            new_queries = pattern.sub(
-                lambda m: self.replacement_dict[m.group(0)], row_queries
-            )
+            new_queries = queries
+
+            for old_table_name, new_table_name in self.replacement_dict.items():
+                new_queries = new_queries.replace(
+                    f" {old_table_name}", f" {new_table_name}"
+                )
+
             with open(
                 f"{self.path_to_new}/{self.workload}_{self.scale}/{file_name}", "w"
             ) as f_write:
