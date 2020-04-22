@@ -4,7 +4,7 @@ const routes: Record<string, string> = {
   home: "/#/",
   overview: "/#/databases/overview",
   comparison: "/#/databases/compare",
-  workloadMonitoring: "/#/workload"
+  workloadMonitoring: "/#/workload",
 };
 
 const selectors: Record<string, string> = {
@@ -39,7 +39,7 @@ const selectors: Record<string, string> = {
     "workload-monitoring-page"
   ),
   metricChip: getSelectorByConfig("span", "metric-chip"),
-  loadingAnimation: getSelectorByConfig("div", "loading-animation")
+  loadingAnimation: getSelectorByConfig("div", "loading-animation"),
 };
 
 const metrics: Record<string, string[]> = {
@@ -52,9 +52,9 @@ const metrics: Record<string, string[]> = {
     "ram",
     "storage",
     "access",
-    "executedQueryTypeProportion"
+    "executedQueryTypeProportion",
   ],
-  overview: ["throughput", "latency", "queueLength", "cpu", "ram"]
+  overview: ["throughput", "latency", "queueLength", "cpu", "ram"],
 };
 
 export function getSelector(component: string): string {
@@ -86,23 +86,23 @@ export function assertItemSelect(
 ): void {
   if (component === "database" && selected) {
     cy.get(getSelector("selectDatabase")).should("not.be.visible", {
-      force: true
+      force: true,
     });
     cy.get(getSelector("unselectDatabase"))
       .scrollIntoView()
       .should("be.visible", {
-        force: true
+        force: true,
       });
   } else if (component === "database" && !selected) {
     cy.get(getSelector("selectDatabase"))
       .scrollIntoView()
       .should("be.visible", { force: true });
     cy.get(getSelector("unselectDatabase")).should("not.be.visible", {
-      force: true
+      force: true,
     });
   } else if (component === "metric" && selected) {
     cy.get(getSelector("selectMetric")).should("not.be.visible", {
-      force: true
+      force: true,
     });
     cy.get(getSelector("unselectMetric"))
       .scrollIntoView()
@@ -112,7 +112,7 @@ export function assertItemSelect(
       .scrollIntoView()
       .should("be.visible", { force: true });
     cy.get(getSelector("unselectMetric")).should("not.be.visible", {
-      force: true
+      force: true,
     });
   }
 }

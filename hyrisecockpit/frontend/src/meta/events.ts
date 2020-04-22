@@ -26,13 +26,13 @@ export function useMetricEvents(): {
     emitSelectedMetricsChangedEvent();
     eventBus.$emit(`SELECTED_METRICS_CHANGED_ON_${page.toUpperCase()}`, {
       metric,
-      value
+      value,
     });
   }
   return {
     emitWatchedMetricsChangedEvent,
     emitSelectedMetricsChangedEvent,
-    emitSelectedMetricsChangedWithinEvent
+    emitSelectedMetricsChangedWithinEvent,
   };
 }
 
@@ -79,7 +79,7 @@ export function useDatabaseEvents(): {
     emitSelectedDatabasesChangedEvent();
     eventBus.$emit(`SELECTED_DATABASES_CHANGED_ON_${page.toUpperCase()}`, {
       database,
-      value
+      value,
     });
   }
   function emitDatabaseAddedEvent(): void {
@@ -92,7 +92,7 @@ export function useDatabaseEvents(): {
     emitSelectedDatabasesChangedEvent,
     emitSelectedDatabasesChangedWithinEvent,
     emitDatabaseAddedEvent,
-    emitDatabaseRemovedEvent
+    emitDatabaseRemovedEvent,
   };
 }
 

@@ -9,11 +9,11 @@ const selectors: Record<string, { element: string; title: string }> = {
   ram: { element: "div", title: "ram" },
   executedQueryTypeProportion: {
     element: "div",
-    title: "executedQueryTypeProportion"
+    title: "executedQueryTypeProportion",
   },
   generatedQueryTypeProportion: {
     element: "div",
-    title: "generatedQueryTypeProportion"
+    title: "generatedQueryTypeProportion",
   },
   firstStorage: { element: "div", title: "1storage" },
   secondStorage: { element: "div", title: "2storage" },
@@ -22,7 +22,7 @@ const selectors: Record<string, { element: string; title: string }> = {
   firstAccessSelect: { element: "input", title: "1access-select" },
   secondAccessSelect: { element: "input", title: "2access-select" },
   openDetailed: { element: "button", title: "open-metric-detailed-view" },
-  closeDetailed: { element: "button", title: "close-metric-detailed-view" }
+  closeDetailed: { element: "button", title: "close-metric-detailed-view" },
 };
 
 export function getSelector(component: string): string {

@@ -9,7 +9,7 @@ import {
   onMounted,
   watch,
   computed,
-  inject
+  inject,
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
 import { useUpdatingDatabases } from "../../meta/databases";
@@ -29,17 +29,17 @@ export default defineComponent({
   props: {
     maxValue: {
       type: Number,
-      default: 1
+      default: 1,
     },
     timestamps: {
       type: Array,
-      default: null
+      default: null,
     },
     pluginEventData: {
       type: Object,
-      default: null
+      default: null,
     },
-    ...ChartPropsValidation
+    ...ChartPropsValidation,
   },
   setup(props: Props, context: SetupContext): void {
     const { databasesUpdated } = context.root.$databaseController;
@@ -90,25 +90,28 @@ export default defineComponent({
       watch(
         () => props.pluginEventData,
         () => {
-          if(props.pluginEventData){
-            
-          const currentPluginEventData = props.pluginEventData[props.selectedDatabases[0]];
-          if(currentPluginEventData) {
-            Plotly.restyle(
-              props.graphId,
-              {
-                y: 
-                  currentPluginEventData.timestamps.map(
-                    x => props.maxValue+1
-                  )
-                ,
-                x: currentPluginEventData.timestamps.map(
-                    x => new Date().getTime()
-                  )
-              },
-              [0]
-            );
-          }
+          if (props.pluginEventData) {
+            console.log(props.pluginEventData);
+            const currentPluginEventData =
+              props.pluginEventData[props.selectedDatabases[0]];
+            if (currentPluginEventData) {
+              Plotly.restyle(
+                props.graphId,
+                {
+                  y: [
+                    currentPluginEventData.timestamps.map(
+                      (x) => props.maxValue + 1
+                    ),
+                  ],
+                  x: [currentPluginEventData.timestamps],
+                  text: [currentPluginEventData.events],
+                  width: 1000,
+                  textposition: "top right",
+                  textinfo: "text",
+                },
+                [1]
+              );
+            }
           }
         }
       );
@@ -133,11 +136,11 @@ export default defineComponent({
           x: [],
           type: "bar",
           name: "plugin events",
-          width: 1,
+          width: 20,
           marker: {
-            color: colors.grey.lighten1
-          }
-        }
+            color: colors.grey.lighten1,
+          },
+        },
       ];
     }
 
@@ -150,8 +153,8 @@ export default defineComponent({
     function updateChartDatasets(): void {
       const timestamps = props.timestamps;
       const newData = {
-        y: Object.values(props.selectedDatabases).map(id => props.data[id]),
-        x: Object.values(props.selectedDatabases).map(() => timestamps)
+        y: Object.values(props.selectedDatabases).map((id) => props.data[id]),
+        x: Object.values(props.selectedDatabases).map(() => timestamps),
       };
       const maxSelectedLength = getMaxDatasetLength();
 
@@ -162,7 +165,7 @@ export default defineComponent({
         props.selectedDatabases.map((x, index) => index)
       );
     }
-  }
+  },
 });
 
 function useLineChartConfiguration(
@@ -184,13 +187,13 @@ function useLineChartConfiguration(
       xaxis: {
         type: "date",
         tickformat: "%H:%M:%S",
-        range: [currentTime - (xMin - 1) * 1000, currentTime]
+        range: [currentTime - (xMin - 1) * 1000, currentTime],
       },
       yaxis: {
         title: {
-          text: props.chartConfiguration.yaxis
+          text: props.chartConfiguration.yaxis,
         },
-        range: [0, yMax * 1.05 > 0 ? yMax * 1.05 : 1]
+        range: [0, yMax * 1.05 > 0 ? yMax * 1.05 : 1],
       },
       autosize: true,
       showlegend: multipleDatabasesAllowed,
@@ -200,15 +203,15 @@ function useLineChartConfiguration(
         r: 40,
         b: 30,
         t: multipleDatabasesAllowed ? 0 : 10,
-        pad: 0
+        pad: 0,
       },
-      paper_bgcolor: "rgba(0,0,0,0)"
+      paper_bgcolor: "rgba(0,0,0,0)",
     };
   }
 
   function getDataset(data: number[] = [], databaseId: string = ""): any {
     const database = databases.value.find(
-      database => database.id === databaseId
+      (database) => database.id === databaseId
     );
     return {
       y: data,
@@ -216,7 +219,7 @@ function useLineChartConfiguration(
       mode: "lines+markers",
       fill: multipleDatabasesAllowed || "tonexty",
       line: database ? { color: database.color } : {},
-      name: database ? database.id : {}
+      name: database ? database.id : {},
     };
   }
 

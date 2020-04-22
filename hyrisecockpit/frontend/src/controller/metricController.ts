@@ -45,7 +45,7 @@ export function useMetricController(): MetricController {
 
   function setupServices(): Record<Metric, MetricService> {
     const services: any = {};
-    availableMetrics.forEach(metric => {
+    availableMetrics.forEach((metric) => {
       services[metric] = useMetricService(metric);
     });
     return services;
@@ -53,18 +53,18 @@ export function useMetricController(): MetricController {
 
   function setupIntervals(): Record<Metric, Interval> {
     const intervals: any = {};
-    availableMetrics.forEach(metric => {
+    availableMetrics.forEach((metric) => {
       intervals[metric] = {
         id: undefined,
         runningState: false,
-        time: getMetricRequestTime(metric)
+        time: getMetricRequestTime(metric),
       };
     });
     return intervals;
   }
 
   function start(metrics: Metric[], start?: Date, end?: Date): void {
-    metrics.forEach(metric => {
+    metrics.forEach((metric) => {
       metricServices[metric].getDataIfReady(start, end);
       metricIntervals[metric].id = setInterval(
         metricServices[metric].getDataIfReady,
@@ -76,9 +76,9 @@ export function useMetricController(): MetricController {
 
   function stop(): void {
     const runningIntervals = Object.values(metricIntervals).filter(
-      interval => interval.runningState == true
+      (interval) => interval.runningState == true
     );
-    runningIntervals.forEach(interval => {
+    runningIntervals.forEach((interval) => {
       clearInterval(interval.id);
       interval.id = undefined;
       interval.runningState = false;

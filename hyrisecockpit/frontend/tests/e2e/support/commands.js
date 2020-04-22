@@ -26,20 +26,22 @@
 
 import { getGetAlias } from "../setup/helpers";
 
-Cypress.Commands.add("numberOfRequests", alias =>
+Cypress.Commands.add("numberOfRequests", (alias) =>
   cy
     .wrap()
-    .then(() => cy.state("requests").filter(req => req.alias === alias).length)
+    .then(
+      () => cy.state("requests").filter((req) => req.alias === alias).length
+    )
 );
 
-Cypress.Commands.add("setupAppState", backend => {
+Cypress.Commands.add("setupAppState", (backend) => {
   backend.start();
   cy.visit("/");
   cy.wait("@" + getGetAlias("database"));
   cy.get("@" + getGetAlias("database"));
 });
 
-Cypress.Commands.add("setupData", request => {
+Cypress.Commands.add("setupData", (request) => {
   cy.wait("@" + getGetAlias(request));
   cy.get("@" + getGetAlias(request));
 });

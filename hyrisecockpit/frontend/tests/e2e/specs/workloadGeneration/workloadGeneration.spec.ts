@@ -6,7 +6,7 @@ import {
   getPostAlias,
   getDeleteAlias,
   getGetAlias,
-  benchmarks
+  benchmarks,
 } from "../../setup/helpers";
 import {
   assertLoadedBenchmarks,
@@ -15,7 +15,7 @@ import {
   getBenchmarkIndex,
   assertStartedWorkload,
   assertButtonState,
-  assertChangedTable
+  assertChangedTable,
 } from "./helpers";
 
 let backend = useBackendMock();
@@ -44,9 +44,7 @@ describe("opening workload generation", () => {
     it("will set frequency to new value but do not start workload", () => {
       const newValue = generateRandomInt(0, 1000);
       clickElement(getViewSelector("workloadGenerationButton"));
-      cy.get(getSelector("frequencyField"))
-        .clear()
-        .type(newValue.toString());
+      cy.get(getSelector("frequencyField")).clear().type(newValue.toString());
       cy.get(getSelector("frequencySlider")).should(
         "have.value",
         newValue.toString()
@@ -98,7 +96,7 @@ describe("opening workload generation", () => {
     it("will load and unload the correct tables", () => {
       const activeBenchmark = statusData[0].loaded_benchmarks[0];
       const deactiveBenchmarks = benchmarks.filter(
-        type => type !== activeBenchmark
+        (type) => type !== activeBenchmark
       );
       const index = generateRandomInt(0, deactiveBenchmarks.length);
 
@@ -153,12 +151,8 @@ describe("opening workload generation", () => {
       cy.wait("@" + getPostAlias("workload"));
 
       clickElement(getViewSelector("workloadGenerationButton"));
-      cy.get(getSelector("frequencyField"))
-        .clear()
-        .type(newValue.toString());
-      cy.get("div")
-        .first()
-        .click({ force: true }); // need this to trigger action (cy.trigger not working)
+      cy.get(getSelector("frequencyField")).clear().type(newValue.toString());
+      cy.get("div").first().click({ force: true }); // need this to trigger action (cy.trigger not working)
 
       cy.wait("@" + getPostAlias("workload"));
       cy.get("@" + getPostAlias("workload")).should((xhr: any) => {

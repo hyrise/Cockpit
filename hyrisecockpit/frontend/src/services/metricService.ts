@@ -35,7 +35,7 @@ export function useMetricService(metric: Metric): MetricService {
       ? formatDateToNanoSec(end)
       : formatDateToNanoSec(currentTimestamp);
 
-    fetchData(startTime, endTime).then(result => {
+    fetchData(startTime, endTime).then((result) => {
       useUpdatingData(result, metric);
       if (metricMetaData.fetchType === "modify") {
         result.forEach((data: any) => {
@@ -68,10 +68,10 @@ export function useMetricService(metric: Metric): MetricService {
         .get(metricMetaData.endpoint, {
           params: {
             startts: start,
-            endts: end
-          }
+            endts: end,
+          },
         })
-        .then(response => {
+        .then((response) => {
           if (
             metricMetaData.component === "QueryTypeProportion" ||
             metricMetaData.historic
@@ -82,7 +82,7 @@ export function useMetricService(metric: Metric): MetricService {
             resolve(response.data.body[metricMetaData.base]);
           }
         })
-        .catch(error => {
+        .catch((error) => {
           queryReadyState.value = true;
           reject(error);
         });
@@ -100,7 +100,7 @@ export function useMetricService(metric: Metric): MetricService {
 
   function handleTimestamps(newTimestamps: number[]): void {
     const dates = newTimestamps.map(
-      timestamp => new Date(timestamp / Math.pow(10, 6))
+      (timestamp) => new Date(timestamp / Math.pow(10, 6))
     );
     timestamps.value = historicFetching.value
       ? handleHistoricDataPoints(dates)

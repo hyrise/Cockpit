@@ -2,7 +2,7 @@ import {
   DatabaseService,
   DatabaseCPUResponse,
   DatabaseStorageResponse,
-  DatabaseResponse
+  DatabaseResponse,
 } from "@/types/database";
 import axios from "axios";
 import { colorDefinition } from "@/meta/colors";
@@ -15,17 +15,17 @@ export function useDatabaseService(): DatabaseService {
   const { formatDateToNanoSec, subSeconds } = useFormatting();
   const {
     emitDatabaseAddedEvent,
-    emitDatabaseRemovedEvent
+    emitDatabaseRemovedEvent,
   } = useDatabaseEvents();
 
   const {
     getDatabaseMemoryFootprint,
-    getDatabaseMainMemoryCapacity
+    getDatabaseMainMemoryCapacity,
   } = useDataTransformationHelpers();
 
   async function fetchDatabases(): Promise<DatabaseResponse[]> {
     let databases: DatabaseResponse[] = [];
-    await axios.get(controlBackend + "database").then(response => {
+    await axios.get(controlBackend + "database").then((response) => {
       databases = getDatabasesInformation(response.data);
     });
     return databases;
@@ -55,10 +55,10 @@ export function useDatabaseService(): DatabaseService {
       .get(monitorBackend + "system", {
         params: {
           startts: formatDateToNanoSec(subSeconds(currentDate, 1)),
-          endts: formatDateToNanoSec(currentDate)
-        }
+          endts: formatDateToNanoSec(currentDate),
+        },
       })
-      .then(response => {
+      .then((response) => {
         databasesWithCPUInformation = getCPUInformation(response.data);
       });
     return databasesWithCPUInformation;
@@ -68,7 +68,7 @@ export function useDatabaseService(): DatabaseService {
     DatabaseStorageResponse[]
   > {
     let databasesWithStorageInformation: DatabaseStorageResponse[] = [];
-    await axios.get(monitorBackend + "storage").then(response => {
+    await axios.get(monitorBackend + "storage").then((response) => {
       databasesWithStorageInformation = getStorageInformation(
         response.data.body.storage
       );
@@ -82,7 +82,7 @@ export function useDatabaseService(): DatabaseService {
       databases.push({
         id: data.id,
         host: data.host,
-        numberOfWorkers: data.number_workers
+        numberOfWorkers: data.number_workers,
       } as DatabaseResponse);
     });
     return databases;
@@ -96,7 +96,7 @@ export function useDatabaseService(): DatabaseService {
       databasesWithCPUInformation.push({
         id: databaseData.id,
         numberOfCPUs: cpuData?.system_data?.cpu?.cpu_count ?? 0,
-        memoryCapacity: getDatabaseMainMemoryCapacity(cpuData.system_data)
+        memoryCapacity: getDatabaseMainMemoryCapacity(cpuData.system_data),
       } as DatabaseCPUResponse);
     });
     return databasesWithCPUInformation;
@@ -108,7 +108,7 @@ export function useDatabaseService(): DatabaseService {
       databasesWithStorageInformation.push({
         id: id,
         memoryFootprint: getDatabaseMemoryFootprint(data),
-        tables: Object.keys(data)
+        tables: Object.keys(data),
       } as DatabaseStorageResponse);
     });
     return databasesWithStorageInformation;
@@ -123,7 +123,7 @@ export function useDatabaseService(): DatabaseService {
   function removeDatabase(databaseId: string): void {
     axios
       .delete(controlBackend + "database", {
-        data: { id: databaseId }
+        data: { id: databaseId },
       })
       .then(() => {
         emitDatabaseRemovedEvent();
@@ -138,6 +138,6 @@ export function useDatabaseService(): DatabaseService {
     fetchDatabasesStorageInformation,
     getDatabaseColor,
     getCPUInformation,
-    getStorageInformation
+    getStorageInformation,
   };
 }

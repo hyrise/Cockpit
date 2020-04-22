@@ -10,9 +10,7 @@ export function clickContentOfSelect(idx: number, content: string): void {
   cy.get("div[role=listbox]")
     .eq(idx)
     .within(() => {
-      cy.get("div")
-        .contains(content)
-        .click({ force: true });
+      cy.get("div").contains(content).click({ force: true });
     });
 }
 

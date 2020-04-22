@@ -4,7 +4,7 @@ import {
   getGetAlias,
   getPostAlias,
   getDeleteAlias,
-  generateRandomInt
+  generateRandomInt,
 } from "../../setup/helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
 import {
@@ -12,7 +12,7 @@ import {
   assertActivePlugins,
   getChangeSettingsSelector,
   assertRequestValues,
-  assertSettingsRequestValues
+  assertSettingsRequestValues,
 } from "./helpers";
 
 let backend = useBackendMock({ plugins: 3 });
@@ -178,7 +178,7 @@ describe("When opening the plugins overview", () => {
                 activePlugins.push({
                   plugin: plugin,
                   idx: idx,
-                  name: pluginSetting.name
+                  name: pluginSetting.name,
                 });
               }
               return activePlugins;
@@ -189,9 +189,7 @@ describe("When opening the plugins overview", () => {
             .eq(idx + 1)
             .click();
           cy.get(getChangeSettingsSelector(activePlugins[0].plugin)).click();
-          cy.get(getSelector("settingValue"))
-            .clear()
-            .type(newValue.toString());
+          cy.get(getSelector("settingValue")).clear().type(newValue.toString());
           cy.get(getSelector("saveSettingsButton")).click();
           cy.wait("@" + getPostAlias("plugin_settings"));
           cy.get("@" + getPostAlias("plugin_settings")).should((xhr: any) => {
