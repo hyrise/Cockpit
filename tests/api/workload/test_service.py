@@ -5,13 +5,16 @@ from unittest.mock import MagicMock
 
 from pytest import fixture, mark
 
-from hyrisecockpit.api.app.workload.interface import WorkloadInterface
-from hyrisecockpit.api.app.workload.schema import WorkloadSchema
+from hyrisecockpit.api.app.workload.interface import (
+    DetailedWorkloadInterface,
+    WorkloadInterface,
+)
+from hyrisecockpit.api.app.workload.schema import DetailedWorkloadSchema, WorkloadSchema
 from hyrisecockpit.api.app.workload.service import WorkloadService
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import get_response
 
-from .data import interfaces
+from .data import detailed_interfaces, interfaces
 
 
 class TestWorkloadService:
@@ -20,7 +23,8 @@ class TestWorkloadService:
     @fixture
     def service(self) -> Type[WorkloadService]:
         """Get a WorkloadService class without IPC."""
-        WorkloadService._send_message = MagicMock()  # type: ignore
+        WorkloadService._send_message_to_gen = MagicMock()  # type: ignore
+        WorkloadService._send_message_to_dbm = MagicMock()  # type: ignore
         return WorkloadService
 
     @mark.parametrize("expected", [interfaces(), []])
@@ -30,9 +34,9 @@ class TestWorkloadService:
         """A Workload service gets all workloads."""
         response = get_response(200)
         response["body"]["workloads"] = expected
-        service._send_message.return_value = response  # type: ignore
+        service._send_message_to_gen.return_value = response  # type: ignore
         result = service.get_all()
-        service._send_message.assert_called_once_with(  # type: ignore
+        service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(header=Header(message="get all workloads"), body={})
         )
         assert expected == WorkloadSchema(many=True).dump(result)
@@ -42,11 +46,18 @@ class TestWorkloadService:
         self, service: WorkloadService, interface: WorkloadInterface
     ):
         """A Workload service gets all workloads."""
+        service._send_message_to_dbm.return_value = get_response(200)  # type: ignore
+
         response = get_response(200)
         response["body"]["workload"] = interface
-        service._send_message.return_value = response  # type: ignore
+        service._send_message_to_gen.return_value = response  # type: ignore
+
         result = service.create(interface)
-        service._send_message.assert_called_once_with(  # type: ignore
+
+        service._send_message_to_dbm.assert_called_once_with(  # type: ignore
+            Request(header=Header(message="start worker"), body={})
+        )
+        service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(header=Header(message="start workload"), body=dict(interface))
         )
         assert interface == WorkloadSchema().dump(result)
@@ -56,121 +67,145 @@ class TestWorkloadService:
         self, service: WorkloadService, interface: WorkloadInterface
     ):
         """A Workload service gets all workloads."""
-        service._send_message.return_value = get_response(409)  # type: ignore
+        service._send_message_to_dbm.return_value = get_response(200)  # type: ignore
+
+        service._send_message_to_gen.return_value = get_response(409)  # type: ignore
+
         result = service.create(interface)
-        service._send_message.assert_called_once_with(  # type: ignore
+
+        service._send_message_to_dbm.assert_called_once_with(  # type: ignore
+            Request(header=Header(message="start worker"), body={})
+        )
+        service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(header=Header(message="start workload"), body=dict(interface))
         )
-        assert {} == WorkloadSchema().dump(result)
+        assert result is None
 
-    @mark.parametrize("interface", interfaces())
+    @mark.parametrize("detailed_interface", detailed_interfaces())
     def test_gets_the_correct_workload(
-        self, service: WorkloadService, interface: WorkloadInterface
+        self, service: WorkloadService, detailed_interface: DetailedWorkloadInterface
     ):
         """A Workload service gets all workloads."""
         response = get_response(200)
-        response["body"]["workload"] = interface
-        service._send_message.return_value = response  # type: ignore
-        result = service.get_by_id(interface["workload_id"])
-        service._send_message.assert_called_once_with(  # type: ignore
+        response["body"]["workload"] = detailed_interface
+        service._send_message_to_gen.return_value = response  # type: ignore
+        result = service.get_by_id(detailed_interface["folder_name"])
+        service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="get workload"),
-                body={"workload_id": interface["workload_id"]},
+                body={"folder_name": detailed_interface["folder_name"]},
             )
         )
-        assert interface == WorkloadSchema().dump(result)
+        assert detailed_interface == DetailedWorkloadSchema().dump(result)
 
-    @mark.parametrize("interface", interfaces())
+    @mark.parametrize("detailed_interface", detailed_interfaces())
     def test_gets_no_workload_if_it_cannot_be_found(
-        self, service: WorkloadService, interface: WorkloadInterface
+        self, service: WorkloadService, detailed_interface: DetailedWorkloadInterface
     ):
         """A Workload service gets all workloads."""
-        service._send_message.return_value = get_response(404)  # type: ignore
-        result = service.get_by_id(interface["workload_id"])
-        service._send_message.assert_called_once_with(  # type: ignore
+        service._send_message_to_gen.return_value = get_response(404)  # type: ignore
+        result = service.get_by_id(detailed_interface["folder_name"])
+        service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="get workload"),
-                body={"workload_id": interface["workload_id"]},
+                body={"folder_name": detailed_interface["folder_name"]},
             )
         )
-        assert {} == WorkloadSchema().dump(result)
+        assert result is None
 
-    @mark.parametrize("interface", interfaces())
+    @mark.parametrize("detailed_interface", detailed_interfaces())
     def test_deletes_the_correct_workload(
-        self, service: WorkloadService, interface: WorkloadInterface
+        self, service: WorkloadService, detailed_interface: DetailedWorkloadInterface
     ):
         """A Workload service gets all workloads."""
+        service._send_message_to_dbm.return_value = get_response(200)  # type: ignore
+
         response = get_response(200)
-        response["body"]["workload_id"] = interface["workload_id"]
-        service._send_message.return_value = response  # type: ignore
-        result = service.delete_by_id(interface["workload_id"])
-        service._send_message.assert_called_once_with(  # type: ignore
+        response["body"]["folder_name"] = detailed_interface["folder_name"]
+        service._send_message_to_gen.return_value = response  # type: ignore
+
+        result = service.delete_by_id(detailed_interface["folder_name"])
+
+        service._send_message_to_dbm.assert_called_once_with(  # type: ignore
+            Request(header=Header(message="close worker"), body={})
+        )
+        service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="delete workload"),
-                body={"workload_id": interface["workload_id"]},
+                body={"folder_name": detailed_interface["folder_name"]},
             )
         )
-        assert interface["workload_id"] == result
+        assert detailed_interface["folder_name"] == result
 
-    @mark.parametrize("interface", interfaces())
+    @mark.parametrize("detailed_interface", detailed_interfaces())
     def test_deletes_no_workload_if_it_cannot_be_found(
-        self, service: WorkloadService, interface: WorkloadInterface
+        self, service: WorkloadService, detailed_interface: DetailedWorkloadInterface
     ):
         """A Workload service gets all workloads."""
-        service._send_message.return_value = get_response(404)  # type: ignore
-        result = service.delete_by_id(interface["workload_id"])
-        service._send_message.assert_called_once_with(  # type: ignore
+        service._send_message_to_dbm.return_value = get_response(200)  # type: ignore
+        service._send_message_to_gen.return_value = get_response(404)  # type: ignore
+
+        result = service.delete_by_id(detailed_interface["folder_name"])
+
+        service._send_message_to_dbm.assert_called_once_with(  # type: ignore
+            Request(header=Header(message="close worker"), body={})
+        )
+        service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="delete workload"),
-                body={"workload_id": interface["workload_id"]},
+                body={"folder_name": detailed_interface["folder_name"]},
             )
         )
-        assert {} == WorkloadSchema().dump(result)
+        assert result is None
 
-    @mark.parametrize("interface", interfaces())
+    @mark.parametrize("detailed_interface", detailed_interfaces())
     def test_updates_the_correct_workload(
-        self, service: WorkloadService, interface: WorkloadInterface
+        self, service: WorkloadService, detailed_interface: DetailedWorkloadInterface
     ):
         """A Workload service gets all workloads."""
-        new_interface = WorkloadInterface(
-            workload_id=interface["workload_id"],
-            folder_name=interface["folder_name"] + "F",
-            frequency=interface["frequency"] + 1,
+        new_detailed_interface = DetailedWorkloadInterface(
+            folder_name=detailed_interface["folder_name"] + "F",
+            frequency=detailed_interface["frequency"] + 1,
+            weights={k: v + 1 for k, v in detailed_interface["weights"].items()},
         )
         response = get_response(200)
-        response["body"]["workload"] = new_interface
-        service._send_message.return_value = response  # type: ignore
-        result = service.update_by_id(interface["workload_id"], new_interface)
-        service._send_message.assert_called_once_with(  # type: ignore
+        response["body"]["workload"] = new_detailed_interface
+        service._send_message_to_gen.return_value = response  # type: ignore
+        result = service.update_by_id(
+            detailed_interface["folder_name"], new_detailed_interface
+        )
+        service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="update workload"),
                 body={
-                    "workload_id": interface["workload_id"],
-                    "workload": dict(new_interface),
+                    "folder_name": detailed_interface["folder_name"],
+                    "workload": dict(new_detailed_interface),
                 },
             )
         )
-        assert new_interface == WorkloadSchema().dump(result)
+        assert new_detailed_interface == DetailedWorkloadSchema().dump(result)
 
-    @mark.parametrize("interface", interfaces())
+    @mark.parametrize("detailed_interface", detailed_interfaces())
     def test_updates_no_workload_if_it_cannot_be_found(
-        self, service: WorkloadService, interface: WorkloadInterface
+        self, service: WorkloadService, detailed_interface: DetailedWorkloadInterface
     ):
         """A Workload service gets all workloads."""
-        new_interface = WorkloadInterface(
-            workload_id=interface["workload_id"],
-            folder_name=interface["folder_name"] + "F",
-            frequency=interface["frequency"] + 1,
+        new_detailed_interface = DetailedWorkloadInterface(
+            folder_name=detailed_interface["folder_name"] + "F",
+            frequency=detailed_interface["frequency"] + 1,
+            weights={k: v + 1 for k, v in detailed_interface["weights"].items()},
         )
-        service._send_message.return_value = get_response(404)  # type: ignore
-        result = service.update_by_id(interface["workload_id"], new_interface)
-        service._send_message.assert_called_once_with(  # type: ignore
+        service._send_message_to_gen.return_value = get_response(404)  # type: ignore
+        result = service.update_by_id(
+            detailed_interface["folder_name"], new_detailed_interface
+        )
+        service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="update workload"),
                 body={
-                    "workload_id": interface["workload_id"],
-                    "workload": dict(new_interface),
+                    "folder_name": detailed_interface["folder_name"],
+                    "workload": dict(new_detailed_interface),
                 },
             )
         )
-        assert {} == WorkloadSchema().dump(result)
+        assert result is None
