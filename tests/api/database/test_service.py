@@ -1,0 +1,182 @@
+"""Tests for the database service."""
+from typing import List
+from unittest.mock import MagicMock, patch
+
+from pytest import fixture
+
+from hyrisecockpit.api.app.database.interface import (
+    BenchmarkTablesInterface,
+    DatabaseInterface,
+    DetailedDatabaseInterface,
+)
+from hyrisecockpit.api.app.database.model import (
+    AvailableBenchmarkTables,
+    DetailedDatabase,
+)
+from hyrisecockpit.api.app.database.schema import DetailedDatabaseSchema
+from hyrisecockpit.api.app.database.service import DatabaseService
+from hyrisecockpit.api.app.shared import _add_active_database, _get_active_databases
+from hyrisecockpit.request import Header, Request
+
+mocked_socket = MagicMock()
+
+
+def get_mocked_socket_manager(*args) -> MagicMock:
+    """Return fake storage cursor."""
+    mocked_socket_manager_constructor: MagicMock = MagicMock()
+    mocked_socket_manager_constructor.__enter__.return_value = mocked_socket
+    return mocked_socket_manager_constructor
+
+
+@fixture
+def database_service() -> DatabaseService:
+    """Return zeromq patched database service."""
+    return DatabaseService()
+
+
+@fixture
+def mocked_database_service() -> DatabaseService:
+    """Return mocked database service."""
+    DatabaseService._send_message = MagicMock()  # type: ignore
+    return DatabaseService  # type: ignore
+
+
+class TestDatabaseService:
+    """Tests for the database service."""
+
+    @patch("hyrisecockpit.api.app.database.service.validate")
+    @patch(
+        "hyrisecockpit.api.app.database.service.ManagerSocket",
+        get_mocked_socket_manager,
+    )
+    def test_sends_request(
+        self, mocked_validate: MagicMock, database_service: DatabaseService
+    ) -> None:
+        """Test sending of message."""
+        fake_message = "do something"
+        global mocked_socket
+        mocked_socket.send_message.return_value = {"some": "response"}
+
+        response = database_service._send_message(fake_message)  # type: ignore
+
+        mocked_socket.send_message.assert_called_once_with(fake_message)
+        mocked_validate.assert_called_once()
+
+        assert response == {"some": "response"}  # type: ignore
+
+        mocked_socket = MagicMock()
+
+    def test_gets_databases(self, mocked_database_service: DatabaseService) -> None:
+        """A database service gets all databases."""
+        fake_database = {
+            "id": "Bibi",
+            "host": "Tina",
+            "port": "1991",
+            "number_workers": 2,
+            "dbname": "Amadeus",
+            "user": "Falko von Falkenstein",
+            "password": "Bibi und Tina",
+        }
+
+        fake_response = {"body": {"databases": [fake_database]}}
+        mocked_database_service._send_message.return_value = fake_response  # type: ignore
+
+        expected: List = [DetailedDatabase(**fake_database)]  # type: ignore
+
+        response: List = mocked_database_service.get_databases()
+
+        mocked_database_service._send_message.assert_called_once_with(  # type: ignore
+            Request(header=Header(message="get databases"), body={})
+        )
+        schema = DetailedDatabaseSchema()
+
+        assert isinstance(response[0], DetailedDatabase)
+        assert schema.dumps(response[0]) == schema.dumps(expected[0])
+
+    def test_registers_database(self, mocked_database_service: DatabaseService) -> None:
+        """A database service registers a database."""
+        interface = DetailedDatabaseInterface(
+            id="hycrash",
+            host="linux",
+            port="666",
+            number_workers=42,
+            dbname="post",
+            user="Alex",
+            password="1234",
+        )
+        fake_response = {"header": {"status": 42}}
+        mocked_database_service._send_message.return_value = fake_response  # type: ignore
+
+        response: int = mocked_database_service.register_database(interface)
+
+        mocked_database_service._send_message.assert_called_once_with(  # type: ignore
+            Request(header=Header(message="add database"), body=dict(interface))
+        )
+        assert "hycrash" in _get_active_databases()
+        assert response == 42
+
+    def test_deregisters_database(
+        self, mocked_database_service: DatabaseService
+    ) -> None:
+        """A database service deregisters a database."""
+        _add_active_database("lowrise")
+        interface = DatabaseInterface(id="lowrise",)
+        fake_response = {"header": {"status": 42}}
+        mocked_database_service._send_message.return_value = fake_response  # type: ignore
+
+        response: int = mocked_database_service.deregister_database(interface)
+
+        mocked_database_service._send_message.assert_called_once_with(  # type: ignore
+            Request(header=Header(message="delete database"), body=dict(interface))
+        )
+        assert response == 42
+
+    def test_gets_available_benchmark_tables(
+        self, mocked_database_service: DatabaseService
+    ) -> None:
+        """A database service returns the available benchmark tables."""
+        fake_response = {"header": {"status": 42}}
+        mocked_database_service._send_message.return_value = fake_response  # type: ignore
+
+        response: AvailableBenchmarkTables = mocked_database_service.get_available_benchmark_tables()
+
+        assert response.folder_names == ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
+
+    def test_deletes_benchmark_tables(
+        self, mocked_database_service: DatabaseService
+    ) -> None:
+        """A database service deletes benchmark tables."""
+        interface = BenchmarkTablesInterface(folder_name="kong fu",)
+        fake_response = {"header": {"status": 42}}
+        mocked_database_service._send_message.return_value = fake_response  # type: ignore
+
+        response: int = mocked_database_service.delete_benchmark_tables(interface)
+
+        mocked_database_service._send_message.assert_called_once_with(  # type: ignore
+            Request(header=Header(message="delete data"), body=dict(interface))
+        )
+        assert response == 42
+
+    def test_starts_worker(self, mocked_database_service: DatabaseService) -> None:
+        """A database service starts worker."""
+        fake_response = {"header": {"status": 42}}
+        mocked_database_service._send_message.return_value = fake_response  # type: ignore
+
+        response: int = mocked_database_service.start_worker_pool()
+
+        mocked_database_service._send_message.assert_called_once_with(  # type: ignore
+            Request(header=Header(message="start worker"), body={})
+        )
+        assert response == 42
+
+    def test_closes_worker(self, mocked_database_service: DatabaseService) -> None:
+        """A database service close worker."""
+        fake_response = {"header": {"status": 42}}
+        mocked_database_service._send_message.return_value = fake_response  # type: ignore
+
+        response: int = mocked_database_service.close_worker_pool()
+
+        mocked_database_service._send_message.assert_called_once_with(  # type: ignore
+            Request(header=Header(message="close worker"), body={})
+        )
+        assert response == 42
