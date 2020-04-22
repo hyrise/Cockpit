@@ -5,7 +5,7 @@
       :evaluations="[false]"
     />
     <div class="mx-6">
-      <status-warning />
+      <status-warning :selected-databases="selectedDatabases" />
       <database-query-tables :selected-databases="selectedDatabases" />
       <warning :condition="selectedDatabases">
         <template #message>

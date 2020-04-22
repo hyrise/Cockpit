@@ -1,7 +1,7 @@
 <template>
   <v-alert
     v-if="show"
-    class="alert mt-2 primary--text"
+    class="alert mt-4 primary--text"
     type="warning"
     color="warning"
   >

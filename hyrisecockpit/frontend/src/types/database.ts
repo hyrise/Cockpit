@@ -13,12 +13,8 @@ export interface Database {
   color: string;
   systemDetails: DatabaseSystemDetails;
   tables: string[];
-}
-
-export interface DatabaseStatus {
-  noDatabase: boolean;
-  blockedDatabases: string[];
-  inactiveDatabases: string[];
+  blocked: boolean;
+  active: boolean;
 }
 
 export interface DatabaseController {
@@ -26,7 +22,6 @@ export interface DatabaseController {
   availableDatabasesById: Ref<readonly string[]>;
   getDatabasesByIds: (ids: string[]) => Database[];
   getDatabaseById: (id: string) => Database;
-  getDatabaseStatusInformation: () => DatabaseStatus;
 }
 
 export interface DatabaseService {

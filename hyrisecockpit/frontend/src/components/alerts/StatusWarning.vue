@@ -1,23 +1,24 @@
 <template>
   <span>
-    <warning v-if="noDatabase">
+    <warning v-if="!databases.length">
       <template #message>
         No database added
       </template>
     </warning>
-    <warning v-for="database in inactiveDatabases" :key="database">
-      <template #message> {{ database }} is not active </template>
-    </warning>
     <v-row>
-      <v-chip
-        class="mx-4 mt-4 mb-1 py-2 white--text"
-        v-for="database in blockedDatabases"
-        :key="database"
-        :color="useDatabaseService().getDatabaseColor(database)"
-      >
-        <v-icon> mdi-exclamation </v-icon>
-        <span> {{ database }} is blocked </span>
-      </v-chip>
+      <div v-for="database in databases" :key="database.id">
+        <warning class="mx-4" v-if="!database.active">
+          <template #message> {{ database.id }} is not active </template>
+        </warning>
+        <v-chip
+          class="mx-4 mt-4 mb-1 py-2 white--text"
+          v-if="database.blocked"
+          :color="database.color"
+        >
+          <v-icon> mdi-exclamation </v-icon>
+          <span> {{ database.id }} is blocked </span>
+        </v-chip>
+      </div>
     </v-row>
   </span>
 </template>
@@ -30,41 +31,30 @@ import {
   ref,
 } from "@vue/composition-api";
 import Warning from "./Warning.vue";
-import { useDatabaseService } from "../../services/databaseService";
+import { Database } from "@/types/database";
+import { useUpdatingDatabases } from "@/meta/databases";
 
+interface Props {
+  selectedDatabases: string[];
+}
 interface Data {
-  noDatabase: Ref<boolean>;
-  blockedDatabases: Ref<readonly string[]>;
-  inactiveDatabases: Ref<readonly string[]>;
-  useDatabaseService: () => void;
+  databases: Ref<readonly Database[]>;
 }
 
 export default defineComponent({
   name: "StatusWarning",
+  props: {
+    selectedDatabases: {
+      type: Array,
+      default: null,
+    },
+  },
   components: {
     Warning,
   },
-  setup(props: {}, context: SetupContext): Data {
-    const noDatabase = ref<boolean>(false);
-    const blockedDatabases = ref<string[]>([]);
-    const inactiveDatabases = ref<string[]>([]);
+  setup(props: Props, context: SetupContext): Data {
     return {
-      noDatabase: computed(
-        () =>
-          context.root.$databaseController.getDatabaseStatusInformation()
-            .noDatabase
-      ),
-      blockedDatabases: computed(
-        () =>
-          context.root.$databaseController.getDatabaseStatusInformation()
-            .blockedDatabases
-      ),
-      inactiveDatabases: computed(
-        () =>
-          context.root.$databaseController.getDatabaseStatusInformation()
-            .inactiveDatabases
-      ),
-      useDatabaseService,
+      ...useUpdatingDatabases(props, context),
     };
   },
 });

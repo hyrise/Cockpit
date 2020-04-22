@@ -5,7 +5,7 @@
       :evaluations="[false]"
     />
     <div v-if="$databaseController.databasesUpdated.value" class="mx-6">
-      <status-warning />
+      <status-warning :selected-databases="selectedDatabases" />
       <database-details-panel
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"

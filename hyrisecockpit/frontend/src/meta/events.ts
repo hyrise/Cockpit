@@ -62,9 +62,8 @@ export function useDatabaseEvents(): {
   emitSelectedDatabasesChangedEvent: (databases?: string[]) => void;
   emitDatabaseAddedEvent: () => void;
   emitDatabaseRemovedEvent: () => void;
-  emitNoDatabaseEvent: () => void;
-  emitDatabaseStatusEvent: (
-    database: string,
+  emitDatabaseStatusChangedEvent: (
+    databaseId: string,
     blocked: boolean,
     active: boolean
   ) => void;
@@ -94,23 +93,19 @@ export function useDatabaseEvents(): {
   function emitDatabaseRemovedEvent(): void {
     eventBus.$emit("DATABASE_REMOVED");
   }
-  function emitNoDatabaseEvent(): void {
-    eventBus.$emit("NO_DATABASE");
-  }
-  function emitDatabaseStatusEvent(
-    database: string,
+  function emitDatabaseStatusChangedEvent(
+    databaseId: string,
     blocked: boolean,
     active: boolean
   ): void {
-    eventBus.$emit("DATABASE_STATUS", database, blocked, active);
+    eventBus.$emit("DATABASE_STATUS_CHANGED", databaseId, blocked, active);
   }
   return {
     emitSelectedDatabasesChangedEvent,
     emitSelectedDatabasesChangedWithinEvent,
     emitDatabaseAddedEvent,
     emitDatabaseRemovedEvent,
-    emitNoDatabaseEvent,
-    emitDatabaseStatusEvent,
+    emitDatabaseStatusChangedEvent,
   };
 }
 

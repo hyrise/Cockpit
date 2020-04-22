@@ -5,7 +5,6 @@ import {
   DatabaseCPUResponse,
   DatabaseStorageResponse,
   DatabaseResponse,
-  DatabaseStatus,
 } from "@/types/database";
 import { useDatabaseService } from "@/services/databaseService";
 import { ref, reactive, computed } from "@vue/composition-api";
@@ -35,40 +34,14 @@ export function useDatabaseController(): DatabaseController {
     }
   });
 
-  let noDatabase: boolean = true;
-  let blockedDatabases: string[] = [];
-  let inactiveDatabases: string[] = [];
-
-  eventBus.$on("NO_DATABASE", () => {
-    noDatabase = true;
-  });
-
   eventBus.$on(
-    "DATABASE_STATUS",
-    (database: string, blocked: boolean, active: boolean) => {
-      noDatabase = false;
-      if (blocked && !blockedDatabases.includes(database)) {
-        blockedDatabases.push(database);
-      } else if (!blocked && blockedDatabases.includes(database)) {
-        let index: number = blockedDatabases.indexOf(database);
-        blockedDatabases.splice(index, 1);
-      }
-      if (!active && !inactiveDatabases.includes(database)) {
-        inactiveDatabases.push(database);
-      } else if (active && inactiveDatabases.includes(database)) {
-        let index: number = inactiveDatabases.indexOf(database);
-        inactiveDatabases.splice(index, 1);
-      }
+    "DATABASE_STATUS_CHANGED",
+    (databaseId: string, blocked: boolean, active: boolean) => {
+      const database = getDatabaseById(databaseId);
+      database.active = active;
+      database.blocked = blocked;
     }
   );
-
-  function getDatabaseStatusInformation(): DatabaseStatus {
-    return reactive({
-      noDatabase: noDatabase,
-      blockedDatabases: blockedDatabases,
-      inactiveDatabases: inactiveDatabases,
-    } as DatabaseStatus);
-  }
 
   function updateDatabases(): void {
     const updatedDatabases: Database[] = [];
@@ -117,6 +90,8 @@ export function useDatabaseController(): DatabaseController {
         numberOfWorkers: database.numberOfWorkers,
       },
       tables: storageInformation!.tables,
+      blocked: false,
+      active: true,
     } as Database);
   }
 
@@ -167,6 +142,5 @@ export function useDatabaseController(): DatabaseController {
     ),
     getDatabasesByIds,
     getDatabaseById,
-    getDatabaseStatusInformation,
   };
 }
