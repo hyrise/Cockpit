@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="overview-page">
     <linear-loader
       :conditions="[$databaseController.databasesUpdated]"
       :evaluations="[false]"
@@ -38,7 +38,7 @@ import {
   computed,
   Ref,
   onMounted,
-  ref
+  ref,
 } from "@vue/composition-api";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { MetricViewData } from "../types/views";
@@ -53,14 +53,14 @@ export default defineComponent({
     MetricsTileList,
     DatabaseDetailsPanel,
     LinearLoader,
-    UnselectedWarning
+    UnselectedWarning,
   },
   setup(props: {}, context: SetupContext): MetricViewData {
     return {
       watchedMetrics: overviewMetrics,
-      ...useSelectionHandling(context, "overview")
+      ...useSelectionHandling(context, "overview"),
     };
-  }
+  },
 });
 </script>
 <style scoped>

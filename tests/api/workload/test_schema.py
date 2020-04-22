@@ -57,7 +57,7 @@ class TestWorkloadSchema:
             "folder_name": folder_name,
             "frequency": frequency,
         }
-        deserialized: interface = schema.load(interface)
+        deserialized: WorkloadInterface = schema.load(interface)
         workload = Workload(**deserialized)
         assert folder_name == workload.folder_name == deserialized["folder_name"]
         assert frequency == workload.frequency == deserialized["frequency"]

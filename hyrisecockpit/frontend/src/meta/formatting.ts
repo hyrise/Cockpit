@@ -8,6 +8,8 @@ export function useFormatting(): {
     even?: boolean
   ) => number;
   formatDateToHHMMSS: (date: Date) => string;
+  formatDateToNanoSec: (date: Date) => number;
+  subSeconds: (date: Date, seconds: number) => Date;
 } {
   function formatNumberWithCommas(data: number): string {
     const parts = data.toString().split(".");
@@ -28,8 +30,16 @@ export function useFormatting(): {
     return date;
   }
 
+  function subSeconds(date: Date, seconds: number): Date {
+    return new Date(date.getTime() - seconds * Math.pow(10, 3));
+  }
+
   function formatDateToHHMMSS(date: Date): string {
     return date.toLocaleTimeString("de-DE");
+  }
+
+  function formatDateToNanoSec(date: Date): number {
+    return date.getTime() * Math.pow(10, 6);
   }
 
   function roundNumber(
@@ -46,7 +56,9 @@ export function useFormatting(): {
     formatNumberWithCommas,
     formatDateWithoutMilliSec,
     roundNumber,
-    formatDateToHHMMSS
+    formatDateToHHMMSS,
+    formatDateToNanoSec,
+    subSeconds,
   };
 }
 
@@ -55,9 +67,9 @@ export function useSorting(): {
 } {
   function sortElements<T>(selected: T[], available: T[]): T[] {
     const sorted: T[] = [];
-    available.forEach(availableElement => {
+    available.forEach((availableElement) => {
       const relatedSelectedElement = selected.find(
-        selectedElement => selectedElement === availableElement
+        (selectedElement) => selectedElement === availableElement
       );
       if (relatedSelectedElement) sorted.push(relatedSelectedElement);
     });

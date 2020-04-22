@@ -1,5 +1,5 @@
 <template>
-  <v-card class="selection-list">
+  <v-card id="selection-list" class="selection-list">
     <v-card-title>
       <div class="selection">{{ pageName }}</div>
     </v-card-title>
@@ -33,13 +33,17 @@ import {
   reactive,
   Ref,
   ref,
-  onMounted
+  onMounted,
 } from "@vue/composition-api";
 
 import { Database } from "@/types/database";
 import DatabaseSelection from "@/components/selection/DatabaseSelection.vue";
 import MetricSelection from "@/components/selection/MetricSelection.vue";
-import { useDatabaseEvents, useMetricEvents } from "@/meta/events";
+import {
+  useDatabaseEvents,
+  useMetricEvents,
+  useWindowEvents,
+} from "@/meta/events";
 import { PageName } from "@/types/views";
 import { Metric } from "@/types/metrics";
 
@@ -58,8 +62,9 @@ export default defineComponent({
     const { emitSelectedDatabasesChangedWithinEvent } = useDatabaseEvents();
     const {
       emitSelectedMetricsChangedWithinEvent,
-      emitWatchedMetricsChangedEvent
+      emitWatchedMetricsChangedEvent,
     } = useMetricEvents();
+    const { emitPageChangedEvent } = useWindowEvents();
 
     const page = computed(() => context.root.$route.name! as PageName);
 
@@ -73,9 +78,15 @@ export default defineComponent({
       () => context.root.$selectionController.selectedMetrics[page.value]
     );
 
-    watch([selectedMetrics, page], () => {
+    watch(selectedMetrics, () => {
       emitWatchedMetricsChangedEvent(selectedMetrics.value as Metric[]);
     });
+
+    watch(page, () => {
+      emitPageChangedEvent(selectedMetrics.value as Metric[]);
+    });
+
+    //TODO: add historic range selection
 
     function handleDatabaseChange(databaseId: string, value: boolean): void {
       emitSelectedDatabasesChangedWithinEvent(page.value, databaseId, value);
@@ -92,9 +103,9 @@ export default defineComponent({
       selectedMetrics,
       pageName: computed(
         () => page.value[0].toUpperCase() + page.value.substring(1)
-      )
+      ),
     };
-  }
+  },
 });
 </script>
 <style scoped>

@@ -1,6 +1,7 @@
 <template>
   <v-progress-linear
     v-if="loading || databasesLoading || metricsLoading"
+    id="loading-animation"
     indeterminate
     :color="color"
     height="7"
@@ -14,7 +15,7 @@ import {
   computed,
   Ref,
   ref,
-  watch
+  watch,
 } from "@vue/composition-api";
 import { eventBus } from "../../plugins/eventBus";
 
@@ -33,16 +34,16 @@ export default defineComponent({
   props: {
     conditions: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     evaluations: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     color: {
       type: String,
-      default: "primary"
-    }
+      default: "primary",
+    },
   },
   setup(props: Props, context: SetupContext): Data {
     return {
@@ -54,9 +55,9 @@ export default defineComponent({
         )
       ),
       ...useDatabaseChangeAnimation(),
-      ...useMetricChangeAnimation()
+      ...useMetricChangeAnimation(),
     };
-  }
+  },
 });
 
 interface DatabaseChangeAnimation {

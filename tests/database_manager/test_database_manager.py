@@ -33,9 +33,16 @@ def fake_server_constructor(*args) -> MagicMock:
 def fake_database(*args) -> MagicMock:
     """Fake server."""
     fake_database = MagicMock()
-    fake_database.driver.dbname = "database_name"
-    fake_database.driver.host = "database_host"
-    fake_database.driver.port = 10000
+    mocked_connection_information = {
+        "id": "database_id",
+        "host": "database_host",
+        "port": "10000",
+        "dbname": "database_name",
+        "user": "Jack Black",
+        "password": "password1234",
+    }
+
+    fake_database.connection_information = mocked_connection_information
     fake_database.number_workers = 8
     fake_database.close.return_value = None
 
@@ -59,6 +66,7 @@ def get_server_calls() -> List[str]:
         "deactivate plugin",
         "set plugin setting",
         "get plugin setting",
+        "execute sql query",
     ]
 
 
@@ -205,7 +213,7 @@ class TestDatabaseManager:
         for call in database_manager._get_server_calls().keys():
             assert call in calls
 
-    @patch("hyrisecockpit.database_manager.manager.Driver.validate_connection")
+    @patch("hyrisecockpit.database_manager.manager.PoolCursor.validate_connection")
     @patch("hyrisecockpit.database_manager.manager.Database")
     def test_call_add_database(
         self,
@@ -244,7 +252,7 @@ class TestDatabaseManager:
         assert response == get_response(200)
         assert "database_id" in database_manager._databases.keys()
 
-    @patch("hyrisecockpit.database_manager.manager.Driver.validate_connection")
+    @patch("hyrisecockpit.database_manager.manager.PoolCursor.validate_connection")
     @patch("hyrisecockpit.database_manager.manager.Database")
     def test_call_add_database_with_invalid_connection(
         self,
@@ -269,7 +277,7 @@ class TestDatabaseManager:
         assert response == get_response(400)
         assert "database_id" not in database_manager._databases.keys()
 
-    @patch("hyrisecockpit.database_manager.manager.Driver.validate_connection")
+    @patch("hyrisecockpit.database_manager.manager.PoolCursor.validate_connection")
     @patch("hyrisecockpit.database_manager.manager.Database")
     def test_call_add_existing_database(
         self,
@@ -284,7 +292,7 @@ class TestDatabaseManager:
             "user": "admin",
             "password": "12345678",
             "host": "database_host",
-            "port": 5432,
+            "port": "5432",
             "dbname": "database_name",
             "number_workers": 8,
         }
@@ -303,9 +311,11 @@ class TestDatabaseManager:
             {
                 "id": "db1",
                 "host": "database_host",
-                "port": 10000,
+                "port": "10000",
                 "number_workers": 8,
                 "dbname": "database_name",
+                "user": "Jack Black",
+                "password": "password1234",
             }
         ]
         expected_response = get_response(200)
@@ -646,6 +656,45 @@ class TestDatabaseManager:
         response = database_manager._call_close_worker(body)
 
         assert get_response(400) == response
+
+    def test_calls_execute_sql_query(self, database_manager: DatabaseManager) -> None:
+        """Test call execute sql query."""
+        fake_body = {
+            "id": "just some ordinary database",
+            "query": "SELECT what_is_the_meaning_of_everything FROM all_the_answers_to _all_the_question",
+        }
+        mocked_database = MagicMock()
+        mocked_database.execute_sql_query.return_value = [
+            ("42 of course"),
+        ]
+        database_manager._databases = {"just some ordinary database": mocked_database}
+
+        expected = get_response(200)
+        expected["body"]["results"] = [
+            ("42 of course"),
+        ]
+
+        response = database_manager._call_execute_sql_query(fake_body)
+
+        mocked_database.execute_sql_query.assert_called_once_with(
+            "SELECT what_is_the_meaning_of_everything FROM all_the_answers_to _all_the_question"
+        )
+        assert expected == response
+
+    def test_calls_execute_sql_query_on_not_existing_database(
+        self, database_manager: DatabaseManager
+    ) -> None:
+        """Test call execute sql query on not existing database."""
+        fake_body = {
+            "id": "just some ordinary database",
+            "query": "SELECT when_can_i_get_out_? FROM all_the_answers_to _all_the_question",
+        }
+        database_manager._databases = {}
+
+        expected = get_response(404)
+        response = database_manager._call_execute_sql_query(fake_body)
+
+        assert expected == response
 
     def test_start_server(self, database_manager: DatabaseManager):
         """Test start server."""

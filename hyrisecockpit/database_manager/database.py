@@ -3,11 +3,11 @@
 from multiprocessing import Value
 from typing import Dict, List, Optional
 
-from psycopg2 import DatabaseError, InterfaceError, pool
+from psycopg2 import DatabaseError, Error, InterfaceError
 
 from .background_scheduler import BackgroundJobManager
-from .cursor import PoolCursor, StorageCursor
-from .driver import Driver
+from .cursor import ConnectionFactory, StorageCursor
+from .interfaces import SqlResultInterface
 from .table_names import table_names as _table_names
 from .worker_pool import WorkerPool
 
@@ -40,23 +40,25 @@ class Database(object):
         self._storage_port: str = storage_port
         self._storage_user: str = storage_user
 
-        self._number_additional_connections: int = 50
-        self.driver: Driver = Driver(
-            user,
-            password,
-            host,
-            port,
-            dbname,
-            self.number_workers + self._number_additional_connections,
+        self.connection_information: Dict[str, str] = {
+            "host": host,
+            "port": port,
+            "user": user,
+            "password": password,
+            "dbname": dbname,
+        }
+
+        self._connection_factory: ConnectionFactory = ConnectionFactory(
+            **self.connection_information
         )
-        self._connection_pool: pool = self.driver.get_connection_pool()
+
         self._database_blocked: Value = Value("b", False)
         self._hyrise_active: Value = Value("b", True)
         self._loaded_tables: Dict[
             str, Optional[str]
         ] = self.create_empty_loaded_tables()
         self._worker_pool: WorkerPool = WorkerPool(
-            self._connection_pool,
+            self._connection_factory,
             self.number_workers,
             self._id,
             workload_publisher_url,
@@ -65,7 +67,7 @@ class Database(object):
         self._background_scheduler: BackgroundJobManager = BackgroundJobManager(
             self._id,
             self._database_blocked,
-            self._connection_pool,
+            self._connection_factory,
             self._loaded_tables,
             self._hyrise_active,
             self._worker_pool,
@@ -196,7 +198,7 @@ class Database(object):
         """Return all currently activated plugins."""
         if not self._database_blocked.value:
             try:
-                with PoolCursor(self._connection_pool) as cur:
+                with self._connection_factory.create_cursor() as cur:
                     cur.execute(("SELECT name FROM meta_plugins;"), None)
                     rows = cur.fetchall()
                     result = [row[0] for row in rows] if rows else []
@@ -209,7 +211,7 @@ class Database(object):
         """Adjust setting for given plugin."""
         if not self._database_blocked.value:
             try:
-                with PoolCursor(self._connection_pool) as cur:
+                with self._connection_factory.create_cursor() as cur:
                     cur.execute(
                         "UPDATE meta_settings SET value=%s WHERE name=%s;",
                         (value, name,),
@@ -223,7 +225,7 @@ class Database(object):
         """Read currently set plugin settings."""
         if not self._database_blocked.value:
             try:
-                with PoolCursor(self._connection_pool) as cur:
+                with self._connection_factory.create_cursor() as cur:
                     cur.execute(
                         "SELECT name, value, description FROM meta_settings;", None
                     )
@@ -241,8 +243,31 @@ class Database(object):
                 return None
         return None
 
+    def execute_sql_query(self, query) -> Optional[SqlResultInterface]:
+        """Execute sql query on database."""
+        if not self._database_blocked.value:
+            try:
+                with self._connection_factory.create_cursor() as cur:
+                    cur.execute(query, None)
+                    col_names = cur.fetch_column_names()
+                    return SqlResultInterface(
+                        id=self._id,
+                        successful=True,
+                        results=[[str(col) for col in row] for row in cur.fetchall()],
+                        col_names=col_names,
+                        error_message="",
+                    )
+            except Error as e:
+                return SqlResultInterface(
+                    id=self._id,
+                    successful=False,
+                    results=[],
+                    col_names=[],
+                    error_message=str(e),
+                )
+        return None
+
     def close(self) -> None:
         """Close the database."""
         self._worker_pool.terminate()
         self._background_scheduler.close()
-        self._connection_pool.closeall()

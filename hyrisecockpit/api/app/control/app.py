@@ -9,9 +9,7 @@ from typing import Dict, List, Union
 from flask_restx import Namespace, Resource, fields
 
 from hyrisecockpit.api.app.shared import (
-    _add_active_database,
     _get_active_databases,
-    _remove_active_database,
     _send_message,
     db_manager_socket,
     storage_connection,
@@ -34,133 +32,6 @@ model_database = api.model(
     },
 )
 
-model_data = api.model(
-    "Data",
-    {
-        "folder_name": fields.String(
-            title="Folder name",
-            description="Name of the folder containing the pregenerated tables.",
-            required=True,
-            example="tpch_0.1",
-        )
-    },
-)
-
-model_storage = api.model(
-    "storage",
-    {
-        fields.String(
-            title="Database ID",
-            description="Used to identify a database.",
-            required=True,
-            example="hyrise-1",
-        ): {
-            fields.String(
-                title="Tablename",
-                description="Name of the table.",
-                required=True,
-                example="aka_name",
-            ): {
-                "size": fields.Integer(
-                    title="Size",
-                    description="Estimated size of the table given in bytes.",
-                    required=True,
-                    example="2931788734",
-                ),
-                "number_columns": fields.Integer(
-                    title="Number of columns",
-                    description="Number of columns of the table.",
-                    required=True,
-                    example="112",
-                ),
-                "data": {
-                    "column_name": {
-                        "size": fields.Integer(
-                            title="Size",
-                            description="Estimated size of the column given in bytes.",
-                            required=True,
-                            example="8593371",
-                        ),
-                        "encoding": fields.String(
-                            title="Encoding",
-                            description="Encodings of the column.",
-                            required=True,
-                            example="Dictionary",
-                        ),
-                        "data_type": fields.String(
-                            title="Datatype",
-                            description="Datatype of the column.",
-                            required=True,
-                            example="String",
-                        ),
-                    }
-                },
-            }
-        }
-    },
-)
-
-model_control_database = api.model(
-    "Database",
-    {
-        "id": fields.String(
-            title="Database ID",
-            description="Used to identify a database.",
-            required=True,
-            example="hyrise-1",
-        )
-    },
-)
-
-model_get_database = api.clone(
-    "Get Database",
-    model_control_database,
-    {
-        "host": fields.String(
-            title="Host",
-            description="Host to log in to.",
-            required=True,
-            example="vm.example.com",
-        ),
-        "port": fields.String(
-            title="Port",
-            description="Port of the host to log in to.",
-            required=True,
-            example="1234",
-        ),
-        "number_workers": fields.Integer(
-            title="Number of initial database worker processes.",
-            description="",
-            required=True,
-            example=8,
-        ),
-        "dbname": fields.String(
-            title="",
-            description="Name of the database to log in to.",
-            required=True,
-            example="mydb",
-        ),
-    },
-)
-
-model_add_database = api.clone(
-    "Add Database",
-    model_get_database,
-    {
-        "user": fields.String(
-            title="Username",
-            description="Username used to log in.",
-            required=True,
-            example="user123",
-        ),
-        "password": fields.String(
-            title="Password",
-            description="Password used to log in.",
-            required=True,
-            example="password123",
-        ),
-    },
-)
 
 modelhelper_plugin = fields.String(
     title="Plugin name",
@@ -254,78 +125,55 @@ model_get_plugin_setting = api.clone(
     },
 )
 
+modelhelper_sql = fields.String(
+    title="SQL query",
+    description="Sql query to execute on database.",
+    required=True,
+    example="SELECT 1;",
+)
 
-@api.route("/database", methods=["GET", "POST", "DELETE"])
-class Database(Resource):
-    """Manages databases."""
-
-    @api.doc(model=[model_get_database])
-    def get(self) -> Response:
-        """Get all databases."""
-        message = Request(header=Header(message="get databases"), body={})
-        response = _send_message(db_manager_socket, message)
-        return response["body"]["databases"]
-
-    @api.doc(body=model_add_database)
-    def post(self) -> Response:
-        """Add a database."""
-        message = Request(
-            header=Header(message="add database"),
-            body={
-                "number_workers": api.payload["number_workers"],
-                "id": api.payload["id"],
-                "user": api.payload["user"],
-                "password": api.payload["password"],
-                "host": api.payload["host"],
-                "port": api.payload["port"],
-                "dbname": api.payload["dbname"],
-            },
-        )
-        response = _send_message(db_manager_socket, message)
-        if response["header"]["status"] == 200:
-            _add_active_database(api.payload["id"])
-        return response
-
-    @api.doc(body=model_control_database)
-    def delete(self) -> Response:
-        """Delete a database."""
-        message = Request(
-            header=Header(message="delete database"), body={"id": api.payload["id"]},
-        )
-        response = _send_message(db_manager_socket, message)
-        if response["header"]["status"] == 200:
-            _remove_active_database(api.payload["id"])
-        return response
+model_execute_sql = api.clone(
+    "Execute SQL query", model_database, {"query": modelhelper_sql},
+)
 
 
-@api.route("/data")
-class Data(Resource):
-    """Manage data in databases."""
-
-    @api.doc(model=[model_data])
-    def get(self) -> List[str]:
-        """Return all pregenerated tables that can be loaded."""
-        return ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
-
-    # @api.doc(body=model_data)
-    def post(self) -> Response:
-        """Load pregenerated tables for all databases."""
-        message = Request(
-            header=Header(message="load data"),
-            body={"folder_name": api.payload["folder_name"]},
-        )
-        response = _send_message(db_manager_socket, message)
-        return response
-
-    @api.doc(body=model_data)
-    def delete(self) -> Response:
-        """Delete pregenerated tables from all databases."""
-        message = Request(
-            header=Header(message="delete data"),
-            body={"folder_name": api.payload["folder_name"]},
-        )
-        response = _send_message(db_manager_socket, message)
-        return response
+model_execute_sql_results = api.clone(
+    "Query results",
+    model_database,
+    {
+        "successful": fields.Boolean(
+            title="Successful execution",
+            description="Description if there was an error while executing.",
+            required=True,
+            example=True,
+        ),
+        "results": fields.List(
+            fields.List(fields.String()),
+            title="Results",
+            description="Results from query execution.",
+            required=True,
+            example=[
+                ["1", "100", "abc'def"],
+                ["2", "None", "dada"],
+                ["3", "42", "bar"],
+            ],
+        ),
+        "col_names": fields.List(
+            fields.String(
+                title="Column Names",
+                description="List of column names.",
+                required=False,
+                example="names",
+            )
+        ),
+        "error_message": fields.String(
+            title="Error message",
+            description="Error message if query execution wasn't successful.",
+            required=False,
+            example="Table not found",
+        ),
+    },
+)
 
 
 @api.route("/available_plugins")
@@ -422,3 +270,18 @@ class PluginSettings(Resource):
         )
         response = _send_message(db_manager_socket, message)
         return response
+
+
+@api.route("/sql")
+class Sql(Resource):
+    """Execute SQL query on database."""
+
+    @api.doc(body=model_execute_sql, model=model_execute_sql_results)
+    def post(self) -> Response:
+        """Execute SQL query."""
+        message = Request(
+            header=Header(message="execute sql query"),
+            body={"id": api.payload["id"], "query": api.payload["query"]},
+        )
+        response = _send_message(db_manager_socket, message)
+        return response["body"]["results"]

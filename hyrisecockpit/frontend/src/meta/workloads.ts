@@ -3,20 +3,20 @@ import { Workload, WorkloadProjectionData } from "../types/workloads";
 const workloadProjectionData: Record<Workload, WorkloadProjectionData> = {
   tpch01: {
     transferred: "tpch_0.1",
-    displayed: "TPC-H SF 0.1"
+    displayed: "TPC-H SF 0.1",
   },
   tpch1: {
     transferred: "tpch_1",
-    displayed: "TPC-H SF 1"
+    displayed: "TPC-H SF 1",
   },
   tpcds: {
     transferred: "tpcds_1",
-    displayed: "TPC-DS"
+    displayed: "TPC-DS",
   },
   job: {
     transferred: "job",
-    displayed: "Join Order Benchmark"
-  }
+    displayed: "Join Order Benchmark",
+  },
 };
 
 export function getTransferredWorkload(workload: Workload): string {
@@ -27,11 +27,11 @@ export function getDisplayedWorkload(workload: Workload): string {
 }
 export function getWorkloadFromTransferred(transferred: string): Workload {
   return Object.keys(workloadProjectionData).find(
-    workload => getTransferredWorkload(workload as Workload) === transferred
+    (workload) => getTransferredWorkload(workload as Workload) === transferred
   )! as Workload;
 }
 export function getDisplayedFromTransferred(transferred: string): string {
   return Object.values(workloadProjectionData).find(
-    workload => workload.transferred === transferred
+    (workload) => workload.transferred === transferred
   )!.displayed;
 }

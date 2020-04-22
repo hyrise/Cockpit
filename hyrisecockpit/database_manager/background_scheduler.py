@@ -3,15 +3,15 @@
 from copy import deepcopy
 from json import dumps
 from multiprocessing import Process, Value
-from time import time, time_ns
+from time import time_ns
 from typing import Any, Dict, List, Optional, Tuple, TypedDict, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
-from psycopg2 import DatabaseError, InterfaceError, ProgrammingError, pool
+from psycopg2 import DatabaseError, InterfaceError, ProgrammingError
 from psycopg2.extensions import AsIs
 
-from .cursor import PoolCursor, StorageCursor
+from .cursor import ConnectionFactory, StorageCursor
 from .table_names import table_names as _table_names
 from .worker_pool import WorkerPool
 
@@ -50,7 +50,7 @@ class BackgroundJobManager(object):
         self,
         database_id: str,
         database_blocked: Value,
-        connection_pool: pool,
+        connection_factory: ConnectionFactory,
         loaded_tables: Dict[str, Optional[str]],
         hyrise_active: Value,
         worker_pool: WorkerPool,
@@ -62,7 +62,7 @@ class BackgroundJobManager(object):
         """Initialize BackgroundJobManager object."""
         self._database_id: str = database_id
         self._database_blocked: Value = database_blocked
-        self._connection_pool: pool = connection_pool
+        self._connection_factory: ConnectionFactory = connection_factory
         self._worker_pool: WorkerPool = worker_pool
         self._storage_host: str = storage_host
         self._storage_password: str = storage_password
@@ -116,7 +116,7 @@ class BackgroundJobManager(object):
     def _ping_hyrise(self) -> None:
         """Check in interval if hyrise is still alive."""
         try:
-            with PoolCursor(self._connection_pool) as cur:
+            with self._connection_factory.create_cursor() as cur:
                 cur.execute("SELECT 1;", None)
                 self._hyrise_active.value = True
         except (DatabaseError, InterfaceError):
@@ -124,7 +124,7 @@ class BackgroundJobManager(object):
 
     def _update_queue_length(self) -> None:
         queue_length: int = self._worker_pool.get_queue_length()
-        time_stamp: int = int(time()) * 1_000_000_000
+        time_stamp: int = time_ns()
         with StorageCursor(
             self._storage_host,
             self._storage_port,
@@ -166,12 +166,12 @@ class BackgroundJobManager(object):
                 time_stamp,
             )
 
-    def _sql_to_data_frame(self, sql: str) -> DataFrame:
+    def _sql_to_data_frame(self, sql: str, params: Optional[Tuple]) -> DataFrame:
         if self._database_blocked.value:
             return DataFrame()
         try:
-            with PoolCursor(self._connection_pool) as cur:
-                return cur.read_sql_query(sql)
+            with self._connection_factory.create_cursor() as cur:
+                return cur.read_sql_query(sql, params)
         except (DatabaseError, InterfaceError):
             return DataFrame()
 
@@ -216,7 +216,7 @@ class BackgroundJobManager(object):
         sql = """SELECT table_name, column_name, chunk_id, (point_accesses + sequential_accesses + monotonic_accesses + random_accesses) as access_count
             FROM meta_segments;"""
 
-        meta_segments = self._sql_to_data_frame(sql)
+        meta_segments = self._sql_to_data_frame(sql, None)
 
         chunks_data = {}
         if not meta_segments.empty:
@@ -241,7 +241,13 @@ class BackgroundJobManager(object):
 
     def _update_plugin_log(self) -> None:
         """Update plugin log."""
-        log_df = self._sql_to_data_frame("SELECT * FROM meta_log;")
+        endts = time_ns()
+        startts = endts - 2_000_000_000
+
+        log_df = self._sql_to_data_frame(
+            "SELECT * FROM meta_log WHERE 'timestamp' >= %s AND 'timestamp' < %s;",
+            params=(startts, endts),
+        )
 
         if log_df.empty:
             return
@@ -277,9 +283,11 @@ class BackgroundJobManager(object):
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
         utilization_df = self._sql_to_data_frame(
-            "SELECT * FROM meta_system_utilization;"
+            "SELECT * FROM meta_system_utilization;", None
         )
-        system_df = self._sql_to_data_frame("SELECT * FROM meta_system_information;")
+        system_df = self._sql_to_data_frame(
+            "SELECT * FROM meta_system_information;", None
+        )
 
         if utilization_df.empty or system_df.empty:
             return
@@ -288,7 +296,7 @@ class BackgroundJobManager(object):
         system_data: Dict[str, Union[int, float]] = self._create_system_data_dict(
             utilization_df, system_df, mocked_database_threads
         )
-        time_stamp = int(time()) * 1_000_000_000
+        time_stamp = time_ns()
 
         with StorageCursor(
             self._storage_host,
@@ -364,7 +372,7 @@ class BackgroundJobManager(object):
     def _update_storage_data(self) -> None:
         """Get storage data from the database."""
         time_stamp = time_ns()
-        meta_segments = self._sql_to_data_frame("SELECT * FROM meta_segments;")
+        meta_segments = self._sql_to_data_frame("SELECT * FROM meta_segments;", None)
 
         with StorageCursor(
             self._storage_host,
@@ -409,7 +417,7 @@ class BackgroundJobManager(object):
         query, parameters = query_tuple
         formatted_parameters = self._format_query_parameters(parameters)
         try:
-            with PoolCursor(self._connection_pool) as cur:
+            with self._connection_factory.create_cursor() as cur:
                 cur.execute(query, formatted_parameters)
                 success_flag.value = True
         except (DatabaseError, InterfaceError, ProgrammingError):
@@ -467,7 +475,7 @@ class BackgroundJobManager(object):
 
     def _activate_plugin_job(self, plugin: str) -> None:
         try:
-            with PoolCursor(self._connection_pool) as cur:
+            with self._connection_factory.create_cursor() as cur:
                 cur.execute(
                     (
                         "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
@@ -487,7 +495,7 @@ class BackgroundJobManager(object):
 
     def _deactivate_plugin_job(self, plugin: str) -> None:
         try:
-            with PoolCursor(self._connection_pool) as cur:
+            with self._connection_factory.create_cursor() as cur:
                 cur.execute(
                     ("DELETE FROM meta_plugins WHERE name='%sPlugin';"), (AsIs(plugin),)
                 )
@@ -507,7 +515,7 @@ class BackgroundJobManager(object):
         existing_tables: List = []
         not_existing_tables: List = []
         try:
-            with PoolCursor(self._connection_pool) as cur:
+            with self._connection_factory.create_cursor() as cur:
                 cur.execute("SELECT table_name FROM meta_tables;", None)
                 results = cur.fetchall()
                 loaded_tables = [row[0] for row in results]

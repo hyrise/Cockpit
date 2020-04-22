@@ -1,43 +1,73 @@
 /* declare functions which should be executed, before requests are sent */
 
-import { Entity } from "./helpers";
+import { Entity, DatabaseState } from "./helpers";
 
 export function useCallbacks(
   addFunction: (entity: Entity, id: string) => void,
   removeFunction: (entity: Entity, id: string) => void,
+  changeFunction: (state: DatabaseState, value: boolean) => void,
   renewFunction: () => void
 ): {
-  handleAddDatabase: (id: string) => void;
-  handleRemoveDatabase: (id: string) => void;
-  handleAddActivePlugin: (id: string) => void;
-  handleRemoveActivePlugin: (id: string) => void;
+  addDatabase: (id: string) => void;
+  removeDatabase: (id: string) => void;
+  activatePlugin: (id: string) => void;
+  deactivatePlugin: (id: string) => void;
+  startWorkload: () => void;
+  stopWorkload: () => void;
+  loadTable: (id: string) => void;
+  removeTable: (id: string) => void;
 } {
   // DATABASES
-  function handleAddDatabase(id: string): void {
+  function addDatabase(id: string): void {
     addFunction("databases", id);
     renewFunction();
   }
 
-  function handleRemoveDatabase(id: string): void {
+  function removeDatabase(id: string): void {
     removeFunction("databases", id);
     renewFunction();
   }
 
-  // ACTIVE PLUGINS
-  function handleAddActivePlugin(id: string): void {
+  // PLUGINS
+  function activatePlugin(id: string): void {
     addFunction("activated_plugins", id);
     renewFunction();
   }
 
-  function handleRemoveActivePlugin(id: string): void {
+  function deactivatePlugin(id: string): void {
     removeFunction("activated_plugins", id);
     renewFunction();
   }
 
+  // WORKLOADS
+  function startWorkload(): void {
+    changeFunction("workloadRunning", true);
+    renewFunction();
+  }
+
+  function stopWorkload(): void {
+    changeFunction("workloadRunning", false);
+    renewFunction();
+  }
+
+  function loadTable(id: string): void {
+    addFunction("loaded_benchmarks", id);
+    renewFunction();
+  }
+
+  function removeTable(id: string): void {
+    removeFunction("loaded_benchmarks", id);
+    renewFunction();
+  }
+
   return {
-    handleAddDatabase,
-    handleRemoveDatabase,
-    handleAddActivePlugin,
-    handleRemoveActivePlugin
+    addDatabase,
+    removeDatabase,
+    activatePlugin,
+    deactivatePlugin,
+    startWorkload,
+    stopWorkload,
+    loadTable,
+    removeTable,
   };
 }
