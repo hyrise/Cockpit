@@ -107,7 +107,7 @@ class TestSocketManager:
         mocked_socket: MagicMock = MagicMock()
         mocked_base_socket.return_value = mocked_socket
 
-        generator_socket = GeneratorSocket()  # type: ignore
+        generator_socket = GeneratorSocket()
 
         mocked_base_socket.assert_called_once_with(f"tcp://hallo:world")
         assert generator_socket._socket == mocked_socket
@@ -134,7 +134,7 @@ class TestSocketManager:
         mocked_socket: MagicMock = MagicMock()
         mocked_base_socket.return_value = mocked_socket
 
-        manager_socket = ManagerSocket()  # type: ignore
+        manager_socket = ManagerSocket()
 
         mocked_base_socket.assert_called_once_with(f"tcp://hallo:manager")
         assert manager_socket._socket == mocked_socket
