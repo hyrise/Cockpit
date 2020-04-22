@@ -19,7 +19,7 @@ function getInitialNumbers(numbers: Partial<Record<Entity, number>>) {
     plugins: 2,
     queries: 10,
     tables: 2,
-    ...numbers
+    ...numbers,
   };
 }
 
@@ -33,7 +33,7 @@ server.use((_, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept",
   );
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
   next();
@@ -64,18 +64,18 @@ mockGetRoute("plugin_log", "control");
 
 mockPostRoute("database/", "control");
 mockPostRoute("database/benchmark_tables", "control");
-mockPostRoute("workload", "control");
+mockPostRoute("workload/", "control");
 mockPostRoute("plugin", "control");
 
 mockDeleteRoute("database/", "control");
 mockDeleteRoute("database/benchmark_tables", "control");
-mockDeleteRoute("workload", "control");
+mockDeleteRoute("workload/", "control");
 mockDeleteRoute("plugin", "control");
 
 function mockGetRoute(
   route: string,
   backendRoute: "control" | "monitor",
-  withBody: boolean = false
+  withBody: boolean = false,
 ): void {
   const request = getRequestOfRoute(route);
   server.get(`/${backendRoute}/${route}`, (req, res) => {
@@ -90,14 +90,14 @@ function mockGetRoute(
 function logRequest(req, res): void {
   console.log(
     `${new Date().toLocaleTimeString()} - ${req.method} - ${res.statusCode} - ${
-    req.url
-    }`
+      req.url
+    }`,
   );
 }
 
 function mockPostRoute(
   route: string,
-  backendRoute: "control" | "monitor"
+  backendRoute: "control" | "monitor",
 ): void {
   const request = getRequestOfRoute(route);
   server.post(`/${backendRoute}/${route}`, (req, res) => {
@@ -109,7 +109,7 @@ function mockPostRoute(
 
 function mockDeleteRoute(
   route: string,
-  backendRoute: "control" | "monitor"
+  backendRoute: "control" | "monitor",
 ): void {
   const request = getRequestOfRoute(route);
   server.delete(`/${backendRoute}/${route}`, (req, res) => {

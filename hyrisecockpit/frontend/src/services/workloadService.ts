@@ -25,13 +25,13 @@ export function useWorkloadService(): WorkloadService {
     workload: Workload,
     frequency: number
   ): Promise<void> {
-    return axios.post(`${controlBackend}workload`, {
+    return axios.post(`${controlBackend}workload/`, {
       folder_name: getTransferredWorkload(workload),
       frequency: frequency,
     });
   }
   async function stopWorkload(): Promise<void> {
-    return axios.delete(`${controlBackend}workload`);
+    return axios.delete(`${controlBackend}workload/`);
   }
 
   return {
