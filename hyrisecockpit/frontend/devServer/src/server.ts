@@ -64,21 +64,21 @@ mockGetRoute("plugin_log", "control");
 
 mockPostRoute("database/", "control");
 mockPostRoute("database/benchmark_tables", "control");
-mockPostRoute("workload/", "control");
+mockPostRoute("workload/");
 mockPostRoute("plugin", "control");
 
 mockDeleteRoute("database/", "control");
 mockDeleteRoute("database/benchmark_tables", "control");
-mockDeleteRoute("workload/", "control");
+mockDeleteRoute("workload/");
 mockDeleteRoute("plugin", "control");
 
 function mockGetRoute(
   route: string,
-  backendRoute: "control" | "monitor",
+  backendRoute?: "control" | "monitor",
   withBody: boolean = false,
 ): void {
   const request = getRequestOfRoute(route);
-  server.get(`/${backendRoute}/${route}`, (req, res) => {
+  server.get(getBackendRoute(route, backendRoute), (req, res) => {
     logRequest(req, res);
     const response = withBody
       ? { body: mocks.getMockedResponse(request) }
@@ -97,10 +97,10 @@ function logRequest(req, res): void {
 
 function mockPostRoute(
   route: string,
-  backendRoute: "control" | "monitor",
+  backendRoute?: "control" | "monitor",
 ): void {
   const request = getRequestOfRoute(route);
-  server.post(`/${backendRoute}/${route}`, (req, res) => {
+  server.post(getBackendRoute(route, backendRoute), (req, res) => {
     logRequest(req, res);
     mocks.getMockedPostCallback(request)(handleRequestBody(request, req));
     res.send({});
@@ -109,10 +109,10 @@ function mockPostRoute(
 
 function mockDeleteRoute(
   route: string,
-  backendRoute: "control" | "monitor",
+  backendRoute?: "control" | "monitor",
 ): void {
   const request = getRequestOfRoute(route);
-  server.delete(`/${backendRoute}/${route}`, (req, res) => {
+  server.delete(getBackendRoute(route, backendRoute), (req, res) => {
     logRequest(req, res);
     mocks.getMockedDeleteCallback(request)(handleRequestBody(request, req));
     res.send({});
@@ -141,4 +141,11 @@ function getRequestOfRoute(route: string): Request {
     }
     return split[split.length - 1] as Request;
   }
+}
+
+function getBackendRoute(
+  route: string,
+  prefix?: "control" | "monitor",
+): string {
+  return prefix ? `/${prefix}/${route}` : `/${route}`;
 }

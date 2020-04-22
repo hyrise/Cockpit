@@ -160,7 +160,7 @@ export function useBackendMock(
     );
     mock("**/control/plugin", getPostAlias("plugin"));
     mock("**/control/plugin_settings", getPostAlias("plugin_settings"));
-    mock("**/control/workload/", getPostAlias("workload"));
+    mock("**/workload/", getPostAlias("workload"));
   }
 
   function mockDeleteRoutes(mock: RouteMockFunction): void {
@@ -170,7 +170,7 @@ export function useBackendMock(
       getDeleteAlias("benchmark_tables")
     );
     mock("**/control/plugin", getDeleteAlias("plugin"));
-    mock("**/control/workload/", getDeleteAlias("workload"));
+    mock("**/workload/", getDeleteAlias("workload"));
   }
 
   return {
