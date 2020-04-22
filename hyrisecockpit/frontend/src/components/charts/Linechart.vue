@@ -23,6 +23,7 @@ import { eventBus } from "@/plugins/eventBus";
 interface Props extends ChartProps {
   maxValue: number;
   timestamps: Date[];
+  pluginEventData: any;
 }
 
 export default defineComponent({
@@ -57,18 +58,6 @@ export default defineComponent({
       multipleDatabasesAllowed
     );
 
-    // eventBus.$on("PLUGIN_DEACTIVATED", (pluginInfo: any) => {
-    //   Plotly.extendTraces(
-    //     props.graphId,
-    //     {
-    //       y: [[props.maxValue + 1]],
-    //       x: [[formatDateWithoutMilliSec(new Date())]],
-    //       textinfo: "text"
-    //     },
-    //     [-1]
-    //   );
-    // });
-
     onMounted(() => {
       Plotly.newPlot(
         props.graphId,
@@ -90,8 +79,7 @@ export default defineComponent({
       watch(
         () => props.pluginEventData,
         () => {
-          if (props.pluginEventData) {
-            console.log(props.pluginEventData);
+          if (!multipleDatabasesAllowed && props.pluginEventData) {
             const currentPluginEventData =
               props.pluginEventData[props.selectedDatabases[0]];
             if (currentPluginEventData) {
@@ -99,15 +87,14 @@ export default defineComponent({
                 props.graphId,
                 {
                   y: [
-                    currentPluginEventData.timestamps.map(
-                      (x) => props.maxValue + 1
+                    currentPluginEventData.timestamps.map((x: Date) =>
+                      getYMax()
                     ),
                   ],
                   x: [currentPluginEventData.timestamps],
                   text: [currentPluginEventData.events],
-                  width: 1000,
-                  textposition: "top right",
-                  textinfo: "text",
+                  width: 100,
+                  hoverinfo: "text",
                 },
                 [1]
               );
@@ -144,6 +131,10 @@ export default defineComponent({
       ];
     }
 
+    function getYMax(): number {
+      return props.maxValue * 1.05 > 0 ? props.maxValue * 1.05 : 1;
+    }
+
     function getMaxDatasetLength(): number {
       return props.selectedDatabases.reduce((currentMax, id) => {
         return Math.max(props.data[id].length, currentMax);
@@ -161,7 +152,7 @@ export default defineComponent({
       Plotly.update(
         props.graphId,
         newData,
-        getLayout(props.maxValue, Math.min(maxSelectedLength, 30)),
+        getLayout(getYMax(), Math.min(maxSelectedLength, 30)),
         props.selectedDatabases.map((x, index) => index)
       );
     }
@@ -193,7 +184,7 @@ function useLineChartConfiguration(
         title: {
           text: props.chartConfiguration.yaxis,
         },
-        range: [0, yMax * 1.05 > 0 ? yMax * 1.05 : 1],
+        range: [0, yMax],
       },
       autosize: true,
       showlegend: multipleDatabasesAllowed,

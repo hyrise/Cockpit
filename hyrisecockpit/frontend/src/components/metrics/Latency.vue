@@ -6,6 +6,7 @@
       :databases="selectedDatabases"
     />
     <Linechart
+      :pluginEventData="pluginEventData"
       :selected-databases="selectedDatabases"
       :data="data"
       :graph-id="graphId || 'latency'"
@@ -41,8 +42,11 @@ export default defineComponent({
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
+    const { pluginEventData } = context.root.$pluginService;
+
     return {
       ...useLineChartComponent(props, context),
+      pluginEventData,
     };
   },
 });

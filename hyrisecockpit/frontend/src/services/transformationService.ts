@@ -21,7 +21,7 @@ const transformationServiceMap: Record<Metric, TransformationService> = {
   throughput: getReadOnlyData,
 };
 
-const { roundNumber, subSeconds } = useFormatting();
+const { roundNumber, subSeconds, trimString } = useFormatting();
 const {
   getTableMemoryFootprint,
   getDatabaseMemoryFootprint,
@@ -347,9 +347,11 @@ export function usePluginTransformationSevice(): any {
   }
 
   function getPluginEventData(data: any): any {
+    const relevantTime = subSeconds(new Date(), 40); // this should be set according to the start and endpoint of the linecharts
     return data.reduce((result: any, currentDatabase: any) => {
       result[currentDatabase.id] = [1].reduce(
         (databaseEvents: any, currentLog: any) => {
+          // if (currentLog.timestamp > relevantTime) {
           return {
             timestamps: [
               ...databaseEvents.timestamps,
@@ -357,11 +359,17 @@ export function usePluginTransformationSevice(): any {
             ],
             events: [
               ...databaseEvents.events,
-              `test [${formatDateToHHMMSS(
-                subSeconds(new Date(), 5)
-              )}]: shits on fire`,
+              trimString(
+                `test [${formatDateToHHMMSS(
+                  subSeconds(new Date(), 5)
+                )}]: shits on fire jooooooo ahdaldksnfsandfsnad ksjafdasdnflkasd ksdjfasdnfkasdnfjskanf kjalsndfljkasdnf`,
+                50
+              ),
             ],
           };
+          // } else {
+          // return result;
+          // }
         },
         { timestamps: [], events: [] }
       );

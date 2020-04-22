@@ -10,6 +10,7 @@ export function useFormatting(): {
   formatDateToHHMMSS: (date: Date) => string;
   formatDateToNanoSec: (date: Date) => number;
   subSeconds: (date: Date, seconds: number) => Date;
+  trimString: (string: string, length: number) => string;
 } {
   function formatNumberWithCommas(data: number): string {
     const parts = data.toString().split(".");
@@ -52,6 +53,12 @@ export function useFormatting(): {
     return even ? Math.floor(rounded) : rounded;
   }
 
+  function trimString(string: string, length: number): string {
+    return string.length > length
+      ? string.substring(0, length - 3) + "..."
+      : string;
+  }
+
   return {
     formatNumberWithCommas,
     formatDateWithoutMilliSec,
@@ -59,6 +66,7 @@ export function useFormatting(): {
     formatDateToHHMMSS,
     formatDateToNanoSec,
     subSeconds,
+    trimString,
   };
 }
 

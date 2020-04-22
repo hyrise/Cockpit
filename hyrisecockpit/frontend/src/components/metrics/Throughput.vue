@@ -41,7 +41,7 @@ export default defineComponent({
   name: "Throughput",
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
-  setup(props: MetricProps, context: SetupContext): any {
+  setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const { pluginEventData } = context.root.$pluginService;
 
     return {
