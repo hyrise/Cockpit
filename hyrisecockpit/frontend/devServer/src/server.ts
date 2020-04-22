@@ -64,12 +64,12 @@ mockGetRoute("plugin_log", "control");
 
 mockPostRoute("database/", "control");
 mockPostRoute("database/benchmark_tables", "control");
-mockPostRoute("workload/", "control");
+mockPostRoute("workload/");
 mockPostRoute("plugin", "control");
 
 mockDeleteRoute("database/", "control");
 mockDeleteRoute("database/benchmark_tables", "control");
-mockDeleteRoute("workload/", "control");
+mockDeleteRoute("workload/");
 mockDeleteRoute("plugin", "control");
 
 function mockGetRoute(
