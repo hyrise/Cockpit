@@ -241,7 +241,7 @@ class BackgroundJobManager(object):
 
     def _update_plugin_log(self) -> None:
         """Update plugin log."""
-        log_df = self._sql_to_data_frame("SELECT * FROM meta_log;", None,)
+        log_df = self._sql_to_data_frame("SELECT * FROM meta_log;", None)
 
         if log_df.empty:
             return
