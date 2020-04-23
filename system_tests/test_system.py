@@ -120,7 +120,7 @@ class TestSystem:
         response = self.backend.add_database(
             "test_database1", DATABASE_HOST, DATABASE_PORT
         )
-        assert response == get_response(200)  # nosec
+        assert response.status_code == 200  # nosec
 
         available_databases = self.backend.get_control_property("database")
         assert available_databases == [  # nosec
@@ -141,7 +141,7 @@ class TestSystem:
         assert {"name": "test_database1"} in influx_databases  # nosec
 
         response = self.backend.remove_database("test_database1")
-        assert response == get_response(200)  # nosec
+        assert response.status_code == 200  # nosec
 
         self.check_stderr()
 

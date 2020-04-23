@@ -77,14 +77,14 @@ class CockpitBackend:
             "user": "serviceuser",
             "password": "serviceuser",
         }
-        url = f"http://{self._backend_host}:{self._backend_port}/control/database"
-        return post(url, json=body, timeout=REQUEST_TIMEOUT).json()
+        url = f"http://{self._backend_host}:{self._backend_port}/control/database/"
+        return post(url, json=body, timeout=REQUEST_TIMEOUT)
 
     def remove_database(self, id: str):
         """Add database."""
         body = {"id": id}
-        url = f"http://{self._backend_host}:{self._backend_port}/control/database"
-        return delete(url, json=body, timeout=REQUEST_TIMEOUT).json()
+        url = f"http://{self._backend_host}:{self._backend_port}/control/database/"
+        return delete(url, json=body, timeout=REQUEST_TIMEOUT)
 
     def start_workload(self, workload_folder: str, frequency: int):
         """Start workload execution."""
