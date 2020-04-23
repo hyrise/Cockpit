@@ -135,7 +135,11 @@ class WorkloadGenerator(object):
         else:
             workload.update(new_workload)
             response = get_response(200)
-            response["body"]["workload"] = workload
+            response["body"]["workload"] = DetailedWorkloadInterface(
+                folder_name=folder_name,
+                frequency=workload.frequency,
+                weights=workload.weights,
+            )
         return response
 
     def _generate_workload(self) -> None:
