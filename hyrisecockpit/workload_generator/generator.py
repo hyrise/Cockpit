@@ -10,6 +10,7 @@ from typing import Callable, Dict, Optional, Tuple, Type
 from apscheduler.schedulers.background import BackgroundScheduler
 from zmq import PUB, Context
 
+from hyrisecockpit.api.app.workload.interface import DetailedWorkloadInterface
 from hyrisecockpit.request import Body
 from hyrisecockpit.response import Response, get_response
 from hyrisecockpit.server import Server
@@ -126,7 +127,7 @@ class WorkloadGenerator(object):
 
     def _call_update_workload(self, body: Body) -> Response:
         folder_name: str = body["folder_name"]
-        new_workload: Dict = body["workload"]  # TODO make this a typed dict
+        new_workload: DetailedWorkloadInterface = body["workload"]
         try:
             workload = self._workloads[folder_name]
         except KeyError:
