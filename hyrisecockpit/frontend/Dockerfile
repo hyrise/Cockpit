@@ -8,3 +8,4 @@ RUN npm set progress=false \
 	&& npm install --no-optional \
 	&& npm run build:min
 EXPOSE 5000
+ENTRYPOINT ["npm", "run", "deploy"]
