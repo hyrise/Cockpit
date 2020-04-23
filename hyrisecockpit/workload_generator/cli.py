@@ -3,7 +3,6 @@ from hyrisecockpit.settings import (
     GENERATOR_LISTENING,
     GENERATOR_PORT,
     WORKLOAD_LISTENING,
-    WORKLOAD_LOCATION,
     WORKLOAD_PUBSUB_PORT,
 )
 
@@ -18,7 +17,6 @@ def main() -> None:
             GENERATOR_PORT,
             WORKLOAD_LISTENING,
             WORKLOAD_PUBSUB_PORT,
-            WORKLOAD_LOCATION,
         ) as workload_generator:
             workload_generator.start()
     except KeyboardInterrupt:
