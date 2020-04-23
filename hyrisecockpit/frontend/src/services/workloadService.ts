@@ -43,6 +43,7 @@ export function useWorkloadService(): WorkloadService {
     return axios.put(`${workloadBackend}${getTransferredWorkload(workload)}`, {
       folder_name: getTransferredWorkload(workload),
       frequency: frequency,
+      weights: {},
     });
   }
   async function stopWorkload(workload: Workload): Promise<void> {
