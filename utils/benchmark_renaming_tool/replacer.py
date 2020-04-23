@@ -40,6 +40,29 @@ class Replacer:
                 f"Workload {self.workload} directory is empty"
             )
 
+    def _basic_renaming(self, queries, old_table_name, new_table_name):
+        """Baisc renaming for TPCH and JOB."""
+        queries = queries.replace(f" {old_table_name},", f" {new_table_name},")
+        queries = queries.replace(f" {old_table_name}\n", f" {new_table_name}\n ")
+        queries = queries.replace(f" {old_table_name} ", f" {new_table_name} ")
+        return queries
+
+    def _tpcds_specific_renaming(self, queries, old_table_name, new_table_name):
+        """Specific renaming for TPCDS."""
+        queries = queries.replace(f" {old_table_name}.", f" {new_table_name}.")
+        queries = queries.replace(f" {old_table_name}.", f" {new_table_name}.")
+        queries = queries.replace(f"({old_table_name}.", f"({new_table_name}.")
+        queries = queries.replace(f"{old_table_name})", f"{new_table_name})")
+        queries = queries.replace(f"\n{old_table_name},", f"\n{new_table_name},")
+        queries = queries.replace(f"\n{old_table_name}\n", f"\n{new_table_name}\n")
+        queries = queries.replace(f"\n{old_table_name} ", f"\n{new_table_name} ")
+        queries = queries.replace(f"\t{old_table_name},", f"\t{new_table_name},")
+        queries = queries.replace(f"\t{old_table_name}\n", f"\t{new_table_name}\n")
+        queries = queries.replace(f"\t{old_table_name} ", f"\t{new_table_name} ")
+        queries = queries.replace(f",{old_table_name}", f",{new_table_name}")
+        queries = queries.replace(f"AS {new_table_name}", f"AS {old_table_name}")
+        return queries
+
     def replace(self, file_names):
         """Replace table names."""
         for file_name in file_names:
@@ -48,61 +71,23 @@ class Replacer:
             ) as f_read:
                 queries = f_read.read()
 
-            new_queries = queries
-
             for old_table_name, new_table_name in self.replacement_dict.items():
-                # TODO TPCH
-                new_queries = new_queries.replace(
-                    f" {old_table_name},", f" {new_table_name},"
-                )
-                new_queries = new_queries.replace(
-                    f" {old_table_name}\n", f" {new_table_name}\n "
-                )
-                new_queries = new_queries.replace(
-                    f" {old_table_name} ", f" {new_table_name} "
-                )
-                # TODO TPCDS
-                new_queries = new_queries.replace(
-                    f" {old_table_name}.", f" {new_table_name}."
-                )
-                new_queries = new_queries.replace(
-                    f" {old_table_name}.", f" {new_table_name}."
-                )
-                new_queries = new_queries.replace(
-                    f"({old_table_name}.", f"({new_table_name}."
-                )
-                new_queries = new_queries.replace(
-                    f"{old_table_name})", f"{new_table_name})"
-                )
-                new_queries = new_queries.replace(
-                    f"\n{old_table_name},", f"\n{new_table_name},"
-                )
-                new_queries = new_queries.replace(
-                    f"\n{old_table_name}\n", f"\n{new_table_name}\n"
-                )
-                new_queries = new_queries.replace(
-                    f"\n{old_table_name} ", f"\n{new_table_name} "
-                )
-                new_queries = new_queries.replace(
-                    f"\t{old_table_name},", f"\t{new_table_name},"
-                )
-                new_queries = new_queries.replace(
-                    f"\t{old_table_name}\n", f"\t{new_table_name}\n"
-                )
-                new_queries = new_queries.replace(
-                    f"\t{old_table_name} ", f"\t{new_table_name} "
-                )
-                new_queries = new_queries.replace(
-                    f",{old_table_name}", f",{new_table_name}"
-                )
-                new_queries = new_queries.replace(
-                    f"AS {new_table_name}", f"AS {old_table_name}"
-                )
+                if self.workload == "tpcds":
+                    basic_renamed_queries = self._basic_renaming(
+                        queries, old_table_name, new_table_name
+                    )
+                    queries = self._tpcds_specific_renaming(
+                        basic_renamed_queries, old_table_name, new_table_name
+                    )
+                else:
+                    queries = self._basic_renaming(
+                        queries, old_table_name, new_table_name
+                    )
 
             with open(
                 f"{self.path_to_new}/{self.workload}_{self.scale}/{file_name}", "w"
             ) as f_write:
-                f_write.write(new_queries)
+                f_write.write(queries)
                 print_green(f"{file_name} " + "\N{check mark}")
 
     def start(self):
