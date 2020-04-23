@@ -88,7 +88,7 @@ class WorkloadService:
         if response["header"]["status"] == 200:
             response = cls._send_message_to_gen(
                 Request(
-                    header=Header(message="delete workload"),
+                    header=Header(message="stop workload"),
                     body={"folder_name": folder_name},
                 ),
             )
