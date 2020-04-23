@@ -36,6 +36,7 @@ export default defineComponent({
   },
   setup(props: Props, context: SetupContext): void {
     const { databasesUpdated } = context.root.$databaseController;
+    const { getHistoricRangeMinutes } = context.root.$metricController;
     const { updateLayout } = useResizingOnChange(props);
     const multipleDatabasesAllowed = inject<boolean>(
       "multipleDatabasesAllowed",
@@ -52,7 +53,7 @@ export default defineComponent({
       Plotly.newPlot(
         props.graphId,
         getDatasets(),
-        getLayout(props.maxValue),
+        getLayout(props.maxValue, getHistoricRangeMinutes() * 60),
         getOptions()
       );
       useChartReactivity(props, context, updateChartDatasets, updateLayout);
@@ -71,7 +72,7 @@ export default defineComponent({
       Plotly.react(
         props.graphId,
         getDatasets(),
-        getLayout(props.maxValue),
+        getLayout(props.maxValue, getHistoricRangeMinutes() * 60),
         getOptions()
       );
     }
@@ -102,7 +103,7 @@ export default defineComponent({
       Plotly.update(
         props.graphId,
         newData,
-        getLayout(props.maxValue, Math.min(maxSelectedLength, 30))
+        getLayout(props.maxValue, getHistoricRangeMinutes() * 60) // set to intervall(number of minutes * 60)
       );
     }
   },

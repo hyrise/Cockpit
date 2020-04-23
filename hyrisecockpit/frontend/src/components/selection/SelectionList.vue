@@ -2,6 +2,13 @@
   <v-card id="selection-list" class="selection-list">
     <v-card-title>
       <div class="selection">{{ pageName }}</div>
+      <v-select
+        v-model="selectedHistoricRange"
+        class="historic-range-selection"
+        :items="availableHistoricRanges"
+        label="Request intervals"
+        @change="handleHistoricRangeChange()"
+      ></v-select>
     </v-card-title>
     <v-card-text>
       <v-container class="white container flex">
@@ -53,18 +60,36 @@ interface Data {
   selectedMetrics: Ref<readonly Metric[]>;
   handleDatabaseChange: (databaseId: string, value: boolean) => void;
   handleMetricChange: (metric: Metric, value: boolean) => void;
+  handleHistoricRangeChange: () => void;
+  selectedHistoricRange: Ref<Number>;
+  availableHistoricRanges: any;
   pageName: Ref<string>;
 }
 
 export default defineComponent({
   components: { DatabaseSelection, MetricSelection },
   setup(props: {}, context: SetupContext): Data {
+    const { getHistoricRangeMinutes } = context.root.$metricController;
     const { emitSelectedDatabasesChangedWithinEvent } = useDatabaseEvents();
     const {
       emitSelectedMetricsChangedWithinEvent,
       emitWatchedMetricsChangedEvent,
     } = useMetricEvents();
-    const { emitPageChangedEvent } = useWindowEvents();
+    const {
+      emitPageChangedEvent,
+      emitHistoricRangeChangedEvent,
+    } = useWindowEvents();
+
+    const availableHistoricRanges = [
+      { text: "last 30 seconds", value: 0.5 },
+      { text: "last minute", value: 1 },
+      { text: "last 5 minutes", value: 5 },
+      { text: "last 10 minutes", value: 10 },
+      { text: "last 30 minutes", value: 30 },
+      { text: "last 60 minutes", value: 60 },
+    ];
+
+    const selectedHistoricRange = ref<number>(getHistoricRangeMinutes()); // get inital value from DatabaseController
 
     const page = computed(() => context.root.$route.name! as PageName);
 
@@ -88,6 +113,14 @@ export default defineComponent({
 
     //TODO: add historic range selection
 
+    function handleHistoricRangeChange() {
+      emitHistoricRangeChangedEvent(
+        selectedMetrics.value as Metric[],
+        selectedHistoricRange.value!
+      );
+      console.log(selectedHistoricRange.value);
+    }
+
     function handleDatabaseChange(databaseId: string, value: boolean): void {
       emitSelectedDatabasesChangedWithinEvent(page.value, databaseId, value);
     }
@@ -98,9 +131,12 @@ export default defineComponent({
     return {
       handleDatabaseChange,
       handleMetricChange,
+      handleHistoricRangeChange,
       selectedDatabases,
       availableMetrics,
       selectedMetrics,
+      availableHistoricRanges,
+      selectedHistoricRange,
       pageName: computed(
         () => page.value[0].toUpperCase() + page.value.substring(1)
       ),
@@ -134,7 +170,9 @@ export default defineComponent({
 }
 .selection {
   display: block;
-  margin-left: auto !important;
   margin-right: auto !important;
+}
+.historic-range-selection {
+  flex: 0 0 40%;
 }
 </style>

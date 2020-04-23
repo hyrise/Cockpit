@@ -146,9 +146,10 @@ export function useMetricService(metrics: Metric[]): MetricService {
   function handleCurrentDataPoints<T>(data: T[], newData: T[]): T[] {
     const dataCopy = data;
     newData.forEach((entry: T) => {
-      if (dataCopy.length > 29) {
-        dataCopy.shift();
-      }
+      // if (dataCopy.length > 29) {
+      //   // set to number of minutes * 60 -1
+      //   dataCopy.shift();
+      // }
       dataCopy.push(entry);
     });
 
@@ -156,7 +157,8 @@ export function useMetricService(metrics: Metric[]): MetricService {
   }
 
   function handleHistoricDataPoints<T>(newData: T[]): T[] {
-    return newData.slice(newData.length - 30, newData.length - 1);
+    return newData;
+    // return newData.slice(newData.length - 30, newData.length - 1);
   }
 
   function getDataIfReady(start?: Date, end?: Date): void {

@@ -15,22 +15,36 @@ type Interval = {
 export function useMetricController(): MetricController {
   const { subSeconds } = useFormatting();
 
+  let historicRangeMinutes = 5;
+
+  function getHistoricRangeMinutes(): number {
+    return historicRangeMinutes;
+  }
+
   eventBus.$on("WATCHED_METRICS_CHANGED", (payload: Metric[]) => {
     stop();
     start(payload || []);
   });
 
-  eventBus.$on("PAGE_CHANGED", (payload: Metric[]) => {
+  function restartRequests(metrics: Metric[]) {
     const currentDate = subSeconds(new Date(), 3);
     stop();
-    start(payload || [], new Date(subSeconds(currentDate, 30)), currentDate);
+    start(
+      metrics || [],
+      new Date(subSeconds(currentDate, historicRangeMinutes * 60)),
+      currentDate
+    );
+  }
+
+  eventBus.$on("PAGE_CHANGED", (payload: Metric[]) => {
+    restartRequests(payload);
   });
 
   eventBus.$on(
     "HISTORIC_RANGE_CHANGED",
-    (payload: { metrics: Metric[]; start: Date; end: Date }) => {
-      stop();
-      start(payload.metrics || [], payload.start, payload.end); //TODO: fire only once when watching historic data
+    (payload: { metrics: Metric[]; newHistoricalRangeMinutes: number }) => {
+      historicRangeMinutes = payload.newHistoricalRangeMinutes;
+      restartRequests(payload.metrics); //TODO: fire only once when watching historic data
     }
   );
 
@@ -119,5 +133,5 @@ export function useMetricController(): MetricController {
     });
   }
 
-  return { data, maxValueData, timestamps };
+  return { data, maxValueData, timestamps, getHistoricRangeMinutes };
 }
