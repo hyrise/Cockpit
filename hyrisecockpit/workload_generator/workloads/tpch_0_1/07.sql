@@ -3,7 +3,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -24,7 +24,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -45,7 +45,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -66,7 +66,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -87,7 +87,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -108,7 +108,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -129,7 +129,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -150,7 +150,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -171,7 +171,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -192,7 +192,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -213,7 +213,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -234,7 +234,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -255,7 +255,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -276,7 +276,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -297,7 +297,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -318,7 +318,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -339,7 +339,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -360,7 +360,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -381,7 +381,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -402,7 +402,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -423,7 +423,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -444,7 +444,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -465,7 +465,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -486,7 +486,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -507,7 +507,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -528,7 +528,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -549,7 +549,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -570,7 +570,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -591,7 +591,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -612,7 +612,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -633,7 +633,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -654,7 +654,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -675,7 +675,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey
@@ -696,7 +696,7 @@ FROM
 		(SELECT n1.n_name AS supp_nation, n2.n_name AS cust_nation, SUBSTR(l_shipdate,
 																																																																1, 4) AS l_year,
 				l_extendedprice * (1 - l_discount) AS volume
-			FROM supplier, lineitem, orders, customer, nation n1, nation n2
+			FROM supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2
 			WHERE s_suppkey = l_suppkey
 					AND o_orderkey = l_orderkey
 					AND c_custkey = o_custkey

@@ -1,11 +1,11 @@
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'MOZAMBIQUE' THEN volume
+																							WHEN nation_tpch_0_1 = 'MOZAMBIQUE' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -21,13 +21,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'KENYA' THEN volume
+																							WHEN nation_tpch_0_1 = 'KENYA' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -43,13 +43,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'FRANCE' THEN volume
+																							WHEN nation_tpch_0_1 = 'FRANCE' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -65,13 +65,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'IRAQ' THEN volume
+																							WHEN nation_tpch_0_1 = 'IRAQ' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -87,13 +87,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'VIETNAM' THEN volume
+																							WHEN nation_tpch_0_1 = 'VIETNAM' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -109,13 +109,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'ROMANIA' THEN volume
+																							WHEN nation_tpch_0_1 = 'ROMANIA' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -131,13 +131,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'FRANCE' THEN volume
+																							WHEN nation_tpch_0_1 = 'FRANCE' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -153,13 +153,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'ARGENTINA' THEN volume
+																							WHEN nation_tpch_0_1 = 'ARGENTINA' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -175,13 +175,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'ETHIOPIA' THEN volume
+																							WHEN nation_tpch_0_1 = 'ETHIOPIA' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -197,13 +197,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'PERU' THEN volume
+																							WHEN nation_tpch_0_1 = 'PERU' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -219,13 +219,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'GERMANY' THEN volume
+																							WHEN nation_tpch_0_1 = 'GERMANY' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -241,13 +241,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'IRAQ' THEN volume
+																							WHEN nation_tpch_0_1 = 'IRAQ' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -263,13 +263,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'CANADA' THEN volume
+																							WHEN nation_tpch_0_1 = 'CANADA' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -285,13 +285,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'VIETNAM' THEN volume
+																							WHEN nation_tpch_0_1 = 'VIETNAM' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -307,13 +307,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'FRANCE' THEN volume
+																							WHEN nation_tpch_0_1 = 'FRANCE' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -329,13 +329,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'GERMANY' THEN volume
+																							WHEN nation_tpch_0_1 = 'GERMANY' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -351,13 +351,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'CANADA' THEN volume
+																							WHEN nation_tpch_0_1 = 'CANADA' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -373,13 +373,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'ALGERIA' THEN volume
+																							WHEN nation_tpch_0_1 = 'ALGERIA' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -395,13 +395,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'CHINA' THEN volume
+																							WHEN nation_tpch_0_1 = 'CHINA' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -417,13 +417,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'INDONESIA' THEN volume
+																							WHEN nation_tpch_0_1 = 'INDONESIA' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -439,13 +439,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'BRAZIL' THEN volume
+																							WHEN nation_tpch_0_1 = 'BRAZIL' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -461,13 +461,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'KENYA' THEN volume
+																							WHEN nation_tpch_0_1 = 'KENYA' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -483,13 +483,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'JORDAN' THEN volume
+																							WHEN nation_tpch_0_1 = 'JORDAN' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -505,13 +505,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'MOZAMBIQUE' THEN volume
+																							WHEN nation_tpch_0_1 = 'MOZAMBIQUE' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -527,13 +527,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'IRAQ' THEN volume
+																							WHEN nation_tpch_0_1 = 'IRAQ' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -549,13 +549,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'INDIA' THEN volume
+																							WHEN nation_tpch_0_1 = 'INDIA' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -571,13 +571,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'MOROCCO' THEN volume
+																							WHEN nation_tpch_0_1 = 'MOROCCO' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -593,13 +593,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'ROMANIA' THEN volume
+																							WHEN nation_tpch_0_1 = 'ROMANIA' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey
@@ -615,13 +615,13 @@ ORDER BY o_year;
 ---
 
 SELECT o_year, SUM(CASE
-																							WHEN nation = 'FRANCE' THEN volume
+																							WHEN nation_tpch_0_1 = 'FRANCE' THEN volume
 																							ELSE 0
 																			END) / SUM(volume) AS mkt_share
 FROM
-		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation
-			FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-			WHERE p_partkey = l_partkey
+		(SELECT SUBSTR(o_orderdate, 1, 4) AS o_year, l_extendedprice * (1 - l_discount) AS volume, n2.n_name AS nation_tpch_0_1
+ 			FROM part_tpch_0_1, supplier_tpch_0_1, lineitem_tpch_0_1, orders_tpch_0_1, customer_tpch_0_1, nation_tpch_0_1 n1, nation_tpch_0_1 n2, region_tpch_0_1
+ 			WHERE p_partkey = l_partkey
 					AND s_suppkey = l_suppkey
 					AND l_orderkey = o_orderkey
 					AND o_custkey = c_custkey

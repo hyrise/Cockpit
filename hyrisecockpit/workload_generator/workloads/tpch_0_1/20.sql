@@ -1,16 +1,16 @@
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'ghost%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'ghost%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1996-01-01'
 												AND l_shipdate < '1997-01-01'))
@@ -21,18 +21,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'seashell%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'seashell%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -43,18 +43,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'smoke%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'smoke%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1995-01-01'
 												AND l_shipdate < '1996-01-01'))
@@ -65,18 +65,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'black%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'black%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -87,18 +87,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'chocolate%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'chocolate%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -109,18 +109,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'black%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'black%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -131,18 +131,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'ivory%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'ivory%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1996-01-01'
 												AND l_shipdate < '1997-01-01'))
@@ -153,18 +153,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'brown%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'brown%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1995-01-01'
 												AND l_shipdate < '1996-01-01'))
@@ -175,18 +175,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'snow%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'snow%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1996-01-01'
 												AND l_shipdate < '1997-01-01'))
@@ -197,18 +197,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'wheat%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'wheat%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -219,18 +219,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'khaki%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'khaki%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -241,18 +241,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'maroon%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'maroon%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -263,18 +263,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'rosy%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'rosy%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -285,18 +285,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'puff%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'puff%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -307,18 +307,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'khaki%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'khaki%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1995-01-01'
 												AND l_shipdate < '1996-01-01'))
@@ -329,18 +329,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'deep%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'deep%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -351,18 +351,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'drab%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'drab%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -373,18 +373,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'goldenrod%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'goldenrod%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -395,18 +395,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'medium%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'medium%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -417,18 +417,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'bisque%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'bisque%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -439,18 +439,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'drab%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'drab%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -461,18 +461,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'mint%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'mint%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -483,18 +483,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'navajo%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'navajo%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -505,18 +505,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'powder%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'powder%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1995-01-01'
 												AND l_shipdate < '1996-01-01'))
@@ -527,18 +527,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'cream%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'cream%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1996-01-01'
 												AND l_shipdate < '1997-01-01'))
@@ -549,18 +549,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'turquoise%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'turquoise%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -571,18 +571,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'powder%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'powder%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -593,18 +593,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'dodger%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'dodger%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1996-01-01'
 												AND l_shipdate < '1997-01-01'))
@@ -615,18 +615,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'cyan%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'cyan%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -637,18 +637,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'indian%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'indian%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1996-01-01'
 												AND l_shipdate < '1997-01-01'))
@@ -659,18 +659,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'ghost%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'ghost%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -681,18 +681,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'royal%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'royal%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -703,18 +703,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'lemon%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'lemon%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -725,18 +725,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'navy%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'navy%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1995-01-01'
 												AND l_shipdate < '1996-01-01'))
@@ -747,18 +747,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'yellow%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'yellow%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1995-01-01'
 												AND l_shipdate < '1996-01-01'))
@@ -769,18 +769,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'beige%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'beige%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1995-01-01'
 												AND l_shipdate < '1996-01-01'))
@@ -791,18 +791,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'grey%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'grey%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -813,18 +813,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'lace%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'lace%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1996-01-01'
 												AND l_shipdate < '1997-01-01'))
@@ -835,18 +835,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'misty%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'misty%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -857,18 +857,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'royal%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'royal%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -879,18 +879,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'tan%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'tan%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -901,18 +901,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'blush%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'blush%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1995-01-01'
 												AND l_shipdate < '1996-01-01'))
@@ -923,18 +923,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'peach%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'peach%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1995-01-01'
 												AND l_shipdate < '1996-01-01'))
@@ -945,18 +945,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'cream%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'cream%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -967,18 +967,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'firebrick%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'firebrick%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1996-01-01'
 												AND l_shipdate < '1997-01-01'))
@@ -989,18 +989,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'sandy%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'sandy%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -1011,18 +1011,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'hot%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'hot%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -1033,18 +1033,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'purple%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'purple%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -1055,18 +1055,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'salmon%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'salmon%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -1077,18 +1077,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'olive%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'olive%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -1099,18 +1099,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'coral%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'coral%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1996-01-01'
 												AND l_shipdate < '1997-01-01'))
@@ -1121,18 +1121,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'wheat%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'wheat%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -1143,18 +1143,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'maroon%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'maroon%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -1165,18 +1165,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'mint%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'mint%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1996-01-01'
 												AND l_shipdate < '1997-01-01'))
@@ -1187,18 +1187,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'tan%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'tan%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -1209,18 +1209,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'papaya%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'papaya%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1995-01-01'
 												AND l_shipdate < '1996-01-01'))
@@ -1231,18 +1231,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'wheat%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'wheat%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1996-01-01'
 												AND l_shipdate < '1997-01-01'))
@@ -1253,18 +1253,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'dim%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'dim%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -1275,18 +1275,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'blue%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'blue%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -1297,18 +1297,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'almond%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'almond%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -1319,18 +1319,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'sky%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'sky%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -1341,18 +1341,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'midnight%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'midnight%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -1363,18 +1363,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'orchid%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'orchid%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -1385,18 +1385,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'green%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'green%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -1407,18 +1407,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'cornflower%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'cornflower%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -1429,18 +1429,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'chocolate%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'chocolate%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -1451,18 +1451,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'floral%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'floral%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -1473,18 +1473,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'dodger%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'dodger%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -1495,18 +1495,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'smoke%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'smoke%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -1517,18 +1517,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'deep%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'deep%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -1539,18 +1539,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'dim%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'dim%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1996-01-01'
 												AND l_shipdate < '1997-01-01'))
@@ -1561,18 +1561,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'sienna%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'sienna%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1995-01-01'
 												AND l_shipdate < '1996-01-01'))
@@ -1583,18 +1583,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'orange%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'orange%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -1605,18 +1605,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'moccasin%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'moccasin%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -1627,18 +1627,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'grey%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'grey%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -1649,18 +1649,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'saddle%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'saddle%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1996-01-01'
 												AND l_shipdate < '1997-01-01'))
@@ -1671,18 +1671,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'maroon%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'maroon%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -1693,18 +1693,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'metallic%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'metallic%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -1715,18 +1715,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'antique%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'antique%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -1737,18 +1737,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'plum%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'plum%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1995-01-01'
 												AND l_shipdate < '1996-01-01'))
@@ -1759,18 +1759,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'navajo%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'navajo%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -1781,18 +1781,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'medium%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'medium%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -1803,18 +1803,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'navajo%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'navajo%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -1825,18 +1825,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'spring%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'spring%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -1847,18 +1847,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'royal%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'royal%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -1869,18 +1869,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'salmon%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'salmon%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -1891,18 +1891,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'saddle%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'saddle%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1995-01-01'
 												AND l_shipdate < '1996-01-01'))
@@ -1913,18 +1913,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'firebrick%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'firebrick%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1994-01-01'
 												AND l_shipdate < '1995-01-01'))
@@ -1935,18 +1935,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'dark%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'dark%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -1957,18 +1957,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'gainsboro%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'gainsboro%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -1979,18 +1979,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'drab%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'drab%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1996-01-01'
 												AND l_shipdate < '1997-01-01'))
@@ -2001,18 +2001,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'grey%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'grey%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -2023,18 +2023,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'tomato%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'tomato%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1993-01-01'
 												AND l_shipdate < '1994-01-01'))
@@ -2045,18 +2045,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'turquoise%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'turquoise%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1995-01-01'
 												AND l_shipdate < '1996-01-01'))
@@ -2067,18 +2067,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'lavender%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'lavender%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
@@ -2089,18 +2089,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'chocolate%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'chocolate%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1995-01-01'
 												AND l_shipdate < '1996-01-01'))
@@ -2111,18 +2111,18 @@ ORDER BY s_name;
 ---
 
 SELECT s_name, s_address
-FROM supplier, nation
-WHERE s_suppkey IN
+FROM supplier_tpch_0_1, nation_tpch_0_1
+ WHERE s_suppkey IN
 				(SELECT ps_suppkey
-					FROM partsupp
-					WHERE ps_partkey IN
+					FROM partsupp_tpch_0_1
+ 					WHERE ps_partkey IN
 									(SELECT p_partkey
-										FROM part
-										WHERE p_name like 'plum%')
+										FROM part_tpch_0_1
+ 										WHERE p_name like 'plum%')
 							AND ps_availqty >
 									(SELECT 0.5 * SUM(l_quantity)
-										FROM lineitem
-										WHERE l_partkey = ps_partkey
+										FROM lineitem_tpch_0_1
+ 										WHERE l_partkey = ps_partkey
 												AND l_suppkey = ps_suppkey
 												AND l_shipdate >= '1997-01-01'
 												AND l_shipdate < '1998-01-01'))
