@@ -135,7 +135,7 @@ class WorkloadGenerator(object):
         else:
             workload.update(new_workload)
             response = get_response(200)
-            response["body"]["folder_name"] = folder_name
+            response["body"]["workload"] = workload
         return response
 
     def _generate_workload(self) -> None:
