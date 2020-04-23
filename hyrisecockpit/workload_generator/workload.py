@@ -5,6 +5,8 @@ from collections import OrderedDict
 from random import choice, choices
 from typing import Dict, List, NamedTuple, Optional, Tuple
 
+from hyrisecockpit.api.app.workload.interface import DetailedWorkloadInterface
+
 
 class Query(NamedTuple):
     """Type of a generated Query."""
@@ -54,9 +56,10 @@ class Workload:
         """Reset the weight of each query."""
         self._weights = OrderedDict((key, 100) for key in self._queries.keys())
 
-    def update(self, new_workload: Dict):
+    def update(self, new_workload: DetailedWorkloadInterface) -> None:
         """Update a Workload with new attributes."""
-        raise NotImplementedError()
+        self.frequency = new_workload["frequency"]
+        self.weights = new_workload["weights"]
 
     def get(self) -> List[Query]:
         """Get a list of queries with the frequency and weights."""
