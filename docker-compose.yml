@@ -48,6 +48,5 @@ services:
       dockerfile: ./hyrise/Dockerfile
     volumes:
       - ./cached_tables:/usr/local/hyrise/cached_tables
-    command: "ls -la /usr/local/hyrise/cached_tables"
     ports:
       - "5432:5432"
