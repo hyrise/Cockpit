@@ -92,7 +92,9 @@ class TestSystem:
             response = self.backend.get_monitor_property(metrics[i])
             assert response["body"][metrics_attributes[i]] == {}  # nosec
 
-        available_datasets = self.backend.get_control_property("data")
+        available_datasets = self.backend.get_control_property(
+            "database/benchmark_tables"
+        )
         available_databases = self.backend.get_control_property("database")
 
         historical_metrics = ["throughput", "latency", "queue_length", "system"]
@@ -106,12 +108,9 @@ class TestSystem:
             )
             assert response == []  # nosec
 
-        assert available_datasets == [  # nosec
-            "tpch_0.1",
-            "tpch_1",
-            "tpcds_1",
-            "job",
-        ]  # nosec
+        assert available_datasets == {  # nosec
+            "folder_names": ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
+        }
         assert available_databases == []  # nosec
 
         self.check_stderr()
