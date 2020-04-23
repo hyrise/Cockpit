@@ -21,7 +21,7 @@ export function useMetricController(): MetricController {
   });
 
   eventBus.$on("PAGE_CHANGED", (payload: Metric[]) => {
-    const currentDate = new Date();
+    const currentDate = subSeconds(new Date(), 3);
     stop();
     start(payload || [], new Date(subSeconds(currentDate, 30)), currentDate);
   });

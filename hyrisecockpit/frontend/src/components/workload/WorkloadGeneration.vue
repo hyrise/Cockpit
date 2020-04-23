@@ -22,7 +22,7 @@
               thumb-label="always"
               min="0"
               max="1000"
-              @click="handleWorkloadChange()"
+              @click="handleFrequencyChange()"
             ></v-slider>
             <v-text-field
               id="frequency-field"
@@ -30,7 +30,7 @@
               label="Number of queries per second"
               outlined
               dense
-              @change="handleWorkloadChange()"
+              @change="handleFrequencyChange()"
             ></v-text-field>
             <v-radio-group
               v-model="workload"
@@ -51,7 +51,7 @@
             <v-btn-toggle>
               <v-btn
                 id="start-workload"
-                @click="handleButtonChange('start')"
+                @click="startingWorkload()"
                 :disabled="
                   buttons.start.loading ||
                   !isLoaded(workload) ||
@@ -67,7 +67,7 @@
               </v-btn>
               <v-btn
                 id="pause-workload"
-                @click="handleButtonChange('pause')"
+                @click="pausingWorkload()"
                 :disabled="
                   buttons.pause.loading ||
                   !isLoaded(workload) ||
@@ -83,7 +83,7 @@
               </v-btn>
               <v-btn
                 id="stop-workload"
-                @click="handleButtonChange('stop')"
+                @click="stoppingWorkload()"
                 :disabled="
                   buttons.stop.loading || isDisabled() || !databases.length
                 "
@@ -155,7 +155,10 @@ interface Data {
   useDatabaseService: () => void;
   isLoaded: (workload: Workload) => boolean;
   isDisabled: () => boolean;
-  handleButtonChange: (button: string) => void;
+  startingWorkload: () => void;
+  pausingWorkload: () => void;
+  stoppingWorkload: () => void;
+  handleFrequencyChange: () => void;
   handleWorkloadChange: () => void;
   handleWorkloadDataChange: (workload: Workload) => void;
   closeWorkloadDialog: () => void;
@@ -178,7 +181,10 @@ export default defineComponent({
       getLoadedWorkloadData,
       loadWorkloadData,
       deleteWorkloadData,
+      getWorkload,
+      getWorkloads,
       startWorkload,
+      updateWorkload,
       stopWorkload,
     } = useWorkloadService();
     const buttons: Record<
@@ -212,27 +218,53 @@ export default defineComponent({
     function closeWorkloadDialog(): void {
       context.emit("close");
     }
-    function handleButtonChange(button: string): void {
+    function startLoading(button: string): void {
       buttons[button].loading = true;
       Object.values(buttons).forEach((button: any) => {
         button.active = false;
       });
-      if (button === "start") {
-        startWorkload(workload.value, frequency.value).then(() => {
-          buttons[button].loading = false;
-          buttons[button].active = true;
-        });
-      } else if (button === "pause") {
-        startWorkload(workload.value, 0).then(() => {
-          buttons[button].loading = false;
-          buttons[button].active = true;
-        });
-      } else {
-        stopWorkload().then(() => {
-          buttons[button].loading = false;
-          buttons[button].active = true;
-        });
-      }
+    }
+    function stopLoading(button: string): void {
+      buttons[button].loading = false;
+      buttons[button].active = true;
+    }
+    function startingWorkload(): void {
+      startLoading("start");
+      getWorkloads().then((response: any) => {
+        if (response.data.length === 0) {
+          startWorkload(workload.value, frequency.value).then(() => {
+            stopLoading("start");
+          });
+        } else {
+          updateWorkload(workload.value, frequency.value).then(() => {
+            stopLoading("start");
+          });
+        }
+      });
+    }
+    function pausingWorkload(): void {
+      startLoading("pause");
+      getWorkloads().then((response: any) => {
+        if (response.data.length === 0) {
+          startWorkload(workload.value, 0).then(() => {
+            stopLoading("pause");
+          });
+        } else {
+          updateWorkload(workload.value, 0).then(() => {
+            stopLoading("pause");
+          });
+        }
+      });
+    }
+    function stoppingWorkload(): void {
+      startLoading("stop");
+      getWorkloads().then((response: any) => {
+        if (response.data.length !== 0) {
+          stopWorkload(workload.value).then(() => {
+            stopLoading("stop");
+          });
+        }
+      });
     }
     function isLoaded(workload: Workload): boolean {
       return workloadData.value.includes(workload);
@@ -246,9 +278,14 @@ export default defineComponent({
         switchesLoading.job
       );
     }
+    function handleFrequencyChange(): void {
+      if (buttons.start.active) {
+        updateWorkload(workload.value, frequency.value);
+      }
+    }
     function handleWorkloadChange(): void {
       if (buttons.start.active) {
-        handleButtonChange("start");
+        startingWorkload();
       }
     }
     function handleWorkloadDataChange(workload: Workload): void {
@@ -314,7 +351,10 @@ export default defineComponent({
       useDatabaseService,
       isLoaded,
       isDisabled,
-      handleButtonChange,
+      startingWorkload,
+      pausingWorkload,
+      stoppingWorkload,
+      handleFrequencyChange,
       handleWorkloadChange,
       handleWorkloadDataChange,
       closeWorkloadDialog,

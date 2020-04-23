@@ -1,4 +1,4 @@
 # Exclude workload queries from Repo statistics 
 # https://github.com/github/linguist#using-gitattributes
 
-hyrisecockpit/workload_generator/workloads/workload_queries/** linguist-vendored
+hyrisecockpit/workload_generator/workloads/** linguist-vendored

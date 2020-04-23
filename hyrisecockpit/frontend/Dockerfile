@@ -4,6 +4,7 @@ LABEL maintainer="upigorsch@me.com"
 
 WORKDIR /usr/local/Cockpit/hyrisecockpit/frontend
 COPY hyrisecockpit/frontend .
-RUN npm install serve \
-	&& npm install \
-	&& npm run build
+RUN npm set progress=false \
+	&& npm install --no-optional \
+	&& npm run build:min
+EXPOSE 5000

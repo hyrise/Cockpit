@@ -38,6 +38,8 @@ def fake_database(*args) -> MagicMock:
         "host": "database_host",
         "port": "10000",
         "dbname": "database_name",
+        "user": "Jack Black",
+        "password": "password1234",
     }
 
     fake_database.connection_information = mocked_connection_information
@@ -312,6 +314,8 @@ class TestDatabaseManager:
                 "port": "10000",
                 "number_workers": 8,
                 "dbname": "database_name",
+                "user": "Jack Black",
+                "password": "password1234",
             }
         ]
         expected_response = get_response(200)
