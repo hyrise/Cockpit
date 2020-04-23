@@ -21,7 +21,7 @@
               thumb-label="always"
               min="0"
               max="1000"
-              @click="handleWorkloadChange()"
+              @click="handleFrequencyChange()"
             ></v-slider>
             <v-text-field
               id="frequency-field"
@@ -29,7 +29,7 @@
               label="Number of queries per second"
               outlined
               dense
-              @change="handleWorkloadChange()"
+              @change="handleFrequencyChange()"
             ></v-text-field>
             <v-radio-group
               v-model="workload"
@@ -153,6 +153,7 @@ interface Data {
   getDisplayedWorkload: (workload: Workload) => string;
   isLoaded: (workload: Workload) => boolean;
   handleButtonChange: (button: string) => void;
+  handleFrequencyChange: () => void;
   handleWorkloadChange: () => void;
   handleWorkloadDataChange: (workload: Workload) => void;
   closeWorkloadDialog: () => void;
@@ -172,7 +173,10 @@ export default defineComponent({
       getLoadedWorkloadData,
       loadWorkloadData,
       deleteWorkloadData,
+      getWorkload,
+      getWorkloads,
       startWorkload,
+      updateWorkload,
       stopWorkload,
     } = useWorkloadService();
     const buttons: Record<
@@ -210,25 +214,46 @@ export default defineComponent({
       Object.values(buttons).forEach((button: any) => {
         button.active = false;
       });
-      if (button === "start") {
-        startWorkload(workload.value, frequency.value).then(() => {
-          buttons[button].loading = false;
-          buttons[button].active = true;
-        });
-      } else if (button === "pause") {
-        startWorkload(workload.value, 0).then(() => {
-          buttons[button].loading = false;
-          buttons[button].active = true;
-        });
-      } else {
-        stopWorkload().then(() => {
-          buttons[button].loading = false;
-          buttons[button].active = true;
-        });
-      }
+      getWorkloads().then((response: any) => {
+        if (response.data.length === 0) {
+          if (button === "start") {
+            startWorkload(workload.value, frequency.value).then(() => {
+              buttons[button].loading = false;
+              buttons[button].active = true;
+            });
+          } else if (button === "pause") {
+            startWorkload(workload.value, 0).then(() => {
+              buttons[button].loading = false;
+              buttons[button].active = true;
+            });
+          }
+        } else {
+          if (button === "start") {
+            updateWorkload(workload.value, frequency.value).then(() => {
+              buttons[button].loading = false;
+              buttons[button].active = true;
+            });
+          } else if (button === "pause") {
+            updateWorkload(workload.value, 0).then(() => {
+              buttons[button].loading = false;
+              buttons[button].active = true;
+            });
+          } else {
+            stopWorkload(workload.value).then(() => {
+              buttons[button].loading = false;
+              buttons[button].active = true;
+            });
+          }
+        }
+      });
     }
     function isLoaded(workload: Workload): boolean {
       return workloadData.value.includes(workload);
+    }
+    function handleFrequencyChange(): void {
+      if (buttons.start.active) {
+        updateWorkload(workload.value, frequency.value);
+      }
     }
     function handleWorkloadChange(): void {
       if (buttons.start.active) {
@@ -300,6 +325,7 @@ export default defineComponent({
       getDisplayedWorkload,
       isLoaded,
       handleButtonChange,
+      handleFrequencyChange,
       handleWorkloadChange,
       handleWorkloadDataChange,
       closeWorkloadDialog,
