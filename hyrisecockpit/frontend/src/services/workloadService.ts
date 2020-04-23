@@ -2,7 +2,7 @@ import axios from "axios";
 import { Workload } from "@/types/workloads";
 import { getTransferredWorkload } from "@/meta/workloads";
 import { WorkloadService } from "../types/services";
-import { controlBackend, monitorBackend, backendUrl } from "../../config";
+import { controlBackend, monitorBackend, workloadBackend } from "../../config";
 
 export function useWorkloadService(): WorkloadService {
   async function getLoadedWorkloadData(): Promise<string[]> {
@@ -21,24 +21,45 @@ export function useWorkloadService(): WorkloadService {
     });
   }
 
+  async function getWorkload(workload: Workload): Promise<void> {
+    return axios.get(`${workloadBackend}${getTransferredWorkload(workload)}`);
+  }
+  async function getWorkloads(): Promise<void> {
+    return axios.get(`${workloadBackend}`);
+  }
   async function startWorkload(
     workload: Workload,
     frequency: number
   ): Promise<void> {
-    return axios.post(`${backendUrl}workload/`, {
+    return axios.post(`${workloadBackend}`, {
       folder_name: getTransferredWorkload(workload),
       frequency: frequency,
     });
   }
-  async function stopWorkload(): Promise<void> {
-    return axios.delete(`${backendUrl}workload/`);
+  async function updateWorkload(
+    workload: Workload,
+    frequency: number
+  ): Promise<void> {
+    return axios.put(`${workloadBackend}${getTransferredWorkload(workload)}`, {
+      folder_name: getTransferredWorkload(workload),
+      frequency: frequency,
+      weights: {},
+    });
+  }
+  async function stopWorkload(workload: Workload): Promise<void> {
+    return axios.delete(
+      `${workloadBackend}${getTransferredWorkload(workload)}`
+    );
   }
 
   return {
     getLoadedWorkloadData,
     loadWorkloadData,
     deleteWorkloadData,
+    getWorkload,
+    getWorkloads,
     startWorkload,
+    updateWorkload,
     stopWorkload,
   };
 }
