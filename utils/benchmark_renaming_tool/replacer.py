@@ -51,6 +51,7 @@ class Replacer:
             new_queries = queries
 
             for old_table_name, new_table_name in self.replacement_dict.items():
+                # TODO TPCH
                 new_queries = new_queries.replace(
                     f" {old_table_name},", f" {new_table_name},"
                 )
@@ -60,7 +61,7 @@ class Replacer:
                 new_queries = new_queries.replace(
                     f" {old_table_name} ", f" {new_table_name} "
                 )
-                # TODO: separate TPCDS from TPCH handling
+                # TODO TPCDS
                 new_queries = new_queries.replace(
                     f" {old_table_name}.", f" {new_table_name}."
                 )
@@ -90,6 +91,12 @@ class Replacer:
                 )
                 new_queries = new_queries.replace(
                     f"\t{old_table_name} ", f"\t{new_table_name} "
+                )
+                new_queries = new_queries.replace(
+                    f",{old_table_name}", f",{new_table_name}"
+                )
+                new_queries = new_queries.replace(
+                    f"AS {new_table_name}", f"AS {old_table_name}"
                 )
 
             with open(
