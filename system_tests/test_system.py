@@ -1,10 +1,8 @@
 """Module for system tests."""
-
 from time import sleep, time_ns
 
 from influxdb import InfluxDBClient
 
-from hyrisecockpit.response import get_response
 from system_tests.cockpit_backend import CockpitBackend
 from system_tests.cockpit_generator import CockpitGenerator
 from system_tests.cockpit_manager import CockpitManager
@@ -150,14 +148,14 @@ class TestSystem:
         response = self.backend.add_database(
             "test_database1", DATABASE_HOST, DATABASE_PORT
         )
-        assert response == get_response(200)  # nosec
+        assert response.status_code == 200  # nosec
 
         sleep(5.0)  # wait until default tables are loaded
 
         self.check_loading_default_tables("test_database1")
 
         response = self.backend.start_workload("tpch_0.1", 300)
-        assert response == get_response(200)  # nosec
+        assert response.status_code == 200  # nosec
 
         sleep(5.0)  # wait for query executions
 
@@ -172,7 +170,7 @@ class TestSystem:
             )
             assert response[0][metric][0][metric] > 0  # nosec
 
-        response = self.backend.stop_workload()
-        assert response == get_response(200)  # nosec
+        response = self.backend.stop_workload("tpch_0.1")
+        assert response.status_code == 200  # nosec
 
         self.check_stderr()
