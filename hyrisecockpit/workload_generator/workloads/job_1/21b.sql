@@ -1,6 +1,6 @@
-SELECT MIN(cn.name) AS company_name, MIN(lt.link) AS link_type, MIN(t.title) AS german_follow_up
-FROM company_name AS cn, company_type AS ct, keyword AS k, link_type AS lt, movie_companies AS mc, movie_info AS mi,
-	movie_keyword AS mk, movie_link AS ml, title AS t
+SELECT MIN(cn.name) AS company_name_job_1, MIN(lt.link) AS link_type_job_1, MIN(t.title) AS german_follow_up
+FROM company_name_job_1 AS cn, company_type_job_1 AS ct, keyword_job_1 AS k, link_type_job_1 AS lt, movie_companies_job_1 AS mc, movie_info_job_1 AS mi,
+	movie_keyword AS mk, movie_link_job_1 AS ml, title_job_1 AS t
 WHERE cn.country_code != '[pl]'
 		AND (cn.name LIKE '%Film%'
 							OR cn.name LIKE '%Warner%')

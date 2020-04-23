@@ -1,7 +1,7 @@
 SELECT MIN(mi.info) AS movie_budget, MIN(mi_idx.info) AS movie_votes, MIN(n.name) AS writer,
 	MIN(t.title) AS complete_violent_movie
-FROM complete_cast AS cc, comp_cast_type AS cct1, comp_cast_type AS cct2, cast_info AS ci, info_type AS it1,
-	info_type AS it2, keyword AS k, movie_info AS mi, movie_info_idx AS mi_idx, movie_keyword AS mk, name AS n,
+FROM complete_cast_job_1 AS cc, comp_cast_type_job_1 AS cct1, comp_cast_type_job_1 AS cct2, cast_info_job_1 AS ci, info_type_job_1 AS it1,
+	info_type AS it2, keyword_job_1 AS k, movie_info_job_1 AS mi, movie_info_idx_job_1 AS mi_idx, movie_keyword_job_1 AS mk, name_job_1 AS n,
 	title AS t
 WHERE cct1.kind IN ('cast', 'crew')
 		AND cct2.kind = 'complete+verified'

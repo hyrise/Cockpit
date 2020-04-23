@@ -1,7 +1,7 @@
 SELECT MIN(mi.info) AS movie_budget, MIN(mi_idx.info) AS movie_votes, MIN(n.name) AS writer,
 	MIN(t.title) AS violent_liongate_movie
-FROM cast_info AS ci, company_name AS cn, info_type AS it1, info_type AS it2, keyword AS k,
-	movie_companies AS mc, movie_info AS mi, movie_info_idx AS mi_idx, movie_keyword AS mk, name AS n, title AS t
+FROM cast_info_job_1 AS ci, company_name_job_1 AS cn, info_type_job_1 AS it1, info_type_job_1 AS it2, keyword_job_1 AS k,
+	movie_companies AS mc, movie_info_job_1 AS mi, movie_info_idx_job_1 AS mi_idx, movie_keyword_job_1 AS mk, name_job_1 AS n, title_job_1 AS t
 WHERE ci.note IN ('(writer)', '(head writer)', '(written by)', '(story)', '(story editor)')
 		AND cn.name LIKE 'Lionsgate%'
 		AND it1.info = 'genres'

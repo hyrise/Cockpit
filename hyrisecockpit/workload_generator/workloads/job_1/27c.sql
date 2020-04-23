@@ -1,7 +1,7 @@
-SELECT MIN(cn.name) AS producing_company, MIN(lt.link) AS link_type, MIN(t.title) AS complete_western_sequel
-FROM complete_cast AS cc, comp_cast_type AS cct1, comp_cast_type AS cct2, company_name AS cn, company_type AS ct,
-	keyword AS k, link_type AS lt, movie_companies AS mc, movie_info AS mi, movie_keyword AS mk,
-	movie_link AS ml, title AS t
+SELECT MIN(cn.name) AS producing_company, MIN(lt.link) AS link_type_job_1, MIN(t.title) AS complete_western_sequel
+FROM complete_cast_job_1 AS cc, comp_cast_type_job_1 AS cct1, comp_cast_type_job_1 AS cct2, company_name_job_1 AS cn, company_type_job_1 AS ct,
+	keyword AS k, link_type_job_1 AS lt, movie_companies_job_1 AS mc, movie_info_job_1 AS mi, movie_keyword_job_1 AS mk,
+	movie_link AS ml, title_job_1 AS t
 WHERE cct1.kind = 'cast'
 		AND cct2.kind LIKE 'complete%'
 		AND cn.country_code != '[pl]'

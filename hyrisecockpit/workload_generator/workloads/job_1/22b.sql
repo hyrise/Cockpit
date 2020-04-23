@@ -1,6 +1,6 @@
 SELECT MIN(cn.name) AS movie_company, MIN(mi_idx.info) AS rating, MIN(t.title) AS western_violent_movie
-FROM company_name AS cn, company_type AS ct, info_type AS it1, info_type AS it2, keyword AS k, kind_type AS kt,
-	movie_companies AS mc, movie_info AS mi, movie_info_idx AS mi_idx, movie_keyword AS mk, title AS t
+FROM company_name_job_1 AS cn, company_type_job_1 AS ct, info_type_job_1 AS it1, info_type_job_1 AS it2, keyword_job_1 AS k, kind_type_job_1 AS kt,
+	movie_companies AS mc, movie_info_job_1 AS mi, movie_info_idx_job_1 AS mi_idx, movie_keyword_job_1 AS mk, title_job_1 AS t
 WHERE cn.country_code != '[us]'
 		AND it1.info = 'countries'
 		AND it2.info = 'rating'

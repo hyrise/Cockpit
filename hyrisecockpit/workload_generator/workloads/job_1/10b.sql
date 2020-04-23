@@ -1,6 +1,6 @@
 SELECT MIN(chn.name) AS CHARACTER, MIN(t.title) AS russian_mov_with_actor_producer
-FROM char_name AS chn, cast_info AS ci, company_name AS cn, company_type AS ct, movie_companies AS mc,
-	role_type AS rt, title AS t
+FROM char_name_job_1 AS chn, cast_info_job_1 AS ci, company_name_job_1 AS cn, company_type_job_1 AS ct, movie_companies_job_1 AS mc,
+	role_type AS rt, title_job_1 AS t
 WHERE ci.note LIKE '%(producer)%'
 		AND cn.country_code = '[ru]'
 		AND rt.role = 'actor'

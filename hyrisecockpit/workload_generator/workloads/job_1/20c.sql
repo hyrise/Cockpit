@@ -1,6 +1,6 @@
 SELECT MIN(n.name) AS cast_member, MIN(t.title) AS complete_dynamic_hero_movie
-FROM complete_cast AS cc, comp_cast_type AS cct1, comp_cast_type AS cct2, char_name AS chn, cast_info AS ci,
-	keyword AS k, kind_type AS kt, movie_keyword AS mk, name AS n, title AS t
+FROM complete_cast_job_1 AS cc, comp_cast_type_job_1 AS cct1, comp_cast_type_job_1 AS cct2, char_name_job_1 AS chn, cast_info_job_1 AS ci,
+	keyword AS k, kind_type_job_1 AS kt, movie_keyword_job_1 AS mk, name_job_1 AS n, title_job_1 AS t
 WHERE cct1.kind = 'cast'
 		AND cct2.kind LIKE '%complete%'
 		AND chn.name IS NOT NULL

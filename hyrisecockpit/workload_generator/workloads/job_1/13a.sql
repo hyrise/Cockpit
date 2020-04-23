@@ -1,6 +1,6 @@
 SELECT MIN(mi.info) AS release_date, MIN(miidx.info) AS rating, MIN(t.title) AS german_movie
-FROM company_name AS cn, company_type AS ct, info_type AS it, info_type AS it2, kind_type AS kt,
-	movie_companies AS mc, movie_info AS mi, movie_info_idx AS miidx, title AS t
+FROM company_name_job_1 AS cn, company_type_job_1 AS ct, info_type_job_1 AS it, info_type_job_1 AS it2, kind_type_job_1 AS kt,
+	movie_companies AS mc, movie_info_job_1 AS mi, movie_info_idx_job_1 AS miidx, title_job_1 AS t
 WHERE cn.country_code = '[de]'
 		AND ct.kind = 'production companies'
 		AND it.info = 'rating'

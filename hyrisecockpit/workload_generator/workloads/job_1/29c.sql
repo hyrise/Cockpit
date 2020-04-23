@@ -1,7 +1,7 @@
 SELECT MIN(chn.name) AS voiced_char, MIN(n.name) AS voicing_actress, MIN(t.title) AS voiced_animation
-FROM aka_name AS an, complete_cast AS cc, comp_cast_type AS cct1, comp_cast_type AS cct2, char_name AS chn,
-	cast_info AS ci, company_name AS cn, info_type AS it, info_type AS it3, keyword AS k, movie_companies AS mc,
-	movie_info AS mi, movie_keyword AS mk, name AS n, person_info AS pi, role_type AS rt, title AS t
+FROM aka_name_job_1 AS an, complete_cast_job_1 AS cc, comp_cast_type_job_1 AS cct1, comp_cast_type_job_1 AS cct2, char_name_job_1 AS chn,
+	cast_info AS ci, company_name_job_1 AS cn, info_type_job_1 AS it, info_type_job_1 AS it3, keyword_job_1 AS k, movie_companies_job_1 AS mc,
+	movie_info AS mi, movie_keyword_job_1 AS mk, name_job_1 AS n, person_info_job_1 AS pi, role_type_job_1 AS rt, title_job_1 AS t
 WHERE cct1.kind = 'cast'
 		AND cct2.kind = 'complete+verified'
 		AND ci.note IN ('(voice)', '(voice: Japanese version)', '(voice) (uncredited)',

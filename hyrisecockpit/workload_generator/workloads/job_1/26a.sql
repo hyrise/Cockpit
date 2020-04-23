@@ -1,7 +1,7 @@
 SELECT MIN(chn.name) AS character_name, MIN(mi_idx.info) AS rating, MIN(n.name) AS playing_actor,
 	MIN(t.title) AS complete_hero_movie
-FROM complete_cast AS cc, comp_cast_type AS cct1, comp_cast_type AS cct2, char_name AS chn, cast_info AS ci,
-	info_type AS it2, keyword AS k, kind_type AS kt, movie_info_idx AS mi_idx, movie_keyword AS mk, name AS n,
+FROM complete_cast_job_1 AS cc, comp_cast_type_job_1 AS cct1, comp_cast_type_job_1 AS cct2, char_name_job_1 AS chn, cast_info_job_1 AS ci,
+	info_type AS it2, keyword_job_1 AS k, kind_type_job_1 AS kt, movie_info_idx_job_1 AS mi_idx, movie_keyword_job_1 AS mk, name_job_1 AS n,
 	title AS t
 WHERE cct1.kind = 'cast'
 		AND cct2.kind LIKE '%complete%'

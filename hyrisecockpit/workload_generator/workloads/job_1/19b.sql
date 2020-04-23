@@ -1,6 +1,6 @@
 SELECT MIN(n.name) AS voicing_actress, MIN(t.title) AS kung_fu_panda
-FROM aka_name AS an, char_name AS chn, cast_info AS ci, company_name AS cn, info_type AS it,
-	movie_companies AS mc, movie_info AS mi, name AS n, role_type AS rt, title AS t
+FROM aka_name_job_1 AS an, char_name_job_1 AS chn, cast_info_job_1 AS ci, company_name_job_1 AS cn, info_type_job_1 AS it,
+	movie_companies AS mc, movie_info_job_1 AS mi, name_job_1 AS n, role_type_job_1 AS rt, title_job_1 AS t
 WHERE ci.note = '(voice)'
 		AND cn.country_code = '[us]'
 		AND it.info = 'release dates'

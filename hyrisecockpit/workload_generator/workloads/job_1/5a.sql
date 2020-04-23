@@ -1,5 +1,5 @@
 SELECT MIN(t.title) AS typical_european_movie
-FROM company_type AS ct, info_type AS it, movie_companies AS mc, movie_info AS mi, title AS t
+FROM company_type_job_1 AS ct, info_type_job_1 AS it, movie_companies_job_1 AS mc, movie_info_job_1 AS mi, title_job_1 AS t
 WHERE ct.kind = 'production companies'
 		AND mc.note LIKE '%(theatrical)%'
 		AND mc.note LIKE '%(France)%'

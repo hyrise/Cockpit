@@ -1,6 +1,6 @@
 SELECT MIN(cn.name) AS from_company, MIN(mc.note) AS production_note, MIN(t.title) AS movie_based_on_book
-FROM company_name AS cn, company_type AS ct, keyword AS k, link_type AS lt, movie_companies AS mc,
-	movie_keyword AS mk, movie_link AS ml, title AS t
+FROM company_name_job_1 AS cn, company_type_job_1 AS ct, keyword_job_1 AS k, link_type_job_1 AS lt, movie_companies_job_1 AS mc,
+	movie_keyword AS mk, movie_link_job_1 AS ml, title_job_1 AS t
 WHERE cn.country_code != '[pl]'
 		AND ct.kind != 'production companies'
 		AND ct.kind IS NOT NULL

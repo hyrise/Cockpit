@@ -1,7 +1,7 @@
 SELECT MIN(cn.name) AS movie_company, MIN(mi_idx.info) AS rating, MIN(t.title) AS complete_euro_dark_movie
-FROM complete_cast AS cc, comp_cast_type AS cct1, comp_cast_type AS cct2, company_name AS cn, company_type AS ct,
-	info_type AS it1, info_type AS it2, keyword AS k, kind_type AS kt, movie_companies AS mc, movie_info AS mi,
-	movie_info_idx AS mi_idx, movie_keyword AS mk, title AS t
+FROM complete_cast_job_1 AS cc, comp_cast_type_job_1 AS cct1, comp_cast_type_job_1 AS cct2, company_name_job_1 AS cn, company_type_job_1 AS ct,
+	info_type AS it1, info_type_job_1 AS it2, keyword_job_1 AS k, kind_type_job_1 AS kt, movie_companies_job_1 AS mc, movie_info_job_1 AS mi,
+	movie_info_idx AS mi_idx, movie_keyword_job_1 AS mk, title_job_1 AS t
 WHERE cct1.kind = 'crew'
 		AND cct2.kind != 'complete+verified'
 		AND cn.country_code != '[us]'

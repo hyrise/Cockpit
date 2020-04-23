@@ -1,6 +1,6 @@
 SELECT MIN(cn.name) AS movie_company, MIN(mi_idx.info) AS rating, MIN(t.title) AS drama_horror_movie
-FROM company_name AS cn, company_type AS ct, info_type AS it1, info_type AS it2, movie_companies AS mc,
-	movie_info AS mi, movie_info_idx AS mi_idx, title AS t
+FROM company_name_job_1 AS cn, company_type_job_1 AS ct, info_type_job_1 AS it1, info_type_job_1 AS it2, movie_companies_job_1 AS mc,
+	movie_info AS mi, movie_info_idx_job_1 AS mi_idx, title_job_1 AS t
 WHERE cn.country_code = '[us]'
 		AND ct.kind = 'production companies'
 		AND it1.info = 'genres'

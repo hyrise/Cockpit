@@ -1,5 +1,5 @@
 SELECT MIN(t.title) AS movie_title
-FROM keyword AS k, movie_info AS mi, movie_keyword AS mk, title AS t
+FROM keyword_job_1 AS k, movie_info_job_1 AS mi, movie_keyword_job_1 AS mk, title_job_1 AS t
 WHERE k.keyword LIKE '%sequel%'
 		AND mi.info IN ('Sweden', 'Norway', 'Germany', 'Denmark', 'Swedish', 'Denish', 'Norwegian', 'German',
 																			'USA', 'American')
