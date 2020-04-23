@@ -131,7 +131,7 @@ class TestWorkloadService:
         )
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
-                header=Header(message="delete workload"),
+                header=Header(message="stop workload"),
                 body={"folder_name": detailed_interface["folder_name"]},
             )
         )
@@ -152,7 +152,7 @@ class TestWorkloadService:
         )
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
-                header=Header(message="delete workload"),
+                header=Header(message="stop workload"),
                 body={"folder_name": detailed_interface["folder_name"]},
             )
         )
