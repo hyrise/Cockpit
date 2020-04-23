@@ -41,7 +41,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
   function getData(start?: Date, end?: Date): void {
     queryReadyState.value = false;
 
-    const currentTimestamp = new Date();
+    const currentTimestamp = subSeconds(new Date(), 3);
     const startTime = start
       ? formatDateToNanoSec(start)
       : formatDateToNanoSec(subSeconds(currentTimestamp, 1));
