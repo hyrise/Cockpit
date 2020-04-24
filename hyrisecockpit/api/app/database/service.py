@@ -23,7 +23,7 @@ class DatabaseService:
     @staticmethod
     def _send_message(message: Request) -> Response:
         """Send an IPC message with data to a database interface, return the response."""
-        with ManagerSocket() as socket:  # type: ignore
+        with ManagerSocket() as socket:
             response = socket.send_message(message)
         validate(instance=response, schema=response_schema)
         return response

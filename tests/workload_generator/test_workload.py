@@ -1,95 +1,118 @@
 """Tests for the workload_generator module's workload."""
 
-from typing import Any
-from unittest.mock import MagicMock, patch
+from random import choice, choices, getstate, randint, setstate
+from typing import Dict, List
 
-from pytest import fixture, raises
+from pytest import fixture
 
-from hyrisecockpit.exception import QueryTypeNotFoundException
-from hyrisecockpit.workload_generator.workloads.workload import Workload
-
-workload_type: str = "TPCH"
-queries_location: str = "/foo"
-delimiter: str = ";"
-file_type: str = "sql"
+from hyrisecockpit.workload_generator.workload import Query, Workload
 
 
-def get_fake_workload_reader() -> Any:
-    """Get fake workload."""
-    workload_reader = MagicMock()
-    workload_reader.read_workload.return_value = ["dummy_query"]
-    return workload_reader
+@fixture(params=[0, 1, 100])
+def frequency(request) -> int:
+    """Get a frequency."""
+    return request.param
+
+
+@fixture(
+    params=[
+        {"query1": ["SELECT 0;", "SELECT 1;"]},
+        {"query1": ["SELECT 0;", "SELECT 1;"], "query 2": ["DROP TABLE mytable;"]},
+    ]
+)
+def queries(request) -> Dict[str, List[str]]:
+    """Get a query dictionary."""
+    return request.param
+
+
+@fixture(params=[0, 1, (0, 100)])
+def weights(request, queries: Dict[str, List[str]]) -> Dict[str, int]:
+    """Get a weights distribution."""
+    if isinstance(request.param, int):
+        return {key: request.param for key in queries.keys()}
+    else:
+        return {key: randint(*request.param) for key in queries.keys()}
+
+
+@fixture
+def workload(frequency: int, queries: Dict[str, List[str]]) -> Workload:
+    """Get a Workload."""
+    return Workload(frequency, queries)
 
 
 class TestWorkload:
     """Test for workload class."""
 
-    def idle_function(self) -> None:
-        """Idle function."""
-        return
+    def test_creates(self, workload: Workload):
+        """Test whether it can be created."""
+        assert workload
 
-    @fixture
-    @patch(
-        "hyrisecockpit.workload_generator.workload_reader.WorkloadReader",
-        get_fake_workload_reader,
-    )
-    @patch(
-        "hyrisecockpit.workload_generator.workloads.workload.WorkloadReader",
-        get_fake_workload_reader,
-    )
-    def fake_workload(self) -> Any:
-        """Instance of WorkloadGenerator without Workloadreader."""
-        return Workload(workload_type, queries_location, delimiter, file_type)
+    def test_initializes(
+        self, workload: Workload, frequency: int, queries: Dict[str, List[str]]
+    ):
+        """Test whether initial attributes are set correctly."""
+        assert workload.frequency == frequency
+        assert workload._queries == queries
+        assert workload.weights == {key: 100 for key in queries.keys()}
 
-    def test_checks_initialization_of_workload_attributes(self, fake_workload):
-        """Test if initial attributes are correct."""
-        assert fake_workload.workload_type == workload_type
-        assert fake_workload._queries_location == f"{queries_location}/TPCH"
-        assert fake_workload._delimiter == delimiter
-        assert fake_workload._file_type == file_type
+    def test_sets_weights(self, workload: Workload, weights: Dict[str, int]):
+        """Test whether weights can be set."""
+        workload.weights = weights
+        assert workload.weights == weights
 
-    def test_initializes_queries(self, fake_workload):
-        """Test initially read queries."""
-        expected_queries = ["dummy_query"]
+    def test_does_not_set_weights_with_incompatible_keys(self, workload: Workload):
+        """Test whether weights are set with incompatible keys."""
+        previous_weights = workload.weights
+        new_weights = {key + "f": value for key, value in previous_weights.items()}
+        workload.weights = new_weights
+        assert previous_weights == workload.weights != new_weights
 
-        assert fake_workload._queries[:] == expected_queries[:]
+    def test_sets_negative_weights_to_0(self, workload: Workload):
+        """Test whether negative weights are set to 0."""
+        previous_weights = workload.weights
+        new_weights = {key: -(i + 1) for i, key in enumerate(previous_weights.keys())}
+        workload.weights = new_weights
+        for value in workload.weights.values():
+            assert value >= 0
 
-    def test_generates_workload(self, fake_workload):
-        """Test cration of workload."""
-        dummy_queries = {"Type1": ["foo"], "Type2": ["foo2"]}
-        expected_workload = [("foo", None, workload_type, "Type1")]
-        fake_workload._queries = dummy_queries
-        received_queries = fake_workload.generate_workload(1)
-        assert received_queries[:] == expected_workload[:]
+    def test_deletes_weights(self, workload: Workload, weights: Dict[str, int]):
+        """Test whether weights a reset with delete."""
+        previous_weights = workload.weights
+        workload.weights = weights
+        del workload.weights
+        assert workload.weights == previous_weights
 
-    def test_generates_workload_with_factor(self, fake_workload):
-        """Test cration of workload."""
-        dummy_queries = {"Type1": ["foo"], "Type2": ["foo2"]}
+    def test_gets_workload(
+        self, workload: Workload, frequency: int, queries: Dict[str, List[str]]
+    ):
+        """Test whether a workload can be generated."""
+        state = getstate()
         expected_workload = [
-            ("foo", None, workload_type, "Type1"),
-            ("foo2", None, workload_type, "Type2"),
-            ("foo", None, workload_type, "Type1"),
-            ("foo2", None, workload_type, "Type2"),
+            Query(query=choice(queries[query_type]), args=None, query_type=query_type)
+            for query_type in choices(population=list(queries.keys()), k=frequency)
         ]
-        fake_workload._queries = dummy_queries
-        received_queries = fake_workload.generate_workload(4)
-        assert received_queries[:] == expected_workload[:]
+        setstate(state)
+        received_workload = workload.get()
+        assert received_workload == expected_workload
 
-    def test_generates_specific_query(self, fake_workload):
-        """Test generating of a single query."""
-        dummy_queries = {"Type1": ["foo"], "Type2": ["foo2"]}
-        expected_workload = [("foo", None), ("foo", None)]
-        fake_workload._queries = dummy_queries
-        received_queries = fake_workload.generate_specific("Type1", 2)
-
-        assert received_queries[:] == expected_workload[:]
-
-    def test_generates_not_existing_specific_query(self, fake_workload):
-        """Test generating of a single query."""
-        dummy_queries = {"Type1": ["foo"], "Type2": ["foo2"]}
-        fake_workload._queries = dummy_queries
-        expected_error_meassage = "Query file Type3 was not found"
-
-        with raises(QueryTypeNotFoundException) as e:
-            fake_workload.generate_specific("Type3", 2)
-        assert str(e.value) == expected_error_meassage
+    def test_gets_workload_with_weights(
+        self,
+        workload: Workload,
+        frequency: int,
+        queries: Dict[str, List[str]],
+        weights: Dict[str, int],
+    ):
+        """Test whether a workload can be generated with weights."""
+        workload.weights = weights
+        state = getstate()
+        expected_workload = [
+            Query(query=choice(queries[query_type]), args=None, query_type=query_type)
+            for query_type in choices(
+                population=list(queries.keys()),
+                weights=list(weights.values()),
+                k=frequency,
+            )
+        ]
+        setstate(state)
+        received_workload = workload.get()
+        assert received_workload == expected_workload
