@@ -112,3 +112,6 @@ venv.bak/
 # Redis
 *.rdb
 cached_tables/
+
+# Mac
+.DS_STORE
