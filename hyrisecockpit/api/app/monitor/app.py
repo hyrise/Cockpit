@@ -507,7 +507,7 @@ class Throughput(Resource):
             precise_startts, precise_endts, precision_ns
         )
 
-        precision: str = f"""{request.args.get("precision")}ns"""
+        precision: str = f"{precision_ns}ns"
 
         response: List = []
         for database in _get_active_databases():
