@@ -1,8 +1,7 @@
 """The BackgroundJobManager is managing the background jobs for the apscheduler."""
 from copy import deepcopy
 from json import dumps
-from multiprocessing import Value
-from sys import platform
+from multiprocessing import Process, Value
 from time import time_ns
 from typing import Any, Dict, List, Optional, Tuple, TypedDict, Union
 
@@ -10,8 +9,6 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
 from psycopg2 import DatabaseError, InterfaceError, ProgrammingError
 from psycopg2.extensions import AsIs
-
-from hyrisecockpit.cross_platform_support.multiprocessing_support import Process
 
 from .cursor import ConnectionFactory, StorageCursor
 from .table_names import table_names as _table_names
@@ -43,6 +40,33 @@ class TableData(TypedDict):
 
 
 StorageDataType = Dict[str, TableData]
+
+
+def format_query_parameters(parameters) -> Optional[Tuple[Any, ...]]:
+    """Format query parameters for execution."""
+    formatted_parameters = (
+        tuple(
+            AsIs(parameter) if protocol == "as_is" else parameter
+            for parameter, protocol in parameters
+        )
+        if parameters is not None
+        else None
+    )
+    return formatted_parameters
+
+
+def execute_table_query(
+    query_tuple: Tuple, success_flag: Value, connection_factory: ConnectionFactory
+) -> None:
+    """Execute loading or deleting table query."""
+    query, parameters = query_tuple
+    formatted_parameters = format_query_parameters(parameters)
+    try:
+        with connection_factory.create_cursor() as cur:
+            cur.execute(query, formatted_parameters)
+            success_flag.value = True
+    except (DatabaseError, InterfaceError, ProgrammingError):
+        return None  # TODO: log error
 
 
 class BackgroundJobManager(object):
@@ -404,42 +428,15 @@ class BackgroundJobManager(object):
             for name in table_names
         ]
 
-    def _format_query_parameters(self, parameters) -> Optional[Tuple[Any, ...]]:
-        formatted_parameters = (
-            tuple(
-                AsIs(parameter) if protocol == "as_is" else parameter
-                for parameter, protocol in parameters
-            )
-            if parameters is not None
-            else None
-        )
-        return formatted_parameters
-
-    def _execute_table_query(self, query_tuple: Tuple, success_flag: Value,) -> None:
-        query, parameters = query_tuple
-        formatted_parameters = self._format_query_parameters(parameters)
-        try:
-            with self._connection_factory.create_cursor() as cur:
-                cur.execute(query, formatted_parameters)
-                success_flag.value = True
-        except (DatabaseError, InterfaceError, ProgrammingError):
-            return None  # TODO: log error
-
     def _execute_queries_parallel(self, table_names, queries, folder_name) -> None:
         success_flags: List[Value] = [Value("b", False) for _ in queries]
-        if platform.startswith("darwin"):
-            processes: List[Process] = [
-                Process(
-                    connection_factory=self._connection_factory,
-                    args=(query, success_flag),
-                )
-                for query, success_flag in zip(queries, success_flags)
-            ]
-        else:
-            processes: List[Process] = [  # type: ignore
-                Process(target=self._execute_table_query, args=(query, success_flag),)
-                for query, success_flag in zip(queries, success_flags)
-            ]
+        processes: List[Process] = [
+            Process(
+                target=execute_table_query,
+                args=(query, success_flag, self._connection_factory,),
+            )
+            for query, success_flag in zip(queries, success_flags)
+        ]
         for process in processes:
             process.start()
         for process in processes:
