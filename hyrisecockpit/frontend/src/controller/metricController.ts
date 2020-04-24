@@ -15,7 +15,7 @@ type Interval = {
 export function useMetricController(): MetricController {
   const { subSeconds } = useFormatting();
 
-  let historicRangeMinutes = 5;
+  let historicRangeMinutes = 0.5;
 
   function getHistoricRangeMinutes(): number {
     return historicRangeMinutes;
