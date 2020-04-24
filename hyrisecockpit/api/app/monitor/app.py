@@ -6,7 +6,7 @@ If run as a module, a flask server application will be started.
 
 from json import loads
 from time import time_ns
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List, Tuple, Union
 
 from flask import request
 from flask_restx import Namespace, Resource, fields
@@ -472,6 +472,19 @@ def fill_missing_points(
     return result
 
 
+def get_interval_limits(
+    precise_startts: int, precise_endts: int, precision_ns: int
+) -> Tuple[int, int]:
+    """Get interval limits for historical data."""
+    startts_rounded: int = int(precise_startts / precision_ns) * precision_ns
+    endts_rounded: int = int(precise_endts / precision_ns) * precision_ns
+
+    startts: int = startts_rounded if precise_startts % precision_ns == 0 else startts_rounded + precision_ns
+    endts: int = endts_rounded if precise_endts % precision_ns == 0 else endts_rounded + 1
+
+    return startts, endts
+
+
 @api.route("/throughput")
 class Throughput(Resource):
     """Throughput information of all databases."""
@@ -490,12 +503,9 @@ class Throughput(Resource):
         precise_endts: int = int(request.args.get("endts"))  # type: ignore
         precision_ns: int = int(request.args.get("precision"))  # type: ignore
 
-        startts_rounded: int = int(precise_startts / precision_ns) * precision_ns
-        endts_rounded: int = int(precise_endts / precision_ns) * precision_ns
-
-        # take nearest whole numbers of seconds
-        startts: int = startts_rounded if precise_startts % precision_ns == 0 else startts_rounded + precision_ns
-        endts: int = endts_rounded if precise_endts % precision_ns == 0 else endts_rounded + 1
+        (startts, endts) = get_interval_limits(
+            precise_startts, precise_endts, precision_ns
+        )
 
         precision: str = f"""{request.args.get("precision")}ns"""
 
