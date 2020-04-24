@@ -14,10 +14,10 @@ RUN apt-get update \
     && mkdir /usr/local/hyrise-git/cmake-build-release \
     && cd /usr/local/hyrise-git/cmake-build-release \
     && CXXFLAGS=-fdiagnostics-color=always cmake -DENABLE_NUMA_SUPPORT=Off -DCMAKE_BUILD_TYPE=Release .. \
-    && make hyriseConsole hyriseServer CompressionPlugin ClusteringPlugin IndexSelectionPlugin
-	&& mkdir -p /usr/local/hyrise/lib \
-	&& cd /usr/local/hyrise-git/cmake-build-release/ \ 
-	&& cp hyriseServer hyriseConsole /usr/local/hyrise/ \
+    && make hyriseConsole hyriseServer CompressionPlugin ClusteringPlugin IndexSelectionPlugin \
+    && mkdir -p /usr/local/hyrise/lib \
+    && cd /usr/local/hyrise-git/cmake-build-release/ \ 
+    && cp hyriseServer hyriseConsole /usr/local/hyrise/ \
     && cp lib/libC* lib/libI* /usr/local/hyrise/lib/ \
-	&& apt-get autoremove 
+    && apt-get autoremove 
 ENTRYPOINT ["/usr/local/hyrise/hyriseServer"]
