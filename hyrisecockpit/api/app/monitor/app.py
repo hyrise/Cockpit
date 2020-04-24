@@ -454,8 +454,21 @@ def get_historical_data(
         bind_params={"startts": startts, "endts": endts},
         epoch=True,
     )
-    result = list(points[table, None])
+    return list(points[table, None])
 
+
+def fill_missing_points(
+    startts: int, endts: int, step: int, metric: str, points: List[Dict]
+) -> List[Dict]:
+    """Fill missing points with zero."""
+    result: List[Dict[str, float]] = []
+    for timestamp in range(startts, endts, step):
+        metric_value = 0.0
+        for point in points:
+            if point["time"] == timestamp:
+                metric_value = point[metric]
+                break
+        result.append({"timestamp": timestamp, metric: metric_value})
     return result
 
 
@@ -491,16 +504,9 @@ class Throughput(Resource):
             throughput_points: List[Dict[str, Union[int, float]]] = get_historical_data(
                 startts, endts, precision, "throughput", ["throughput"], database
             )
-            throughput: List[Dict[str, float]] = []
-            for timestamp in range(startts, endts, precision_ns):
-                throughput_value = 0.0
-                for point in throughput_points:
-                    if point["time"] == timestamp:
-                        throughput_value = point["throughput"]
-                        break
-                throughput.append(
-                    {"timestamp": timestamp, "throughput": throughput_value}
-                )
+            throughput: List[Dict[str, float]] = fill_missing_points(
+                startts, endts, precision_ns, "throughput", throughput_points
+            )
             database_data: Dict[str, Union[str, List]] = {
                 "id": database,
                 "throughput": throughput,
