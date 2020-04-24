@@ -1,12 +1,12 @@
 <template>
-  <v-navigation-drawer app fixed width="200" color="grey lighten-3">
-    <v-list>
-      <v-list-item dense flat>
-        <v-list-item-avatar tile size="50" class="ml-0 mt-0 mb-4">
+  <v-navigation-drawer app fixed width="200" color="grey lighten-4">
+    <v-list nav subheader>
+      <v-list-item>
+        <v-list-item-avatar tile size="55" class="ml-0 mb-1 mt-1 mr-3">
           <img src="../../src/assets/images/hyrise_logo.png" />
         </v-list-item-avatar>
         <img
-          class="mb-1"
+          class="mt-4"
           height="23"
           src="../../src/assets/images/cockpit_logo.png"
         />
@@ -14,7 +14,7 @@
       <v-divider />
       <v-list-item color="#02789D" input-value="true" dense>
         <v-list-item-content>
-          <v-list-item-title class="body-2">Metrics</v-list-item-title>
+          <v-list-item-title class="body-2">ANALYSIS VIEWS</v-list-item-title>
         </v-list-item-content>
         <v-list-item-icon>
           <v-icon
@@ -28,7 +28,7 @@
       </v-list-item>
 
       <v-list-item id="overview-button" :to="{ name: 'overview' }" dense>
-        <v-list-item-icon class="mr-2">
+        <v-list-item-icon class="mr-4">
           <v-icon>mdi-database-search</v-icon>
         </v-list-item-icon>
 
@@ -40,7 +40,7 @@
       </v-list-item>
 
       <v-list-item id="comparison-button" :to="{ name: 'comparison' }" dense>
-        <v-list-item-icon class="mr-2">
+        <v-list-item-icon class="mr-4">
           <v-icon>mdi-chart-line</v-icon>
         </v-list-item-icon>
 
@@ -56,7 +56,7 @@
         :to="{ name: 'workload' }"
         dense
       >
-        <v-list-item-icon class="mr-2">
+        <v-list-item-icon class="mr-4">
           <v-icon>mdi-chart-bar</v-icon>
         </v-list-item-icon>
 
@@ -70,7 +70,7 @@
       <v-divider />
       <v-list-item color="#02789D" input-value="true" dense>
         <v-list-item-content>
-          <v-list-item-title class="body-2">Settings</v-list-item-title>
+          <v-list-item-title class="body-2">SETTINGS</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -84,7 +84,7 @@
         @click="showWorkloadDialog = true"
         dense
       >
-        <v-list-item-icon class="mr-2">
+        <v-list-item-icon class="mr-4">
           <v-icon>mdi-account-cog</v-icon>
         </v-list-item-icon>
 
@@ -100,7 +100,7 @@
         @click="$emit('openPlugins')"
         dense
       >
-        <v-list-item-icon class="mr-2">
+        <v-list-item-icon class="mr-4">
           <v-icon>mdi-tune</v-icon>
         </v-list-item-icon>
 
@@ -129,7 +129,7 @@
             @click="$emit('closeSelection')"
             dense
           >
-            <v-list-item-icon class="mr-2">
+            <v-list-item-icon class="mr-4">
               <v-icon>mdi-database-sync</v-icon>
             </v-list-item-icon>
             <v-badge
@@ -137,7 +137,7 @@
               color="secondary primary--text"
               :content="databaseCount"
               offset-y="1"
-              offset-x="40"
+              offset-x="47"
             >
             </v-badge>
 
@@ -153,8 +153,9 @@
           @removeDatabase="handleDatabaseDeletion"
         />
       </v-menu>
+      <v-divider />
     </v-list>
-    <v-divider />
+
     <v-footer absolute class="font-weight-medium mb-1" color="grey lighten-3">
       <v-img
         src="../../src/assets/images/hpi_logo_bw.png"
@@ -219,8 +220,8 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.card-title {
-  padding: 16px 0px 16px 0px;
-  font-size: 16px;
+.v-list-item {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 </style>
