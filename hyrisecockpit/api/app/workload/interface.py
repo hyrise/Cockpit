@@ -1,10 +1,15 @@
 """Interface of a Workload."""
-from typing import TypedDict
+from typing import Dict, TypedDict
 
 
-class WorkloadInterface(TypedDict, total=False):
+class WorkloadInterface(TypedDict):
     """Interface of a Workload."""
 
-    workload_id: str
     folder_name: str
     frequency: int
+
+
+class DetailedWorkloadInterface(WorkloadInterface):
+    """Detailed interface of a Workload."""
+
+    weights: Dict[str, int]

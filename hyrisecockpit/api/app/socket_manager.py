@@ -18,7 +18,7 @@ from hyrisecockpit.settings import (
 class BaseSocket:
     """Base Socket that interacts directly with zmq."""
 
-    def __init__(self, url):
+    def __init__(self, url) -> None:
         """Initialize a BaseSocket."""
         self._url: str = url
 
@@ -44,7 +44,7 @@ class BaseSocket:
 class GeneratorSocket:
     """GeneratorSocket that sends requests to the generator."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize a GeneratorSocket."""
         self._socket: BaseSocket = BaseSocket(
             f"tcp://{GENERATOR_HOST}:{GENERATOR_PORT}"
@@ -73,7 +73,7 @@ class GeneratorSocket:
 class ManagerSocket:
     """ManagerSocket that sends requests to the Manager."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize a ManagerSocket."""
         self._socket: BaseSocket = BaseSocket(
             f"tcp://{DB_MANAGER_HOST}:{DB_MANAGER_PORT}"
