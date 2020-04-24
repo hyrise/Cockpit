@@ -61,7 +61,7 @@ export function useMetricController(): MetricController {
   function setupServices(): Record<Metric, MetricService> {
     const services: any = {};
     getMetricsByEndpoint(availableMetrics).forEach((metrics) => {
-      const metricService = useMetricService(metrics);
+      const metricService = useMetricService(metrics, getHistoricRangeMinutes);
       metrics.forEach((metric) => {
         services[metric] = metricService;
       });

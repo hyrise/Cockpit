@@ -118,7 +118,6 @@ export default defineComponent({
         selectedMetrics.value as Metric[],
         selectedHistoricRange.value!
       );
-      console.log(selectedHistoricRange.value);
     }
 
     function handleDatabaseChange(databaseId: string, value: boolean): void {

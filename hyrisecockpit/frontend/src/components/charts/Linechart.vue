@@ -142,7 +142,7 @@ function useLineChartConfiguration(
       margin: {
         l: 70,
         r: 40,
-        b: 30,
+        b: multipleDatabasesAllowed ? 45 : 30,
         t: multipleDatabasesAllowed ? 0 : 10,
         pad: 0,
       },
