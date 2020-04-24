@@ -58,9 +58,10 @@ class TestWorkerPool(object):
         assert len(worker_pool._execute_task_workers) == 0
         assert worker_pool._fill_task_worker is None
         assert isinstance(worker_pool._worker_wait_for_exit_event, EventType)
-        # TODO adjust for Mac
         if platform.startswith("linux"):
             assert isinstance(worker_pool._task_queue, QueueType)
+        if platform.startswith("darwin"):
+            assert isinstance(worker_pool._task_queue.queue, QueueType)
 
     def test_generation_of_execute_task_worker_done_events(
         self, worker_pool: WorkerPool
@@ -152,9 +153,10 @@ class TestWorkerPool(object):
         assert type(worker_pool._execute_task_workers) is list
         assert len(worker_pool._execute_task_workers) == 0
         assert type(worker_pool._worker_wait_for_exit_event) is EventType
-        # TODO adjust for Mac
         if platform.startswith("linux"):
-            assert type(worker_pool._task_queue) is QueueType
+            assert isinstance(worker_pool._task_queue, QueueType)
+        if platform.startswith("darwin"):
+            assert isinstance(worker_pool._task_queue.queue, QueueType)
 
     @mark.timeout(10)
     def test_waits_for_workers(self, worker_pool: WorkerPool) -> None:
