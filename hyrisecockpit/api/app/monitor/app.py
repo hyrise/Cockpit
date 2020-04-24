@@ -438,6 +438,27 @@ model_database_status = api.clone(
 )
 
 
+def get_historical_data(
+    startts, endts, precision, table, metrics, database
+) -> List[Dict[str, Union[int, float]]]:
+    """Retrieve historical data for provided metrics and precision."""
+    select_clause = ",".join(f" mean({metric}) as {metric}" for metric in metrics)
+    query = f"""SELECT {select_clause}
+        FROM {table} WHERE time >= $startts AND time < $endts
+        GROUP BY TIME({precision})
+        FILL(0.0);"""
+
+    points = storage_connection.query(
+        query,
+        database=database,
+        bind_params={"startts": startts, "endts": endts},
+        epoch=True,
+    )
+    result = list(points[table, None])
+
+    return result
+
+
 @api.route("/throughput")
 class Throughput(Resource):
     """Throughput information of all databases."""
@@ -447,44 +468,43 @@ class Throughput(Resource):
         params={
             "startts": "Start of a time interval",
             "endts": "End of a time interval",
+            "precision": "Length of the aggregation interval",
         },
     )
     def get(self) -> Union[int, List]:
         """Return throughput information in a given time range."""
         precise_startts: int = int(request.args.get("startts"))  # type: ignore
         precise_endts: int = int(request.args.get("endts"))  # type: ignore
+        precision_ns: int = int(request.args.get("precision"))  # type: ignore
 
-        startts_rounded: int = int(precise_startts / 1_000_000_000) * 1_000_000_000
-        endts_rounded: int = int(precise_endts / 1_000_000_000) * 1_000_000_000
+        startts_rounded: int = int(precise_startts / precision_ns) * precision_ns
+        endts_rounded: int = int(precise_endts / precision_ns) * precision_ns
 
         # take nearest whole numbers of seconds
-        startts: int = startts_rounded if precise_startts % 1_000_000_000 == 0 else startts_rounded + 1_000_000_000
-        endts: int = endts_rounded if precise_endts % 1_000_000_000 == 0 else endts_rounded + 1
+        startts: int = startts_rounded if precise_startts % precision_ns == 0 else startts_rounded + precision_ns
+        endts: int = endts_rounded if precise_endts % precision_ns == 0 else endts_rounded + 1
+
+        precision: str = f"""{request.args.get("precision")}ns"""
 
         response: List = []
         for database in _get_active_databases():
-            database_data: Dict[str, Union[str, List]] = {
-                "id": database,
-            }
-
-            result = storage_connection.query(
-                "SELECT * FROM throughput WHERE time >= $startts AND time < $endts;",
-                database=database,
-                bind_params={"startts": startts, "endts": endts},
+            throughput_points: List[Dict[str, Union[int, float]]] = get_historical_data(
+                startts, endts, precision, "throughput", ["throughput"], database
             )
-            throughput_rows: List = list(result["throughput", None])
-            throughput: List[Dict[str, int]] = []
-            for timestamp in range(startts, endts, 1_000_000_000):
-                throughput_value = 0
-                for row in throughput_rows:
-                    if int(parse_date(row["time"]).timestamp() * 1e9) == timestamp:
-                        throughput_value = row["throughput"]
+            throughput: List[Dict[str, float]] = []
+            for timestamp in range(startts, endts, precision_ns):
+                throughput_value = 0.0
+                for point in throughput_points:
+                    if point["time"] == timestamp:
+                        throughput_value = point["throughput"]
                         break
                 throughput.append(
                     {"timestamp": timestamp, "throughput": throughput_value}
                 )
-
-            database_data["throughput"] = throughput
+            database_data: Dict[str, Union[str, List]] = {
+                "id": database,
+                "throughput": throughput,
+            }
             response.append(database_data)
         return response
 
