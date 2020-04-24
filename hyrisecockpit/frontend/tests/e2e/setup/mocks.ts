@@ -137,7 +137,7 @@ export function useMocks(
       fakeDatabaseQueryInformationData(id, numbers.queries)
     );
     //TODO: handle loaded tables for every database
-    responseMocks.data = benchmarks;
+    responseMocks.benchmark_tables = benchmarks;
     responseMocks.status = mockedIds.databases.map((id) =>
       fakeDatabaseStatusData(
         id,
@@ -181,7 +181,7 @@ export function useMocks(
       database: callbacks.addDatabase,
       plugin: callbacks.activatePlugin,
       workload: callbacks.startWorkload,
-      data: callbacks.loadTable,
+      benchmark_tables: callbacks.loadTable,
     };
 
     return postCallbackMocks;
@@ -197,7 +197,7 @@ export function useMocks(
       database: callbacks.removeDatabase,
       plugin: callbacks.deactivatePlugin,
       workload: callbacks.stopWorkload,
-      data: callbacks.removeTable,
+      benchmark_tables: callbacks.removeTable,
     };
 
     return deleteCallbackMocks;

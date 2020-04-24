@@ -243,11 +243,11 @@ class BackgroundJobManager(object):
 
     def _update_plugin_log(self) -> None:
         """Update plugin log."""
-        endts = time_ns()
-        startts = endts - 2_000_000_000
+        endts = int(time_ns() / 1_000_000)  # timestamps in hyrise are in ms-precision
+        startts = endts - 5_000
 
         log_df = self._sql_to_data_frame(
-            "SELECT * FROM meta_log WHERE 'timestamp' >= %s AND 'timestamp' < %s;",
+            """SELECT * FROM meta_log WHERE "timestamp" >= %s AND "timestamp" < %s;""",
             params=(startts, endts),
         )
 
