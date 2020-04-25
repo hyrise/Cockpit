@@ -3,6 +3,7 @@
     <v-card-title>
       <div class="selection">{{ pageName }}</div>
       <v-select
+        id="historic-range-selection"
         v-model="selectedHistoricRange"
         class="historic-range-selection"
         :items="availableHistoricRanges"
