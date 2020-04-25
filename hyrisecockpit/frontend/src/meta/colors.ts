@@ -10,7 +10,7 @@ export const colorValueDefinition: Record<string, string> = {
   darkblue: "#1f688a",
 };
 
-export const colorDefinition: Record<string, string> = {
+export const colorDatabaseDefinition: Record<string, string> = {
   darkblue: "#1c4e80",
   grey: "#7e909a",
   orange: "#ea6a47",
