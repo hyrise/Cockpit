@@ -485,6 +485,27 @@ def get_interval_limits(
     return startts, endts
 
 
+def get_historical_metric(
+    startts: int, endts: int, precision_ns: int, table_name: str, metrics: List
+) -> List[Dict[str, Union[str, List]]]:
+    """Get historical metric data for all databases."""
+    precision: str = f"{precision_ns}ns"
+    result: List = []
+    for database in _get_active_databases():
+        metric_points: List[Dict[str, Union[int, float]]] = get_historical_data(
+            startts, endts, precision, table_name, metrics, database
+        )
+        metric: List[Dict[str, float]] = fill_missing_points(
+            startts, endts, precision_ns, table_name, metric_points
+        )
+        database_data: Dict[str, Union[str, List]] = {
+            "id": database,
+            table_name: metric,
+        }
+        result.append(database_data)
+    return result
+
+
 @api.route("/throughput")
 class Throughput(Resource):
     """Throughput information of all databases."""
@@ -506,22 +527,10 @@ class Throughput(Resource):
         (startts, endts) = get_interval_limits(
             precise_startts, precise_endts, precision_ns
         )
+        response: List[Dict[str, Union[str, List]]] = get_historical_metric(
+            startts, endts, precision_ns, "throughput", ["throughput"]
+        )
 
-        precision: str = f"{precision_ns}ns"
-
-        response: List = []
-        for database in _get_active_databases():
-            throughput_points: List[Dict[str, Union[int, float]]] = get_historical_data(
-                startts, endts, precision, "throughput", ["throughput"], database
-            )
-            throughput: List[Dict[str, float]] = fill_missing_points(
-                startts, endts, precision_ns, "throughput", throughput_points
-            )
-            database_data: Dict[str, Union[str, List]] = {
-                "id": database,
-                "throughput": throughput,
-            }
-            response.append(database_data)
         return response
 
 
