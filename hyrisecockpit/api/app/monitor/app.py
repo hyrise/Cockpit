@@ -439,7 +439,12 @@ model_database_status = api.clone(
 
 
 def get_historical_data(
-    startts, endts, precision, table, metrics, database
+    startts: int,
+    endts: int,
+    precision_ns: int,
+    table: str,
+    metrics: List[str],
+    database: str,
 ) -> List[Dict[str, Union[int, float]]]:
     """Retrieve historical data for provided metrics and precision."""
     select_clause = ",".join(f" mean({metric}) as {metric}" for metric in metrics)
@@ -453,7 +458,7 @@ def get_historical_data(
     query = f"""SELECT {select_clause}
         FROM ({subquery})
         WHERE time >= $startts AND time < $endts
-        GROUP BY TIME({precision})
+        GROUP BY TIME({precision_ns}ns)
         FILL(0.0);"""  # do aggregation over time intervals of the precision_ns length
 
     points = storage_connection.query(
@@ -497,11 +502,10 @@ def get_historical_metric(
     startts: int, endts: int, precision_ns: int, table_name: str, metrics: List
 ) -> List[Dict[str, Union[str, List]]]:
     """Get historical metric data for all databases."""
-    precision: str = f"{precision_ns}ns"
     result: List = []
     for database in _get_active_databases():
         metric_points: List[Dict[str, Union[int, float]]] = get_historical_data(
-            startts, endts, precision, table_name, metrics, database
+            startts, endts, precision_ns, table_name, metrics, database
         )
         metric: List[Dict[str, float]] = fill_missing_points(
             startts, endts, precision_ns, table_name, metric_points
