@@ -443,10 +443,18 @@ def get_historical_data(
 ) -> List[Dict[str, Union[int, float]]]:
     """Retrieve historical data for provided metrics and precision."""
     select_clause = ",".join(f" mean({metric}) as {metric}" for metric in metrics)
+    subquery = f"""SELECT {select_clause}
+        FROM {table}
+        WHERE time >=  $startts AND
+        time < $endts
+        GROUP BY TIME(1s)
+        FILL(0.0)"""  # fill empty 1s-slots with 0
+
     query = f"""SELECT {select_clause}
-        FROM {table} WHERE time >= $startts AND time < $endts
+        FROM ({subquery})
+        WHERE time >= $startts AND time < $endts
         GROUP BY TIME({precision})
-        FILL(0.0);"""
+        FILL(0.0);"""  # do aggregation over time intervals of the precision_ns length
 
     points = storage_connection.query(
         query,
