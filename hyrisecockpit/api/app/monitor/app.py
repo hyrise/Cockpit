@@ -499,10 +499,7 @@ def get_interval_limits(
     startts_rounded: int = int(precise_startts / precision_ns) * precision_ns
     endts_rounded: int = int(precise_endts / precision_ns) * precision_ns
 
-    startts: int = startts_rounded if precise_startts % precision_ns == 0 else startts_rounded + precision_ns
-    endts: int = endts_rounded if precise_endts % precision_ns == 0 else endts_rounded + 1
-
-    return startts, endts
+    return startts_rounded, endts_rounded
 
 
 def get_historical_metric(
