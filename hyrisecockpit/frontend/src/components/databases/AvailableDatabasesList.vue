@@ -22,12 +22,16 @@
     </v-card>
     <v-divider class="my-2" />
     <v-list-item class="mt-1" v-for="database in databases" :key="database.id">
-      <v-list-item-title>
+      <v-list-item-title class="database-list-item">
         <database-chip
           :database-id="database.id"
           :closable="true"
           @closed="$emit('removeDatabase', database)"
         />
+        <v-spacer />
+        <v-icon @click="openSqlEditor()">
+          mdi-file-edit
+        </v-icon>
       </v-list-item-title>
     </v-list-item>
   </v-list>
@@ -46,6 +50,7 @@ import DatabaseChip from "@/components/details/DatabaseChip.vue";
 
 interface Data {
   databases: Ref<readonly Database[]>;
+  openSqlEditor: () => void;
 }
 
 export default defineComponent({
@@ -57,10 +62,15 @@ export default defineComponent({
       getDatabasesByIds,
       availableDatabasesById,
     } = context.root.$databaseController;
+
+    function openSqlEditor(): void {
+      console.log("klick");
+    }
     return {
       databases: computed(() =>
         getDatabasesByIds(availableDatabasesById.value as string[])
       ),
+      openSqlEditor,
     };
   },
 });
@@ -68,6 +78,9 @@ export default defineComponent({
 <style scoped>
 .list {
   z-index: 12;
+}
+.database-list-item {
+  display: flex;
 }
 .button {
   margin-right: 10px;
