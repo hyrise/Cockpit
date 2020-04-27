@@ -29,9 +29,7 @@
           @closed="$emit('removeDatabase', database)"
         />
         <v-spacer />
-        <v-icon @click="openSqlEditor()">
-          mdi-file-edit
-        </v-icon>
+        <s-q-l-editor :databaseId="database.id" />
       </v-list-item-title>
     </v-list-item>
   </v-list>
@@ -47,15 +45,16 @@ import {
 } from "@vue/composition-api";
 import { Database } from "@/types/database";
 import DatabaseChip from "@/components/details/DatabaseChip.vue";
+import SQLEditor from "@/components/databases/SQLEditor.vue";
 
 interface Data {
   databases: Ref<readonly Database[]>;
-  openSqlEditor: () => void;
 }
 
 export default defineComponent({
   components: {
     DatabaseChip,
+    SQLEditor,
   },
   setup(props: {}, context: SetupContext): Data {
     const {
@@ -63,14 +62,10 @@ export default defineComponent({
       availableDatabasesById,
     } = context.root.$databaseController;
 
-    function openSqlEditor(): void {
-      console.log("klick");
-    }
     return {
       databases: computed(() =>
         getDatabasesByIds(availableDatabasesById.value as string[])
       ),
-      openSqlEditor,
     };
   },
 });

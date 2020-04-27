@@ -1,22 +1,32 @@
 <template>
-  <v-simple-table class="result-table" :fixed-header="true">
-    <template v-slot:default>
-      <thead>
-        <tr>
-          <th v-for="column in columnNames" :key="column" class="text-left">
-            {{ column }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(row, idx) in rows" :key="`row_${idx}`">
-          <td v-for="value in row" :key="`row_${idx}_${value}`">
-            {{ value }}
-          </td>
-        </tr>
-      </tbody>
-    </template>
-  </v-simple-table>
+  <div>
+    Result:
+    <v-simple-table
+      class="result-table"
+      :fixed-header="true"
+      :height="Math.min(rows.length * 100, 400)"
+    >
+      <template v-slot:default>
+        <thead>
+          <tr>
+            <th v-for="column in columnNames" :key="column" class="text-left">
+              {{ column }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(row, rowIdx) in rows" :key="`row_${rowIdx}`">
+            <td
+              v-for="(value, valueIdx) in row"
+              :key="`row_${rowIdx}_${valueIdx}`"
+            >
+              {{ value }}
+            </td>
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
+  </div>
 </template>
 
 <script lang="ts">
@@ -55,8 +65,7 @@ export default defineComponent({
 </script>
 <style scoped>
 .result-table {
-  overflow-x: auto;
-  overflow-y: scroll;
-  max-height: 300px;
+  overflow: auto;
+  max-height: 100%;
 }
 </style>

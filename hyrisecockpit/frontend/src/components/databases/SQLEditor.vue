@@ -1,26 +1,40 @@
 <template>
-  <v-card>
-    <v-card-title>
-      Send Sql to DB
-    </v-card-title>
-    <v-card-text>
-      <v-textarea
-        name="input-7-1"
-        filled
-        auto-grow
-        v-model="sqlQuery"
-        :error-messages="error"
-        :loading="isLoading"
-      ></v-textarea>
-      <s-q-l-result-table :rows="rows" :columnNames="columnNames" />
-    </v-card-text>
-    <v-card-actions>
-      <v-spacer />
-      <v-btn @click="sendSQLQuery()" color="primary" text
-        >send Query to DB</v-btn
-      >
-    </v-card-actions>
-  </v-card>
+  <v-dialog v-model="showDialog" width="60%">
+    <template v-slot:activator="{ on }">
+      <v-btn icon v-on="on">
+        <v-icon> mdi-file-edit </v-icon>
+      </v-btn>
+    </template>
+    <v-card>
+      <v-system-bar :height="50" class="sql-header">
+        <v-card-title>
+          SQL-interface
+        </v-card-title>
+        <v-spacer />
+        <v-btn @click="showDialog = false" color="primary" text>
+          <v-icon>mdi-close </v-icon>
+        </v-btn>
+      </v-system-bar>
+      <v-card-text>
+        <v-textarea
+          filled
+          auto-grow
+          v-model="sqlQuery"
+          :error-messages="error"
+          :loading="isLoading"
+          placeholder="insert SQL here"
+        ></v-textarea>
+        <s-q-l-result-table :rows="rows" :columnNames="columnNames" />
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn @click="showDialog = false" color="primary" text>Close</v-btn>
+        <v-btn @click="sendSQLQuery()" color="primary" text
+          >send Query to DB</v-btn
+        >
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script lang="ts">
@@ -41,6 +55,7 @@ interface Data {
   isLoading: Ref<boolean>;
   rows: Ref<[]>;
   columnNames: Ref<String[]>;
+  showDialog: Ref<boolean>;
 }
 
 interface Props {
@@ -64,6 +79,7 @@ export default defineComponent({
     const isLoading = ref<boolean>(false);
     const rows = ref<[]>([]);
     const columnNames = ref<string[]>([]);
+    const showDialog = ref<boolean>(false);
 
     function sendSQLQuery() {
       isLoading.value = true;
@@ -82,7 +98,6 @@ export default defineComponent({
           error.value = error;
           isLoading.value = false;
         });
-      console.log(props.databaseId, sqlQuery.value);
     }
 
     return {
@@ -92,11 +107,15 @@ export default defineComponent({
       isLoading,
       rows,
       columnNames,
+      showDialog,
     };
   },
 });
 </script>
 <style scoped>
+.sql-header {
+  margin-bottom: 16px;
+}
 .list {
   z-index: 12;
 }

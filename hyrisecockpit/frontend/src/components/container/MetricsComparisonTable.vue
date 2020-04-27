@@ -17,7 +17,6 @@
           :max-chart-width="maxChartWidth"
         />
       </div>
-      <s-q-l-editor :databaseId="database" />
     </div>
   </div>
 </template>
@@ -35,7 +34,6 @@ import {
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
 import { useDatabaseFlex } from "../../meta/components";
 import MetricTile from "@/components/container/MetricTile.vue";
-import SQLEditor from "../databases/SQLEditor.vue";
 
 interface Data {
   databaseFlex: Readonly<Ref<Object>>;
@@ -45,7 +43,6 @@ interface Data {
 export default defineComponent({
   components: {
     MetricTile,
-    SQLEditor,
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
