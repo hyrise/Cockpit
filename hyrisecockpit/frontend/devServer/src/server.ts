@@ -144,7 +144,6 @@ function handleRequestBody(
     if (del) {
       const split = req.url.split("/");
       id = split[split.length - 1];
-      console.log(id);
     } else {
       id = req.body.folder_name;
     }
