@@ -25,6 +25,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import { getGetAlias } from "../setup/helpers";
+import { mockBackend } from "../setup/backendMock";
 
 // count numbers of requests
 Cypress.Commands.add("numberOfRequests", (alias) =>
@@ -62,4 +63,14 @@ Cypress.Commands.add("cleanAppState", (backend, payload) => {
 Cypress.Commands.add("updateAppState", (backend, payload) => {
   if (!Cypress.env("stubless"))
     backend.reload(payload.request, payload.id, payload.method);
+});
+
+// restart app state with new numbers
+Cypress.Commands.add("restartAppState", (backend, payload) => {
+  if (Cypress.env("stubless")) {
+    cy.request("POST", "http://localhost:3000/restart/", payload);
+  } else {
+    backend = mockBackend(payload);
+    backend.restart();
+  }
 });

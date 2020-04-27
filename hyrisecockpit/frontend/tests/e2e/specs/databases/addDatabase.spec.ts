@@ -14,6 +14,7 @@ import {
   testElementNoVisibility,
   testElementNoExistence,
   testButtonIsDisabled,
+  testContentNoExistence,
 } from "../abstractTests";
 
 const backend = useBackendMock();
@@ -56,6 +57,7 @@ describe("When adding a new database", () => {
     it("will add a new database with the correct data", () => {
       clickElement(getViewSelector("databaseListButton"));
       clickElement(getSelector("addDatabaseButton"));
+      testContentNoExistence(newDatabase.host);
 
       // update tmp state
       cy.updateAppState(backend, {
@@ -99,6 +101,7 @@ describe("When adding a new database", () => {
     it("will add a new database with the correct data", () => {
       clickElement(getViewSelector("databaseListButton"));
       clickElement(getSelector("addDatabaseButton"));
+      testContentNoExistence(newDatabase.id);
 
       // update tmp state
       cy.updateAppState(backend, {

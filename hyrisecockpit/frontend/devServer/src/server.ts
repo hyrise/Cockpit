@@ -7,7 +7,7 @@ import express from "express";
 import bodyParser from "body-parser";
 
 const server = express();
-const mocks = useMocks(getInitialNumbers({}));
+let mocks = useMocks(getInitialNumbers({}));
 
 function getInitialNumbers(numbers: Partial<Record<Entity, number>>) {
   return {
@@ -83,6 +83,13 @@ server.post("/clean/", (req, res) => {
     mocks.getMockedPostCallback(req.body.request)(req.body.id);
   if (req.body.method === "DELETE")
     mocks.getMockedDeleteCallback(req.body.request)(req.body.id);
+  res.send({});
+});
+
+/* route for manual restarting with different numbers */
+server.post("/restart/", (req, res) => {
+  logRequest(req, res);
+  mocks = useMocks(getInitialNumbers(req.body));
   res.send({});
 });
 

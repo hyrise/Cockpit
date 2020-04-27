@@ -1,4 +1,4 @@
-import { useBackendMock, mockBackend } from "../../setup/backendMock";
+import { useBackendMock } from "../../setup/backendMock";
 import { clickElement } from "../helpers";
 import { getSelector as getViewSelector, getRoute } from "../views/helpers";
 import {
@@ -13,7 +13,7 @@ import {
   testMaxDecimalDigits,
 } from "../abstractTests";
 
-let backend = mockBackend({
+let backend = useBackendMock({
   databases: 2,
 });
 
@@ -145,10 +145,9 @@ describe("when observing the database data and details", () => {
   // test empty databases
   describe("when no database has been added", () => {
     it("will show empty database list and details", () => {
-      backend = mockBackend({
+      cy.restartAppState(backend, {
         databases: 0,
       });
-      backend.restart();
       cy.visit("/");
 
       cy.get(getSelector("numberOfDatabases")).contains("0");

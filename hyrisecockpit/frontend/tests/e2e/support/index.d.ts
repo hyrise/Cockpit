@@ -1,8 +1,8 @@
 declare namespace Cypress {
   interface Chainable {
     numberOfRequests(selector: string): Chainable;
-    setupAppState(backend: any): Promise<any>;
     setupData(request: string): Promise<any>;
+    setupAppState(backend: any): Promise<any>;
     cleanAppState(
       backend: any,
       payload: { request: string; id: string; method: "POST" | "DELETE" }
@@ -11,5 +11,6 @@ declare namespace Cypress {
       backend: any,
       payload: { request: string; id: string; method: "POST" | "DELETE" }
     ): any;
+    restartAppState(backend: any, payload: any): any;
   }
 }
