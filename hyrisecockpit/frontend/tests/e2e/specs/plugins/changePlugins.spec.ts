@@ -15,7 +15,7 @@ import {
   assertSettingsRequestValues,
 } from "./helpers";
 
-let backend = mockBackend({ plugins: 3 });
+let backend = useBackendMock({ plugins: 3 });
 
 let databases: any = [];
 let availablePlugins: any = [];
@@ -26,6 +26,9 @@ let databasesPluginSettings: any = [];
 // test plugins overview
 describe("When opening the plugins overview", () => {
   beforeEach(() => {
+    cy.restartAppState(backend, {
+      databases: 1,
+    });
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
       cy.setupData("available_plugins").then((xhr: any) => {
@@ -41,6 +44,10 @@ describe("When opening the plugins overview", () => {
         });
       });
     });
+  });
+
+  after(() => {
+    cy.restartAppState(backend, {});
   });
 
   // test activate plugin
@@ -63,7 +70,12 @@ describe("When opening the plugins overview", () => {
             []
           );
 
-          backend.reload("plugin", deactivePlugins[0].plugin, "POST");
+          // update tmp state
+          cy.updateAppState(backend, {
+            request: "plugin",
+            id: deactivePlugins[0].plugin,
+            method: "POST",
+          });
 
           cy.get("button")
             .eq(idx + 1)
@@ -93,7 +105,13 @@ describe("When opening the plugins overview", () => {
           cy.get("button")
             .eq(idx + 1)
             .click();
-          backend.reload("plugin", deactivePlugins[0].plugin, "DELETE");
+
+          // clean tmp state
+          cy.cleanAppState(backend, {
+            request: "plugin",
+            id: deactivePlugins[0].plugin,
+            method: "DELETE",
+          });
         });
       });
     });
@@ -119,7 +137,12 @@ describe("When opening the plugins overview", () => {
             []
           );
 
-          backend.reload("plugin", activePlugins[0].plugin, "DELETE");
+          // update tmp state
+          cy.updateAppState(backend, {
+            request: "plugin",
+            id: activePlugins[0].plugin,
+            method: "DELETE",
+          });
 
           cy.get("button")
             .eq(idx + 1)
@@ -149,7 +172,13 @@ describe("When opening the plugins overview", () => {
           cy.get("button")
             .eq(idx + 1)
             .click();
-          backend.reload("plugin", activePlugins[0].plugin, "POST");
+
+          // clean tmp state
+          cy.cleanAppState(backend, {
+            request: "plugin",
+            id: activePlugins[0].plugin,
+            method: "POST",
+          });
         });
       });
     });

@@ -1,6 +1,6 @@
 import { clickElement } from "../helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
-import { useBackendMock, mockBackend } from "../../setup/backendMock";
+import { useBackendMock } from "../../setup/backendMock";
 import {
   generateRandomInt,
   getPostAlias,
@@ -19,7 +19,7 @@ import {
   assertChangedTable,
 } from "./helpers";
 
-let backend = mockBackend();
+let backend = useBackendMock();
 
 let statusData: any[] = [];
 
@@ -71,7 +71,14 @@ describe("opening workload generation", () => {
         assertStartedWorkload(xhr.request.body, activeBenchmark);
       });
       cy.numberOfRequests(getPostAlias("workload")).should("eq", 1);
-      backend.reload("workload", activeBenchmark, "POST");
+
+      // update tmp state
+      cy.updateAppState(backend, {
+        request: "workload",
+        id: activeBenchmark,
+        method: "POST",
+      });
+
       cy.wait("@" + getGetAlias("status"));
       assertButtonState("checkbox", true);
 
@@ -86,7 +93,14 @@ describe("opening workload generation", () => {
 
       cy.wait("@" + getDeleteAlias("workload"));
       cy.numberOfRequests(getDeleteAlias("workload")).should("eq", 1);
-      backend.reload("workload", activeBenchmark, "DELETE");
+
+      // update tmp state
+      cy.updateAppState(backend, {
+        request: "workload",
+        id: activeBenchmark,
+        method: "DELETE",
+      });
+
       cy.wait("@" + getGetAlias("status"));
       assertButtonState("checkbox", false);
     });
@@ -95,9 +109,8 @@ describe("opening workload generation", () => {
   // test load and unload tables
   describe("when loading or removing tables via button", () => {
     it("will load and unload the correct tables", () => {
-      const activeBenchmark = statusData[0].loaded_benchmarks[0];
       const deactiveBenchmarks = benchmarks.filter(
-        (type) => type !== activeBenchmark
+        (type) => type !== statusData[0].loaded_benchmarks[0]
       );
       const index = generateRandomInt(0, deactiveBenchmarks.length);
 
@@ -112,7 +125,12 @@ describe("opening workload generation", () => {
         assertChangedTable(xhr.request.body, deactiveBenchmarks[index]);
       });
       cy.numberOfRequests(getPostAlias("benchmark_tables")).should("eq", 1);
-      backend.reload("benchmark_tables", deactiveBenchmarks[index], "POST");
+      // update tmp state
+      cy.updateAppState(backend, {
+        request: "benchmark_tables",
+        id: deactiveBenchmarks[index],
+        method: "POST",
+      });
       cy.setupData("status").then((xhr: any) => {
         statusData = xhr.response.body;
         assertLoadedBenchmarks(statusData);
@@ -120,15 +138,21 @@ describe("opening workload generation", () => {
       });
 
       cy.get("input[type=checkbox]")
-        .eq(getBenchmarkIndex(activeBenchmark))
+        .eq(getBenchmarkIndex(deactiveBenchmarks[index]))
         .uncheck({ force: true });
 
       cy.wait("@" + getDeleteAlias("benchmark_tables"));
       cy.get("@" + getDeleteAlias("benchmark_tables")).then((xhr: any) => {
-        assertChangedTable(xhr.request.body, activeBenchmark);
+        assertChangedTable(xhr.request.body, deactiveBenchmarks[index]);
       });
       cy.numberOfRequests(getDeleteAlias("benchmark_tables")).should("eq", 1);
-      backend.reload("benchmark_tables", activeBenchmark, "DELETE");
+
+      // update tmp state
+      cy.updateAppState(backend, {
+        request: "benchmark_tables",
+        id: deactiveBenchmarks[index],
+        method: "DELETE",
+      });
       cy.setupData("status").then((xhr: any) => {
         statusData = xhr.response.body;
         assertLoadedBenchmarks(statusData);
@@ -150,6 +174,9 @@ describe("opening workload generation", () => {
         .check({ force: true });
       cy.get(getSelector("startButton")).click();
       cy.wait("@" + getPostAlias("workload"));
+      cy.get("@" + getPostAlias("workload")).should((xhr: any) => {
+        assertStartedWorkload(xhr.request.body, activeBenchmark);
+      });
       cy.numberOfRequests(getPostAlias("workload")).should("eq", 1);
 
       clickElement(getViewSelector("workloadGenerationButton"));
@@ -161,19 +188,29 @@ describe("opening workload generation", () => {
         assertStartedWorkload(xhr.request.body, activeBenchmark, newValue);
       });
       cy.numberOfRequests(getPutAlias("workload")).should("eq", 1);
+
+      // clean tmp state
+      cy.cleanAppState(backend, {
+        request: "workload",
+        id: activeBenchmark,
+        method: "DELETE",
+      });
     });
   });
 
   // test empty databases
   describe("when no database has been added", () => {
     it("will show an error and disable all buttons", () => {
-      backend = mockBackend({ databases: 0 });
-      backend.restart();
+      cy.restartAppState(backend, {
+        databases: 0,
+      });
       cy.reload();
       clickElement(getViewSelector("workloadGenerationButton"));
       assertButtonState("checkbox", true);
       assertButtonState("radio", true);
       cy.contains("No database added");
+
+      cy.restartAppState(backend, {});
     });
   });
 });

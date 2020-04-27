@@ -19,7 +19,7 @@ function getInitialNumbers(
     columns: 2,
     chunks: 2,
     queries: 10,
-    plugins: 2,
+    plugins: 3,
     activated_plugins: 1,
     loaded_benchmarks: 1,
     workloads: 0,

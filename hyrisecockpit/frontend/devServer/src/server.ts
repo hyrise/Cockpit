@@ -16,7 +16,7 @@ function getInitialNumbers(numbers: Partial<Record<Entity, number>>) {
     columns: 2,
     databases: 2,
     loaded_benchmarks: 1,
-    plugins: 2,
+    plugins: 3,
     queries: 10,
     tables: 2,
     workloads: 0,

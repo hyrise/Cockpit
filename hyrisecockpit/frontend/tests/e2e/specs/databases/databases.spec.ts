@@ -159,6 +159,8 @@ describe("when observing the database data and details", () => {
 
       cy.visit(getRoute("overview"));
       cy.get(getSelector("databaseSystemDetails")).should("not.exist");
+
+      cy.restartAppState(backend, {});
     });
   });
 });
