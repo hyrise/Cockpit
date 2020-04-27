@@ -9,7 +9,10 @@
         <v-icon @click="closeWorkloadDialog()">mdi-close</v-icon>
       </v-system-bar>
       <v-card-text>
-        <status-warning :selected-databases="databases" />
+        <status-warning
+          :selected-databases="databases"
+          :selected-metrics="['']"
+        />
         <v-row>
           <v-col class="pt-2">
             <p class="subtitle-1 font-weight-medium">
@@ -42,9 +45,7 @@
                 :key="workload"
                 :label="getDisplayedWorkload(workload)"
                 :value="workload"
-                :disabled="
-                  !isLoaded(workload) || isDisabled() || !databases.length
-                "
+                :disabled="!isLoaded(workload) || disabled"
               >
               </v-radio>
             </v-radio-group>
@@ -53,10 +54,7 @@
                 id="start-workload"
                 @click="startingWorkload()"
                 :disabled="
-                  buttons.start.loading ||
-                  !isLoaded(workload) ||
-                  isDisabled() ||
-                  !databases.length
+                  buttons.start.loading || !isLoaded(workload) || disabled
                 "
                 :loading="buttons.start.loading"
                 :style="{ color: buttons.start.active ? 'green' : '' }"
@@ -69,10 +67,7 @@
                 id="pause-workload"
                 @click="pausingWorkload()"
                 :disabled="
-                  buttons.pause.loading ||
-                  !isLoaded(workload) ||
-                  isDisabled() ||
-                  !databases.length
+                  buttons.pause.loading || !isLoaded(workload) || disabled
                 "
                 :loading="buttons.pause.loading"
                 :style="{ color: buttons.pause.active ? 'blue' : '' }"
@@ -84,9 +79,7 @@
               <v-btn
                 id="stop-workload"
                 @click="stoppingWorkload()"
-                :disabled="
-                  buttons.stop.loading || isDisabled() || !databases.length
-                "
+                :disabled="buttons.stop.loading || disabled"
                 :loading="buttons.stop.loading"
                 :style="{ color: buttons.stop.active ? 'red' : '' }"
               >
@@ -110,7 +103,7 @@
               :value="workload"
               @change="handleWorkloadDataChange(workload)"
               :loading="switchesLoading[workload]"
-              :disabled="runningWorkload || isDisabled() || !databases.length"
+              :disabled="runningWorkload || disabled"
             >
             </v-switch>
           </v-col>
@@ -131,7 +124,6 @@ import {
 } from "@vue/composition-api";
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
-import { useDatabaseService } from "../../services/databaseService";
 import { useDatabaseEvents } from "../../meta/events";
 import {
   getDisplayedWorkload,
@@ -150,11 +142,10 @@ interface Data {
   buttons: Record<string, { active: boolean; loading: boolean }>;
   switchesLoading: Record<string, boolean>;
   runningWorkload: Ref<boolean>;
+  disabled: Ref<boolean>;
   databases: Ref<readonly string[]>;
   getDisplayedWorkload: (workload: Workload) => string;
-  useDatabaseService: () => void;
   isLoaded: (workload: Workload) => boolean;
-  isDisabled: () => boolean;
   startingWorkload: () => void;
   pausingWorkload: () => void;
   stoppingWorkload: () => void;
@@ -211,7 +202,7 @@ export default defineComponent({
       job: false,
     });
     const runningWorkload = ref<boolean>(false);
-    let disabled: boolean = false;
+    let blocked: boolean = false;
     let changeWorkloadData: boolean = true;
     const { emitDatabaseStatusChangedEvent } = useDatabaseEvents();
 
@@ -269,15 +260,6 @@ export default defineComponent({
     function isLoaded(workload: Workload): boolean {
       return workloadData.value.includes(workload);
     }
-    function isDisabled(): boolean {
-      return (
-        disabled ||
-        switchesLoading.tpch01 ||
-        switchesLoading.tpch1 ||
-        switchesLoading.tpcds ||
-        switchesLoading.job
-      );
-    }
     function handleFrequencyChange(): void {
       if (buttons.start.active) {
         updateWorkload(workload.value, frequency.value);
@@ -318,12 +300,12 @@ export default defineComponent({
           runningWorkload.value = Object.values(response.data).some(
             (database: any) => database.worker_pool_status === "running"
           );
-          disabled = Object.values(response.data).some(
+          blocked = Object.values(response.data).some(
             (database: any) =>
               database.database_blocked_status === true ||
               database.hyrise_active === false
           );
-          if (!disabled && changeWorkloadData) {
+          if (!blocked && changeWorkloadData) {
             Object.values(availableWorkloads).forEach((workload: Workload) => {
               switchesLoading[workload] = false;
             });
@@ -344,13 +326,21 @@ export default defineComponent({
       buttons,
       switchesLoading,
       runningWorkload,
+      disabled: computed(
+        () =>
+          blocked ||
+          !context.root.$databaseController.availableDatabasesById.value
+            .length ||
+          switchesLoading.tpch01 ||
+          switchesLoading.tpch1 ||
+          switchesLoading.tpcds ||
+          switchesLoading.job
+      ),
       databases: computed(
         () => context.root.$databaseController.availableDatabasesById.value
       ),
       getDisplayedWorkload,
-      useDatabaseService,
       isLoaded,
-      isDisabled,
       startingWorkload,
       pausingWorkload,
       stoppingWorkload,

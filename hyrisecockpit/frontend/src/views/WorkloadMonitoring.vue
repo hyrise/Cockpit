@@ -5,13 +5,11 @@
       :evaluations="[false]"
     />
     <div class="mx-6">
-      <status-warning :selected-databases="selectedDatabases" />
+      <status-warning
+        :selected-databases="selectedDatabases"
+        :selected-metrics="selectedMetrics"
+      />
       <database-query-tables :selected-databases="selectedDatabases" />
-      <warning :condition="selectedDatabases">
-        <template #message>
-          No databases selected.
-        </template>
-      </warning>
       <v-card color="primary">
         <v-card-title class="white--text">
           Workload Metrics
@@ -54,7 +52,6 @@ import LinearLoader from "../components/alerts/LinearLoader.vue";
 import DatabaseQueryTables from "@/components/queries/DatabaseQueryTables.vue";
 import { MetricViewData } from "../types/views";
 import { useSelectionHandling } from "@/meta/selection";
-import Warning from "@/components/alerts/Warning.vue";
 import StatusWarning from "@/components/alerts/StatusWarning.vue";
 import MetricTile from "@/components/container/MetricTile.vue";
 import SelectionList from "@/components/selection/SelectionList.vue";
@@ -70,7 +67,6 @@ export default defineComponent({
     MetricTile,
     LinearLoader,
     DatabaseQueryTables,
-    Warning,
     StatusWarning,
     SelectionList,
   },
