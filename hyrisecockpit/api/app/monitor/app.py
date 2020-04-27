@@ -615,43 +615,22 @@ class Latency(Resource):
         params={
             "startts": "Start of a time interval",
             "endts": "End of a time interval",
+            "precision": "Length of the aggregation interval",
         },
     )
     def get(self) -> Union[int, List]:
-        """Return latency information in a given time range."""
+        """Return throughput information in a given time range."""
         precise_startts: int = int(request.args.get("startts"))  # type: ignore
         precise_endts: int = int(request.args.get("endts"))  # type: ignore
+        precision_ns: int = int(request.args.get("precision"))  # type: ignore
 
-        startts_rounded: int = int(precise_startts / 1_000_000_000) * 1_000_000_000
-        endts_rounded: int = int(precise_endts / 1_000_000_000) * 1_000_000_000
+        (startts, endts) = get_interval_limits(
+            precise_startts, precise_endts, precision_ns
+        )
+        response: List[Dict[str, Union[str, List]]] = get_historical_metric(
+            startts, endts, precision_ns, "latency", ["latency"]
+        )
 
-        # take nearest whole numbers of seconds
-        startts: int = startts_rounded if precise_startts % 1_000_000_000 == 0 else startts_rounded + 1_000_000_000
-        endts: int = endts_rounded if precise_endts % 1_000_000_000 == 0 else endts_rounded + 1
-        response: List = []
-
-        for database in _get_active_databases():
-            database_data: Dict[str, Union[str, List]] = {
-                "id": database,
-            }
-
-            result = storage_connection.query(
-                "SELECT * FROM latency WHERE time >= $startts AND time < $endts;",
-                database=database,
-                bind_params={"startts": startts, "endts": endts},
-            )
-            latency_rows: List = list(result["latency", None])
-            latency: List[Dict[str, int]] = []
-            for timestamp in range(startts, endts, 1_000_000_000):
-                latency_value = 0
-                for row in latency_rows:
-                    if int(parse_date(row["time"]).timestamp() * 1e9) == timestamp:
-                        latency_value = row["latency"]
-                        break
-                latency.append({"timestamp": timestamp, "latency": latency_value})
-
-            database_data["latency"] = latency
-            response.append(database_data)
         return response
 
 
