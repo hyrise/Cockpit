@@ -675,34 +675,22 @@ class QueueLength(Resource):
         params={
             "startts": "Start of a time interval",
             "endts": "End of a time interval",
+            "precision": "Length of the aggregation interval",
         },
     )
     def get(self) -> Union[int, List]:
         """Return queue length information in a given time range."""
-        startts: int = int(request.args.get("startts"))  # type: ignore
-        endts: int = int(request.args.get("endts"))  # type: ignore
+        precise_startts: int = int(request.args.get("startts"))  # type: ignore
+        precise_endts: int = int(request.args.get("endts"))  # type: ignore
+        precision_ns: int = int(request.args.get("precision"))  # type: ignore
 
-        response: List = []
-        for database in _get_active_databases():
-            database_data: Dict[str, Union[str, List]] = {
-                "id": database,
-            }
+        (startts, endts) = get_interval_limits(
+            precise_startts, precise_endts, precision_ns
+        )
+        response: List[Dict[str, Union[str, List]]] = get_historical_metric(
+            startts, endts, precision_ns, "queue_length", ["queue_length"]
+        )
 
-            result = storage_connection.query(
-                "SELECT * FROM queue_length WHERE time >= $startts AND time < $endts;",
-                database=database,
-                bind_params={"startts": startts, "endts": endts},
-            )
-            queue_length_rows: List = list(result["queue_length", None])
-            queue_length: List[Dict[str, int]] = [
-                {
-                    "timestamp": int(parse_date(row["time"]).timestamp() * 1e9),
-                    "queue_length": row["queue_length"],
-                }
-                for row in queue_length_rows
-            ]
-            database_data["queue_length"] = queue_length
-            response.append(database_data)
         return response
 
 
