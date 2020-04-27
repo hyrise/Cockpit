@@ -109,7 +109,7 @@ class TestSocketManager:
 
         generator_socket = GeneratorSocket()
 
-        mocked_base_socket.assert_called_once_with(f"tcp://hallo:world")
+        mocked_base_socket.assert_called_once_with(f"tcp://hallo:world")  # noqa
         assert generator_socket._socket == mocked_socket
         mocked_socket.open.assert_called_once()
 
@@ -136,7 +136,7 @@ class TestSocketManager:
 
         manager_socket = ManagerSocket()
 
-        mocked_base_socket.assert_called_once_with(f"tcp://hallo:manager")
+        mocked_base_socket.assert_called_once_with(f"tcp://hallo:manager")  # noqa
         assert manager_socket._socket == mocked_socket
         mocked_socket.open.assert_called_once()
 
