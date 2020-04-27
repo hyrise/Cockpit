@@ -3,14 +3,6 @@
 # Team
 * @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @kathwill @MaxSchneider1337 @monasobh @PeterTsayun @schTi
 
-# DevOps
-# @caterinamandel98 @cH3n7i @fabianhe
-/* @caterinamandel98 @cH3n7i @fabianhe
-/.github/ @caterinamandel98 @cH3n7i @fabianhe
-/docker/ @caterinamandel98 @cH3n7i @fabianhe
-/hyrise/ @caterinamandel98 @cH3n7i @fabianhe
-**/**/Dockerfile @caterinamandel98 @cH3n7i @fabianhe
-
 # Backend
 # @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
 /hyrisecockpit/ @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
@@ -20,3 +12,11 @@
 # Frontend
 # @kathwill @MaxSchneider1337 @monasobh @schTi
 /hyrisecockpit/frontend/ @kathwill @MaxSchneider1337 @monasobh @schTi
+
+# DevOps
+# @caterinamandel98 @cH3n7i @fabianhe
+/* @caterinamandel98 @cH3n7i @fabianhe
+/.github/ @caterinamandel98 @cH3n7i @fabianhe
+/docker/ @caterinamandel98 @cH3n7i @fabianhe
+/hyrise/ @caterinamandel98 @cH3n7i @fabianhe
+**/**/Dockerfile @caterinamandel98 @cH3n7i @fabianhe
