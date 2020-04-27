@@ -177,7 +177,7 @@ model_execute_sql_results = api.clone(
 
 
 @api.route("/available_plugins")
-class ActivatedPlugin(Resource):
+class AvailablePlugin(Resource):
     """Get all available Plugins."""
 
     @api.doc(model=model_get_all_plugins)
