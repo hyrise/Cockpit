@@ -1,16 +1,42 @@
 """Tests for the Workload model."""
+from typing import Dict
+
 from pytest import fixture
 
-from hyrisecockpit.api.app.workload.interface import WorkloadInterface
-from hyrisecockpit.api.app.workload.model import Workload
+from hyrisecockpit.api.app.workload.model import DetailedWorkload, Workload
 
 
-@fixture(params=[("workload0", "tpch_0.1", 420), ("workload1", "job", 0)],)
-def workload(request) -> Workload:
+@fixture(params=["tpch_0.1", "job"])
+def folder_name(request) -> str:
+    """Get examples of folder names."""
+    return request.param
+
+
+@fixture(params=[0, 420])
+def frequency(request) -> int:
+    """Get examples of frequencies."""
+    return request.param
+
+
+@fixture(params=[{}, {"01": 0, "23c": 101}])
+def weights(request) -> Dict[str, int]:
+    """Get examples of weights."""
+    return request.param
+
+
+@fixture
+def workload(folder_name: str, frequency: int) -> Workload:
     """Return a real Workload model."""
-    workload_id, folder_name, frequency = request.param
-    return Workload(
-        workload_id=workload_id, folder_name=folder_name, frequency=frequency
+    return Workload(folder_name=folder_name, frequency=frequency)
+
+
+@fixture
+def detailed_workload(
+    folder_name: str, frequency: int, weights: Dict[str, int]
+) -> Workload:
+    """Return a real DetailedWorkload model."""
+    return DetailedWorkload(
+        folder_name=folder_name, frequency=frequency, weights=weights
     )
 
 
@@ -21,16 +47,10 @@ class TestWorkload:
         """A Workload model can be created."""
         assert workload
 
-    def test_updates(self, workload: Workload):
-        """A Workload model can be updated."""
-        id = workload.workload_id
-        folder_name = workload.folder_name
-        frequency = workload.frequency
-        new_folder_name = f"{workload.folder_name}1"
-        new_frequency = workload.frequency + 1
-        workload.update(
-            WorkloadInterface(folder_name=new_folder_name, frequency=new_frequency)
-        )
-        assert id == workload.workload_id
-        assert folder_name != new_folder_name == workload.folder_name
-        assert frequency != new_frequency == workload.frequency
+
+class TestDetailedWorkload:
+    """Tests for the DetailedWorkload model."""
+
+    def test_creates(self, detailed_workload: DetailedWorkload):
+        """A Workload model can be created."""
+        assert workload

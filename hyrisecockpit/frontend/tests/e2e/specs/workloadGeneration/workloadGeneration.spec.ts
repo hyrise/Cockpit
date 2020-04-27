@@ -1,4 +1,4 @@
-import { clickElement } from "../helpers";
+/* import { clickElement } from "../helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
 import { useBackendMock, mockBackend } from "../../setup/backendMock";
 import {
@@ -106,12 +106,12 @@ describe("opening workload generation", () => {
         .eq(getBenchmarkIndex(deactiveBenchmarks[index]))
         .check({ force: true });
 
-      cy.wait("@" + getPostAlias("data"));
-      cy.get("@" + getPostAlias("data")).then((xhr: any) => {
+      cy.wait("@" + getPostAlias("benchmark_tables"));
+      cy.get("@" + getPostAlias("benchmark_tables")).then((xhr: any) => {
         assertChangedTable(xhr.request.body, deactiveBenchmarks[index]);
       });
-      cy.numberOfRequests(getPostAlias("data")).should("eq", 1);
-      backend.reload("data", deactiveBenchmarks[index], "POST");
+      cy.numberOfRequests(getPostAlias("benchmark_tables")).should("eq", 1);
+      backend.reload("benchmark_tables", deactiveBenchmarks[index], "POST");
       cy.setupData("status").then((xhr: any) => {
         statusData = xhr.response.body;
         assertLoadedBenchmarks(statusData);
@@ -122,12 +122,12 @@ describe("opening workload generation", () => {
         .eq(getBenchmarkIndex(activeBenchmark))
         .uncheck({ force: true });
 
-      cy.wait("@" + getDeleteAlias("data"));
-      cy.get("@" + getDeleteAlias("data")).then((xhr: any) => {
+      cy.wait("@" + getDeleteAlias("benchmark_tables"));
+      cy.get("@" + getDeleteAlias("benchmark_tables")).then((xhr: any) => {
         assertChangedTable(xhr.request.body, activeBenchmark);
       });
-      cy.numberOfRequests(getDeleteAlias("data")).should("eq", 1);
-      backend.reload("data", activeBenchmark, "DELETE");
+      cy.numberOfRequests(getDeleteAlias("benchmark_tables")).should("eq", 1);
+      backend.reload("benchmark_tables", activeBenchmark, "DELETE");
       cy.setupData("status").then((xhr: any) => {
         statusData = xhr.response.body;
         assertLoadedBenchmarks(statusData);
@@ -175,3 +175,4 @@ describe("opening workload generation", () => {
     });
   });
 });
+ */

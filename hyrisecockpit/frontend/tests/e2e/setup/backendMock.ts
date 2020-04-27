@@ -138,7 +138,7 @@ export function mockBackend(
 
   function mockGetRoutes(mock: RouteMockFunction): void {
     mock(
-      "**/control/database",
+      "**/control/database/",
       getGetAlias("database"),
       getMockedResponse("database")
     );
@@ -189,7 +189,11 @@ export function mockBackend(
       getGetAlias("status"),
       getMockedResponse("status")
     );
-    mock("**/control/data", getGetAlias("data"), getMockedResponse("data"));
+    mock(
+      "**/control/database/benchmark_tables",
+      getGetAlias("benchmark_tables"),
+      getMockedResponse("benchmark_tables")
+    );
     mock(
       "**/control/available_plugins",
       getGetAlias("available_plugins"),
@@ -214,18 +218,24 @@ export function mockBackend(
   }
 
   function mockPostRoutes(mock: RouteMockFunction): void {
-    mock("**/control/database", getPostAlias("database"));
-    mock("**/control/data", getPostAlias("data"));
+    mock("**/control/database/", getPostAlias("database"));
+    mock(
+      "**/control/database/benchmark_tables",
+      getPostAlias("benchmark_tables")
+    );
     mock("**/control/plugin", getPostAlias("plugin"));
     mock("**/control/plugin_settings", getPostAlias("plugin_settings"));
-    mock("**/control/workload", getPostAlias("workload"));
+    mock("**/workload/", getPostAlias("workload"));
   }
 
   function mockDeleteRoutes(mock: RouteMockFunction): void {
-    mock("**/control/database", getDeleteAlias("database"));
-    mock("**/control/data", getDeleteAlias("data"));
+    mock("**/control/database/", getDeleteAlias("database"));
+    mock(
+      "**/control/database/benchmark_tables",
+      getDeleteAlias("benchmark_tables")
+    );
     mock("**/control/plugin", getDeleteAlias("plugin"));
-    mock("**/control/workload", getDeleteAlias("workload"));
+    mock("**/workload/", getDeleteAlias("workload"));
   }
 
   return {
