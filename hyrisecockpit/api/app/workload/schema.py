@@ -1,16 +1,25 @@
 """Schema of a Workload."""
 from marshmallow import Schema
-from marshmallow.fields import Integer, String
+from marshmallow.fields import Dict, Integer, String
 
 
 class WorkloadSchema(Schema):
     """Schema of a Workload."""
 
-    workload_id = String(description="Identifier of the Workload.", required=True)
     folder_name = String(
         description="Name of the folder containing the pregenerated tables.",
         required=True,
     )
     frequency = Integer(
         description="Number of queries generated per second.", required=True
+    )
+
+
+class DetailedWorkloadSchema(WorkloadSchema):
+    """Detailed schema of a Workload."""
+
+    weights = Dict(
+        keys=String(description="Name of the query."),
+        values=Integer(description="Weight of the query."),
+        description="Weights of queries used for generation.",
     )

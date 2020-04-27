@@ -1,6 +1,5 @@
 """Module for WorkloadGenerator testing."""
 
-from typing import Any
 from unittest.mock import MagicMock, patch
 
 from pytest import fixture
@@ -8,100 +7,135 @@ from pytest import fixture
 from hyrisecockpit.response import get_response
 from hyrisecockpit.workload_generator.generator import WorkloadGenerator
 
-generator_listening = "generator_listening"
-generator_port = "10000"
-workload_listening = "workload_listening"
-workload_pub_port = "20000"
-default_workload_location = "default_workload_location"
+
+@fixture
+def generator_listening() -> str:
+    """Get the host address where the generator is listening."""
+    return "generator_listening"
 
 
-fake_workload = [("dummy_query", None, "benchmark", "query_no")]
+@fixture
+def generator_port() -> str:
+    """Get the host port where the generator is listening."""
+    return "10000"
 
 
-def idle_function(self, *args) -> None:
-    """Idle function."""
-    return
+@fixture
+def workload_listening() -> str:
+    """Get the host address where the workload is publishing."""
+    return "workload_listening"
 
 
-def get_fake_workload(*args) -> Any:
-    """Get fake workload."""
-    workload = MagicMock()
-    workload.generate_workload.return_value = fake_workload
-    return workload
+@fixture
+def workload_pub_port() -> str:
+    """Get the host port where the workload is publishing."""
+    return "20000"
+
+
+@fixture
+@patch.object(
+    WorkloadGenerator, "_init_server", lambda *args: None,
+)
+@patch.object(
+    WorkloadGenerator, "_init_scheduler", lambda *args: None,
+)
+@patch(
+    "hyrisecockpit.workload_generator.generator.Server", lambda *args: None,
+)
+def generator(
+    generator_listening, generator_port, workload_listening, workload_pub_port
+) -> WorkloadGenerator:
+    """Instance of WorkloadGenerator without binding of sockets."""
+    return WorkloadGenerator(
+        generator_listening, generator_port, workload_listening, workload_pub_port,
+    )
 
 
 class TestWorkloadGenerator:
     """Tests for the WorkloadGenerator class."""
 
-    @fixture
-    @patch(
-        "hyrisecockpit.workload_generator.generator.WorkloadGenerator._init_server",
-        idle_function,
-    )
-    @patch(
-        "hyrisecockpit.workload_generator.generator.Server", idle_function,
-    )
-    @patch(
-        "hyrisecockpit.workload_generator.generator.WorkloadGenerator._init_scheduler",
-        idle_function,
-    )
-    def isolated_generator(self) -> Any:
-        """Instance of WorkloadGenerator without binding of sockets."""
-        return WorkloadGenerator(
-            generator_listening,
-            generator_port,
-            workload_listening,
-            workload_pub_port,
-            default_workload_location,
-        )
+    def test_creates(self, generator: WorkloadGenerator):
+        """A WorkloadGenerator can be created."""
+        assert generator
 
-    def test_initializes_socket_attributes(self, isolated_generator: WorkloadGenerator):
-        """Test initialization of socket hosts and ports."""
-        assert isolated_generator._workload_listening == workload_listening
-        assert isolated_generator._workload_pub_port == workload_pub_port
-
-    def test_initializes_workload_attributes(
-        self, isolated_generator: WorkloadGenerator
+    def test_initializes(
+        self,
+        generator: WorkloadGenerator,
+        generator_listening: str,
+        generator_port: str,
+        workload_listening: str,
+        workload_pub_port: str,
     ):
-        """Test initialization of workload attributes."""
-        assert isolated_generator._frequency == 0
-        assert not isolated_generator._generate_workload_flag
+        """A WorkloadGenerator initializes all attributes."""
+        assert generator._workload_listening == workload_listening
+        assert generator._workload_pub_port == workload_pub_port
 
-    @patch("hyrisecockpit.workload_generator.generator.Workload", get_fake_workload)
-    def test_starts_a_workload(self, isolated_generator: WorkloadGenerator):
+    def test_starts_a_workload(self, generator: WorkloadGenerator):
         """Test starting of the workload generation."""
-        body = {"folder_name": "benchmark_name", "frequency": 100}
+        folder_name = "myFolder"
+        assert generator._workloads == {}
+        with patch(
+            "hyrisecockpit.workload_generator.reader.WorkloadReader.get"
+        ) as mock_get:
+            mock_get.return_value = {"Query1": ["SELECT 1;"]}
+            response = generator._call_start_workload(
+                {"folder_name": folder_name, "frequency": 100}
+            )
+            mock_get.assert_called_once_with(folder_name)
+        assert response["header"] == get_response(200)["header"]
+        assert "workload" in response["body"]
+        assert list(generator._workloads.keys()) == [folder_name]
 
-        response = isolated_generator._call_start_workload(body)
-
-        assert isolated_generator._frequency == 100
-        assert isolated_generator._workload_type == "benchmark_name"
-        assert isolated_generator._generate_workload_flag
-        assert list(isolated_generator._workloads.keys()) == ["benchmark_name"]
-        assert response == get_response(200)
-
-    def test_stops_a_workload(self, isolated_generator: WorkloadGenerator):
-        """Test stopping of the workload generation."""
-        response = isolated_generator._call_stop_workload({})
-
-        assert not isolated_generator._generate_workload_flag
-        assert response == get_response(200)
-
-    @patch("hyrisecockpit.workload_generator.generator.Workload", get_fake_workload)
-    @patch("hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data")
-    def test_generates_a_workload(
-        self, mocked_publish_data, isolated_generator: WorkloadGenerator
+    def test_does_not_start_a_workload_if_it_cannot_be_found(
+        self, generator: WorkloadGenerator
     ):
-        """Test workload generation."""
-        isolated_generator._generate_workload_flag = True
-        isolated_generator._workload_type = "benchmark_name"
-        isolated_generator._frequency = 1
+        """Test starting of the workload generation."""
+        folder_name = "myFolder"
+        assert generator._workloads == {}
+        with patch(
+            "hyrisecockpit.workload_generator.reader.WorkloadReader.get"
+        ) as mock_get:
+            mock_get.return_value = None
+            response = generator._call_start_workload(
+                {"folder_name": folder_name, "frequency": 100}
+            )
+            mock_get.assert_called_once_with(folder_name)
+        assert response == get_response(404)
+        assert list(generator._workloads.keys()) == []
 
-        mocked_publish_data.return_value = None
+    def test_does_not_start_a_workload_if_it_is_already_started(
+        self, generator: WorkloadGenerator
+    ):
+        """Test starting of the workload generation."""
+        folder_name = "myFolder"
+        assert generator._workloads == {}
+        generator._workloads[folder_name] = MagicMock()
+        with patch(
+            "hyrisecockpit.workload_generator.reader.WorkloadReader.get"
+        ) as mock_get:
+            response = generator._call_start_workload(
+                {"folder_name": folder_name, "frequency": 100}
+            )
+            mock_get.assert_not_called()
+        assert response == get_response(409)
+        assert list(generator._workloads.keys()) == [folder_name]
 
-        isolated_generator._generate_workload()
-
+    def test_stops_a_workload(self, generator: WorkloadGenerator):
+        """Test stopping of the workload generation."""
+        folder_name = "myFolder"
+        assert generator._workloads == {}
+        generator._workloads[folder_name] = MagicMock()
+        response = generator._call_stop_workload({"folder_name": folder_name})
         expected_response = get_response(200)
-        expected_response["body"] = {"querylist": fake_workload}
+        expected_response["body"]["folder_name"] = folder_name
+        assert response == expected_response
+        assert generator._workloads == {}
 
-        mocked_publish_data.assert_any_call(expected_response)
+    def test_does_not_stop_a_workload_if_there_is_none(
+        self, generator: WorkloadGenerator
+    ):
+        """Test stopping of the workload generation."""
+        assert generator._workloads == {}
+        response = generator._call_stop_workload({"folder_name": "myFolder"})
+        assert response == get_response(404)
+        assert generator._workloads == {}

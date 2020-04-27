@@ -5,6 +5,7 @@ from multiprocessing.context import Process as ProcessType
 from multiprocessing.queues import Queue as QueueType
 from multiprocessing.sharedctypes import Synchronized as ValueType
 from multiprocessing.synchronize import Event as EventType
+from sys import platform
 from typing import List, Optional
 from unittest.mock import MagicMock, patch
 
@@ -48,16 +49,19 @@ class TestWorkerPool(object):
         assert worker_pool._connection_factory is None
         assert worker_pool._number_worker == number_worker  # type: ignore
         assert worker_pool._database_id == database_id
-        assert type(worker_pool._database_blocked) is ValueType
+        assert isinstance(worker_pool._database_blocked, ValueType)
         assert worker_pool._workload_publisher_url == workload_publisher_url
         assert worker_pool._status == "closed"
-        assert type(worker_pool._continue_execution_flag) is ValueType
+        assert isinstance(worker_pool._continue_execution_flag, ValueType)
         assert worker_pool._continue_execution_flag.value
-        assert type(worker_pool._execute_task_workers) is list
+        assert isinstance(worker_pool._execute_task_workers, list)
         assert len(worker_pool._execute_task_workers) == 0
         assert worker_pool._fill_task_worker is None
-        assert type(worker_pool._worker_wait_for_exit_event) is EventType
-        assert type(worker_pool._task_queue) is QueueType
+        assert isinstance(worker_pool._worker_wait_for_exit_event, EventType)
+        if platform.startswith("linux"):
+            assert isinstance(worker_pool._task_queue, QueueType)
+        if platform.startswith("darwin"):
+            assert isinstance(worker_pool._task_queue.queue, QueueType)
 
     def test_generation_of_execute_task_worker_done_events(
         self, worker_pool: WorkerPool
@@ -81,7 +85,7 @@ class TestWorkerPool(object):
         mock_connection_factory = MagicMock()
         mock_connection_factory.create_cursor.return_value = "mock_cursor"
         worker_pool._connection_factory = mock_connection_factory
-        worker_pool._task_queue = "queue"  # type: ignore
+        worker_pool._task_queue = "queue"
         worker_pool._database_id = "database_id"
         worker_pool._continue_execution_flag = "Flag"  # type: ignore
         worker_pool._worker_wait_for_exit_event = "wait for exit event"  # type: ignore
@@ -149,7 +153,10 @@ class TestWorkerPool(object):
         assert type(worker_pool._execute_task_workers) is list
         assert len(worker_pool._execute_task_workers) == 0
         assert type(worker_pool._worker_wait_for_exit_event) is EventType
-        assert type(worker_pool._task_queue) is QueueType
+        if platform.startswith("linux"):
+            assert isinstance(worker_pool._task_queue, QueueType)
+        if platform.startswith("darwin"):
+            assert isinstance(worker_pool._task_queue.queue, QueueType)
 
     @mark.timeout(10)
     def test_waits_for_workers(self, worker_pool: WorkerPool) -> None:
