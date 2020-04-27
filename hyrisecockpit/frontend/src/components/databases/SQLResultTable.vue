@@ -18,7 +18,7 @@
           <tr v-for="(row, rowIdx) in rows" :key="`row_${rowIdx}`">
             <td
               v-for="(value, valueIdx) in row"
-              :key="`row_${rowIdx}_${valueIdx}`"
+              :key="`row_${rowIdx}_value_${valueIdx}`"
             >
               {{ value }}
             </td>

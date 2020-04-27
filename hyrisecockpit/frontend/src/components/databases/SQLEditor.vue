@@ -17,9 +17,9 @@
       </v-system-bar>
       <v-card-text>
         <v-textarea
+          v-model="sqlQuery"
           filled
           auto-grow
-          v-model="sqlQuery"
           :error-messages="error"
           :loading="isLoading"
           placeholder="insert SQL here"
@@ -30,7 +30,7 @@
         <v-spacer />
         <v-btn @click="showDialog = false" color="primary" text>Close</v-btn>
         <v-btn @click="sendSQLQuery()" color="primary" text
-          >send Query to DB</v-btn
+          >send query to DB</v-btn
         >
       </v-card-actions>
     </v-card>
