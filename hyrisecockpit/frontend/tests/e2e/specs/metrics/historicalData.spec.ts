@@ -36,7 +36,7 @@ describe("requesting different time ranges", () => {
         cy.get(getSelectionSelector("historicRangeSelection")).click({
           force: true,
         });
-        cy.wait(300);
+        cy.wait(500);
       });
       cy.get("div").contains(range.title).click({
         force: true,
@@ -60,7 +60,7 @@ describe("requesting different time ranges", () => {
         cy.get(getSelectionSelector("historicRangeSelection")).click({
           force: true,
         });
-        cy.wait(300);
+        cy.wait(500);
       });
       cy.get("div").contains(range.title).click({
         force: true,
@@ -86,7 +86,7 @@ describe("requesting different time ranges", () => {
         cy.get(getSelectionSelector("historicRangeSelection")).click({
           force: true,
         });
-        cy.wait(300);
+        cy.wait(500);
       });
       cy.get("div").contains(range.title).click({
         force: true,

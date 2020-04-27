@@ -239,7 +239,6 @@ export function mockBackend(
       getGetAlias("workload"),
       getMockedResponse("workload")
     );
-    //mock("**/workload/**", getGetAlias("workload"));
   }
 
   function mockPostRoutes(mock: RouteMockFunction): void {
