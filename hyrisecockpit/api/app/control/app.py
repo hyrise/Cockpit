@@ -197,26 +197,6 @@ class Plugin(Resource):
         response = _send_message(db_manager_socket, message)
         return response["body"]["plugins"]
 
-    @api.doc(body=model_activate_plugin)
-    def post(self) -> Response:
-        """Activate a plugin in a database."""
-        message = Request(
-            header=Header(message="activate plugin"),
-            body={"id": api.payload["id"], "plugin": api.payload["plugin"]},
-        )
-        response = _send_message(db_manager_socket, message)
-        return response
-
-    @api.doc(body=model_deactivate_plugin)
-    def delete(self) -> Response:
-        """Deactivate a plugin in a database."""
-        message = Request(
-            header=Header(message="deactivate plugin"),
-            body={"id": api.payload["id"], "plugin": api.payload["plugin"]},
-        )
-        response = _send_message(db_manager_socket, message)
-        return response
-
 
 @api.route("/plugin_log")
 class PluginLog(Resource):

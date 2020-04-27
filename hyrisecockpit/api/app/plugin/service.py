@@ -1,0 +1,50 @@
+"""Services used by the Plugin controller."""
+from hyrisecockpit.api.app.socket_manager import ManagerSocket
+from hyrisecockpit.request import Header, Request
+from hyrisecockpit.response import Response
+
+from .interface import PluginInterface
+
+
+class PluginService:
+    """Services of the Plugin Controller."""
+
+    @staticmethod
+    def _send_message_to_dbm(message: Request) -> Response:
+        """Send an IPC message to the database manager."""
+        with ManagerSocket() as socket:
+            return socket.send_message(message)
+
+    @classmethod
+    def get_all(cls):
+        """Get all Plugins from all databases.
+
+        Returns all activated plugins per database.
+        """
+        raise NotImplementedError()
+
+    @classmethod
+    def activate_by_id(cls, database_id: str, interface: PluginInterface) -> int:
+        """Activate a Plugin.
+
+        Returns the status code from the database manager.
+        """
+        return cls._send_message_to_dbm(
+            Request(
+                header=Header(message="activate plugin"),
+                body={"id": database_id, "plugin": interface["name"]},
+            )
+        )["header"]["status"]
+
+    @classmethod
+    def deactivate_by_id(cls, database_id: str, interface: PluginInterface) -> int:
+        """Deactivate a Plugin.
+
+        Returns the status code from the database manager.
+        """
+        return cls._send_message_to_dbm(
+            Request(
+                header=Header(message="deactivate plugin"),
+                body={"id": database_id, "plugin": interface["name"]},
+            )
+        )["header"]["status"]
