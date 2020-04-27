@@ -93,7 +93,7 @@ export function useBackendMock(
     cy.route("POST", "**/control/plugin_settings").as(
       getPostAlias("plugin_settings")
     );
-    cy.route("POST", "**/control/workload").as(getPostAlias("workload"));
+    cy.route("POST", "**/workload/").as(getPostAlias("workload"));
 
     /* DELETE */
     cy.route("DELETE", "**/control/database").as(getDeleteAlias("database"));
@@ -101,7 +101,7 @@ export function useBackendMock(
       getDeleteAlias("benchmark_tables")
     );
     cy.route("DELETE", "**/control/plugin").as(getDeleteAlias("plugin"));
-    cy.route("DELETE", "**/control/workload").as(getDeleteAlias("workload"));
+    cy.route("DELETE", "**/workload/**").as(getDeleteAlias("workload"));
 
     /* PUT */
     cy.route("PUT", "**/workload/**").as(getPutAlias("workload"));
