@@ -23,6 +23,9 @@ let databasesStorageData: any[];
 
 describe("when observing the database data and details", () => {
   beforeEach(() => {
+    cy.restartAppState(backend, {
+      databases: 2,
+    });
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
       cy.setupData("system").then((xhr: any) => {
@@ -35,6 +38,11 @@ describe("when observing the database data and details", () => {
       });
     });
     cy.visit(getRoute("overview"));
+  });
+
+  // clear state
+  after(() => {
+    cy.restartAppState(backend, {});
   });
 
   // test panel opening

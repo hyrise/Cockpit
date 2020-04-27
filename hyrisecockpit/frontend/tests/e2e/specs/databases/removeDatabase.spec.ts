@@ -11,10 +11,18 @@ let removeDatabase: string = "";
 
 describe("When removing a database", () => {
   beforeEach(() => {
+    cy.restartAppState(backend, {
+      databases: 2,
+    });
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
       removeDatabase = databases[0].id;
     });
+  });
+
+  // clear state
+  after(() => {
+    cy.restartAppState(backend, {});
   });
 
   // test cancel
