@@ -102,7 +102,7 @@ class TestSystem:
             startts: int = timestamp - offset - 1_000_000_000
             endts: int = timestamp - offset
             response = self.backend.get_historical_monitor_property(
-                metric, startts, endts
+                metric, startts, endts, 1_000_000_000
             )
             assert response == []  # nosec
 
@@ -166,7 +166,7 @@ class TestSystem:
             startts: int = timestamp - offset - 1_000_000_000
             endts: int = timestamp - offset
             response = self.backend.get_historical_monitor_property(
-                metric, startts, endts
+                metric, startts, endts, 1_000_000_000
             )
             assert response[0][metric][0][metric] > 0  # nosec
 
