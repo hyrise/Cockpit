@@ -1,4 +1,4 @@
-import { useBackendMock, mockBackend } from "../../setup/backendMock";
+import { useBackendMock } from "../../setup/backendMock";
 import { clickElement } from "../helpers";
 import {
   getGetAlias,

@@ -85,7 +85,7 @@ describe("visiting workload monitoring page", () => {
       const index = generateRandomInt(0, data[0].query_information.length);
       databases.forEach((database: any, idx: number) => {
         cy.get('input[id="query-search-input"]')
-          .eq(idx * 3)
+          .eq(idx)
           .click({ force: true })
           .type(data[idx].query_information[index].query_number);
         cy.wait(500);
