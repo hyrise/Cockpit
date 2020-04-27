@@ -19,7 +19,7 @@ export interface MetricController {
   data: Record<Metric, Ref<any>>;
   maxValueData: Record<Metric, Ref<number>>;
   timestamps: Record<Metric, Ref<Date[]>>;
-  gethistoricRangeSeconds: () => number;
+  getHistoricRangeSeconds: () => number;
 }
 
 //TODO: refactor

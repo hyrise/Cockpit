@@ -71,7 +71,7 @@ interface Data {
 export default defineComponent({
   components: { DatabaseSelection, MetricSelection },
   setup(props: {}, context: SetupContext): Data {
-    const { gethistoricRangeSeconds } = context.root.$metricController;
+    const { getHistoricRangeSeconds } = context.root.$metricController;
     const { emitSelectedDatabasesChangedWithinEvent } = useDatabaseEvents();
     const {
       emitSelectedMetricsChangedWithinEvent,
@@ -92,7 +92,7 @@ export default defineComponent({
       { text: "last 60 minutes", value: formatMinutesToSeconds(60) },
     ];
 
-    const selectedHistoricRange = ref<number>(gethistoricRangeSeconds());
+    const selectedHistoricRange = ref<number>(getHistoricRangeSeconds());
 
     const page = computed(() => context.root.$route.name! as PageName);
 

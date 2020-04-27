@@ -17,7 +17,7 @@ export function useMetricController(): MetricController {
 
   let historicRangeSeconds = 30;
 
-  function gethistoricRangeSeconds(): number {
+  function getHistoricRangeSeconds(): number {
     return historicRangeSeconds;
   }
 
@@ -61,7 +61,7 @@ export function useMetricController(): MetricController {
   function setupServices(): Record<Metric, MetricService> {
     const services: any = {};
     getMetricsByEndpoint(availableMetrics).forEach((metrics) => {
-      const metricService = useMetricService(metrics, gethistoricRangeSeconds);
+      const metricService = useMetricService(metrics, getHistoricRangeSeconds);
       metrics.forEach((metric) => {
         services[metric] = metricService;
       });
@@ -133,5 +133,5 @@ export function useMetricController(): MetricController {
     });
   }
 
-  return { data, maxValueData, timestamps, gethistoricRangeSeconds };
+  return { data, maxValueData, timestamps, getHistoricRangeSeconds };
 }
