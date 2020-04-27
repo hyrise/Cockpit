@@ -1,8 +1,6 @@
 """Models for SQL module."""
 from typing import List
 
-from .interface import SqlQueryInterface, SqlResponseInterface
-
 
 class SqlQuery:
     """Model of a sql query."""
@@ -11,12 +9,6 @@ class SqlQuery:
         """Initialize a sql query model."""
         self.id: str = id
         self.query: str = query
-
-    def update(self, interface: SqlQueryInterface) -> "SqlQuery":
-        """Update attributes of a sql query model."""
-        for key, value in interface.items():
-            setattr(self, key, value)
-        return self
 
 
 class SqlResponse:
@@ -36,9 +28,3 @@ class SqlResponse:
         self.results: List[List[str]] = results
         self.col_names: List[str] = col_names
         self.error_message: str = error_message
-
-    def update(self, interface: SqlResponseInterface) -> "SqlResponse":
-        """Update attributes of a sql reponse model."""
-        for key, value in interface.items():
-            setattr(self, key, value)
-        return self
