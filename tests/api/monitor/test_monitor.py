@@ -1,8 +1,13 @@
 """Tests for monitor namespace."""
 
 from typing import Dict, List
+from unittest.mock import MagicMock, patch
 
-from hyrisecockpit.api.app.monitor.app import fill_missing_points, get_interval_limits
+from hyrisecockpit.api.app.monitor.app import (
+    fill_missing_points,
+    get_historical_metric,
+    get_interval_limits,
+)
 
 
 class TestMonitor:
@@ -57,3 +62,37 @@ class TestMonitor:
 
         for point in expected_points:
             assert point in filled_points
+
+    @patch("hyrisecockpit.api.app.monitor.app._get_active_databases")
+    @patch("hyrisecockpit.api.app.monitor.app.get_historical_data")
+    def test_gets_historical_metric(
+        self, mock_get_historical_data: MagicMock, mock_get_active_databases: MagicMock
+    ):
+        """Test retrieving of the historical metric data."""
+        startts: int = 1587997260000000000
+        endts: int = 1587997265000000000
+        precision_ns: int = 1000000000
+        table_name: str = "table_name"
+        databases: List = ["database1", "database2"]
+        metrics: List[str] = ["metric1", "metric2"]
+        historical_data: List = [
+            {"time": 1587997260000000000, "metric1": 1.0, "metric2": 2.0},
+            {"time": 1587997261000000000, "metric1": 3.0, "metric2": 4.0},
+        ]
+        mock_get_active_databases.return_value = databases
+        mock_get_historical_data.return_value = historical_data
+
+        expected_points: List = [
+            {"timestamp": 1587997260000000000, "metric1": 1.0, "metric2": 2.0},
+            {"timestamp": 1587997261000000000, "metric1": 3.0, "metric2": 4.0},
+            {"timestamp": 1587997262000000000, "metric1": 0.0, "metric2": 0.0},
+            {"timestamp": 1587997263000000000, "metric1": 0.0, "metric2": 0.0},
+            {"timestamp": 1587997264000000000, "metric1": 0.0, "metric2": 0.0},
+        ]
+
+        result: List = get_historical_metric(
+            startts, endts, precision_ns, table_name, metrics
+        )
+
+        for database in databases:
+            assert {"id": database, table_name: expected_points} in result
