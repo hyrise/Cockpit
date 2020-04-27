@@ -1,9 +1,11 @@
 """The WorkerPool object represents the workers."""
-from multiprocessing import Event, Process, Queue, Value
+from multiprocessing import Event, Process, Value
 from multiprocessing.synchronize import Event as EventType
 from typing import List, Optional
 
 from apscheduler.schedulers.background import BackgroundScheduler
+
+from hyrisecockpit.cross_platform_support.multiprocessing_support import Queue
 
 from .cursor import ConnectionFactory
 from .worker import execute_queries, fill_queue
