@@ -4,6 +4,7 @@ from unittest.mock import MagicMock, patch
 
 from pytest import fixture
 
+from hyrisecockpit.api.app.exception import StatusCodeNotFoundException
 from hyrisecockpit.api.app.sql.interface import SqlQueryInterface
 from hyrisecockpit.api.app.sql.model import SqlResponse
 from hyrisecockpit.api.app.sql.schema import SqlResponseSchema
@@ -106,7 +107,7 @@ class TestSqlService:
             "error_message": "Error",
         }
         mock_sql_service._send_message.return_value = {  # type: ignore
-            "header": {"status": 400},
+            "header": {"status": 404},
             "body": {"results": mock_results},
         }
 
@@ -122,4 +123,34 @@ class TestSqlService:
         mock_sql_service._send_message.assert_called_once_with("request object")  # type: ignore
 
         assert response[0] is None
-        assert response[1] == 400
+        assert response[1] == 404
+
+    @patch("hyrisecockpit.api.app.sql.service.Header")
+    @patch("hyrisecockpit.api.app.sql.service.Request")
+    def test_execute_sql_with_unknown_status_code(
+        self, mock_request: MagicMock, mock_header: MagicMock
+    ) -> None:
+        """Test executes SQL query with unknown status code."""
+        mock_header.return_value = "header object"
+        mock_request.return_value = "request object"
+
+        mock_sql_service = SqlService
+        mock_sql_service._send_message = MagicMock()  # type: ignore
+
+        mock_sql_service._send_message.return_value = {  # type: ignore
+            "header": {"status": 123456},
+        }
+
+        interface: SqlQueryInterface = SqlQueryInterface(
+            id="database_id", query="SELECT 1"
+        )
+        try:
+            mock_sql_service.execute_sql(interface)
+        except StatusCodeNotFoundException as e:
+            assert str(e) == f"Unknown status code: {123456}"
+
+        mock_header.assert_called_once_with(message="execute sql query")
+        mock_request.assert_called_once_with(
+            header="header object", body=dict(interface)
+        )
+        mock_sql_service._send_message.assert_called_once_with("request object")  # type: ignore
