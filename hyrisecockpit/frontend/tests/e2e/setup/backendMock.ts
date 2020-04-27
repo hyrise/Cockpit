@@ -7,6 +7,7 @@ import {
   getDeleteAlias,
   getResponseStatus,
   getGetAlias,
+  getPutAlias,
 } from "./helpers";
 
 function getInitialNumbers(
@@ -21,6 +22,7 @@ function getInitialNumbers(
     plugins: 2,
     activated_plugins: 1,
     loaded_benchmarks: 1,
+    workloads: 0,
     ...numbers,
   };
 }
@@ -69,7 +71,9 @@ export function useBackendMock(
       getGetAlias("detailed_query_information")
     );
     cy.route("GET", "**/monitor/status").as(getGetAlias("status"));
-    cy.route("GET", "**/control/data").as(getGetAlias("data"));
+    cy.route("GET", "**/control/database/benchmark_tables").as(
+      getGetAlias("benchmark_tables")
+    );
     cy.route("GET", "**/control/available_plugins").as(
       getGetAlias("available_plugins")
     );
@@ -78,10 +82,13 @@ export function useBackendMock(
       getGetAlias("plugin_settings")
     );
     cy.route("GET", "**/control/plugin_log").as(getGetAlias("plugin_log"));
+    cy.route("GET", "**/workload/").as(getGetAlias("workload"));
 
     /* POST */
     cy.route("POST", "**/control/database").as(getPostAlias("database"));
-    cy.route("POST", "**/control/data").as(getPostAlias("data"));
+    cy.route("POST", "**/control/database/benchmark_tables").as(
+      getPostAlias("benchmark_tables")
+    );
     cy.route("POST", "**/control/plugin").as(getPostAlias("plugin"));
     cy.route("POST", "**/control/plugin_settings").as(
       getPostAlias("plugin_settings")
@@ -90,9 +97,14 @@ export function useBackendMock(
 
     /* DELETE */
     cy.route("DELETE", "**/control/database").as(getDeleteAlias("database"));
-    cy.route("DELETE", "**/control/data").as(getDeleteAlias("data"));
+    cy.route("DELETE", "**/control/database/benchmark_tables").as(
+      getDeleteAlias("benchmark_tables")
+    );
     cy.route("DELETE", "**/control/plugin").as(getDeleteAlias("plugin"));
     cy.route("DELETE", "**/control/workload").as(getDeleteAlias("workload"));
+
+    /* PUT */
+    cy.route("PUT", "**/workload/**").as(getPutAlias("workload"));
   }
 
   if (Cypress.env("stubless")) return { start, reload, restart };
@@ -127,13 +139,20 @@ export function mockBackend(
   }
 
   function mockRoutes(status: number = 200, delay?: number): void {
-    const { mockGetRoute, mockDeleteRoute, mockPostRoute } = useRouteMocking(
-      status,
-      delay
-    );
+    const {
+      mockGetRoute,
+      mockDeleteRoute,
+      mockPostRoute,
+      mockPutRoute,
+    } = useRouteMocking(status, delay);
     mockGetRoutes(mockGetRoute);
     mockPostRoutes(mockPostRoute);
     mockDeleteRoutes(mockDeleteRoute);
+    mockPutRoutes(mockPutRoute);
+  }
+
+  function mockPutRoutes(mock: RouteMockFunction): void {
+    mock("**/workload/**", getPutAlias("workload"));
   }
 
   function mockGetRoutes(mock: RouteMockFunction): void {
@@ -215,6 +234,12 @@ export function mockBackend(
       getGetAlias("plugin_log"),
       getMockedResponse("plugin_log")
     );
+    mock(
+      "**/workload/",
+      getGetAlias("workload"),
+      getMockedResponse("workload")
+    );
+    //mock("**/workload/**", getGetAlias("workload"));
   }
 
   function mockPostRoutes(mock: RouteMockFunction): void {
@@ -235,7 +260,7 @@ export function mockBackend(
       getDeleteAlias("benchmark_tables")
     );
     mock("**/control/plugin", getDeleteAlias("plugin"));
-    mock("**/workload/", getDeleteAlias("workload"));
+    mock("**/workload/**", getDeleteAlias("workload"));
   }
 
   return {
@@ -258,6 +283,7 @@ function useRouteMocking(
 ): {
   mockGetRoute: RouteMockFunction;
   mockPostRoute: RouteMockFunction;
+  mockPutRoute: RouteMockFunction;
   mockDeleteRoute: RouteMockFunction;
 } {
   function getRouteMock(
@@ -274,6 +300,17 @@ function useRouteMocking(
       response: withBody ? { body: response } : response,
       delay: delay,
     };
+  }
+
+  function mockPutRoute(
+    url: string,
+    alias: string,
+    response: any = {},
+    withBody: boolean = false
+  ): void {
+    cy.route(getRouteMock("PUT", url, response, withBody, delay || 0)).as(
+      alias
+    );
   }
 
   function mockGetRoute(
@@ -309,5 +346,5 @@ function useRouteMocking(
     );
   }
 
-  return { mockGetRoute, mockPostRoute, mockDeleteRoute };
+  return { mockGetRoute, mockPostRoute, mockDeleteRoute, mockPutRoute };
 }

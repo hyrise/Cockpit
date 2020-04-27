@@ -1,4 +1,4 @@
-/* import { clickElement } from "../helpers";
+import { clickElement } from "../helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
 import { useBackendMock, mockBackend } from "../../setup/backendMock";
 import {
@@ -7,6 +7,7 @@ import {
   getDeleteAlias,
   getGetAlias,
   benchmarks,
+  getPutAlias,
 } from "../../setup/helpers";
 import {
   assertLoadedBenchmarks,
@@ -70,22 +71,22 @@ describe("opening workload generation", () => {
         assertStartedWorkload(xhr.request.body, activeBenchmark);
       });
       cy.numberOfRequests(getPostAlias("workload")).should("eq", 1);
-      backend.reload("workload", "", "POST");
+      backend.reload("workload", activeBenchmark, "POST");
       cy.wait("@" + getGetAlias("status"));
       assertButtonState("checkbox", true);
 
       cy.get(getSelector("pauseButton")).click();
-      cy.wait("@" + getPostAlias("workload"));
-      cy.get("@" + getPostAlias("workload")).should((xhr: any) => {
+      cy.wait("@" + getPutAlias("workload"));
+      cy.get("@" + getPutAlias("workload")).should((xhr: any) => {
         assertStartedWorkload(xhr.request.body, activeBenchmark, 0);
       });
-      cy.numberOfRequests(getPostAlias("workload")).should("eq", 2);
+      cy.numberOfRequests(getPutAlias("workload")).should("eq", 1);
 
       cy.get(getSelector("stopButton")).click();
 
       cy.wait("@" + getDeleteAlias("workload"));
       cy.numberOfRequests(getDeleteAlias("workload")).should("eq", 1);
-      backend.reload("workload", "", "DELETE");
+      backend.reload("workload", activeBenchmark, "DELETE");
       cy.wait("@" + getGetAlias("status"));
       assertButtonState("checkbox", false);
     });
@@ -149,16 +150,17 @@ describe("opening workload generation", () => {
         .check({ force: true });
       cy.get(getSelector("startButton")).click();
       cy.wait("@" + getPostAlias("workload"));
+      cy.numberOfRequests(getPostAlias("workload")).should("eq", 1);
 
       clickElement(getViewSelector("workloadGenerationButton"));
       cy.get(getSelector("frequencyField")).clear().type(newValue.toString());
       cy.get("div").first().click({ force: true }); // need this to trigger action (cy.trigger not working)
 
-      cy.wait("@" + getPostAlias("workload"));
-      cy.get("@" + getPostAlias("workload")).should((xhr: any) => {
+      cy.wait("@" + getPutAlias("workload"));
+      cy.get("@" + getPutAlias("workload")).should((xhr: any) => {
         assertStartedWorkload(xhr.request.body, activeBenchmark, newValue);
       });
-      cy.numberOfRequests(getPostAlias("workload")).should("eq", 2);
+      cy.numberOfRequests(getPutAlias("workload")).should("eq", 1);
     });
   });
 
@@ -175,4 +177,3 @@ describe("opening workload generation", () => {
     });
   });
 });
- */

@@ -272,3 +272,11 @@ export function fakeDatabaseStatusData(
     loaded_tables: [],
   };
 }
+
+export function fakeWorkloadData(benchmark: string): Object {
+  return {
+    weights: {},
+    frequency: faker.random.number(),
+    folder_name: benchmark,
+  };
+}

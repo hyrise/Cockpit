@@ -11,7 +11,8 @@ export type Entity =
   | "queries"
   | "plugins"
   | "activated_plugins"
-  | "loaded_benchmarks";
+  | "loaded_benchmarks"
+  | "workloads";
 export type Request =
   | "database"
   | "system"
@@ -52,6 +53,7 @@ const getAliases: Partial<Record<Request, string>> = {
   plugin_settings: "getPluginSettings",
   plugin_log: "getPluginLog",
   status: "getDatabaseWorkloadState",
+  workload: "getWorkloads",
 };
 
 const postAliases: Partial<Record<Request, string>> = {
@@ -69,6 +71,10 @@ const deleteAliases: Partial<Record<Request, string>> = {
   workload: "stopWorkload",
 };
 
+const putAliases: Partial<Record<Request, string>> = {
+  workload: "updateWorkload",
+};
+
 const responseStatus: Record<BackendState, number> = {
   up: 200,
   down: 500,
@@ -84,6 +90,10 @@ export function getPostAlias(request: Request): string {
 
 export function getDeleteAlias(request: Request): string {
   return deleteAliases[request]!;
+}
+
+export function getPutAlias(request: Request): string {
+  return putAliases[request]!;
 }
 
 export function getResponseStatus(BackendState: BackendState): number {
