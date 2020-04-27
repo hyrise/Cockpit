@@ -3,6 +3,7 @@ from typing import Optional, Tuple
 
 from jsonschema import validate
 
+from hyrisecockpit.api.app.exception import StatusCodeNotFoundException
 from hyrisecockpit.api.app.socket_manager import ManagerSocket
 from hyrisecockpit.message import response_schema
 from hyrisecockpit.request import Header, Request
@@ -36,8 +37,12 @@ class SqlService:
                 SqlResponse(**response["body"]["results"]),
                 200,
             )
-        else:
+        elif response["header"]["status"] == 404:
             return (
                 None,
-                response["header"]["status"],
+                404,
+            )
+        else:
+            raise StatusCodeNotFoundException(
+                f"Unknown status code: {response['header']['status']}"
             )
