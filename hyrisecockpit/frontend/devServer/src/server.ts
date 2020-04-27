@@ -76,6 +76,16 @@ mockDeleteRoute("plugin", "control");
 
 mockPutRoute("workload/*");
 
+/* route for manual state cleaning */
+server.post("/clean/", (req, res) => {
+  logRequest(req, res);
+  if (req.body.method === "POST")
+    mocks.getMockedPostCallback(req.body.request)(req.body.id);
+  if (req.body.method === "DELETE")
+    mocks.getMockedDeleteCallback(req.body.request)(req.body.id);
+  res.send({});
+});
+
 function mockGetRoute(
   route: string,
   backendRoute?: "control" | "monitor",
