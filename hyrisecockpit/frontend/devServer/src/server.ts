@@ -7,7 +7,9 @@ import express from "express";
 import bodyParser from "body-parser";
 
 const server = express();
-let mocks = useMocks(getInitialNumbers({}));
+let mocks = useMocks(
+  process.env.TEST ? getInitialNumbers({ databases: 1 }) : getInitialNumbers({})
+);
 
 function getInitialNumbers(numbers: Partial<Record<Entity, number>>) {
   return {

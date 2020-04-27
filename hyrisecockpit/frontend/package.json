@@ -1,69 +1,70 @@
 {
-    "name": "hyrise-cockpit",
-    "version": "0.1.0",
-    "private": true,
-    "scripts": {
-        "serve": "vue-cli-service serve --host 0.0.0.0",
-        "build": "vue-cli-service build",
-        "build:min": "vue-cli-service build --skip-plugins e2e-cypress",
-        "deploy": "serve -s dist",
-        "test:e2e": "vue-cli-service test:e2e",
-        "test:e2e:headless": "vue-cli-service test:e2e --headless",
-        "test:e2e:stubless": "vue-cli-service test:e2e --env stubless=true",
-        "test:e2e:headless:stubless": "vue-cli-service test:e2e --headless --env stubless=true",
-        "lint": "vue-cli-service lint",
-        "start:dev": "cd devServer/ ; npm run start",
-        "start:dev:quiet": "cd devServer/ ; npm run start:quiet"
-    },
-    "dependencies": {
-        "@types/faker": "^4.1.11",
-        "@types/plotly.js": "^1.50.7",
-        "@typescript-eslint/eslint-plugin": "^2.28.0",
-        "@typescript-eslint/parser": "^2.28.0",
-        "@vue/composition-api": "^0.5.0",
-        "axios": "^0.19.2",
-        "core-js": "^3.6.5",
-        "faker": "^4.1.0",
-        "plotly.js": "^1.53.0",
-        "plotly.js-dist": "^1.53.0",
-        "static-eval": "^2.0.5",
-        "vue": "^2.6.11",
-        "vue-router": "^3.1.6",
-        "vuetify": "^2.2.22"
-    },
-    "devDependencies": {
-        "@cypress/webpack-preprocessor": "^4.1.5",
-        "@vue/cli-plugin-babel": "^4.3.1",
-        "@vue/cli-plugin-eslint": "^4.3.1",
-        "@vue/cli-plugin-typescript": "^4.3.1",
-        "@vue/cli-service": "^4.3.1",
-        "@vue/eslint-config-prettier": "^6.0.0",
-        "@vue/eslint-config-typescript": "^5.0.2",
-        "eslint": "^6.8.0",
-        "eslint-plugin-prettier": "^3.1.3",
-        "eslint-plugin-vue": "^6.2.2",
-        "lint-staged": "^10.1.3",
-        "prettier": "^2.0.4",
-        "sass": "^1.26.3",
-        "sass-loader": "^8.0.2",
-        "serve": "^11.3.0",
-        "ts-loader": "^7.0.0",
-        "typescript": "^3.8.3",
-        "vue-cli-plugin-vuetify": "^2.0.5",
-        "vue-template-compiler": "^2.6.11",
-        "vuetify-loader": "^1.4.3",
-        "webpack": "^4.42.1"
-    },
-    "gitHooks": {
-        "pre-commit": "lint-staged"
-    },
-    "lint-staged": {
-        "*.{js,vue,ts}": [
-            "vue-cli-service lint",
-            "git add"
-        ]
-    },
-    "optionalDependencies": {
-        "@vue/cli-plugin-e2e-cypress": "^4.3.1"
-    }
+  "name": "hyrise-cockpit",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve --host 0.0.0.0",
+    "build": "vue-cli-service build",
+    "build:min": "vue-cli-service build --skip-plugins e2e-cypress",
+    "deploy": "serve -s dist",
+    "test:e2e": "vue-cli-service test:e2e",
+    "test:e2e:headless": "vue-cli-service test:e2e --headless",
+    "test:e2e:stubless": "vue-cli-service test:e2e --env stubless=true",
+    "test:e2e:headless:stubless": "vue-cli-service test:e2e --headless --env stubless=true",
+    "lint": "vue-cli-service lint",
+    "start:dev": "cd devServer/ ; npm run start",
+    "start:dev:quiet": "cd devServer/ ; npm run start:quiet",
+    "start:dev:ci": "cd devServer/ ; npm run start:ci"
+  },
+  "dependencies": {
+    "@types/faker": "^4.1.11",
+    "@types/plotly.js": "^1.50.7",
+    "@typescript-eslint/eslint-plugin": "^2.28.0",
+    "@typescript-eslint/parser": "^2.28.0",
+    "@vue/composition-api": "^0.5.0",
+    "axios": "^0.19.2",
+    "core-js": "^3.6.5",
+    "faker": "^4.1.0",
+    "plotly.js": "^1.53.0",
+    "plotly.js-dist": "^1.53.0",
+    "static-eval": "^2.0.5",
+    "vue": "^2.6.11",
+    "vue-router": "^3.1.6",
+    "vuetify": "^2.2.22"
+  },
+  "devDependencies": {
+    "@cypress/webpack-preprocessor": "^4.1.5",
+    "@vue/cli-plugin-babel": "^4.3.1",
+    "@vue/cli-plugin-eslint": "^4.3.1",
+    "@vue/cli-plugin-typescript": "^4.3.1",
+    "@vue/cli-service": "^4.3.1",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/eslint-config-typescript": "^5.0.2",
+    "eslint": "^6.8.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-vue": "^6.2.2",
+    "lint-staged": "^10.1.3",
+    "prettier": "^2.0.4",
+    "sass": "^1.26.3",
+    "sass-loader": "^8.0.2",
+    "serve": "^11.3.0",
+    "ts-loader": "^7.0.0",
+    "typescript": "^3.8.3",
+    "vue-cli-plugin-vuetify": "^2.0.5",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.4.3",
+    "webpack": "^4.42.1"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,vue,ts}": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  },
+  "optionalDependencies": {
+    "@vue/cli-plugin-e2e-cypress": "^4.3.1"
+  }
 }
