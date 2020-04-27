@@ -5,6 +5,7 @@ from unittest.mock import MagicMock, patch
 
 from hyrisecockpit.api.app.monitor.app import (
     fill_missing_points,
+    get_historical_data,
     get_historical_metric,
     get_interval_limits,
 )
@@ -68,7 +69,7 @@ class TestMonitor:
     def test_gets_historical_metric(
         self, mock_get_historical_data: MagicMock, mock_get_active_databases: MagicMock
     ):
-        """Test retrieving of the historical metric data."""
+        """Test retrieving of the historical metric data for each database."""
         startts: int = 1587997260000000000
         endts: int = 1587997265000000000
         precision_ns: int = 1000000000
@@ -96,3 +97,44 @@ class TestMonitor:
 
         for database in databases:
             assert {"id": database, table_name: expected_points} in result
+
+    @patch("hyrisecockpit.api.app.monitor.app.storage_connection")
+    def test_gets_historical_data(self, mock_storage_connection: MagicMock):
+        """Test retrieving of the historical data."""
+        startts: int = 1587997260000000000
+        endts: int = 1587997265000000000
+        precision_ns: int = 1000000000
+        table_name = "table_name"
+        metrics: List[str] = ["metric1", "metric2"]
+        database: str = "database"
+
+        mock_storage_connection.query.return_value = {
+            (table_name, None): ["point1", "point2"]
+        }
+
+        select_clause = ",".join(f" mean({metric}) as {metric}" for metric in metrics)
+
+        subquery = f"""SELECT {select_clause}
+        FROM {table_name}
+        WHERE time >=  $startts AND
+        time < $endts
+        GROUP BY TIME(1s)
+        FILL(0.0)"""
+
+        expected_query: str = f"""SELECT {select_clause}
+        FROM ({subquery})
+        WHERE time >= $startts AND time < $endts
+        GROUP BY TIME({precision_ns}ns)
+        FILL(0.0);"""
+
+        result = get_historical_data(
+            startts, endts, precision_ns, table_name, metrics, database
+        )
+
+        assert result == ["point1", "point2"]  # type: ignore
+        mock_storage_connection.query.assert_any_call(
+            expected_query,
+            database=database,
+            bind_params={"startts": startts, "endts": endts},
+            epoch=True,
+        )
