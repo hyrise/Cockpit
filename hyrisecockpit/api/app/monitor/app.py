@@ -619,7 +619,7 @@ class Latency(Resource):
         },
     )
     def get(self) -> Union[int, List]:
-        """Return throughput information in a given time range."""
+        """Return latency information in a given time range."""
         precise_startts: int = int(request.args.get("startts"))  # type: ignore
         precise_endts: int = int(request.args.get("endts"))  # type: ignore
         precision_ns: int = int(request.args.get("precision"))  # type: ignore
