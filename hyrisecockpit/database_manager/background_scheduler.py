@@ -1,5 +1,4 @@
 """The BackgroundJobManager is managing the background jobs for the apscheduler."""
-
 from copy import deepcopy
 from json import dumps
 from multiprocessing import Process, Value
@@ -41,6 +40,33 @@ class TableData(TypedDict):
 
 
 StorageDataType = Dict[str, TableData]
+
+
+def format_query_parameters(parameters) -> Optional[Tuple[Any, ...]]:
+    """Format query parameters for execution."""
+    formatted_parameters = (
+        tuple(
+            AsIs(parameter) if protocol == "as_is" else parameter
+            for parameter, protocol in parameters
+        )
+        if parameters is not None
+        else None
+    )
+    return formatted_parameters
+
+
+def execute_table_query(
+    query_tuple: Tuple, success_flag: Value, connection_factory: ConnectionFactory
+) -> None:
+    """Execute loading or deleting table query."""
+    query, parameters = query_tuple
+    formatted_parameters = format_query_parameters(parameters)
+    try:
+        with connection_factory.create_cursor() as cur:
+            cur.execute(query, formatted_parameters)
+            success_flag.value = True
+    except (DatabaseError, InterfaceError, ProgrammingError):
+        return None  # TODO: log error
 
 
 class BackgroundJobManager(object):
@@ -402,31 +428,13 @@ class BackgroundJobManager(object):
             for name in table_names
         ]
 
-    def _format_query_parameters(self, parameters) -> Optional[Tuple[Any, ...]]:
-        formatted_parameters = (
-            tuple(
-                AsIs(parameter) if protocol == "as_is" else parameter
-                for parameter, protocol in parameters
-            )
-            if parameters is not None
-            else None
-        )
-        return formatted_parameters
-
-    def _execute_table_query(self, query_tuple: Tuple, success_flag: Value,) -> None:
-        query, parameters = query_tuple
-        formatted_parameters = self._format_query_parameters(parameters)
-        try:
-            with self._connection_factory.create_cursor() as cur:
-                cur.execute(query, formatted_parameters)
-                success_flag.value = True
-        except (DatabaseError, InterfaceError, ProgrammingError):
-            return None  # TODO: log error
-
     def _execute_queries_parallel(self, table_names, queries, folder_name) -> None:
         success_flags: List[Value] = [Value("b", False) for _ in queries]
         processes: List[Process] = [
-            Process(target=self._execute_table_query, args=(query, success_flag),)
+            Process(
+                target=execute_table_query,
+                args=(query, success_flag, self._connection_factory,),
+            )
             for query, success_flag in zip(queries, success_flags)
         ]
         for process in processes:
