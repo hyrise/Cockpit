@@ -37,6 +37,23 @@ export type DatabaseState = "workloadRunning";
 
 export const benchmarks = ["tpch_0.1", "tpch_1", "tpcds_1", "job"];
 
+export const comparisonRequests: Request[] = [
+  "throughput",
+  "latency",
+  "queue_length",
+  "system",
+  "storage",
+  "krueger_data",
+];
+export const overviewRequests: Request[] = [
+  "throughput",
+  "latency",
+  "queue_length",
+  "system",
+  "storage",
+];
+export const workloadMonitoringRequests: Request[] = ["krueger_data"];
+
 const getAliases: Partial<Record<Request, string>> = {
   database: "getDatabases",
   system: "getSystemData",
