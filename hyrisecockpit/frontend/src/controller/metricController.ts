@@ -15,10 +15,10 @@ type Interval = {
 export function useMetricController(): MetricController {
   const { subSeconds } = useFormatting();
 
-  let historicRangeMinutes = 0.5;
+  let historicRangeSeconds = 30;
 
-  function getHistoricRangeMinutes(): number {
-    return historicRangeMinutes;
+  function gethistoricRangeSeconds(): number {
+    return historicRangeSeconds;
   }
 
   eventBus.$on("WATCHED_METRICS_CHANGED", (payload: Metric[]) => {
@@ -31,7 +31,7 @@ export function useMetricController(): MetricController {
     stop();
     start(
       metrics || [],
-      new Date(subSeconds(currentDate, historicRangeMinutes * 60)),
+      new Date(subSeconds(currentDate, historicRangeSeconds)),
       currentDate
     );
   }
@@ -43,7 +43,7 @@ export function useMetricController(): MetricController {
   eventBus.$on(
     "HISTORIC_RANGE_CHANGED",
     (payload: { metrics: Metric[]; newHistoricalRangeMinutes: number }) => {
-      historicRangeMinutes = payload.newHistoricalRangeMinutes;
+      historicRangeSeconds = payload.newHistoricalRangeMinutes;
       restartRequests(payload.metrics); //TODO: fire only once when watching historic data
     }
   );
@@ -61,7 +61,7 @@ export function useMetricController(): MetricController {
   function setupServices(): Record<Metric, MetricService> {
     const services: any = {};
     getMetricsByEndpoint(availableMetrics).forEach((metrics) => {
-      const metricService = useMetricService(metrics, getHistoricRangeMinutes);
+      const metricService = useMetricService(metrics, gethistoricRangeSeconds);
       metrics.forEach((metric) => {
         services[metric] = metricService;
       });
@@ -133,5 +133,5 @@ export function useMetricController(): MetricController {
     });
   }
 
-  return { data, maxValueData, timestamps, getHistoricRangeMinutes };
+  return { data, maxValueData, timestamps, gethistoricRangeSeconds };
 }

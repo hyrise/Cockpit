@@ -54,6 +54,7 @@ import {
 } from "@/meta/events";
 import { PageName } from "@/types/views";
 import { Metric } from "@/types/metrics";
+import { useFormatting } from "@/meta/formatting";
 
 interface Data {
   selectedDatabases: Ref<readonly string[]>;
@@ -70,7 +71,7 @@ interface Data {
 export default defineComponent({
   components: { DatabaseSelection, MetricSelection },
   setup(props: {}, context: SetupContext): Data {
-    const { getHistoricRangeMinutes } = context.root.$metricController;
+    const { gethistoricRangeSeconds } = context.root.$metricController;
     const { emitSelectedDatabasesChangedWithinEvent } = useDatabaseEvents();
     const {
       emitSelectedMetricsChangedWithinEvent,
@@ -80,17 +81,18 @@ export default defineComponent({
       emitPageChangedEvent,
       emitHistoricRangeChangedEvent,
     } = useWindowEvents();
+    const { formatMinutesToSeconds } = useFormatting();
 
     const availableHistoricRanges = [
-      { text: "last 30 seconds", value: 0.5 },
-      { text: "last minute", value: 1 },
-      { text: "last 5 minutes", value: 5 },
-      { text: "last 10 minutes", value: 10 },
-      { text: "last 30 minutes", value: 30 },
-      { text: "last 60 minutes", value: 60 },
+      { text: "last 30 seconds", value: formatMinutesToSeconds(0.5) },
+      { text: "last minute", value: formatMinutesToSeconds(1) },
+      { text: "last 5 minutes", value: formatMinutesToSeconds(5) },
+      { text: "last 10 minutes", value: formatMinutesToSeconds(10) },
+      { text: "last 30 minutes", value: formatMinutesToSeconds(30) },
+      { text: "last 60 minutes", value: formatMinutesToSeconds(60) },
     ];
 
-    const selectedHistoricRange = ref<number>(getHistoricRangeMinutes()); // get inital value from DatabaseController
+    const selectedHistoricRange = ref<number>(gethistoricRangeSeconds());
 
     const page = computed(() => context.root.$route.name! as PageName);
 
