@@ -32,7 +32,7 @@ export interface Backend {
   start(status?: BackendState, delay?: number): void;
   reload(request: Request, id: string, type: "POST" | "DELETE"): void;
   restart(status?: BackendState, delay?: number): void;
-  refetch(request: Request, alias: string, status?: number): void;
+  rename(request: Request, alias: string, status?: number): void;
 }
 
 /* return mocked backend, only if requests should be mocked inside cypress */
@@ -53,7 +53,7 @@ export function useBackendMock(
     mockRoutes();
   }
 
-  function refetch(request: Request, alias: string, status?: number): void {
+  function rename(request: Request, alias: string, status?: number): void {
     cy.route("GET", getRequestRoute(request, "get")).as(alias);
   }
 
@@ -137,7 +137,7 @@ export function useBackendMock(
     );
   }
 
-  if (Cypress.env("stubless")) return { start, reload, restart, refetch };
+  if (Cypress.env("stubless")) return { start, reload, restart, rename };
   return mockBackend(numbers);
 }
 
@@ -168,7 +168,7 @@ export function mockBackend(
     start(status, delay);
   }
 
-  function refetch(request: Request, alias: string, status = 200): void {
+  function rename(request: Request, alias: string, status = 200): void {
     const { mockGetRoute } = useRouteMocking(status);
 
     mockGetRoute(
@@ -309,7 +309,7 @@ export function mockBackend(
     restart,
     start,
     reload,
-    refetch,
+    rename,
   };
 }
 

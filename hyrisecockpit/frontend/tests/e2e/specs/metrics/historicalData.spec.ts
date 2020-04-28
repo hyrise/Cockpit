@@ -47,7 +47,7 @@ describe("requesting different time ranges", () => {
           force: true,
         });
       });
-      backend.refetch(comparisonRequest, newAlias); // set new alias to get specific request
+      backend.rename(comparisonRequest, newAlias); // set new alias to get specific request
       cy.get("div").contains(range.title).click({
         force: true,
       });
@@ -71,7 +71,7 @@ describe("requesting different time ranges", () => {
           force: true,
         });
       });
-      backend.refetch(overviewRequest, newAlias); // set new alias to get specific request
+      backend.rename(overviewRequest, newAlias); // set new alias to get specific request
       cy.get("div").contains(range.title).click({
         force: true,
       });
@@ -95,7 +95,7 @@ describe("requesting different time ranges", () => {
           force: true,
         });
       });
-      backend.refetch(workloadRequest, newAlias); // set new alias to get specific request
+      backend.rename(workloadRequest, newAlias); // set new alias to get specific request
       cy.get("div").contains(range.title).click({
         force: true,
       });
