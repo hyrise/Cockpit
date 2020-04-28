@@ -10,6 +10,8 @@ from pytest import fixture
 from hyrisecockpit.api.app import create_app
 from hyrisecockpit.api.app.plugin import BASE_ROUTE
 from hyrisecockpit.api.app.plugin.interface import PluginInterface
+from hyrisecockpit.api.app.plugin.model import Plugin
+from hyrisecockpit.api.app.plugin.schema import PluginSchema
 
 url = f"/{BASE_ROUTE}"
 
@@ -41,8 +43,23 @@ def client(app: Flask) -> FlaskClient:
         return client
 
 
+class TestPluginController:
+    """Tests for the PluginController."""
+
+    def test_gets_all_plugins(self, client: FlaskClient):
+        """A PluginController routes get correctly."""
+        expected = [Plugin(name="Compression"), Plugin(name="Clustering")]
+        with patch(
+            "hyrisecockpit.api.app.plugin.service.PluginService.get_all"
+        ) as get_all:
+            get_all.return_value = expected
+            response = client.get(url, follow_redirects=True)
+        assert 200 == response.status_code
+        assert PluginSchema(many=True).dump(expected) == response.get_json()
+
+
 class TestPluginIdController:
-    """Tests for the PluginId controller."""
+    """Tests for the PluginIdController."""
 
     def test_activates_the_correct_plugin(
         self, client: FlaskClient, database_id: str, interface: PluginInterface

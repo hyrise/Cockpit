@@ -21,7 +21,7 @@ class PluginController(Resource):
     @responds(schema=PluginSchema(many=True), api=api)
     def get(self) -> List[Plugin]:
         """Get all Plugins from all databases."""
-        return PluginService.get_all()  # type: ignore
+        return PluginService.get_all()
 
 
 @api.response(404, "A database with the given ID does not exist.")
@@ -39,7 +39,7 @@ class PluginIdController(Resource):
         if status in {200, 404, 423}:
             return Response(status=status)
         else:
-            raise NotImplementedError()
+            raise ValueError()
 
     @accepts(schema=PluginSchema, api=api)
     def delete(self, database_id: str) -> Response:
@@ -49,4 +49,4 @@ class PluginIdController(Resource):
         if status in {200, 404, 423}:
             return Response(status=status)
         else:
-            raise NotImplementedError()
+            raise ValueError()

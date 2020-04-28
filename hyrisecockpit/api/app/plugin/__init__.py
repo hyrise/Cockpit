@@ -1,6 +1,6 @@
 """Plugin entity.
 
-Plugins can be get, set, updated, and deleted.
+Plugins can be get, activated and deactivated.
 """
 
 from flask import Flask

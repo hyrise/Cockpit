@@ -79,20 +79,6 @@ model_get_all_plugins = api.model(
     "Available Plugins", {"plugins": fields.List(modelhelper_plugin, required=True,)},
 )
 
-model_get_activated_plugins = api.clone(
-    "Activated Plugins",
-    model_database,
-    {"plugins": fields.List(modelhelper_plugin, required=True,)},
-)
-
-model_activate_plugin = api.clone(
-    "Activate Plugin", model_database, {"plugin": modelhelper_plugin},
-)
-
-model_deactivate_plugin = api.clone(
-    "Deactivate Plugin", model_database, {"plugin": modelhelper_plugin},
-)
-
 model_plugin_setting = api.clone(
     "Set Plugin Setting",
     model_database,
@@ -184,18 +170,6 @@ class AvailablePlugin(Resource):
     def get(self) -> List[str]:
         """Return available plugins."""
         return available_plugins
-
-
-@api.route("/plugin")
-class Plugin(Resource):
-    """Activate, Deactive Plugins, respectively show which ones are activated."""
-
-    @api.doc(model=[model_get_activated_plugins])
-    def get(self) -> Union[Dict, List[Dict[str, List[str]]]]:
-        """Return activated plugins in each database."""
-        message = Request(header=Header(message="get plugins"), body={})
-        response = _send_message(db_manager_socket, message)
-        return response["body"]["plugins"]
 
 
 @api.route("/plugin_log")
