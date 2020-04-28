@@ -119,9 +119,8 @@ function getMemoryFootprint(data: any): number[] {
 function getStorageData(data: any, primaryKey: string = ""): StorageData {
   //TODO: this can be replaced when the size entry of the returned data of every table is fixed from the backend
   const totalDatabaseMemory = getDatabaseMemoryFootprint(data[primaryKey]);
-  const header = `${primaryKey} - ${totalDatabaseMemory} MB`;
 
-  const labels: string[] = [header];
+  const labels: string[] = [primaryKey];
   const parents: string[] = [""];
   const sizes: number[] = [0];
   const descriptions: TreemapDescription[] = [
@@ -185,7 +184,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
   Object.entries(data[primaryKey]).forEach(
     ([table, tableData]: [string, any]) => {
       labels.push(table);
-      parents.push(header);
+      parents.push(primaryKey);
       sizes.push(0);
       descriptions.push({
         size: `${getTableMemoryFootprint(tableData.data)} MB`,
