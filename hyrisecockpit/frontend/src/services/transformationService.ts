@@ -6,7 +6,7 @@ import {
 } from "../types/metrics";
 import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
-import { colorDefinition } from "@/meta/colors";
+import { colorValueDefinition } from "@/meta/colors";
 
 const transformationServiceMap: Record<Metric, TransformationService> = {
   access: getAccessData,
@@ -61,7 +61,7 @@ function getQueryTypeProportionData(data: any, type: string): any {
       name: "UPDATE",
       type: "bar",
       marker: {
-        color: colorDefinition.green,
+        color: colorValueDefinition.green,
       },
     },
     {
@@ -70,7 +70,7 @@ function getQueryTypeProportionData(data: any, type: string): any {
       name: "SELECT",
       type: "bar",
       marker: {
-        color: colorDefinition.blue,
+        color: colorValueDefinition.blue,
       },
     },
     {
@@ -79,7 +79,7 @@ function getQueryTypeProportionData(data: any, type: string): any {
       name: "INSERT",
       type: "bar",
       marker: {
-        color: colorDefinition.orange,
+        color: colorValueDefinition.orange,
       },
     },
     {
@@ -88,7 +88,7 @@ function getQueryTypeProportionData(data: any, type: string): any {
       name: "DELETE",
       type: "bar",
       marker: {
-        color: colorDefinition.red,
+        color: colorValueDefinition.red,
       },
     },
   ];

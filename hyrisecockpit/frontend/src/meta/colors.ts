@@ -1,35 +1,40 @@
-type Colors =
-  | "blue"
-  | "orange"
-  | "green"
-  | "red"
-  | "violet"
-  | "darkblue"
-  | "darkorange"
-  | "darkgreen"
-  | "darkred"
-  | "darkviolet";
-type Hex =
-  | "#a6cee3"
-  | "#fdbf6f"
-  | "#b2df8a"
-  | "#fb9a99"
-  | "#cab2d6"
-  | "#1f78b4"
-  | "#ff7f00"
-  | "#33a02c"
-  | "#e31a1c"
-  | "#6a3d9a";
+export const colorValueDefinition: Record<string, string> = {
+  darkgrey: "#424242",
+  lightgrey: "#bdbdbd",
+  white: "ffffff",
+  green: "#a6cf91",
+  orange: "#ffcc5c",
+  red: "#ff6f69",
+  darkred: "#b24d49",
+  blue: "#96ccce",
+  darkblue: "#1f688a",
+};
 
-export const colorDefinition: Record<Colors, Hex> = {
-  blue: "#a6cee3",
-  orange: "#fdbf6f",
-  green: "#b2df8a",
-  red: "#fb9a99",
-  violet: "#cab2d6",
-  darkblue: "#1f78b4",
-  darkorange: "#ff7f00",
-  darkgreen: "#33a02c",
-  darkred: "#e31a1c",
-  darkviolet: "#6a3d9a",
+export const colorDatabaseDefinition: Record<string, string> = {
+  darkblue: "#1c4e80",
+  grey: "#7e909a",
+  orange: "#ea6a47",
+  blue: "#32a7dd",
+  green: "#6ab187",
+  red: "#ac3e31",
+  yellow: "#dbae58",
+  turquoise: "#488a99",
+};
+
+export const colorTreemapDefinition: Record<string, string> = {
+  green: "#a6cf91",
+  orange: "#ffcc5c",
+  red: "#ff6f69",
+  darkred: "#b24d49",
+  blue: "#96ccce",
+  darkblue: "#1f688a",
+  blue2: "#58a1a3",
+  oceanblue: "#7baea2",
+  greengrey: "#a5b7b0",
+  mintgreen: "#87a18e",
+  darkviolet: "#bea0a5",
+  pink: "#c895a2",
+  skincolor: "#e2b2a0",
+  pink2: "#fb87be",
+  yellow: "#fec981",
 };
