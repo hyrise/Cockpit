@@ -1,6 +1,6 @@
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -15,8 +15,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -31,8 +31,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -47,8 +47,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -63,8 +63,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -79,8 +79,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -95,8 +95,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -111,8 +111,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -127,8 +127,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -143,8 +143,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -159,8 +159,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -175,8 +175,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -191,8 +191,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -207,8 +207,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -223,8 +223,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -239,8 +239,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -255,8 +255,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -271,8 +271,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -287,8 +287,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -303,8 +303,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -319,8 +319,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -335,8 +335,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -351,8 +351,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -367,8 +367,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -383,8 +383,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -399,8 +399,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -415,8 +415,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -431,8 +431,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -447,8 +447,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -463,8 +463,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -479,8 +479,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -495,8 +495,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -511,8 +511,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -527,8 +527,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -543,8 +543,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -559,8 +559,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -575,8 +575,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -591,8 +591,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -607,8 +607,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -623,8 +623,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -639,8 +639,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -655,8 +655,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -671,8 +671,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -687,8 +687,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -703,8 +703,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -719,8 +719,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -735,8 +735,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -751,8 +751,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -767,8 +767,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -783,8 +783,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -799,8 +799,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -815,8 +815,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -831,8 +831,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -847,8 +847,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -863,8 +863,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -879,8 +879,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -895,8 +895,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -911,8 +911,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -927,8 +927,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -943,8 +943,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -959,8 +959,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -975,8 +975,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -991,8 +991,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1007,8 +1007,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1023,8 +1023,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1039,8 +1039,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1055,8 +1055,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1071,8 +1071,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1087,8 +1087,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1103,8 +1103,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1119,8 +1119,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1135,8 +1135,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1151,8 +1151,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1167,8 +1167,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1183,8 +1183,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1199,8 +1199,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1215,8 +1215,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1231,8 +1231,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1247,8 +1247,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1263,8 +1263,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1279,8 +1279,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1295,8 +1295,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1311,8 +1311,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1327,8 +1327,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1343,8 +1343,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1359,8 +1359,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1375,8 +1375,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1391,8 +1391,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1407,8 +1407,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1423,8 +1423,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1439,8 +1439,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1455,8 +1455,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1471,8 +1471,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1487,8 +1487,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1503,8 +1503,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1519,8 +1519,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1535,8 +1535,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1551,8 +1551,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
@@ -1567,8 +1567,8 @@ ORDER BY revenue DESC;
 ---
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM customer, orders, lineitem, supplier, nation, region
-WHERE c_custkey = o_custkey
+FROM customer_tpch_1, orders_tpch_1, lineitem_tpch_1, supplier_tpch_1, nation_tpch_1, region_tpch_1
+ WHERE c_custkey = o_custkey
 		AND l_orderkey = o_orderkey
 		AND l_suppkey = s_suppkey
 		AND c_nationkey = s_nationkey
