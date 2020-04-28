@@ -40,14 +40,22 @@ class Databases(Resource):
     @accepts(schema=DetailedDatabaseSchema, api=api)
     def post(self) -> Response:
         """Register new database."""
-        interface: DetailedDatabaseInterface = request.parsed_obj
+        interface: DetailedDatabaseInterface = DetailedDatabaseInterface(
+            id=request.parsed_obj.id,
+            host=request.parsed_obj.host,
+            port=request.parsed_obj.port,
+            number_workers=request.parsed_obj.number_workers,
+            dbname=request.parsed_obj.dbname,
+            user=request.parsed_obj.user,
+            password=request.parsed_obj.password,
+        )
         status_code = DatabaseService.register_database(interface)
         return Response(status=status_code)
 
     @accepts(schema=DatabaseSchema, api=api)
     def delete(self) -> Response:
         """De-register database."""
-        interface: DatabaseInterface = request.parsed_obj
+        interface: DatabaseInterface = DatabaseInterface(id=request.parsed_obj.id)
         status_code = DatabaseService.deregister_database(interface)
         return Response(status=status_code)
 
@@ -64,14 +72,18 @@ class BenchmarkTables(Resource):
     @accepts(schema=BenchmarkTablesSchema, api=api)
     def post(self) -> Response:
         """Load benchmark tables."""
-        interface: BenchmarkTablesInterface = request.parsed_obj
+        interface: BenchmarkTablesInterface = BenchmarkTablesInterface(
+            folder_name=request.parsed_obj.folder_name
+        )
         status_code = DatabaseService.load_benchmark_tables(interface)
         return Response(status=status_code)
 
     @accepts(schema=BenchmarkTablesSchema, api=api)
     def delete(self) -> Response:
         """Delete benchmark tables."""
-        interface: BenchmarkTablesInterface = request.parsed_obj
+        interface: BenchmarkTablesInterface = BenchmarkTablesInterface(
+            folder_name=request.parsed_obj.folder_name
+        )
         status_code = DatabaseService.delete_benchmark_tables(interface)
         return Response(status=status_code)
 

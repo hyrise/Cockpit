@@ -4,6 +4,7 @@
       <database-chip :database-id="databaseId" />
       <v-spacer />
       <v-text-field
+        id="query-search-input"
         v-model="searchQueries"
         append-icon="mdi-magnify"
         label="Search queries"

@@ -1,5 +1,4 @@
 """The BackgroundJobManager is managing the background jobs for the apscheduler."""
-
 from copy import deepcopy
 from json import dumps
 from multiprocessing import Process, Value
@@ -41,6 +40,33 @@ class TableData(TypedDict):
 
 
 StorageDataType = Dict[str, TableData]
+
+
+def format_query_parameters(parameters) -> Optional[Tuple[Any, ...]]:
+    """Format query parameters for execution."""
+    formatted_parameters = (
+        tuple(
+            AsIs(parameter) if protocol == "as_is" else parameter
+            for parameter, protocol in parameters
+        )
+        if parameters is not None
+        else None
+    )
+    return formatted_parameters
+
+
+def execute_table_query(
+    query_tuple: Tuple, success_flag: Value, connection_factory: ConnectionFactory
+) -> None:
+    """Execute loading or deleting table query."""
+    query, parameters = query_tuple
+    formatted_parameters = format_query_parameters(parameters)
+    try:
+        with connection_factory.create_cursor() as cur:
+            cur.execute(query, formatted_parameters)
+            success_flag.value = True
+    except (DatabaseError, InterfaceError, ProgrammingError):
+        return None  # TODO: log error
 
 
 class BackgroundJobManager(object):
@@ -241,11 +267,11 @@ class BackgroundJobManager(object):
 
     def _update_plugin_log(self) -> None:
         """Update plugin log."""
-        endts = time_ns()
-        startts = endts - 2_000_000_000
+        endts = int(time_ns() / 1_000_000)  # timestamps in hyrise are in ms-precision
+        startts = endts - 5_000
 
         log_df = self._sql_to_data_frame(
-            "SELECT * FROM meta_log WHERE 'timestamp' >= %s AND 'timestamp' < %s;",
+            """SELECT * FROM meta_log WHERE "timestamp" >= %s AND "timestamp" < %s;""",
             params=(startts, endts),
         )
 
@@ -396,37 +422,24 @@ class BackgroundJobManager(object):
         # TODO change absolute to relative path
         return [
             (
-                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                ((name, "as_is"), (folder_name, "as_is"), (name, "as_is"),),
+                "COPY %s_%s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                (
+                    (name, "as_is"),
+                    (folder_name, "as_is"),
+                    (folder_name, "as_is"),
+                    (name, "as_is"),
+                ),
             )
             for name in table_names
         ]
 
-    def _format_query_parameters(self, parameters) -> Optional[Tuple[Any, ...]]:
-        formatted_parameters = (
-            tuple(
-                AsIs(parameter) if protocol == "as_is" else parameter
-                for parameter, protocol in parameters
-            )
-            if parameters is not None
-            else None
-        )
-        return formatted_parameters
-
-    def _execute_table_query(self, query_tuple: Tuple, success_flag: Value,) -> None:
-        query, parameters = query_tuple
-        formatted_parameters = self._format_query_parameters(parameters)
-        try:
-            with self._connection_factory.create_cursor() as cur:
-                cur.execute(query, formatted_parameters)
-                success_flag.value = True
-        except (DatabaseError, InterfaceError, ProgrammingError):
-            return None  # TODO: log error
-
     def _execute_queries_parallel(self, table_names, queries, folder_name) -> None:
         success_flags: List[Value] = [Value("b", False) for _ in queries]
         processes: List[Process] = [
-            Process(target=self._execute_table_query, args=(query, success_flag),)
+            Process(
+                target=execute_table_query,
+                args=(query, success_flag, self._connection_factory,),
+            )
             for query, success_flag in zip(queries, success_flags)
         ]
         for process in processes:
@@ -548,7 +561,7 @@ class BackgroundJobManager(object):
         if table_names is None:
             return []
         else:
-            return table_names
+            return [f"{table_name}_{folder_name}" for table_name in table_names]
 
     def delete_tables(self, folder_name: str) -> bool:
         """Delete tables."""

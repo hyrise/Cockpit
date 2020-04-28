@@ -1,22 +1,18 @@
 <template>
-  <v-navigation-drawer app fixed width="180">
-    <v-list>
-      <v-list-item two-line class="my-0">
-        <v-list-item-avatar tile class="mt-0 mr-2">
+  <v-navigation-drawer app fixed width="200" color="grey lighten-4">
+    <v-list subheader>
+      <v-list-item>
+        <v-list-item-avatar tile size="55" class="mb-3 mr-3">
           <img src="../../src/assets/images/hyrise_logo.png" />
         </v-list-item-avatar>
-        <v-list-item-content>
-          <v-list-item-title class="body-2 mb-2 font-weight-light"
-            >COCKPIT</v-list-item-title
-          >
-        </v-list-item-content>
+        <v-list-item-title class="mt-2 body-1 font-weight-light"
+          >Cockpit</v-list-item-title
+        >
       </v-list-item>
-
       <v-divider />
-
-      <v-list-item color="#02789D" input-value="true">
+      <v-list-item color="#02789D" input-value="true" dense>
         <v-list-item-content>
-          <v-list-item-title class="body-2">Views</v-list-item-title>
+          <v-list-item-title class="body-2">Analysis Views</v-list-item-title>
         </v-list-item-content>
         <v-list-item-icon>
           <v-icon
@@ -31,8 +27,8 @@
       <v-divider />
 
       <v-list-item id="overview-button" :to="{ name: 'overview' }">
-        <v-list-item-icon class="mr-2">
-          <v-icon>mdi-speedometer</v-icon>
+        <v-list-item-icon class="mr-4">
+          <v-icon>mdi-database-search</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>
@@ -43,8 +39,8 @@
       </v-list-item>
 
       <v-list-item id="comparison-button" :to="{ name: 'comparison' }">
-        <v-list-item-icon class="mr-2">
-          <v-icon>mdi-database-search</v-icon>
+        <v-list-item-icon class="mr-4">
+          <v-icon>mdi-chart-line</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>
@@ -55,24 +51,66 @@
       </v-list-item>
 
       <v-list-item id="workload-monitoring-button" :to="{ name: 'workload' }">
-        <v-list-item-icon class="mr-2">
-          <v-icon>mdi-align-vertical-bottom</v-icon>
+        <v-list-item-icon class="mr-4">
+          <v-icon>mdi-chart-bar</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>
           <v-list-item-title class="body-2 font-weight-light"
-            >Workload Metrics</v-list-item-title
+            >Workload Analysis</v-list-item-title
           >
         </v-list-item-content>
       </v-list-item>
 
       <v-divider />
-      <v-list-item color="#02789D" input-value="true">
+      <v-list-item color="#02789D" input-value="true" dense>
         <v-list-item-content>
           <v-list-item-title class="body-2">Settings</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-divider />
+
+      <workload-generation
+        :open="showWorkloadDialog"
+        @close="showWorkloadDialog = false"
+      />
+
+      <v-list-item
+        id="workload-generation-button"
+        @click="showWorkloadDialog = true"
+      >
+        <v-list-item-icon class="mr-4">
+          <v-icon>mdi-account-cog</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title class="body-2 font-weight-light"
+            >Workload</v-list-item-title
+          >
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-list-item id="plugin-overview-button" @click="$emit('openPlugins')">
+        <v-list-item-icon class="mr-4">
+          <v-icon>mdi-tune</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title class="body-2 font-weight-light"
+            >Plugins</v-list-item-title
+          >
+        </v-list-item-content>
+      </v-list-item>
+
+      <add-database
+        :open="showAddDatabaseDialog"
+        @close="showAddDatabaseDialog = false"
+      />
+      <remove-database
+        :open="showRemoveDatabaseDialog"
+        :database-id="removedDatabaseId"
+        @close="showRemoveDatabaseDialog = false"
+      />
 
       <v-menu bottom offset-x>
         <template v-slot:activator="{ on: menu }">
@@ -81,16 +119,15 @@
             v-on="{ ...menu }"
             @click="$emit('closeSelection')"
           >
-            <v-list-item-icon class="mr-2">
-              <v-icon>mdi-database</v-icon>
+            <v-list-item-icon class="mr-4">
+              <v-icon>mdi-database-sync</v-icon>
             </v-list-item-icon>
             <v-badge
               id="number-of-databases"
               color="secondary primary--text"
               :content="databaseCount"
               offset-y="1"
-              offset-x="40"
-              bordered
+              offset-x="47"
             >
             </v-badge>
 
@@ -106,52 +143,10 @@
           @removeDatabase="handleDatabaseDeletion"
         />
       </v-menu>
-
-      <workload-generation
-        :open="showWorkloadDialog"
-        @close="showWorkloadDialog = false"
-      />
-
-      <v-list-item
-        id="workload-generation-button"
-        @click="showWorkloadDialog = true"
-      >
-        <v-list-item-icon class="mr-2">
-          <v-icon>mdi-account-cog</v-icon>
-        </v-list-item-icon>
-
-        <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light"
-            >Workload</v-list-item-title
-          >
-        </v-list-item-content>
-      </v-list-item>
-
-      <add-database
-        :open="showAddDatabaseDialog"
-        @close="showAddDatabaseDialog = false"
-      />
-      <remove-database
-        :open="showRemoveDatabaseDialog"
-        :database-id="removedDatabaseId"
-        @close="showRemoveDatabaseDialog = false"
-      />
-
-      <v-list-item id="plugin-overview-button" @click="$emit('openPlugins')">
-        <v-list-item-icon class="mr-2">
-          <v-icon>mdi-alpha-p-box</v-icon>
-        </v-list-item-icon>
-
-        <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light"
-            >Plugins</v-list-item-title
-          >
-        </v-list-item-content>
-      </v-list-item>
+      <v-divider />
     </v-list>
-    <v-divider />
 
-    <v-footer absolute class="font-weight-medium">
+    <v-footer absolute class="font-weight-medium mb-1" color="grey lighten-3">
       <v-img
         src="../../src/assets/images/hpi_logo_bw.png"
         max-width="80"
@@ -215,8 +210,8 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.card-title {
-  padding: 16px 0px 16px 0px;
-  font-size: 16px;
+.v-list-item {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 </style>

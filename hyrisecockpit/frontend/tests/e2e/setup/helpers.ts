@@ -22,7 +22,7 @@ export type Request =
   | "krueger_data"
   | "chunks"
   | "detailed_query_information"
-  | "data"
+  | "benchmark_tables"
   | "available_plugins"
   | "plugin"
   | "plugin_settings"
@@ -46,7 +46,7 @@ const getAliases: Partial<Record<Request, string>> = {
   krueger_data: "getKruegerData",
   chunks: "getChunksData",
   detailed_query_information: "getQueryInformation",
-  data: "getData",
+  benchmark_tables: "getBenchmarks",
   available_plugins: "getAvailablePLugins",
   plugin: "getPlugin",
   plugin_settings: "getPluginSettings",
@@ -56,7 +56,7 @@ const getAliases: Partial<Record<Request, string>> = {
 
 const postAliases: Partial<Record<Request, string>> = {
   database: "addDatabase",
-  data: "loadTables",
+  benchmark_tables: "loadTables",
   plugin: "activatePlugin",
   plugin_settings: "setPluginSettings",
   workload: "startWorkload",
@@ -64,7 +64,7 @@ const postAliases: Partial<Record<Request, string>> = {
 
 const deleteAliases: Partial<Record<Request, string>> = {
   database: "removeDatabase",
-  data: "removeTables",
+  benchmark_tables: "removeTables",
   plugin: "deactivatePlugin",
   workload: "stopWorkload",
 };
