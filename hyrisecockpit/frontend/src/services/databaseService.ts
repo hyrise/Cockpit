@@ -131,7 +131,7 @@ export function useDatabaseService(): DatabaseService {
   }
 
   function postSQLQuery(databaseId: string, sqlQuery: string): Promise<any> {
-    return axios.post(controlBackend + "sql", {
+    return axios.post(controlBackend + "sql/", {
       id: databaseId,
       query: sqlQuery,
     });
