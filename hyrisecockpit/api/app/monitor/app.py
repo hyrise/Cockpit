@@ -472,14 +472,14 @@ def get_historical_data(
 def fill_missing_points(
     startts: int,
     endts: int,
-    step: int,
+    precision: int,
     table_name: str,
     metrics: List[str],
     points: List[Dict],
 ) -> List[Dict]:
     """Fill missing points with zero."""
     result: List[Dict[str, float]] = []
-    for timestamp in range(startts, endts, step):
+    for timestamp in range(startts, endts, precision):
         new_point: Dict = {"timestamp": timestamp}
         for metric in metrics:
             new_point[metric] = 0.0
