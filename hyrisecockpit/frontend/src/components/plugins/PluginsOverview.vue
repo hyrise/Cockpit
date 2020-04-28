@@ -3,17 +3,10 @@
     <v-card :id="pluginDraggerId" class="card" color="primary" dark>
       <v-card-title>
         Plugins
-        <v-icon class="close-icon" @click="onClose()">
-          mdi-close
-        </v-icon>
+        <v-icon class="close-icon" @click="onClose()">mdi-close</v-icon>
       </v-card-title>
     </v-card>
-    <v-expansion-panels
-      class="panels"
-      v-if="showDatabasePanels"
-      multiple
-      accordion
-    >
+    <v-expansion-panels class="panels" v-if="showDatabasePanels" multiple accordion>
       <v-expansion-panel v-for="database in databases" :key="database">
         <v-expansion-panel-header class="title">
           <v-list-item class="item">
@@ -23,13 +16,12 @@
         <v-expansion-panel-content>
           <div v-for="plugin in plugins" :key="plugin">
             <div class="plugin">
-              <div class="plugin-name">
-                {{ plugin }}
-              </div>
+              <div class="plugin-name">{{ plugin }}</div>
               <v-switch
+                :id="`${plugin}-switch-button`"
+                v-model="activePlugins"
                 :disabled="disableAll"
                 :loading="isLoading[database + '_' + plugin]"
-                v-model="activePlugins"
                 :value="database + '_' + plugin"
                 @change="onClickPluginSwitch(database, plugin)"
               />
@@ -39,22 +31,13 @@
                 @click="toggleSettingsView(database, plugin)"
                 text
               >
-                <v-icon>
-                  mdi-cog
-                </v-icon>
+                <v-icon>mdi-cog</v-icon>
               </v-btn>
             </div>
             <v-expand-transition>
               <div v-if="showSettings[database + '_' + plugin]">
-                <div
-                  v-for="setting in pluginSettings[database][plugin]"
-                  :key="setting.name"
-                >
-                  <PluginSetting
-                    :setting="setting"
-                    :databaseId="database"
-                    :pluginId="plugin"
-                  />
+                <div v-for="setting in pluginSettings[database][plugin]" :key="setting.name">
+                  <PluginSetting :setting="setting" :databaseId="database" :pluginId="plugin" />
                 </div>
               </div>
             </v-expand-transition>

@@ -14,8 +14,16 @@ export function getSelector(component: string): string {
   return selectors[component];
 }
 
-export function getChangeSettingsSelector(plugin: string): string {
-  return getSelectorByConfig("button", `${plugin}-change-button`);
+const pluginButtons: Record<string, { element: string; suffix: string }> = {
+  changeButton: { element: "button", suffix: "-change-button" },
+  switchButton: { element: "input", suffix: "-switch-button" },
+};
+
+export function getPluginSelector(plugin: string, button: string): string {
+  return getSelectorByConfig(
+    pluginButtons[button].element,
+    `${plugin}${pluginButtons[button].suffix}`
+  );
 }
 
 export function assertActivePlugins(
@@ -27,14 +35,12 @@ export function assertActivePlugins(
     (data: any) => data.id === database
   );
 
-  availablePlugins.forEach((plugin: any, idx: number) => {
-    cy.get("input[type=checkbox]")
-      .eq(idx)
-      .then((checkbox: any) => {
-        expect(checkbox[0].checked).to.eq(
-          databaseActivePluginData.plugins.includes(plugin)
-        );
-      });
+  availablePlugins.forEach((plugin: any) => {
+    cy.get(getPluginSelector(plugin, "switchButton")).then((checkbox: any) => {
+      expect(checkbox[0].checked).to.eq(
+        databaseActivePluginData.plugins.includes(plugin)
+      );
+    });
   });
 }
 
