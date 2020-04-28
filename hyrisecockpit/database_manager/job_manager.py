@@ -41,6 +41,15 @@ class JobManger:
         self._storage_password: str = storage_password
         self._storage_port: str = storage_port
         self._storage_user: str = storage_user
+        self._basic_job_args = (
+            self._database_blocked,
+            self._connection_factory,
+            self._storage_host,
+            self._storage_password,
+            self._storage_port,
+            self._storage_user,
+            self._database_id,
+        )
         self._init_background_jobs()
 
     def _init_background_jobs(self) -> None:
@@ -68,55 +77,23 @@ class JobManger:
             func=update_system_data,
             trigger="interval",
             seconds=1,
-            args=(
-                self._database_blocked,
-                self._connection_factory,
-                self._storage_host,
-                self._storage_password,
-                self._storage_port,
-                self._storage_user,
-                self._database_id,
-            ),
+            args=self._basic_job_args,
         )
         self._update_storage_data_job = self._scheduler.add_job(
             func=update_storage_data,
             trigger="interval",
             seconds=5,
-            args=(
-                self._database_blocked,
-                self._connection_factory,
-                self._storage_host,
-                self._storage_password,
-                self._storage_port,
-                self._storage_user,
-                self._database_id,
-            ),
+            args=self._basic_job_args,
         )
         self._update_plugin_log_job = self._scheduler.add_job(
             func=update_plugin_log,
             trigger="interval",
             seconds=1,
-            args=(
-                self._database_blocked,
-                self._connection_factory,
-                self._storage_host,
-                self._storage_password,
-                self._storage_port,
-                self._storage_user,
-                self._database_id,
-            ),
+            args=self._basic_job_args,
         )
         self._update_chunks_data_job = self._scheduler.add_job(
             func=update_chunks_data,
             trigger="interval",
             seconds=5,
-            args=(
-                self._database_blocked,
-                self._connection_factory,
-                self._storage_host,
-                self._storage_password,
-                self._storage_port,
-                self._storage_user,
-                self._database_id,
-            ),
+            args=self._basic_job_args,
         )
