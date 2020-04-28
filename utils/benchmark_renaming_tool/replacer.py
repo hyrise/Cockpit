@@ -50,7 +50,6 @@ class Replacer:
     def _tpcds_specific_renaming(self, queries, old_table_name, new_table_name):
         """Specific renaming for TPCDS."""
         queries = queries.replace(f" {old_table_name}.", f" {new_table_name}.")
-        queries = queries.replace(f" {old_table_name}.", f" {new_table_name}.")
         queries = queries.replace(f"({old_table_name}.", f"({new_table_name}.")
         queries = queries.replace(f"{old_table_name})", f"{new_table_name})")
         queries = queries.replace(f"\n{old_table_name},", f"\n{new_table_name},")
