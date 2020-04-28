@@ -14,7 +14,7 @@ function getInitialNumbers(
   numbers: Partial<Record<Entity, number>>
 ): Record<Entity, number> {
   return {
-    databases: 2,
+    databases: 1,
     tables: 2,
     columns: 2,
     chunks: 2,

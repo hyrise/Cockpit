@@ -27,9 +27,6 @@ let databasesPluginSettings: any = [];
 // test plugins overview
 describe("When opening the plugins overview", () => {
   beforeEach(() => {
-    cy.restartAppState(backend, {
-      databases: 1,
-    });
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
       cy.setupData("available_plugins").then((xhr: any) => {
@@ -45,10 +42,6 @@ describe("When opening the plugins overview", () => {
         });
       });
     });
-  });
-
-  after(() => {
-    cy.restartAppState(backend, {});
   });
 
   // test activate plugin
