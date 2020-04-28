@@ -6,6 +6,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from .cursor import ConnectionFactory
 from .job import (
     ping_hyrise,
+    update_plugin_log,
     update_queue_length,
     update_storage_data,
     update_system_data,
@@ -80,6 +81,20 @@ class JobManger:
             func=update_storage_data,
             trigger="interval",
             seconds=5,
+            args=(
+                self._database_blocked,
+                self._connection_factory,
+                self._storage_host,
+                self._storage_password,
+                self._storage_port,
+                self._storage_user,
+                self._database_id,
+            ),
+        )
+        self._update_plugin_log_job = self._scheduler.add_job(
+            func=update_plugin_log,
+            trigger="interval",
+            seconds=1,
             args=(
                 self._database_blocked,
                 self._connection_factory,
