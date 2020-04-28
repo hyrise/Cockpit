@@ -36,6 +36,7 @@ export default defineComponent({
   },
   setup(props: Props, context: SetupContext): void {
     const { databasesUpdated } = context.root.$databaseController;
+    const { getHistoricRangeSeconds } = context.root.$metricController;
     const { updateLayout } = useResizingOnChange(props);
     const multipleDatabasesAllowed = inject<boolean>(
       "multipleDatabasesAllowed",
@@ -52,7 +53,7 @@ export default defineComponent({
       Plotly.newPlot(
         props.graphId,
         getDatasets(),
-        getLayout(props.maxValue),
+        getLayout(props.maxValue, getHistoricRangeSeconds()),
         getOptions()
       );
       useChartReactivity(props, context, updateChartDatasets, updateLayout);
@@ -71,7 +72,7 @@ export default defineComponent({
       Plotly.react(
         props.graphId,
         getDatasets(),
-        getLayout(props.maxValue),
+        getLayout(props.maxValue, getHistoricRangeSeconds()),
         getOptions()
       );
     }
@@ -102,7 +103,7 @@ export default defineComponent({
       Plotly.update(
         props.graphId,
         newData,
-        getLayout(props.maxValue, Math.min(maxSelectedLength, 30))
+        getLayout(props.maxValue, getHistoricRangeSeconds())
       );
     }
   },
@@ -141,7 +142,7 @@ function useLineChartConfiguration(
       margin: {
         l: 70,
         r: 40,
-        b: 30,
+        b: multipleDatabasesAllowed ? 45 : 30,
         t: multipleDatabasesAllowed ? 0 : 10,
         pad: 0,
       },
