@@ -1,20 +1,18 @@
 <template>
   <v-navigation-drawer app fixed width="200" color="grey lighten-4">
-    <v-list nav subheader>
+    <v-list subheader>
       <v-list-item>
-        <v-list-item-avatar tile size="55" class="ml-0 mb-1 mt-1 mr-3">
+        <v-list-item-avatar tile size="55" class="mb-3 mr-3">
           <img src="../../src/assets/images/hyrise_logo.png" />
         </v-list-item-avatar>
-        <img
-          class="mt-4"
-          height="23"
-          src="../../src/assets/images/cockpit_logo.png"
-        />
+        <v-list-item-title class="mt-2 body-1 font-weight-light"
+          >Cockpit</v-list-item-title
+        >
       </v-list-item>
       <v-divider />
       <v-list-item color="#02789D" input-value="true" dense>
         <v-list-item-content>
-          <v-list-item-title class="body-2">ANALYSIS VIEWS</v-list-item-title>
+          <v-list-item-title class="body-2">Analysis Views</v-list-item-title>
         </v-list-item-content>
         <v-list-item-icon>
           <v-icon
@@ -26,8 +24,9 @@
           >
         </v-list-item-icon>
       </v-list-item>
+      <v-divider />
 
-      <v-list-item id="overview-button" :to="{ name: 'overview' }" dense>
+      <v-list-item id="overview-button" :to="{ name: 'overview' }">
         <v-list-item-icon class="mr-4">
           <v-icon>mdi-database-search</v-icon>
         </v-list-item-icon>
@@ -39,7 +38,7 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item id="comparison-button" :to="{ name: 'comparison' }" dense>
+      <v-list-item id="comparison-button" :to="{ name: 'comparison' }">
         <v-list-item-icon class="mr-4">
           <v-icon>mdi-chart-line</v-icon>
         </v-list-item-icon>
@@ -51,11 +50,7 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item
-        id="workload-monitoring-button"
-        :to="{ name: 'workload' }"
-        dense
-      >
+      <v-list-item id="workload-monitoring-button" :to="{ name: 'workload' }">
         <v-list-item-icon class="mr-4">
           <v-icon>mdi-chart-bar</v-icon>
         </v-list-item-icon>
@@ -70,9 +65,10 @@
       <v-divider />
       <v-list-item color="#02789D" input-value="true" dense>
         <v-list-item-content>
-          <v-list-item-title class="body-2">SETTINGS</v-list-item-title>
+          <v-list-item-title class="body-2">Settings</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <v-divider />
 
       <workload-generation
         :open="showWorkloadDialog"
@@ -82,7 +78,6 @@
       <v-list-item
         id="workload-generation-button"
         @click="showWorkloadDialog = true"
-        dense
       >
         <v-list-item-icon class="mr-4">
           <v-icon>mdi-account-cog</v-icon>
@@ -95,11 +90,7 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item
-        id="plugin-overview-button"
-        @click="$emit('openPlugins')"
-        dense
-      >
+      <v-list-item id="plugin-overview-button" @click="$emit('openPlugins')">
         <v-list-item-icon class="mr-4">
           <v-icon>mdi-tune</v-icon>
         </v-list-item-icon>
@@ -127,7 +118,6 @@
             id="database-list-button"
             v-on="{ ...menu }"
             @click="$emit('closeSelection')"
-            dense
           >
             <v-list-item-icon class="mr-4">
               <v-icon>mdi-database-sync</v-icon>
