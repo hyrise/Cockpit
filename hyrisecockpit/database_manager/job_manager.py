@@ -1,0 +1,57 @@
+"""The JobManager is managing all the jobs."""
+from multiprocessing import Value
+
+from apscheduler.schedulers.background import BackgroundScheduler
+
+from .cursor import ConnectionFactory
+from .job import ping_hyrise, update_queue_length
+from .worker_pool import WorkerPool
+
+
+class JobManger:
+    """Manage jobs."""
+
+    def __init__(
+        self,
+        database_id: str,
+        connection_factory: ConnectionFactory,
+        worker_pool: WorkerPool,
+        hyrise_active: Value,
+        storage_host: str,
+        storage_password: str,
+        storage_port: str,
+        storage_user: str,
+    ):
+        """Initialize JobManager object."""
+        self._database_id: str = database_id
+        self._connection_factory: ConnectionFactory = connection_factory
+        self._worker_pool: WorkerPool = worker_pool
+        self._hyrise_active: Value = hyrise_active
+        self._scheduler: BackgroundScheduler = BackgroundScheduler()
+        self._storage_host: str = storage_host
+        self._storage_password: str = storage_password
+        self._storage_port: str = storage_port
+        self._storage_user: str = storage_user
+        self._init_jobs()
+
+    def _init_jobs(self) -> None:
+        """Initialize basic background jobs."""
+        self._ping_hyrise_job = self._scheduler.add_job(
+            func=ping_hyrise,
+            trigger="interval",
+            seconds=0.5,
+            args=(self._connection_factory, self._hyrise_active,),
+        )
+        self._update_queue_length_job = self._scheduler.add_job(
+            func=update_queue_length,
+            trigger="interval",
+            seconds=1,
+            args=(
+                self._worker_pool,
+                self._storage_host,
+                self._storage_password,
+                self._storage_port,
+                self._storage_user,
+                self._database_id,
+            ),
+        )
