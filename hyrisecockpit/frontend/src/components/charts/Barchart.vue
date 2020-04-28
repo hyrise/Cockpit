@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent, SetupContext, onMounted } from "@vue/composition-api";
-import * as Plotly from "plotly.js";
+import Plotly from "@/../plotlyBundle.ts";
 import { ChartConfiguration } from "../../types/metrics";
 import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
 import { ChartProps, ChartPropsValidation } from "../../types/charts";
