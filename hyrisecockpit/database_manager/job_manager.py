@@ -7,6 +7,7 @@ from .cursor import ConnectionFactory
 from .job import (
     ping_hyrise,
     update_chunks_data,
+    update_krueger_data,
     update_plugin_log,
     update_queue_length,
     update_storage_data,
@@ -97,3 +98,30 @@ class JobManger:
             seconds=5,
             args=self._basic_job_args,
         )
+        self._update_krueger_data_job = self._scheduler.add_job(
+            func=update_krueger_data,
+            trigger="interval",
+            seconds=5,
+            args=(
+                self._storage_host,
+                self._storage_password,
+                self._storage_port,
+                self._storage_user,
+                self._database_id,
+            ),
+        )
+
+    def start_background_jobs(self) -> None:
+        """Start background scheduler."""
+        self._scheduler.start()
+
+    def close_background_jobs(self) -> None:
+        """Close background scheduler."""
+        self._update_krueger_data_job.remove()
+        self._update_system_data_job.remove()
+        self._update_chunks_data_job.remove()
+        self._update_storage_data_job.remove()
+        self._update_plugin_log_job.remove()
+        self._update_queue_length_job.remove()
+        self._ping_hyrise_job.remove()
+        self._scheduler.shutdown()
