@@ -182,7 +182,7 @@ export function fakeDatabaseChunksData(
 function fakeQueryInformationData(latency: number): Object {
   return {
     benchmark: benchmarks[generateRandomInt(0, benchmarks.length)],
-    query_number: latency,
+    query_number: latency / Math.pow(10, 3),
     throughput: generateRandomInt(0, 100),
     latency: latency,
   };
@@ -195,8 +195,8 @@ export function fakeDatabaseQueryInformationData(
   // ensure uniquenes of latency data
   const latencyData = generateUniqueRandomNumbers(
     numberOfQueries,
-    Math.pow(10, 3)
-  );
+    Math.pow(10, 3) - Math.pow(10, 2)
+  ).map((latency: any) => latency + Math.pow(10, 2));
   return {
     id: databaseId,
     query_information: [...Array(numberOfQueries).keys()].map((idx: number) =>
