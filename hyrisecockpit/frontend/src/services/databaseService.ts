@@ -5,7 +5,7 @@ import {
   DatabaseResponse,
 } from "@/types/database";
 import axios from "axios";
-import { colorDefinition } from "@/meta/colors";
+import { colorDatabaseDefinition } from "@/meta/colors";
 import { monitorBackend, controlBackend } from "../../config";
 import { useDataTransformationHelpers } from "@/services/transformationService";
 import { useDatabaseEvents } from "@/meta/events";
@@ -41,8 +41,8 @@ export function useDatabaseService(): DatabaseService {
       hashedDatabaseID = hashedDatabaseID & hashedDatabaseID;
     });
     const index =
-      Math.abs(hashedDatabaseID) % Object.keys(colorDefinition).length;
-    let color = Object.values(colorDefinition)[index];
+      Math.abs(hashedDatabaseID) % Object.keys(colorDatabaseDefinition).length;
+    let color = Object.values(colorDatabaseDefinition)[index];
     return color;
   }
 
@@ -130,6 +130,13 @@ export function useDatabaseService(): DatabaseService {
       });
   }
 
+  function postSQLQuery(databaseId: string, sqlQuery: string): Promise<any> {
+    return axios.post(controlBackend + "sql/", {
+      id: databaseId,
+      query: sqlQuery,
+    });
+  }
+
   return {
     addDatabase,
     removeDatabase,
@@ -139,5 +146,6 @@ export function useDatabaseService(): DatabaseService {
     getDatabaseColor,
     getCPUInformation,
     getStorageInformation,
+    postSQLQuery,
   };
 }

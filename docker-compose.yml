@@ -6,30 +6,32 @@ services:
     build: 
       context: .
       dockerfile: ./hyrisecockpit/api/Dockerfile
-    command: "cockpit-backend"
-    volumes:
-      - .:/usr/local/Cockpit
+    ports:
+      - "8000:8000"
 
   manager:
     image: cockpit-manager:3.8.2
     build: 
       context: .
       dockerfile: ./hyrisecockpit/database_manager/Dockerfile
-    command: "cockpit-manager"
-    volumes:
-      - .:/usr/local/Cockpit
+    ports:
+      - "8001:8001"
     
   generator:
     image: cockpit-generator:3.8.2
     build: 
       context: .
       dockerfile: ./hyrisecockpit/workload_generator/Dockerfile
-    command: "cockpit-generator"
     volumes:
-      - .:/usr/local/Cockpit
-          
+        - ./hyrisecockpit/workload_generator/workloads:/usr/local/lib/python3.8/site-packages/hyrisecockpit/workload_generator/workloads
+    ports:
+      - "8002:8002"
+      - "8003:8003"
+    
   influxdb:
     image: influxdb:alpine
+    volumes:
+      - ./influxdb:/var/lib/influxdb
     ports:
       - "8086:8086"
 
@@ -38,16 +40,14 @@ services:
     build:
         context: .
         dockerfile: ./hyrisecockpit/frontend/Dockerfile
-    working_dir: "/usr/local/Cockpit/hyrisecockpit/frontend"
-    command: "npm run deploy"
-  
+    ports:
+      - "5000:5000"
+
   hyrise:
     image: hyrise:bensk1_multithreaded
     build: 
       context: .
       dockerfile: ./hyrise/Dockerfile
-    working_dir: "/usr/local/hyrise/cmake-build-release"
-    command: "./hyriseServer"
     volumes:
       - ./cached_tables:/usr/local/hyrise/cached_tables
     ports:

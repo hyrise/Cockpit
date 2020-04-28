@@ -1,13 +1,13 @@
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -51,14 +51,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -102,14 +102,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -153,14 +153,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -204,14 +204,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -255,14 +255,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -306,14 +306,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -357,14 +357,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -408,14 +408,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -459,14 +459,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -510,14 +510,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -561,14 +561,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -612,14 +612,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -663,14 +663,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -714,14 +714,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -765,14 +765,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -816,14 +816,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -867,14 +867,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -918,14 +918,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -969,14 +969,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1020,14 +1020,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1071,14 +1071,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1122,14 +1122,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1173,14 +1173,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1224,14 +1224,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1275,14 +1275,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1326,14 +1326,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1377,14 +1377,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1428,14 +1428,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1479,14 +1479,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1530,14 +1530,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1581,14 +1581,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1632,14 +1632,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1683,14 +1683,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1734,14 +1734,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1785,14 +1785,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1836,14 +1836,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1887,14 +1887,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1938,14 +1938,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -1989,14 +1989,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2040,14 +2040,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2091,14 +2091,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2142,14 +2142,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2193,14 +2193,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2244,14 +2244,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2295,14 +2295,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2346,14 +2346,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2397,14 +2397,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2448,14 +2448,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2499,14 +2499,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2550,14 +2550,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2601,14 +2601,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2652,14 +2652,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2703,14 +2703,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2754,14 +2754,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2805,14 +2805,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2856,14 +2856,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2907,14 +2907,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -2958,14 +2958,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3009,14 +3009,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3060,14 +3060,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3111,14 +3111,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3162,14 +3162,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3213,14 +3213,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3264,14 +3264,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3315,14 +3315,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3366,14 +3366,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3417,14 +3417,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3468,14 +3468,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3519,14 +3519,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3570,14 +3570,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3621,14 +3621,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3672,14 +3672,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3723,14 +3723,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3774,14 +3774,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3825,14 +3825,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3876,14 +3876,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3927,14 +3927,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -3978,14 +3978,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4029,14 +4029,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4080,14 +4080,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4131,14 +4131,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4182,14 +4182,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4233,14 +4233,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4284,14 +4284,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4335,14 +4335,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4386,14 +4386,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4437,14 +4437,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4488,14 +4488,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4539,14 +4539,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4590,14 +4590,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4641,14 +4641,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4692,14 +4692,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4743,14 +4743,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4794,14 +4794,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4845,14 +4845,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4896,14 +4896,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4947,14 +4947,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -4998,14 +4998,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
@@ -5049,14 +5049,14 @@ ORDER BY ss1.ca_county;
 
 WITH ss AS
 		(SELECT ca_county, d_qoy, d_year, sum(ss_ext_sales_price) AS store_sales
-			FROM store_sales, date_dim, customer_address
-			WHERE ss_sold_date_sk = d_date_sk
+ 			FROM store_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ss_sold_date_sk = d_date_sk
 					AND ss_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year),
 	ws AS
 		(SELECT ca_county, d_qoy, d_year, sum(ws_ext_sales_price) AS web_sales
-			FROM web_sales, date_dim, customer_address
-			WHERE ws_sold_date_sk = d_date_sk
+ 			FROM web_sales_tpcds_1, date_dim_tpcds_1, customer_address_tpcds_1
+ 			WHERE ws_sold_date_sk = d_date_sk
 					AND ws_bill_addr_sk = ca_address_sk
 			GROUP BY ca_county, d_qoy, d_year)
 SELECT ss1.ca_county, ss1.d_year, ws2.web_sales / ws1.web_sales web_q1_q2_increase,
