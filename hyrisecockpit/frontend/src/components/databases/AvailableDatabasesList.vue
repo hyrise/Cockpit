@@ -22,12 +22,14 @@
     </v-card>
     <v-divider class="my-2" />
     <v-list-item class="mt-1" v-for="database in databases" :key="database.id">
-      <v-list-item-title>
+      <v-list-item-title class="database-list-item">
         <database-chip
           :database-id="database.id"
           :closable="true"
           @closed="$emit('removeDatabase', database)"
         />
+        <v-spacer />
+        <s-q-l-editor :databaseId="database.id" />
       </v-list-item-title>
     </v-list-item>
   </v-list>
@@ -43,6 +45,7 @@ import {
 } from "@vue/composition-api";
 import { Database } from "@/types/database";
 import DatabaseChip from "@/components/details/DatabaseChip.vue";
+import SQLEditor from "@/components/databases/SQLEditor.vue";
 
 interface Data {
   databases: Ref<readonly Database[]>;
@@ -51,12 +54,14 @@ interface Data {
 export default defineComponent({
   components: {
     DatabaseChip,
+    SQLEditor,
   },
   setup(props: {}, context: SetupContext): Data {
     const {
       getDatabasesByIds,
       availableDatabasesById,
     } = context.root.$databaseController;
+
     return {
       databases: computed(() =>
         getDatabasesByIds(availableDatabasesById.value as string[])
@@ -68,6 +73,9 @@ export default defineComponent({
 <style scoped>
 .list {
   z-index: 12;
+}
+.database-list-item {
+  display: flex;
 }
 .button {
   margin-right: 10px;

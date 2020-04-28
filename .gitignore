@@ -112,3 +112,4 @@ venv.bak/
 # Redis
 *.rdb
 cached_tables/
+influxdb/
