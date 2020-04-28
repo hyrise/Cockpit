@@ -4,7 +4,7 @@ from multiprocessing import Value
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from .cursor import ConnectionFactory
-from .job import ping_hyrise, update_queue_length
+from .job import ping_hyrise, update_queue_length, update_system_data
 from .worker_pool import WorkerPool
 
 
@@ -14,6 +14,7 @@ class JobManger:
     def __init__(
         self,
         database_id: str,
+        database_blocked: Value,
         connection_factory: ConnectionFactory,
         worker_pool: WorkerPool,
         hyrise_active: Value,
@@ -24,6 +25,7 @@ class JobManger:
     ):
         """Initialize JobManager object."""
         self._database_id: str = database_id
+        self._database_blocked: Value = database_blocked
         self._connection_factory: ConnectionFactory = connection_factory
         self._worker_pool: WorkerPool = worker_pool
         self._hyrise_active: Value = hyrise_active
@@ -48,6 +50,20 @@ class JobManger:
             seconds=1,
             args=(
                 self._worker_pool,
+                self._storage_host,
+                self._storage_password,
+                self._storage_port,
+                self._storage_user,
+                self._database_id,
+            ),
+        )
+        self._update_system_data_job = self._scheduler.add_job(
+            func=update_system_data,
+            trigger="interval",
+            seconds=1,
+            args=(
+                self._database_blocked,
+                self._connection_factory,
                 self._storage_host,
                 self._storage_password,
                 self._storage_port,
