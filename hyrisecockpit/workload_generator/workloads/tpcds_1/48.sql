@@ -1,6 +1,6 @@
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -31,8 +31,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -63,8 +63,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -95,8 +95,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -127,8 +127,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -159,8 +159,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -191,8 +191,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -223,8 +223,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -255,8 +255,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -287,8 +287,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -319,8 +319,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -351,8 +351,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -383,8 +383,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -415,8 +415,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -447,8 +447,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -479,8 +479,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -511,8 +511,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -543,8 +543,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -575,8 +575,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -607,8 +607,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -639,8 +639,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -671,8 +671,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -703,8 +703,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -735,8 +735,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -767,8 +767,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -799,8 +799,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -831,8 +831,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -863,8 +863,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -895,8 +895,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -927,8 +927,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -959,8 +959,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -991,8 +991,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1023,8 +1023,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1055,8 +1055,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1087,8 +1087,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1119,8 +1119,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1151,8 +1151,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1183,8 +1183,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1215,8 +1215,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1247,8 +1247,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1279,8 +1279,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1311,8 +1311,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1343,8 +1343,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1375,8 +1375,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1407,8 +1407,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1439,8 +1439,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1471,8 +1471,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1503,8 +1503,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1535,8 +1535,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1567,8 +1567,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1599,8 +1599,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1631,8 +1631,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1663,8 +1663,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1695,8 +1695,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1727,8 +1727,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1759,8 +1759,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1791,8 +1791,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1823,8 +1823,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1855,8 +1855,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1887,8 +1887,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1919,8 +1919,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1951,8 +1951,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -1983,8 +1983,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2015,8 +2015,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2047,8 +2047,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2079,8 +2079,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2111,8 +2111,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2143,8 +2143,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2175,8 +2175,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2207,8 +2207,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2239,8 +2239,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2271,8 +2271,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2303,8 +2303,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2335,8 +2335,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2367,8 +2367,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2399,8 +2399,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2431,8 +2431,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2463,8 +2463,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2495,8 +2495,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2527,8 +2527,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2559,8 +2559,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2591,8 +2591,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2623,8 +2623,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2655,8 +2655,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2687,8 +2687,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2719,8 +2719,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2751,8 +2751,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2783,8 +2783,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2815,8 +2815,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2847,8 +2847,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2879,8 +2879,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2911,8 +2911,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2943,8 +2943,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -2975,8 +2975,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -3007,8 +3007,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -3039,8 +3039,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -3071,8 +3071,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -3103,8 +3103,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -3135,8 +3135,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk
@@ -3167,8 +3167,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT SUM(ss_quantity)
-FROM store_sales, store, customer_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2000
 		AND ((cd_demo_sk = ss_cdemo_sk

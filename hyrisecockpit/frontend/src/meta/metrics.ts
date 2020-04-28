@@ -9,7 +9,7 @@ import {
   DataType,
 } from "@/types/metrics";
 import { useDataTransformation } from "@/services/transformationService";
-import { colorDefinition } from "./colors";
+import { colorValueDefinition } from "./colors";
 import { FetchType } from "@/types/services";
 
 const metricsMetadata: Record<Metric, MetricMetadata> = {
@@ -124,9 +124,9 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
 };
 
 const metricDetailColor: Record<MetricValueState, string> = {
-  average: colorDefinition.orange,
-  high: colorDefinition.green,
-  low: colorDefinition.red,
+  average: colorValueDefinition.orange,
+  high: colorValueDefinition.green,
+  low: colorValueDefinition.red,
 };
 
 const metricValueStateOrder: Record<
