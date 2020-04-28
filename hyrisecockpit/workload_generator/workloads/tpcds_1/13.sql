@@ -1,6 +1,6 @@
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -38,8 +38,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -77,8 +77,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -116,8 +116,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -155,8 +155,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -194,8 +194,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -233,8 +233,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -272,8 +272,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -311,8 +311,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -350,8 +350,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -389,8 +389,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -428,8 +428,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -467,8 +467,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -506,8 +506,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -545,8 +545,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -584,8 +584,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -623,8 +623,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -662,8 +662,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -701,8 +701,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -740,8 +740,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -779,8 +779,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -818,8 +818,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -857,8 +857,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -896,8 +896,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -935,8 +935,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -974,8 +974,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1013,8 +1013,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1052,8 +1052,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1091,8 +1091,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1130,8 +1130,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1169,8 +1169,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1208,8 +1208,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1247,8 +1247,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1286,8 +1286,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1325,8 +1325,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1364,8 +1364,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1403,8 +1403,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1442,8 +1442,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1481,8 +1481,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1520,8 +1520,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1559,8 +1559,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1598,8 +1598,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1637,8 +1637,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1676,8 +1676,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1715,8 +1715,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1754,8 +1754,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1793,8 +1793,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1832,8 +1832,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1871,8 +1871,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1910,8 +1910,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1949,8 +1949,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -1988,8 +1988,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2027,8 +2027,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2066,8 +2066,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2105,8 +2105,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2144,8 +2144,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2183,8 +2183,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2222,8 +2222,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2261,8 +2261,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2300,8 +2300,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2339,8 +2339,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2378,8 +2378,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2417,8 +2417,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2456,8 +2456,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2495,8 +2495,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2534,8 +2534,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2573,8 +2573,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2612,8 +2612,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2651,8 +2651,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2690,8 +2690,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2729,8 +2729,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2768,8 +2768,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2807,8 +2807,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2846,8 +2846,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2885,8 +2885,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2924,8 +2924,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -2963,8 +2963,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3002,8 +3002,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3041,8 +3041,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3080,8 +3080,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3119,8 +3119,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3158,8 +3158,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3197,8 +3197,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3236,8 +3236,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3275,8 +3275,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3314,8 +3314,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3353,8 +3353,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3392,8 +3392,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3431,8 +3431,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3470,8 +3470,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3509,8 +3509,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3548,8 +3548,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3587,8 +3587,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3626,8 +3626,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3665,8 +3665,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3704,8 +3704,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3743,8 +3743,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3782,8 +3782,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3821,8 +3821,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
@@ -3860,8 +3860,8 @@ WHERE s_store_sk = ss_store_sk
 ---
 
 SELECT avg(ss_quantity), avg(ss_ext_sales_price), avg(ss_ext_wholesale_cost), sum(ss_ext_wholesale_cost)
-FROM store_sales, store, customer_demographics, household_demographics, customer_address, date_dim
-WHERE s_store_sk = ss_store_sk
+FROM store_sales_tpcds_1, store_tpcds_1, customer_demographics_tpcds_1, household_demographics_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE s_store_sk = ss_store_sk
 		AND ss_sold_date_sk = d_date_sk
 		AND d_year = 2001 and((ss_hdemo_sk = hd_demo_sk
 																									AND cd_demo_sk = ss_cdemo_sk
