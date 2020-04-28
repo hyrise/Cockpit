@@ -5,7 +5,7 @@ import { getSelector as getViewSelector } from "../views/helpers";
 import { getSelector, assertDeleteValues } from "./helpers";
 import { testContentExistence } from "../abstractTests";
 
-const backend = useBackendMock();
+const backend = useBackendMock({ databases: 2 });
 let databases: any = [];
 let removeDatabase: string = "";
 
@@ -48,7 +48,6 @@ describe("When removing a database", () => {
       clickElement(getViewSelector("databaseListButton"));
 
       cy.get(getSelector("removeDatabaseButton")).first().click();
-      backend.reload("database", secondRemoveDatabase, "DELETE");
 
       cy.get(getSelector("removeDatabase")).within(() => {
         cy.get("span").contains(removeDatabase);

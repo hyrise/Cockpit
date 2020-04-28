@@ -8,7 +8,7 @@ import {
   assertPlugins,
   assertPluginLog,
   assertPluginSettings,
-  getChangeSettingsSelector,
+  getPluginSelector,
 } from "./helpers";
 import { testElementNoExistence } from "../abstractTests";
 
@@ -120,7 +120,7 @@ describe("When opening the plugins overview", () => {
           []
         );
         cy.get("button").contains(database.id).click();
-        cy.get(getChangeSettingsSelector(activePlugins[0].plugin))
+        cy.get(getPluginSelector(activePlugins[0].plugin, "changeButton"))
           .eq(idx)
           .click();
         cy.wait(1000);
