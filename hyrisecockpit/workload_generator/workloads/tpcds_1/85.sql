@@ -1,7 +1,7 @@
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -41,9 +41,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -83,9 +83,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -125,9 +125,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -167,9 +167,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -209,9 +209,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -251,9 +251,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -293,9 +293,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -335,9 +335,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -377,9 +377,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -419,9 +419,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -461,9 +461,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -503,9 +503,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -545,9 +545,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -587,9 +587,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -629,9 +629,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -671,9 +671,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -713,9 +713,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -755,9 +755,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -797,9 +797,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -839,9 +839,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -881,9 +881,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -923,9 +923,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -965,9 +965,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1007,9 +1007,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1049,9 +1049,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1091,9 +1091,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1133,9 +1133,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1175,9 +1175,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1217,9 +1217,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1259,9 +1259,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1301,9 +1301,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1343,9 +1343,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1385,9 +1385,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1427,9 +1427,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1469,9 +1469,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1511,9 +1511,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1553,9 +1553,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1595,9 +1595,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1637,9 +1637,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1679,9 +1679,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1721,9 +1721,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1763,9 +1763,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1805,9 +1805,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1847,9 +1847,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1889,9 +1889,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1931,9 +1931,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -1973,9 +1973,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2015,9 +2015,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2057,9 +2057,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2099,9 +2099,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2141,9 +2141,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2183,9 +2183,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2225,9 +2225,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2267,9 +2267,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2309,9 +2309,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2351,9 +2351,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2393,9 +2393,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2435,9 +2435,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2477,9 +2477,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2519,9 +2519,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2561,9 +2561,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2603,9 +2603,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2645,9 +2645,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2687,9 +2687,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2729,9 +2729,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2771,9 +2771,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2813,9 +2813,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2855,9 +2855,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2897,9 +2897,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2939,9 +2939,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -2981,9 +2981,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3023,9 +3023,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3065,9 +3065,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3107,9 +3107,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3149,9 +3149,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3191,9 +3191,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3233,9 +3233,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3275,9 +3275,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3317,9 +3317,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3359,9 +3359,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3401,9 +3401,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3443,9 +3443,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3485,9 +3485,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3527,9 +3527,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3569,9 +3569,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3611,9 +3611,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3653,9 +3653,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3695,9 +3695,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3737,9 +3737,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3779,9 +3779,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3821,9 +3821,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3863,9 +3863,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3905,9 +3905,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3947,9 +3947,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -3989,9 +3989,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -4031,9 +4031,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -4073,9 +4073,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -4115,9 +4115,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
@@ -4157,9 +4157,9 @@ LIMIT 100;
 ---
 
 SELECT SUBSTR(r_reason_desc, 1, 20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)
-FROM web_sales, web_returns, web_page, customer_demographics cd1, customer_demographics cd2,
-	customer_address, date_dim, reason
-WHERE ws_web_page_sk = wp_web_page_sk
+FROM web_sales_tpcds_1, web_returns_tpcds_1, web_page_tpcds_1, customer_demographics_tpcds_1 cd1, customer_demographics_tpcds_1 cd2,
+	customer_address_tpcds_1, date_dim_tpcds_1, reason_tpcds_1
+ WHERE ws_web_page_sk = wp_web_page_sk
 		AND ws_item_sk = wr_item_sk
 		AND ws_order_number = wr_order_number
 		AND ws_sold_date_sk = d_date_sk
