@@ -715,21 +715,37 @@ class TestBackgroundJobManager:
 
         expected_queries = [
             (
-                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                (("keep", "as_is"), (fake_folder_name, "as_is"), ("keep", "as_is"),),
+                "COPY %s_%s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                (
+                    ("keep", "as_is"),
+                    (fake_folder_name, "as_is"),
+                    (fake_folder_name, "as_is"),
+                    ("keep", "as_is"),
+                ),
             ),
             (
-                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                (("on", "as_is"), (fake_folder_name, "as_is"), ("on", "as_is"),),
+                "COPY %s_%s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                (
+                    ("on", "as_is"),
+                    (fake_folder_name, "as_is"),
+                    (fake_folder_name, "as_is"),
+                    ("on", "as_is"),
+                ),
             ),
             (
-                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                (("going", "as_is"), (fake_folder_name, "as_is"), ("going", "as_is"),),
+                "COPY %s_%s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                (
+                    ("going", "as_is"),
+                    (fake_folder_name, "as_is"),
+                    (fake_folder_name, "as_is"),
+                    ("going", "as_is"),
+                ),
             ),
             (
-                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                "COPY %s_%s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
                 (
                     ("please!!!", "as_is"),
+                    ("hyriseDown", "as_is"),
                     ("hyriseDown", "as_is"),
                     ("please!!!", "as_is"),
                 ),
@@ -1242,10 +1258,10 @@ class TestBackgroundJobManager:
         )
 
         expected: List[str] = [
-            "The Dough Rollers",
-            "Broken Witt Rebels",
-            "Bonny Doon",
-            "Jack White",
+            "The Dough Rollers_alternative",
+            "Broken Witt Rebels_alternative",
+            "Bonny Doon_alternative",
+            "Jack White_alternative",
         ]
 
         assert received == expected

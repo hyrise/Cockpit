@@ -1,17 +1,17 @@
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -24,19 +24,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -49,19 +49,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -74,19 +74,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -99,19 +99,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -124,19 +124,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -149,19 +149,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -174,19 +174,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -199,19 +199,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -224,19 +224,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -249,19 +249,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -274,19 +274,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -299,19 +299,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -324,19 +324,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -349,19 +349,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -374,19 +374,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -399,19 +399,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -424,19 +424,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -449,19 +449,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -474,19 +474,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -499,19 +499,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -524,19 +524,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -549,19 +549,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -574,19 +574,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -599,19 +599,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -624,19 +624,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -649,19 +649,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -674,19 +674,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -699,19 +699,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -724,19 +724,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
@@ -749,19 +749,19 @@ LIMIT 100;
 ---
 
 SELECT s_name, count(*) AS numwait
-FROM supplier, lineitem l1, orders, nation
-WHERE s_suppkey = l1.l_suppkey
+FROM supplier_tpch_1, lineitem_tpch_1 l1, orders_tpch_1, nation_tpch_1
+ WHERE s_suppkey = l1.l_suppkey
 		AND o_orderkey = l1.l_orderkey
 		AND o_orderstatus = 'F'
 		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM lineitem l2
+					FROM lineitem_tpch_1 l2
 					WHERE l2.l_orderkey = l1.l_orderkey
 							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM lineitem l3
+					FROM lineitem_tpch_1 l3
 					WHERE l3.l_orderkey = l1.l_orderkey
 							AND l3.l_suppkey <> l1.l_suppkey
 							AND l3.l_receiptdate > l3.l_commitdate )
