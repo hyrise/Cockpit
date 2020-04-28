@@ -6,8 +6,8 @@ from time import time_ns
 from pandas import DataFrame
 
 from hyrisecockpit.database_manager.cursor import StorageCursor
-from hyrisecockpit.database_manager.job import sql_to_data_frame
 from hyrisecockpit.database_manager.job.interfaces import StorageDataType
+from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_frame
 
 
 def _create_storage_data_dataframe(meta_segments: DataFrame) -> DataFrame:
