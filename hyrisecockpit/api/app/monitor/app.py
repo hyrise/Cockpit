@@ -478,17 +478,20 @@ def fill_missing_points(
     points: List[Dict],
 ) -> List[Dict]:
     """Fill missing points with zero."""
-    result: List[Dict[str, float]] = []
+    result: List[Dict[str, Union[int, float]]] = []
+    index: int = 0
+
     for timestamp in range(startts, endts, precision):
-        new_point: Dict = {"timestamp": timestamp}
-        for metric in metrics:
-            new_point[metric] = 0.0
-        for point in points:
-            if point["time"] == timestamp:
-                for metric in metrics:
-                    new_point[metric] = point[metric]
-                break
-        result.append(new_point)
+        point: Dict = {"timestamp": timestamp}
+        if index < len(points) and points[index]["time"] == timestamp:
+            for metric in metrics:
+                point[metric] = points[index][metric]
+            index = index + 1
+        else:
+            for metric in metrics:
+                point[metric] = 0.0
+        result.append(point)
+
     return result
 
 
