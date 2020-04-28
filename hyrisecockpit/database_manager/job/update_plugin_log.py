@@ -2,9 +2,8 @@
 
 from time import time_ns
 
+from hyrisecockpit.database_manager.cursor import StorageCursor
 from hyrisecockpit.database_manager.job import sql_to_data_frame
-
-from .cursor import StorageCursor
 
 
 def update_plugin_log(
