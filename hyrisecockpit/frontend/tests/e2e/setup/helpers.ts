@@ -54,6 +54,59 @@ export const overviewRequests: Request[] = [
 ];
 export const workloadMonitoringRequests: Request[] = ["krueger_data"];
 
+const requestRoutes: Record<
+  Request,
+  Partial<{ get: string; post: string; delete: string; put: string }>
+> = {
+  database: {
+    get: "**/control/database/",
+    post: "**/control/database/",
+    delete: "**/control/database/",
+  },
+  system: {
+    get: "**/monitor/system**",
+  },
+  storage: {
+    get: "**/monitor/storage**",
+  },
+  throughput: { get: "**/monitor/throughput**" },
+  latency: { get: "**/monitor/latency**" },
+  queue_length: { get: "**/monitor/queue_length**" },
+  krueger_data: { get: "**/monitor/krueger_data**" },
+  chunks: { get: "**/monitor/chunks**" },
+  detailed_query_information: { get: "**/monitor/detailed_query_information" },
+  status: { get: "**/monitor/status" },
+  benchmark_tables: {
+    get: "**/control/database/benchmark_tables",
+    post: "**/control/database/benchmark_tables",
+    delete: "**/control/database/benchmark_tables",
+  },
+  available_plugins: { get: "**/control/available_plugins" },
+  plugin: {
+    get: "**/control/plugin",
+    post: "**/control/plugin",
+    delete: "**/control/plugin",
+  },
+  plugin_settings: {
+    get: "**/control/plugin_settings",
+    post: "**/control/plugin_settings",
+  },
+  plugin_log: { get: "**/control/plugin_log" },
+  workload: {
+    get: "**/workload/",
+    post: "**/workload/",
+    delete: "**/workload/**",
+    put: "**/workload/**",
+  },
+};
+
+export function getRequestRoute(
+  request: Request,
+  method: "get" | "post" | "delete" | "put"
+): string {
+  return requestRoutes[request][method]!;
+}
+
 const getAliases: Partial<Record<Request, string>> = {
   database: "getDatabases",
   system: "getSystemData",

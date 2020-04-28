@@ -8,6 +8,7 @@ import {
   getResponseStatus,
   getGetAlias,
   getPutAlias,
+  getRequestRoute,
 } from "./helpers";
 
 function getInitialNumbers(
@@ -31,6 +32,7 @@ export interface Backend {
   start(status?: BackendState, delay?: number): void;
   reload(request: Request, id: string, type: "POST" | "DELETE"): void;
   restart(status?: BackendState, delay?: number): void;
+  refetch(request: Request, alias: string, status?: number): void;
 }
 
 /* return mocked backend, only if requests should be mocked inside cypress */
@@ -40,7 +42,6 @@ export function useBackendMock(
   function start(): void {
     cy.server();
     mockRoutes();
-    return;
   }
 
   function reload(): void {
@@ -50,64 +51,93 @@ export function useBackendMock(
   function restart(): void {
     cy.server();
     mockRoutes();
-    return;
+  }
+
+  function refetch(request: Request, alias: string, status?: number): void {
+    cy.route("GET", getRequestRoute(request, "get")).as(alias);
   }
 
   function mockRoutes(): void {
     /* GET */
-    cy.route("GET", "**/control/database").as(getGetAlias("database"));
-    cy.route("GET", "**/monitor/system**").as(getGetAlias("system"));
-    cy.route("GET", "**/monitor/storage**").as(getGetAlias("storage"));
-    cy.route("GET", "**/monitor/throughput**").as(getGetAlias("throughput"));
-    cy.route("GET", "**/monitor/latency**").as(getGetAlias("latency"));
-    cy.route("GET", "**/monitor/queue_length**").as(
+    cy.route("GET", getRequestRoute("database", "get")).as(
+      getGetAlias("database")
+    );
+    cy.route("GET", getRequestRoute("system", "get")).as(getGetAlias("system"));
+    cy.route("GET", getRequestRoute("storage", "get")).as(
+      getGetAlias("storage")
+    );
+    cy.route("GET", getRequestRoute("throughput", "get")).as(
+      getGetAlias("throughput")
+    );
+    cy.route("GET", getRequestRoute("latency", "get")).as(
+      getGetAlias("latency")
+    );
+    cy.route("GET", getRequestRoute("queue_length", "get")).as(
       getGetAlias("queue_length")
     );
-    cy.route("GET", "**/monitor/krueger_data**").as(
+    cy.route("GET", getRequestRoute("krueger_data", "get")).as(
       getGetAlias("krueger_data")
     );
-    cy.route("GET", "**/monitor/chunks**").as(getGetAlias("chunks"));
-    cy.route("GET", "**/monitor/detailed_query_information").as(
+    cy.route("GET", getRequestRoute("chunks", "get")).as(getGetAlias("chunks"));
+    cy.route("GET", getRequestRoute("detailed_query_information", "get")).as(
       getGetAlias("detailed_query_information")
     );
-    cy.route("GET", "**/monitor/status").as(getGetAlias("status"));
-    cy.route("GET", "**/control/database/benchmark_tables").as(
+    cy.route("GET", getRequestRoute("status", "get")).as(getGetAlias("status"));
+    cy.route("GET", getRequestRoute("benchmark_tables", "get")).as(
       getGetAlias("benchmark_tables")
     );
-    cy.route("GET", "**/control/available_plugins").as(
+    cy.route("GET", getRequestRoute("available_plugins", "get")).as(
       getGetAlias("available_plugins")
     );
-    cy.route("GET", "**/control/plugin").as(getGetAlias("plugin"));
-    cy.route("GET", "**/control/plugin_settings").as(
+    cy.route("GET", getRequestRoute("plugin", "get")).as(getGetAlias("plugin"));
+    cy.route("GET", getRequestRoute("plugin_settings", "get")).as(
       getGetAlias("plugin_settings")
     );
-    cy.route("GET", "**/control/plugin_log").as(getGetAlias("plugin_log"));
-    cy.route("GET", "**/workload/").as(getGetAlias("workload"));
+    cy.route("GET", getRequestRoute("plugin_log", "get")).as(
+      getGetAlias("plugin_log")
+    );
+    cy.route("GET", getRequestRoute("workload", "get")).as(
+      getGetAlias("workload")
+    );
 
     /* POST */
-    cy.route("POST", "**/control/database").as(getPostAlias("database"));
-    cy.route("POST", "**/control/database/benchmark_tables").as(
+    cy.route("POST", getRequestRoute("database", "post")).as(
+      getPostAlias("database")
+    );
+    cy.route("POST", getRequestRoute("benchmark_tables", "post")).as(
       getPostAlias("benchmark_tables")
     );
-    cy.route("POST", "**/control/plugin").as(getPostAlias("plugin"));
-    cy.route("POST", "**/control/plugin_settings").as(
+    cy.route("POST", getRequestRoute("plugin", "post")).as(
+      getPostAlias("plugin")
+    );
+    cy.route("POST", getRequestRoute("plugin_settings", "post")).as(
       getPostAlias("plugin_settings")
     );
-    cy.route("POST", "**/workload/").as(getPostAlias("workload"));
+    cy.route("POST", getRequestRoute("workload", "post")).as(
+      getPostAlias("workload")
+    );
 
     /* DELETE */
-    cy.route("DELETE", "**/control/database").as(getDeleteAlias("database"));
-    cy.route("DELETE", "**/control/database/benchmark_tables").as(
+    cy.route("DELETE", getRequestRoute("database", "delete")).as(
+      getDeleteAlias("database")
+    );
+    cy.route("DELETE", getRequestRoute("benchmark_tables", "delete")).as(
       getDeleteAlias("benchmark_tables")
     );
-    cy.route("DELETE", "**/control/plugin").as(getDeleteAlias("plugin"));
-    cy.route("DELETE", "**/workload/**").as(getDeleteAlias("workload"));
+    cy.route("DELETE", getRequestRoute("plugin", "delete")).as(
+      getDeleteAlias("plugin")
+    );
+    cy.route("DELETE", getRequestRoute("workload", "delete")).as(
+      getDeleteAlias("workload")
+    );
 
     /* PUT */
-    cy.route("PUT", "**/workload/**").as(getPutAlias("workload"));
+    cy.route("PUT", getRequestRoute("workload", "put")).as(
+      getPutAlias("workload")
+    );
   }
 
-  if (Cypress.env("stubless")) return { start, reload, restart };
+  if (Cypress.env("stubless")) return { start, reload, restart, refetch };
   return mockBackend(numbers);
 }
 
@@ -138,6 +168,16 @@ export function mockBackend(
     start(status, delay);
   }
 
+  function refetch(request: Request, alias: string, status = 200): void {
+    const { mockGetRoute } = useRouteMocking(status);
+
+    mockGetRoute(
+      getRequestRoute(request, "get"),
+      alias,
+      getMockedResponse(request)
+    );
+  }
+
   function mockRoutes(status: number = 200, delay?: number): void {
     const {
       mockGetRoute,
@@ -152,120 +192,124 @@ export function mockBackend(
   }
 
   function mockPutRoutes(mock: RouteMockFunction): void {
-    mock("**/workload/**", getPutAlias("workload"));
+    mock(getRequestRoute("workload", "put"), getPutAlias("workload"));
   }
 
   function mockGetRoutes(mock: RouteMockFunction): void {
     mock(
-      "**/control/database/",
+      getRequestRoute("database", "get"),
       getGetAlias("database"),
       getMockedResponse("database")
     );
     mock(
-      "**/monitor/system**",
+      getRequestRoute("system", "get"),
       getGetAlias("system"),
       getMockedResponse("system")
     );
     mock(
-      "**/monitor/storage**",
+      getRequestRoute("storage", "get"),
       getGetAlias("storage"),
       getMockedResponse("storage"),
       true
     );
     mock(
-      "**/monitor/throughput**",
+      getRequestRoute("throughput", "get"),
       getGetAlias("throughput"),
       getMockedResponse("throughput")
     );
     mock(
-      "**/monitor/latency**",
+      getRequestRoute("latency", "get"),
       getGetAlias("latency"),
       getMockedResponse("latency")
     );
     mock(
-      "**/monitor/queue_length**",
+      getRequestRoute("queue_length", "get"),
       getGetAlias("queue_length"),
       getMockedResponse("queue_length")
     );
     mock(
-      "**/monitor/krueger_data**",
+      getRequestRoute("krueger_data", "get"),
       getGetAlias("krueger_data"),
       getMockedResponse("krueger_data")
     );
     mock(
-      "**/monitor/chunks**",
+      getRequestRoute("chunks", "get"),
       getGetAlias("chunks"),
       getMockedResponse("chunks"),
       true
     );
     mock(
-      "**/monitor/detailed_query_information",
+      getRequestRoute("detailed_query_information", "get"),
       getGetAlias("detailed_query_information"),
       getMockedResponse("detailed_query_information")
     );
     mock(
-      "**/monitor/status",
+      getRequestRoute("status", "get"),
       getGetAlias("status"),
       getMockedResponse("status")
     );
     mock(
-      "**/control/database/benchmark_tables",
+      getRequestRoute("benchmark_tables", "get"),
       getGetAlias("benchmark_tables"),
       getMockedResponse("benchmark_tables")
     );
     mock(
-      "**/control/available_plugins",
+      getRequestRoute("available_plugins", "get"),
       getGetAlias("available_plugins"),
       getMockedResponse("available_plugins")
     );
     mock(
-      "**/control/plugin",
+      getRequestRoute("plugin", "get"),
       getGetAlias("plugin"),
       getMockedResponse("plugin")
     );
     mock(
-      "**/control/plugin_settings",
+      getRequestRoute("plugin_settings", "get"),
       getGetAlias("plugin_settings"),
       getMockedResponse("plugin_settings"),
       true
     );
     mock(
-      "**/control/plugin_log",
+      getRequestRoute("plugin_log", "get"),
       getGetAlias("plugin_log"),
       getMockedResponse("plugin_log")
     );
     mock(
-      "**/workload/",
+      getRequestRoute("workload", "get"),
       getGetAlias("workload"),
       getMockedResponse("workload")
     );
   }
 
   function mockPostRoutes(mock: RouteMockFunction): void {
-    mock("**/control/database/", getPostAlias("database"));
+    mock(getRequestRoute("database", "post"), getPostAlias("database"));
     mock(
-      "**/control/database/benchmark_tables",
+      getRequestRoute("benchmark_tables", "post"),
       getPostAlias("benchmark_tables")
     );
-    mock("**/control/plugin", getPostAlias("plugin"));
-    mock("**/control/plugin_settings", getPostAlias("plugin_settings"));
-    mock("**/workload/", getPostAlias("workload"));
+    mock(getRequestRoute("plugin", "post"), getPostAlias("plugin"));
+    mock(
+      getRequestRoute("plugin_settings", "post"),
+      getPostAlias("plugin_settings")
+    );
+    mock(getRequestRoute("workload", "post"), getPostAlias("workload"));
   }
 
   function mockDeleteRoutes(mock: RouteMockFunction): void {
-    mock("**/control/database/", getDeleteAlias("database"));
+    mock(getRequestRoute("database", "delete"), getDeleteAlias("database"));
     mock(
-      "**/control/database/benchmark_tables",
+      getRequestRoute("benchmark_tables", "delete"),
       getDeleteAlias("benchmark_tables")
     );
-    mock("**/control/plugin", getDeleteAlias("plugin"));
-    mock("**/workload/**", getDeleteAlias("workload"));
+    mock(getRequestRoute("plugin", "delete"), getDeleteAlias("plugin"));
+    mock(getRequestRoute("workload", "delete"), getDeleteAlias("workload"));
   }
 
   return {
     restart,
     start,
     reload,
+    refetch,
   };
 }
 

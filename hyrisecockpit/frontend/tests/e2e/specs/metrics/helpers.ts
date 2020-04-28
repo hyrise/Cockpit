@@ -64,38 +64,13 @@ export function getDetailsSelectorWithID(
   );
 }
 
-export function assertRangeRequest(alias: string, range: number): void {
-  let finished = false;
-  cy.wait(alias);
-  cy.get(alias).then((xhr: any) => {
-    finished = assertDataRequest(xhr.url, range, false);
-    if (!finished) {
-      cy.wait(300);
-      cy.wait(alias);
-      cy.get(alias).then((xhr: any) => {
-        finished = assertDataRequest(xhr.url, range, false);
-        assertDataRequest(xhr.url, range);
-      });
-    } else {
-      assertDataRequest(xhr.url, range);
-    }
-  });
-}
-
-export function assertDataRequest(
-  url: string,
-  range: number,
-  assert: boolean = true
-): boolean {
+export function assertDataRequest(url: string, range: number): void {
   const startIndex = url.indexOf("=") + 1;
   const endIndex = url.indexOf("=", startIndex) + 1;
   const startTime = parseInt(url.substring(startIndex, url.indexOf("&")), 10);
   const endTime = parseInt(url.substring(endIndex), 10);
 
-  if (assert) {
-    expect(endTime - startTime).to.eq(range * Math.pow(10, 9));
-  }
-  return endTime - startTime === range * Math.pow(10, 9);
+  expect(endTime - startTime).to.eq(range * Math.pow(10, 9));
 }
 
 export function assertLineChartData(

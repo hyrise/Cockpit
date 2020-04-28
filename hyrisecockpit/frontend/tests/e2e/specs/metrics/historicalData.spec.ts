@@ -7,12 +7,24 @@ import {
   workloadMonitoringRequests,
 } from "../../setup/helpers";
 import { getRoute } from "../views/helpers";
-import { assertRangeRequest, historicRanges } from "./helpers";
+import { assertDataRequest, historicRanges } from "./helpers";
 import { clickElement } from "../helpers";
 import { getSelector as getSelectionSelector } from "../views/helpers";
 
 const backend = useBackendMock();
-const ranges = Object.entries(historicRanges);
+
+const newAlias = "historic";
+const ranges = Object.entries(historicRanges).filter(
+  (element) => element[0] !== "0.5"
+); // select new range
+const comparisonRequest =
+  comparisonRequests[generateRandomInt(0, comparisonRequests.length)];
+const overviewRequest =
+  overviewRequests[generateRandomInt(0, overviewRequests.length)];
+const workloadRequest =
+  workloadMonitoringRequests[
+    generateRandomInt(0, workloadMonitoringRequests.length)
+  ];
 
 // test historical ranges
 describe("requesting different time ranges", () => {
@@ -26,23 +38,23 @@ describe("requesting different time ranges", () => {
   describe("visiting comparison page", () => {
     it("will request the selected time range", () => {
       const range = ranges[generateRandomInt(0, ranges.length)][1];
-      const request =
-        comparisonRequests[generateRandomInt(0, comparisonRequests.length)];
 
       cy.visit(getRoute("comparison"));
-
+      cy.wait("@" + getGetAlias(comparisonRequest));
       clickElement(getSelectionSelector("selectionListButton"));
       cy.get(getSelectionSelector("selectionList")).within(() => {
         cy.get(getSelectionSelector("historicRangeSelection")).click({
           force: true,
         });
-        cy.wait(500);
       });
+      backend.refetch(comparisonRequest, newAlias); // set new alias to get specific request
       cy.get("div").contains(range.title).click({
         force: true,
       });
-
-      assertRangeRequest("@" + getGetAlias(request), range.value);
+      cy.wait("@" + newAlias).then((xhr: any) => {
+        assertDataRequest(xhr.url, range.value);
+      });
+      backend.restart(); // reset aliases
     });
   });
 
@@ -50,23 +62,23 @@ describe("requesting different time ranges", () => {
   describe("visiting overview page", () => {
     it("will request the selected time range", () => {
       const range = ranges[generateRandomInt(0, ranges.length)][1];
-      const request =
-        overviewRequests[generateRandomInt(0, overviewRequests.length)];
 
       cy.visit(getRoute("overview"));
-
+      cy.wait("@" + getGetAlias(overviewRequest));
       clickElement(getSelectionSelector("selectionListButton"));
       cy.get(getSelectionSelector("selectionList")).within(() => {
         cy.get(getSelectionSelector("historicRangeSelection")).click({
           force: true,
         });
-        cy.wait(500);
       });
+      backend.refetch(overviewRequest, newAlias); // set new alias to get specific request
       cy.get("div").contains(range.title).click({
         force: true,
       });
-
-      assertRangeRequest("@" + getGetAlias(request), range.value);
+      cy.wait("@" + newAlias).then((xhr: any) => {
+        assertDataRequest(xhr.url, range.value);
+      });
+      backend.restart(); // reset aliases
     });
   });
 
@@ -74,25 +86,23 @@ describe("requesting different time ranges", () => {
   describe("visiting workload monitoring page", () => {
     it("will request the selected time range", () => {
       const range = ranges[generateRandomInt(0, ranges.length)][1];
-      const request =
-        workloadMonitoringRequests[
-          generateRandomInt(0, workloadMonitoringRequests.length)
-        ];
 
       cy.visit(getRoute("workloadMonitoring"));
-
+      cy.wait("@" + getGetAlias(workloadRequest));
       clickElement(getSelectionSelector("selectionListButton"));
       cy.get(getSelectionSelector("selectionList")).within(() => {
         cy.get(getSelectionSelector("historicRangeSelection")).click({
           force: true,
         });
-        cy.wait(500);
       });
+      backend.refetch(workloadRequest, newAlias); // set new alias to get specific request
       cy.get("div").contains(range.title).click({
         force: true,
       });
-
-      assertRangeRequest("@" + getGetAlias(request), range.value);
+      cy.wait("@" + newAlias).then((xhr: any) => {
+        assertDataRequest(xhr.url, range.value);
+      });
+      backend.restart(); // reset aliases
     });
   });
 });
