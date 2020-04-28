@@ -6,7 +6,12 @@
         <v-icon class="close-icon" @click="onClose()">mdi-close</v-icon>
       </v-card-title>
     </v-card>
-    <v-expansion-panels class="panels" v-if="showDatabasePanels" multiple accordion>
+    <v-expansion-panels
+      class="panels"
+      v-if="showDatabasePanels"
+      multiple
+      accordion
+    >
       <v-expansion-panel v-for="database in databases" :key="database">
         <v-expansion-panel-header class="title">
           <v-list-item class="item">
@@ -36,8 +41,15 @@
             </div>
             <v-expand-transition>
               <div v-if="showSettings[database + '_' + plugin]">
-                <div v-for="setting in pluginSettings[database][plugin]" :key="setting.name">
-                  <PluginSetting :setting="setting" :databaseId="database" :pluginId="plugin" />
+                <div
+                  v-for="setting in pluginSettings[database][plugin]"
+                  :key="setting.name"
+                >
+                  <PluginSetting
+                    :setting="setting"
+                    :databaseId="database"
+                    :pluginId="plugin"
+                  />
                 </div>
               </div>
             </v-expand-transition>
