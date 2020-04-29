@@ -25,7 +25,9 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import { getGetAlias } from "../setup/helpers";
+import { mockBackend } from "../setup/backendMock";
 
+// count numbers of requests
 Cypress.Commands.add("numberOfRequests", (alias) =>
   cy
     .wrap()
@@ -34,6 +36,7 @@ Cypress.Commands.add("numberOfRequests", (alias) =>
     )
 );
 
+// setup temporary app state
 Cypress.Commands.add("setupAppState", (backend) => {
   backend.start();
   cy.visit("/");
@@ -41,7 +44,33 @@ Cypress.Commands.add("setupAppState", (backend) => {
   cy.get("@" + getGetAlias("database"));
 });
 
+// setup request data
 Cypress.Commands.add("setupData", (request) => {
   cy.wait("@" + getGetAlias(request));
   cy.get("@" + getGetAlias(request));
+});
+
+// clean temporary app state manually
+Cypress.Commands.add("cleanAppState", (backend, payload) => {
+  if (Cypress.env("stubless")) {
+    cy.request("POST", "http://localhost:3000/clean/", payload);
+  } else {
+    backend.reload(payload.request, payload.id, payload.method);
+  }
+});
+
+// update temporary app state manually
+Cypress.Commands.add("updateAppState", (backend, payload) => {
+  if (!Cypress.env("stubless"))
+    backend.reload(payload.request, payload.id, payload.method);
+});
+
+// restart app state with new numbers
+Cypress.Commands.add("restartAppState", (backend, payload) => {
+  if (Cypress.env("stubless")) {
+    cy.request("POST", "http://localhost:3000/restart/", payload);
+  } else {
+    backend = mockBackend(payload);
+    backend.restart();
+  }
 });

@@ -6,7 +6,7 @@ import {
 } from "../types/metrics";
 import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
-import { colorDefinition } from "@/meta/colors";
+import { colorValueDefinition } from "@/meta/colors";
 
 const transformationServiceMap: Record<Metric, TransformationService> = {
   access: getAccessData,
@@ -61,7 +61,7 @@ function getQueryTypeProportionData(data: any, type: string): any {
       name: "UPDATE",
       type: "bar",
       marker: {
-        color: colorDefinition.green,
+        color: colorValueDefinition.green,
       },
     },
     {
@@ -70,7 +70,7 @@ function getQueryTypeProportionData(data: any, type: string): any {
       name: "SELECT",
       type: "bar",
       marker: {
-        color: colorDefinition.blue,
+        color: colorValueDefinition.blue,
       },
     },
     {
@@ -79,7 +79,7 @@ function getQueryTypeProportionData(data: any, type: string): any {
       name: "INSERT",
       type: "bar",
       marker: {
-        color: colorDefinition.orange,
+        color: colorValueDefinition.orange,
       },
     },
     {
@@ -88,7 +88,7 @@ function getQueryTypeProportionData(data: any, type: string): any {
       name: "DELETE",
       type: "bar",
       marker: {
-        color: colorDefinition.red,
+        color: colorValueDefinition.red,
       },
     },
   ];
@@ -128,7 +128,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
       size: `${totalDatabaseMemory} MB`,
       encoding: "",
       dataType: "",
-      percentOfDatabase: "100% of total footprint",
+      percentOfDatabase: "",
       percentOfTable: "",
     },
   ];
@@ -266,6 +266,33 @@ function getAccessData(
     dataByChunks.push(chunk);
   }
   return { chunks, columns, dataByChunks, descriptions };
+}
+
+export function useMaxValueHelper(
+  metric: Metric
+): ((data: any) => number) | undefined {
+  const maxValueHelper: Partial<Record<Metric, (data: any) => number>> = {
+    access: getAccessMaxValue,
+  };
+
+  function getAccessMaxValue(data: any): number {
+    return Object.values(data).reduce((maxValue: number, dbData: any) => {
+      const tableMaxValue = Object.values(dbData).reduce(
+        (maxValue: number, tableData: any) => {
+          const columnMaxValue = Object.values(tableData).reduce(
+            (maxValue: number, columnData: any) =>
+              Math.max(...columnData, maxValue),
+            0
+          );
+          return Math.max(maxValue, columnMaxValue);
+        },
+        0
+      );
+      return Math.max(maxValue, tableMaxValue);
+    }, 0);
+  }
+
+  return maxValueHelper[metric];
 }
 
 export function useDataTransformationHelpers(): {

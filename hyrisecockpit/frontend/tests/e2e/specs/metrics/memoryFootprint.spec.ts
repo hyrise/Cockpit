@@ -78,10 +78,15 @@ describe("visiting the comparison page", () => {
 
   // test data
   it("will show the correct metric data", () => {
-    databases.forEach((database: any) => {
+    databases.forEach((database: any, idx: any) => {
       cy.get(getSelectorWithID("memoryFootprint", database.id)).should(
         (elements: any) => {
-          assertLineChartData(elements[0].data, data, [database.id], true);
+          assertLineChartData(
+            elements[0].data,
+            [data[idx]],
+            [database.id],
+            true
+          );
         }
       );
     });

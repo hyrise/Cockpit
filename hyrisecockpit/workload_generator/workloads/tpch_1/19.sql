@@ -1,6 +1,6 @@
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#43'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -28,8 +28,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#23'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -57,8 +57,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -86,8 +86,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#43'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -115,8 +115,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#54'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 9
@@ -144,8 +144,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#35'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -173,8 +173,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -202,8 +202,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#54'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 9
@@ -231,8 +231,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3
@@ -260,8 +260,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#35'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -289,8 +289,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#42'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -318,8 +318,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#55'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -347,8 +347,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#24'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 10
@@ -376,8 +376,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#34'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -405,8 +405,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#43'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -434,8 +434,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#54'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -463,8 +463,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#32'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -492,8 +492,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#24'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -521,8 +521,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#44'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -550,8 +550,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#13'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -579,8 +579,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#35'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -608,8 +608,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#53'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -637,8 +637,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#11'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 10
@@ -666,8 +666,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#22'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3
@@ -695,8 +695,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#41'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -724,8 +724,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 10
@@ -753,8 +753,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#12'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3
@@ -782,8 +782,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#32'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -811,8 +811,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#14'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3
@@ -840,8 +840,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#44'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -869,8 +869,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#31'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -898,8 +898,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#35'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -927,8 +927,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#14'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -956,8 +956,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#55'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -985,8 +985,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 9
@@ -1014,8 +1014,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#44'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -1043,8 +1043,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -1072,8 +1072,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#13'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -1101,8 +1101,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#41'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -1130,8 +1130,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#23'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 10
@@ -1159,8 +1159,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#34'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3
@@ -1188,8 +1188,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#33'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -1217,8 +1217,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#43'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -1246,8 +1246,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#32'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -1275,8 +1275,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#45'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -1304,8 +1304,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#43'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -1333,8 +1333,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#53'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -1362,8 +1362,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#21'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -1391,8 +1391,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#34'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -1420,8 +1420,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#14'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -1449,8 +1449,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#54'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -1478,8 +1478,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#53'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3
@@ -1507,8 +1507,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#55'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 10
@@ -1536,8 +1536,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#43'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -1565,8 +1565,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -1594,8 +1594,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#52'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -1623,8 +1623,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#25'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -1652,8 +1652,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#44'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -1681,8 +1681,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#42'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -1710,8 +1710,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#11'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3
@@ -1739,8 +1739,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#24'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -1768,8 +1768,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#24'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -1797,8 +1797,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -1826,8 +1826,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#34'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 10
@@ -1855,8 +1855,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#25'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -1884,8 +1884,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#42'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -1913,8 +1913,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#23'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -1942,8 +1942,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#12'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -1971,8 +1971,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 10
@@ -2000,8 +2000,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#42'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -2029,8 +2029,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#33'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -2058,8 +2058,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#24'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -2087,8 +2087,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#44'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -2116,8 +2116,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#21'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -2145,8 +2145,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#21'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -2174,8 +2174,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#42'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -2203,8 +2203,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#21'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -2232,8 +2232,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#51'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -2261,8 +2261,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#21'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -2290,8 +2290,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#25'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -2319,8 +2319,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#23'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -2348,8 +2348,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#33'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3
@@ -2377,8 +2377,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#11'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -2406,8 +2406,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#24'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 5
@@ -2435,8 +2435,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#54'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -2464,8 +2464,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#54'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -2493,8 +2493,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#55'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -2522,8 +2522,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#34'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 10
@@ -2551,8 +2551,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#21'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -2580,8 +2580,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#31'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -2609,8 +2609,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#41'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 4
@@ -2638,8 +2638,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#22'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -2667,8 +2667,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#23'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -2696,8 +2696,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#35'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 2
@@ -2725,8 +2725,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#14'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 1
@@ -2754,8 +2754,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#45'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 7
@@ -2783,8 +2783,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#45'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 9
@@ -2812,8 +2812,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#45'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 8
@@ -2841,8 +2841,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#13'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 6
@@ -2870,8 +2870,8 @@ WHERE ((p_partkey = l_partkey
 ---
 
 SELECT SUM(l_extendedprice * (1 - l_discount)) AS revenue
-FROM lineitem, part
-WHERE ((p_partkey = l_partkey
+FROM lineitem_tpch_1, part_tpch_1
+ WHERE ((p_partkey = l_partkey
 								AND p_brand = 'Brand#31'
 								AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
 								AND l_quantity >= 3

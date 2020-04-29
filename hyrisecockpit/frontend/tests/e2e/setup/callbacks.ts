@@ -12,8 +12,8 @@ export function useCallbacks(
   removeDatabase: (id: string) => void;
   activatePlugin: (id: string) => void;
   deactivatePlugin: (id: string) => void;
-  startWorkload: () => void;
-  stopWorkload: () => void;
+  startWorkload: (id: string) => void;
+  stopWorkload: (id: string) => void;
   loadTable: (id: string) => void;
   removeTable: (id: string) => void;
 } {
@@ -40,13 +40,15 @@ export function useCallbacks(
   }
 
   // WORKLOADS
-  function startWorkload(): void {
+  function startWorkload(id: string): void {
     changeFunction("workloadRunning", true);
+    addFunction("workloads", id);
     renewFunction();
   }
 
-  function stopWorkload(): void {
+  function stopWorkload(id: string): void {
     changeFunction("workloadRunning", false);
+    removeFunction("workloads", id);
     renewFunction();
   }
 

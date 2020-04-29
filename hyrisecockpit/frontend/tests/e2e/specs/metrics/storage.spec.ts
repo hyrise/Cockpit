@@ -5,8 +5,10 @@ import {
   getSelectorWithID,
   getDetailsSelectorWithID,
   assertTreeMapData,
+  assertMetricDetails,
 } from "./helpers";
 import { waitForChartRender } from "../helpers";
+import { getDatabaseMemoryFootprint } from "../databases/helpers";
 
 const backend = useBackendMock();
 
@@ -31,9 +33,9 @@ describe("visiting the overview page", () => {
   // test details
   it("will not show metric details", () => {
     databases.forEach((database: any) => {
-      cy.get(getDetailsSelectorWithID("secondStorage", database.id)).should(
-        "not.exist"
-      );
+      cy.get(
+        getDetailsSelectorWithID("memoryFootprint", database.id, "storage")
+      ).should("not.exist");
     });
   });
 });
@@ -67,11 +69,19 @@ describe("visiting the comparison page", () => {
   });
 
   // test details
-  it("will not show metric details", () => {
+  it("will show the correct metric details", () => {
     databases.forEach((database: any) => {
-      cy.get(getDetailsSelectorWithID("secondStorage", database.id)).should(
-        "not.exist"
-      );
+      cy.get(
+        getDetailsSelectorWithID("memoryFootprint", database.id, "storage")
+      )
+        .invoke("text")
+        .then((text: any) => {
+          assertMetricDetails(
+            text,
+            getDatabaseMemoryFootprint(data[database.id]),
+            3
+          );
+        });
     });
   });
 
