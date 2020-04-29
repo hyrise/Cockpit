@@ -3,7 +3,7 @@
 from typing import Type
 from unittest.mock import MagicMock
 
-from pytest import fixture, mark
+from pytest import fixture, mark, raises
 
 from hyrisecockpit.api.app.plugin.interface import PluginInterface
 from hyrisecockpit.api.app.plugin.service import PluginService
@@ -78,12 +78,13 @@ class TestPluginService:
     ):
         """A Plugin service does not get all plugins if an unexpected error occurs."""
         service._send_message_to_dbm.return_value = get_response(status)  # type: ignore
-        result = service.get_all()
-        if status != 200:
+        if status == 200:
+            with raises(KeyError):
+                result = service.get_all()
+        else:
+            result = service.get_all()
             assert isinstance(result, int)
             assert result == status
-        else:
-            assert not isinstance(result, int)
 
     def test_activates_a_plugin(
         self, service: PluginService, database_id: str, interface: PluginInterface

@@ -23,8 +23,8 @@ class PluginService:
         response = cls._send_message_to_dbm(
             Request(header=Header(message="get plugins"), body={})
         )
-        plugins = response["body"]["plugins"]
         if response["header"]["status"] == 200:
+            plugins = response["body"]["plugins"]
             return [
                 PluginIDInterface(
                     id=database["id"],
