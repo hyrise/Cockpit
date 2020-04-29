@@ -10,7 +10,7 @@ import {
   watch,
   inject,
 } from "@vue/composition-api";
-import * as Plotly from "plotly.js";
+import Plotly from "@/../plotlyBundle.ts";
 import { useUpdatingDatabases } from "../../meta/databases";
 import { ChartConfiguration } from "../../types/metrics";
 import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
