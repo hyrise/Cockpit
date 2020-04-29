@@ -40,8 +40,7 @@ export function useWindowEvents(): {
   emitPageChangedEvent: (metrics: Metric[]) => void;
   emitHistoricRangeChangedEvent: (
     metrics: Metric[],
-    start: Date,
-    end: Date
+    newHistoricalRangeMinutes: number
   ) => void;
 } {
   function emitPageChangedEvent(metrics: Metric[]): void {
@@ -49,10 +48,12 @@ export function useWindowEvents(): {
   }
   function emitHistoricRangeChangedEvent(
     metrics: Metric[],
-    start: Date,
-    end: Date
+    newHistoricalRangeMinutes: number
   ): void {
-    eventBus.$emit("HISTORIC_RANGE_CHANGED", { metrics, start, end });
+    eventBus.$emit("HISTORIC_RANGE_CHANGED", {
+      metrics,
+      newHistoricalRangeMinutes,
+    });
   }
 
   return { emitPageChangedEvent, emitHistoricRangeChangedEvent };

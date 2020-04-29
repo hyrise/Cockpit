@@ -4,17 +4,21 @@ from json import dumps
 from multiprocessing import Value
 from multiprocessing.sharedctypes import Synchronized as ValueType
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
-from unittest.mock import MagicMock, call, patch
+from unittest.mock import call, patch
 
 from pandas import DataFrame
 from pandas.core.frame import DataFrame as DataframeType
 from psycopg2 import DatabaseError, InterfaceError
 from pytest import fixture, mark
 
+from hyrisecockpit.cross_platform_support.testing_support import MagicMock
 from hyrisecockpit.database_manager.background_scheduler import (
     BackgroundJobManager,
     StorageDataType,
+    execute_table_query,
+    format_query_parameters,
 )
+from hyrisecockpit.database_manager.cursor import ConnectionFactory
 
 database_id: str = "MongoDB"
 get_database_blocked: Callable[[], Value] = lambda: Value("b", False)  # noqa: E731
@@ -77,9 +81,18 @@ def get_mocked_pool_cursor(*args):
     return mocked_pool_cursor_constructor
 
 
-def fake_execute_table_query(self, query: Tuple, success_flag: Value) -> None:
-    """Return dummy execute table query method."""
+def fake_execute_table_query(
+    query: Tuple, success_flag: Value, connection_factory: ConnectionFactory
+) -> None:
+    """Return dummy execute table query method that sets flag to true."""
     success_flag.value = True
+
+
+def fake_unsuccessful_execute_table_query(
+    query: Tuple, success_flag: Value, connection_factory: ConnectionFactory
+) -> None:
+    """Return dummy execute table query method that sets flag to false."""
+    success_flag.value = False
 
 
 class TestBackgroundJobManager:
@@ -702,21 +715,37 @@ class TestBackgroundJobManager:
 
         expected_queries = [
             (
-                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                (("keep", "as_is"), (fake_folder_name, "as_is"), ("keep", "as_is"),),
+                "COPY %s_%s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                (
+                    ("keep", "as_is"),
+                    (fake_folder_name, "as_is"),
+                    (fake_folder_name, "as_is"),
+                    ("keep", "as_is"),
+                ),
             ),
             (
-                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                (("on", "as_is"), (fake_folder_name, "as_is"), ("on", "as_is"),),
+                "COPY %s_%s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                (
+                    ("on", "as_is"),
+                    (fake_folder_name, "as_is"),
+                    (fake_folder_name, "as_is"),
+                    ("on", "as_is"),
+                ),
             ),
             (
-                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                (("going", "as_is"), (fake_folder_name, "as_is"), ("going", "as_is"),),
+                "COPY %s_%s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                (
+                    ("going", "as_is"),
+                    (fake_folder_name, "as_is"),
+                    (fake_folder_name, "as_is"),
+                    ("going", "as_is"),
+                ),
             ),
             (
-                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                "COPY %s_%s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
                 (
                     ("please!!!", "as_is"),
+                    ("hyriseDown", "as_is"),
                     ("hyriseDown", "as_is"),
                     ("please!!!", "as_is"),
                 ),
@@ -729,26 +758,25 @@ class TestBackgroundJobManager:
         "hyrisecockpit.database_manager.background_scheduler.AsIs",
         lambda name: f"AsIs({name})",
     )
-    def test_successfully_formats_query_parameters(
-        self, background_job_manager: BackgroundJobManager
-    ) -> None:
+    def test_successfully_formats_query_parameters(self) -> None:
         """Test successfully formats query parameters."""
         parameters = (
             ("keep", "as_is",),
             ("hyriseDown", None,),
             ("keep", None,),
         )
-        received = background_job_manager._format_query_parameters(parameters)
+        received = format_query_parameters(parameters)
         assert received == ("AsIs(keep)", "hyriseDown", "keep")
 
-    def test_doesnt_format_no_parameters(
-        self, background_job_manager: BackgroundJobManager
-    ) -> None:
+    def test_doesnt_format_no_parameters(self) -> None:
         """Test doesn't format when there are no parameters."""
-        assert background_job_manager._format_query_parameters(None) is None
+        assert format_query_parameters(None) is None
 
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.format_query_parameters"
+    )
     def test_successfully_executes_table_query(
-        self, background_job_manager: BackgroundJobManager
+        self, mock_format_query_parameters: MagicMock
     ) -> None:
         """Test successfully executes table queries."""
         mock_cursor = MagicMock()
@@ -756,16 +784,12 @@ class TestBackgroundJobManager:
         mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
             mock_cursor
         )
-        background_job_manager._connection_factory = mock_connection_factory
-        background_job_manager._database_blocked.value = True
 
-        mocked_format_query_parameters: MagicMock = MagicMock()
-        mocked_format_query_parameters.return_value = (
+        mock_format_query_parameters.return_value = (
             "keep",
             "hyriseDown",
             "keep",
         )
-        background_job_manager._format_query_parameters = mocked_format_query_parameters  # type: ignore
 
         query_tuple: Tuple[str, Tuple[str, str, str]] = (
             "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
@@ -773,7 +797,7 @@ class TestBackgroundJobManager:
         )
 
         success_flag: Value = Value("b", 0)
-        background_job_manager._execute_table_query(query_tuple, success_flag)
+        execute_table_query(query_tuple, success_flag, mock_connection_factory)
 
         mock_cursor.execute.assert_called_once_with(
             "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
@@ -781,11 +805,14 @@ class TestBackgroundJobManager:
         )
         assert success_flag.value
 
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.format_query_parameters"
+    )
     @mark.parametrize(
         "exceptions", [DatabaseError(), InterfaceError()],
     )
     def test_successfully_executes_table_query_with_exception_from_database(
-        self, background_job_manager: BackgroundJobManager, exceptions
+        self, mock_format_query_parameters: MagicMock, exceptions
     ) -> None:
         """Test executes table queries with exception from database."""
 
@@ -799,16 +826,12 @@ class TestBackgroundJobManager:
         mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
             mock_cursor
         )
-        background_job_manager._connection_factory = mock_connection_factory
-        background_job_manager._database_blocked.value = False
 
-        mocked_format_query_parameters: MagicMock = MagicMock()
-        mocked_format_query_parameters.return_value = (
+        mock_format_query_parameters.return_value = (
             "keep",
             "hyriseDown",
             "keep",
         )
-        background_job_manager._format_query_parameters = mocked_format_query_parameters  # type: ignore
 
         query_tuple: Tuple[str, Tuple[str, str, str]] = (
             "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
@@ -816,7 +839,7 @@ class TestBackgroundJobManager:
         )
 
         success_flag: Value = Value("b", False)
-        background_job_manager._execute_table_query(query_tuple, success_flag)
+        execute_table_query(query_tuple, success_flag, mock_connection_factory)
 
         mock_cursor.execute.assert_called_once_with(
             "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
@@ -829,7 +852,7 @@ class TestBackgroundJobManager:
         mocked_process_constructor,
     )
     @patch(
-        "hyrisecockpit.database_manager.background_scheduler.BackgroundJobManager._execute_table_query",
+        "hyrisecockpit.database_manager.background_scheduler.execute_table_query",
         lambda *args: 42,
     )
     def test_starts_processes_for_execute_queries_parallel(
@@ -850,7 +873,6 @@ class TestBackgroundJobManager:
         global mocked_process_constructor
 
         args, kwargs = mocked_process_constructor.call_args_list[0]
-
         assert kwargs["target"]() == 42
         assert kwargs["args"][0] == fake_queries[0]
         assert isinstance(kwargs["args"][1], ValueType)
@@ -860,13 +882,14 @@ class TestBackgroundJobManager:
         mocked_process.terminate.assert_called_once()
 
     @patch(
-        "hyrisecockpit.database_manager.background_scheduler.BackgroundJobManager._execute_table_query",
+        "hyrisecockpit.database_manager.background_scheduler.execute_table_query",
         fake_execute_table_query,
     )
     def test_successfully_updates_loaded_tables(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully update table loading queries in parallel."""
+        # TODO adjust for Mac
         fake_table_names: List[str] = ["HyriseAreYouStillAlive"]
         fake_queries: Tuple[str] = ("Ping Hyrise",)
         folder_name: str = "Hallo"
@@ -883,8 +906,8 @@ class TestBackgroundJobManager:
         )
 
     @patch(
-        "hyrisecockpit.database_manager.background_scheduler.BackgroundJobManager._execute_table_query",
-        lambda *args: "I do nothing",
+        "hyrisecockpit.database_manager.background_scheduler.execute_table_query",
+        fake_unsuccessful_execute_table_query,
     )
     def test_doesnt_update_loaded_tables_when_unsuccessful(
         self, background_job_manager: BackgroundJobManager
@@ -1235,10 +1258,10 @@ class TestBackgroundJobManager:
         )
 
         expected: List[str] = [
-            "The Dough Rollers",
-            "Broken Witt Rebels",
-            "Bonny Doon",
-            "Jack White",
+            "The Dough Rollers_alternative",
+            "Broken Witt Rebels_alternative",
+            "Bonny Doon_alternative",
+            "Jack White_alternative",
         ]
 
         assert received == expected

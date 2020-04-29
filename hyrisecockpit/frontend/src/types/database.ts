@@ -33,6 +33,7 @@ export interface DatabaseService {
   getDatabaseColor: (databaseID: string) => string;
   getStorageInformation: (response: any) => DatabaseStorageResponse[];
   getCPUInformation: (response: any) => DatabaseCPUResponse[];
+  postSQLQuery: (databseId: string, sqlQuery: string) => Promise<any>;
 }
 
 export type DatabaseResponse = {

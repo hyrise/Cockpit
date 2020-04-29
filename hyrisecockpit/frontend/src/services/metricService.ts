@@ -7,9 +7,13 @@ import { getMetricMetadata } from "../meta/metrics";
 import { useFormatting } from "@/meta/formatting";
 import { isInTestMode } from "../../config";
 import Vue from "vue";
+import { useMaxValueHelper } from "./transformationService";
 
 // fetch data for all metrics with same endpoint
-export function useMetricService(metrics: Metric[]): MetricService {
+export function useMetricService(
+  metrics: Metric[],
+  getHistoricRangeSeconds: () => number
+): MetricService {
   const queryReadyState = ref(true);
   const data: any = initializeData({});
   const timestamps = ref<Date[]>([]);
@@ -78,8 +82,12 @@ export function useMetricService(metrics: Metric[]): MetricService {
           data[metric] = result;
         }
         Vue.set(data, metric, JSON.parse(JSON.stringify(data[metric])));
-        if (metricsMetaData[idx].fetchType === "modify")
+        if (metricsMetaData[idx].fetchType === "modify") {
           Vue.set(maxValues, metric, handleMaxValues(data[metric], idx));
+        } else {
+          const getMaxValue = useMaxValueHelper(metric);
+          if (getMaxValue) Vue.set(maxValues, metric, getMaxValue(result));
+        }
       });
 
       const newTimestamps = result[0]?.[metricInfo.base]?.map(
@@ -146,7 +154,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
   function handleCurrentDataPoints<T>(data: T[], newData: T[]): T[] {
     const dataCopy = data;
     newData.forEach((entry: T) => {
-      if (dataCopy.length > 29) {
+      if (dataCopy.length > getHistoricRangeSeconds() - 1) {
         dataCopy.shift();
       }
       dataCopy.push(entry);
@@ -156,7 +164,10 @@ export function useMetricService(metrics: Metric[]): MetricService {
   }
 
   function handleHistoricDataPoints<T>(newData: T[]): T[] {
-    return newData.slice(newData.length - 30, newData.length - 1);
+    return newData.slice(
+      newData.length - getHistoricRangeSeconds(),
+      newData.length - 1
+    );
   }
 
   function getDataIfReady(start?: Date, end?: Date): void {

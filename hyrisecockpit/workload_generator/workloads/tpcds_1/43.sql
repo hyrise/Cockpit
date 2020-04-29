@@ -27,8 +27,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -67,8 +67,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -107,8 +107,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -147,8 +147,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -187,8 +187,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -227,8 +227,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -267,8 +267,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -307,8 +307,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -347,8 +347,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -387,8 +387,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -427,8 +427,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -467,8 +467,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -507,8 +507,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -547,8 +547,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -587,8 +587,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -627,8 +627,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -667,8 +667,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -707,8 +707,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -747,8 +747,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -787,8 +787,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -827,8 +827,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -867,8 +867,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -907,8 +907,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -947,8 +947,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -987,8 +987,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1027,8 +1027,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1067,8 +1067,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1107,8 +1107,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1147,8 +1147,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1187,8 +1187,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1227,8 +1227,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1267,8 +1267,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1307,8 +1307,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1347,8 +1347,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1387,8 +1387,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1427,8 +1427,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1467,8 +1467,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1507,8 +1507,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1547,8 +1547,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1587,8 +1587,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1627,8 +1627,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1667,8 +1667,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1707,8 +1707,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1747,8 +1747,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1787,8 +1787,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1827,8 +1827,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1867,8 +1867,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1907,8 +1907,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1947,8 +1947,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -1987,8 +1987,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2027,8 +2027,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2067,8 +2067,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2107,8 +2107,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2147,8 +2147,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2187,8 +2187,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2227,8 +2227,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2267,8 +2267,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2307,8 +2307,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2347,8 +2347,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2387,8 +2387,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2427,8 +2427,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2467,8 +2467,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2507,8 +2507,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2547,8 +2547,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2587,8 +2587,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2627,8 +2627,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2667,8 +2667,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2707,8 +2707,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2747,8 +2747,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2787,8 +2787,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000
@@ -2827,8 +2827,8 @@ SELECT s_store_name, s_store_id,
 									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
 					END) sat_sales
-FROM date_dim, store_sales, store
-WHERE d_date_sk = ss_sold_date_sk
+FROM date_dim_tpcds_1, store_sales_tpcds_1, store_tpcds_1
+ WHERE d_date_sk = ss_sold_date_sk
 		AND s_store_sk = ss_store_sk
 		AND s_gmt_offset = -5
 		AND d_year = 2000

@@ -1,7 +1,8 @@
 import { getRoute, getSelector } from "./helpers";
-import { useBackendMock } from "../../setup/backendMock";
+import { mockBackend } from "../../setup/backendMock";
 
-const backend = useBackendMock();
+// use cypress mock to change response status code manually
+const backend = mockBackend();
 
 // test running backend
 describe("when backend is up", () => {

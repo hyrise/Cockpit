@@ -2,6 +2,7 @@ import { getSelectorByConfig, formatDateToHHMMSS } from "../helpers";
 
 const selectors: Record<string, string> = {
   pluginOverview: getSelectorByConfig("div", "plugin-overview"),
+  pluginLog: getSelectorByConfig("div", "plugin-log"),
   settingName: getSelectorByConfig("div", "setting-name"),
   settingValue: getSelectorByConfig("input", "setting-value"),
   settingDescription: getSelectorByConfig("span", "setting-description"),
@@ -13,8 +14,16 @@ export function getSelector(component: string): string {
   return selectors[component];
 }
 
-export function getChangeSettingsSelector(plugin: string): string {
-  return getSelectorByConfig("button", `${plugin}-change-button`);
+const pluginButtons: Record<string, { element: string; suffix: string }> = {
+  changeButton: { element: "button", suffix: "-change-button" },
+  switchButton: { element: "input", suffix: "-switch-button" },
+};
+
+export function getPluginSelector(plugin: string, button: string): string {
+  return getSelectorByConfig(
+    pluginButtons[button].element,
+    `${plugin}${pluginButtons[button].suffix}`
+  );
 }
 
 export function assertActivePlugins(
@@ -26,14 +35,12 @@ export function assertActivePlugins(
     (data: any) => data.id === database
   );
 
-  availablePlugins.forEach((plugin: any, idx: number) => {
-    cy.get("input[type=checkbox]")
-      .eq(idx)
-      .then((checkbox: any) => {
-        expect(checkbox[0].checked).to.eq(
-          databaseActivePluginData.plugins.includes(plugin)
-        );
-      });
+  availablePlugins.forEach((plugin: any) => {
+    cy.get(getPluginSelector(plugin, "switchButton")).then((checkbox: any) => {
+      expect(checkbox[0].checked).to.eq(
+        databaseActivePluginData.plugins.includes(plugin)
+      );
+    });
   });
 }
 
@@ -64,7 +71,8 @@ export function assertPluginLog(
 
 export function assertPluginSettings(
   database: string,
-  pluginSettings: any[]
+  pluginSettings: any[],
+  idx: number
 ): void {
   const databasePluginSetings = pluginSettings.find(
     (data: any) => data.id === database
@@ -73,11 +81,14 @@ export function assertPluginSettings(
     cy.get(getSelector("settingName")).within(() => {
       cy.contains(getPluginName(plugin.name));
     });
-    cy.get(getSelector("settingValue")).then((value: any) => {
-      expect(plugin.value.toString()).to.eq(value[0].value);
-    });
-    cy.get(getSelector("settingHelpIcon")).click({ force: true });
+    cy.get(getSelector("settingValue"))
+      .eq(idx)
+      .then((value: any) => {
+        expect(plugin.value.toString()).to.eq(value[0].value);
+      });
+    cy.get(getSelector("settingHelpIcon")).eq(idx).click({ force: true });
     cy.get(getSelector("settingDescription"))
+      .eq(idx)
       .parents()
       .contains(plugin.description);
   });

@@ -2,7 +2,7 @@
   <v-expansion-panels flat>
     <v-expansion-panel>
       <v-expansion-panel-header flat>
-        <div class="log">
+        <div class="log" id="plugin-log">
           Plugin log messages
         </div>
       </v-expansion-panel-header>
