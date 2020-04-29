@@ -10,9 +10,9 @@ class PluginSchema(Schema):
 
 
 class PluginIDSchema(Schema):
-    """Schema of all plugins per database."""
+    """Schema of Plugins per database."""
 
     id = String(description="Identifier of the database.", required=True)
     plugins = Nested(
-        PluginSchema, description="Plugins per database", many=True, required=True
+        PluginSchema, description="Plugins per database.", many=True, required=True
     )

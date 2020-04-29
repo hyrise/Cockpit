@@ -9,7 +9,7 @@ class PluginInterface(TypedDict):
 
 
 class PluginIDInterface(TypedDict):
-    """Interface for a pluginlist per database."""
+    """Interface of Plugins per database."""
 
     id: str
     plugins: List[PluginInterface]

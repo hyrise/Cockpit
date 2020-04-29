@@ -11,9 +11,9 @@ class Plugin:
 
 
 class PluginID:
-    """Model of plugins per database."""
+    """Model of Plugins per database."""
 
     def __init__(self, id: str, plugins: List[Plugin]):
-        """Initialize a Pluginlist per Database model."""
+        """Initialize a Plugins per database model."""
         self.id: str = id
         self.plugins: List[Plugin] = plugins

@@ -11,7 +11,7 @@ from .model import Plugin
 from .schema import PluginSchema
 from .service import PluginService
 
-api = Namespace("Plugin", description="Control plugin execution.")
+api = Namespace("Plugin", description="Control Plugins per database.")
 
 
 @api.route("/")
@@ -25,15 +25,15 @@ class PluginController(Resource):
 
 
 @api.response(404, "A database with the given ID does not exist.")
-@api.response(423, "The plugin can't be activated because the database is blocked.")
+@api.response(423, "The Plugin can't be activated because the database is blocked.")
 @api.route("/<string:database_id>")
 @api.param("database_id", "Database ID")
 class PluginIdController(Resource):
-    """Controller of a Plugin."""
+    """Controller of a Plugin per database."""
 
     @accepts(schema=PluginSchema, api=api)
     def post(self, database_id: str) -> Union[Plugin, Response]:
-        """Activate a Plugin."""
+        """Activate a Plugin in a database."""
         interface: PluginInterface = request.parsed_obj
         status = PluginService.activate_by_id(database_id, interface)
         if status in {200, 404, 423}:
@@ -43,7 +43,7 @@ class PluginIdController(Resource):
 
     @accepts(schema=PluginSchema, api=api)
     def delete(self, database_id: str) -> Response:
-        """Deactivate a Plugin."""
+        """Deactivate a Plugin in a database."""
         interface: PluginInterface = request.parsed_obj
         status = PluginService.deactivate_by_id(database_id, interface)
         if status in {200, 404, 423}:
