@@ -4,7 +4,7 @@ from typing import List
 from pytest import fixture
 
 from hyrisecockpit.api.app.plugin.interface import PluginIDInterface, PluginInterface
-from hyrisecockpit.api.app.plugin.model import Plugin
+from hyrisecockpit.api.app.plugin.model import Plugin, PluginID
 
 
 @fixture(params=["Clustering", "Compression"],)
@@ -47,5 +47,9 @@ class TestPluginIDInterface:
     """Tests for the Plugin ID interface."""
 
     def test_creates(self, interface_id: PluginIDInterface):
-        """A Plugin interface can be created."""
+        """A PluginID interface can be created."""
         assert interface_id
+
+    def test_works(self, interface_id: PluginIDInterface):
+        """A PluginID model can be created from an interface."""
+        assert PluginID(**interface_id)  # type: ignore

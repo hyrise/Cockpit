@@ -9,9 +9,8 @@ from pytest import fixture
 
 from hyrisecockpit.api.app import create_app
 from hyrisecockpit.api.app.plugin import BASE_ROUTE
-from hyrisecockpit.api.app.plugin.interface import PluginInterface
-from hyrisecockpit.api.app.plugin.model import Plugin
-from hyrisecockpit.api.app.plugin.schema import PluginSchema
+from hyrisecockpit.api.app.plugin.interface import PluginIDInterface, PluginInterface
+from hyrisecockpit.api.app.plugin.schema import PluginIDSchema
 
 url = f"/{BASE_ROUTE}"
 
@@ -48,14 +47,20 @@ class TestPluginController:
 
     def test_gets_all_plugins(self, client: FlaskClient):
         """A PluginController routes get correctly."""
-        expected = [Plugin(name="Compression"), Plugin(name="Clustering")]
+        expected = PluginIDInterface(
+            id="york",
+            plugins=[
+                PluginInterface(name="Compression"),
+                PluginInterface(name="Clustering"),
+            ],
+        )
         with patch(
             "hyrisecockpit.api.app.plugin.service.PluginService.get_all"
         ) as get_all:
             get_all.return_value = expected
             response = client.get(url, follow_redirects=True)
         assert 200 == response.status_code
-        assert PluginSchema(many=True).dump(expected) == response.get_json()
+        assert PluginIDSchema(many=True).dump(expected) == response.get_json()
 
 
 class TestPluginIdController:
