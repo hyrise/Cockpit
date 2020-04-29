@@ -7,6 +7,7 @@ const selectors: Record<string, string> = {
     "div",
     "generatedQueryTypeProportion"
   ),
+  querySearch: getSelectorByConfig("input", "query-search-input"),
 };
 
 export function getSelector(component: string): string {

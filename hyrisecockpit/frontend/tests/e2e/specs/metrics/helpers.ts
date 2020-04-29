@@ -1,6 +1,7 @@
 import { getSelectorByConfig, roundNumber } from "../helpers";
 import { testDateFormatting, testMaxDecimalDigits } from "../abstractTests";
 import { getDatabaseMemoryFootprint } from "../databases/helpers";
+import { Request } from "../../setup/helpers";
 
 const selectors: Record<string, { element: string; title: string }> = {
   throughput: { element: "div", title: "throughput" },
@@ -25,6 +26,18 @@ const selectors: Record<string, { element: string; title: string }> = {
   secondAccessSelect: { element: "input", title: "2access-select" },
   openDetailed: { element: "button", title: "open-metric-detailed-view" },
   closeDetailed: { element: "button", title: "close-metric-detailed-view" },
+};
+
+export const historicRanges: Record<
+  string,
+  { title: string; value: number }
+> = {
+  0.5: { title: "last 30 seconds", value: 30 },
+  1: { title: "last minute", value: 60 },
+  5: { title: "last 5 minutes", value: 5 * 60 },
+  10: { title: "last 10 minutes", value: 10 * 60 },
+  30: { title: "last 30 minutes", value: 30 * 60 },
+  60: { title: "last 60 minutes", value: 60 * 60 },
 };
 
 export function getSelector(component: string): string {

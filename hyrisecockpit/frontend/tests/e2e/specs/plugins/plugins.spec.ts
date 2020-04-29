@@ -8,7 +8,7 @@ import {
   assertPlugins,
   assertPluginLog,
   assertPluginSettings,
-  getChangeSettingsSelector,
+  getPluginSelector,
 } from "./helpers";
 import { testElementNoExistence } from "../abstractTests";
 
@@ -79,16 +79,18 @@ describe("When opening the plugins overview", () => {
     clickElement(getViewSelector("pluginOverviewButton"));
     cy.get(getSelector("pluginOverview")).within(() => {
       databases.forEach((database: any, idx: number) => {
-        cy.get("button")
-          .eq(idx + 1)
-          .click();
-        cy.get("button").contains("Plugin log messages").click();
-        cy.get("textarea").then((textarea: any) => {
-          assertPluginLog(database.id, databasesPluginLogs, textarea[0].value);
-        });
-        cy.get("button")
-          .eq(idx + 1)
-          .click();
+        cy.get("button").contains(database.id).click();
+        cy.get(getSelector("pluginLog")).eq(idx).click({ force: true });
+        cy.get("textarea")
+          .eq(idx)
+          .then((textarea: any) => {
+            assertPluginLog(
+              database.id,
+              databasesPluginLogs,
+              textarea[0].value
+            );
+          });
+        cy.get("button").contains(database.id).click();
       });
     });
     clickElement(getViewSelector("pluginOverviewButton"));
@@ -117,16 +119,15 @@ describe("When opening the plugins overview", () => {
           },
           []
         );
-        cy.get("button")
-          .eq(idx + 1)
+        cy.get("button").contains(database.id).click();
+        cy.get(getPluginSelector(activePlugins[0].plugin, "changeButton"))
+          .eq(idx)
           .click();
-        cy.get(getChangeSettingsSelector(activePlugins[0].plugin)).click();
+        cy.wait(1000);
 
-        assertPluginSettings(database.id, databasesPluginSettings);
+        assertPluginSettings(database.id, databasesPluginSettings, idx);
 
-        cy.get("button")
-          .eq(idx + 1)
-          .click();
+        cy.get("button").contains(database.id).click();
       });
     });
   });
