@@ -14,5 +14,9 @@ class PluginIDSchema(Schema):
 
     id = String(description="Identifier of the database.", required=True)
     plugins = Nested(
-        PluginSchema, description="Plugins per database.", many=True, required=True
+        PluginSchema,
+        description="Plugins per database, none if the database is blocked.",
+        many=True,
+        required=True,
+        allow_none=True,
     )

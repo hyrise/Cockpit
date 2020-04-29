@@ -1,5 +1,5 @@
 """Interface of a Plugin."""
-from typing import List, TypedDict
+from typing import List, Optional, TypedDict
 
 
 class PluginInterface(TypedDict):
@@ -12,4 +12,4 @@ class PluginIDInterface(TypedDict):
     """Interface of Plugins per database."""
 
     id: str
-    plugins: List[PluginInterface]
+    plugins: Optional[List[PluginInterface]]

@@ -20,7 +20,11 @@ class PluginController(Resource):
     @responds(schema=PluginIDSchema(many=True), api=api)
     def get(self) -> List[PluginIDInterface]:
         """Get all Plugins from all databases."""
-        return PluginService.get_all()
+        response = PluginService.get_all()
+        if isinstance(response, int):
+            raise ValueError()
+        else:
+            return response
 
 
 @api.response(404, "A database with the given ID does not exist.")

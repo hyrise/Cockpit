@@ -1,5 +1,5 @@
 """Services used by the Plugin controller."""
-from typing import List
+from typing import List, Union
 
 from hyrisecockpit.api.app.socket_manager import ManagerSocket
 from hyrisecockpit.request import Header, Request
@@ -18,9 +18,26 @@ class PluginService:
             return socket.send_message(message)
 
     @classmethod
-    def get_all(cls) -> List[PluginIDInterface]:
+    def get_all(cls) -> Union[List[PluginIDInterface], int]:
         """Get all Plugins from all databases."""
-        raise NotImplementedError()
+        response = cls._send_message_to_dbm(
+            Request(header=Header(message="get plugins"), body={})
+        )
+        plugins = response["body"]["plugins"]
+        if response["header"]["status"] == 200:
+            return [
+                PluginIDInterface(
+                    id=database["id"],
+                    plugins=[
+                        PluginInterface(name=plugin) for plugin in database["plugins"]
+                    ]
+                    if database["plugins"] is not None
+                    else None,
+                )
+                for database in plugins
+            ]
+        else:
+            return response["header"]["status"]
 
     @classmethod
     def activate_by_id(cls, database_id: str, interface: PluginInterface) -> int:

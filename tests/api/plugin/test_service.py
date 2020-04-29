@@ -3,7 +3,7 @@
 from typing import Type
 from unittest.mock import MagicMock
 
-from pytest import fixture
+from pytest import fixture, mark
 
 from hyrisecockpit.api.app.plugin.interface import PluginInterface
 from hyrisecockpit.api.app.plugin.service import PluginService
@@ -31,6 +31,59 @@ class TestPluginService:
         """Get a PluginService class without IPC."""
         PluginService._send_message_to_dbm = MagicMock()  # type: ignore
         return PluginService
+
+    def test_gets_all_plugins(self, service: PluginService, interface: PluginInterface):
+        """A Plugin service gets all activated plugins per database."""
+        expected = get_response(200)
+        expected["body"]["plugins"] = [
+            {"id": "york", "plugins": ["Compression"]},
+            {"id": "citadelle", "plugins": ["Compression", "Clustering"]},
+        ]
+        service._send_message_to_dbm.return_value = expected  # type: ignore
+        result = service.get_all()
+        assert not isinstance(result, int)
+        assert isinstance(result, list)
+        assert result == [
+            {"id": "york", "plugins": [{"name": "Compression"}]},
+            {
+                "id": "citadelle",
+                "plugins": [{"name": "Compression"}, {"name": "Clustering"}],
+            },
+        ]
+
+    def test_doesnt_get_plugins_if_a_database_error_occurs(
+        self, service: PluginService, interface: PluginInterface
+    ):
+        """A Plugin service does not get all plugins if a database error occurs."""
+        expected = get_response(200)
+        expected["body"]["plugins"] = [
+            {"id": "york", "plugins": None},
+            {"id": "citadelle", "plugins": ["Compression", "Clustering"]},
+        ]
+        service._send_message_to_dbm.return_value = expected  # type: ignore
+        result = service.get_all()
+        assert not isinstance(result, int)
+        assert isinstance(result, list)
+        assert result == [
+            {"id": "york", "plugins": None},
+            {
+                "id": "citadelle",
+                "plugins": [{"name": "Compression"}, {"name": "Clustering"}],
+            },
+        ]
+
+    @mark.parametrize("status", [200, 400, 500])
+    def test_doesnt_get_plugins_if_an_unexpected_error_occurs(
+        self, service: PluginService, interface: PluginInterface, status: int
+    ):
+        """A Plugin service does not get all plugins if an unexpected error occurs."""
+        service._send_message_to_dbm.return_value = get_response(status)  # type: ignore
+        result = service.get_all()
+        if status != 200:
+            assert isinstance(result, int)
+            assert result == status
+        else:
+            assert not isinstance(result, int)
 
     def test_activates_a_plugin(
         self, service: PluginService, database_id: str, interface: PluginInterface

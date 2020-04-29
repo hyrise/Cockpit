@@ -1,5 +1,5 @@
 """Model of a Plugin."""
-from typing import List
+from typing import List, Optional
 
 
 class Plugin:
@@ -13,7 +13,7 @@ class Plugin:
 class PluginID:
     """Model of Plugins per database."""
 
-    def __init__(self, id: str, plugins: List[Plugin]):
+    def __init__(self, id: str, plugins: Optional[List[Plugin]]):
         """Initialize a Plugins per database model."""
         self.id: str = id
-        self.plugins: List[Plugin] = plugins
+        self.plugins: Optional[List[Plugin]] = plugins

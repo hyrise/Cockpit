@@ -194,7 +194,7 @@ class Database(object):
         """Close worker."""
         return self._worker_pool.close()
 
-    def get_plugins(self) -> Optional[List]:
+    def get_plugins(self) -> Optional[List[str]]:
         """Return all currently activated plugins."""
         if not self._database_blocked.value:
             try:
