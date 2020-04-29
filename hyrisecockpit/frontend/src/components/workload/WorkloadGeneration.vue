@@ -60,11 +60,7 @@ import {
   reactive,
   computed,
 } from "@vue/composition-api";
-import {
-  Workload,
-  availableWorkloads,
-  WorkloadAction,
-} from "../../types/workloads";
+import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
 import { useDatabaseEvents } from "../../meta/events";
 import { getWorkloadFromTransferred } from "../../meta/workloads";
@@ -76,6 +72,30 @@ import WorkloadDataSelector from "./WorkloadDataSelector.vue";
 
 interface Props {
   open: boolean;
+}
+
+interface Data extends WorkloadHandler, WorkloadAction, WorkloadDataHandler {
+  databases: Ref<readonly string[]>;
+}
+
+interface WorkloadHandler {
+  workload: Ref<Workload>;
+  handleWorkloadChange: (workload: Workload) => void;
+}
+
+interface WorkloadAction {
+  actions: Record<string, { active: boolean; loading: boolean }>;
+  startingWorkload: () => void;
+  pausingWorkload: () => void;
+  stoppingWorkload: () => void;
+  handleFrequencyChange: (frequency: number) => void;
+}
+
+interface WorkloadDataHandler {
+  workloadData: Record<string, { loaded: boolean; loading: boolean }>;
+  runningWorkload: Ref<boolean>;
+  disabled: Ref<boolean>;
+  handleWorkloadDataChange: (workload: Workload) => void;
 }
 
 export default defineComponent({
@@ -92,41 +112,34 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props: {}, context: SetupContext): WorkloadAction {
+  setup(props: {}, context: SetupContext): Data {
+    const workloadHandler = useWorkloadHandler();
     return {
-      ...useWorkloadAction(context),
+      databases: computed(
+        () => context.root.$databaseController.availableDatabasesById.value
+      ),
+      ...workloadHandler,
+      ...useWorkloadAction(workloadHandler.workload),
+      ...useWorkloadDataHandler(context),
     };
   },
 });
 
-function useWorkloadAction(context: SetupContext): WorkloadAction {
-  const frequency = ref<number>(200);
+function useWorkloadHandler(): WorkloadHandler {
   const workload = ref<Workload>("");
-  const workloadData: Record<
-    string,
-    { loaded: boolean; loading: boolean }
-  > = reactive({
-    tpch01: {
-      loaded: false,
-      loading: false,
-    },
-    tpch1: {
-      loaded: false,
-      loading: false,
-    },
-    tpcds: {
-      loaded: false,
-      loading: false,
-    },
-    job: {
-      loaded: false,
-      loading: false,
-    },
-  });
+
+  function handleWorkloadChange(changedWorkload: Workload): void {
+    workload.value = changedWorkload;
+  }
+  return {
+    workload,
+    handleWorkloadChange,
+  };
+}
+
+function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
+  const frequency = ref<number>(200);
   const {
-    getLoadedWorkloadData,
-    loadWorkloadData,
-    deleteWorkloadData,
     getWorkload,
     getWorkloads,
     startWorkload,
@@ -150,10 +163,6 @@ function useWorkloadAction(context: SetupContext): WorkloadAction {
       loading: false,
     },
   });
-  const runningWorkload = ref<boolean>(false);
-  let blocked: boolean = false;
-  let changeWorkloadData: boolean = true;
-  const { emitDatabaseStatusChangedEvent } = useDatabaseEvents();
 
   function startLoading(action: string): void {
     actions[action].loading = true;
@@ -209,9 +218,47 @@ function useWorkloadAction(context: SetupContext): WorkloadAction {
       updateWorkload(workload.value, frequency.value);
     }
   }
-  function handleWorkloadChange(changedWorkload: Workload): void {
-    workload.value = changedWorkload;
-  }
+  return {
+    actions,
+    startingWorkload,
+    pausingWorkload,
+    stoppingWorkload,
+    handleFrequencyChange,
+  };
+}
+
+function useWorkloadDataHandler(context: SetupContext): WorkloadDataHandler {
+  const workloadData: Record<
+    string,
+    { loaded: boolean; loading: boolean }
+  > = reactive({
+    tpch01: {
+      loaded: false,
+      loading: false,
+    },
+    tpch1: {
+      loaded: false,
+      loading: false,
+    },
+    tpcds: {
+      loaded: false,
+      loading: false,
+    },
+    job: {
+      loaded: false,
+      loading: false,
+    },
+  });
+  const {
+    getLoadedWorkloadData,
+    loadWorkloadData,
+    deleteWorkloadData,
+  } = useWorkloadService();
+  const runningWorkload = ref<boolean>(false);
+  let blocked: boolean = false;
+  let changeWorkloadData: boolean = true;
+  const { emitDatabaseStatusChangedEvent } = useDatabaseEvents();
+
   function handleWorkloadDataChange(workload: Workload): void {
     workloadData[workload].loading = true;
     changeWorkloadData = false;
@@ -263,9 +310,7 @@ function useWorkloadAction(context: SetupContext): WorkloadAction {
   }
   setInterval(updateWorkloadInformation, 1000);
   return {
-    workload,
     workloadData,
-    actions,
     runningWorkload,
     disabled: computed(
       () =>
@@ -276,14 +321,6 @@ function useWorkloadAction(context: SetupContext): WorkloadAction {
         workloadData.tpcds.loading ||
         workloadData.job.loading
     ),
-    databases: computed(
-      () => context.root.$databaseController.availableDatabasesById.value
-    ),
-    startingWorkload,
-    pausingWorkload,
-    stoppingWorkload,
-    handleFrequencyChange,
-    handleWorkloadChange,
     handleWorkloadDataChange,
   };
 }
