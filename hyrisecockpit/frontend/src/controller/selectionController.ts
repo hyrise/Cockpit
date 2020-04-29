@@ -3,7 +3,7 @@ import { eventBus } from "@/plugins/eventBus";
 import { PageName } from "@/types/views";
 import { SelectionController } from "@/types/controller";
 import { pages } from "@/meta/views";
-import { reactive, watch, computed } from "@vue/composition-api";
+import { reactive, watch, computed, ref } from "@vue/composition-api";
 import {
   Metric,
   comparisonMetrics,
@@ -34,6 +34,8 @@ export function useSelectionController(): SelectionController {
     overview: overviewMetrics,
     workload: workloadMetrics,
   });
+  const selectedRange = ref(30);
+  const selectedPrecision = ref(1);
 
   watch(
     () => availableDatabases.value,
@@ -82,5 +84,11 @@ export function useSelectionController(): SelectionController {
     );
   });
 
-  return { selectedDatabases, availableMetrics, selectedMetrics };
+  return {
+    selectedDatabases,
+    availableMetrics,
+    selectedMetrics,
+    selectedPrecision,
+    selectedRange,
+  };
 }

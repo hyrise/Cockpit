@@ -37,26 +37,47 @@ export function useMetricEvents(): {
 }
 
 export function useWindowEvents(): {
-  emitPageChangedEvent: (metrics: Metric[]) => void;
+  emitPageChangedEvent: (metrics: Metric[], newRange: number) => void;
   emitHistoricRangeChangedEvent: (
     metrics: Metric[],
     newHistoricalRangeMinutes: number
   ) => void;
+  emitPrecisionChangedEvent: (
+    metrics: Metric[],
+    newHistoricalRangeMinutes: number
+  ) => void;
 } {
-  function emitPageChangedEvent(metrics: Metric[]): void {
-    eventBus.$emit("PAGE_CHANGED", metrics);
+  function emitPageChangedEvent(metrics: Metric[], newRange: number): void {
+    eventBus.$emit("PAGE_CHANGED", {
+      metrics,
+      newRange,
+    });
   }
   function emitHistoricRangeChangedEvent(
     metrics: Metric[],
-    newHistoricalRangeMinutes: number
+    newRange: number
   ): void {
     eventBus.$emit("HISTORIC_RANGE_CHANGED", {
       metrics,
-      newHistoricalRangeMinutes,
+      newRange,
     });
   }
 
-  return { emitPageChangedEvent, emitHistoricRangeChangedEvent };
+  function emitPrecisionChangedEvent(
+    metrics: Metric[],
+    newRange: number
+  ): void {
+    eventBus.$emit("PRECISION_CHANGED", {
+      metrics,
+      newRange,
+    });
+  }
+
+  return {
+    emitPageChangedEvent,
+    emitHistoricRangeChangedEvent,
+    emitPrecisionChangedEvent,
+  };
 }
 
 export function useDatabaseEvents(): {
