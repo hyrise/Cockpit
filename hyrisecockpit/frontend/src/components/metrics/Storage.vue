@@ -14,6 +14,13 @@
         />
       </template>
     </metric-detailed-view>
+    <metric-details
+      v-if="showDetails"
+      metric="memoryFootprint"
+      :databases="selectedDatabases"
+      :decimal-digits="3"
+      id-prefix="storage"
+    />
     <Treemap
       :graph-id="'2' + graphId || 'storage'"
       :data="storageData"
@@ -34,6 +41,7 @@ import {
 } from "@vue/composition-api";
 import Treemap from "../charts/Treemap.vue";
 import MetricDetailedView from "@/components/details/MetricDetailedView.vue";
+import MetricDetails from "@/components/details/MetricDetails.vue";
 import {
   MetricProps,
   MetricPropsValidation,
@@ -55,6 +63,7 @@ export default defineComponent({
   components: {
     Treemap,
     MetricDetailedView,
+    MetricDetails,
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
