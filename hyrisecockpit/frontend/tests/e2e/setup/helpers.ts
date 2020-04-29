@@ -35,7 +35,7 @@ export type BackendState = "up" | "down";
 
 export type DatabaseState = "workloadRunning";
 
-export const benchmarks = ["tpch_0.1", "tpch_1", "tpcds_1", "job"];
+export const benchmarks = ["tpch_0_1", "tpch_1", "tpcds_1", "job_1"];
 
 export const comparisonRequests: Request[] = [
   "throughput",
