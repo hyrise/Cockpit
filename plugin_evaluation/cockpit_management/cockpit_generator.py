@@ -1,8 +1,10 @@
 """Wrapper for workload generator."""
-
+import pathlib
 from os import remove
 from signal import SIGINT
 from subprocess import Popen  # nosec
+
+absolute_directory_path = str(pathlib.Path(__file__).parent.absolute())
 
 
 class CockpitGenerator:
@@ -14,7 +16,13 @@ class CockpitGenerator:
         self.output_file = open("generator_stdout.txt", "w")
 
         self.generator_process = Popen(  # nosec
-            ["pipenv", "run", "python", "-u", "cli_generator.py"],
+            [
+                "pipenv",
+                "run",
+                "python",
+                "-u",
+                f"{absolute_directory_path}/cli_generator.py",
+            ],
             stderr=self.error_file,
             stdout=self.output_file,
         )

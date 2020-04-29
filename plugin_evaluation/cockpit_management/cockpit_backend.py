@@ -1,5 +1,6 @@
 """Wrapper for backend."""
 
+import pathlib
 from os import remove
 from signal import SIGINT
 from subprocess import Popen  # nosec
@@ -9,6 +10,7 @@ from requests import delete, get, post
 from plugin_evaluation.cockpit_management.settings import BACKEND_HOST, BACKEND_PORT
 
 REQUEST_TIMEOUT = 5.0
+absolute_directory_path = str(pathlib.Path(__file__).parent.absolute())
 
 
 class CockpitBackend:
@@ -25,7 +27,13 @@ class CockpitBackend:
     def start(self) -> None:
         """Start backend."""
         self.backend_process = Popen(  # nosec
-            ["pipenv", "run", "python", "-u", "cli_backend.py"],
+            [
+                "pipenv",
+                "run",
+                "python",
+                "-u",
+                f"{absolute_directory_path}/cli_backend.py",
+            ],
             stderr=self.error_file,
             stdout=self.output_file,
         )
