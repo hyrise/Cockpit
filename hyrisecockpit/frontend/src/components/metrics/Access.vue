@@ -2,9 +2,7 @@
   <div>
     <div>
       <metric-detailed-view>
-        <template #header>
-          Access Frequency
-        </template>
+        <template #header>Access Frequency</template>
         <template #content>
           <v-select
             :id="'1' + 'access-select'"
@@ -22,6 +20,7 @@
             :data="accessData"
             :chart-configuration="chartConfiguration"
             :autosize="false"
+            :max-value="maxValue"
           />
         </template>
       </metric-detailed-view>
@@ -41,6 +40,7 @@
         :chart-configuration="chartConfiguration"
         :selected-databases="selectedDatabases"
         :max-chart-width="maxChartWidth"
+        :max-value="maxValue"
       />
     </div>
   </div>
@@ -74,6 +74,7 @@ interface Data {
   accessData: Ref<AccessData>;
   chartConfiguration: ChartConfiguration;
   selectedTable: Ref<string>;
+  maxValue: Ref<number>;
 }
 
 export default defineComponent({
@@ -107,6 +108,7 @@ export default defineComponent({
       tables: computed(() => watchedDatabase.tables),
       accessData,
       selectedTable,
+      maxValue: context.root.$metricController.maxValueData[props.metric],
     };
   },
 });

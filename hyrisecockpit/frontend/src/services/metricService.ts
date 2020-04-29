@@ -7,6 +7,7 @@ import { getMetricMetadata } from "../meta/metrics";
 import { useFormatting } from "@/meta/formatting";
 import { isInTestMode } from "../../config";
 import Vue from "vue";
+import { useMaxValueHelper } from "./transformationService";
 
 // fetch data for all metrics with same endpoint
 export function useMetricService(
@@ -81,8 +82,12 @@ export function useMetricService(
           data[metric] = result;
         }
         Vue.set(data, metric, JSON.parse(JSON.stringify(data[metric])));
-        if (metricsMetaData[idx].fetchType === "modify")
+        if (metricsMetaData[idx].fetchType === "modify") {
           Vue.set(maxValues, metric, handleMaxValues(data[metric], idx));
+        } else {
+          const getMaxValue = useMaxValueHelper(metric);
+          if (getMaxValue) Vue.set(maxValues, metric, getMaxValue(result));
+        }
       });
 
       const newTimestamps = result[0]?.[metricInfo.base]?.map(
