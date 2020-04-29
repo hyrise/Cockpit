@@ -1,14 +1,13 @@
 """Controllers for activating and deactivating Plugins."""
-from typing import List, Union
+from typing import List
 
 from flask import request
 from flask.wrappers import Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 
-from .interface import PluginInterface
-from .model import Plugin
-from .schema import PluginSchema
+from .interface import PluginIDInterface, PluginInterface
+from .schema import PluginIDSchema, PluginSchema
 from .service import PluginService
 
 api = Namespace("Plugin", description="Control Plugins per database.")
@@ -18,8 +17,8 @@ api = Namespace("Plugin", description="Control Plugins per database.")
 class PluginController(Resource):
     """Controller of Plugins."""
 
-    @responds(schema=PluginSchema(many=True), api=api)
-    def get(self) -> List[Plugin]:
+    @responds(schema=PluginIDSchema(many=True), api=api)
+    def get(self) -> List[PluginIDInterface]:
         """Get all Plugins from all databases."""
         return PluginService.get_all()
 
@@ -32,7 +31,7 @@ class PluginIdController(Resource):
     """Controller of a Plugin per database."""
 
     @accepts(schema=PluginSchema, api=api)
-    def post(self, database_id: str) -> Union[Plugin, Response]:
+    def post(self, database_id: str) -> Response:
         """Activate a Plugin in a database."""
         interface: PluginInterface = request.parsed_obj
         status = PluginService.activate_by_id(database_id, interface)

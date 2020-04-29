@@ -5,8 +5,7 @@ from hyrisecockpit.api.app.socket_manager import ManagerSocket
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
-from .interface import PluginInterface
-from .model import Plugin
+from .interface import PluginIDInterface, PluginInterface
 
 
 class PluginService:
@@ -19,7 +18,7 @@ class PluginService:
             return socket.send_message(message)
 
     @classmethod
-    def get_all(cls) -> List[Plugin]:
+    def get_all(cls) -> List[PluginIDInterface]:
         """Get all Plugins from all databases."""
         raise NotImplementedError()
 
