@@ -23,6 +23,9 @@ let databasesStorageData: any[];
 
 describe("when observing the database data and details", () => {
   beforeEach(() => {
+    cy.restartAppState(backend, {
+      databases: 2,
+    });
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
       cy.setupData("system").then((xhr: any) => {
@@ -37,10 +40,30 @@ describe("when observing the database data and details", () => {
     cy.visit(getRoute("overview"));
   });
 
+  // clear state
+  after(() => {
+    cy.restartAppState(backend, {});
+  });
+
   // test panel opening
   it("will directly show the details panel", () => {
     testElementExistence(getSelector("databaseSystemDetails"));
     testElementVisibility(getSelector("databaseSystemDetails"));
+  });
+
+  // test correct number of databases
+  describe("when clicking the database list button", () => {
+    it("will show the correct number of databases", () => {
+      cy.get(getSelector("numberOfDatabases")).contains(
+        databases.length.toString()
+      );
+      clickElement(getViewSelector("databaseListButton"));
+      cy.get(getViewSelector("databaseList")).within(() => {
+        databases.forEach((database: any, idx: number) => {
+          cy.get(getSelector("databaseChip")).eq(idx).contains(database.id);
+        });
+      });
+    });
   });
 
   // test showing correct data
@@ -99,21 +122,6 @@ describe("when observing the database data and details", () => {
     });
   });
 
-  // test correct number of databases
-  describe("when clicking the database list button", () => {
-    it("will show the correct number of databases", () => {
-      cy.get(getSelector("numberOfDatabases")).contains(
-        databases.length.toString()
-      );
-      clickElement(getViewSelector("databaseListButton"));
-      cy.get(getViewSelector("databaseList")).within(() => {
-        databases.forEach((database: any, idx: number) => {
-          cy.get(getSelector("databaseChip")).eq(idx).contains(database.id);
-        });
-      });
-    });
-  });
-
   // test correct database colors
   describe("when changing routes", () => {
     it("will show the same database colors", () => {
@@ -143,12 +151,11 @@ describe("when observing the database data and details", () => {
   });
 
   // test empty databases
-  describe("when no databases has been added", () => {
+  describe("when no database has been added", () => {
     it("will show empty database list and details", () => {
-      backend = useBackendMock({
+      cy.restartAppState(backend, {
         databases: 0,
       });
-      backend.restart();
       cy.visit("/");
 
       cy.get(getSelector("numberOfDatabases")).contains("0");
@@ -160,6 +167,8 @@ describe("when observing the database data and details", () => {
 
       cy.visit(getRoute("overview"));
       cy.get(getSelector("databaseSystemDetails")).should("not.exist");
+
+      cy.restartAppState(backend, {});
     });
   });
 });
