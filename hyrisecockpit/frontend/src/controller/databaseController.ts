@@ -37,9 +37,11 @@ export function useDatabaseController(): DatabaseController {
   eventBus.$on(
     "DATABASE_STATUS_CHANGED",
     (databaseId: string, blocked: boolean, active: boolean) => {
-      const database = getDatabaseById(databaseId);
-      database.active = active;
-      database.blocked = blocked;
+      if (databasesUpdated.value) {
+        const database = getDatabaseById(databaseId);
+        database.active = active;
+        database.blocked = blocked;
+      }
     }
   );
 
