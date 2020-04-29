@@ -1,6 +1,9 @@
 <template>
   <div id="workload-monitoring-page">
-    <linear-loader :conditions="[$databaseController.databasesUpdated]" :evaluations="[false]" />
+    <linear-loader
+      :conditions="[$databaseController.databasesUpdated]"
+      :evaluations="[false]"
+    />
     <div class="mx-6">
       <database-query-tables :selected-databases="selectedDatabases" />
       <unselected-warning :condition="selectedDatabases">
