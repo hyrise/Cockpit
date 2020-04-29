@@ -1,6 +1,6 @@
 """CLI used to start the database manager."""
 from hyrisecockpit.database_manager.manager import DatabaseManager
-from plugin_evaluation.cockpit_management.settings import (
+from plugin_evaluation.settings import (
     DB_MANAGER_HOST,
     DB_MANAGER_PORT,
     DEFAULT_TABLES,

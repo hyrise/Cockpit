@@ -7,7 +7,7 @@ from subprocess import Popen  # nosec
 
 from requests import delete, get, post
 
-from plugin_evaluation.cockpit_management.settings import BACKEND_HOST, BACKEND_PORT
+from plugin_evaluation.settings import BACKEND_HOST, BACKEND_PORT
 
 REQUEST_TIMEOUT = 5.0
 absolute_directory_path = str(pathlib.Path(__file__).parent.absolute())
