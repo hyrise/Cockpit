@@ -56,11 +56,12 @@ export function getSelectorWithID(component: string, id?: string): string {
 
 export function getDetailsSelectorWithID(
   component: string,
-  id: string
+  id: string,
+  prefix: string = ""
 ): string {
   return getSelectorByConfig(
     selectors[component].element,
-    `${selectors[component].title}-${id}-details`
+    `${prefix}${selectors[component].title}-${id}-details`
   );
 }
 

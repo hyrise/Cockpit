@@ -128,7 +128,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
       size: `${totalDatabaseMemory} MB`,
       encoding: "",
       dataType: "",
-      percentOfDatabase: "100% of total footprint",
+      percentOfDatabase: "",
       percentOfTable: "",
     },
   ];
