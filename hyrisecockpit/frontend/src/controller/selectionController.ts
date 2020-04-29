@@ -42,10 +42,6 @@ export function useSelectionController(): SelectionController {
   const selectedMetrics = computed(() => pageMetrics[page.value] || []);
   const selectedDatabases = computed(() => pageDatabases[page.value] || []);
 
-  eventBus.$on("PAGE_CHANGED", (newPage: PageName) => {
-    page.value = newPage;
-  });
-
   watch(
     () => availableDatabases.value,
     () => {
@@ -54,6 +50,10 @@ export function useSelectionController(): SelectionController {
       pageDatabases.workload = availableDatabases.value as string[];
     }
   );
+
+  eventBus.$on("PAGE_CHANGED", (newPage: PageName) => {
+    page.value = newPage;
+  });
 
   pages.forEach((page) => {
     // database events
