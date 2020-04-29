@@ -4,7 +4,6 @@
     v-model="selectedPrecision"
     :items="selectablePrecisions"
     label="Aggregation intervals"
-    @change="$emit('selectionChanged', selectedPrecision)"
   />
 </template>
 
@@ -18,7 +17,6 @@ import {
   watch,
 } from "@vue/composition-api";
 import { useFormatting } from "@/meta/formatting";
-import { useWindowEvents } from "@/meta/events";
 
 interface Data {
   selectedPrecision: Ref<number>;
@@ -28,7 +26,6 @@ interface Data {
 export default defineComponent({
   setup(props: {}, context: SetupContext): Data {
     const { formatMinutesToSeconds } = useFormatting();
-    const { emitPrecisionChangedEvent } = useWindowEvents();
 
     const availablePrecisions = [
       { text: "1 second", value: 1 },
@@ -58,7 +55,6 @@ export default defineComponent({
       ) {
         context.root.$selectionController.selectedPrecision.value =
           selectablePrecisions.value[0].value;
-        //TODO: emit trigger event here
       }
     });
 

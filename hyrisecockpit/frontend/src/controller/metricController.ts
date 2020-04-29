@@ -1,10 +1,9 @@
-import { eventBus } from "@/plugins/eventBus";
-import { computed } from "@vue/composition-api";
+import { computed, watch } from "@vue/composition-api";
 import { useMetricService } from "@/services/metricService";
-import { Metric, availableMetrics, MetricController } from "@/types/metrics";
+import { Metric, availableMetrics } from "@/types/metrics";
 import { MetricService } from "@/types/services";
+import { MetricController } from "@/types/controller";
 import { getMetricRequestTime, getMetricMetadata } from "@/meta/metrics";
-import { useFormatting } from "@/meta/formatting";
 import Vue from "vue";
 
 type Interval = {
@@ -14,35 +13,14 @@ type Interval = {
 };
 
 export function useMetricController(): MetricController {
-  const { subSeconds } = useFormatting();
   const precision = computed(
     (): number => Vue.prototype.$selectionController.selectedPrecision.value
   );
-
-  eventBus.$on("WATCHED_METRICS_CHANGED", (payload: Metric[]) => {
-    stop();
-    start(payload || []);
-  });
-
-  eventBus.$on(
-    "PAGE_CHANGED",
-    (payload: { metrics: Metric[]; newRange: number }) => {
-      restartRequests(payload.metrics);
-    }
+  const range = computed(
+    (): number => Vue.prototype.$selectionController.selectedRange.value
   );
-
-  eventBus.$on(
-    "HISTORIC_RANGE_CHANGED",
-    (payload: { metrics: Metric[]; newRange: number }) => {
-      restartRequests(payload.metrics);
-    }
-  );
-
-  eventBus.$on(
-    "PRECISION_CHANGED",
-    (payload: { metrics: Metric[]; newRange: number }) => {
-      restartRequests(payload.metrics);
-    }
+  const selectedMetrics = computed(
+    (): Metric[] => Vue.prototype.$selectionController.selectedMetrics.value
   );
 
   const metricServices = setupServices();
@@ -55,10 +33,11 @@ export function useMetricController(): MetricController {
 
   mapToData(metricServices);
 
-  function restartRequests(metrics: Metric[]) {
+  /* restart requests on change */
+  watch([precision, range, selectedMetrics], () => {
     stop();
-    start(metrics || []);
-  }
+    start(selectedMetrics.value as Metric[]);
+  });
 
   function setupServices(): Record<Metric, MetricService> {
     const services: any = {};

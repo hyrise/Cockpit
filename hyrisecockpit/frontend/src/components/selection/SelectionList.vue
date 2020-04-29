@@ -7,10 +7,10 @@
       <v-container class="white container flex">
         <v-row class="top-row" no gutters>
           <v-col class="flex-item select">
-            <range-selection @selectionChanged="handleHistoricRangeChange" />
+            <range-selection />
           </v-col>
           <v-col class="flex-item select">
-            <precision-selection @selectionChanged="handlePrecisionChange" />
+            <precision-selection />
           </v-col>
         </v-row>
       </v-container>
@@ -94,38 +94,18 @@ function useUpdatingInstances(
   context: SetupContext,
   page: Ref<PageName>
 ): UseUpdatingInstances {
-  const { emitWatchedMetricsChangedEvent } = useMetricEvents();
-  const { emitPageChangedEvent } = useWindowEvents();
-
-  const selectedDatabases = computed(
-    () => context.root.$selectionController.selectedDatabases[page.value]
-  );
-  const availableMetrics = computed(
-    () => context.root.$selectionController.availableMetrics[page.value]
-  );
-  const selectedMetrics = computed(
-    () => context.root.$selectionController.selectedMetrics[page.value]
-  );
-
-  watch(selectedMetrics, () => {
-    emitWatchedMetricsChangedEvent(selectedMetrics.value as Metric[]);
-  });
-
-  watch(page, () => {
-    emitPageChangedEvent(
-      selectedMetrics.value as Metric[],
-      context.root.$selectionController.selectedRange.value
-    );
-  });
-
-  return { selectedDatabases, selectedMetrics, availableMetrics };
+  return {
+    selectedDatabases: context.root.$selectionController.selectedDatabases,
+    selectedMetrics: context.root.$selectionController.selectedMetrics,
+    availableMetrics: computed(
+      () => context.root.$selectionController.availableMetrics[page.value]
+    ),
+  };
 }
 
 interface UseChangeHandling {
   handleDatabaseChange: (databaseId: string, value: boolean) => void;
   handleMetricChange: (metric: Metric, value: boolean) => void;
-  handleHistoricRangeChange: (value: number) => void;
-  handlePrecisionChange: (value: number) => void;
 }
 
 function useChangeHandling(
@@ -134,24 +114,11 @@ function useChangeHandling(
 ): UseChangeHandling {
   const { emitSelectedDatabasesChangedWithinEvent } = useDatabaseEvents();
   const { emitSelectedMetricsChangedWithinEvent } = useMetricEvents();
-  const {
-    emitHistoricRangeChangedEvent,
-    emitPrecisionChangedEvent,
-  } = useWindowEvents();
+  const { emitPageChangedEvent } = useWindowEvents();
 
-  function handleHistoricRangeChange(value: number): void {
-    emitHistoricRangeChangedEvent(
-      context.root.$selectionController.selectedMetrics[page.value],
-      value
-    );
-  }
-
-  function handlePrecisionChange(value: number): void {
-    emitPrecisionChangedEvent(
-      context.root.$selectionController.selectedMetrics[page.value],
-      value
-    );
-  }
+  watch(page, () => {
+    emitPageChangedEvent(page.value);
+  });
 
   function handleDatabaseChange(databaseId: string, value: boolean): void {
     emitSelectedDatabasesChangedWithinEvent(page.value, databaseId, value);
@@ -163,8 +130,6 @@ function useChangeHandling(
   return {
     handleDatabaseChange,
     handleMetricChange,
-    handleHistoricRangeChange,
-    handlePrecisionChange,
   };
 }
 </script>

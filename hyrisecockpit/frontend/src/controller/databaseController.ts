@@ -1,11 +1,11 @@
 import { eventBus } from "@/plugins/eventBus";
 import {
-  DatabaseController,
   Database,
   DatabaseCPUResponse,
   DatabaseStorageResponse,
   DatabaseResponse,
 } from "@/types/database";
+import { DatabaseController } from "@/types/controller";
 import { useDatabaseService } from "@/services/databaseService";
 import { ref, reactive, computed } from "@vue/composition-api";
 import { equals } from "@/helpers/methods";

@@ -19,7 +19,7 @@ export function useSelectionController(): SelectionController {
     () =>
       Vue.prototype.$databaseController.availableDatabasesById.value as string[]
   );
-  const selectedDatabases = reactive<Record<PageName, string[]>>({
+  const pageDatabases = reactive<Record<PageName, string[]>>({
     comparison: [] as string[],
     overview: [] as string[],
     workload: [] as string[],
@@ -29,7 +29,7 @@ export function useSelectionController(): SelectionController {
     overview: overviewMetrics,
     workload: workloadMetrics,
   });
-  const selectedMetrics = reactive<Record<PageName, Metric[]>>({
+  const pageMetrics = reactive<Record<PageName, Metric[]>>({
     comparison: comparisonMetrics,
     overview: overviewMetrics,
     workload: workloadMetrics,
@@ -37,12 +37,21 @@ export function useSelectionController(): SelectionController {
   const selectedRange = ref(30);
   const selectedPrecision = ref(1);
 
+  const page = ref<PageName>("");
+
+  const selectedMetrics = computed(() => pageMetrics[page.value] || []);
+  const selectedDatabases = computed(() => pageDatabases[page.value] || []);
+
+  eventBus.$on("PAGE_CHANGED", (newPage: PageName) => {
+    page.value = newPage;
+  });
+
   watch(
     () => availableDatabases.value,
     () => {
-      selectedDatabases.comparison = availableDatabases.value as string[];
-      selectedDatabases.overview = availableDatabases.value as string[];
-      selectedDatabases.workload = availableDatabases.value as string[];
+      pageDatabases.comparison = availableDatabases.value as string[];
+      pageDatabases.overview = availableDatabases.value as string[];
+      pageDatabases.workload = availableDatabases.value as string[];
     }
   );
 
@@ -52,13 +61,13 @@ export function useSelectionController(): SelectionController {
       `SELECTED_DATABASES_CHANGED_ON_${page.toUpperCase()}`,
       (payload: { database: string; value: boolean }) => {
         if (payload.value) {
-          selectedDatabases[page].push(payload.database);
-          selectedDatabases[page] = sortElements(
-            selectedDatabases[page],
+          pageDatabases[page].push(payload.database);
+          pageDatabases[page] = sortElements(
+            pageDatabases[page],
             availableDatabases.value as string[]
           );
         } else {
-          selectedDatabases[page] = selectedDatabases[page].filter(
+          pageDatabases[page] = pageDatabases[page].filter(
             (current) => current !== payload.database
           );
         }
@@ -70,13 +79,13 @@ export function useSelectionController(): SelectionController {
       `SELECTED_METRICS_CHANGED_ON_${page.toUpperCase()}`,
       (payload: { metric: Metric; value: boolean }) => {
         if (payload.value) {
-          selectedMetrics[page].push(payload.metric);
-          selectedMetrics[page] = sortElements(
-            selectedMetrics[page],
+          pageMetrics[page].push(payload.metric);
+          pageMetrics[page] = sortElements(
+            pageMetrics[page],
             availableMetrics[page]
           );
         } else {
-          selectedMetrics[page] = selectedMetrics[page].filter(
+          pageMetrics[page] = pageMetrics[page].filter(
             (current) => current !== payload.metric
           );
         }
@@ -90,5 +99,7 @@ export function useSelectionController(): SelectionController {
     selectedMetrics,
     selectedPrecision,
     selectedRange,
+    pageDatabases,
+    pageMetrics,
   };
 }

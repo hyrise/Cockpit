@@ -1,20 +1,13 @@
 <template>
   <div id="workload-monitoring-page">
-    <linear-loader
-      :conditions="[$databaseController.databasesUpdated]"
-      :evaluations="[false]"
-    />
+    <linear-loader :conditions="[$databaseController.databasesUpdated]" :evaluations="[false]" />
     <div class="mx-6">
       <database-query-tables :selected-databases="selectedDatabases" />
       <unselected-warning :condition="selectedDatabases">
-        <template #message>
-          No databases selected.
-        </template>
+        <template #message>No databases selected.</template>
       </unselected-warning>
       <v-card color="primary">
-        <v-card-title class="white--text">
-          Workload Metrics
-        </v-card-title>
+        <v-card-title class="white--text">Workload Metrics</v-card-title>
       </v-card>
       <v-container
         v-if="$databaseController.databasesUpdated.value"
@@ -47,7 +40,6 @@ import {
   watch,
 } from "@vue/composition-api";
 import { Metric, workloadMetrics } from "../types/metrics";
-import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
 import LinearLoader from "../components/alerts/LinearLoader.vue";
 import DatabaseQueryTables from "@/components/queries/DatabaseQueryTables.vue";
@@ -72,7 +64,6 @@ export default defineComponent({
     SelectionList,
   },
   setup(props: Props, context: SetupContext): Data {
-    const { emitWatchedMetricsChangedEvent } = useMetricEvents();
     const watchedInstances = ref<string[]>([]);
     const { databasesUpdated } = context.root.$databaseController;
 
@@ -82,10 +73,6 @@ export default defineComponent({
           context.root.$databaseController.availableDatabasesById.value[0],
         ];
       }
-    });
-
-    onMounted(() => {
-      emitWatchedMetricsChangedEvent(workloadMetrics);
     });
 
     return {

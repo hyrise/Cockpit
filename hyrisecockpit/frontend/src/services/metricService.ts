@@ -47,7 +47,6 @@ export function useMetricService(metrics: Metric[]): MetricService {
 
   function getData(): void {
     queryReadyState.value = false;
-    console.log("range", range.value, "precision", precision.value);
 
     const currentTimestamp = subSeconds(new Date(), 3);
     const startTime = historicFetching.value

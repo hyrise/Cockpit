@@ -4,7 +4,6 @@
     v-model="selectedHistoricRange"
     :items="availableHistoricRanges"
     label="Request intervals"
-    @change="$emit('selectionChanged', selectedHistoricRange)"
   />
 </template>
 

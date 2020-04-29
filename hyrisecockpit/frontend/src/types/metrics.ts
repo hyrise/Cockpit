@@ -15,12 +15,6 @@ export type Metric =
   | "generatedQueryTypeProportion"
   | "memoryFootprint";
 
-export interface MetricController {
-  data: Record<Metric, Ref<any>>;
-  maxValueData: Record<Metric, Ref<number>>;
-  timestamps: Record<Metric, Ref<Date[]>>;
-}
-
 //TODO: refactor
 export const availableMetrics: Metric[] = [
   "access",

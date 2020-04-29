@@ -1,10 +1,8 @@
 import { eventBus } from "@/plugins/eventBus";
 import { Metric } from "@/types/metrics";
 import { PageName } from "@/types/views";
-import { SetupContext } from "@vue/composition-api";
 
 export function useMetricEvents(): {
-  emitWatchedMetricsChangedEvent: (metrics: Metric[]) => void;
   emitSelectedMetricsChangedEvent: () => void;
   emitSelectedMetricsChangedWithinEvent: (
     page: PageName,
@@ -12,9 +10,6 @@ export function useMetricEvents(): {
     value: boolean
   ) => void;
 } {
-  function emitWatchedMetricsChangedEvent(metrics: Metric[]): void {
-    eventBus.$emit("WATCHED_METRICS_CHANGED", metrics);
-  }
   function emitSelectedMetricsChangedEvent(): void {
     eventBus.$emit("SELECTED_METRICS_CHANGED");
   }
@@ -30,53 +25,20 @@ export function useMetricEvents(): {
     });
   }
   return {
-    emitWatchedMetricsChangedEvent,
     emitSelectedMetricsChangedEvent,
     emitSelectedMetricsChangedWithinEvent,
   };
 }
 
 export function useWindowEvents(): {
-  emitPageChangedEvent: (metrics: Metric[], newRange: number) => void;
-  emitHistoricRangeChangedEvent: (
-    metrics: Metric[],
-    newHistoricalRangeMinutes: number
-  ) => void;
-  emitPrecisionChangedEvent: (
-    metrics: Metric[],
-    newHistoricalRangeMinutes: number
-  ) => void;
+  emitPageChangedEvent: (page: PageName) => void;
 } {
-  function emitPageChangedEvent(metrics: Metric[], newRange: number): void {
-    eventBus.$emit("PAGE_CHANGED", {
-      metrics,
-      newRange,
-    });
-  }
-  function emitHistoricRangeChangedEvent(
-    metrics: Metric[],
-    newRange: number
-  ): void {
-    eventBus.$emit("HISTORIC_RANGE_CHANGED", {
-      metrics,
-      newRange,
-    });
-  }
-
-  function emitPrecisionChangedEvent(
-    metrics: Metric[],
-    newRange: number
-  ): void {
-    eventBus.$emit("PRECISION_CHANGED", {
-      metrics,
-      newRange,
-    });
+  function emitPageChangedEvent(page: PageName): void {
+    eventBus.$emit("PAGE_CHANGED", page);
   }
 
   return {
     emitPageChangedEvent,
-    emitHistoricRangeChangedEvent,
-    emitPrecisionChangedEvent,
   };
 }
 
