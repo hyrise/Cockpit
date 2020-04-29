@@ -11,6 +11,7 @@ import {
   fakeDatabasePluginLogs,
   fakeDatabaseStatusData,
   fakeIds,
+  fakeWorkloadData,
 } from "./factories";
 import {
   assignFakeData,
@@ -78,6 +79,10 @@ export function useMocks(
       ).map((index) => plugins[index]),
       loaded_benchmarks: generateUniqueRandomNumbers(
         numbers.loaded_benchmarks,
+        benchmarks.length
+      ).map((index) => benchmarks[index]),
+      workloads: generateUniqueRandomNumbers(
+        numbers.workloads,
         benchmarks.length
       ).map((index) => benchmarks[index]),
     };
@@ -158,6 +163,9 @@ export function useMocks(
     // NOTE: currently all databases have exactly one log entry
     responseMocks.plugin_log = mockedIds.databases.map((id) =>
       fakeDatabasePluginLogs(id, mockedIds.plugins)
+    );
+    responseMocks.workload = mockedIds.workloads.map((idx) =>
+      fakeWorkloadData(idx)
     );
     return responseMocks as Record<Request, any>;
   }
