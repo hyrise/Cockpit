@@ -25,3 +25,11 @@ class Cockpit:
         self.backend.shutdown()
         self.manager.shutdown()
         self.generator.shutdown()
+
+    def get_stderr(self):
+        """Get stderr from all components."""
+        return {
+            "backend": self.backend.get_stderr(),
+            "manager": self.manager.get_stderr(),
+            "generator": self.generator.get_stderr(),
+        }
