@@ -1,6 +1,6 @@
 import { watch, SetupContext } from "@vue/composition-api";
 import { ChartProps } from "@/types/charts";
-import * as Plotly from "plotly.js";
+import Plotly from "@/../plotlyBundle.ts";
 
 export function useChartReactivity(
   props: ChartProps,

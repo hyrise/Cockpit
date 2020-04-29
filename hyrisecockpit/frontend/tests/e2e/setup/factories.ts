@@ -195,8 +195,8 @@ export function fakeDatabaseQueryInformationData(
   // ensure uniquenes of latency data
   const latencyData = generateUniqueRandomNumbers(
     numberOfQueries,
-    Math.pow(10, 3)
-  );
+    Math.pow(10, 3) - Math.pow(10, 2)
+  ).map((latency: any) => latency + Math.pow(10, 2));
   return {
     id: databaseId,
     query_information: [...Array(numberOfQueries).keys()].map((idx: number) =>
@@ -270,5 +270,13 @@ export function fakeDatabaseStatusData(
     worker_pool_status: state ? "running" : "",
     loaded_benchmarks: loadedBenchmarks,
     loaded_tables: [],
+  };
+}
+
+export function fakeWorkloadData(benchmark: string): Object {
+  return {
+    weights: {},
+    frequency: faker.random.number(),
+    folder_name: benchmark,
   };
 }

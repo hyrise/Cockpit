@@ -9,7 +9,10 @@ import { isInTestMode } from "../../config";
 import Vue from "vue";
 
 // fetch data for all metrics with same endpoint
-export function useMetricService(metrics: Metric[]): MetricService {
+export function useMetricService(
+  metrics: Metric[],
+  getHistoricRangeSeconds: () => number
+): MetricService {
   const queryReadyState = ref(true);
   const data: any = initializeData({});
   const timestamps = ref<Date[]>([]);
@@ -146,7 +149,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
   function handleCurrentDataPoints<T>(data: T[], newData: T[]): T[] {
     const dataCopy = data;
     newData.forEach((entry: T) => {
-      if (dataCopy.length > 29) {
+      if (dataCopy.length > getHistoricRangeSeconds() - 1) {
         dataCopy.shift();
       }
       dataCopy.push(entry);
@@ -156,7 +159,10 @@ export function useMetricService(metrics: Metric[]): MetricService {
   }
 
   function handleHistoricDataPoints<T>(newData: T[]): T[] {
-    return newData.slice(newData.length - 30, newData.length - 1);
+    return newData.slice(
+      newData.length - getHistoricRangeSeconds(),
+      newData.length - 1
+    );
   }
 
   function getDataIfReady(start?: Date, end?: Date): void {

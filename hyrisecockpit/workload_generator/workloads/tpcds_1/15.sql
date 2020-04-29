@@ -1,6 +1,6 @@
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -16,8 +16,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -33,8 +33,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -50,8 +50,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -67,8 +67,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -84,8 +84,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -101,8 +101,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -118,8 +118,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -135,8 +135,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -152,8 +152,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -169,8 +169,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -186,8 +186,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -203,8 +203,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -220,8 +220,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -237,8 +237,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -254,8 +254,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -271,8 +271,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -288,8 +288,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -305,8 +305,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -322,8 +322,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -339,8 +339,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -356,8 +356,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -373,8 +373,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -390,8 +390,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -407,8 +407,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -424,8 +424,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -441,8 +441,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -458,8 +458,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -475,8 +475,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -492,8 +492,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -509,8 +509,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -526,8 +526,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -543,8 +543,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -560,8 +560,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -577,8 +577,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -594,8 +594,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -611,8 +611,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -628,8 +628,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -645,8 +645,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -662,8 +662,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -679,8 +679,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -696,8 +696,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -713,8 +713,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -730,8 +730,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -747,8 +747,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -764,8 +764,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -781,8 +781,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -798,8 +798,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -815,8 +815,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -832,8 +832,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -849,8 +849,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -866,8 +866,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -883,8 +883,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -900,8 +900,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -917,8 +917,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -934,8 +934,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -951,8 +951,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -968,8 +968,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -985,8 +985,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1002,8 +1002,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1019,8 +1019,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1036,8 +1036,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1053,8 +1053,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1070,8 +1070,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1087,8 +1087,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1104,8 +1104,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1121,8 +1121,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1138,8 +1138,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1155,8 +1155,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1172,8 +1172,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1189,8 +1189,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1206,8 +1206,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1223,8 +1223,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1240,8 +1240,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1257,8 +1257,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1274,8 +1274,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1291,8 +1291,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1308,8 +1308,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1325,8 +1325,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1342,8 +1342,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1359,8 +1359,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1376,8 +1376,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1393,8 +1393,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1410,8 +1410,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1427,8 +1427,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1444,8 +1444,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1461,8 +1461,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1478,8 +1478,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1495,8 +1495,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1512,8 +1512,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1529,8 +1529,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1546,8 +1546,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1563,8 +1563,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1580,8 +1580,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1597,8 +1597,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1614,8 +1614,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1631,8 +1631,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1648,8 +1648,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1665,8 +1665,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
@@ -1682,8 +1682,8 @@ LIMIT 100;
 ---
 
 SELECT ca_zip, sum(cs_sales_price)
-FROM catalog_sales, customer, customer_address, date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
+FROM catalog_sales_tpcds_1, customer_tpcds_1, customer_address_tpcds_1, date_dim_tpcds_1
+ WHERE cs_bill_customer_sk = c_customer_sk
 		AND c_current_addr_sk = ca_address_sk
 		AND (SUBSTR(ca_zip, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
 																																	'81792')
