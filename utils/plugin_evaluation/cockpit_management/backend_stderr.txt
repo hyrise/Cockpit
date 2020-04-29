@@ -1,6 +1,0 @@
-Creating a Pipfile for this project…
-Loading .env environment variables…
-Traceback (most recent call last):
-  File "cli_backend.py", line 4, in <module>
-    from hyrisecockpit.api.app import create_app
-ModuleNotFoundError: No module named 'hyrisecockpit'

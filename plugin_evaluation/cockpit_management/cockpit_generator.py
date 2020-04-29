@@ -14,7 +14,7 @@ class CockpitGenerator:
         self.output_file = open("generator_stdout.txt", "w")
 
         self.generator_process = Popen(  # nosec
-            ["PIPENV_MAX_DEPTH=4", "pipenv", "run", "python", "-u", "cli_generator.py"],
+            ["pipenv", "run", "python", "-u", "cli_generator.py"],
             stderr=self.error_file,
             stdout=self.output_file,
         )

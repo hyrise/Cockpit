@@ -1,6 +1,6 @@
 """CLI used to start the workload generator."""
 from hyrisecockpit.workload_generator.generator import WorkloadGenerator
-from utils.plugin_evaluation.cockpit_management.settings import (
+from plugin_evaluation.cockpit_management.settings import (
     GENERATOR_HOST,
     GENERATOR_PORT,
     WORKLOAD_PUBSUB_PORT,

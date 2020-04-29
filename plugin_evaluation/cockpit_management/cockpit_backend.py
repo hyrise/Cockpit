@@ -6,10 +6,7 @@ from subprocess import Popen  # nosec
 
 from requests import delete, get, post
 
-from utils.plugin_evaluation.cockpit_management.settings import (
-    BACKEND_HOST,
-    BACKEND_PORT,
-)
+from plugin_evaluation.cockpit_management.settings import BACKEND_HOST, BACKEND_PORT
 
 REQUEST_TIMEOUT = 5.0
 

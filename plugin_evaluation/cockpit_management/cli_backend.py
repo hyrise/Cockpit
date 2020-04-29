@@ -2,7 +2,7 @@
 import logging
 
 from hyrisecockpit.api.app import create_app
-from utils.plugin_evaluation.cockpit_management.settings import (
+from plugin_evaluation.cockpit_management.settings import (
     BACKEND_HOST,
     BACKEND_PORT,
     FLASK_DEBUG,

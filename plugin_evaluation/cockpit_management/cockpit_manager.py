@@ -15,7 +15,7 @@ class CockpitManager:
         self.output_file = open("manager_stdout.txt", "w")
 
         self.manager_process = Popen(  # nosec
-            ["PIPENV_MAX_DEPTH=4", "pipenv", "run", "python", "-u", "cli_manager.py"],
+            ["pipenv", "run", "python", "-u", "cli_manager.py"],
             stderr=self.error_file,
             stdout=self.output_file,
         )
