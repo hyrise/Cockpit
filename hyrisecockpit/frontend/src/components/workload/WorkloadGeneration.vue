@@ -3,7 +3,7 @@
     <v-card id="workload-generation">
       <v-system-bar :height="50">
         <v-card-title>
-          Workload Generation
+          Workload Settings
         </v-card-title>
         <v-spacer></v-spacer>
         <v-icon @click="$emit('close')">mdi-close</v-icon>
@@ -99,6 +99,7 @@ interface WorkloadDataHandler {
 }
 
 export default defineComponent({
+  name: "WorkloadGeneration",
   components: {
     StatusWarning,
     FrequencyHandler,
