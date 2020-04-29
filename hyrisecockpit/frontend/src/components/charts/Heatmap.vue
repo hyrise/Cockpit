@@ -3,12 +3,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  SetupContext,
-  onMounted,
-  watch,
-} from "@vue/composition-api";
+import { defineComponent, SetupContext, onMounted } from "@vue/composition-api";
 import Plotly from "@/../plotlyBundle.ts";
 import { ChartConfiguration, AccessData } from "../../types/metrics";
 import { ChartProps, ChartPropsValidation } from "../../types/charts";
