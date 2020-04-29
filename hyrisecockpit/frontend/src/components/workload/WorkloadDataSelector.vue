@@ -6,7 +6,7 @@
       :key="workload"
       :input-value="workloadData[workload].loaded"
       :label="getDisplayedWorkload(workload)"
-      @change="handleWorkloadDataChange(workload)"
+      @change="$emit('change', workload)"
       :loading="workloadData[workload].loading"
       :disabled="workloadData[workload].loading || disabled"
     >
@@ -25,7 +25,6 @@ interface Props {
 interface Data {
   availableWorkloads: string[];
   getDisplayedWorkload: (workload: Workload) => string;
-  handleWorkloadDataChange: (workload: Workload) => void;
 }
 
 export default defineComponent({
@@ -33,21 +32,17 @@ export default defineComponent({
   props: {
     workloadData: {
       type: Object,
-      default: null,
+      default: {},
     },
     disabled: {
       type: Boolean,
-      default: null,
+      default: false,
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    function handleWorkloadDataChange(workload: Workload): void {
-      context.emit("change", workload);
-    }
     return {
       availableWorkloads,
       getDisplayedWorkload,
-      handleWorkloadDataChange,
     };
   },
 });

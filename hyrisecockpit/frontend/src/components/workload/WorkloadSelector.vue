@@ -6,7 +6,7 @@
       :label="getDisplayedWorkload(workload)"
       :value="workload"
       :disabled="!workloadData[workload].loaded || disabled"
-      @change="handleWorkloadChange(workload)"
+      @change="$emit('change', workload)"
     >
     </v-radio>
   </v-radio-group>
@@ -23,7 +23,6 @@ interface Props {
 interface Data {
   availableWorkloads: string[];
   getDisplayedWorkload: (workload: Workload) => string;
-  handleWorkloadChange: (workload: Workload) => void;
 }
 
 export default defineComponent({
@@ -31,21 +30,17 @@ export default defineComponent({
   props: {
     workloadData: {
       type: Object,
-      default: null,
+      default: {},
     },
     disabled: {
       type: Boolean,
-      default: null,
+      default: false,
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    function handleWorkloadChange(workload: Workload): void {
-      context.emit("change", workload);
-    }
     return {
       availableWorkloads,
       getDisplayedWorkload,
-      handleWorkloadChange,
     };
   },
 });
