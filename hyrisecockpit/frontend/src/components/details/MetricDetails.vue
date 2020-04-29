@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      :id="`${metric}-${database}-details`"
+      :id="`${idPrefix}${metric}-${database}-details`"
       class="details"
       v-for="(database, idx) in databases"
       :key="database"
@@ -42,6 +42,7 @@ interface Props {
   metric: Metric;
   databases: string[];
   decimalDigits: number;
+  idPrefix: string;
 }
 interface Data {
   currentValue: Ref<Record<string, number>>;
@@ -64,6 +65,10 @@ export default defineComponent({
     decimalDigits: {
       type: Number,
       default: 2,
+    },
+    idPrefix: {
+      type: String,
+      default: "",
     },
   },
   setup(props: Props, context: SetupContext): Data {
