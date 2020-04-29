@@ -7,6 +7,7 @@ const selectors: Record<string, string> = {
     "div",
     "generatedQueryTypeProportion"
   ),
+  querySearch: getSelectorByConfig("input", "query-search-input"),
 };
 
 export function getSelector(component: string): string {
@@ -14,10 +15,10 @@ export function getSelector(component: string): string {
 }
 
 const displayedBenchmark: Record<string, string> = {
-  "tpch_0.1": "TPC-H SF 0.1",
+  tpch_0_1: "TPC-H SF 0.1",
   tpch_1: "TPC-H SF 1",
   tpcds_1: "TPC-DS",
-  job: "Join Order Benchmark",
+  job_1: "Join Order Benchmark",
 };
 
 function getDisplayedBenchmark(benchmark: string): string {
