@@ -33,3 +33,7 @@ class Cockpit:
             "manager": self.manager.get_stderr(),
             "generator": self.generator.get_stderr(),
         }
+
+    def has_errors(self):
+        """Return True, if some of the components has stderr."""
+        return {"backend": "", "manager": "", "generator": ""} != self.get_stderr()
