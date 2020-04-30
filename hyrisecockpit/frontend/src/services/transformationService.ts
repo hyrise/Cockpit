@@ -128,7 +128,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
       size: `${totalDatabaseMemory} MB`,
       encoding: "",
       dataType: "",
-      percentOfDatabase: "100% of total footprint",
+      percentOfDatabase: "",
       percentOfTable: "",
     },
   ];
@@ -266,6 +266,33 @@ function getAccessData(
     dataByChunks.push(chunk);
   }
   return { chunks, columns, dataByChunks, descriptions };
+}
+
+export function useMaxValueHelper(
+  metric: Metric
+): ((data: any) => number) | undefined {
+  const maxValueHelper: Partial<Record<Metric, (data: any) => number>> = {
+    access: getAccessMaxValue,
+  };
+
+  function getAccessMaxValue(data: any): number {
+    return Object.values(data).reduce((maxValue: number, dbData: any) => {
+      const tableMaxValue = Object.values(dbData).reduce(
+        (maxValue: number, tableData: any) => {
+          const columnMaxValue = Object.values(tableData).reduce(
+            (maxValue: number, columnData: any) =>
+              Math.max(...columnData, maxValue),
+            0
+          );
+          return Math.max(maxValue, columnMaxValue);
+        },
+        0
+      );
+      return Math.max(maxValue, tableMaxValue);
+    }, 0);
+  }
+
+  return maxValueHelper[metric];
 }
 
 export function useDataTransformationHelpers(): {
