@@ -7,13 +7,19 @@ import {
   workloadMonitoringRequests,
 } from "../../setup/helpers";
 import { getRoute } from "../views/helpers";
-import { assertDataRequest, historicRanges } from "./helpers";
+import {
+  assertDataRequest,
+  historicRanges,
+  basicPrecision,
+  assertPrecisionRequest,
+} from "./helpers";
 import { clickElement } from "../helpers";
 import { getSelector as getSelectionSelector } from "../views/helpers";
 
 const backend = useBackendMock();
 
-const newAlias = "historic";
+const rangeAlias = "range";
+const precisionAlias = "precision";
 const ranges = Object.entries(historicRanges).filter(
   (element) => element[0] !== "0.5"
 ); // select new range
@@ -47,12 +53,34 @@ describe("requesting different time ranges", () => {
           force: true,
         });
       });
-      backend.rename(comparisonRequest, newAlias); // set new alias to get specific request
+      backend.rename(comparisonRequest, rangeAlias); // set new alias to get specific request
       cy.get("div").contains(range.title).click({
         force: true,
       });
-      cy.wait("@" + newAlias).then((xhr: any) => {
+      cy.wait("@" + rangeAlias).then((xhr: any) => {
         assertDataRequest(xhr.url, range.value);
+      });
+      backend.restart(); // reset aliases
+    });
+
+    it("will request the selected precision", () => {
+      const precisionIdx = generateRandomInt(0, basicPrecision.length);
+
+      cy.visit(getRoute("comparison"));
+      cy.wait("@" + getGetAlias(comparisonRequest));
+      clickElement(getSelectionSelector("selectionListButton"));
+
+      cy.get(getSelectionSelector("selectionList")).within(() => {
+        cy.get(getSelectionSelector("precisionSelection")).click({
+          force: true,
+        });
+      });
+      backend.rename(comparisonRequest, precisionAlias); // set new alias to get specific request
+      cy.get("div[role=option]").eq(precisionIdx).click({
+        force: true,
+      });
+      cy.wait("@" + precisionAlias).then((xhr: any) => {
+        assertPrecisionRequest(xhr.url, basicPrecision[precisionIdx]);
       });
       backend.restart(); // reset aliases
     });
@@ -71,12 +99,34 @@ describe("requesting different time ranges", () => {
           force: true,
         });
       });
-      backend.rename(overviewRequest, newAlias); // set new alias to get specific request
+      backend.rename(overviewRequest, rangeAlias); // set new alias to get specific request
       cy.get("div").contains(range.title).click({
         force: true,
       });
-      cy.wait("@" + newAlias).then((xhr: any) => {
+      cy.wait("@" + rangeAlias).then((xhr: any) => {
         assertDataRequest(xhr.url, range.value);
+      });
+      backend.restart(); // reset aliases
+    });
+
+    it("will request the selected  precision", () => {
+      const precisionIdx = generateRandomInt(0, basicPrecision.length);
+
+      cy.visit(getRoute("overview"));
+      cy.wait("@" + getGetAlias(overviewRequest));
+      clickElement(getSelectionSelector("selectionListButton"));
+
+      cy.get(getSelectionSelector("selectionList")).within(() => {
+        cy.get(getSelectionSelector("precisionSelection")).click({
+          force: true,
+        });
+      });
+      backend.rename(overviewRequest, precisionAlias); // set new alias to get specific request
+      cy.get("div[role=option]").eq(precisionIdx).click({
+        force: true,
+      });
+      cy.wait("@" + precisionAlias).then((xhr: any) => {
+        assertPrecisionRequest(xhr.url, basicPrecision[precisionIdx]);
       });
       backend.restart(); // reset aliases
     });
@@ -95,12 +145,34 @@ describe("requesting different time ranges", () => {
           force: true,
         });
       });
-      backend.rename(workloadRequest, newAlias); // set new alias to get specific request
+      backend.rename(workloadRequest, rangeAlias); // set new alias to get specific request
       cy.get("div").contains(range.title).click({
         force: true,
       });
-      cy.wait("@" + newAlias).then((xhr: any) => {
+      cy.wait("@" + rangeAlias).then((xhr: any) => {
         assertDataRequest(xhr.url, range.value);
+      });
+      backend.restart(); // reset aliases
+    });
+
+    it("will request the selected  precision", () => {
+      const precisionIdx = generateRandomInt(0, basicPrecision.length);
+
+      cy.visit(getRoute("workloadMonitoring"));
+      cy.wait("@" + getGetAlias(workloadRequest));
+      clickElement(getSelectionSelector("selectionListButton"));
+
+      cy.get(getSelectionSelector("selectionList")).within(() => {
+        cy.get(getSelectionSelector("precisionSelection")).click({
+          force: true,
+        });
+      });
+      backend.rename(workloadRequest, precisionAlias); // set new alias to get specific request
+      cy.get("div[role=option]").eq(precisionIdx).click({
+        force: true,
+      });
+      cy.wait("@" + precisionAlias).then((xhr: any) => {
+        assertPrecisionRequest(xhr.url, basicPrecision[precisionIdx]);
       });
       backend.restart(); // reset aliases
     });
