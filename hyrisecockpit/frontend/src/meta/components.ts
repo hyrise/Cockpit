@@ -57,8 +57,9 @@ export function useUpdatingInterval(
   return computed(() => {
     let currentTimeStamp = formatDateWithoutMilliSec(new Date());
     let type = "";
-    const intervalTime = Math.floor(
-      getMetricRequestTime(metric) / Math.pow(10, 3)
+    const intervalTime = Math.max(
+      Math.floor(getMetricRequestTime(metric) / Math.pow(10, 3)),
+      context.root.$selectionController.selectedPrecision.value
     );
     if (timestamps.value.length > 0) {
       currentTimeStamp = timestamps.value[timestamps.value.length - 1];
@@ -66,8 +67,8 @@ export function useUpdatingInterval(
     if (getMetricDataType(metric) === "interval") {
       type =
         intervalTime > 1
-          ? `Interval: last ${intervalTime} seconds`
-          : "Interval: last second";
+          ? `Aggregation: ${intervalTime} seconds`
+          : "Aggregation: 1 second";
     } else {
       type = `Snapshot: ${formatDateToHHMMSS(currentTimeStamp)}`;
     }

@@ -1,4 +1,4 @@
-import { ref, reactive } from "@vue/composition-api";
+import { ref, reactive, computed } from "@vue/composition-api";
 import axios from "axios";
 import { Metric } from "@/types/metrics";
 import { MetricService } from "@/types/services";
@@ -10,10 +10,7 @@ import Vue from "vue";
 import { useMaxValueHelper } from "./transformationService";
 
 // fetch data for all metrics with same endpoint
-export function useMetricService(
-  metrics: Metric[],
-  getHistoricRangeSeconds: () => number
-): MetricService {
+export function useMetricService(metrics: Metric[]): MetricService {
   const queryReadyState = ref(true);
   const data: any = initializeData({});
   const timestamps = ref<Date[]>([]);
@@ -21,8 +18,14 @@ export function useMetricService(
   const metricInfo = metricsMetaData[0];
   const maxValues = initializeData(0) as Record<Metric, number>;
   const historicFetching = ref(false);
+  const range = computed(
+    (): number => Vue.prototype.$selectionController.selectedRange.value
+  );
+  const precision = computed(
+    (): number => Vue.prototype.$selectionController.selectedPrecision.value
+  );
 
-  const { subSeconds, formatDateToNanoSec } = useFormatting();
+  const { subSeconds, formatDateToNanoSec, getNanoSeconds } = useFormatting();
 
   function initializeData(value: any): Object {
     const newData: any = reactive({});
@@ -42,16 +45,14 @@ export function useMetricService(
     );
   }
 
-  function getData(start?: Date, end?: Date): void {
+  function getData(): void {
     queryReadyState.value = false;
 
     const currentTimestamp = subSeconds(new Date(), 3);
-    const startTime = start
-      ? formatDateToNanoSec(start)
-      : formatDateToNanoSec(subSeconds(currentTimestamp, 1));
-    const endTime = end
-      ? formatDateToNanoSec(end)
-      : formatDateToNanoSec(currentTimestamp);
+    const startTime = historicFetching.value
+      ? formatDateToNanoSec(subSeconds(currentTimestamp, range.value))
+      : formatDateToNanoSec(subSeconds(currentTimestamp, precision.value));
+    const endTime = formatDateToNanoSec(currentTimestamp);
 
     fetchData(startTime, endTime).then((result) => {
       useUpdatingData(result, metrics);
@@ -109,6 +110,7 @@ export function useMetricService(
           params: {
             startts: start,
             endts: end,
+            precision: getNanoSeconds(precision.value),
           },
         })
         .then((response) => {
@@ -154,7 +156,7 @@ export function useMetricService(
   function handleCurrentDataPoints<T>(data: T[], newData: T[]): T[] {
     const dataCopy = data;
     newData.forEach((entry: T) => {
-      if (dataCopy.length > getHistoricRangeSeconds() - 1) {
+      if (dataCopy.length > range.value - 1) {
         dataCopy.shift();
       }
       dataCopy.push(entry);
@@ -164,16 +166,13 @@ export function useMetricService(
   }
 
   function handleHistoricDataPoints<T>(newData: T[]): T[] {
-    return newData.slice(
-      newData.length - getHistoricRangeSeconds(),
-      newData.length - 1
-    );
+    return newData.slice(newData.length - range.value, newData.length - 1);
   }
 
-  function getDataIfReady(start?: Date, end?: Date): void {
-    historicFetching.value = !!start && !!end;
+  function getDataIfReady(refetch: boolean = false): void {
+    historicFetching.value = refetch;
     if (queryReadyState.value || historicFetching.value) {
-      getData(start, end);
+      getData();
     }
   }
 
