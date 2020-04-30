@@ -1,8 +1,7 @@
 import Vue from "vue";
 import { eventBus } from "@/plugins/eventBus";
-import { PageName } from "@/types/views";
+import { PageName, pages } from "@/types/views";
 import { SelectionController } from "@/types/controller";
-import { pages } from "@/meta/views";
 import { reactive, watch, computed, ref } from "@vue/composition-api";
 import {
   Metric,

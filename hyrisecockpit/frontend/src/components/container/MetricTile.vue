@@ -6,7 +6,6 @@
           <v-col class="metric-title">
             <div>{{ getMetricTitle(metric) }}</div>
             <time-interval :metric="metric" />
-            <!--  Think about where to add this  <metric-description-tooltip :metric="metric" /> -->
           </v-col>
           <v-spacer />
           <v-col class="database-title">
@@ -48,7 +47,6 @@ import {
   MetricPropsValidation,
 } from "../../types/metrics";
 import { Database } from "../../types/database";
-import MetricDescriptionTooltip from "@/components/details/MetricDescriptionTooltip.vue";
 import DatabaseChip from "@/components/details/DatabaseChip.vue";
 import TimeInterval from "@/components/details/TimeInterval.vue";
 
@@ -63,7 +61,6 @@ interface Data {
 
 export default defineComponent({
   components: {
-    MetricDescriptionTooltip,
     DatabaseChip,
     Throughput,
     CPU,

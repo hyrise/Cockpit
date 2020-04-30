@@ -8,7 +8,7 @@ import {
 import { DatabaseController } from "@/types/controller";
 import { useDatabaseService } from "@/services/databaseService";
 import { ref, reactive, computed } from "@vue/composition-api";
-import { equals } from "@/helpers/methods";
+import { equals } from "@/utils/methods";
 
 export function useDatabaseController(): DatabaseController {
   const databases = ref<Database[]>([]);
