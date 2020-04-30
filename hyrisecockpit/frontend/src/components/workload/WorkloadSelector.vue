@@ -1,5 +1,5 @@
 <template>
-  <v-radio-group class="mt-0">
+  <v-radio-group class="mt-0" :value="workload">
     <v-radio
       v-for="workload in availableWorkloads"
       :key="workload"
@@ -17,6 +17,7 @@ import { Workload, availableWorkloads } from "../../types/workloads";
 import { getDisplayedWorkload } from "../../meta/workloads";
 
 interface Props {
+  workload: Workload;
   workloadData: Record<string, { loaded: boolean; loading: boolean }>;
   disabled: boolean;
 }
@@ -28,6 +29,10 @@ interface Data {
 export default defineComponent({
   name: "WorkloadSelector",
   props: {
+    workload: {
+      type: String,
+      default: "",
+    },
     workloadData: {
       type: Object,
       default: {},

@@ -20,7 +20,17 @@
   </span>
 </template>
 <script lang="ts">
-import { defineComponent, SetupContext, Ref, ref } from "@vue/composition-api";
+import {
+  defineComponent,
+  SetupContext,
+  Ref,
+  ref,
+  watch,
+} from "@vue/composition-api";
+
+interface Props {
+  initialFrequency: number;
+}
 
 interface Data {
   frequency: Ref<number>;
@@ -28,8 +38,20 @@ interface Data {
 
 export default defineComponent({
   name: "FrequencyHandler",
-  setup(props: {}, context: SetupContext): Data {
+  props: {
+    initialFrequency: {
+      type: Number,
+      default: 0,
+    },
+  },
+  setup(props: Props, context: SetupContext): Data {
     const frequency = ref<number>(200);
+    watch(
+      () => props.initialFrequency,
+      () => {
+        frequency.value = props.initialFrequency;
+      }
+    );
     return {
       frequency,
     };
