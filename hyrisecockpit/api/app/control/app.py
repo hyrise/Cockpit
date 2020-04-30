@@ -111,56 +111,6 @@ model_get_plugin_setting = api.clone(
     },
 )
 
-modelhelper_sql = fields.String(
-    title="SQL query",
-    description="Sql query to execute on database.",
-    required=True,
-    example="SELECT 1;",
-)
-
-model_execute_sql = api.clone(
-    "Execute SQL query", model_database, {"query": modelhelper_sql},
-)
-
-
-model_execute_sql_results = api.clone(
-    "Query results",
-    model_database,
-    {
-        "successful": fields.Boolean(
-            title="Successful execution",
-            description="Description if there was an error while executing.",
-            required=True,
-            example=True,
-        ),
-        "results": fields.List(
-            fields.List(fields.String()),
-            title="Results",
-            description="Results from query execution.",
-            required=True,
-            example=[
-                ["1", "100", "abc'def"],
-                ["2", "None", "dada"],
-                ["3", "42", "bar"],
-            ],
-        ),
-        "col_names": fields.List(
-            fields.String(
-                title="Column Names",
-                description="List of column names.",
-                required=False,
-                example="names",
-            )
-        ),
-        "error_message": fields.String(
-            title="Error message",
-            description="Error message if query execution wasn't successful.",
-            required=False,
-            example="Table not found",
-        ),
-    },
-)
-
 
 @api.route("/available_plugins")
 class AvailablePlugin(Resource):
