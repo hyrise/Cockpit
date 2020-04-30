@@ -34,6 +34,17 @@ export function useDatabaseController(): DatabaseController {
     }
   });
 
+  eventBus.$on(
+    "DATABASE_STATUS_CHANGED",
+    (databaseId: string, blocked: boolean, active: boolean) => {
+      if (databasesUpdated.value) {
+        const database = getDatabaseById(databaseId);
+        database.active = active;
+        database.blocked = blocked;
+      }
+    }
+  );
+
   function updateDatabases(): void {
     const updatedDatabases: Database[] = [];
     databaseService.fetchDatabases().then((currentDatabases) => {
@@ -81,6 +92,8 @@ export function useDatabaseController(): DatabaseController {
         numberOfWorkers: database.numberOfWorkers,
       },
       tables: storageInformation!.tables,
+      blocked: false,
+      active: true,
     } as Database);
   }
 
