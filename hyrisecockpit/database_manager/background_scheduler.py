@@ -77,7 +77,6 @@ class BackgroundJobManager(object):
         database_id: str,
         database_blocked: Value,
         connection_factory: ConnectionFactory,
-        loaded_tables: Dict[str, Optional[str]],
         hyrise_active: Value,
         worker_pool: WorkerPool,
         storage_host: str,
@@ -96,7 +95,6 @@ class BackgroundJobManager(object):
         self._storage_user: str = storage_user
         self._scheduler: BackgroundScheduler = BackgroundScheduler()
         self._previous_chunks_data: Dict = {}
-        self._loaded_tables: Dict[str, Optional[str]] = loaded_tables
         self._hyrise_active: Value = hyrise_active
         self._init_jobs()
 
@@ -420,14 +418,14 @@ class BackgroundJobManager(object):
     ) -> List[Tuple[str, Tuple[Tuple[Union[str, int], Optional[str]], ...]]]:
         """Generate queries in tuple form that load tables."""
         # TODO change absolute to relative path
+
         return [
             (
-                "COPY %s_%s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
                 (
                     (name, "as_is"),
                     (folder_name, "as_is"),
-                    (folder_name, "as_is"),
-                    (name, "as_is"),
+                    (name.split("_")[0], "as_is"),
                 ),
             )
             for name in table_names
@@ -448,10 +446,6 @@ class BackgroundJobManager(object):
             process.join()
             process.terminate()
 
-        for success_flag, table_name in zip(success_flags, table_names):
-            if success_flag.value:
-                self._loaded_tables[table_name] = folder_name
-
     def _load_tables_job(self, table_names: List[str], folder_name: str) -> None:
         table_loading_queries = self._generate_table_loading_queries(
             table_names, folder_name
@@ -461,15 +455,8 @@ class BackgroundJobManager(object):
 
     def _get_load_table_names(self, workload_type: str):
         """Get table names to load."""
-        table_names = []
-        full_table_names = _table_names.get(workload_type.split("_")[0])
-        if full_table_names is not None:
-            table_names = [
-                table_name
-                for table_name in full_table_names
-                if self._loaded_tables[table_name] != workload_type
-            ]
-        return table_names
+        required_table_names = self._get_required_table_names(workload_type)
+        return self._get_existing_tables(required_table_names)["not_existing"]
 
     def load_tables(self, folder_name: str) -> bool:
         """Load tables."""
@@ -529,9 +516,9 @@ class BackgroundJobManager(object):
         not_existing_tables: List = []
         try:
             with self._connection_factory.create_cursor() as cur:
-                cur.execute("SELECT table_name FROM meta_tables;", None)
+                cur.execute("show tables;", None)
                 results = cur.fetchall()
-                loaded_tables = [row[0] for row in results]
+                loaded_tables = [row[0] for row in results] if results else []
                 for name in table_names:
                     if name in loaded_tables:
                         existing_tables.append(name)
@@ -555,13 +542,10 @@ class BackgroundJobManager(object):
         self._execute_queries_parallel(table_names, table_drop_queries, None)
         self._database_blocked.value = False
 
-    def _get_delete_table_names(self, folder_name: str):
+    def _get_delete_table_names(self, workload_type: str):
         """Get table names to delete."""
-        table_names = _table_names.get(folder_name.split("_")[0])
-        if table_names is None:
-            return []
-        else:
-            return [f"{table_name}_{folder_name}" for table_name in table_names]
+        required_table_names = self._get_required_table_names(workload_type)
+        return self._get_existing_tables(required_table_names)["existing"]
 
     def delete_tables(self, folder_name: str) -> bool:
         """Delete tables."""
@@ -575,3 +559,10 @@ class BackgroundJobManager(object):
         self._database_blocked.value = True
         self._scheduler.add_job(func=self._delete_tables_job, args=(table_names,))
         return True
+
+    def _get_required_table_names(self, workload_type: str):
+        """Get required table names for workload_type."""
+        benchmark_name = workload_type.split("_")[0]
+        origin_table_names = _table_names[benchmark_name]
+
+        return [f"{table}_{workload_type}" for table in origin_table_names]
