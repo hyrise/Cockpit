@@ -15,7 +15,13 @@ from hyrisecockpit.api.app.plugin.model import (
     PluginSetting,
     PluginSettingBase,
 )
-from hyrisecockpit.api.app.plugin.schema import PluginIDSchema, PluginSchema
+from hyrisecockpit.api.app.plugin.schema import (
+    DetailedPluginSchema,
+    PluginIDSchema,
+    PluginSchema,
+    PluginSettingBaseSchema,
+    PluginSettingSchema,
+)
 
 
 @fixture(params=["Clustering", "Compression"])
@@ -126,5 +132,23 @@ def schema() -> PluginSchema:
 
 @fixture
 def schema_id() -> PluginIDSchema:
-    """Return a Plugin schema."""
+    """Return a PluginID schema."""
     return PluginIDSchema()
+
+
+@fixture
+def schema_setting_base() -> PluginSettingBaseSchema:
+    """Return a PluginSettingBase schema."""
+    return PluginSettingBaseSchema()
+
+
+@fixture
+def schema_setting() -> PluginSettingSchema:
+    """Return a PluginSetting schema."""
+    return PluginSettingSchema()
+
+
+@fixture
+def schema_detailed_plugin() -> DetailedPluginSchema:
+    """Return a DetailedPlugin schema."""
+    return DetailedPluginSchema()

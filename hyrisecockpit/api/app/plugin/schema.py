@@ -20,3 +20,29 @@ class PluginIDSchema(Schema):
         required=True,
         allow_none=True,
     )
+
+
+class PluginSettingBaseSchema(Schema):
+    """Base schema of a Plugin Setting."""
+
+    name = String(description="Name of the setting that shall be set.", required=True)
+    value = String(description="Value the setting should have.", required=True)
+
+
+class PluginSettingSchema(PluginSettingBaseSchema):
+    """Schema of a Plugin Setting."""
+
+    description = String(
+        description="Description of the plugin setting.", required=True
+    )
+
+
+class DetailedPluginSchema(PluginSchema):
+    """Schema of a detailed Plugin."""
+
+    settings = Nested(
+        PluginSettingSchema,
+        description="Settings of the Plugin",
+        many=True,
+        required=True,
+    )
