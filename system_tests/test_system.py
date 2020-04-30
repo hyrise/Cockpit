@@ -59,16 +59,16 @@ class TestSystem:
             "hyrise_active": True,
             "database_blocked_status": False,
             "worker_pool_status": "closed",
-            "loaded_benchmarks": ["tpch_0.1"],
+            "loaded_benchmarks": ["tpch_0_1"],
             "loaded_tables": [
-                {"table_name": "customer", "benchmark": "tpch_0.1"},
-                {"table_name": "lineitem", "benchmark": "tpch_0.1"},
-                {"table_name": "nation", "benchmark": "tpch_0.1"},
-                {"table_name": "orders", "benchmark": "tpch_0.1"},
-                {"table_name": "part", "benchmark": "tpch_0.1"},
-                {"table_name": "partsupp", "benchmark": "tpch_0.1"},
-                {"table_name": "region", "benchmark": "tpch_0.1"},
-                {"table_name": "supplier", "benchmark": "tpch_0.1"},
+                {"table_name": "customer", "benchmark": "tpch_0_1"},
+                {"table_name": "lineitem", "benchmark": "tpch_0_1"},
+                {"table_name": "nation", "benchmark": "tpch_0_1"},
+                {"table_name": "orders", "benchmark": "tpch_0_1"},
+                {"table_name": "part", "benchmark": "tpch_0_1"},
+                {"table_name": "partsupp", "benchmark": "tpch_0_1"},
+                {"table_name": "region", "benchmark": "tpch_0_1"},
+                {"table_name": "supplier", "benchmark": "tpch_0_1"},
             ],
         }
 
@@ -102,7 +102,7 @@ class TestSystem:
             startts: int = timestamp - offset - 1_000_000_000
             endts: int = timestamp - offset
             response = self.backend.get_historical_monitor_property(
-                metric, startts, endts
+                metric, startts, endts, 1_000_000_000
             )
             assert response == []  # nosec
 
@@ -154,7 +154,7 @@ class TestSystem:
 
         self.check_loading_default_tables("test_database1")
 
-        response = self.backend.start_workload("tpch_0.1", 300)
+        response = self.backend.start_workload("tpch_0_1", 300)
         assert response.status_code == 200  # nosec
 
         sleep(5.0)  # wait for query executions
@@ -166,11 +166,11 @@ class TestSystem:
             startts: int = timestamp - offset - 1_000_000_000
             endts: int = timestamp - offset
             response = self.backend.get_historical_monitor_property(
-                metric, startts, endts
+                metric, startts, endts, 1_000_000_000
             )
             assert response[0][metric][0][metric] > 0  # nosec
 
-        response = self.backend.stop_workload("tpch_0.1")
+        response = self.backend.stop_workload("tpch_0_1")
         assert response.status_code == 200  # nosec
 
         self.check_stderr()
