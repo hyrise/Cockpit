@@ -11,6 +11,7 @@ export function useFormatting(): {
   formatDateToNanoSec: (date: Date) => number;
   subSeconds: (date: Date, seconds: number) => Date;
   formatMinutesToSeconds: (minutes: number) => number;
+  getNanoSeconds: (seconds: number) => number;
 } {
   function formatNumberWithCommas(data: number): string {
     const parts = data.toString().split(".");
@@ -43,6 +44,10 @@ export function useFormatting(): {
     return date.getTime() * Math.pow(10, 6);
   }
 
+  function getNanoSeconds(seconds: number): number {
+    return seconds * Math.pow(10, 9);
+  }
+
   function roundNumber(
     data: number,
     ratio: number,
@@ -65,6 +70,7 @@ export function useFormatting(): {
     formatDateToNanoSec,
     subSeconds,
     formatMinutesToSeconds,
+    getNanoSeconds,
   };
 }
 
