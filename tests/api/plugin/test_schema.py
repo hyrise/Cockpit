@@ -1,16 +1,8 @@
 """Tests for the Plugin schema."""
 
-from pytest import fixture, mark
-
 from hyrisecockpit.api.app.plugin.interface import PluginInterface
 from hyrisecockpit.api.app.plugin.model import Plugin
-from hyrisecockpit.api.app.plugin.schema import PluginSchema
-
-
-@fixture
-def schema() -> PluginSchema:
-    """Return a real Plugin schema."""
-    return PluginSchema()
+from hyrisecockpit.api.app.plugin.schema import PluginIDSchema, PluginSchema
 
 
 class TestPluginSchema:
@@ -20,22 +12,24 @@ class TestPluginSchema:
         """A Workload schema can be created."""
         assert schema
 
-    @mark.parametrize("name", ["Compression", "Clustering"])
-    def test_deserializes(self, schema: PluginSchema, name: str):
+    def test_deserializes(self, schema: PluginSchema, interface: PluginInterface):
         """A Workload schema can create a Workload model."""
-        interface: PluginInterface = {
-            "name": name,
-        }
         deserialized: PluginInterface = schema.load(interface)
+        assert deserialized
         plugin = Plugin(**deserialized)
-        assert name == plugin.name == deserialized["name"]
+        assert plugin
+        assert interface["name"] == deserialized["name"] == plugin.name
 
-    @mark.parametrize("name", ["Compression", "Clustering"])
-    def test_serializes(self, schema: PluginSchema, name: str):
+    def test_serializes(self, schema: PluginSchema, interface: PluginInterface):
         """A Workload model can be serialized with a Workload schema."""
-        interface: PluginInterface = {
-            "name": name,
-        }
         plugin = Plugin(**interface)
         serialized = schema.dump(plugin)
-        assert name == plugin.name == serialized["name"]
+        assert interface["name"] == plugin.name == serialized["name"]
+
+
+class TestPluginIDSchema:
+    """Tests for the PluginID schema."""
+
+    def test_creates(self, schema_id: PluginIDSchema):
+        """A Workload schema can be created."""
+        assert schema_id

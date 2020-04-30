@@ -30,7 +30,7 @@ def weights(request) -> Dict[str, int]:
 
 @fixture
 def interface(folder_name: str, frequency: int) -> WorkloadInterface:
-    """Return a real Workload model."""
+    """Return a Workload model."""
     return WorkloadInterface(folder_name=folder_name, frequency=frequency)
 
 
@@ -38,7 +38,7 @@ def interface(folder_name: str, frequency: int) -> WorkloadInterface:
 def detailed_interface(
     folder_name: str, frequency: int, weights: Dict[str, int]
 ) -> DetailedWorkloadInterface:
-    """Return a real DetailedWorkload model."""
+    """Return a DetailedWorkload model."""
     return DetailedWorkloadInterface(
         folder_name=folder_name, frequency=frequency, weights=weights
     )

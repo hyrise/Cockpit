@@ -26,7 +26,7 @@ def weights(request) -> Dict[str, int]:
 
 @fixture
 def workload(folder_name: str, frequency: int) -> Workload:
-    """Return a real Workload model."""
+    """Return a Workload model."""
     return Workload(folder_name=folder_name, frequency=frequency)
 
 
@@ -34,7 +34,7 @@ def workload(folder_name: str, frequency: int) -> Workload:
 def detailed_workload(
     folder_name: str, frequency: int, weights: Dict[str, int]
 ) -> Workload:
-    """Return a real DetailedWorkload model."""
+    """Return a DetailedWorkload model."""
     return DetailedWorkload(
         folder_name=folder_name, frequency=frequency, weights=weights
     )
