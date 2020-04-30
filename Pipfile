@@ -38,6 +38,8 @@ flask-restx = "*"
 werkzeug = "==0.16"
 flask-accepts = "*"
 marshmallow = "*"
+matplotlib = "*"
+numpy = "*"
 
 [requires]
 python_version = "3.8.2"
