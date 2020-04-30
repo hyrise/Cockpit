@@ -6,8 +6,20 @@ from flask.wrappers import Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 
-from .interface import PluginIDInterface, PluginInterface
-from .schema import PluginIDSchema, PluginSchema
+from .interface import (
+    DetailedPluginInterface,
+    PluginIDInterface,
+    PluginInterface,
+    PluginSettingBaseInterface,
+    PluginSettingInterface,
+)
+from .schema import (
+    DetailedPluginSchema,
+    PluginIDSchema,
+    PluginSchema,
+    PluginSettingBaseSchema,
+    PluginSettingSchema,
+)
 from .service import PluginService
 
 api = Namespace("Plugin", description="Control Plugins per database.")
@@ -34,6 +46,11 @@ class PluginController(Resource):
 class PluginIdController(Resource):
     """Controller of a Plugin per database."""
 
+    @responds(schema=DetailedPluginSchema, api=api)
+    def get(self, database_id: str) -> DetailedPluginInterface:
+        """Get all settings of a Plugin in a database."""
+        pass
+
     @accepts(schema=PluginSchema, api=api)
     def post(self, database_id: str) -> Response:
         """Activate a Plugin in a database."""
@@ -53,3 +70,10 @@ class PluginIdController(Resource):
             return Response(status=status)
         else:
             raise ValueError()
+
+    @accepts(schema=PluginSettingBaseSchema, api=api)
+    @responds(schema=PluginSettingSchema, api=api)
+    def put(self, database_id: str) -> PluginSettingInterface:  # type: ignore
+        """Set a setting of a Plugin in a database."""
+        interface: PluginSettingBaseInterface = request.parsed_obj  # noqa: F841
+        pass
