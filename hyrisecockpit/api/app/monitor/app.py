@@ -6,11 +6,10 @@ If run as a module, a flask server application will be started.
 
 from json import loads
 from time import time_ns
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List, Tuple, Union
 
 from flask import request
 from flask_restx import Namespace, Resource, fields
-from iso8601 import parse_date
 
 from hyrisecockpit.api.app.shared import (
     _get_active_databases,
@@ -438,6 +437,94 @@ model_database_status = api.clone(
 )
 
 
+def get_historical_data(
+    startts: int,
+    endts: int,
+    precision_ns: int,
+    table: str,
+    metrics: List[str],
+    database: str,
+) -> List[Dict[str, Union[int, float]]]:
+    """Retrieve historical data for provided metrics and precision."""
+    select_clause = ",".join(f" mean({metric}) as {metric}" for metric in metrics)
+    subquery = f"""SELECT {select_clause}
+        FROM {table}
+        WHERE time >=  $startts AND
+        time < $endts
+        GROUP BY TIME(1s)
+        FILL(0.0)"""  # fill empty 1s-slots with 0
+
+    query = f"""SELECT {select_clause}
+        FROM ({subquery})
+        WHERE time >= $startts AND time < $endts
+        GROUP BY TIME({precision_ns}ns)
+        FILL(0.0);"""  # do aggregation over time intervals of the precision_ns length
+
+    points = storage_connection.query(
+        query,
+        database=database,
+        bind_params={"startts": startts, "endts": endts},
+        epoch=True,
+    )
+    return list(points[table, None])
+
+
+def fill_missing_points(
+    startts: int,
+    endts: int,
+    precision: int,
+    table_name: str,
+    metrics: List[str],
+    points: List[Dict],
+) -> List[Dict]:
+    """Fill missing points with zero."""
+    result: List[Dict[str, Union[int, float]]] = []
+    index: int = 0
+
+    for timestamp in range(startts, endts, precision):
+        point: Dict = {"timestamp": timestamp}
+        if index < len(points) and points[index]["time"] == timestamp:
+            for metric in metrics:
+                point[metric] = points[index][metric]
+            index = index + 1
+        else:
+            for metric in metrics:
+                point[metric] = 0.0
+        result.append(point)
+
+    return result
+
+
+def get_interval_limits(
+    precise_startts: int, precise_endts: int, precision_ns: int
+) -> Tuple[int, int]:
+    """Get interval limits for historical data."""
+    startts_rounded: int = int(precise_startts / precision_ns) * precision_ns
+    endts_rounded: int = int(precise_endts / precision_ns) * precision_ns
+
+    return startts_rounded, endts_rounded
+
+
+def get_historical_metric(
+    startts: int, endts: int, precision_ns: int, table_name: str, metrics: List
+) -> List[Dict[str, Union[str, List]]]:
+    """Get historical metric data for all databases."""
+    result: List = []
+    for database in _get_active_databases():
+        metric_points: List[Dict[str, Union[int, float]]] = get_historical_data(
+            startts, endts, precision_ns, table_name, metrics, database
+        )
+        metric: List[Dict[str, float]] = fill_missing_points(
+            startts, endts, precision_ns, table_name, metrics, metric_points
+        )
+        database_data: Dict[str, Union[str, List]] = {
+            "id": database,
+            table_name: metric,
+        }
+        result.append(database_data)
+    return result
+
+
 @api.route("/throughput")
 class Throughput(Resource):
     """Throughput information of all databases."""
@@ -447,45 +534,22 @@ class Throughput(Resource):
         params={
             "startts": "Start of a time interval",
             "endts": "End of a time interval",
+            "precision": "Length of the aggregation interval",
         },
     )
     def get(self) -> Union[int, List]:
         """Return throughput information in a given time range."""
         precise_startts: int = int(request.args.get("startts"))  # type: ignore
         precise_endts: int = int(request.args.get("endts"))  # type: ignore
+        precision_ns: int = int(request.args.get("precision"))  # type: ignore
 
-        startts_rounded: int = int(precise_startts / 1_000_000_000) * 1_000_000_000
-        endts_rounded: int = int(precise_endts / 1_000_000_000) * 1_000_000_000
+        (startts, endts) = get_interval_limits(
+            precise_startts, precise_endts, precision_ns
+        )
+        response: List[Dict[str, Union[str, List]]] = get_historical_metric(
+            startts, endts, precision_ns, "throughput", ["throughput"]
+        )
 
-        # take nearest whole numbers of seconds
-        startts: int = startts_rounded if precise_startts % 1_000_000_000 == 0 else startts_rounded + 1_000_000_000
-        endts: int = endts_rounded if precise_endts % 1_000_000_000 == 0 else endts_rounded + 1
-
-        response: List = []
-        for database in _get_active_databases():
-            database_data: Dict[str, Union[str, List]] = {
-                "id": database,
-            }
-
-            result = storage_connection.query(
-                "SELECT * FROM throughput WHERE time >= $startts AND time < $endts;",
-                database=database,
-                bind_params={"startts": startts, "endts": endts},
-            )
-            throughput_rows: List = list(result["throughput", None])
-            throughput: List[Dict[str, int]] = []
-            for timestamp in range(startts, endts, 1_000_000_000):
-                throughput_value = 0
-                for row in throughput_rows:
-                    if int(parse_date(row["time"]).timestamp() * 1e9) == timestamp:
-                        throughput_value = row["throughput"]
-                        break
-                throughput.append(
-                    {"timestamp": timestamp, "throughput": throughput_value}
-                )
-
-            database_data["throughput"] = throughput
-            response.append(database_data)
         return response
 
 
@@ -558,43 +622,22 @@ class Latency(Resource):
         params={
             "startts": "Start of a time interval",
             "endts": "End of a time interval",
+            "precision": "Length of the aggregation interval",
         },
     )
     def get(self) -> Union[int, List]:
         """Return latency information in a given time range."""
         precise_startts: int = int(request.args.get("startts"))  # type: ignore
         precise_endts: int = int(request.args.get("endts"))  # type: ignore
+        precision_ns: int = int(request.args.get("precision"))  # type: ignore
 
-        startts_rounded: int = int(precise_startts / 1_000_000_000) * 1_000_000_000
-        endts_rounded: int = int(precise_endts / 1_000_000_000) * 1_000_000_000
+        (startts, endts) = get_interval_limits(
+            precise_startts, precise_endts, precision_ns
+        )
+        response: List[Dict[str, Union[str, List]]] = get_historical_metric(
+            startts, endts, precision_ns, "latency", ["latency"]
+        )
 
-        # take nearest whole numbers of seconds
-        startts: int = startts_rounded if precise_startts % 1_000_000_000 == 0 else startts_rounded + 1_000_000_000
-        endts: int = endts_rounded if precise_endts % 1_000_000_000 == 0 else endts_rounded + 1
-        response: List = []
-
-        for database in _get_active_databases():
-            database_data: Dict[str, Union[str, List]] = {
-                "id": database,
-            }
-
-            result = storage_connection.query(
-                "SELECT * FROM latency WHERE time >= $startts AND time < $endts;",
-                database=database,
-                bind_params={"startts": startts, "endts": endts},
-            )
-            latency_rows: List = list(result["latency", None])
-            latency: List[Dict[str, int]] = []
-            for timestamp in range(startts, endts, 1_000_000_000):
-                latency_value = 0
-                for row in latency_rows:
-                    if int(parse_date(row["time"]).timestamp() * 1e9) == timestamp:
-                        latency_value = row["latency"]
-                        break
-                latency.append({"timestamp": timestamp, "latency": latency_value})
-
-            database_data["latency"] = latency
-            response.append(database_data)
         return response
 
 
@@ -639,34 +682,22 @@ class QueueLength(Resource):
         params={
             "startts": "Start of a time interval",
             "endts": "End of a time interval",
+            "precision": "Length of the aggregation interval",
         },
     )
     def get(self) -> Union[int, List]:
         """Return queue length information in a given time range."""
-        startts: int = int(request.args.get("startts"))  # type: ignore
-        endts: int = int(request.args.get("endts"))  # type: ignore
+        precise_startts: int = int(request.args.get("startts"))  # type: ignore
+        precise_endts: int = int(request.args.get("endts"))  # type: ignore
+        precision_ns: int = int(request.args.get("precision"))  # type: ignore
 
-        response: List = []
-        for database in _get_active_databases():
-            database_data: Dict[str, Union[str, List]] = {
-                "id": database,
-            }
+        (startts, endts) = get_interval_limits(
+            precise_startts, precise_endts, precision_ns
+        )
+        response: List[Dict[str, Union[str, List]]] = get_historical_metric(
+            startts, endts, precision_ns, "queue_length", ["queue_length"]
+        )
 
-            result = storage_connection.query(
-                "SELECT * FROM queue_length WHERE time >= $startts AND time < $endts;",
-                database=database,
-                bind_params={"startts": startts, "endts": endts},
-            )
-            queue_length_rows: List = list(result["queue_length", None])
-            queue_length: List[Dict[str, int]] = [
-                {
-                    "timestamp": int(parse_date(row["time"]).timestamp() * 1e9),
-                    "queue_length": row["queue_length"],
-                }
-                for row in queue_length_rows
-            ]
-            database_data["queue_length"] = queue_length
-            response.append(database_data)
         return response
 
 
@@ -698,48 +729,66 @@ class System(Resource):
         params={
             "startts": "Start of a time interval",
             "endts": "End of a time interval",
+            "precision": "Length of the aggregation interval",
         },
     )
     def get(self) -> Union[int, List]:
-        """Return cpu and memory information for every database and the number of threads it is using from database manager."""
-        startts: int = int(request.args.get("startts"))  # type: ignore
-        endts: int = int(request.args.get("endts"))  # type: ignore
+        """Return system data in a given time range."""
+        precise_startts: int = int(request.args.get("startts"))  # type: ignore
+        precise_endts: int = int(request.args.get("endts"))  # type: ignore
+        precision_ns: int = int(request.args.get("precision"))  # type: ignore
 
-        response: List = []
-        for database in _get_active_databases():
-            database_data: Dict[str, Union[str, List]] = {
-                "id": database,
+        (startts, endts) = get_interval_limits(
+            precise_startts, precise_endts, precision_ns
+        )
+        historical_system_data: List[Dict] = get_historical_metric(
+            startts,
+            endts,
+            precision_ns,
+            "system_data",
+            [
+                "cpu_clock_speed",
+                "cpu_count",
+                "cpu_process_usage",
+                "cpu_system_usage",
+                "database_threads",
+                "free_memory",
+                "total_memory",
+                "used_memory",
+            ],
+        )
+        response: List[Dict] = [
+            {
+                "id": database_data["id"],
+                "system_data": [
+                    {
+                        "timestamp": point["timestamp"],
+                        "system_data": {
+                            "cpu": {
+                                "cpu_system_usage": point["cpu_system_usage"],
+                                "cpu_process_usage": point["cpu_process_usage"],
+                                "cpu_count": point["cpu_count"],
+                                "cpu_clock_speed": point["cpu_clock_speed"],
+                            },
+                            "memory": {
+                                "free": point["free_memory"],
+                                "used": point["used_memory"],
+                                "total": point["total_memory"],
+                                "percent": (
+                                    point["used_memory"] / point["total_memory"]
+                                )
+                                if point["total_memory"] != 0.0
+                                else 0.0,
+                            },
+                            "database_threads": point["database_threads"],
+                        },
+                    }
+                    for point in database_data["system_data"]
+                ],
             }
+            for database_data in historical_system_data
+        ]
 
-            result = storage_connection.query(
-                "SELECT * FROM system_data WHERE time >= $startts AND time < $endts;",
-                database=database,
-                bind_params={"startts": startts, "endts": endts},
-            )
-            system_data_rows: List = list(result["system_data", None])
-            system_data: List[Dict[str, Union[int, Dict]]] = [
-                {
-                    "timestamp": int(parse_date(row["time"]).timestamp() * 1e9),
-                    "system_data": {
-                        "cpu": {
-                            "cpu_system_usage": row["cpu_system_usage"],
-                            "cpu_process_usage": row["cpu_process_usage"],
-                            "cpu_count": row["cpu_count"],
-                            "cpu_clock_speed": row["cpu_clock_speed"],
-                        },
-                        "memory": {
-                            "free": row["free_memory"],
-                            "used": row["used_memory"],
-                            "total": row["total_memory"],
-                            "percent": row["used_memory"] / row["total_memory"],
-                        },
-                        "database_threads": row["database_threads"],
-                    },
-                }
-                for row in system_data_rows
-            ]
-            database_data["system_data"] = system_data
-            response.append(database_data)
         return response
 
 

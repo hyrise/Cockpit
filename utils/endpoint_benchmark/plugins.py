@@ -139,10 +139,10 @@ class DisplayReply:
             output_monitor = self._get_endpoint_output("monitor")
             output_control = self._get_endpoint_output("control")
             if output_monitor:
-                print_purple(f"\nMonitor")
+                print_purple(f"\nMonitor")  # noqa
                 self._display_endpoint_output(output_monitor)
             if output_control:
-                print_purple(f"\nControl")
+                print_purple(f"\nControl")  # noqa
                 self._display_endpoint_output(output_control)
             sleep(self._configuration["time"])
 

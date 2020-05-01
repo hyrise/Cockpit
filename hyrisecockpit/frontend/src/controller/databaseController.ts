@@ -1,11 +1,11 @@
 import { eventBus } from "@/plugins/eventBus";
 import {
-  DatabaseController,
   Database,
   DatabaseCPUResponse,
   DatabaseStorageResponse,
   DatabaseResponse,
 } from "@/types/database";
+import { DatabaseController } from "@/types/controller";
 import { useDatabaseService } from "@/services/databaseService";
 import { ref, reactive, computed } from "@vue/composition-api";
 import { equals } from "@/helpers/methods";
@@ -33,6 +33,17 @@ export function useDatabaseController(): DatabaseController {
       updateDatabaseCPUInformation(data);
     }
   });
+
+  eventBus.$on(
+    "DATABASE_STATUS_CHANGED",
+    (databaseId: string, blocked: boolean, active: boolean) => {
+      if (databasesUpdated.value) {
+        const database = getDatabaseById(databaseId);
+        database.active = active;
+        database.blocked = blocked;
+      }
+    }
+  );
 
   function updateDatabases(): void {
     const updatedDatabases: Database[] = [];
@@ -81,6 +92,8 @@ export function useDatabaseController(): DatabaseController {
         numberOfWorkers: database.numberOfWorkers,
       },
       tables: storageInformation!.tables,
+      blocked: false,
+      active: true,
     } as Database);
   }
 

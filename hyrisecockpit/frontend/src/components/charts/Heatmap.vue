@@ -12,6 +12,7 @@ import { colorValueDefinition } from "../../meta/colors";
 
 interface Props extends ChartProps {
   autosize: boolean;
+  maxValue: number;
 }
 
 export default defineComponent({
@@ -20,6 +21,10 @@ export default defineComponent({
     autosize: {
       type: Boolean,
       default: true,
+    },
+    maxValue: {
+      type: Number,
+      default: 0,
     },
     ...ChartPropsValidation,
   },
@@ -31,12 +36,17 @@ export default defineComponent({
     const { updateLayout } = useResizingOnChange(props);
 
     onMounted(() => {
-      Plotly.newPlot(props.graphId, [getDataset()], getLayout(), getOptions());
+      Plotly.newPlot(
+        props.graphId,
+        [getDataset(props.maxValue)],
+        getLayout(),
+        getOptions()
+      );
       useChartReactivity(props, context, updateDataset, updateLayout);
     });
 
     function updateDataset(): void {
-      Plotly.addTraces(props.graphId, getDataset(props.data));
+      Plotly.addTraces(props.graphId, getDataset(props.maxValue, props.data));
       Plotly.deleteTraces(props.graphId, 0);
     }
   },
@@ -46,7 +56,7 @@ function useHeatMapConfiguration(
   chartConfiguration: ChartConfiguration,
   autosize: boolean
 ): {
-  getDataset: (data?: AccessData) => Object;
+  getDataset: (maxValue: number, data?: AccessData) => Object;
   getLayout: () => Object;
   getOptions: () => Object;
 } {
@@ -78,6 +88,7 @@ function useHeatMapConfiguration(
   }
 
   function getDataset(
+    maxValue: number,
     data: AccessData = {
       dataByChunks: [],
       descriptions: [],
@@ -89,6 +100,8 @@ function useHeatMapConfiguration(
       z: data.dataByChunks,
       x: data.columns,
       y: data.chunks,
+      zmin: 0,
+      zmax: maxValue,
       text: data.descriptions,
       type: "heatmap",
       colorscale: [
