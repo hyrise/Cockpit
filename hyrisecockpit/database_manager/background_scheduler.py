@@ -413,22 +413,32 @@ class BackgroundJobManager(object):
                 "storage", {"storage_meta_information": dumps(output)}, time_stamp
             )
 
+    def _get_origin_tables_from_workload_type(
+        self, table_names: List[str], workload_type: str
+    ):
+        return [table_name.split(f"_{workload_type}")[0] for table_name in table_names]
+
     def _generate_table_loading_queries(
-        self, table_names: List[str], folder_name: str
+        self, table_names: List[str], workload_type: str
     ) -> List[Tuple[str, Tuple[Tuple[Union[str, int], Optional[str]], ...]]]:
         """Generate queries in tuple form that load tables."""
         # TODO change absolute to relative path
 
+        origin_table_names = self._get_origin_tables_from_workload_type(
+            table_names, workload_type
+        )
+
         return [
             (
-                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                "COPY %s_%s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
                 (
                     (name, "as_is"),
-                    (folder_name, "as_is"),
-                    (name.split("_")[0], "as_is"),
+                    (workload_type, "as_is"),
+                    (workload_type, "as_is"),
+                    (name, "as_is"),
                 ),
             )
-            for name in table_names
+            for name in origin_table_names
         ]
 
     def _execute_queries_parallel(self, table_names, queries, folder_name) -> None:
