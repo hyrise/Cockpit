@@ -13,6 +13,8 @@ export interface Database {
   color: string;
   systemDetails: DatabaseSystemDetails;
   tables: string[];
+  blocked: boolean;
+  active: boolean;
 }
 
 export interface DatabaseService {
