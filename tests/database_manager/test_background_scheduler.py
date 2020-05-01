@@ -114,7 +114,6 @@ class TestBackgroundJobManager:
             database_id,
             get_database_blocked(),
             get_connection_pool(),
-            fake_loaded_tables,
             get_hyrise_active(),
             worker_pool,
             storage_host,
@@ -141,7 +140,6 @@ class TestBackgroundJobManager:
         assert background_job_manager._storage_port == storage_port
         assert background_job_manager._storage_user == storage_user
         assert background_job_manager._storage_password == storage_password
-        assert background_job_manager._loaded_tables == fake_loaded_tables
         assert isinstance(background_job_manager._previous_chunks_data, dict)
         assert background_job_manager._hyrise_active.value == get_hyrise_active().value
 
@@ -863,8 +861,6 @@ class TestBackgroundJobManager:
         fake_queries: Tuple[str] = ("Ping Hyrise",)
         folder_name: str = "Hallo"
 
-        background_job_manager._loaded_tables = {}
-
         background_job_manager._execute_queries_parallel(
             fake_table_names, fake_queries, folder_name
         )
@@ -881,117 +877,52 @@ class TestBackgroundJobManager:
         mocked_process.join.assert_called_once()
         mocked_process.terminate.assert_called_once()
 
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler.execute_table_query",
-        fake_execute_table_query,
-    )
-    def test_successfully_updates_loaded_tables(
-        self, background_job_manager: BackgroundJobManager
-    ) -> None:
-        """Test successfully update table loading queries in parallel."""
-        # TODO adjust for Mac
-        fake_table_names: List[str] = ["HyriseAreYouStillAlive"]
-        fake_queries: Tuple[str] = ("Ping Hyrise",)
-        folder_name: str = "Hallo"
-
-        background_job_manager._loaded_tables = {}
-
-        background_job_manager._execute_queries_parallel(
-            fake_table_names, fake_queries, folder_name
-        )
-
-        assert "HyriseAreYouStillAlive" in background_job_manager._loaded_tables
-        assert (
-            background_job_manager._loaded_tables["HyriseAreYouStillAlive"] == "Hallo"
-        )
-
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler.execute_table_query",
-        fake_unsuccessful_execute_table_query,
-    )
-    def test_doesnt_update_loaded_tables_when_unsuccessful(
-        self, background_job_manager: BackgroundJobManager
-    ) -> None:
-        """Test doesnt update loaded tables when loading wasn't successful."""
-        fake_table_names: List[str] = ["HyriseAreYouStillAlive"]
-        fake_queries: Tuple[str] = ("Ping Hyrise",)
-        folder_name: str = "Hallo"
-
-        background_job_manager._loaded_tables = {}
-
-        background_job_manager._execute_queries_parallel(
-            fake_table_names, fake_queries, folder_name
-        )
-
-        assert "HyriseAreYouStillAlive" not in background_job_manager._loaded_tables
-
     def test_successfully_calls_execute_queries(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully calls execute queries in load tables job."""
+        folder_name = "folder_name"
+        table_names = ["table1", "table2"]
         background_job_manager._database_blocked.value = True
 
         background_job_manager._generate_table_loading_queries = MagicMock()  # type: ignore
         background_job_manager._execute_queries_parallel = MagicMock()  # type: ignore
 
-        background_job_manager._load_tables_job(["table_names"], "folder_name")
+        background_job_manager._load_tables_job(table_names, folder_name)
 
         background_job_manager._generate_table_loading_queries.assert_called_once()  # type: ignore
         background_job_manager._execute_queries_parallel.assert_called_once()  # type: ignore
 
         assert not background_job_manager._database_blocked.value
 
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler._table_names", fake_dict,
-    )
     def test_get_load_table_names(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test gets table names of not imported tables."""
-        fake_loaded_tables: Dict[str, Optional[str]] = {
-            "The Dough Rollers": "alternative",
-            "Broken Witt Rebels": "Hip Hop",
-            "Bonny Doon": "alternative",
-            "Jack White": "alternative",
-            "Gary Clark Jr.": "Rock",
-            "Greta Van Fleet": "Rock",
-            "Tenacious D": "Rock",
+        background_job_manager._get_required_table_names = MagicMock()  # type: ignore
+        background_job_manager._get_required_table_names.return_value = [  # type: ignore
+            "table_1",
+            "table_2",
+        ]
+        background_job_manager._get_existing_tables = MagicMock()  # type: ignore
+        background_job_manager._get_existing_tables.return_value = {  # type: ignore
+            "existing": ["table_1"],
+            "not_existing": ["table_2"],
         }
-
-        background_job_manager._loaded_tables = fake_loaded_tables
 
         received: List[str] = background_job_manager._get_load_table_names(
             "alternative"
         )
 
-        expected = ["Broken Witt Rebels"]
+        expected = ["table_2"]
 
         assert received == expected
-
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler._table_names", fake_dict,
-    )
-    def test_get_empty_load_table_names(
-        self, background_job_manager: BackgroundJobManager
-    ) -> None:
-        """Test gets empty list when workload isn't available."""
-        fake_loaded_tables: Dict[str, Optional[str]] = {
-            "The Dough Rollers": "alternative",
-            "Broken Witt Rebels": "Hip Hop",
-            "Bonny Doon": "alternative",
-            "Jack White": "alternative",
-            "Gary Clark Jr.": "Rock",
-            "Greta Van Fleet": "Rock",
-            "Tenacious D": "Rock",
-        }
-
-        background_job_manager._loaded_tables = fake_loaded_tables
-
-        received: List = background_job_manager._get_load_table_names(
-            "techno techno... :("
+        background_job_manager._get_required_table_names.assert_called_once_with(  # type: ignore
+            "alternative"
         )
-
-        assert received == []
+        background_job_manager._get_existing_tables.assert_called_once_with(  # type: ignore
+            ["table_1", "table_2"]
+        )
 
     def test_doesnt_load_tables_when_database_locked(
         self, background_job_manager: BackgroundJobManager
@@ -1246,25 +1177,34 @@ class TestBackgroundJobManager:
         )
         assert not background_job_manager._database_blocked.value
 
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler._table_names", fake_dict,
-    )
     def test_get_delete_table_names(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
-        """Test gets table names of imported tables."""
+        """Test gets table names of not imported tables."""
+        background_job_manager._get_required_table_names = MagicMock()  # type: ignore
+        background_job_manager._get_required_table_names.return_value = [  # type: ignore
+            "table_1",
+            "table_2",
+        ]
+        background_job_manager._get_existing_tables = MagicMock()  # type: ignore
+        background_job_manager._get_existing_tables.return_value = {  # type: ignore
+            "existing": ["table_1"],
+            "not_existing": ["table_2"],
+        }
+
         received: List[str] = background_job_manager._get_delete_table_names(
             "alternative"
         )
 
-        expected: List[str] = [
-            "The Dough Rollers_alternative",
-            "Broken Witt Rebels_alternative",
-            "Bonny Doon_alternative",
-            "Jack White_alternative",
-        ]
+        expected = ["table_1"]
 
         assert received == expected
+        background_job_manager._get_required_table_names.assert_called_once_with(  # type: ignore
+            "alternative"
+        )
+        background_job_manager._get_existing_tables.assert_called_once_with(  # type: ignore
+            ["table_1", "table_2"]
+        )
 
     def test_doesnt_delete_tables_when_database_locked(
         self, background_job_manager: BackgroundJobManager
