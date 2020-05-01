@@ -68,8 +68,9 @@ def update_chunks_data(
     chunks_data = {}
     if not meta_segments.empty:
         new_chunks_data = _create_chunks_dictionary(meta_segments)
+        new_chunks_deep_copy = deepcopy(new_chunks_data)
         chunks_data = _calculate_chunks_difference(
-            deepcopy(new_chunks_data), previous_chunks_data
+            new_chunks_deep_copy, previous_chunks_data
         )
         previous_chunks_data = new_chunks_data
 

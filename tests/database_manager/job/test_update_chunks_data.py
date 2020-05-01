@@ -12,6 +12,14 @@ from hyrisecockpit.database_manager.job.update_chunks_data import (
     update_chunks_data,
 )
 
+fake_database_blocked = "blocked"
+fake_connection_factory = "connection_factory"
+fake_storage_host = "influx"
+fake_storage_port = "666"
+fake_storage_user = "Me"
+fake_storage_password = "super password"
+fake_database_id = "Egal wie dicht du bist Goethe war dichter."
+
 
 class TestUpdateChunksData:
     """Tests for the update chunk data job."""
@@ -77,13 +85,6 @@ class TestUpdateChunksData:
         mock_cursor = MagicMock()
         mock_storage_cursor.return_value.__enter__.return_value = mock_cursor
 
-        fake_database_blocked = "blocked"
-        fake_connection_factory = "connection_factory"
-        fake_storage_host = "influx"
-        fake_storage_port = "666"
-        fake_storage_user = "Me"
-        fake_storage_password = "super password"
-        fake_database_id = "Egal wie dicht du bist Goethe war dichter."
         expected_sql = """SELECT table_name, column_name, chunk_id, (point_accesses + sequential_accesses + monotonic_accesses + random_accesses) as access_count
         FROM meta_segments;"""
 
@@ -135,13 +136,6 @@ class TestUpdateChunksData:
         mock_deep_copy.return_value = {"new": 55}
         mock_calculate_chunks_difference.return_value = {"new": 55}
 
-        fake_database_blocked = "blocked"
-        fake_connection_factory = "connection_factory"
-        fake_storage_host = "influx"
-        fake_storage_port = "666"
-        fake_storage_user = "Me"
-        fake_storage_password = "super password"
-        fake_database_id = "Egal wie dicht du bist Goethe war dichter."
         expected_sql = """SELECT table_name, column_name, chunk_id, (point_accesses + sequential_accesses + monotonic_accesses + random_accesses) as access_count
         FROM meta_segments;"""
 
