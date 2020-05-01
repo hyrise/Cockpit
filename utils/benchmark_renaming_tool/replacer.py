@@ -1,7 +1,7 @@
 """This module todo."""
 from os import fsencode, listdir
 
-from utils.benchmark_renaming_tool.table_names import table_names as tables
+from hyrisecockpit.database_manager.table_names import table_names as tables
 from utils.endpoint_benchmark.print_colors import print_green, print_red
 
 

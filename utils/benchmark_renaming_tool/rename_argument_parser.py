@@ -88,10 +88,10 @@ class ArgumentParser:
         if not scale:
             return None
         if not self.parser.parse_args().source:
-            print_red(f"\nPlease add valid source path\n")
+            print_red("\nPlease add valid source path\n")
             return None
         if not self.parser.parse_args().destination:
-            print_red(f"\nPlease add valid destination path\n")
+            print_red("\nPlease add valid destination path\n")
             return None
         return {
             "path_to_original": self.parser.parse_args().source,
