@@ -706,6 +706,12 @@ class TestBackgroundJobManager:
         """Test successfully generates table loading queries."""
         fake_folder_name: str = "hyriseDown"
         fake_table_names: List[str] = ["keep", "on", "going", "please!!!"]
+        mock_get_original_table_names_from_workload_type = MagicMock()
+        mock_get_original_table_names_from_workload_type.return_value = fake_table_names
+
+        background_job_manager._get_origin_tables_from_workload_type = (  # type: ignore
+            mock_get_original_table_names_from_workload_type
+        )
 
         received_queries = background_job_manager._generate_table_loading_queries(
             fake_table_names, fake_folder_name
@@ -1290,3 +1296,26 @@ class TestBackgroundJobManager:
         mock_storage_cursor.log_meta_information.assert_called_once_with(
             "queue_length", {"queue_length": 100}, 1000
         )
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler._table_names",
+        {"benchmark": ["table1", "table2"]},
+    )
+    def test_get_required_table_names(
+        self, background_job_manager: BackgroundJobManager
+    ):
+        """Test get required table names."""
+        required_tables = background_job_manager._get_required_table_names(
+            "benchmark_sf"
+        )
+
+        assert required_tables == ["table1_benchmark_sf", "table2_benchmark_sf"]
+
+    def test_get_origin_table_names(self, background_job_manager: BackgroundJobManager):
+        """Test get original table names."""
+        table_names = ["table1_benchmark_sf", "table2_benchmark_sf"]
+        required_tables = background_job_manager._get_origin_tables_from_workload_type(
+            table_names, "benchmark_sf"
+        )
+
+        assert required_tables == ["table1", "table2"]
