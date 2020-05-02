@@ -42,6 +42,12 @@ config = {
         "label": "number of items",
         "function": idle_function,
     },
+    "cpu_process_usage": {
+        "table_name": "system_data",
+        "metric": "cpu_process_usage",
+        "label": "% usage",
+        "function": idle_function,
+    },
 }
 
 
