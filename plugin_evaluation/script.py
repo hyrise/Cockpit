@@ -20,22 +20,25 @@ def show_bar(prefix: str, sec: int) -> None:
         n_routes = int(progress * length)
         n_spaces = length - n_routes - 1
         n_hats = 1 if n_routes != length else 0
-        progress_percent = "%3.1f" % (progress * 100.0)
-        time_left = "%3.1f" % (sec - progress * sec)
+        progress_percent = "%.1f" % (progress * 100.0)
+        time_left = "%.1f" % (sec - progress * sec)
         stdout.write(
-            "\r{0}[{1}{2}{3}] {4} % {5} s".format(
+            "\r{0}[{1}{2}{3}] {4} % {5} s / {6} s".format(
                 prefix,
                 "=" * n_routes,
                 ">" * n_hats,
                 " " * n_spaces,
                 progress_percent,
                 time_left,
+                "%.1f" % sec,
             )
         )
         stdout.flush()
         sleep(1.0 / frequency)
     stdout.write(
-        "\r{0}[{1}{2}] {3} % {4} s\n".format(prefix, "=" * length, "", 100.0, 0.0)
+        "\r{0}[{1}{2}] {3} % {4} s / {5} s\n".format(
+            prefix, "=" * length, "", 100.0, 0.0, "%.1f" % sec
+        )
     )
 
 
