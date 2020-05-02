@@ -36,6 +36,12 @@ config = {
         "label": "ms",
         "function": ns_to_ms,
     },
+    "queue_length": {
+        "table_name": "queue_length",
+        "metric": "queue_length",
+        "label": "number of items",
+        "function": idle_function,
+    },
 }
 
 
@@ -90,7 +96,7 @@ class Exporter:
         secs = mdate.epoch2num(time)
 
         figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
-        plt.title("Title")
+        plt.title(f"{metric}")
         plt.ylim(bottom=0.0, top=np.amax(metric_values) * 1.3)
         plt.plot_date(secs, metric_values, "-b", label=f"{metric}")
         plt.ylabel(f"{label}")
