@@ -18,13 +18,24 @@ def idle_function(value):
     return value
 
 
+def ns_to_ms(value):
+    """Convert ns to ms."""
+    return value / 1_000_000
+
+
 config = {
     "throughput": {
         "table_name": "throughput",
         "metric": "throughput",
         "label": "Queries / second",
         "function": idle_function,
-    }
+    },
+    "latency": {
+        "table_name": "latency",
+        "metric": "latency",
+        "label": "ms",
+        "function": ns_to_ms,
+    },
 }
 
 
