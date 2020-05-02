@@ -109,4 +109,4 @@ class Exporter:
         plt.xlabel("Time")
         plt.legend()
 
-        plt.savefig(f"{metric}.png", dpi=300)
+        plt.savefig(f"export/{metric}.png", dpi=300)
