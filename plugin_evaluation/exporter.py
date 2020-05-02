@@ -1,6 +1,7 @@
 """Module for export of the Influx data to PDF."""
 import matplotlib.dates as mdate
 import matplotlib.pyplot as plt
+import numpy as np
 from influxdb import InfluxDBClient
 from matplotlib.pyplot import figure
 
@@ -11,11 +12,18 @@ from plugin_evaluation.settings import (
     STORAGE_USER,
 )
 
+
+def idle_function(value):
+    """Doesn't change the input value."""
+    return value
+
+
 config = {
     "throughput": {
         "table_name": "throughput",
         "metric": "throughput",
         "label": "Queries / second",
+        "function": idle_function,
     }
 }
 
@@ -45,22 +53,28 @@ class Exporter:
         """Plot metric data for a given database."""
         metric_config = config[metric]
         points = self.get_metric_data(
-            metric_config["table_name"],
-            metric_config["metric"],
+            metric_config["table_name"],  # type: ignore
+            metric_config["metric"],  # type: ignore
             database,
             startts,
             endts,
         )
-        self.export_metric(metric_config["metric"], metric_config["label"], points)
+        self.export_metric(
+            metric_config["metric"],  # type: ignore
+            metric_config["label"],  # type: ignore
+            points,
+            metric_config["function"],
+        )
 
-    def export_metric(self, metric: str, label: str, points):
+    def export_metric(self, metric: str, label: str, points, function):
         """Export metric to file."""
         time = [int(point["time"] / 1_000_000_000) for point in points]
-        metric_values = [point[metric] for point in points]
+        metric_values = [function(point[metric]) for point in points]
         secs = mdate.epoch2num(time)
 
         figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
         plt.title("Title")
+        plt.ylim(bottom=0.0, top=np.amax(metric_values) * 1.3)
         plt.plot_date(secs, metric_values, "-b", label=f"{metric}")
         plt.ylabel(f"{label}")
         plt.xlabel("Time")
