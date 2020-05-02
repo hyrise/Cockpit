@@ -44,12 +44,10 @@ def show_bar(prefix: str, sec: int) -> None:
 
 print(intro)
 
-stdout.write("Starting cockpit...")
 cockpit = Cockpit()
 cockpit.start()
-stdout.write("\rStarting cockpit...                 DONE\n")
 
-sleep(3.0)
+show_bar("Starting cockpit...                 ", 3)
 
 stdout.write("Adding database...")
 cockpit.backend.add_database("momentum", DATABASE_HOST, DATABASE_PORT)
@@ -60,7 +58,6 @@ show_bar("Waiting default tables to load...   ", 5)
 stdout.write("Starting a workload...")
 cockpit.backend.start_workload("tpch_0_1", 300)
 stdout.write("\rStarting a workload...              DONE\n")
-
 
 startts = time_ns()
 
@@ -77,12 +74,9 @@ stdout.write("Removing database...")
 cockpit.backend.remove_database("momentum")
 stdout.write("\rRemoving database...                DONE\n")
 
-
 stdout.write("Cockpit shutdown...")
 cockpit.shutdown()
-stdout.write("\rCockpit shutdown...                 DONE\n")
-
-sleep(3.0)
+show_bar("Cockpit shutdown...                 ", 3)
 
 stdout.write("Export...")
 exporter = Exporter()
