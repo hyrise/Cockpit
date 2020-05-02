@@ -52,8 +52,14 @@ class Exporter:
         self, table_name: str, metric: str, database: str, startts: int, endts: int
     ):
         """Get metric data for provided time range."""
+        query: str = f"""SELECT MEAN({metric}) AS {metric}
+            FROM {table_name}
+            WHERE time >= $startts
+            AND time < $endts
+            GROUP BY TIME(1s)
+            FILL(0.0)"""
         result = self._client.query(
-            f"SELECT {metric} FROM {table_name} WHERE time >= $startts AND time < $endts;",
+            query,
             database=database,
             bind_params={"startts": startts, "endts": endts},
             epoch=True,
