@@ -26,25 +26,17 @@ def ns_to_ms(value):
 config = {
     "throughput": {
         "table_name": "throughput",
-        "metric": "throughput",
         "label": "Queries / second",
         "function": idle_function,
     },
-    "latency": {
-        "table_name": "latency",
-        "metric": "latency",
-        "label": "ms",
-        "function": ns_to_ms,
-    },
+    "latency": {"table_name": "latency", "label": "ms", "function": ns_to_ms},
     "queue_length": {
         "table_name": "queue_length",
-        "metric": "queue_length",
         "label": "number of items",
         "function": idle_function,
     },
     "cpu_process_usage": {
         "table_name": "system_data",
-        "metric": "cpu_process_usage",
         "label": "% usage",
         "function": idle_function,
     },
@@ -83,13 +75,13 @@ class Exporter:
         metric_config = config[metric]
         points = self.get_metric_data(
             metric_config["table_name"],  # type: ignore
-            metric_config["metric"],  # type: ignore
+            metric,
             database,
             startts,
             endts,
         )
         self.export_metric(
-            metric_config["metric"],  # type: ignore
+            metric,
             metric_config["label"],  # type: ignore
             points,
             metric_config["function"],
