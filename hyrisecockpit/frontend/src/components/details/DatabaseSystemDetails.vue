@@ -9,18 +9,22 @@
     >
       <v-container fluid>
         <v-row no-gutters>
-          <v-col class="entry">
+          <v-col class="detail-icon">
             <v-icon left> mdi-database</v-icon>
+          </v-col>
+          <v-col>
             <b>ID: </b>
           </v-col>
-          <v-col id="database-id" class="top-entry">
+          <v-col id="database-id">
             <database-chip :database-id="database.id" />
           </v-col>
         </v-row>
         <v-divider class="divider" />
         <v-row no-gutters>
-          <v-col class="entry">
+          <v-col class="detail-icon">
             <v-icon left> mdi-desktop-classic</v-icon>
+          </v-col>
+          <v-col>
             <b>Host:</b>
           </v-col>
           <v-col id="database-host" class="entry">
@@ -28,8 +32,10 @@
           </v-col>
         </v-row>
         <v-row no-gutters>
-          <v-col class="entry">
+          <v-col class="detail-icon">
             <v-icon left> mdi-memory</v-icon>
+          </v-col>
+          <v-col>
             <b>Memory capacity:</b>
           </v-col>
           <v-col id="database-memory-capacity" class="entry">
@@ -37,8 +43,10 @@
           </v-col>
         </v-row>
         <v-row no-gutters>
-          <v-col class="entry">
+          <v-col class="detail-icon">
             <v-icon left> mdi-shoe-print</v-icon>
+          </v-col>
+          <v-col>
             <b>Memory footprint:</b>
           </v-col>
           <v-col id="database-memory-footprint" class="entry">
@@ -46,8 +54,10 @@
           </v-col>
         </v-row>
         <v-row no-gutters>
-          <v-col class="entry">
+          <v-col class="detail-icon">
             <v-icon left> mdi-cpu-64-bit</v-icon>
+          </v-col>
+          <v-col>
             <b>Number of CPUs:</b>
           </v-col>
           <v-col id="database-number-cpus" class="entry">
@@ -55,8 +65,10 @@
           </v-col>
         </v-row>
         <v-row no-gutters>
-          <v-col class="entry">
+          <v-col class="detail-icon">
             <v-icon left> mdi-account-hard-hat </v-icon>
+          </v-col>
+          <v-col>
             <b>Number of workers:</b>
           </v-col>
           <v-col id="database-number-workers" class="entry">
@@ -110,17 +122,17 @@ export default defineComponent({
 });
 </script>
 <style>
+.detail-icon {
+  flex: 0 0 3%;
+}
 .flex {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 .entry {
-  margin-top: 0.5%;
   margin-left: 2%;
-}
-.top-entry {
-  margin-left: 2%;
+  align-self: flex-end;
 }
 .card {
   margin-bottom: 0.5%;
