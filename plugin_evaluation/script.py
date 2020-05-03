@@ -36,8 +36,8 @@ def show_bar(prefix: str, sec: int) -> None:
         stdout.flush()
         sleep(1.0 / frequency)
     stdout.write(
-        "\r{0}[{1}{2}] {3} % {4} s / {5} s\n".format(
-            prefix, "=" * length, "", 100.0, 0.0, "%.1f" % sec
+        "\r{0}[{1}{2}] 100.0 % 0.0 s / {3} s\n".format(
+            prefix, "=" * length, "", "%.1f" % sec
         )
     )
 
@@ -50,12 +50,14 @@ cockpit.start()
 show_bar("Starting cockpit...                 ", 3)
 
 stdout.write("Adding database...")
+stdout.flush()
 cockpit.backend.add_database("momentum", DATABASE_HOST, DATABASE_PORT)
 stdout.write("\rAdding database...                  DONE\n")
 
 show_bar("Waiting default tables to load...   ", 5)
 
 stdout.write("Starting a workload...")
+stdout.flush()
 cockpit.backend.start_workload("tpch_0_1", 300)
 stdout.write("\rStarting a workload...              DONE\n")
 
@@ -67,10 +69,12 @@ endts = time_ns()
 sleep(1.0)
 
 stdout.write("Stopping a workload...")
+stdout.flush()
 cockpit.backend.stop_workload("tpch_0_1")
 stdout.write("\rStopping a workload...              DONE\n")
 
 stdout.write("Removing database...")
+stdout.flush()
 cockpit.backend.remove_database("momentum")
 stdout.write("\rRemoving database...                DONE\n")
 
@@ -79,9 +83,12 @@ cockpit.shutdown()
 show_bar("Cockpit shutdown...                 ", 3)
 
 stdout.write("Export...")
+stdout.flush()
+
 exporter = Exporter()
 exporter.plot_metric("throughput", "momentum", startts, endts)
 exporter.plot_metric("latency", "momentum", startts, endts)
 exporter.plot_metric("queue_length", "momentum", startts, endts)
 exporter.plot_metric("cpu_process_usage", "momentum", startts, endts)
+
 stdout.write("\rExport...                           DONE\n")
