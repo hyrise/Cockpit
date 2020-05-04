@@ -1,1 +1,1 @@
-"""Module for system tests."""
+"""Module for cokcpit management tests."""
