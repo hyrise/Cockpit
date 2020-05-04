@@ -23,7 +23,7 @@
               @change="handleFrequencyChange"
             />
             <workload-selector
-              :workload="workload"
+              :initial-workload="workload"
               :workload-data="workloadData"
               :disabled="disabled"
               @change="handleWorkloadChange"
@@ -148,6 +148,8 @@ function useWorkloadHandler(): WorkloadHandler {
 function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
   const frequency = ref<number>(200);
   const {
+    startWorker,
+    stopWorker,
     getWorkload,
     getWorkloads,
     startWorkload,
@@ -182,7 +184,7 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     }
   });
   eventBus.$on("DATABASE_ADDED", () => {
-    stopWorkload(workload.value);
+    stoppingWorkload();
   });
 
   function startLoading(action: string): void {
@@ -199,9 +201,11 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     startLoading("start");
     getWorkloads().then((response: any) => {
       if (response.data.length === 0) {
-        startWorkload(workload.value, frequency.value).then(() => {
-          stopLoading("start");
-        });
+        startWorker().then(() =>
+          startWorkload(workload.value, frequency.value).then(() => {
+            stopLoading("start");
+          })
+        );
       } else {
         updateWorkload(workload.value, frequency.value).then(() => {
           stopLoading("start");
@@ -213,9 +217,11 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     startLoading("pause");
     getWorkloads().then((response: any) => {
       if (response.data.length === 0) {
-        startWorkload(workload.value, 0).then(() => {
-          stopLoading("pause");
-        });
+        startWorker().then(() =>
+          startWorkload(workload.value, 0).then(() => {
+            stopLoading("pause");
+          })
+        );
       } else {
         updateWorkload(workload.value, 0).then(() => {
           stopLoading("pause");
@@ -228,6 +234,7 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     getWorkloads().then((response: any) => {
       if (response.data.length !== 0) {
         stopWorkload(workload.value).then(() => {
+          stopWorker();
           stopLoading("stop");
         });
       }
