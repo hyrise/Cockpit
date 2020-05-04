@@ -25,7 +25,12 @@ export function useMetricService(metrics: Metric[]): MetricService {
     (): number => Vue.prototype.$selectionController.selectedPrecision.value
   );
 
-  const { subSeconds, formatDateToNanoSec, getNanoSeconds } = useFormatting();
+  const {
+    addSeconds,
+    subSeconds,
+    formatDateToNanoSec,
+    getNanoSeconds,
+  } = useFormatting();
 
   function initializeData(value: any): Object {
     const newData: any = reactive({});
@@ -49,10 +54,17 @@ export function useMetricService(metrics: Metric[]): MetricService {
     queryReadyState.value = false;
 
     const currentTimestamp = subSeconds(new Date(), 3);
-    const startTime = historicFetching.value
-      ? formatDateToNanoSec(subSeconds(currentTimestamp, range.value))
-      : formatDateToNanoSec(subSeconds(currentTimestamp, precision.value));
-    const endTime = formatDateToNanoSec(currentTimestamp);
+    const startTime = formatDateToNanoSec(
+      subSeconds(
+        currentTimestamp,
+        historicFetching.value ? range.value : precision.value
+      )
+    );
+    const endTime = formatDateToNanoSec(
+      historicFetching.value
+        ? addSeconds(currentTimestamp, precision.value + 3)
+        : currentTimestamp
+    );
 
     fetchData(startTime, endTime).then((result) => {
       useUpdatingData(result, metrics);
