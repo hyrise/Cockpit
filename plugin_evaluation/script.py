@@ -36,7 +36,7 @@ sleep(1.0)
 with DoneStatus("Stopping a workload..."):
     cockpit.backend.stop_workload("tpch_0_1")
 
-with DoneStatus("Stopping a workload..."):
+with DoneStatus("Removing the database..."):
     cockpit.backend.remove_database("momentum")
 
 cockpit.shutdown()
