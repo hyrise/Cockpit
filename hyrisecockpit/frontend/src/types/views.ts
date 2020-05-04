@@ -3,6 +3,8 @@ import { Metric } from "./metrics";
 
 export type PageName = "workload" | "comparison" | "overview";
 
+export const pages: PageName[] = ["comparison", "workload", "overview"];
+
 export interface MetricViewData {
   watchedMetrics: Metric[];
   selectedMetrics: Ref<readonly Metric[]>;
