@@ -182,17 +182,20 @@ class DatabaseManager(object):
         return get_response(200)
 
     def _call_status(self, body: Body) -> Response:
-        status = [
-            {
-                "id": database_id,
-                "hyrise_active": database.get_hyrise_active(),
-                "database_blocked_status": database.get_database_blocked(),
-                "worker_pool_status": database.get_worker_pool_status(),
-                "loaded_benchmarks": database.get_loaded_benchmarks(),
-                "loaded_tables": database.get_loaded_tables(),
-            }
-            for database_id, database in self._databases.items()
-        ]
+        status = []
+
+        for database_id, database in self._databases.items():
+            loaded_tables, loaded_benchmarks = database.get_loaded_benchmark_data()
+            status.append(
+                {
+                    "id": database_id,
+                    "hyrise_active": database.get_hyrise_active(),
+                    "database_blocked_status": database.get_database_blocked(),
+                    "worker_pool_status": database.get_worker_pool_status(),
+                    "loaded_benchmarks": loaded_benchmarks,
+                    "loaded_tables": loaded_tables,
+                }
+            )
         response = get_response(200)
         response["body"]["status"] = status
         return response
