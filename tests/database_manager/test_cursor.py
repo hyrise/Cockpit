@@ -355,5 +355,5 @@ class TestCursor:
 
         assert cursor == mock_cursor
         mock_storage_cursor_constructor.assert_called_once_with(
-            "host", "port", "user", "password", "dbname"
+            fake_host, fake_port, fake_user, fake_password, fake_dbname
         )
