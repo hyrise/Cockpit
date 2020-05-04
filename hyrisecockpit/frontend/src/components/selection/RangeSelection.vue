@@ -3,7 +3,7 @@
     id="historic-range-selection"
     v-model="selectedHistoricRange"
     :items="availableHistoricRanges"
-    label="Request intervals"
+    label="Observed Time Range"
   />
 </template>
 

@@ -3,7 +3,7 @@
     id="precision-selection"
     v-model="selectedPrecision"
     :items="selectablePrecisions"
-    label="Aggregation intervals"
+    label="Aggregation Interval"
   />
 </template>
 
