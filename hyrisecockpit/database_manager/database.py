@@ -6,7 +6,7 @@ from typing import Dict, List, Optional
 from psycopg2 import DatabaseError, Error, InterfaceError
 
 from .background_scheduler import BackgroundJobManager
-from .cursor import ConnectionFactory, StorageConnectionFactory
+from .cursor import ConnectionFactory, StorageCursor
 from .interfaces import SqlResultInterface
 from .table_names import table_names as _table_names
 from .worker_pool import WorkerPool
@@ -35,6 +35,10 @@ class Database(object):
         self._id = id
         self.number_workers: int = number_workers
         self._default_tables: str = default_tables
+        self._storage_host: str = storage_host
+        self._storage_password: str = storage_password
+        self._storage_port: str = storage_port
+        self._storage_user: str = storage_user
 
         self.connection_information: Dict[str, str] = {
             "host": host,
@@ -46,10 +50,6 @@ class Database(object):
 
         self._connection_factory: ConnectionFactory = ConnectionFactory(
             **self.connection_information
-        )
-
-        self._storage_connection_factory: StorageConnectionFactory = StorageConnectionFactory(
-            storage_host, storage_port, storage_user, storage_password, dbname,
         )
 
         self._database_blocked: Value = Value("b", False)
@@ -82,7 +82,13 @@ class Database(object):
 
     def _initialize_influx(self) -> None:
         """Initialize Influx database."""
-        with self._storage_connection_factory.create_cursor() as cursor:
+        with StorageCursor(
+            self._storage_host,
+            self._storage_port,
+            self._storage_user,
+            self._storage_password,
+            self._id,
+        ) as cursor:
             cursor.drop_database()
             cursor.create_database()
             throughput_continuous_query = """SELECT count("latency") AS "throughput"

@@ -223,14 +223,14 @@ class StorageConnectionFactory:
     """Factory for creating storage cursors."""
 
     def __init__(
-        self, host: str, port: str, user: str, password: str, database: str,
+        self, user: str, password: str, host: str, port: str, dbname: str,
     ):
         """Initialize the connection attributes."""
         self._host: str = host
         self._port: str = port
         self._user: str = user
         self._password: str = password
-        self._dbname: str = database
+        self._dbname: str = dbname
 
     def create_cursor(self) -> StorageCursor:
         """Create new StorageCursor."""
