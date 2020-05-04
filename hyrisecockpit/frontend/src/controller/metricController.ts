@@ -23,6 +23,10 @@ export function useMetricController(): MetricController {
     (): Metric[] => Vue.prototype.$selectionController.selectedMetrics.value
   );
 
+  const validTime = computed(
+    () => precision.value < range.value && precision.value >= range.value / 60
+  );
+
   const metricServices = setupServices();
 
   const metricIntervals = setupIntervals();
@@ -36,7 +40,7 @@ export function useMetricController(): MetricController {
   /* restart requests on change */
   watch([precision, range, selectedMetrics], () => {
     stop();
-    start(selectedMetrics.value as Metric[]);
+    if (validTime.value) start(selectedMetrics.value as Metric[]);
   });
 
   function setupServices(): Record<Metric, MetricService> {

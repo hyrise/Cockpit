@@ -9,6 +9,7 @@ export function useFormatting(): {
   ) => number;
   formatDateToHHMMSS: (date: Date) => string;
   formatDateToNanoSec: (date: Date) => number;
+  addSeconds: (date: Date, seconds: number) => Date;
   subSeconds: (date: Date, seconds: number) => Date;
   formatMinutesToSeconds: (minutes: number) => number;
   getNanoSeconds: (seconds: number) => number;
@@ -30,6 +31,10 @@ export function useFormatting(): {
   function formatDateWithoutMilliSec(date: Date): Date {
     date.setMilliseconds(0);
     return date;
+  }
+
+  function addSeconds(date: Date, seconds: number): Date {
+    return new Date(date.getTime() + seconds * Math.pow(10, 3));
   }
 
   function subSeconds(date: Date, seconds: number): Date {
@@ -68,6 +73,7 @@ export function useFormatting(): {
     roundNumber,
     formatDateToHHMMSS,
     formatDateToNanoSec,
+    addSeconds,
     subSeconds,
     formatMinutesToSeconds,
     getNanoSeconds,
