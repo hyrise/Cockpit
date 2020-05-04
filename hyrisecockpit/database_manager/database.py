@@ -67,10 +67,7 @@ class Database(object):
             self._connection_factory,
             self._hyrise_active,
             self._worker_pool,
-            storage_host,
-            storage_password,
-            storage_port,
-            storage_user,
+            self._storage_connection_factory,
         )
         self._initialize_influx()
         self._background_scheduler.start()
