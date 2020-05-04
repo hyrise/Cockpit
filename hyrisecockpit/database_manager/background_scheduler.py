@@ -102,7 +102,7 @@ class BackgroundJobManager(object):
             func=ping_hyrise,
             trigger="interval",
             seconds=0.5,
-            args=(self._connection_factory, self._hyrise_active,),
+            args=(self._connection_factory, self._hyrise_active),
         )
         self._update_queue_length_job = self._scheduler.add_job(
             func=update_queue_length,
@@ -154,7 +154,7 @@ class BackgroundJobManager(object):
             func=update_krueger_data,
             trigger="interval",
             seconds=5,
-            args=(self._storage_connection_factory),
+            args=(self._storage_connection_factory,),
         )
 
     def start(self) -> None:
