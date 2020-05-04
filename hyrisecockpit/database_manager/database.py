@@ -155,10 +155,10 @@ class Database(object):
             with self._connection_factory.create_cursor() as cur:
                 cur.execute("show tables;", None)
                 rows = cur.fetchall()
-                result = [row[0] for row in rows] if rows else []
-                return result
         except (DatabaseError, InterfaceError):
             return []
+        else:
+            return [row[0] for row in rows] if rows else []
 
     def get_loaded_benchmarks(self, loaded_tables) -> List[str]:
         """Get list of all benchmarks which are completely loaded."""
