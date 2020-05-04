@@ -61,10 +61,6 @@ class TestDatabase(object):
     @patch("hyrisecockpit.database_manager.database.WorkerPool", MagicMock())
     @patch("hyrisecockpit.database_manager.database.ConnectionFactory", MagicMock())
     @patch(
-        "hyrisecockpit.database_manager.database.Database.create_empty_loaded_tables",
-        MagicMock(),
-    )
-    @patch(
         "hyrisecockpit.database_manager.database.Database._initialize_influx",
         MagicMock(),
     )
@@ -99,21 +95,6 @@ class TestDatabase(object):
         database._background_scheduler.load_tables.assert_called_once_with(  # type: ignore
             default_tables
         )
-
-    @patch("hyrisecockpit.database_manager.database._table_names", get_fake_tables())
-    def test_creates_empty_loaded_tables(self, database: Database) -> None:
-        """Test creates empty loaded tables."""
-        expected_results: Dict[str, Optional[str]] = {
-            "The Dough Rollers": None,
-            "Broken Witt Rebels": None,
-            "Bonny Doon": None,
-            "Jack White": None,
-            "Gary Clark Jr.": None,
-            "Greta Van Fleet": None,
-            "Tenacious D": None,
-        }
-        result: Dict[str, Optional[str]] = database.create_empty_loaded_tables()
-        assert expected_results == result
 
     def test_gets_worker_pool_queue_length(self, database: Database) -> None:
         """Test return of queue length from worker pool."""
@@ -319,42 +300,17 @@ class TestDatabase(object):
         self, database: Database
     ) -> None:
         """Test get loaded benchmark for present benchmarks."""
-        fake_loaded_tables: Dict[str, Optional[str]] = {
-            "The Dough Rollers": "alternative",
-            "Broken Witt Rebels": "alternative",
-            "Bonny Doon": "alternative",
-            "Jack White": "alternative",
-            "Gary Clark Jr.": "Rock",
-            "Greta Van Fleet": "Rock",
-            "Tenacious D": "Rock",
-        }
-        database._loaded_tables = fake_loaded_tables
-        expected: List[str] = ["Rock", "alternative"]
+        fake_loaded_tables = [
+            "Gary Clark Jr._Rock_1",
+            "Greta Van Fleet_Rock_1",
+            "Tenacious D_Rock_1",
+            "Jack White_alternative_1",
+        ]
 
-        results: List[str] = database.get_loaded_benchmarks()
+        expected: List[str] = ["Rock_1"]
 
-        assert Counter(results) == Counter(expected)
-
-    @patch("hyrisecockpit.database_manager.database._table_names", get_fake_tables())
-    def test_gets_loaded_benchmarks_for_not_present_benchmarks(
-        self, database: Database
-    ) -> None:
-        """Test get loaded benchmark for not present benchmarks."""
-        fake_loaded_tables: Dict[str, Optional[str]] = {
-            "The Dough Rollers": "alternative",
-            "Broken Witt Rebels": "alternative",
-            "Bonny Doon": None,
-            "Jack White": "alternative",
-            "Gary Clark Jr.": "Rock",
-            "Greta Van Fleet": "Rock",
-            "Tenacious D": "Rock",
-        }
-        database._loaded_tables = fake_loaded_tables
-        expected = ["Rock"]
-
-        results: List[str] = database.get_loaded_benchmarks()
-
-        assert Counter(results) == Counter(expected)
+        results: List[str] = database.get_loaded_benchmarks(fake_loaded_tables)
+        assert results == expected
 
     def test_gets_worker_pool_status(self, database: Database) -> None:
         """Test return of worker pool status."""
@@ -369,23 +325,43 @@ class TestDatabase(object):
 
     def test_gets_loaded_tables(self, database: Database) -> None:
         """Test get loaded tables."""
-        fake_loaded_tables: Dict[str, Optional[str]] = {
-            "Broken Witt Rebels": "alternative",
-            "Bonny Doon": None,
-            "Jack White": "alternative",
-            "Greta Van Fleet": None,
-            "Tenacious D": "Rock",
-        }
-        database._loaded_tables = fake_loaded_tables
-        expected: List[Dict[str, str]] = [
-            {"table_name": "Broken Witt Rebels", "benchmark": "alternative"},
-            {"table_name": "Jack White", "benchmark": "alternative"},
-            {"table_name": "Tenacious D", "benchmark": "Rock"},
-        ]
+        mock_cursor = MagicMock()
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        mock_cursor.fetchall.return_value = [("hallo", "type",), ("world", "boring",)]
+        database._connection_factory = mock_connection_factory
 
-        received: List[Dict[str, str]] = database.get_loaded_tables()
+        results = database.get_loaded_tables()
 
-        assert expected == received
+        mock_cursor.execute.assert_called_once_with("show tables;", None)
+        assert results == ["hallo", "world"]  # type: ignore
+
+    @mark.parametrize(
+        "exceptions", [DatabaseError(), InterfaceError()],
+    )
+    def test_gets_loaded_tables_with_exception(
+        self, database: Database, exceptions
+    ) -> None:
+        """Test get loaded tables with exception."""
+
+        def raise_exception(*args):
+            """Throw exception."""
+            raise exceptions
+
+        mock_cursor = MagicMock()
+        mock_cursor.execute.side_effect = raise_exception
+        mock_connection_factory = MagicMock()
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+        database._connection_factory = mock_connection_factory
+
+        results = database.get_loaded_tables()
+
+        mock_cursor.execute.assert_called_once_with("show tables;", None)
+        assert results == []
 
     def test_gets_hyrise_active(self, database: Database) -> None:
         """Test get hyrise active status."""
@@ -834,3 +810,17 @@ class TestDatabase(object):
         mock_storage_cursor.create_continuous_query.assert_any_call(
             "latency_calculation", latency_query, resample_options
         )
+
+    def test_get_loaded_benchmark_data(self, database: Database):
+        """Test get loaded benchmark data."""
+        database.get_loaded_tables = MagicMock()  # type: ignore
+        database.get_loaded_tables.return_value = ["table1", "table2"]  # type: ignore
+        database.get_loaded_benchmarks = MagicMock()  # type: ignore
+        database.get_loaded_benchmarks.return_value = ["benchmark"]  # type: ignore
+
+        (loaded_tables, loaded_benchmarks) = database.get_loaded_benchmark_data()
+
+        database.get_loaded_tables.assert_called_once()  # type: ignore
+        database.get_loaded_benchmarks.assert_called_once_with(["table1", "table2"])  # type: ignore
+        assert loaded_tables == ["table1", "table2"]
+        assert loaded_benchmarks == ["benchmark"]
