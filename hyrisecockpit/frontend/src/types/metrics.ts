@@ -15,7 +15,6 @@ export type Metric =
   | "generatedQueryTypeProportion"
   | "memoryFootprint";
 
-//TODO: refactor
 export const availableMetrics: Metric[] = [
   "access",
   "cpu",
@@ -28,8 +27,6 @@ export const availableMetrics: Metric[] = [
   "generatedQueryTypeProportion",
   "memoryFootprint",
 ];
-
-export const instanceMetrics: Metric[] = ["storage", "access"];
 
 export const comparisonMetrics: Metric[] = [
   "throughput",
