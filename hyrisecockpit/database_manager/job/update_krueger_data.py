@@ -3,12 +3,10 @@
 from json import dumps
 from time import time_ns
 
-from hyrisecockpit.database_manager.cursor import StorageCursor
+from hyrisecockpit.database_manager.cursor import StorageConnectionFactory
 
 
-def update_krueger_data(
-    storage_host, storage_port, storage_user, storage_password, database_id,
-) -> None:
+def update_krueger_data(storage_connection_factory: StorageConnectionFactory) -> None:
     """Update krueger data."""
     time_stamp = time_ns()
     executed_mocked_data = {
@@ -23,9 +21,7 @@ def update_krueger_data(
         "UPDATE": 0,
         "DELETE": 0,
     }
-    with StorageCursor(
-        storage_host, storage_port, storage_user, storage_password, database_id,
-    ) as log:
+    with storage_connection_factory.create_cursor() as log:
         log.log_meta_information(
             "krueger_data",
             {

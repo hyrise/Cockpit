@@ -2,18 +2,14 @@
 
 from time import time_ns
 
-from hyrisecockpit.database_manager.cursor import StorageCursor
+from hyrisecockpit.database_manager.cursor import StorageConnectionFactory
 from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_frame
 
 
 def update_plugin_log(
     database_blocked,
     connection_factory,
-    storage_host,
-    storage_port,
-    storage_user,
-    storage_password,
-    database_id,
+    storage_connection_factory: StorageConnectionFactory,
 ) -> None:
     """Update plugin log."""
     endts = int(time_ns() / 1_000_000)  # timestamps in hyrise are in ms-precision
@@ -34,7 +30,5 @@ def update_plugin_log(
         for row in log_df.to_dict("index").values()
     ]
 
-    with StorageCursor(
-        storage_host, storage_port, storage_user, storage_password, database_id,
-    ) as log:
+    with storage_connection_factory.create_cursor() as log:
         log.log_plugin_log(plugin_log)

@@ -6,7 +6,7 @@ from typing import Dict
 
 from pandas import DataFrame
 
-from hyrisecockpit.database_manager.cursor import StorageCursor
+from hyrisecockpit.database_manager.cursor import StorageConnectionFactory
 from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_frame
 
 previous_chunks_data: Dict = {}
@@ -50,11 +50,7 @@ def _create_chunks_dictionary(meta_segments: DataFrame) -> Dict:  # TODO refacto
 def update_chunks_data(
     database_blocked,
     connection_factory,
-    storage_host,
-    storage_port,
-    storage_user,
-    storage_password,
-    database_id,
+    storage_connection_factory: StorageConnectionFactory,
 ) -> None:
     """Update chunks data for database instance."""
     global previous_chunks_data
@@ -74,9 +70,7 @@ def update_chunks_data(
         )
         previous_chunks_data = new_chunks_data
 
-    with StorageCursor(
-        storage_host, storage_port, storage_user, storage_password, database_id,
-    ) as log:
+    with storage_connection_factory.create_cursor() as log:
         log.log_meta_information(
             "chunks_data",
             {"chunks_data_meta_information": dumps(chunks_data)},

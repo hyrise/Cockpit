@@ -5,7 +5,7 @@ from time import time_ns
 
 from pandas import DataFrame
 
-from hyrisecockpit.database_manager.cursor import StorageCursor
+from hyrisecockpit.database_manager.cursor import StorageConnectionFactory
 from hyrisecockpit.database_manager.job.interfaces import StorageDataType
 from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_frame
 
@@ -73,11 +73,7 @@ def _create_storage_data_dictionary(result: DataFrame) -> StorageDataType:
 def update_storage_data(
     database_blocked,
     connection_factory,
-    storage_host,
-    storage_port,
-    storage_user,
-    storage_password,
-    database_id,
+    storage_connection_factory: StorageConnectionFactory,
 ) -> None:
     """Get storage data from the database."""
     time_stamp = time_ns()
@@ -85,9 +81,7 @@ def update_storage_data(
         database_blocked, connection_factory, "SELECT * FROM meta_segments;", None
     )
 
-    with StorageCursor(
-        storage_host, storage_port, storage_user, storage_password, database_id,
-    ) as log:
+    with storage_connection_factory.create_cursor() as log:
         output = {}
         if not meta_segments.empty:
             result = _create_storage_data_dataframe(meta_segments)

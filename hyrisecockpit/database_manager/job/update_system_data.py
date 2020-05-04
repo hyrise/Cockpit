@@ -3,7 +3,7 @@
 from time import time_ns
 from typing import Dict, Union
 
-from hyrisecockpit.database_manager.cursor import StorageCursor
+from hyrisecockpit.database_manager.cursor import StorageConnectionFactory
 from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_frame
 
 
@@ -25,11 +25,7 @@ def _create_system_data_dict(
 def update_system_data(
     database_blocked,
     connection_factory,
-    storage_host,
-    storage_port,
-    storage_user,
-    storage_password,
-    database_id,
+    storage_connection_factory: StorageConnectionFactory,
 ) -> None:
     """Update system data for database instance."""
     utilization_df = sql_to_data_frame(
@@ -54,9 +50,7 @@ def update_system_data(
     )
     time_stamp = time_ns()
 
-    with StorageCursor(
-        storage_host, storage_port, storage_user, storage_password, database_id,
-    ) as log:
+    with storage_connection_factory.create_cursor() as log:
         log.log_meta_information(
             "system_data", system_data, time_stamp,
         )
