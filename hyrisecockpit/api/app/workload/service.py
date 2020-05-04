@@ -42,20 +42,14 @@ class WorkloadService:
         Returns the created Workload.
         Returns None if a Workload with the given ID already exists.
         """
-        response = cls._send_message_to_dbm(
-            Request(header=Header(message="start worker"), body={})
+        response = cls._send_message_to_gen(
+            Request(header=Header(message="start workload"), body=dict(interface)),
         )
-        if response["header"]["status"] == 200:
-            response = cls._send_message_to_gen(
-                Request(header=Header(message="start workload"), body=dict(interface)),
-            )
-            return (
-                None
-                if response["header"]["status"] == 409
-                else Workload(**response["body"]["workload"])
-            )
-        else:
-            return None
+        return (
+            None
+            if response["header"]["status"] == 409
+            else Workload(**response["body"]["workload"])
+        )
 
     @classmethod
     def get_by_id(cls, folder_name: str) -> Optional[DetailedWorkload]:
@@ -82,23 +76,17 @@ class WorkloadService:
         Returns the folder_name of the deleted Workload.
         Returns None if a Workload with the given ID doesn't exist.
         """
-        response = cls._send_message_to_dbm(
-            Request(header=Header(message="close worker"), body={})
+        response = cls._send_message_to_gen(
+            Request(
+                header=Header(message="stop workload"),
+                body={"folder_name": folder_name},
+            ),
         )
-        if response["header"]["status"] == 200:
-            response = cls._send_message_to_gen(
-                Request(
-                    header=Header(message="stop workload"),
-                    body={"folder_name": folder_name},
-                ),
-            )
-            return (
-                None
-                if response["header"]["status"] == 404
-                else response["body"]["folder_name"]
-            )
-        else:
-            return None
+        return (
+            None
+            if response["header"]["status"] == 404
+            else response["body"]["folder_name"]
+        )
 
     @classmethod
     def update_by_id(
