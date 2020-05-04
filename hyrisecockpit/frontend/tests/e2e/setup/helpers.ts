@@ -29,7 +29,8 @@ export type Request =
   | "plugin_settings"
   | "plugin_log"
   | "workload"
-  | "status";
+  | "status"
+  | "sql";
 
 export type BackendState = "up" | "down";
 
@@ -98,6 +99,7 @@ const requestRoutes: Record<
     delete: "**/workload/**",
     put: "**/workload/**",
   },
+  sql: { post: "**/control/sql/" },
 };
 
 export function getRequestRoute(
@@ -132,6 +134,7 @@ const postAliases: Partial<Record<Request, string>> = {
   plugin: "activatePlugin",
   plugin_settings: "setPluginSettings",
   workload: "startWorkload",
+  sql: "sendSQL",
 };
 
 const deleteAliases: Partial<Record<Request, string>> = {

@@ -44,6 +44,7 @@ const selectors: Record<string, string> = {
     "input",
     "historic-range-selection"
   ),
+  precisionSelection: getSelectorByConfig("input", "precision-selection"),
 };
 
 const metrics: Record<string, string[]> = {
