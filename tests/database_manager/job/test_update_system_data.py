@@ -11,7 +11,9 @@ from hyrisecockpit.database_manager.job.update_system_data import (
 )
 
 fake_database_blocked = "blocked"
-fake_connection_factory = "connection_factory"
+fake_connection_factory = (
+    "Warum stehen Studenten schon um 7 uhr auf? Weil um 8 uhr der Supermarkt schließt"
+)
 fake_storage_host = "influx"
 fake_storage_port = "666"
 fake_storage_user = "Me"
@@ -59,7 +61,6 @@ class TestUpdateSystemDataJob:
 
         assert received_dict == expected_dict
 
-    @patch("hyrisecockpit.database_manager.job.update_system_data.StorageCursor")
     @patch(
         "hyrisecockpit.database_manager.job.update_system_data._create_system_data_dict"
     )
@@ -69,7 +70,6 @@ class TestUpdateSystemDataJob:
         self,
         mock_sql_to_data_frame: MagicMock,
         mock_create_system_data_dict: MagicMock,
-        mock_storage_cursor_constructor: MagicMock,
     ) -> None:
         """Test logs updated system data."""
         fake_not_empty_df: DataFrame = DataFrame({"column1": [1]})
@@ -83,10 +83,10 @@ class TestUpdateSystemDataJob:
             "total_memory": 1234,
             "database_threads": 16,
         }
-        mock_storage_cursor = MagicMock()
-        mock_storage_cursor.log_meta_information.return_value = None
-        mock_storage_cursor_constructor.return_value.__enter__.return_value = (
-            mock_storage_cursor
+        mock_cursor = MagicMock()
+        mock_storage_connection_factory = MagicMock()
+        mock_storage_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
         )
 
         mock_sql_to_data_frame.return_value = fake_not_empty_df
@@ -96,18 +96,13 @@ class TestUpdateSystemDataJob:
         update_system_data(
             fake_database_blocked,
             fake_connection_factory,
-            fake_storage_host,
-            fake_storage_port,
-            fake_storage_user,
-            fake_storage_password,
-            fake_database_id,
+            mock_storage_connection_factory,
         )
 
-        mock_storage_cursor.log_meta_information.assert_called_once_with(
+        mock_cursor.log_meta_information.assert_called_once_with(
             "system_data", fake_system_dict, 42
         )
 
-    @patch("hyrisecockpit.database_manager.job.update_system_data.StorageCursor")
     @patch(
         "hyrisecockpit.database_manager.job.update_system_data._create_system_data_dict"
     )
@@ -117,15 +112,14 @@ class TestUpdateSystemDataJob:
         self,
         mock_sql_to_data_frame: MagicMock,
         mock_create_system_data_dict: MagicMock,
-        mock_storage_cursor_constructor: MagicMock,
     ) -> None:
         """Test doesn't log updated system data when it's emtpy."""
         fake_empty_df: DataFrame = DataFrame()
 
-        mock_storage_cursor = MagicMock()
-        mock_storage_cursor.log_meta_information.return_value = None
-        mock_storage_cursor_constructor.return_value.__enter__.return_value = (
-            mock_storage_cursor
+        mock_cursor = MagicMock()
+        mock_storage_connection_factory = MagicMock()
+        mock_storage_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
         )
 
         mock_sql_to_data_frame.return_value = fake_empty_df
@@ -133,12 +127,8 @@ class TestUpdateSystemDataJob:
         update_system_data(
             fake_database_blocked,
             fake_connection_factory,
-            fake_storage_host,
-            fake_storage_port,
-            fake_storage_user,
-            fake_storage_password,
-            fake_database_id,
+            mock_storage_connection_factory,
         )
 
         mock_create_system_data_dict.assert_not_called()
-        mock_storage_cursor.log_meta_information.assert_not_called()
+        mock_cursor.log_meta_information.assert_not_called()

@@ -8,30 +8,25 @@ from pandas import DataFrame
 from hyrisecockpit.cross_platform_support.testing_support import MagicMock
 from hyrisecockpit.database_manager.job.update_plugin_log import update_plugin_log
 
-fake_database_blocked = "blocked"
-fake_connection_factory = "connection_factory"
-fake_storage_host = "influx"
-fake_storage_port = "666"
-fake_storage_user = "Me"
-fake_storage_password = "super password"
-fake_database_id = "Was ist Spider-Man's Trumberuf? Webdesigner!"
+fake_database_blocked = "blocked?"
+fake_connection_factory = "Was ist Spider-Man's Trumberuf? Webdesigner!"
 
 
 class TestUpdatePluginLogJob:
     """Tests for the update chunk data job."""
 
-    @patch("hyrisecockpit.database_manager.job.update_plugin_log.StorageCursor")
     @patch("hyrisecockpit.database_manager.job.update_plugin_log.sql_to_data_frame")
     @patch(
         "hyrisecockpit.database_manager.job.update_plugin_log.time_ns",
         lambda: 1_000_000,
     )
-    def test_logs_plugin_log(
-        self, mock_sql_to_data_frame: MagicMock, mock_storage_cursor: MagicMock
-    ) -> None:
+    def test_logs_plugin_log(self, mock_sql_to_data_frame: MagicMock) -> None:
         """Test logs plugin log."""
         mock_cursor = MagicMock()
-        mock_storage_cursor.return_value.__enter__.return_value = mock_cursor
+        mock_storage_connection_factory = MagicMock()
+        mock_storage_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
         fake_not_empty_data_frame: DataFrame = DataFrame(
             {
                 "timestamp": [0, 42],
@@ -44,11 +39,7 @@ class TestUpdatePluginLogJob:
         update_plugin_log(
             fake_database_blocked,
             fake_connection_factory,
-            fake_storage_host,
-            fake_storage_port,
-            fake_storage_user,
-            fake_storage_password,
-            fake_database_id,
+            mock_storage_connection_factory,
         )
 
         expected_function_argument: List[Tuple[int, str, str]] = [
@@ -64,29 +55,27 @@ class TestUpdatePluginLogJob:
         )
         mock_cursor.log_plugin_log.assert_called_once_with(expected_function_argument)
 
-    @patch("hyrisecockpit.database_manager.job.update_plugin_log.StorageCursor")
     @patch("hyrisecockpit.database_manager.job.update_plugin_log.sql_to_data_frame")
     @patch(
         "hyrisecockpit.database_manager.job.update_plugin_log.time_ns",
         lambda: 1_000_000,
     )
     def test_doesnt_log_plugin_log_when_empty(
-        self, mock_sql_to_data_frame: MagicMock, mock_storage_cursor: MagicMock
+        self, mock_sql_to_data_frame: MagicMock
     ) -> None:
         """Test logs plugin log."""
         mock_cursor = MagicMock()
-        mock_storage_cursor.return_value.__enter__.return_value = mock_cursor
+        mock_storage_connection_factory = MagicMock()
+        mock_storage_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
         fake_empty_data_frame: DataFrame = DataFrame()
         mock_sql_to_data_frame.return_value = fake_empty_data_frame
 
         update_plugin_log(
             fake_database_blocked,
             fake_connection_factory,
-            fake_storage_host,
-            fake_storage_port,
-            fake_storage_user,
-            fake_storage_password,
-            fake_database_id,
+            mock_storage_connection_factory,
         )
 
         mock_cursor.log_plugin_log.assert_not_called()

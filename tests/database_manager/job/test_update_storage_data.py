@@ -8,32 +8,27 @@ from hyrisecockpit.cross_platform_support.testing_support import MagicMock
 from hyrisecockpit.database_manager.job.interfaces import StorageDataType
 from hyrisecockpit.database_manager.job.update_storage_data import update_storage_data
 
-fake_database_blocked = "blocked"
-fake_connection_factory = "connection_factory"
-fake_storage_host = "influx"
-fake_storage_port = "666"
-fake_storage_user = "Me"
-fake_storage_password = "super password"
-fake_database_id = "Wie bezahlen die Dinosaurier? Mit Tyrannosaurus Schecks!"
+fake_database_blocked = (
+    "Was muss beim Installieren von Windows gedrückt werden? Beide Daumen"
+)
+fake_connection_factory = "Wie bezahlen die Dinosaurier? Mit Tyrannosaurus Schecks!"
 
 
 class TestUpdateStorageDataJob:
     """Test update storage data job."""
 
-    @patch("hyrisecockpit.database_manager.job.update_storage_data.StorageCursor")
     @patch("hyrisecockpit.database_manager.job.update_storage_data.sql_to_data_frame")
     @patch("hyrisecockpit.database_manager.job.update_storage_data.time_ns", lambda: 42)
     def test_successfully_logs_storage_data(
-        self,
-        mock_sql_to_data_frame: MagicMock,
-        mock_storage_cursor_constructor: MagicMock,
+        self, mock_sql_to_data_frame: MagicMock,
     ) -> None:
         """Test successfully logs storage data."""
-        mock_storage_cursor = MagicMock()
-        mock_storage_cursor.log_meta_information.return_value = None
-        mock_storage_cursor_constructor.return_value.__enter__.return_value = (
-            mock_storage_cursor
+        mock_cursor = MagicMock()
+        mock_storage_connection_factory = MagicMock()
+        mock_storage_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
         )
+
         fake_storage_df: DataFrame = DataFrame(
             {
                 "table_name": ["customer", "customer", "supplier"],
@@ -104,44 +99,32 @@ class TestUpdateStorageDataJob:
         update_storage_data(
             fake_database_blocked,
             fake_connection_factory,
-            fake_storage_host,
-            fake_storage_port,
-            fake_storage_user,
-            fake_storage_password,
-            fake_database_id,
+            mock_storage_connection_factory,
         )
 
-        mock_storage_cursor.log_meta_information.assert_called_with(
+        mock_cursor.log_meta_information.assert_called_with(
             "storage", {"storage_meta_information": dumps(expected_storage_dict)}, 42
         )
 
-    @patch("hyrisecockpit.database_manager.job.update_storage_data.StorageCursor")
     @patch("hyrisecockpit.database_manager.job.update_storage_data.sql_to_data_frame")
     @patch("hyrisecockpit.database_manager.job.update_storage_data.time_ns", lambda: 42)
-    def test_logs_empty_storage_data(
-        self,
-        mock_sql_to_data_frame: MagicMock,
-        mock_storage_cursor_constructor: MagicMock,
-    ) -> None:
+    def test_logs_empty_storage_data(self, mock_sql_to_data_frame: MagicMock,) -> None:
         """Test doesn't log storage data when it's empty."""
-        mock_storage_cursor = MagicMock()
-        mock_storage_cursor.log_meta_information.return_value = None
-        mock_storage_cursor_constructor.return_value.__enter__.return_value = (
-            mock_storage_cursor
+        mock_cursor = MagicMock()
+        mock_storage_connection_factory = MagicMock()
+        mock_storage_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
         )
+
         fake_empty_storage_df: DataFrame = DataFrame()
         mock_sql_to_data_frame.return_value = fake_empty_storage_df
 
         update_storage_data(
             fake_database_blocked,
             fake_connection_factory,
-            fake_storage_host,
-            fake_storage_port,
-            fake_storage_user,
-            fake_storage_password,
-            fake_database_id,
+            mock_storage_connection_factory,
         )
 
-        mock_storage_cursor.log_meta_information.assert_called_with(
+        mock_cursor.log_meta_information.assert_called_with(
             "storage", {"storage_meta_information": dumps({})}, 42
         )
