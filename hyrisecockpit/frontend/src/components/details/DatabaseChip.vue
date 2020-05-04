@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="database-chip">
     <v-tooltip v-if="closable" left>
-      <template v-slot:activator="{ on, value }">
+      <template v-slot:activator="{ on: remove, value }">
         <v-icon
           id="remove-database-button"
           class="mr-3"
-          v-on="on"
+          v-on="remove"
           color="error"
           :size="value ? 36 : 28"
           @click="$emit('closed')"
@@ -36,8 +36,20 @@
           >mdi-eye-off</v-icon
         >
       </div>
-      <v-icon v-if="!selectable" left>mdi-database</v-icon>
-      <b>{{ database.id }}</b>
+      <div v-if="!!onlyIcon">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on: test }">
+            <v-icon v-on="test">mdi-database</v-icon>
+          </template>
+          <span>{{ database.id }}</span>
+        </v-tooltip>
+      </div>
+      <div v-else>
+        <v-icon class="tooltip-icon" v-if="!selectable" top
+          >mdi-database</v-icon
+        >
+        <b>{{ database.id }}</b>
+      </div>
     </v-chip>
   </div>
 </template>
@@ -64,6 +76,7 @@ interface Props {
   closable: boolean;
   selectable: boolean;
   selected: boolean;
+  onlyIcon: boolean;
 }
 
 export default defineComponent({
@@ -85,6 +98,10 @@ export default defineComponent({
       type: Boolean,
       default: undefined,
     },
+    onlyIcon: {
+      type: Boolean,
+      default: undefined,
+    },
   },
   setup(props: Props, context: SetupContext): Data {
     return {
@@ -96,4 +113,8 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped></style>
+<style scoped>
+.database-chip {
+  z-index: 3;
+}
+</style>

@@ -2,18 +2,21 @@
   <v-card :id="`${tileDatabase}-${metric}-tile`">
     <v-card-title class="card-title" :ref="`${tileDatabase}-${metric}-title`">
       <v-container fluid>
-        <v-row no-gutters>
-          <v-col class="metric-title">
-            <div>{{ getMetricTitle(metric) }}</div>
+        <v-row no-gutters class="card-title-row">
+          <v-col class="metric-title-container">
+            <div :class="isThin && 'metric-title'">
+              {{ getMetricTitle(metric) }}
+            </div>
             <time-interval :metric="metric" />
             <!--  Think about where to add this  <metric-description-tooltip :metric="metric" /> -->
           </v-col>
-          <v-spacer />
+          <v-spacer v-if="!isThin" />
           <v-col class="database-title">
             <database-chip
               class="database-chip"
               v-if="!!tileDatabase"
               :database-id="tileDatabase"
+              :onlyIcon="isThin"
             />
           </v-col>
         </v-row>
@@ -51,8 +54,10 @@ import { Database } from "../../types/database";
 import MetricDescriptionTooltip from "@/components/details/MetricDescriptionTooltip.vue";
 import DatabaseChip from "@/components/details/DatabaseChip.vue";
 import TimeInterval from "@/components/details/TimeInterval.vue";
+import { eventBus } from "@/plugins/eventBus";
 
 interface Props extends MetricProps {
+  isThin: boolean;
   tileDatabase: string;
 }
 
@@ -77,6 +82,10 @@ export default defineComponent({
     TimeInterval,
   },
   props: {
+    isThin: {
+      type: Boolean,
+      default: null,
+    },
     tileDatabase: {
       type: String,
       default: null,
@@ -97,6 +106,7 @@ export default defineComponent({
   padding-bottom: 0 !important;
   padding-top: 0 !important;
 }
+
 .database-title {
   display: flex;
   align-items: baseline;
@@ -106,6 +116,11 @@ export default defineComponent({
   margin-left: auto;
 }
 .metric-title {
+  width: 65%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.metric-title-container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;

@@ -15,6 +15,7 @@
           :show-details="showDetails"
           :graph-id="`${metric}-${database}`"
           :max-chart-width="maxChartWidth"
+          :isThin="needsThinTiles"
         />
       </div>
     </div>
@@ -36,6 +37,7 @@ import { useDatabaseFlex } from "../../meta/components";
 import MetricTile from "@/components/container/MetricTile.vue";
 
 interface Data {
+  needsThinTiles: Readonly<Ref<boolean>>;
   databaseFlex: Readonly<Ref<Object>>;
   maxChartWidth: Readonly<Ref<number>>;
 }
@@ -51,6 +53,7 @@ export default defineComponent({
       () =>
         Math.floor(totalViewWidth.value / props.selectedDatabases.length) - 10
     );
+    const needsThinTiles = computed(() => maxChartWidth.value < 400);
     provide("multipleDatabasesAllowed", false);
 
     onMounted(() => {
@@ -62,6 +65,7 @@ export default defineComponent({
     return {
       ...useDatabaseFlex(props),
       maxChartWidth,
+      needsThinTiles,
     };
   },
 });
