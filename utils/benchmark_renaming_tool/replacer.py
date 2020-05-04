@@ -25,7 +25,10 @@ class Replacer:
         self.replacement_dict = self._build_replacement_dict()
 
     def _build_replacement_dict(self):
-        return {table: f"{table}_{self.workload}_{self.scale}" for table in tables[self.workload]}
+        return {
+            table: f"{table}_{self.workload}_{self.scale}"
+            for table in tables[self.workload]
+        }
 
     def _get_file_names(self, path):
         return [name.decode("utf-8") for name in listdir(fsencode(path))]
