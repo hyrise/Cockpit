@@ -41,7 +41,7 @@ def show_bar(prefix: str, sec: int) -> None:
 class DoneStatus:
     """Print done status."""
 
-    def __init__(self, message):
+    def __init__(self, message: str):
         """Initialize message."""
         self.message = message
 

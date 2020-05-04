@@ -3,7 +3,7 @@
 from time import sleep, time_ns
 
 from plugin_evaluation.cockpit_management.cockpit import Cockpit
-from plugin_evaluation.exporter import Exporter
+from plugin_evaluation.export.exporter import Exporter
 from plugin_evaluation.settings import DATABASE_HOST, DATABASE_PORT
 from plugin_evaluation.utils.figlet import intro
 from plugin_evaluation.utils.user_interface import DoneStatus, show_bar
@@ -13,7 +13,7 @@ workload_execution_time = 10
 
 print(intro)
 
-cockpit = Cockpit()
+cockpit = Cockpit()  # type: ignore
 cockpit.start()
 
 show_bar("Starting cockpit...                 ", 3)
@@ -44,7 +44,7 @@ cockpit.shutdown()
 show_bar("Cockpit shutdown...                 ", 3)
 
 with DoneStatus("Export..."):
-    exporter = Exporter()
+    exporter = Exporter()  # type: ignore
     exporter.plot_metric("throughput", "momentum", startts, endts)
     exporter.plot_metric("latency", "momentum", startts, endts)
     exporter.plot_metric("queue_length", "momentum", startts, endts)

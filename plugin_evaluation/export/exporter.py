@@ -1,10 +1,13 @@
 """Module for export of the Influx data to PDF."""
+from pathlib import Path
+
 import matplotlib.dates as mdate
 import matplotlib.pyplot as plt
 import numpy as np
 from influxdb import InfluxDBClient
 from matplotlib.pyplot import figure
 
+from plugin_evaluation.export.config import config
 from plugin_evaluation.settings import (
     STORAGE_HOST,
     STORAGE_PASSWORD,
@@ -12,35 +15,7 @@ from plugin_evaluation.settings import (
     STORAGE_USER,
 )
 
-
-def idle_function(value):
-    """Doesn't change the input value."""
-    return value
-
-
-def ns_to_ms(value):
-    """Convert ns to ms."""
-    return value / 1_000_000
-
-
-config = {
-    "throughput": {
-        "table_name": "throughput",
-        "label": "Queries / second",
-        "function": idle_function,
-    },
-    "latency": {"table_name": "latency", "label": "ms", "function": ns_to_ms},
-    "queue_length": {
-        "table_name": "queue_length",
-        "label": "number of items",
-        "function": idle_function,
-    },
-    "cpu_process_usage": {
-        "table_name": "system_data",
-        "label": "% usage",
-        "function": idle_function,
-    },
-}
+absolute_report_directory_path = str(Path(__file__).parent.parent.absolute())
 
 
 class Exporter:
@@ -101,4 +76,4 @@ class Exporter:
         plt.xlabel("Time")
         plt.legend()
 
-        plt.savefig(f"export/{metric}.png", dpi=300)
+        plt.savefig(f"{absolute_report_directory_path}/report/{metric}.png", dpi=300)
