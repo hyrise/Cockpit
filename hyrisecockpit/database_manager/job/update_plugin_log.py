@@ -18,7 +18,7 @@ def update_plugin_log(
     log_df = sql_to_data_frame(
         database_blocked,
         connection_factory,
-        """SELECT * FROM meta_log WHERE "timestamp" >= %s AND "timestamp" < %s;""",
+        'SELECT * FROM meta_log WHERE "timestamp" >= %s AND "timestamp" < %s;',
         params=(startts, endts),
     )
 
