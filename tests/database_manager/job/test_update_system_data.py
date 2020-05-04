@@ -14,13 +14,6 @@ fake_database_blocked = "blocked"
 fake_connection_factory = (
     "Warum stehen Studenten schon um 7 uhr auf? Weil um 8 uhr der Supermarkt schließt"
 )
-fake_storage_host = "influx"
-fake_storage_port = "666"
-fake_storage_user = "Me"
-fake_storage_password = "super password"
-fake_database_id = (
-    "Warum stehen Studenten schon um 7 uhr auf? Weil um 8 uhr der Supermarkt schließt"
-)
 
 
 class TestUpdateSystemDataJob:
