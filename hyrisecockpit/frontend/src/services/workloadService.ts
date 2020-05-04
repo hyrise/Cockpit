@@ -21,13 +21,6 @@ export function useWorkloadService(): WorkloadService {
     });
   }
 
-  async function startWorker(): Promise<void> {
-    return axios.post(`${controlBackend}database/worker`);
-  }
-  async function stopWorker(): Promise<void> {
-    return axios.delete(`${controlBackend}database/worker`);
-  }
-
   async function getWorkload(workload: Workload): Promise<void> {
     return axios.get(`${workloadBackend}${getTransferredWorkload(workload)}`);
   }
@@ -63,8 +56,6 @@ export function useWorkloadService(): WorkloadService {
     getLoadedWorkloadData,
     loadWorkloadData,
     deleteWorkloadData,
-    startWorker,
-    stopWorker,
     getWorkload,
     getWorkloads,
     startWorkload,

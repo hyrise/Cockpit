@@ -64,7 +64,6 @@ import {
   reactive,
   computed,
 } from "@vue/composition-api";
-import { eventBus } from "../../plugins/eventBus";
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
 import { useDatabaseEvents } from "../../meta/events";
@@ -148,8 +147,6 @@ function useWorkloadHandler(): WorkloadHandler {
 function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
   const frequency = ref<number>(200);
   const {
-    startWorker,
-    stopWorker,
     getWorkload,
     getWorkloads,
     startWorkload,
@@ -183,9 +180,6 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
         : (actions.pause.active = true);
     }
   });
-  eventBus.$on("DATABASE_ADDED", () => {
-    stoppingWorkload();
-  });
 
   function startLoading(action: string): void {
     actions[action].loading = true;
@@ -201,11 +195,9 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     startLoading("start");
     getWorkloads().then((response: any) => {
       if (response.data.length === 0) {
-        startWorker().then(() =>
-          startWorkload(workload.value, frequency.value).then(() => {
-            stopLoading("start");
-          })
-        );
+        startWorkload(workload.value, frequency.value).then(() => {
+          stopLoading("start");
+        });
       } else {
         updateWorkload(workload.value, frequency.value).then(() => {
           stopLoading("start");
@@ -217,11 +209,9 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     startLoading("pause");
     getWorkloads().then((response: any) => {
       if (response.data.length === 0) {
-        startWorker().then(() =>
-          startWorkload(workload.value, 0).then(() => {
-            stopLoading("pause");
-          })
-        );
+        startWorkload(workload.value, 0).then(() => {
+          stopLoading("pause");
+        });
       } else {
         updateWorkload(workload.value, 0).then(() => {
           stopLoading("pause");
@@ -234,7 +224,6 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     getWorkloads().then((response: any) => {
       if (response.data.length !== 0) {
         stopWorkload(workload.value).then(() => {
-          stopWorker();
           stopLoading("stop");
         });
       }
