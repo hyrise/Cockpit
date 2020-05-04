@@ -1,7 +1,7 @@
 """The database object represents the instance of a database."""
 
 from multiprocessing import Value
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 from psycopg2 import DatabaseError, Error, InterfaceError
 
@@ -54,9 +54,6 @@ class Database(object):
 
         self._database_blocked: Value = Value("b", False)
         self._hyrise_active: Value = Value("b", True)
-        self._loaded_tables: Dict[
-            str, Optional[str]
-        ] = self.create_empty_loaded_tables()
         self._worker_pool: WorkerPool = WorkerPool(
             self._connection_factory,
             self.number_workers,
@@ -68,7 +65,6 @@ class Database(object):
             self._id,
             self._database_blocked,
             self._connection_factory,
-            self._loaded_tables,
             self._hyrise_active,
             self._worker_pool,
             storage_host,
@@ -113,10 +109,6 @@ class Database(object):
                 latency_resample_options,
             )
 
-    def create_empty_loaded_tables(self) -> Dict[str, Optional[str]]:
-        """Create loaded_tables dictionary without information about already loaded tables."""
-        return {table: None for tables in _table_names.values() for table in tables}
-
     def get_queue_length(self) -> int:
         """Return queue length."""
         return self._worker_pool.get_queue_length()
@@ -153,38 +145,49 @@ class Database(object):
         """Return worker pool status."""
         return self._worker_pool.get_status()
 
-    def get_loaded_tables(self) -> List[Dict[str, str]]:
-        """Return already loaded tables."""
-        return [
-            {"table_name": table, "benchmark": value}
-            for table, value in self._loaded_tables.items()
-            if value is not None
-        ]
-
     def get_hyrise_active(self) -> bool:
         """Return status of hyrise."""
         return bool(self._hyrise_active.value)
 
-    def get_loaded_benchmarks(self) -> List[str]:
-        """Get list of all benchmarks which are completely loaded."""
-        loaded_benchmarks: List[str] = []
-        present_benchmarks = [
-            benchmark
-            for benchmark in set(self._loaded_tables.values())
-            if benchmark is not None
-        ]
+    def get_loaded_tables(self) -> List[Dict[str, str]]:
+        """Return already loaded tables."""
+        try:
+            with self._connection_factory.create_cursor() as cur:
+                cur.execute("show tables;", None)
+                rows = cur.fetchall()
+        except (DatabaseError, InterfaceError):
+            return []
+        else:
+            return [row[0] for row in rows] if rows else []
 
-        for benchmark in present_benchmarks:
-            required_tables = _table_names[benchmark.split("_")[0]]
-            valid_flag: bool = True
-            for table_name in required_tables:
-                if self._loaded_tables[table_name] != benchmark:
-                    valid_flag = False
-                    break
-            if valid_flag:
-                loaded_benchmarks.append(benchmark)
+    def get_loaded_benchmarks(self, loaded_tables) -> List[str]:
+        """Get list of all benchmarks which are completely loaded."""
+        loaded_benchmarks: List = []
+        benchmark_names = _table_names.keys()
+        scale_factors = ["0_1", "1"]
+
+        for benchmark_name in benchmark_names:
+            for scale_factor in scale_factors:
+                required_tables = _table_names[benchmark_name]
+                loaded = True
+                for table_name in required_tables:
+                    loaded = loaded and (
+                        f"{table_name}_{benchmark_name}_{scale_factor}" in loaded_tables
+                    )
+
+                if loaded:
+                    loaded_benchmarks.append(f"{benchmark_name}_{scale_factor}")
 
         return loaded_benchmarks
+
+    def get_loaded_benchmark_data(self) -> Tuple:
+        """Get loaded benchmark data."""
+        loaded_tables: List = self.get_loaded_tables()
+        loaded_benchmarks: List = self.get_loaded_benchmarks(loaded_tables)
+        return (
+            loaded_tables,
+            loaded_benchmarks,
+        )
 
     def start_worker(self) -> bool:
         """Start worker."""

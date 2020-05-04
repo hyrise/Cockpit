@@ -13,13 +13,8 @@ export interface Database {
   color: string;
   systemDetails: DatabaseSystemDetails;
   tables: string[];
-}
-
-export interface DatabaseController {
-  databasesUpdated: Ref<boolean>;
-  availableDatabasesById: Ref<readonly string[]>;
-  getDatabasesByIds: (ids: string[]) => Database[];
-  getDatabaseById: (id: string) => Database;
+  blocked: boolean;
+  active: boolean;
 }
 
 export interface DatabaseService {

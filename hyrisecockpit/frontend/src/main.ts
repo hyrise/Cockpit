@@ -13,9 +13,9 @@ Vue.use(VueCompositionApi);
 Vue.config.productionTip = false;
 
 Vue.prototype.$databaseController = useDatabaseController();
+Vue.prototype.$selectionController = useSelectionController();
 Vue.prototype.$metricController = useMetricController();
 Vue.prototype.$pluginService = usePluginService();
-Vue.prototype.$selectionController = useSelectionController();
 
 new Vue({
   vuetify,
