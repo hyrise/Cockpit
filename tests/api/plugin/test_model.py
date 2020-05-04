@@ -1,8 +1,8 @@
 """Tests for the Plugin model."""
 from hyrisecockpit.api.app.plugin.model import (
     DetailedPlugin,
+    DetailedPluginID,
     Plugin,
-    PluginID,
     PluginSetting,
     PluginSettingBase,
 )
@@ -14,14 +14,6 @@ class TestPlugin:
     def test_creates(self, plugin: Plugin):
         """A Plugin model can be created."""
         assert plugin
-
-
-class TestPluginID:
-    """Tests for the PluginID model."""
-
-    def test_creates(self, plugin_id: PluginID):
-        """A PluginID model can be created."""
-        assert plugin_id
 
 
 class TestPluginSettingBase:
@@ -46,3 +38,11 @@ class TestDetailedPlugin:
     def test_creates(self, detailed_plugin: DetailedPlugin):
         """A DetailedPlugin model can be created."""
         assert detailed_plugin
+
+
+class TestDetailedPluginID:
+    """Tests for the detailed PluginID model."""
+
+    def test_creates(self, detailed_plugin_id: DetailedPluginID):
+        """A detailed PluginID model can be created."""
+        assert detailed_plugin_id

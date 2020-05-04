@@ -5,7 +5,7 @@ from hyrisecockpit.api.app.socket_manager import ManagerSocket
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
-from .interface import PluginIDInterface, PluginInterface
+from .interface import DetailedPluginIDInterface, PluginInterface
 
 
 class PluginService:
@@ -18,24 +18,14 @@ class PluginService:
             return socket.send_message(message)
 
     @classmethod
-    def get_all(cls) -> Union[List[PluginIDInterface], int]:
+    def get_all(cls) -> Union[List[DetailedPluginIDInterface], int]:
         """Get all Plugins from all databases."""
         response = cls._send_message_to_dbm(
             Request(header=Header(message="get plugins"), body={})
         )
         if response["header"]["status"] == 200:
-            plugins = response["body"]["plugins"]
-            return [
-                PluginIDInterface(
-                    id=database["id"],
-                    plugins=[
-                        PluginInterface(name=plugin) for plugin in database["plugins"]
-                    ]
-                    if database["plugins"] is not None
-                    else None,
-                )
-                for database in plugins
-            ]
+            plugins: List[DetailedPluginIDInterface] = response["body"]["plugins"]
+            return plugins
         else:
             return response["header"]["status"]
 

@@ -25,20 +25,43 @@ class TestPluginService:
         """A Plugin service gets all activated plugins per database."""
         expected = get_response(200)
         expected["body"]["plugins"] = [
-            {"id": "york", "plugins": ["Compression"]},
-            {"id": "citadelle", "plugins": ["Compression", "Clustering"]},
+            {
+                "id": "york",
+                "plugins": [
+                    {
+                        "name": "Compression",
+                        "settings": [
+                            {
+                                "name": "MemoryBudget",
+                                "value": "5000",
+                                "description": "...",
+                            }
+                        ],
+                    }
+                ],
+            },
+            {
+                "id": "citadelle",
+                "plugins": [
+                    {
+                        "name": "Compression",
+                        "settings": [
+                            {
+                                "name": "MemoryBudget",
+                                "value": "5000",
+                                "description": "...",
+                            }
+                        ],
+                    },
+                    {"name": "Clustering", "settings": []},
+                ],
+            },
         ]
         service._send_message_to_dbm.return_value = expected  # type: ignore
         result = service.get_all()
         assert not isinstance(result, int)
         assert isinstance(result, list)
-        assert result == [
-            {"id": "york", "plugins": [{"name": "Compression"}]},
-            {
-                "id": "citadelle",
-                "plugins": [{"name": "Compression"}, {"name": "Clustering"}],
-            },
-        ]
+        assert result == expected["body"]["plugins"]
 
     def test_doesnt_get_plugins_if_a_database_error_occurs(
         self, service: PluginService, interface: PluginInterface
@@ -47,19 +70,28 @@ class TestPluginService:
         expected = get_response(200)
         expected["body"]["plugins"] = [
             {"id": "york", "plugins": None},
-            {"id": "citadelle", "plugins": ["Compression", "Clustering"]},
+            {
+                "id": "citadelle",
+                "plugins": [
+                    {
+                        "name": "Compression",
+                        "settings": [
+                            {
+                                "name": "MemoryBudget",
+                                "value": "5000",
+                                "description": "...",
+                            }
+                        ],
+                    },
+                    {"name": "Clustering", "settings": []},
+                ],
+            },
         ]
         service._send_message_to_dbm.return_value = expected  # type: ignore
         result = service.get_all()
         assert not isinstance(result, int)
         assert isinstance(result, list)
-        assert result == [
-            {"id": "york", "plugins": None},
-            {
-                "id": "citadelle",
-                "plugins": [{"name": "Compression"}, {"name": "Clustering"}],
-            },
-        ]
+        assert result == expected["body"]["plugins"]
 
     @mark.parametrize("status", [200, 400, 500])
     def test_doesnt_get_plugins_if_an_unexpected_error_occurs(

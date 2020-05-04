@@ -8,13 +8,6 @@ class PluginInterface(TypedDict):
     name: str
 
 
-class PluginIDInterface(TypedDict):
-    """Interface of Plugins per database."""
-
-    id: str
-    plugins: Optional[List[PluginInterface]]
-
-
 class PluginSettingBaseInterface(TypedDict):
     """Base interface of a Plugin Setting."""
 
@@ -32,3 +25,10 @@ class DetailedPluginInterface(PluginInterface):
     """Interface of a detailed Plugin."""
 
     settings: List[PluginSettingInterface]
+
+
+class DetailedPluginIDInterface(TypedDict):
+    """Interface of detailed Plugins per database."""
+
+    id: str
+    plugins: Optional[List[DetailedPluginInterface]]

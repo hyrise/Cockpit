@@ -7,15 +7,15 @@ from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 
 from .interface import (
+    DetailedPluginIDInterface,
     DetailedPluginInterface,
-    PluginIDInterface,
     PluginInterface,
     PluginSettingBaseInterface,
     PluginSettingInterface,
 )
 from .schema import (
+    DetailedPluginIDSchema,
     DetailedPluginSchema,
-    PluginIDSchema,
     PluginSchema,
     PluginSettingBaseSchema,
     PluginSettingSchema,
@@ -29,8 +29,8 @@ api = Namespace("Plugin", description="Control Plugins per database.")
 class PluginController(Resource):
     """Controller of Plugins."""
 
-    @responds(schema=PluginIDSchema(many=True), api=api)
-    def get(self) -> List[PluginIDInterface]:
+    @responds(schema=DetailedPluginIDSchema(many=True), api=api)
+    def get(self) -> List[DetailedPluginIDInterface]:
         """Get all Plugins from all databases."""
         response = PluginService.get_all()
         if isinstance(response, int):

@@ -10,15 +10,6 @@ class Plugin:
         self.name: str = name
 
 
-class PluginID:
-    """Model of Plugins per database."""
-
-    def __init__(self, id: str, plugins: Optional[List[Plugin]]) -> None:
-        """Initialize a Plugins per database model."""
-        self.id: str = id
-        self.plugins: Optional[List[Plugin]] = plugins
-
-
 class PluginSettingBase:
     """Base model of a Plugin Setting."""
 
@@ -44,3 +35,12 @@ class DetailedPlugin(Plugin):
         """Initialize a detailed Plugin."""
         super().__init__(name)
         self.settings: List[PluginSetting] = settings
+
+
+class DetailedPluginID:
+    """Model of detailed Plugins per database."""
+
+    def __init__(self, id: str, plugins: Optional[List[DetailedPlugin]]) -> None:
+        """Initialize a detailed Plugins per database model."""
+        self.id: str = id
+        self.plugins: Optional[List[DetailedPlugin]] = plugins

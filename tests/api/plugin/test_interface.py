@@ -1,16 +1,16 @@
 """Tests for the Plugin interface."""
 
 from hyrisecockpit.api.app.plugin.interface import (
+    DetailedPluginIDInterface,
     DetailedPluginInterface,
-    PluginIDInterface,
     PluginInterface,
     PluginSettingBaseInterface,
     PluginSettingInterface,
 )
 from hyrisecockpit.api.app.plugin.model import (
     DetailedPlugin,
+    DetailedPluginID,
     Plugin,
-    PluginID,
     PluginSetting,
     PluginSettingBase,
 )
@@ -26,18 +26,6 @@ class TestPluginInterface:
     def test_works(self, interface: PluginInterface):
         """A Plugin model can be created from an interface."""
         assert Plugin(**interface)
-
-
-class TestPluginIDInterface:
-    """Tests for the Plugin ID interface."""
-
-    def test_creates(self, interface_id: PluginIDInterface):
-        """A PluginID interface can be created."""
-        assert interface_id
-
-    def test_works(self, interface_id: PluginIDInterface):
-        """A PluginID model can be created from an interface."""
-        assert PluginID(**interface_id)  # type: ignore
 
 
 class TestPluginSettingBaseInterface:
@@ -74,3 +62,15 @@ class TestDetailedPluginInterface:
     def test_works(self, interface_detailed_plugin: DetailedPluginInterface):
         """A DetailedPlugin model can be created from an interface."""
         assert DetailedPlugin(**interface_detailed_plugin)  # type: ignore
+
+
+class TestDetailedPluginIDInterface:
+    """Tests for the detailed Plugin ID interface."""
+
+    def test_creates(self, interface_detailed_plugin_id: DetailedPluginIDInterface):
+        """A detailed PluginID interface can be created."""
+        assert interface_detailed_plugin_id
+
+    def test_works(self, interface_detailed_plugin_id: DetailedPluginIDInterface):
+        """A detailed PluginID model can be created from an interface."""
+        assert DetailedPluginID(**interface_detailed_plugin_id)  # type: ignore

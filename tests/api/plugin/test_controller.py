@@ -9,8 +9,13 @@ from pytest import fixture
 
 from hyrisecockpit.api.app import create_app
 from hyrisecockpit.api.app.plugin import BASE_ROUTE
-from hyrisecockpit.api.app.plugin.interface import PluginIDInterface, PluginInterface
-from hyrisecockpit.api.app.plugin.schema import PluginIDSchema
+from hyrisecockpit.api.app.plugin.interface import (
+    DetailedPluginIDInterface,
+    DetailedPluginInterface,
+    PluginInterface,
+    PluginSettingInterface,
+)
+from hyrisecockpit.api.app.plugin.schema import DetailedPluginIDSchema
 
 url = f"/{BASE_ROUTE}"
 
@@ -47,11 +52,25 @@ class TestPluginController:
 
     def test_gets_all_plugins(self, client: FlaskClient):
         """A PluginController routes get correctly."""
-        expected = PluginIDInterface(
+        expected = DetailedPluginIDInterface(
             id="york",
             plugins=[
-                PluginInterface(name="Compression"),
-                PluginInterface(name="Clustering"),
+                DetailedPluginInterface(
+                    name="Compression",
+                    settings=[
+                        PluginSettingInterface(
+                            name="MemoryBudget", value="5000", description="..."
+                        )
+                    ],
+                ),
+                DetailedPluginInterface(
+                    name="Clustering",
+                    settings=[
+                        PluginSettingInterface(
+                            name="SomeOtherSetting", value="true", description="..."
+                        )
+                    ],
+                ),
             ],
         )
         with patch(
@@ -60,16 +79,16 @@ class TestPluginController:
             get_all.return_value = expected
             response = client.get(url, follow_redirects=True)
         assert 200 == response.status_code
-        assert PluginIDSchema(many=True).dump(expected) == response.get_json()
+        assert DetailedPluginIDSchema(many=True).dump(expected) == response.get_json()
 
 
-class TestPluginIdController:
-    """Tests for the PluginIdController."""
+class TestDetailedPluginIDController:
+    """Tests for the DetailedPluginIDController."""
 
     def test_activates_the_correct_plugin(
         self, client: FlaskClient, database_id: str, interface: PluginInterface
     ):
-        """A PluginId controller routes post route correctly."""
+        """A DetailedPluginID controller routes post route correctly."""
         with patch(
             "hyrisecockpit.api.app.plugin.service.PluginService.activate_by_id"
         ) as activate:
@@ -86,7 +105,7 @@ class TestPluginIdController:
     def test_doesnt_activate_when_id_not_available(
         self, client: FlaskClient, database_id: str, interface: PluginInterface
     ):
-        """A PluginId controller routes post route correctly."""
+        """A DetailedPluginID controller routes post route correctly."""
         with patch(
             "hyrisecockpit.api.app.plugin.service.PluginService.activate_by_id"
         ) as activate:
@@ -103,7 +122,7 @@ class TestPluginIdController:
     def test_doesnt_activate_when_database_blocked(
         self, client: FlaskClient, database_id: str, interface: PluginInterface
     ):
-        """A PluginId controller routes post route correctly."""
+        """A DetailedPluginID controller routes post route correctly."""
         with patch(
             "hyrisecockpit.api.app.plugin.service.PluginService.activate_by_id"
         ) as activate:
@@ -120,7 +139,7 @@ class TestPluginIdController:
     def test_deactivates_the_correct_plugin(
         self, client: FlaskClient, database_id: str, interface: PluginInterface
     ):
-        """A PluginId controller routes delete correctly."""
+        """A DetailedPluginID controller routes delete correctly."""
         with patch(
             "hyrisecockpit.api.app.plugin.service.PluginService.deactivate_by_id"
         ) as deactivate:
@@ -137,7 +156,7 @@ class TestPluginIdController:
     def test_doesnt_deactivate_when_id_not_available(
         self, client: FlaskClient, database_id: str, interface: PluginInterface
     ):
-        """A PluginId controller routes delete correctly."""
+        """A DetailedPluginID controller routes delete correctly."""
         with patch(
             "hyrisecockpit.api.app.plugin.service.PluginService.deactivate_by_id"
         ) as deactivate:
@@ -154,7 +173,7 @@ class TestPluginIdController:
     def test_doesnt_deactivate_when_database_blocked(
         self, client: FlaskClient, database_id: str, interface: PluginInterface
     ):
-        """A PluginId controller routes delete correctly."""
+        """A DetailedPluginID controller routes delete correctly."""
         with patch(
             "hyrisecockpit.api.app.plugin.service.PluginService.deactivate_by_id"
         ) as deactivate:

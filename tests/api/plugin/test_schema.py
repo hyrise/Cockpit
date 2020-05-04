@@ -1,22 +1,22 @@
 """Tests for the Plugin schema."""
 
 from hyrisecockpit.api.app.plugin.interface import (
+    DetailedPluginIDInterface,
     DetailedPluginInterface,
-    PluginIDInterface,
     PluginInterface,
     PluginSettingBaseInterface,
     PluginSettingInterface,
 )
 from hyrisecockpit.api.app.plugin.model import (
     DetailedPlugin,
+    DetailedPluginID,
     Plugin,
-    PluginID,
     PluginSetting,
     PluginSettingBase,
 )
 from hyrisecockpit.api.app.plugin.schema import (
+    DetailedPluginIDSchema,
     DetailedPluginSchema,
-    PluginIDSchema,
     PluginSchema,
     PluginSettingBaseSchema,
     PluginSettingSchema,
@@ -46,33 +46,41 @@ class TestPluginSchema:
         assert interface["name"] == plugin.name == serialized["name"]
 
 
-class TestPluginIDSchema:
-    """Tests for the PluginID schema."""
+class TestDetailedPluginIDSchema:
+    """Tests for the DetailedPluginID schema."""
 
-    def test_creates(self, schema_id: PluginIDSchema):
-        """A PluginID schema can be created."""
-        assert schema_id
-        assert isinstance(schema_id, PluginIDSchema)
+    def test_creates(self, schema_detailed_plugin_id: DetailedPluginIDSchema):
+        """A DetailedPluginID schema can be created."""
+        assert schema_detailed_plugin_id
+        assert isinstance(schema_detailed_plugin_id, DetailedPluginIDSchema)
 
     def test_deserializes(
-        self, schema_id: PluginIDSchema, interface_id: PluginIDInterface
+        self,
+        schema_detailed_plugin_id: DetailedPluginIDSchema,
+        interface_detailed_plugin_id: DetailedPluginIDInterface,
     ):
-        """A PluginID schema can create a PluginID model."""
-        deserialized: PluginIDInterface = schema_id.load(interface_id)
+        """A DetailedPluginID schema can create a DetailedPluginID model."""
+        deserialized: DetailedPluginIDInterface = schema_detailed_plugin_id.load(
+            interface_detailed_plugin_id
+        )
         assert deserialized
-        plugin_id = PluginID(**deserialized)  # type: ignore
+        plugin_id = DetailedPluginID(**deserialized)  # type: ignore
         assert plugin_id
-        assert interface_id["id"] == deserialized["id"] == plugin_id.id
-        assert interface_id["plugins"] == deserialized["plugins"] == plugin_id.plugins  # type: ignore
+        assert interface_detailed_plugin_id["id"] == deserialized["id"] == plugin_id.id
+        assert interface_detailed_plugin_id["plugins"] == deserialized["plugins"] == plugin_id.plugins  # type: ignore
 
     def test_serializes(
-        self, schema_id: PluginIDSchema, interface_id: PluginIDInterface
+        self,
+        schema_detailed_plugin_id: DetailedPluginIDSchema,
+        interface_detailed_plugin_id: DetailedPluginIDInterface,
     ):
-        """A PluginID model can be serialized with a PluginID schema."""
-        plugin_id = PluginID(**interface_id)  # type: ignore
-        serialized: PluginIDInterface = schema_id.dump(plugin_id)
-        assert interface_id["id"] == plugin_id.id == serialized["id"]
-        assert interface_id["plugins"] == plugin_id.plugins == serialized["plugins"]  # type: ignore
+        """A DetailedPluginID model can be serialized with a DetailedPluginID schema."""
+        plugin_id = DetailedPluginID(**interface_detailed_plugin_id)  # type: ignore
+        serialized: DetailedPluginIDInterface = schema_detailed_plugin_id.dump(
+            plugin_id
+        )
+        assert interface_detailed_plugin_id["id"] == plugin_id.id == serialized["id"]
+        assert interface_detailed_plugin_id["plugins"] == plugin_id.plugins == serialized["plugins"]  # type: ignore
 
 
 class TestPluginSettingBaseSchema:

@@ -9,19 +9,6 @@ class PluginSchema(Schema):
     name = String(description="Identifier of the Plugin.", required=True)
 
 
-class PluginIDSchema(Schema):
-    """Schema of Plugins per database."""
-
-    id = String(description="Identifier of the database.", required=True)
-    plugins = Nested(
-        PluginSchema,
-        description="Plugins per database, none if the database is blocked.",
-        many=True,
-        required=True,
-        allow_none=True,
-    )
-
-
 class PluginSettingBaseSchema(Schema):
     """Base schema of a Plugin Setting."""
 
@@ -45,4 +32,17 @@ class DetailedPluginSchema(PluginSchema):
         description="Settings of the Plugin",
         many=True,
         required=True,
+    )
+
+
+class DetailedPluginIDSchema(Schema):
+    """Schema of detailed Plugins per database."""
+
+    id = String(description="Identifier of the database.", required=True)
+    plugins = Nested(
+        DetailedPluginSchema,
+        description="Detailed Plugins per database, none if the database is blocked.",
+        many=True,
+        required=True,
+        allow_none=True,
     )

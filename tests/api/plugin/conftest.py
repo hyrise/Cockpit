@@ -2,22 +2,22 @@
 from pytest import fixture
 
 from hyrisecockpit.api.app.plugin.interface import (
+    DetailedPluginIDInterface,
     DetailedPluginInterface,
-    PluginIDInterface,
     PluginInterface,
     PluginSettingBaseInterface,
     PluginSettingInterface,
 )
 from hyrisecockpit.api.app.plugin.model import (
     DetailedPlugin,
+    DetailedPluginID,
     Plugin,
-    PluginID,
     PluginSetting,
     PluginSettingBase,
 )
 from hyrisecockpit.api.app.plugin.schema import (
+    DetailedPluginIDSchema,
     DetailedPluginSchema,
-    PluginIDSchema,
     PluginSchema,
     PluginSettingBaseSchema,
     PluginSettingSchema,
@@ -61,12 +61,6 @@ def plugin(name: str) -> Plugin:
 
 
 @fixture
-def plugin_id(id: str, plugin: Plugin) -> PluginID:
-    """Return a PluginID model."""
-    return PluginID(id=id, plugins=[plugin])
-
-
-@fixture
 def plugin_setting_base(setting_name: str, setting_value: str) -> PluginSettingBase:
     """Return a PluginSettingBase model."""
     return PluginSettingBase(setting_name, setting_value)
@@ -87,15 +81,15 @@ def detailed_plugin(name: str, plugin_setting: PluginSetting) -> DetailedPlugin:
 
 
 @fixture
-def interface(name: str) -> PluginInterface:
-    """Return a Plugin interface."""
-    return PluginInterface(name=name)
+def detailed_plugin_id(id: str, detailed_plugin: DetailedPlugin) -> DetailedPluginID:
+    """Return a PluginID model."""
+    return DetailedPluginID(id=id, plugins=[detailed_plugin])
 
 
 @fixture
-def interface_id(id: str, interface: PluginInterface) -> PluginIDInterface:
+def interface(name: str) -> PluginInterface:
     """Return a Plugin interface."""
-    return PluginIDInterface(id=id, plugins=[interface])
+    return PluginInterface(name=name)
 
 
 @fixture
@@ -125,15 +119,17 @@ def interface_detailed_plugin(
 
 
 @fixture
-def schema() -> PluginSchema:
-    """Return a Plugin schema."""
-    return PluginSchema()
+def interface_detailed_plugin_id(
+    id: str, interface_detailed_plugin: DetailedPluginInterface
+) -> DetailedPluginIDInterface:
+    """Return a Plugin interface."""
+    return DetailedPluginIDInterface(id=id, plugins=[interface_detailed_plugin])
 
 
 @fixture
-def schema_id() -> PluginIDSchema:
-    """Return a PluginID schema."""
-    return PluginIDSchema()
+def schema() -> PluginSchema:
+    """Return a Plugin schema."""
+    return PluginSchema()
 
 
 @fixture
@@ -152,3 +148,9 @@ def schema_setting() -> PluginSettingSchema:
 def schema_detailed_plugin() -> DetailedPluginSchema:
     """Return a DetailedPlugin schema."""
     return DetailedPluginSchema()
+
+
+@fixture
+def schema_detailed_plugin_id() -> DetailedPluginIDSchema:
+    """Return a PluginID schema."""
+    return DetailedPluginIDSchema()
