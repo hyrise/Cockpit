@@ -2,7 +2,12 @@
   <div class="setting-row">
     <v-tooltip id="setting-description" class="setting-tooltip" bottom>
       <template v-slot:activator="{ on }">
-        <v-icon id="setting-help-icon" class="setting-icon" v-on="on">
+        <v-icon
+          id="setting-help-icon"
+          class="setting-icon"
+          v-on="on"
+          @click="togglePluginEditor()"
+        >
           mdi-help-circle
         </v-icon>
       </template>
