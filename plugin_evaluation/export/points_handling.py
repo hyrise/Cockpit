@@ -4,7 +4,7 @@ from typing import List
 import matplotlib.dates as mdate
 
 
-def idle_function(points: List, metric: str):
+def default_function(points: List, metric: str):
     """Doesn't change the input value."""
     time = [int(point["time"] / 1_000_000_000) for point in points]
     metric_values = [point[metric] for point in points]
