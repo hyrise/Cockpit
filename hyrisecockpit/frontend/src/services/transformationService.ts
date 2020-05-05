@@ -376,20 +376,20 @@ export function usePluginTransformationSevice(): any {
   function getPluginEventData(data: any): any {
     const relevantTime = subSeconds(new Date(), 40); // this should be set according to the start and endpoint of the linecharts
     return data.reduce((result: any, currentDatabase: any) => {
-      result[currentDatabase.id] = [1].reduce(
+      result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
         (databaseEvents: any, currentLog: any) => {
           // if (currentLog.timestamp > relevantTime) {
           return {
             timestamps: [
               ...databaseEvents.timestamps,
-              subSeconds(new Date(), 5),
+              new Date(parseInt(currentLog.timestamp)),
             ],
             events: [
               ...databaseEvents.events,
               trimString(
-                `test [${formatDateToHHMMSS(
-                  subSeconds(new Date(), 5)
-                )}]: shits on fire jooooooo ahdaldksnfsandfsnad ksjafdasdnflkasd ksdjfasdnfkasdnfjskanf kjalsndfljkasdnf`,
+                `${currentLog.reporter} [${formatDateToHHMMSS(
+                  new Date(parseInt(currentLog.timestamp))
+                )}]: ${currentLog.message}`,
                 50
               ),
             ],
