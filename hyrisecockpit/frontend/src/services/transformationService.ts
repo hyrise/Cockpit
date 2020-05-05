@@ -7,6 +7,7 @@ import {
 import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
 import { colorValueDefinition } from "@/meta/colors";
+import Vue from "vue";
 
 const transformationServiceMap: Record<Metric, TransformationService> = {
   access: getAccessData,
@@ -356,16 +357,17 @@ export function usePluginTransformationSevice(): any {
     }, []);
   }
 
+  function producePluginLogString(currentLog: any) {
+    return `${currentLog.reporter} [${formatDateToHHMMSS(
+      new Date(parseInt(currentLog.timestamp))
+    )}]: ${currentLog.message}`;
+  }
+
   function getPluginLogsData(data: any): any {
     return data.reduce((result: any, currentDatabase: any) => {
       result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
         (databaseLog: string, currentLog: any) => {
-          return (
-            databaseLog +
-            `${currentLog.reporter} [${formatDateToHHMMSS(
-              new Date(parseInt(currentLog.timestamp))
-            )}]: ${currentLog.message}\n`
-          );
+          return databaseLog + `${producePluginLogString(currentLog)}\n`;
         },
         ""
       );
@@ -374,29 +376,29 @@ export function usePluginTransformationSevice(): any {
   }
 
   function getPluginEventData(data: any): any {
-    const relevantTime = subSeconds(new Date(), 40); // this should be set according to the start and endpoint of the linecharts
+    console.log(Vue.prototype.$selectionController.selectedRange.value);
+    const relevantTime = subSeconds(
+      new Date(),
+      Vue.prototype.$selectionController.selectedRange.value +
+        Vue.prototype.$selectionController.selectedPrecision.value
+    );
     return data.reduce((result: any, currentDatabase: any) => {
       result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
         (databaseEvents: any, currentLog: any) => {
-          // if (currentLog.timestamp > relevantTime) {
-          return {
-            timestamps: [
-              ...databaseEvents.timestamps,
-              new Date(parseInt(currentLog.timestamp)),
-            ],
-            events: [
-              ...databaseEvents.events,
-              trimString(
-                `${currentLog.reporter} [${formatDateToHHMMSS(
-                  new Date(parseInt(currentLog.timestamp))
-                )}]: ${currentLog.message}`,
-                50
-              ),
-            ],
-          };
-          // } else {
-          // return result;
-          // }
+          if (currentLog.timestamp > relevantTime) {
+            return {
+              timestamps: [
+                ...databaseEvents.timestamps,
+                new Date(parseInt(currentLog.timestamp)),
+              ],
+              events: [
+                ...databaseEvents.events,
+                trimString(producePluginLogString(currentLog), 50),
+              ],
+            };
+          } else {
+            return databaseEvents;
+          }
         },
         { timestamps: [], events: [] }
       );
