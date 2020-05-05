@@ -23,3 +23,21 @@ def plot_line_chart(
     plt.legend()
 
     plt.savefig(f"{absolute_report_directory_path}/report/{metric}.png", dpi=300)
+
+
+def plot_bar_chart(
+    labels: List, metric_values: List, metric: str, x_label: str, y_label: str
+):
+    """Plot line chart to file."""
+    figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
+    plt.title(f"{metric}")
+    plt.ticklabel_format(style="plain")
+    plt.xticks(rotation=45, ha="right")
+    plt.subplots_adjust(bottom=0.15)
+    plt.ylim(bottom=0.0, top=np.amax(metric_values) * 1.3)
+    plt.bar(labels, metric_values, label=f"{metric}")
+    plt.ylabel(f"{y_label}")
+    plt.xlabel(f"{x_label}")
+    plt.legend()
+
+    plt.savefig(f"{absolute_report_directory_path}/report/{metric}.png", dpi=300)

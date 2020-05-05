@@ -50,3 +50,4 @@ with DoneStatus("Export..."):
     exporter.plot_metric("queue_length", "momentum", startts, endts)
     exporter.plot_metric("cpu_process_usage", "momentum", startts, endts)
     exporter.plot_metric("footprint", "momentum", startts, endts)
+    exporter.plot_metric("detailed latency", "momentum", startts, endts)

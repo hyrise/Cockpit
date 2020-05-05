@@ -38,3 +38,25 @@ def calculate_footprint(points: List, column_name: str):
         metric_values.append(footprint / 1_000_000)
 
     return secs, metric_values
+
+
+def sort_detailed_latency_points(points: List, column_name: str):
+    """Sort detailed latency points."""
+
+    def get_latency(elem):
+        return elem["latency"]
+
+    points.sort(key=get_latency, reverse=True)
+
+    labels = []
+    for point in points:
+        benchmark_name = point["benchmark"].split("_")[0].upper()
+        scale_factor = ".".join(
+            f"{number}" for number in point["benchmark"].split("_")[1:]
+        )
+        query_number = point["query_number"]
+        labels.append(f"{benchmark_name}({scale_factor})-{query_number}")
+
+    latency = [point["latency"] / 1_000_000 for point in points]
+
+    return labels, latency
