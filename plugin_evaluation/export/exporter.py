@@ -4,16 +4,9 @@ from pathlib import Path
 import matplotlib.dates as mdate
 import matplotlib.pyplot as plt
 import numpy as np
-from influxdb import InfluxDBClient
 from matplotlib.pyplot import figure
 
 from plugin_evaluation.export.config import config
-from plugin_evaluation.settings import (
-    STORAGE_HOST,
-    STORAGE_PASSWORD,
-    STORAGE_PORT,
-    STORAGE_USER,
-)
 
 absolute_report_directory_path = str(Path(__file__).parent.parent.absolute())
 
@@ -21,34 +14,10 @@ absolute_report_directory_path = str(Path(__file__).parent.parent.absolute())
 class Exporter:
     """Exports time series data to PDF."""
 
-    def __init__(self):
-        """Initialize Exporter."""
-        self._client = InfluxDBClient(
-            STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD
-        )
-
-    def get_metric_data(
-        self, table_name: str, metric: str, database: str, startts: int, endts: int
-    ):
-        """Get metric data for provided time range."""
-        query: str = f"""SELECT MEAN({metric}) AS {metric}
-            FROM {table_name}
-            WHERE time >= $startts
-            AND time < $endts
-            GROUP BY TIME(1s)
-            FILL(0.0)"""
-        result = self._client.query(
-            query,
-            database=database,
-            bind_params={"startts": startts, "endts": endts},
-            epoch=True,
-        )
-        return list(result[table_name, None])
-
     def plot_metric(self, metric: str, database: str, startts: int, endts: int):
         """Plot metric data for a given database."""
         metric_config = config[metric]
-        points = self.get_metric_data(
+        points = metric_config["influx_function"](
             metric_config["table_name"],  # type: ignore
             metric,
             database,
@@ -59,7 +28,7 @@ class Exporter:
             metric,
             metric_config["label"],  # type: ignore
             points,
-            metric_config["function"],
+            metric_config["metric_function"],
         )
 
     def export_metric(self, metric: str, label: str, points, function):
