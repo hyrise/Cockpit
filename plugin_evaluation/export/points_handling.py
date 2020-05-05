@@ -5,25 +5,25 @@ from typing import List
 import matplotlib.dates as mdate
 
 
-def default_function(points: List, metric: str):
+def default_function(points: List, column_name: str):
     """Doesn't change the input value."""
     time = [int(point["time"] / 1_000_000_000) for point in points]
-    metric_values = [point[metric] for point in points]
+    metric_values = [point[column_name] for point in points]
     secs = mdate.epoch2num(time)
 
     return secs, metric_values
 
 
-def ns_to_ms(points: List, metric: str):
+def ns_to_ms(points: List, column_name: str):
     """Convert ns to ms."""
     time = [int(point["time"] / 1_000_000_000) for point in points]
-    metric_values = [point[metric] / 1_000_000 for point in points]
+    metric_values = [point[column_name] / 1_000_000 for point in points]
     secs = mdate.epoch2num(time)
 
     return secs, metric_values
 
 
-def calculate_footprint(points: List, metric: str):
+def calculate_footprint(points: List, column_name: str):
     """Convert ns to ms."""
     time = [int(point["time"] / 1_000_000_000) for point in points]
     secs = mdate.epoch2num(time)
