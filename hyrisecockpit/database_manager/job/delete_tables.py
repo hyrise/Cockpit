@@ -14,7 +14,6 @@ from hyrisecockpit.database_manager.table_names import table_names as _table_nam
 def _generate_table_drop_queries(
     tables: List[str], benchmark: str, scale_factor: str
 ) -> List[Tuple]:
-    # TODO folder_name is unused? This deletes all tables
     """Generate queries in tuple form that drop tables."""
     return [
         (
