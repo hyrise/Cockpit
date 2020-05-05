@@ -15,8 +15,8 @@ class Exporter:
         points = influx_function(  # type: ignore
             metric_config["table_name"], metric, database, startts, endts,
         )
-        time_values, metric_values = points_function(points, metric)  # type: ignore
+        x_values, y_values = points_function(points, metric)  # type: ignore
 
         plot_function(  # type: ignore
-            time_values, metric_values, metric, metric_config["y_label"]
+            x_values, y_values, metric, metric_config["y_label"]
         )
