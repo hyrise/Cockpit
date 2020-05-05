@@ -468,10 +468,10 @@ class TestDatabaseManager:
         database.get_database_blocked.return_value = 0
         database.get_hyrise_active.return_value = True
         database.get_worker_pool_status.return_value = "closed"
-        database.get_loaded_benchmarks.return_value = ["tpch_0.1"]
-        database.get_loaded_tables.return_value = [
-            {"table_name": "customer", "benchmark": "tpch_0.1"}
-        ]
+        database.get_loaded_benchmark_data.return_value = (
+            ["table1", "table2"],
+            ["hahahahahah", "wann darf ich wieder raus"],
+        )
         database_manager._databases["db1"] = database
 
         expected_status = [
@@ -480,8 +480,8 @@ class TestDatabaseManager:
                 "hyrise_active": True,
                 "database_blocked_status": 0,
                 "worker_pool_status": "closed",
-                "loaded_benchmarks": ["tpch_0.1"],
-                "loaded_tables": [{"table_name": "customer", "benchmark": "tpch_0.1"}],
+                "loaded_benchmarks": ["hahahahahah", "wann darf ich wieder raus"],
+                "loaded_tables": ["table1", "table2"],
             }
         ]
         expected_response = get_response(200)
