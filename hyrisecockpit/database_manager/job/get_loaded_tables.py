@@ -13,9 +13,9 @@ def get_loaded_tables_for_scale_factor(
         with connection_factory.create_cursor() as cur:
             cur.execute("show tables;", None)
             results = cur.fetchall()
-            loaded_tables = [row[0] for row in results] if results else []
+            all_loaded_tables = [row[0] for row in results] if results else []
             for table in tables:
-                if f"{table}_{benchmark}_{scale_factor}" in loaded_tables:
+                if f"{table}_{benchmark}_{scale_factor}" in all_loaded_tables:
                     loaded_tables.append(table)
 
     except (DatabaseError, InterfaceError):
