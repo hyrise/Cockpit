@@ -1,13 +1,13 @@
 """The BackgroundJobManager is managing the background jobs for the apscheduler."""
 
 from multiprocessing import Value
-from typing import Any, Dict, List, Optional, Tuple, TypedDict
+from typing import Dict, List, TypedDict
 
 from apscheduler.schedulers.background import BackgroundScheduler
-from psycopg2 import DatabaseError, InterfaceError, ProgrammingError
-from psycopg2.extensions import AsIs
 
 from .cursor import ConnectionFactory, StorageConnectionFactory
+from .job.activate_plugin import activate_plugin as activate_plugin_job
+from .job.deactivate_plugin import deactivate_plugin as deactivate_plugin_job
 from .job.delete_tables import delete_tables as delete_tables_job
 from .job.load_tables import load_tables as load_tables_job
 from .job.ping_hyrise import ping_hyrise
@@ -47,33 +47,6 @@ class TableData(TypedDict):
 StorageDataType = Dict[str, TableData]
 
 
-def format_query_parameters(parameters) -> Optional[Tuple[Any, ...]]:
-    """Format query parameters for execution."""
-    formatted_parameters = (
-        tuple(
-            AsIs(parameter) if protocol == "as_is" else parameter
-            for parameter, protocol in parameters
-        )
-        if parameters is not None
-        else None
-    )
-    return formatted_parameters
-
-
-def execute_table_query(
-    query_tuple: Tuple, success_flag: Value, connection_factory: ConnectionFactory
-) -> None:
-    """Execute loading or deleting table query."""
-    query, parameters = query_tuple
-    formatted_parameters = format_query_parameters(parameters)
-    try:
-        with connection_factory.create_cursor() as cur:
-            cur.execute(query, formatted_parameters)
-            success_flag.value = True
-    except (DatabaseError, InterfaceError, ProgrammingError):
-        return None  # TODO: log error
-
-
 class BackgroundJobManager(object):
     """Manage background scheduling jobs."""
 
@@ -93,7 +66,6 @@ class BackgroundJobManager(object):
         self._storage_connection_factory: StorageConnectionFactory = storage_connection_factory
         self._worker_pool: WorkerPool = worker_pool
         self._scheduler: BackgroundScheduler = BackgroundScheduler()
-        self._previous_chunks_data: Dict = {}
         self._hyrise_active: Value = hyrise_active
         self._init_jobs()
 
@@ -197,39 +169,22 @@ class BackgroundJobManager(object):
         )
         return True
 
-    def _activate_plugin_job(self, plugin: str) -> None:
-        try:
-            with self._connection_factory.create_cursor() as cur:
-                cur.execute(
-                    (
-                        "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
-                    ),
-                    (AsIs(plugin),),
-                )
-        except (DatabaseError, InterfaceError):
-            return None  # TODO: log that activate plug-in failed
-
     def activate_plugin(self, plugin: str) -> bool:
         """Activate plugin."""
         if not self._database_blocked.value:
-            self._scheduler.add_job(func=self._activate_plugin_job, args=(plugin,))
+            self._scheduler.add_job(
+                func=activate_plugin_job, args=(self._connection_factory, plugin,)
+            )
             return True
         else:
             return False
 
-    def _deactivate_plugin_job(self, plugin: str) -> None:
-        try:
-            with self._connection_factory.create_cursor() as cur:
-                cur.execute(
-                    ("DELETE FROM meta_plugins WHERE name='%sPlugin';"), (AsIs(plugin),)
-                )
-        except (DatabaseError, InterfaceError):
-            return None  # TODO: log that deactivate plug-in failed
-
     def deactivate_plugin(self, plugin: str) -> bool:
         """Dectivate plugin."""
         if not self._database_blocked.value:
-            self._scheduler.add_job(func=self._deactivate_plugin_job, args=(plugin,))
+            self._scheduler.add_job(
+                func=deactivate_plugin_job, args=(self._connection_factory, plugin,)
+            )
             return True
         else:
             return False
