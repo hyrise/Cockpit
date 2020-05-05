@@ -1,5 +1,5 @@
 """This job loads tables."""
-
+from copy import deepcopy
 from multiprocessing import Value
 from typing import List, Optional, Tuple, Union
 
@@ -36,7 +36,7 @@ def load_tables(database_blocked: Value, folder_name: str, connection_factory) -
     """Load tables."""
     benchmark, scale_factor = folder_name.split("_", maxsplit=1)
 
-    table_names: List[str] = _table_names[benchmark]
+    table_names: List[str] = deepcopy(_table_names)[benchmark]
     loaded_tables: List[str] = get_loaded_tables_for_scale_factor(
         table_names, benchmark, scale_factor, connection_factory
     )
