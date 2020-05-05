@@ -1,10 +1,8 @@
 import { eventBus } from "@/plugins/eventBus";
 import { Metric } from "@/types/metrics";
 import { PageName } from "@/types/views";
-import { SetupContext } from "@vue/composition-api";
 
 export function useMetricEvents(): {
-  emitWatchedMetricsChangedEvent: (metrics: Metric[]) => void;
   emitSelectedMetricsChangedEvent: () => void;
   emitSelectedMetricsChangedWithinEvent: (
     page: PageName,
@@ -12,9 +10,6 @@ export function useMetricEvents(): {
     value: boolean
   ) => void;
 } {
-  function emitWatchedMetricsChangedEvent(metrics: Metric[]): void {
-    eventBus.$emit("WATCHED_METRICS_CHANGED", metrics);
-  }
   function emitSelectedMetricsChangedEvent(): void {
     eventBus.$emit("SELECTED_METRICS_CHANGED");
   }
@@ -30,38 +25,32 @@ export function useMetricEvents(): {
     });
   }
   return {
-    emitWatchedMetricsChangedEvent,
     emitSelectedMetricsChangedEvent,
     emitSelectedMetricsChangedWithinEvent,
   };
 }
 
 export function useWindowEvents(): {
-  emitPageChangedEvent: (metrics: Metric[]) => void;
-  emitHistoricRangeChangedEvent: (
-    metrics: Metric[],
-    start: Date,
-    end: Date
-  ) => void;
+  emitPageChangedEvent: (page: PageName) => void;
 } {
-  function emitPageChangedEvent(metrics: Metric[]): void {
-    eventBus.$emit("PAGE_CHANGED", metrics);
-  }
-  function emitHistoricRangeChangedEvent(
-    metrics: Metric[],
-    start: Date,
-    end: Date
-  ): void {
-    eventBus.$emit("HISTORIC_RANGE_CHANGED", { metrics, start, end });
+  function emitPageChangedEvent(page: PageName): void {
+    eventBus.$emit("PAGE_CHANGED", page);
   }
 
-  return { emitPageChangedEvent, emitHistoricRangeChangedEvent };
+  return {
+    emitPageChangedEvent,
+  };
 }
 
 export function useDatabaseEvents(): {
   emitSelectedDatabasesChangedEvent: (databases?: string[]) => void;
   emitDatabaseAddedEvent: () => void;
   emitDatabaseRemovedEvent: () => void;
+  emitDatabaseStatusChangedEvent: (
+    databaseId: string,
+    blocked: boolean,
+    active: boolean
+  ) => void;
   emitSelectedDatabasesChangedWithinEvent: (
     page: PageName,
     database: string,
@@ -88,11 +77,19 @@ export function useDatabaseEvents(): {
   function emitDatabaseRemovedEvent(): void {
     eventBus.$emit("DATABASE_REMOVED");
   }
+  function emitDatabaseStatusChangedEvent(
+    databaseId: string,
+    blocked: boolean,
+    active: boolean
+  ): void {
+    eventBus.$emit("DATABASE_STATUS_CHANGED", databaseId, blocked, active);
+  }
   return {
     emitSelectedDatabasesChangedEvent,
     emitSelectedDatabasesChangedWithinEvent,
     emitDatabaseAddedEvent,
     emitDatabaseRemovedEvent,
+    emitDatabaseStatusChangedEvent,
   };
 }
 

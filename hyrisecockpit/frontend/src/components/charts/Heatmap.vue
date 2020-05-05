@@ -4,14 +4,15 @@
 
 <script lang="ts">
 import { defineComponent, SetupContext, onMounted } from "@vue/composition-api";
-import * as Plotly from "plotly.js";
+import Plotly from "@/../plotlyBundle.ts";
 import { ChartConfiguration, AccessData } from "../../types/metrics";
 import { ChartProps, ChartPropsValidation } from "../../types/charts";
 import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
-import { colorDefinition } from "../../meta/colors";
+import { colorValueDefinition } from "../../meta/colors";
 
 interface Props extends ChartProps {
   autosize: boolean;
+  maxValue: number;
 }
 
 export default defineComponent({
@@ -20,6 +21,10 @@ export default defineComponent({
     autosize: {
       type: Boolean,
       default: true,
+    },
+    maxValue: {
+      type: Number,
+      default: 0,
     },
     ...ChartPropsValidation,
   },
@@ -31,12 +36,17 @@ export default defineComponent({
     const { updateLayout } = useResizingOnChange(props);
 
     onMounted(() => {
-      Plotly.newPlot(props.graphId, [getDataset()], getLayout(), getOptions());
+      Plotly.newPlot(
+        props.graphId,
+        [getDataset(props.maxValue)],
+        getLayout(),
+        getOptions()
+      );
       useChartReactivity(props, context, updateDataset, updateLayout);
     });
 
     function updateDataset(): void {
-      Plotly.addTraces(props.graphId, getDataset(props.data));
+      Plotly.addTraces(props.graphId, getDataset(props.maxValue, props.data));
       Plotly.deleteTraces(props.graphId, 0);
     }
   },
@@ -46,7 +56,7 @@ function useHeatMapConfiguration(
   chartConfiguration: ChartConfiguration,
   autosize: boolean
 ): {
-  getDataset: (data?: AccessData) => Object;
+  getDataset: (maxValue: number, data?: AccessData) => Object;
   getLayout: () => Object;
   getOptions: () => Object;
 } {
@@ -78,6 +88,7 @@ function useHeatMapConfiguration(
   }
 
   function getDataset(
+    maxValue: number,
     data: AccessData = {
       dataByChunks: [],
       descriptions: [],
@@ -89,14 +100,16 @@ function useHeatMapConfiguration(
       z: data.dataByChunks,
       x: data.columns,
       y: data.chunks,
+      zmin: 0,
+      zmax: maxValue,
       text: data.descriptions,
       type: "heatmap",
       colorscale: [
-        [0.0, colorDefinition.darkblue],
-        [0.25, colorDefinition.blue],
+        [0.0, colorValueDefinition.darkblue],
+        [0.25, colorValueDefinition.blue],
         [0.5, "#F5F5F5"],
-        [0.75, colorDefinition.orange],
-        [1, colorDefinition.darkorange],
+        [0.75, colorValueDefinition.red],
+        [1, colorValueDefinition.darkred],
       ],
       hovermode: "closest",
       hovertemplate:

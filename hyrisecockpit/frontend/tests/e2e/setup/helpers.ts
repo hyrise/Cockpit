@@ -11,7 +11,8 @@ export type Entity =
   | "queries"
   | "plugins"
   | "activated_plugins"
-  | "loaded_benchmarks";
+  | "loaded_benchmarks"
+  | "workloads";
 export type Request =
   | "database"
   | "system"
@@ -22,19 +23,91 @@ export type Request =
   | "krueger_data"
   | "chunks"
   | "detailed_query_information"
-  | "data"
+  | "benchmark_tables"
   | "available_plugins"
   | "plugin"
   | "plugin_settings"
   | "plugin_log"
   | "workload"
-  | "status";
+  | "status"
+  | "sql";
 
 export type BackendState = "up" | "down";
 
 export type DatabaseState = "workloadRunning";
 
-export const benchmarks = ["tpch_0.1", "tpch_1", "tpcds_1", "job"];
+export const benchmarks = ["tpch_0_1", "tpch_1", "tpcds_1", "job_1"];
+
+export const comparisonRequests: Request[] = [
+  "throughput",
+  "latency",
+  "queue_length",
+  "system",
+  "storage",
+  "krueger_data",
+];
+export const overviewRequests: Request[] = [
+  "throughput",
+  "latency",
+  "queue_length",
+  "system",
+  "storage",
+];
+export const workloadMonitoringRequests: Request[] = ["krueger_data"];
+
+const requestRoutes: Record<
+  Request,
+  Partial<{ get: string; post: string; delete: string; put: string }>
+> = {
+  database: {
+    get: "**/control/database/",
+    post: "**/control/database/",
+    delete: "**/control/database/",
+  },
+  system: {
+    get: "**/monitor/system**",
+  },
+  storage: {
+    get: "**/monitor/storage**",
+  },
+  throughput: { get: "**/monitor/throughput**" },
+  latency: { get: "**/monitor/latency**" },
+  queue_length: { get: "**/monitor/queue_length**" },
+  krueger_data: { get: "**/monitor/krueger_data**" },
+  chunks: { get: "**/monitor/chunks**" },
+  detailed_query_information: { get: "**/monitor/detailed_query_information" },
+  status: { get: "**/monitor/status" },
+  benchmark_tables: {
+    get: "**/control/database/benchmark_tables",
+    post: "**/control/database/benchmark_tables",
+    delete: "**/control/database/benchmark_tables",
+  },
+  available_plugins: { get: "**/control/available_plugins" },
+  plugin: {
+    get: "**/control/plugin",
+    post: "**/control/plugin",
+    delete: "**/control/plugin",
+  },
+  plugin_settings: {
+    get: "**/control/plugin_settings",
+    post: "**/control/plugin_settings",
+  },
+  plugin_log: { get: "**/control/plugin_log" },
+  workload: {
+    get: "**/workload/",
+    post: "**/workload/",
+    delete: "**/workload/**",
+    put: "**/workload/**",
+  },
+  sql: { post: "**/control/sql/" },
+};
+
+export function getRequestRoute(
+  request: Request,
+  method: "get" | "post" | "delete" | "put"
+): string {
+  return requestRoutes[request][method]!;
+}
 
 const getAliases: Partial<Record<Request, string>> = {
   database: "getDatabases",
@@ -46,27 +119,33 @@ const getAliases: Partial<Record<Request, string>> = {
   krueger_data: "getKruegerData",
   chunks: "getChunksData",
   detailed_query_information: "getQueryInformation",
-  data: "getData",
+  benchmark_tables: "getBenchmarks",
   available_plugins: "getAvailablePLugins",
   plugin: "getPlugin",
   plugin_settings: "getPluginSettings",
   plugin_log: "getPluginLog",
   status: "getDatabaseWorkloadState",
+  workload: "getWorkloads",
 };
 
 const postAliases: Partial<Record<Request, string>> = {
   database: "addDatabase",
-  data: "loadTables",
+  benchmark_tables: "loadTables",
   plugin: "activatePlugin",
   plugin_settings: "setPluginSettings",
   workload: "startWorkload",
+  sql: "sendSQL",
 };
 
 const deleteAliases: Partial<Record<Request, string>> = {
   database: "removeDatabase",
-  data: "removeTables",
+  benchmark_tables: "removeTables",
   plugin: "deactivatePlugin",
   workload: "stopWorkload",
+};
+
+const putAliases: Partial<Record<Request, string>> = {
+  workload: "updateWorkload",
 };
 
 const responseStatus: Record<BackendState, number> = {
@@ -84,6 +163,10 @@ export function getPostAlias(request: Request): string {
 
 export function getDeleteAlias(request: Request): string {
   return deleteAliases[request]!;
+}
+
+export function getPutAlias(request: Request): string {
+  return putAliases[request]!;
 }
 
 export function getResponseStatus(BackendState: BackendState): number {

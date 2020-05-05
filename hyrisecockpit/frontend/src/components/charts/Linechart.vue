@@ -11,7 +11,7 @@ import {
   computed,
   inject,
 } from "@vue/composition-api";
-import * as Plotly from "plotly.js";
+import Plotly from "@/../plotlyBundle.ts";
 import { useUpdatingDatabases } from "../../meta/databases";
 import { ChartConfiguration } from "../../types/metrics";
 import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
@@ -45,6 +45,7 @@ export default defineComponent({
   setup(props: Props, context: SetupContext): void {
     const { databasesUpdated } = context.root.$databaseController;
     const { pluginEventData } = context.root.$pluginService;
+    const { selectedRange } = context.root.$selectionController;
     const { updateLayout } = useResizingOnChange(props);
     const multipleDatabasesAllowed = inject<boolean>(
       "multipleDatabasesAllowed",
@@ -62,7 +63,7 @@ export default defineComponent({
       Plotly.newPlot(
         props.graphId,
         getDatasets(),
-        getLayout(props.maxValue),
+        getLayout(props.maxValue, selectedRange.value),
         getOptions()
       );
       useChartReactivity(props, context, updateChartDatasets, updateLayout);
@@ -108,7 +109,7 @@ export default defineComponent({
       Plotly.react(
         props.graphId,
         getDatasets(),
-        getLayout(props.maxValue),
+        getLayout(props.maxValue, selectedRange.value),
         getOptions()
       );
     }
@@ -152,7 +153,7 @@ export default defineComponent({
       Plotly.update(
         props.graphId,
         newData,
-        getLayout(getYMax(), Math.min(maxSelectedLength, 30)),
+        getLayout(getYMax(), selectedRange.value),
         props.selectedDatabases.map((x, index) => index)
       );
     }
@@ -192,7 +193,7 @@ function useLineChartConfiguration(
       margin: {
         l: 70,
         r: 40,
-        b: 30,
+        b: multipleDatabasesAllowed ? 45 : 30,
         t: multipleDatabasesAllowed ? 0 : 10,
         pad: 0,
       },

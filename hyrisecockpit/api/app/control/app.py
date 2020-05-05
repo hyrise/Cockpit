@@ -270,18 +270,3 @@ class PluginSettings(Resource):
         )
         response = _send_message(db_manager_socket, message)
         return response
-
-
-@api.route("/sql")
-class Sql(Resource):
-    """Execute SQL query on database."""
-
-    @api.doc(body=model_execute_sql, model=model_execute_sql_results)
-    def post(self) -> Response:
-        """Execute SQL query."""
-        message = Request(
-            header=Header(message="execute sql query"),
-            body={"id": api.payload["id"], "query": api.payload["query"]},
-        )
-        response = _send_message(db_manager_socket, message)
-        return response["body"]["results"]

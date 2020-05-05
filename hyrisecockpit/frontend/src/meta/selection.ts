@@ -10,10 +10,10 @@ export function useSelectionHandling(
   selectedDatabases: Ref<readonly string[]>;
 } {
   const selectedMetrics = computed(
-    () => context.root.$selectionController.selectedMetrics[page]
+    () => context.root.$selectionController.pageMetrics[page]
   );
   const selectedDatabases = computed(
-    () => context.root.$selectionController.selectedDatabases[page]
+    () => context.root.$selectionController.pageDatabases[page]
   );
 
   return { selectedMetrics, selectedDatabases };

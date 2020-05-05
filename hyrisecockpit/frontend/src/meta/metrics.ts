@@ -9,7 +9,7 @@ import {
   DataType,
 } from "@/types/metrics";
 import { useDataTransformation } from "@/services/transformationService";
-import { colorDefinition } from "./colors";
+import { colorValueDefinition } from "./colors";
 import { FetchType } from "@/types/services";
 
 const metricsMetadata: Record<Metric, MetricMetadata> = {
@@ -124,9 +124,9 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
 };
 
 const metricDetailColor: Record<MetricValueState, string> = {
-  average: colorDefinition.orange,
-  high: colorDefinition.green,
-  low: colorDefinition.red,
+  average: colorValueDefinition.orange,
+  high: colorValueDefinition.green,
+  low: colorValueDefinition.red,
 };
 
 const metricValueStateOrder: Record<
@@ -189,22 +189,6 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
     xaxis: timeLabel,
     yaxis: queryLabel,
   },
-};
-
-const metricDescription: Partial<Record<Metric, string>> = {
-  access:
-    "Number of accesses  <br/> separated by chunk and column  <br/> of the selected table.",
-  cpu: "Current processor workload.",
-  executedQueryTypeProportion:
-    "Distribution of types of <br/>  the executed queries.",
-  generatedQueryTypeProportion:
-    "Distribution of types of <br/>  the generated queries.",
-  latency: "Average latency <br/> when processing queries from queue.",
-  queueLength:
-    "Length of the queue <br/> containing queries which <br/> have to be processed by workers ",
-  ram: "Current memory usage of <br/>  the database instance in percent",
-  storage: "Sizes of the tables and <br/> columns currently available.",
-  throughput: "Number of queries <br/> processed in the last second.",
 };
 
 const metricDetailsConfiguration: Partial<Record<
@@ -281,10 +265,6 @@ export function getMetricChartConfiguration(
   metric: Metric
 ): ChartConfiguration {
   return metricsChartConfiguration[metric];
-}
-
-export function getMetricDescription(metric: Metric): string {
-  return metricDescription[metric]!;
 }
 
 export function getMetricDetailsConfiguration(

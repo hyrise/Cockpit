@@ -5,14 +5,14 @@ import {
   DatabaseResponse,
 } from "@/types/database";
 import axios from "axios";
-import { colorDefinition } from "@/meta/colors";
+import { colorDatabaseDefinition } from "@/meta/colors";
 import { monitorBackend, controlBackend } from "../../config";
 import { useDataTransformationHelpers } from "@/services/transformationService";
 import { useDatabaseEvents } from "@/meta/events";
 import { useFormatting } from "@/meta/formatting";
 
 export function useDatabaseService(): DatabaseService {
-  const { formatDateToNanoSec, subSeconds } = useFormatting();
+  const { formatDateToNanoSec, subSeconds, getNanoSeconds } = useFormatting();
   const {
     emitDatabaseAddedEvent,
     emitDatabaseRemovedEvent,
@@ -25,7 +25,7 @@ export function useDatabaseService(): DatabaseService {
 
   async function fetchDatabases(): Promise<DatabaseResponse[]> {
     let databases: DatabaseResponse[] = [];
-    await axios.get(controlBackend + "database").then((response) => {
+    await axios.get(controlBackend + "database/").then((response) => {
       databases = getDatabasesInformation(response.data);
     });
     return databases;
@@ -41,8 +41,8 @@ export function useDatabaseService(): DatabaseService {
       hashedDatabaseID = hashedDatabaseID & hashedDatabaseID;
     });
     const index =
-      Math.abs(hashedDatabaseID) % Object.keys(colorDefinition).length;
-    let color = Object.values(colorDefinition)[index];
+      Math.abs(hashedDatabaseID) % Object.keys(colorDatabaseDefinition).length;
+    let color = Object.values(colorDatabaseDefinition)[index];
     return color;
   }
 
@@ -50,12 +50,13 @@ export function useDatabaseService(): DatabaseService {
     DatabaseCPUResponse[]
   > {
     let databasesWithCPUInformation: DatabaseCPUResponse[] = [];
-    const currentDate = new Date();
+    const currentDate = subSeconds(new Date(), 3);
     await axios
       .get(monitorBackend + "system", {
         params: {
           startts: formatDateToNanoSec(subSeconds(currentDate, 1)),
           endts: formatDateToNanoSec(currentDate),
+          precision: getNanoSeconds(1),
         },
       })
       .then((response) => {
@@ -115,19 +116,26 @@ export function useDatabaseService(): DatabaseService {
   }
 
   function addDatabase(databaseConnection: any): void {
-    axios.post(controlBackend + "database", databaseConnection).then(() => {
+    axios.post(controlBackend + "database/", databaseConnection).then(() => {
       emitDatabaseAddedEvent();
     });
   }
 
   function removeDatabase(databaseId: string): void {
     axios
-      .delete(controlBackend + "database", {
+      .delete(controlBackend + "database/", {
         data: { id: databaseId },
       })
       .then(() => {
         emitDatabaseRemovedEvent();
       });
+  }
+
+  function postSQLQuery(databaseId: string, sqlQuery: string): Promise<any> {
+    return axios.post(controlBackend + "sql/", {
+      id: databaseId,
+      query: sqlQuery,
+    });
   }
 
   return {
@@ -139,5 +147,6 @@ export function useDatabaseService(): DatabaseService {
     getDatabaseColor,
     getCPUInformation,
     getStorageInformation,
+    postSQLQuery,
   };
 }

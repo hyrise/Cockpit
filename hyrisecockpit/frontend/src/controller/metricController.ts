@@ -1,10 +1,10 @@
-import { eventBus } from "@/plugins/eventBus";
 import { computed, watch } from "@vue/composition-api";
 import { useMetricService } from "@/services/metricService";
-import { Metric, availableMetrics, MetricController } from "@/types/metrics";
+import { Metric, availableMetrics } from "@/types/metrics";
 import { MetricService } from "@/types/services";
+import { MetricController } from "@/types/controller";
 import { getMetricRequestTime, getMetricMetadata } from "@/meta/metrics";
-import { useFormatting } from "@/meta/formatting";
+import Vue from "vue";
 
 type Interval = {
   id: number | undefined;
@@ -13,25 +13,18 @@ type Interval = {
 };
 
 export function useMetricController(): MetricController {
-  const { subSeconds } = useFormatting();
+  const precision = computed(
+    (): number => Vue.prototype.$selectionController.selectedPrecision.value
+  );
+  const range = computed(
+    (): number => Vue.prototype.$selectionController.selectedRange.value
+  );
+  const selectedMetrics = computed(
+    (): Metric[] => Vue.prototype.$selectionController.selectedMetrics.value
+  );
 
-  eventBus.$on("WATCHED_METRICS_CHANGED", (payload: Metric[]) => {
-    stop();
-    start(payload || []);
-  });
-
-  eventBus.$on("PAGE_CHANGED", (payload: Metric[]) => {
-    const currentDate = new Date();
-    stop();
-    start(payload || [], new Date(subSeconds(currentDate, 30)), currentDate);
-  });
-
-  eventBus.$on(
-    "HISTORIC_RANGE_CHANGED",
-    (payload: { metrics: Metric[]; start: Date; end: Date }) => {
-      stop();
-      start(payload.metrics || [], payload.start, payload.end); //TODO: fire only once when watching historic data
-    }
+  const validTime = computed(
+    () => precision.value < range.value && precision.value >= range.value / 60
   );
 
   const metricServices = setupServices();
@@ -43,6 +36,12 @@ export function useMetricController(): MetricController {
   let timestamps = {} as any;
 
   mapToData(metricServices);
+
+  /* restart requests on change */
+  watch([precision, range, selectedMetrics], () => {
+    stop();
+    if (validTime.value) start(selectedMetrics.value as Metric[]);
+  });
 
   function setupServices(): Record<Metric, MetricService> {
     const services: any = {};
@@ -86,13 +85,13 @@ export function useMetricController(): MetricController {
     return intervals;
   }
 
-  function start(newMetrics: Metric[], start?: Date, end?: Date): void {
+  function start(newMetrics: Metric[]): void {
     getMetricsByEndpoint(newMetrics).forEach((metrics) => {
       const metric = metrics[0];
-      metricServices[metric].getDataIfReady(start, end);
+      metricServices[metric].getDataIfReady(true);
       metricIntervals[metric].id = setInterval(
         metricServices[metric].getDataIfReady,
-        metricIntervals[metric].time
+        Math.max(metricIntervals[metric].time, precision.value * 1000)
       );
       metricIntervals[metric].runningState = true;
     });

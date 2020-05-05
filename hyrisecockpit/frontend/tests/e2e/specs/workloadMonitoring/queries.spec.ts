@@ -84,8 +84,8 @@ describe("visiting workload monitoring page", () => {
     it("will show only the matching queries", () => {
       const index = generateRandomInt(0, data[0].query_information.length);
       databases.forEach((database: any, idx: number) => {
-        cy.get("input")
-          .eq(idx * 3)
+        cy.get(getSelector("querySearch"))
+          .eq(idx)
           .click({ force: true })
           .type(data[idx].query_information[index].query_number);
         cy.wait(500);

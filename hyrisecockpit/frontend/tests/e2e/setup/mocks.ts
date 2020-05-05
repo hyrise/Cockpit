@@ -11,6 +11,7 @@ import {
   fakeDatabasePluginLogs,
   fakeDatabaseStatusData,
   fakeIds,
+  fakeWorkloadData,
 } from "./factories";
 import {
   assignFakeData,
@@ -80,6 +81,10 @@ export function useMocks(
         numbers.loaded_benchmarks,
         benchmarks.length
       ).map((index) => benchmarks[index]),
+      workloads: generateUniqueRandomNumbers(
+        numbers.workloads,
+        benchmarks.length
+      ).map((index) => benchmarks[index]),
     };
   }
 
@@ -137,7 +142,7 @@ export function useMocks(
       fakeDatabaseQueryInformationData(id, numbers.queries)
     );
     //TODO: handle loaded tables for every database
-    responseMocks.data = benchmarks;
+    responseMocks.benchmark_tables = benchmarks;
     responseMocks.status = mockedIds.databases.map((id) =>
       fakeDatabaseStatusData(
         id,
@@ -158,6 +163,9 @@ export function useMocks(
     // NOTE: currently all databases have exactly one log entry
     responseMocks.plugin_log = mockedIds.databases.map((id) =>
       fakeDatabasePluginLogs(id, mockedIds.plugins)
+    );
+    responseMocks.workload = mockedIds.workloads.map((idx) =>
+      fakeWorkloadData(idx)
     );
     return responseMocks as Record<Request, any>;
   }
@@ -181,7 +189,7 @@ export function useMocks(
       database: callbacks.addDatabase,
       plugin: callbacks.activatePlugin,
       workload: callbacks.startWorkload,
-      data: callbacks.loadTable,
+      benchmark_tables: callbacks.loadTable,
     };
 
     return postCallbackMocks;
@@ -197,7 +205,7 @@ export function useMocks(
       database: callbacks.removeDatabase,
       plugin: callbacks.deactivatePlugin,
       workload: callbacks.stopWorkload,
-      data: callbacks.removeTable,
+      benchmark_tables: callbacks.removeTable,
     };
 
     return deleteCallbackMocks;

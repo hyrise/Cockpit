@@ -7,8 +7,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -37,8 +37,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -67,8 +67,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -97,8 +97,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -127,8 +127,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -157,8 +157,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -187,8 +187,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -217,8 +217,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -247,8 +247,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -277,8 +277,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -307,8 +307,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -337,8 +337,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -367,8 +367,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -397,8 +397,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -427,8 +427,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -457,8 +457,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -487,8 +487,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -517,8 +517,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -547,8 +547,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -577,8 +577,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -607,8 +607,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -637,8 +637,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -667,8 +667,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -697,8 +697,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -727,8 +727,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -757,8 +757,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -787,8 +787,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -817,8 +817,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -847,8 +847,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -877,8 +877,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -907,8 +907,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -937,8 +937,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -967,8 +967,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -997,8 +997,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1027,8 +1027,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1057,8 +1057,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1087,8 +1087,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1117,8 +1117,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1147,8 +1147,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1177,8 +1177,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1207,8 +1207,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1237,8 +1237,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1267,8 +1267,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1297,8 +1297,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1327,8 +1327,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1357,8 +1357,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1387,8 +1387,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1417,8 +1417,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1447,8 +1447,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1477,8 +1477,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1507,8 +1507,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1537,8 +1537,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1567,8 +1567,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1597,8 +1597,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1627,8 +1627,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1657,8 +1657,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1687,8 +1687,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001
@@ -1717,8 +1717,8 @@ WITH inv AS
 			FROM
 					(SELECT w_warehouse_name, w_warehouse_sk, i_item_sk, d_moy, stddev_samp(inv_quantity_on_hand) stdev,
 							avg(inv_quantity_on_hand) mean
-						FROM inventory, item, warehouse, date_dim
-						WHERE inv_item_sk = i_item_sk
+						FROM inventory_tpcds_1, item_tpcds_1, warehouse_tpcds_1, date_dim_tpcds_1
+ 						WHERE inv_item_sk = i_item_sk
 								AND inv_warehouse_sk = w_warehouse_sk
 								AND inv_date_sk = d_date_sk
 								AND d_year = 2001

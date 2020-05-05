@@ -5,8 +5,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -32,8 +32,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -59,8 +59,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -86,8 +86,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -113,8 +113,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -140,8 +140,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -167,8 +167,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -194,8 +194,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -221,8 +221,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -248,8 +248,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -275,8 +275,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -302,8 +302,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -329,8 +329,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -356,8 +356,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -383,8 +383,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -410,8 +410,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -437,8 +437,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -464,8 +464,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -491,8 +491,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -518,8 +518,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -545,8 +545,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -572,8 +572,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -599,8 +599,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -626,8 +626,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -653,8 +653,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -680,8 +680,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -707,8 +707,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -734,8 +734,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -761,8 +761,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -788,8 +788,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -815,8 +815,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -842,8 +842,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -869,8 +869,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -896,8 +896,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -923,8 +923,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -950,8 +950,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -977,8 +977,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1004,8 +1004,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1031,8 +1031,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1058,8 +1058,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1085,8 +1085,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1112,8 +1112,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1139,8 +1139,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1166,8 +1166,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1193,8 +1193,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1220,8 +1220,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1247,8 +1247,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1274,8 +1274,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1301,8 +1301,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1328,8 +1328,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1355,8 +1355,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1382,8 +1382,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1409,8 +1409,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1436,8 +1436,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1463,8 +1463,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1490,8 +1490,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1517,8 +1517,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1544,8 +1544,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1571,8 +1571,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1598,8 +1598,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1625,8 +1625,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1652,8 +1652,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1679,8 +1679,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1706,8 +1706,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1733,8 +1733,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1760,8 +1760,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1787,8 +1787,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1814,8 +1814,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1841,8 +1841,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1868,8 +1868,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1895,8 +1895,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1922,8 +1922,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1949,8 +1949,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -1976,8 +1976,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2003,8 +2003,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2030,8 +2030,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2057,8 +2057,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2084,8 +2084,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2111,8 +2111,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2138,8 +2138,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2165,8 +2165,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2192,8 +2192,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2219,8 +2219,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2246,8 +2246,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2273,8 +2273,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2300,8 +2300,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2327,8 +2327,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2354,8 +2354,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2381,8 +2381,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2408,8 +2408,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2435,8 +2435,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2462,8 +2462,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2489,8 +2489,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2516,8 +2516,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2543,8 +2543,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2570,8 +2570,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2597,8 +2597,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2624,8 +2624,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2651,8 +2651,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk
@@ -2678,8 +2678,8 @@ SELECT i_item_id, i_item_desc, s_state, count(ss_quantity) AS store_sales_quanti
 	stddev_samp(sr_return_quantity) / avg(sr_return_quantity) AS store_returns_quantitycov, count(cs_quantity) AS catalog_sales_quantitycount,
 	avg(cs_quantity) AS catalog_sales_quantityave, stddev_samp(cs_quantity) AS catalog_sales_quantitystdev,
 	stddev_samp(cs_quantity) / avg(cs_quantity) AS catalog_sales_quantitycov
-FROM store_sales, store_returns, catalog_sales, date_dim d1, date_dim d2, date_dim d3, store, item
-WHERE d1.d_quarter_name = '2001Q1'
+FROM store_sales_tpcds_1, store_returns_tpcds_1, catalog_sales_tpcds_1, date_dim_tpcds_1 d1, date_dim_tpcds_1 d2, date_dim_tpcds_1 d3, store_tpcds_1, item_tpcds_1
+ WHERE d1.d_quarter_name = '2001Q1'
 		AND d1.d_date_sk = ss_sold_date_sk
 		AND i_item_sk = ss_item_sk
 		AND s_store_sk = ss_store_sk

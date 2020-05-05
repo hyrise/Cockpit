@@ -7,6 +7,7 @@ import {
   getDeleteAlias,
   getGetAlias,
   benchmarks,
+  getPutAlias,
 } from "../../setup/helpers";
 import {
   assertLoadedBenchmarks,
@@ -40,7 +41,7 @@ describe("opening workload generation", () => {
   });
 
   // test changing frequency
-  describe("when chaning frequency without starting the workload", () => {
+  describe("when changing frequency without starting the workload", () => {
     it("will set frequency to new value but do not start workload", () => {
       const newValue = generateRandomInt(0, 1000);
       clickElement(getViewSelector("workloadGenerationButton"));
@@ -70,22 +71,36 @@ describe("opening workload generation", () => {
         assertStartedWorkload(xhr.request.body, activeBenchmark);
       });
       cy.numberOfRequests(getPostAlias("workload")).should("eq", 1);
-      backend.reload("workload", "", "POST");
+
+      // update tmp state
+      cy.updateAppState(backend, {
+        request: "workload",
+        id: activeBenchmark,
+        method: "POST",
+      });
+
       cy.wait("@" + getGetAlias("status"));
       assertButtonState("checkbox", true);
 
       cy.get(getSelector("pauseButton")).click();
-      cy.wait("@" + getPostAlias("workload"));
-      cy.get("@" + getPostAlias("workload")).should((xhr: any) => {
+      cy.wait("@" + getPutAlias("workload"));
+      cy.get("@" + getPutAlias("workload")).should((xhr: any) => {
         assertStartedWorkload(xhr.request.body, activeBenchmark, 0);
       });
-      cy.numberOfRequests(getPostAlias("workload")).should("eq", 2);
+      cy.numberOfRequests(getPutAlias("workload")).should("eq", 1);
 
       cy.get(getSelector("stopButton")).click();
 
       cy.wait("@" + getDeleteAlias("workload"));
       cy.numberOfRequests(getDeleteAlias("workload")).should("eq", 1);
-      backend.reload("workload", "", "DELETE");
+
+      // update tmp state
+      cy.updateAppState(backend, {
+        request: "workload",
+        id: activeBenchmark,
+        method: "DELETE",
+      });
+
       cy.wait("@" + getGetAlias("status"));
       assertButtonState("checkbox", false);
     });
@@ -94,9 +109,8 @@ describe("opening workload generation", () => {
   // test load and unload tables
   describe("when loading or removing tables via button", () => {
     it("will load and unload the correct tables", () => {
-      const activeBenchmark = statusData[0].loaded_benchmarks[0];
       const deactiveBenchmarks = benchmarks.filter(
-        (type) => type !== activeBenchmark
+        (type) => type !== statusData[0].loaded_benchmarks[0]
       );
       const index = generateRandomInt(0, deactiveBenchmarks.length);
 
@@ -106,12 +120,17 @@ describe("opening workload generation", () => {
         .eq(getBenchmarkIndex(deactiveBenchmarks[index]))
         .check({ force: true });
 
-      cy.wait("@" + getPostAlias("data"));
-      cy.get("@" + getPostAlias("data")).then((xhr: any) => {
+      cy.wait("@" + getPostAlias("benchmark_tables"));
+      cy.get("@" + getPostAlias("benchmark_tables")).then((xhr: any) => {
         assertChangedTable(xhr.request.body, deactiveBenchmarks[index]);
       });
-      cy.numberOfRequests(getPostAlias("data")).should("eq", 1);
-      backend.reload("data", deactiveBenchmarks[index], "POST");
+      cy.numberOfRequests(getPostAlias("benchmark_tables")).should("eq", 1);
+      // update tmp state
+      cy.updateAppState(backend, {
+        request: "benchmark_tables",
+        id: deactiveBenchmarks[index],
+        method: "POST",
+      });
       cy.setupData("status").then((xhr: any) => {
         statusData = xhr.response.body;
         assertLoadedBenchmarks(statusData);
@@ -119,15 +138,21 @@ describe("opening workload generation", () => {
       });
 
       cy.get("input[type=checkbox]")
-        .eq(getBenchmarkIndex(activeBenchmark))
+        .eq(getBenchmarkIndex(deactiveBenchmarks[index]))
         .uncheck({ force: true });
 
-      cy.wait("@" + getDeleteAlias("data"));
-      cy.get("@" + getDeleteAlias("data")).then((xhr: any) => {
-        assertChangedTable(xhr.request.body, activeBenchmark);
+      cy.wait("@" + getDeleteAlias("benchmark_tables"));
+      cy.get("@" + getDeleteAlias("benchmark_tables")).then((xhr: any) => {
+        assertChangedTable(xhr.request.body, deactiveBenchmarks[index]);
       });
-      cy.numberOfRequests(getDeleteAlias("data")).should("eq", 1);
-      backend.reload("data", activeBenchmark, "DELETE");
+      cy.numberOfRequests(getDeleteAlias("benchmark_tables")).should("eq", 1);
+
+      // update tmp state
+      cy.updateAppState(backend, {
+        request: "benchmark_tables",
+        id: deactiveBenchmarks[index],
+        method: "DELETE",
+      });
       cy.setupData("status").then((xhr: any) => {
         statusData = xhr.response.body;
         assertLoadedBenchmarks(statusData);
@@ -149,29 +174,43 @@ describe("opening workload generation", () => {
         .check({ force: true });
       cy.get(getSelector("startButton")).click();
       cy.wait("@" + getPostAlias("workload"));
+      cy.get("@" + getPostAlias("workload")).should((xhr: any) => {
+        assertStartedWorkload(xhr.request.body, activeBenchmark);
+      });
+      cy.numberOfRequests(getPostAlias("workload")).should("eq", 1);
 
       clickElement(getViewSelector("workloadGenerationButton"));
       cy.get(getSelector("frequencyField")).clear().type(newValue.toString());
       cy.get("div").first().click({ force: true }); // need this to trigger action (cy.trigger not working)
 
-      cy.wait("@" + getPostAlias("workload"));
-      cy.get("@" + getPostAlias("workload")).should((xhr: any) => {
+      cy.wait("@" + getPutAlias("workload"));
+      cy.get("@" + getPutAlias("workload")).should((xhr: any) => {
         assertStartedWorkload(xhr.request.body, activeBenchmark, newValue);
       });
-      cy.numberOfRequests(getPostAlias("workload")).should("eq", 2);
+      cy.numberOfRequests(getPutAlias("workload")).should("eq", 1);
+
+      // clean tmp state
+      cy.cleanAppState(backend, {
+        request: "workload",
+        id: activeBenchmark,
+        method: "DELETE",
+      });
     });
   });
 
   // test empty databases
   describe("when no database has been added", () => {
     it("will show an error and disable all buttons", () => {
-      backend = useBackendMock({ databases: 0 });
-      backend.restart();
+      cy.restartAppState(backend, {
+        databases: 0,
+      });
       cy.reload();
       clickElement(getViewSelector("workloadGenerationButton"));
       assertButtonState("checkbox", true);
       assertButtonState("radio", true);
       cy.contains("No database added");
+
+      cy.restartAppState(backend, {});
     });
   });
 });
