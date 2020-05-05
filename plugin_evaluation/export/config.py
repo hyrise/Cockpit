@@ -1,6 +1,6 @@
 """Module with metric configs."""
 
-from plugin_evaluation.export.influx_client import get_metric_data_with_fill
+from plugin_evaluation.export.influx_handling import get_metric_data_with_fill
 from plugin_evaluation.export.metric_handling import idle_function, ns_to_ms
 
 config = {
