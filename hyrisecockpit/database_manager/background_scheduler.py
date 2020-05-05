@@ -1,7 +1,6 @@
 """The BackgroundJobManager is managing the background jobs for the apscheduler."""
 
 from multiprocessing import Value
-from typing import Dict, List, TypedDict
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -18,33 +17,6 @@ from .job.update_queue_length import update_queue_length
 from .job.update_storage_data import update_storage_data
 from .job.update_system_data import update_system_data
 from .worker_pool import WorkerPool
-
-
-class Encoding(TypedDict):
-    """Type of an encoding in a storage dictionary."""
-
-    name: str
-    amount: int
-    compression: List[str]
-
-
-class ColumnData(TypedDict):
-    """Type of column data in a storage dictionary."""
-
-    size: int
-    data_type: str
-    encoding: List[Encoding]
-
-
-class TableData(TypedDict):
-    """Type of table data in a storage dictionary."""
-
-    size: int
-    number_columns: int
-    data: Dict[str, ColumnData]
-
-
-StorageDataType = Dict[str, TableData]
 
 
 class BackgroundJobManager(object):
