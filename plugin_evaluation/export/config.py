@@ -4,31 +4,31 @@ from plugin_evaluation.export.influx_handling import (
     get_metric_data,
     get_metric_data_with_fill,
 )
-from plugin_evaluation.export.metric_handling import idle_function, ns_to_ms
+from plugin_evaluation.export.points_handling import idle_function, ns_to_ms
 
 config = {
     "throughput": {
         "table_name": "throughput",
-        "label": "Queries / second",
+        "y_label": "Queries / second",
         "influx_function": get_metric_data_with_fill,
-        "metric_function": idle_function,
+        "points_function": idle_function,
     },
     "latency": {
         "table_name": "latency",
-        "label": "ms",
+        "y_label": "ms",
         "influx_function": get_metric_data_with_fill,
-        "metric_function": ns_to_ms,
+        "points_function": ns_to_ms,
     },
     "queue_length": {
         "table_name": "queue_length",
-        "label": "number of items",
+        "y_label": "number of items",
         "influx_function": get_metric_data,
-        "metric_function": idle_function,
+        "points_function": idle_function,
     },
     "cpu_process_usage": {
         "table_name": "system_data",
-        "label": "% usage",
+        "y_label": "% usage",
         "influx_function": get_metric_data,
-        "metric_function": idle_function,
+        "points_function": idle_function,
     },
 }

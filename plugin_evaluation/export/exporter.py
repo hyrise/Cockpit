@@ -1,7 +1,7 @@
 """Module for export of the Influx data to PDF."""
 from pathlib import Path
+from typing import List
 
-import matplotlib.dates as mdate
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.pyplot import figure
@@ -17,31 +17,23 @@ class Exporter:
     def plot_metric(self, metric: str, database: str, startts: int, endts: int):
         """Plot metric data for a given database."""
         metric_config = config[metric]
-        points = metric_config["influx_function"](
-            metric_config["table_name"],  # type: ignore
-            metric,
-            database,
-            startts,
-            endts,
+        points = metric_config["influx_function"](  # type: ignore
+            metric_config["table_name"], metric, database, startts, endts,
         )
+        time_values, metric_values = metric_config["points_function"](points, metric)  # type: ignore
         self.export_metric(
-            metric,
-            metric_config["label"],  # type: ignore
-            points,
-            metric_config["metric_function"],
+            time_values, metric_values, metric, metric_config["y_label"],  # type: ignore
         )
 
-    def export_metric(self, metric: str, label: str, points, function):
+    def export_metric(
+        self, time_values: List, metric_values: List, metric: str, y_label: str
+    ):
         """Export metric to file."""
-        time = [int(point["time"] / 1_000_000_000) for point in points]
-        metric_values = [function(point[metric]) for point in points]
-        secs = mdate.epoch2num(time)
-
         figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
         plt.title(f"{metric}")
         plt.ylim(bottom=0.0, top=np.amax(metric_values) * 1.3)
-        plt.plot_date(secs, metric_values, "-b", label=f"{metric}")
-        plt.ylabel(f"{label}")
+        plt.plot_date(time_values, metric_values, "-b", label=f"{metric}")
+        plt.ylabel(f"{y_label}")
         plt.xlabel("Time")
         plt.legend()
 
