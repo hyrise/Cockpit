@@ -6,12 +6,7 @@
         <v-icon class="close-icon" @click="onClose()">mdi-close</v-icon>
       </v-card-title>
     </v-card>
-    <v-expansion-panels
-      class="panels"
-      v-if="showDatabasePanels"
-      multiple
-      accordion
-    >
+    <v-expansion-panels class="panels" v-if="showDatabasePanels" multiple accordion>
       <v-expansion-panel v-for="database in databases" :key="database">
         <v-expansion-panel-header class="title">
           <v-list-item class="item">
@@ -41,15 +36,8 @@
             </div>
             <v-expand-transition>
               <div v-if="showSettings[database + '_' + plugin]">
-                <div
-                  v-for="setting in pluginSettings[database][plugin]"
-                  :key="setting.name"
-                >
-                  <PluginSetting
-                    :setting="setting"
-                    :databaseId="database"
-                    :pluginId="plugin"
-                  />
+                <div v-for="setting in pluginSettings[database][plugin]" :key="setting.name">
+                  <PluginSetting :setting="setting" :databaseId="database" :pluginId="plugin" />
                 </div>
               </div>
             </v-expand-transition>
@@ -119,13 +107,15 @@ export default defineComponent({
     const isLoading: Ref<any> = ref({});
     const pluginDraggableId: string = "plugin-overview";
     const pluginDraggerId: string = "plugin-card";
+
     const {
-      plugins,
+      availablePlugins,
       activePlugins,
-      updatePlugins,
       pluginLogs,
       pluginSettings,
-    } = context.root.$pluginService;
+      changePlugin,
+      isActivated,
+    } = context.root.$pluginController;
 
     const showSettings: any = reactive({});
 
@@ -140,7 +130,7 @@ export default defineComponent({
       pluginId: string
     ): boolean {
       return (
-        activePlugins.value.find((x) => x === databseId + "_" + pluginId) &&
+        isActivated(databseId, pluginId) &&
         pluginSettings.value[databseId] &&
         pluginSettings.value[databseId][pluginId]
       );
@@ -158,17 +148,18 @@ export default defineComponent({
     function onClickPluginSwitch(databaseId: string, plugin: string): void {
       isLoading.value[databaseId + "_" + plugin] = true;
       disableAll.value = true;
-      updatePlugins(databaseId, plugin).then(() => {
+      changePlugin(databaseId, plugin).then(() => {
         isLoading.value[databaseId + "_" + plugin] = false;
         disableAll.value = false;
       });
     }
 
+    //TODO: this should be refactored
     return {
       showDatabasePanels,
       togglePanelView,
       databases: availableDatabasesById,
-      plugins,
+      plugins: availablePlugins,
       onClickPluginSwitch,
       activePlugins,
       isLoading,
