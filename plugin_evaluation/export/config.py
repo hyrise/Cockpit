@@ -14,6 +14,7 @@ from plugin_evaluation.export.points_handling import (
 config = {
     "throughput": {
         "table_name": "throughput",
+        "column_name": "throughput",
         "x_label": "Time",
         "y_label": "Queries / second",
         "influx_function": get_metric_data_with_fill,
@@ -22,6 +23,7 @@ config = {
     },
     "latency": {
         "table_name": "latency",
+        "column_name": "latency",
         "x_label": "Time",
         "y_label": "ms",
         "influx_function": get_metric_data_with_fill,
@@ -30,6 +32,7 @@ config = {
     },
     "queue_length": {
         "table_name": "queue_length",
+        "column_name": "queue_length",
         "x_label": "Time",
         "y_label": "number of items",
         "influx_function": get_metric_data,
@@ -38,14 +41,16 @@ config = {
     },
     "cpu_process_usage": {
         "table_name": "system_data",
+        "column_name": "cpu_process_usage",
         "x_label": "Time",
         "y_label": "% usage",
         "influx_function": get_metric_data,
         "points_function": default_function,
         "plot_function": plot_line_chart,
     },
-    "storage_meta_information": {
+    "footprint": {
         "table_name": "storage",
+        "column_name": "storage_meta_information",
         "x_label": "Time",
         "y_label": "MB",
         "influx_function": get_metric_data,
