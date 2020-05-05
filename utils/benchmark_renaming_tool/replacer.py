@@ -2,15 +2,8 @@
 from os import fsencode, listdir
 
 from hyrisecockpit.database_manager.table_names import table_names as tables
+from hyrisecockpit.exception import NotExistingWorkloadFolderException
 from utils.endpoint_benchmark.print_colors import print_green, print_red
-
-
-class NotExistingWorkloadFolderException(Exception):
-    """Exception raised for empty workload folder."""
-
-    def __init__(self, message: str):
-        """Initialize a NotExistingWorkloadFolderException."""
-        super().__init__(message)
 
 
 class Replacer:
@@ -93,7 +86,7 @@ class Replacer:
         """Start replacing of table names."""
         try:
             self._check_if_folder_exists()
-        except BaseException:
+        except NotExistingWorkloadFolderException:
             return
 
         file_names = self._get_file_names(
