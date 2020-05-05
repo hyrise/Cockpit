@@ -44,6 +44,11 @@ const selectors: Record<string, string> = {
   workerDetails: getSelectorByConfig("div", "database-number-workers"),
   numberOfDatabases: getSelectorByConfig("span", "number-of-databases"),
   databaseChip: getSelectorByConfig("span", "database-chip"),
+  sqlInput: getSelectorByConfig("textarea", "sql-input"),
+  openSQLDialog: getSelectorByConfig("button", "open-sql-dialog"),
+  closeSQLDialog: getSelectorByConfig("button", "close-sql-dialog"),
+  closeSQLInput: getSelectorByConfig("button", "close-sql-input"),
+  sendSQLInput: getSelectorByConfig("button", "send-sql-input"),
 };
 
 export function getSelector(component: string): string {
@@ -76,6 +81,15 @@ export function assertDeleteValues(
   requested: { id: string }
 ): void {
   expect(input).to.eq(requested.id);
+}
+
+export function assertSQLRequest(
+  database: string,
+  query: string,
+  requested: { id: string; query: string }
+): void {
+  expect(database).to.eq(requested.id);
+  expect(query).to.eq(requested.query);
 }
 
 // DATA HELPERS

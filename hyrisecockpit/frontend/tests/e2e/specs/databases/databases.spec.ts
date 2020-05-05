@@ -26,6 +26,7 @@ describe("when observing the database data and details", () => {
     cy.restartAppState(backend, {
       databases: 2,
     });
+    cy.wait(500);
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
       cy.setupData("system").then((xhr: any) => {
