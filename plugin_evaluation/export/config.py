@@ -5,7 +5,11 @@ from plugin_evaluation.export.influx_handling import (
     get_metric_data_with_fill,
 )
 from plugin_evaluation.export.plot_handling import plot_line_chart
-from plugin_evaluation.export.points_handling import default_function, ns_to_ms
+from plugin_evaluation.export.points_handling import (
+    calculate_footprint,
+    default_function,
+    ns_to_ms,
+)
 
 config = {
     "throughput": {
@@ -34,6 +38,13 @@ config = {
         "y_label": "% usage",
         "influx_function": get_metric_data,
         "points_function": default_function,
+        "plot_function": plot_line_chart,
+    },
+    "storage_meta_information": {
+        "table_name": "storage",
+        "y_label": "MB",
+        "influx_function": get_metric_data,
+        "points_function": calculate_footprint,
         "plot_function": plot_line_chart,
     },
 }

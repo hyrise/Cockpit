@@ -13,6 +13,7 @@ def plot_line_chart(time_values: List, metric_values: List, metric: str, y_label
     """Plot line chart to file."""
     figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
     plt.title(f"{metric}")
+    plt.ticklabel_format(style="plain")
     plt.ylim(bottom=0.0, top=np.amax(metric_values) * 1.3)
     plt.plot_date(time_values, metric_values, "-b", label=f"{metric}")
     plt.ylabel(f"{y_label}")

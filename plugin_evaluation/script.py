@@ -44,8 +44,9 @@ cockpit.shutdown()
 show_bar("Cockpit shutdown...                 ", 3)
 
 with DoneStatus("Export..."):
-    exporter = Exporter()  # type: ignore
+    exporter = Exporter()
     exporter.plot_metric("throughput", "momentum", startts, endts)
     exporter.plot_metric("latency", "momentum", startts, endts)
     exporter.plot_metric("queue_length", "momentum", startts, endts)
     exporter.plot_metric("cpu_process_usage", "momentum", startts, endts)
+    exporter.plot_metric("storage_meta_information", "momentum", startts, endts)
