@@ -8,10 +8,15 @@ class Exporter:
     def plot_metric(self, metric: str, database: str, startts: int, endts: int):
         """Plot metric data for a given database."""
         metric_config = config[metric]
-        points = metric_config["influx_function"](  # type: ignore
+        influx_function = metric_config["influx_function"]
+        points_function = metric_config["points_function"]
+        plot_function = metric_config["plot_function"]
+
+        points = influx_function(  # type: ignore
             metric_config["table_name"], metric, database, startts, endts,
         )
-        time_values, metric_values = metric_config["points_function"](points, metric)  # type: ignore
-        metric_config["plot_function"](  # type: ignore
+        time_values, metric_values = points_function(points, metric)  # type: ignore
+
+        plot_function(  # type: ignore
             time_values, metric_values, metric, metric_config["y_label"]
         )
