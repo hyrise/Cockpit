@@ -155,28 +155,25 @@ class TestCursor:
 
     def test_creates_database(self):
         """Test creating of an Influx database."""
-        cursor = StorageCursor("host", "port", "user", "password", "database")
-        cursor._database = "database_name"
+        cursor = StorageCursor("host", "port", "user", "password", "database_id")
         cursor._connection = MagicMock()
         cursor._connection.create_database.return_value = None
 
         cursor.create_database()
-        cursor._connection.create_database.assert_called_once_with("database_name")
+        cursor._connection.create_database.assert_called_once_with("database_id")
 
     def test_drops_database(self):
         """Test dropping of an Influx database."""
-        cursor = StorageCursor("host", "port", "user", "password", "database")
-        cursor._database = "database_name"
+        cursor = StorageCursor("host", "port", "user", "password", "database_id")
         cursor._connection = MagicMock()
         cursor._connection.drop_database.return_value = None
 
         cursor.drop_database()
-        cursor._connection.drop_database.assert_called_once_with("database_name")
+        cursor._connection.drop_database.assert_called_once_with("database_id")
 
     def test_creates_continuous_query(self):
         """Test creating of a continuous query in Influx database."""
-        cursor = StorageCursor("host", "port", "user", "password", "database")
-        cursor._database = "database_name"
+        cursor = StorageCursor("host", "port", "user", "password", "database_id")
         cursor._connection = MagicMock()
         cursor._connection.create_continuous_query.return_value = None
 
@@ -184,7 +181,7 @@ class TestCursor:
             "query_name", "query statement", "resample_options"
         )
         cursor._connection.create_continuous_query.assert_called_once_with(
-            "query_name", "query statement", "database_name", "resample_options"
+            "query_name", "query statement", "database_id", "resample_options"
         )
 
     @patch("hyrisecockpit.database_manager.cursor.connect")
@@ -323,17 +320,17 @@ class TestCursor:
         fake_password: str = "password"
         fake_host: str = "host"
         fake_port: str = "port"
-        fake_dbname: str = "dbname"
+        fake_dbname_id: str = "database_id"
 
         factory = StorageConnectionFactory(
-            fake_user, fake_password, fake_host, fake_port, fake_dbname
+            fake_user, fake_password, fake_host, fake_port, fake_dbname_id
         )
 
         assert factory._user == "user"
         assert factory._password == "password"
         assert factory._host == "host"
         assert factory._port == "port"
-        assert factory._dbname == "dbname"
+        assert factory._database_id == "database_id"
 
     @patch("hyrisecockpit.database_manager.cursor.StorageCursor",)
     def test_create_storage_cursor(
