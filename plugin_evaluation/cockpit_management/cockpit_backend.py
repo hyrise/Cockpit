@@ -4,6 +4,7 @@ import pathlib
 from os import remove
 from signal import SIGINT
 from subprocess import Popen  # nosec
+from time import sleep
 
 from requests import delete, get, post
 
@@ -106,3 +107,37 @@ class CockpitBackend:
         """Stop workload execution."""
         url = f"http://{self._backend_host}:{self._backend_port}/workload/{workload_folder}"
         return delete(url, timeout=REQUEST_TIMEOUT)
+
+    def activate_plugin(self, database_id: str, plugin: int):
+        """Activate plugin."""
+        body = {"id": database_id, "plugin": plugin}
+        url = f"http://{self._backend_host}:{self._backend_port}/control/plugin"
+        return post(url, json=body, timeout=REQUEST_TIMEOUT)
+
+    def deactivate_plugin(self, database_id: str, plugin: int):
+        """Deactivate plugin."""
+        body = {"id": database_id, "plugin": plugin}
+        url = f"http://{self._backend_host}:{self._backend_port}/control/plugin"
+        return delete(url, json=body, timeout=REQUEST_TIMEOUT)
+
+    def get_plugin_log(self):
+        """Get plugin log."""
+        url = f"http://{self._backend_host}:{self._backend_port}/control/plugin_log"
+        return get(url, timeout=REQUEST_TIMEOUT).json()
+
+    def get_status(self):
+        """Get status."""
+        url = f"http://{self._backend_host}:{self._backend_port}/monitor/status"
+        return get(url, timeout=REQUEST_TIMEOUT).json()
+
+    def wait_for_unblocked_status(self):
+        """Wait for all databases to leave blocked status."""
+        while True:
+            unblocked_statuses = [
+                not database_data["database_blocked_status"]
+                for database_data in self.get_status()
+            ]
+            if all(unblocked_statuses):
+                break
+            else:
+                sleep(0.5)
