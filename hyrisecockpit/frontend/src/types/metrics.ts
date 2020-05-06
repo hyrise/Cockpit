@@ -80,6 +80,7 @@ export interface ComparisonMetricData {
   chartConfiguration: ChartConfiguration;
   maxValue: Ref<number>;
   timestamps: Ref<Date[]>;
+  pluginEventData: any;
 }
 
 export interface MetricProps {

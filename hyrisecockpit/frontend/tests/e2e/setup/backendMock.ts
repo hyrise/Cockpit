@@ -116,6 +116,7 @@ export function useBackendMock(
     cy.route("POST", getRequestRoute("workload", "post")).as(
       getPostAlias("workload")
     );
+    cy.route("POST", getRequestRoute("sql", "post")).as(getPostAlias("sql"));
 
     /* DELETE */
     cy.route("DELETE", getRequestRoute("database", "delete")).as(
@@ -293,6 +294,7 @@ export function mockBackend(
       getPostAlias("plugin_settings")
     );
     mock(getRequestRoute("workload", "post"), getPostAlias("workload"));
+    mock(getRequestRoute("sql", "post"), getPostAlias("sql"));
   }
 
   function mockDeleteRoutes(mock: RouteMockFunction): void {

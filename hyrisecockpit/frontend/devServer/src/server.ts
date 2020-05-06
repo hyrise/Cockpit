@@ -70,6 +70,8 @@ mockPostRoute("database/", "control");
 mockPostRoute("database/benchmark_tables", "control");
 mockPostRoute("workload/");
 mockPostRoute("plugin", "control");
+mockPostRoute("plugin_settings", "control", true);
+mockPostRoute("sql/", "control");
 
 mockDeleteRoute("database/", "control");
 mockDeleteRoute("database/benchmark_tables", "control");
@@ -123,12 +125,14 @@ function mockPutRoute(
 
 function mockPostRoute(
   route: string,
-  backendRoute?: "control" | "monitor"
+  backendRoute?: "control" | "monitor",
+  stub = false
 ): void {
   const request = getRequestOfRoute(route);
   server.post(getBackendRoute(route, backendRoute), (req, res) => {
     logRequest(req, res);
-    mocks.getMockedPostCallback(request)(handleRequestBody(request, req));
+    if (!stub)
+      mocks.getMockedPostCallback(request)(handleRequestBody(request, req));
     res.send({});
   });
 }
