@@ -14,5 +14,11 @@ jobs:
       run: docker-compose up --build --quiet-pull -d backend generator manager frontend influxdb
     - name: Check running containers
       run: docker ps -a
-    - name: Check logs
-      run: docker logs backend generator manager frontend
+    - name: Check logs Backend
+      run: docker logs backend
+    - name: Check logs Generator
+      run: docker logs generator
+    - name: Check logs Manager
+      run: docker logs manager
+    - name: Check logs Frontend
+      run: docker logs frontend
