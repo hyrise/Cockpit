@@ -12,6 +12,7 @@ export function useLineChartComponent(
     chartConfiguration: getMetricChartConfiguration(props.metric),
     maxValue: context.root.$metricController.maxValueData[props.metric],
     timestamps: context.root.$metricController.timestamps[props.metric],
+    pluginEventData: context.root.$pluginController.pluginEventData,
   };
 }
 
