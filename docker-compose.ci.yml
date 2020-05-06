@@ -1,0 +1,52 @@
+version: "3.5"
+
+services:
+  backend:
+    image: cockpit-backend:3.8.2
+    build: 
+      context: .
+      dockerfile: ./hyrisecockpit/api/Dockerfile
+    ports:
+      - "8000:8000"
+
+  manager:
+    image: cockpit-manager:3.8.2
+    build: 
+      context: .
+      dockerfile: ./hyrisecockpit/database_manager/Dockerfile
+    ports:
+      - "8001:8001"
+    
+  generator:
+    image: cockpit-generator:3.8.2
+    build: 
+      context: .
+      dockerfile: ./hyrisecockpit/workload_generator/Dockerfile
+    volumes:
+        - ./hyrisecockpit/workload_generator/workloads:/usr/local/lib/python3.8/site-packages/hyrisecockpit/workload_generator/workloads
+    ports:
+      - "8002:8002"
+      - "8003:8003"
+    
+  influxdb:
+    image: influxdb:alpine
+    volumes:
+      - ./influxdb:/var/lib/influxdb
+    ports:
+      - "8086:8086"
+
+  frontend:
+    image: frontend:buster
+    build:
+        context: .
+        dockerfile: ./hyrisecockpit/frontend/Dockerfile
+    ports:
+      - "5000:5000"
+
+  hyrise:
+    image: udopigorsch/hyrise:bensk1_multithreaded
+    volumes:
+      - ./cached_tables:/usr/local/hyrise/cached_tables
+    ports:
+      - "5432:5432"
+      
