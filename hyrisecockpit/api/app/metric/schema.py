@@ -3,7 +3,7 @@ from marshmallow import Schema
 from marshmallow.fields import Float, Integer, List, Nested, String
 
 
-class ThroughputEntry(Schema):
+class ThroughputEntrySchema(Schema):
     """Schema of a Throughput entry."""
 
     timestamp = Integer(
@@ -29,10 +29,10 @@ class ThroughputSchema(Schema):
         required=True,
         example="hyrise-1",
     )
-    throughput = List(Nested(ThroughputEntry))
+    throughput = List(Nested(ThroughputEntrySchema))
 
 
-class LatencyEntry(Schema):
+class LatencyEntrySchema(Schema):
     """Schema of a Latency entry."""
 
     timestamp = Integer(
@@ -55,4 +55,33 @@ class LatencySchema(Schema):
         required=True,
         example="hyrise-1",
     )
-    latency = List(Nested(LatencyEntry))
+    latency = List(Nested(LatencyEntrySchema))
+
+
+class QueueLengthEntrySchema(Schema):
+    """Schema of a Latency entry."""
+
+    timestamp = Integer(
+        title="Queue length",
+        description="Timestamp in nanoseconds since epoch",
+        required=True,
+        example=1585762457000000000,
+    )
+    queue_length = Float(
+        title="Queue length",
+        description="Queue length value",
+        required=True,
+        example=273.9,
+    )
+
+
+class QueueLengthSchema(Schema):
+    """Schema of a Latency metric."""
+
+    id = String(
+        title="Database ID",
+        description="Used to identify a database.",
+        required=True,
+        example="hyrise-1",
+    )
+    queue_length = List(Nested(QueueLengthEntrySchema))

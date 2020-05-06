@@ -42,3 +42,8 @@ class MetricService:
     def get_latency(time_interval: TimeIntervalInterface):
         """Get latency data."""
         return MetricService.get_data(time_interval, "latency", ["latency"])
+
+    @staticmethod
+    def get_queue_length(time_interval: TimeIntervalInterface):
+        """Get queue length data."""
+        return MetricService.get_data(time_interval, "queue_length", ["queue_length"])
