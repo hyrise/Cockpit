@@ -75,7 +75,7 @@ class TestMetricService:
         )
 
     def test_get_queue_length(self, metric_service: MetricService) -> None:
-        """Test get queue_length."""
+        """Test get queue length."""
         mock_get_data: MagicMock = MagicMock()
         metric_service.get_data = mock_get_data  # type: ignore
 
@@ -84,4 +84,29 @@ class TestMetricService:
         metric_service.get_queue_length(fake_time_interval)  # type: ignore
         mock_get_data.assert_called_once_with(
             fake_time_interval, "queue_length", ["queue_length"]
+        )
+
+    @patch("hyrisecockpit.api.app.metric.service.StorageConnection")
+    @patch("hyrisecockpit.api.app.metric.service._get_active_databases")
+    @patch("hyrisecockpit.api.app.metric.service.time_ns", lambda: 5_000_000_000)
+    def test_get_detailed_query_information(
+        self,
+        mock_get_active_databases: MagicMock,
+        mock_storage_connection: MagicMock,
+        metric_service: MetricService,
+    ) -> None:
+        """Test get detailed query information."""
+        mock_get_active_databases.return_value = ["database"]
+        mock_client: MagicMock = MagicMock()
+        mock_storage_connection.return_value.__enter__.return_value = mock_client
+
+        # TODO use better fake data
+        mock_client.query.return_value = MagicMock()
+
+        metric_service.get_detailed_query_information()  # type: ignore
+
+        mock_client.query.assert_called_once_with(
+            'SELECT COUNT("latency") as "throughput", MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
+            database="database",
+            bind_params={"startts": 1_000_000_000, "endts": 2_000_000_000},
         )
