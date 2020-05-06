@@ -32,13 +32,16 @@ with DoneStatus("Starting a workload..."):
 
 startts = time_ns()
 
-with DoneStatus(f"Activate {plugin} plugin..."):
-    response = cockpit.backend.activate_plugin(database_id, plugin)
+# with DoneStatus(f"Activate {plugin} plugin..."):  # noqa
+#     response = cockpit.backend.activate_plugin(database_id, plugin)   # noqa
 
 show_bar("Executing a workload...", workload_execution_time)
 
 endts = time_ns()
 sleep(1.0)
+
+# with DoneStatus(f"Deactivate {plugin} plugin..."):    # noqa
+#     response = cockpit.backend.deactivate_plugin(database_id, plugin) # noqa
 
 with DoneStatus("Stopping a workload..."):
     cockpit.backend.stop_workload("tpch_0_1")
@@ -59,3 +62,6 @@ with DoneStatus("Export..."):
     exporter.plot_metric("cpu_process_usage", "momentum", startts, endts)
     exporter.plot_metric("footprint", "momentum", startts, endts)
     exporter.plot_metric("detailed latency", "momentum", startts, endts)
+    exporter.plot_metric(
+        "table footprint", "momentum", startts, endts, "customer_tpch_0_1"
+    )

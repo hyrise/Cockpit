@@ -1,6 +1,6 @@
 """Module for plotting of the graphs."""
 from pathlib import Path
-from typing import List
+from typing import Dict, List
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -21,6 +21,34 @@ def plot_line_chart(
     plt.ylabel(f"{y_label}")
     plt.xlabel(f"{x_label}")
     plt.legend()
+
+    plt.savefig(f"{absolute_report_directory_path}/report/{metric}.png", dpi=300)
+
+
+def plot_line_chart_with_multiple_metrics(
+    time_values: List, metric_values: Dict, metric: str, x_label: str, y_label: str
+):
+    """Plot line chart to file."""
+    print(metric_values)
+    figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
+    prop_cycle = plt.rcParams["axes.prop_cycle"]
+    colors = prop_cycle.by_key()["color"]
+
+    maximum_value = np.amax([np.amax(values) for values in metric_values.values()])
+    plt.title(f"{metric}")
+    plt.ticklabel_format(style="plain")
+
+    plt.ylim(bottom=0.0, top=maximum_value * 1.1)
+
+    for (metric_name, values), index in zip(
+        metric_values.items(), range(len(metric_values.keys()))
+    ):
+        plt.plot_date(
+            time_values, values, "-b", color=colors[index], label=f"{metric_name}"
+        )
+    plt.ylabel(f"{y_label}")
+    plt.xlabel(f"{x_label}")
+    plt.legend(loc="upper right")
 
     plt.savefig(f"{absolute_report_directory_path}/report/{metric}.png", dpi=300)
 
