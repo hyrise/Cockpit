@@ -16,17 +16,20 @@ export type TransformationService = (
 ) => any;
 
 export interface PluginService {
-  plugins: Ref<string[]>;
-  activePlugins: Ref<string[]>;
-  updatePlugins: (databaseId: string, plugin: string) => Promise<void>;
-  pluginLogs: Ref<any>;
-  pluginSettings: Ref<any>;
-  updatePluginSettings: (
+  fetchActivePlugins: () => Promise<string[]>;
+  fetchAvailablePlugins: () => Promise<string[]>;
+  fetchPluginLogs: () => Promise<Object>;
+  fetchPluginSettings: () => Promise<Object>;
+  setPluginSetting: (
     databaseId: string,
     settingId: string,
     settingValue: string
-  ) => void;
-  pluginEventData: Ref<any>;
+  ) => Promise<void>;
+  togglePlugin: (
+    databaseId: string,
+    plugin: string,
+    isActivated: boolean
+  ) => Promise<void>;
 }
 
 export interface WorkloadService {
