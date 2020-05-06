@@ -1,5 +1,5 @@
 <template>
-  <v-radio-group class="mt-0">
+  <v-radio-group class="mt-0 pt-0">
     <v-radio
       v-for="workload in availableWorkloads"
       :key="workload"

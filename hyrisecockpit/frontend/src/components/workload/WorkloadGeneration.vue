@@ -18,7 +18,12 @@
             <p class="subtitle-1 font-weight-medium">
               Start, pause and stop a workload
             </p>
-            <frequency-handler @change="handleFrequencyChange" />
+            <frequency-handler
+              :enable-equalizer="actions.start.active || actions.pause.active"
+              :initial-weights="weights"
+              @change="handleFrequencyChange"
+              @update="handleWeightChange"
+            />
             <workload-selector
               :workload-data="workloadData"
               :disabled="disabled"
@@ -85,10 +90,12 @@ interface WorkloadHandler {
 
 interface WorkloadAction {
   actions: Record<string, { active: boolean; loading: boolean }>;
+  weights: Ref<Object>;
   startingWorkload: () => void;
   pausingWorkload: () => void;
   stoppingWorkload: () => void;
   handleFrequencyChange: (frequency: number) => void;
+  handleWeightChange: (weights: Object) => void;
 }
 
 interface WorkloadDataHandler {
@@ -164,6 +171,7 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
       loading: false,
     },
   });
+  let weights = ref<Object>({});
 
   function startLoading(action: string): void {
     actions[action].loading = true;
@@ -175,17 +183,30 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     actions[action].loading = false;
     actions[action].active = true;
   }
+  function updatingWorkload(action: string): void {
+    if (action === "start") {
+      updateWorkload(workload.value, frequency.value, weights.value).then(
+        (response: any) => {
+          handleWeightChange(response.data.weights);
+          stopLoading(action);
+        }
+      );
+    } else {
+      updateWorkload(workload.value, 0, weights.value).then((response: any) => {
+        handleWeightChange(response.data.weights);
+        stopLoading(action);
+      });
+    }
+  }
   function startingWorkload(): void {
     startLoading("start");
     getWorkloads().then((response: any) => {
       if (response.data.length === 0) {
         startWorkload(workload.value, frequency.value).then(() => {
-          stopLoading("start");
+          updatingWorkload("start");
         });
       } else {
-        updateWorkload(workload.value, frequency.value).then(() => {
-          stopLoading("start");
-        });
+        updatingWorkload("start");
       }
     });
   }
@@ -194,12 +215,10 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     getWorkloads().then((response: any) => {
       if (response.data.length === 0) {
         startWorkload(workload.value, 0).then(() => {
-          stopLoading("pause");
+          updatingWorkload("pause");
         });
       } else {
-        updateWorkload(workload.value, 0).then(() => {
-          stopLoading("pause");
-        });
+        updatingWorkload("pause");
       }
     });
   }
@@ -213,18 +232,26 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
       }
     });
   }
+  function handleWeightChange(changedWeights: Object): void {
+    weights.value = changedWeights;
+    if (actions.start.active) {
+      updateWorkload(workload.value, frequency.value, weights.value);
+    }
+  }
   function handleFrequencyChange(changedFrequency: number): void {
     frequency.value = changedFrequency;
     if (actions.start.active) {
-      updateWorkload(workload.value, frequency.value);
+      updateWorkload(workload.value, frequency.value, weights.value);
     }
   }
   return {
     actions,
+    weights,
     startingWorkload,
     pausingWorkload,
     stoppingWorkload,
     handleFrequencyChange,
+    handleWeightChange,
   };
 }
 
