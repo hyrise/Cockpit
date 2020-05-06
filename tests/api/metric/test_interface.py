@@ -3,7 +3,7 @@
 from hyrisecockpit.api.app.metric.interface import TimeIntervalInterface
 
 
-class TestDatabaseInterface:
+class TestMetricInterface:
     """Tests for the metric namespace interfaces."""
 
     def test_creates_time_interval_interface(self) -> None:
