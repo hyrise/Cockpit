@@ -47,7 +47,7 @@ class WorkloadService:
         )
         return (
             None
-            if response["header"]["status"] == 409
+            if response["header"]["status"] != 200
             else Workload(**response["body"]["workload"])
         )
 
