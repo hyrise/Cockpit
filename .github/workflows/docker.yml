@@ -7,16 +7,11 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    env:
-      DOCKER_REPO: ${{ secrets.PG_PASS }}
-      DOCKER_USERNAME: postgresql://postgres:${{ secrets.SECRET_PASSWORD }}@postgres/postgres
-      DOCKER_PASSWORD: app_name.settings.dev
-      TAG: ${{ secrets.SECRET_KEY }}
 
     steps:
     - uses: actions/checkout@v1
     - name: Build the docker-compose stack
-      run: docker-compose -f docker-compose.yml --build --no-cache up -d backend generator manager frontend influxdb
+      run: docker-compose --build --no-cache up -d backend generator manager frontend influxdb
     - name: Check running containers
       run: docker ps -a
     - name: Check logs
