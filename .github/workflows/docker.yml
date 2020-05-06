@@ -4,14 +4,16 @@ on: [push]
 
 jobs:
 
-  build:
+  build & test backend:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
+    - name: Copy environment file
+      run: cp .env.example .env
     - name: Build the docker-compose stack
-      run: docker-compose up --build --quiet-pull -d backend generator manager frontend influxdb
+      run: docker-compose up --build --quiet-pull -d backend generator manager influxdb hyrise
     - name: Check running containers
       run: docker ps -a
     - name: Check logs Backend
@@ -20,5 +22,28 @@ jobs:
       run: docker logs cockpit_generator_1
     - name: Check logs Manager
       run: docker logs cockpit_manager_1
+    - name: Register database
+      run: curl -X POST "http://localhost:8000/control/database/" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{  \"password\": \"password\",  \"dbname\": \"postgres\",  \"port\": \"5432\",  \"host\": \"hyrise\",  \"user\": \"user\",  \"number_workers\": 8,  \"id\": \"hyrise\"}"
+    - name: Check database
+      run: curl -X GET "http://localhost:8000/control/database/" -H  "accept: application/json"
+    - name: De-register database
+      run: curl -X DELETE "http://localhost:8000/control/database/" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{  \"id\": \"hyrise\"}"
+    - name: Check running containers
+      run: docker ps -a
+    - name: Check logs Backend
+      run: docker logs cockpit_backend_1
+    - name: Check logs Generator
+      run: docker logs cockpit_generator_1
+    - name: Check logs Manager
+      run: docker logs cockpit_manager_1
+
+  build frontend:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the frontend container
+      run: docker-compose up --build --quiet-pull -d frontend
     - name: Check logs Frontend
       run: docker logs cockpit_frontend_1
