@@ -36,23 +36,23 @@ class MetricService:
 
         return response
 
-    @staticmethod
-    def get_throughput(time_interval: TimeIntervalInterface):
+    @classmethod
+    def get_throughput(cls, time_interval: TimeIntervalInterface):
         """Get throughput data."""
-        return MetricService.get_data(time_interval, "throughput", ["throughput"])
+        return cls.get_data(time_interval, "throughput", ["throughput"])
 
-    @staticmethod
-    def get_latency(time_interval: TimeIntervalInterface):
+    @classmethod
+    def get_latency(cls, time_interval: TimeIntervalInterface):
         """Get latency data."""
-        return MetricService.get_data(time_interval, "latency", ["latency"])
+        return cls.get_data(time_interval, "latency", ["latency"])
 
-    @staticmethod
-    def get_queue_length(time_interval: TimeIntervalInterface):
+    @classmethod
+    def get_queue_length(cls, time_interval: TimeIntervalInterface):
         """Get queue length data."""
-        return MetricService.get_data(time_interval, "queue_length", ["queue_length"])
+        return cls.get_data(time_interval, "queue_length", ["queue_length"])
 
-    @staticmethod
-    def get_detailed_query_information():
+    @classmethod
+    def get_detailed_query_information(cls):
         """Return detailed throughput and latency information from the stored queries."""
         currentts = time_ns()
         offset = 3_000_000_000
