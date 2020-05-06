@@ -3,6 +3,7 @@
 from types import TracebackType
 from typing import Optional, Type
 
+from influxdb import InfluxDBClient
 from zmq import REQ, Context, Socket
 
 from hyrisecockpit.request import Request
@@ -12,6 +13,10 @@ from hyrisecockpit.settings import (
     DB_MANAGER_PORT,
     GENERATOR_HOST,
     GENERATOR_PORT,
+    STORAGE_HOST,
+    STORAGE_PASSWORD,
+    STORAGE_PORT,
+    STORAGE_USER,
 )
 
 
@@ -97,3 +102,27 @@ class ManagerSocket:
     def send_message(self, message: Request) -> Response:
         """Send message to manager."""
         return self._socket.send_req(message)
+
+
+class StorageConnection:
+    """A wrapper for InfluxDBClient with attributes set."""
+
+    def __enter__(self):
+        """Return InfluxDBClient with attributes set."""
+        self.client = InfluxDBClient(
+            host=STORAGE_HOST,
+            port=STORAGE_PORT,
+            username=STORAGE_USER,
+            password=STORAGE_PASSWORD,
+        )
+        return self.client
+
+    def __exit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_value: Optional[BaseException],
+        traceback: Optional[TracebackType],
+    ) -> Optional[bool]:
+        """Close client."""
+        self.client.close()
+        return None

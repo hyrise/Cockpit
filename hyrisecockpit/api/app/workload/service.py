@@ -1,7 +1,7 @@
 """Services used by the Workload controller."""
 from typing import List, Optional
 
-from hyrisecockpit.api.app.socket_manager import GeneratorSocket, ManagerSocket
+from hyrisecockpit.api.app.connection_manager import GeneratorSocket, ManagerSocket
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 

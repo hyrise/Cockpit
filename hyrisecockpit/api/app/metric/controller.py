@@ -18,6 +18,7 @@ class ThroughputController(Resource):
         dict(name="startts", type=int),  # noqa
         dict(name="endts", type=int),  # noqa
         dict(name="precision", type=int),  # noqa
+        api=api,
     )
     @responds(schema=ThroughputSchema(many=True), api=api)
     def get(self):

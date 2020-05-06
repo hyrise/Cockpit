@@ -1,15 +1,13 @@
 """Services for metrics."""
 from typing import Dict, List, Union
 
+from hyrisecockpit.api.app.connection_manager import StorageConnection
+from hyrisecockpit.api.app.historical_data_handling import (
+    get_historical_metric,
+    get_interval_limits,
+)
+
 from .interface import TimeIntervalInterface
-
-
-def _get_historical_metric(**kwargs):
-    return 42
-
-
-def _get_interval_limits(**kwargs):
-    return (1, 2)
 
 
 class MetricService:
@@ -24,12 +22,14 @@ class MetricService:
         precise_endts: int = time_interval["endts"]
         precision_ns: int = time_interval["precision"]
 
-        (startts, endts) = _get_interval_limits(  # type: ignore
+        (startts, endts) = get_interval_limits(
             precise_startts, precise_endts, precision_ns
         )
-        response: List[Dict[str, Union[str, List]]] = _get_historical_metric(  # type: ignore
-            startts, endts, precision_ns, table_name, column_names
-        )
+
+        with StorageConnection() as client:
+            response: List[Dict[str, Union[str, List]]] = get_historical_metric(
+                startts, endts, precision_ns, table_name, column_names, client
+            )
 
         return response
 
