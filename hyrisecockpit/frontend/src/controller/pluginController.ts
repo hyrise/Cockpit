@@ -13,6 +13,7 @@ export function usePluginController(): PluginController {
 
   const pluginLogs = ref<any>({});
   const pluginSettings = ref<any>({});
+  const pluginEventData = ref<any>({});
 
   updatePluginData();
   setInterval(() => updatePluginLogs(), 1000);
@@ -36,8 +37,9 @@ export function usePluginController(): PluginController {
   }
 
   function updatePluginLogs(): void {
-    pluginService.fetchPluginLogs().then((logData) => {
-      pluginLogs.value = logData;
+    pluginService.fetchPluginLogs().then((data: any) => {
+      pluginLogs.value = data.logs;
+      pluginEventData.value = data.events;
     });
   }
 
@@ -76,6 +78,7 @@ export function usePluginController(): PluginController {
     activePlugins,
     pluginLogs,
     pluginSettings,
+    pluginEventData,
     changePlugin,
     changePluginSetting,
     isActivated,

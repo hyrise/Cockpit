@@ -2,6 +2,7 @@ import axios from "axios";
 import { controlBackend } from "../../config";
 import { PluginService } from "../types/services";
 import { useFormatting } from "@/meta/formatting";
+import Vue from "vue";
 
 export function usePluginService(): PluginService {
   /* fetch plugin data */
@@ -26,11 +27,12 @@ export function usePluginService(): PluginService {
   }
 
   async function fetchPluginLogs(): Promise<Object> {
-    let pluginLogs: any = {};
+    let pluginMeta: any = { logs: {}, events: {} };
     await axios.get(controlBackend + "plugin_log").then((response) => {
-      pluginLogs = getPluginLogsData(response.data);
+      pluginMeta.logs = getPluginLogsData(response.data);
+      pluginMeta.events = getPluginEventData(response.data);
     });
-    return pluginLogs;
+    return pluginMeta;
   }
 
   async function fetchPluginSettings(): Promise<Object> {
@@ -71,7 +73,7 @@ export function usePluginService(): PluginService {
   }
 
   /* transform plugin data */
-  const { formatDateToHHMMSS } = useFormatting();
+  const { formatDateToHHMMSS, subSeconds, trimString } = useFormatting();
 
   function getActivePluginData(data: any): any {
     return data.reduce((result: string[], currentDatabase: any) => {
@@ -125,6 +127,42 @@ export function usePluginService(): PluginService {
           {}
         );
       result[currentDatabase.id] = allDatabaseSettings;
+      return result;
+    }, {});
+  }
+
+  function producePluginLogString(currentLog: any) {
+    return `${currentLog.reporter} [${formatDateToHHMMSS(
+      new Date(parseInt(currentLog.timestamp))
+    )}]: ${currentLog.message}`;
+  }
+
+  function getPluginEventData(data: any): any {
+    const relevantTime = subSeconds(
+      new Date(),
+      Vue.prototype.$selectionController.selectedRange.value +
+        Vue.prototype.$selectionController.selectedPrecision.value
+    );
+    return data.reduce((result: any, currentDatabase: any) => {
+      result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
+        (databaseEvents: any, currentLog: any) => {
+          if (currentLog.timestamp > relevantTime) {
+            return {
+              timestamps: [
+                ...databaseEvents.timestamps,
+                new Date(parseInt(currentLog.timestamp)),
+              ],
+              events: [
+                ...databaseEvents.events,
+                trimString(producePluginLogString(currentLog), 50),
+              ],
+            };
+          } else {
+            return databaseEvents;
+          }
+        },
+        { timestamps: [], events: [] }
+      );
       return result;
     }, {});
   }

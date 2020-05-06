@@ -31,6 +31,7 @@ export interface PluginController {
   activePlugins: Ref<string[]>;
   pluginLogs: Ref<any>;
   pluginSettings: Ref<any>;
+  pluginEventData: Ref<any>;
   changePluginSetting: (
     databaseId: string,
     settingId: string,
