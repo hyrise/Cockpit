@@ -119,27 +119,27 @@ class BackgroundJobManager(object):
 
     def load_tables(self, folder_name: str) -> bool:
         """Load tables."""
-        if self._database_blocked.value:
+        if not self._database_blocked.value:
+            self._database_blocked.value = True
+            self._scheduler.add_job(
+                func=load_tables_job,
+                args=(self._database_blocked, folder_name, self._connection_factory),
+            )
+            return True
+        else:
             return False
-
-        self._database_blocked.value = True
-        self._scheduler.add_job(
-            func=load_tables_job,
-            args=(self._database_blocked, folder_name, self._connection_factory),
-        )
-        return True
 
     def delete_tables(self, folder_name: str) -> bool:
         """Delete tables."""
-        if self._database_blocked.value:
+        if not self._database_blocked.value:
+            self._database_blocked.value = True
+            self._scheduler.add_job(
+                func=delete_tables_job,
+                args=(self._database_blocked, folder_name, self._connection_factory),
+            )
+            return True
+        else:
             return False
-
-        self._database_blocked.value = True
-        self._scheduler.add_job(
-            func=delete_tables_job,
-            args=(self._database_blocked, folder_name, self._connection_factory),
-        )
-        return True
 
     def activate_plugin(self, plugin: str) -> bool:
         """Activate plugin."""
