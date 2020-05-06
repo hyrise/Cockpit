@@ -1,5 +1,3 @@
-import { Ref } from "@vue/composition-api";
-
 export interface DatabaseSystemDetails {
   host: string;
   memoryCapacity: number;
