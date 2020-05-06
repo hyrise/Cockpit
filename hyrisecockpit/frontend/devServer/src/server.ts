@@ -70,7 +70,7 @@ mockPostRoute("database/", "control");
 mockPostRoute("database/benchmark_tables", "control");
 mockPostRoute("workload/");
 mockPostRoute("plugin", "control");
-mockPostRoute("plugin_settings", "control");
+mockPostRoute("plugin_settings", "control", true);
 mockPostRoute("sql/", "control");
 
 mockDeleteRoute("database/", "control");

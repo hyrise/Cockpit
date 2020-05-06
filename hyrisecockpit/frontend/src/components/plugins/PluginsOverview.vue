@@ -19,7 +19,7 @@
           </v-list-item>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <div v-for="plugin in plugins" :key="plugin">
+          <div v-for="plugin in availablePlugins" :key="plugin">
             <div class="plugin">
               <div class="plugin-name">{{ plugin }}</div>
               <v-switch
@@ -33,8 +33,8 @@
               <v-btn
                 :id="`${plugin}-change-button`"
                 v-if="canSettingsBeChanged(database, plugin)"
-                @click="toggleSettingsView(database, plugin)"
                 text
+                @click="toggleSettingsView(database, plugin)"
               >
                 <v-icon>mdi-cog</v-icon>
               </v-btn>
@@ -71,32 +71,24 @@ import {
   ref,
   reactive,
 } from "@vue/composition-api";
-import { Database } from "../../types/database";
+import { Database } from "@/types/database";
 import PluginsLog from "./PluginsLog.vue";
 import PluginSetting from "./PluginSetting.vue";
-import useDragElement from "../../meta/draggable";
-import DatabaseChip from "../details/DatabaseChip.vue";
+import useDragElement from "@/meta/draggable";
+import DatabaseChip from "@/components/details/DatabaseChip.vue";
+import { PluginController } from "@/types/controller";
 
 interface Props {
   onClose: () => void;
 }
 
-interface Data {
-  showDatabasePanels: Ref<boolean>;
-  togglePanelView: () => void;
+interface Data
+  extends UsePluginSwitching,
+    UsePluginPanelRendering,
+    PluginController {
   databases: Ref<readonly string[]>;
-  plugins: Ref<string[]>;
-  activePlugins: Ref<string[]>;
-  onClickPluginSwitch: (databaseId: string, plugin: string) => void;
-  isLoading: Ref<any>;
-  disableAll: Ref<boolean>;
   pluginDraggableId: string;
   pluginDraggerId: string;
-  pluginLogs: Ref<any>;
-  showSettings: any;
-  toggleSettingsView: (database: string, plugin: string) => void;
-  pluginSettings: Ref<any>;
-  canSettingsBeChanged: (databseId: string, pluginId: string) => boolean;
 }
 
 export default defineComponent({
@@ -113,79 +105,90 @@ export default defineComponent({
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    var { availableDatabasesById } = context.root.$databaseController;
-    const showDatabasePanels = ref(true);
-    const disableAll = ref(false);
-    const isLoading: Ref<any> = ref({});
-    const pluginDraggableId: string = "plugin-overview";
-    const pluginDraggerId: string = "plugin-card";
+    const pluginDraggableId = "plugin-overview";
+    const pluginDraggerId = "plugin-card";
 
-    const {
-      availablePlugins,
-      activePlugins,
-      pluginLogs,
-      pluginSettings,
-      changePlugin,
-      isActivated,
-    } = context.root.$pluginController;
-
-    const showSettings: any = reactive({});
-
-    function toggleSettingsView(database: string, plugin: string): void {
-      showSettings[database + "_" + plugin] = !showSettings[
-        database + "_" + plugin
-      ];
-    }
-
-    function canSettingsBeChanged(
-      databseId: string,
-      pluginId: string
-    ): boolean {
-      return (
-        isActivated(databseId, pluginId) &&
-        pluginSettings.value[databseId] &&
-        pluginSettings.value[databseId][pluginId]
-      );
-    }
-
-    function togglePanelView(): void {
-      showDatabasePanels.value = !showDatabasePanels.value;
-    }
-
+    // Make the DIV element draggable
     onMounted(() => {
-      // Make the DIV element draggable:
       useDragElement(pluginDraggableId, pluginDraggerId);
     });
 
-    function onClickPluginSwitch(databaseId: string, plugin: string): void {
-      isLoading.value[databaseId + "_" + plugin] = true;
-      disableAll.value = true;
-      changePlugin(databaseId, plugin).then(() => {
-        isLoading.value[databaseId + "_" + plugin] = false;
-        disableAll.value = false;
-      });
-    }
-
-    //TODO: this should be refactored
     return {
-      showDatabasePanels,
-      togglePanelView,
-      databases: availableDatabasesById,
-      plugins: availablePlugins,
-      onClickPluginSwitch,
-      activePlugins,
-      isLoading,
-      disableAll,
       pluginDraggableId,
       pluginDraggerId,
-      pluginLogs,
-      showSettings,
-      toggleSettingsView,
-      pluginSettings,
-      canSettingsBeChanged,
+      databases: context.root.$databaseController.availableDatabasesById,
+      ...context.root.$pluginController,
+      ...usePluginSwitching(context),
+      ...usePluginPanelRendering(),
     };
   },
 });
+
+interface UsePluginSwitching {
+  disableAll: Ref<boolean>;
+  isLoading: Ref<Object>;
+  canSettingsBeChanged: (databseId: string, pluginId: string) => boolean;
+  onClickPluginSwitch: (databaseId: string, plugin: string) => void;
+}
+
+function usePluginSwitching(context: SetupContext): UsePluginSwitching {
+  const disableAll = ref(false);
+  const isLoading: Ref<any> = ref({});
+
+  const {
+    pluginSettings,
+    changePlugin,
+    isActivated,
+  } = context.root.$pluginController;
+
+  function canSettingsBeChanged(databseId: string, pluginId: string): boolean {
+    return (
+      isActivated(databseId, pluginId) &&
+      pluginSettings.value[databseId] &&
+      pluginSettings.value[databseId][pluginId]
+    );
+  }
+
+  function onClickPluginSwitch(databaseId: string, plugin: string): void {
+    isLoading.value[databaseId + "_" + plugin] = true;
+    disableAll.value = true;
+    changePlugin(databaseId, plugin).then(() => {
+      isLoading.value[databaseId + "_" + plugin] = false;
+      disableAll.value = false;
+    });
+  }
+
+  return { disableAll, isLoading, canSettingsBeChanged, onClickPluginSwitch };
+}
+
+interface UsePluginPanelRendering {
+  showDatabasePanels: Ref<boolean>;
+  showSettings: Ref<Object>;
+  togglePanelView: () => void;
+  toggleSettingsView: (database: string, plugin: string) => void;
+}
+
+function usePluginPanelRendering(): UsePluginPanelRendering {
+  const showDatabasePanels = ref(true);
+  const showSettings: any = ref({});
+
+  function togglePanelView(): void {
+    showDatabasePanels.value = !showDatabasePanels.value;
+  }
+
+  function toggleSettingsView(database: string, plugin: string): void {
+    showSettings.value[database + "_" + plugin] = !showSettings.value[
+      database + "_" + plugin
+    ];
+  }
+
+  return {
+    showDatabasePanels,
+    showSettings,
+    togglePanelView,
+    toggleSettingsView,
+  };
+}
 </script>
 <style>
 .panels {
