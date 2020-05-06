@@ -27,7 +27,7 @@ def _generate_table_drop_queries(
 def delete_tables(
     database_blocked: Value, folder_name: str, connection_factory
 ) -> None:
-    """Load tables."""
+    """Delete tables."""
     benchmark, scale_factor = folder_name.split("_", maxsplit=1)
     table_names: List[str] = _table_names[benchmark]
     loaded_tables: List[str] = get_loaded_tables_for_scale_factor(
