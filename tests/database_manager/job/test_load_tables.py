@@ -1,6 +1,6 @@
 """Tests for the load tables job."""
 from multiprocessing import Value
-from typing import List, Tuple
+from typing import List
 from unittest.mock import patch
 
 from hyrisecockpit.cross_platform_support.testing_support import MagicMock
@@ -19,7 +19,7 @@ class TestLoadTablesJob:
         fake_benchmark = "benchmark"
         fake_scale_factor = "4_2"
 
-        received_queries: List[Tuple] = _generate_table_loading_queries(
+        received_queries = _generate_table_loading_queries(
             fake_tables, fake_benchmark, fake_scale_factor
         )
 
