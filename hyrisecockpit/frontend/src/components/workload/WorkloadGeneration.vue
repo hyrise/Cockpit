@@ -281,8 +281,7 @@ function useWorkloadDataHandler(context: SetupContext): WorkloadDataHandler {
           loadedWorkloadData = loadedWorkloadData.filter(
             (benchmark: any) =>
               database.loaded_benchmarks.includes(benchmark) &&
-              benchmark !== "no-ops_0_1" &&
-              benchmark !== "no-ops_1"
+              !["no-ops_0_1", "no-ops_1"].includes(benchmark)
           );
           emitDatabaseStatusChangedEvent(
             database.id,
