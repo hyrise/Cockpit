@@ -13,7 +13,7 @@ jobs:
     - name: Copy environment file
       run: cp .env.example .env
     - name: Build the docker-compose stack
-      run: docker-compose up --build --quiet-pull -d backend generator manager influxdb hyrise
+      run: docker-compose -f docker-compose.ci.yml up --build --quiet-pull -d backend generator manager influxdb hyrise
     - name: Check running containers
       run: docker ps -a
     - name: Check logs Backend
