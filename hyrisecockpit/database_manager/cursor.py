@@ -119,21 +119,21 @@ class StorageCursor:
     """Context Manager for a connection to log queries persistently."""
 
     def __init__(
-        self, host: str, port: str, user: str, password: str, database: str
+        self, host: str, port: str, user: str, password: str, database_id: str
     ) -> None:
         """Initialize a StorageCursor."""
         self._host: str = host
         self._port: str = port
         self._user: str = user
         self._password: str = password
-        self._database: str = database
+        self._database_id: str = database_id
 
     def __enter__(self) -> "StorageCursor":
         """Establish a connection."""
         self._connection: InfluxDBClient = InfluxDBClient(
             self._host, self._port, self._user, self._password
         )
-        self._connection.create_database(self._database)
+        self._connection.create_database(self._database_id)
         return self
 
     def __exit__(
@@ -148,7 +148,7 @@ class StorageCursor:
 
     def __write_points(self, points: Iterable[Point]) -> None:
         """Write multiple points to the database."""
-        return self._connection.write_points(list(points), database=self._database)
+        return self._connection.write_points(list(points), database=self._database_id)
 
     def __write_point(self, point: Point) -> None:
         """Write a single point to the database."""
@@ -156,18 +156,18 @@ class StorageCursor:
 
     def create_database(self) -> None:
         """Create database."""
-        self._connection.create_database(self._database)
+        self._connection.create_database(self._database_id)
 
     def drop_database(self) -> None:
         """Drop database."""
-        self._connection.drop_database(self._database)
+        self._connection.drop_database(self._database_id)
 
     def create_continuous_query(
         self, query_name: str, query: str, resample_options: Optional[str] = None,
     ) -> None:
         """Create continuous query."""
         self._connection.create_continuous_query(
-            query_name, query, self._database, resample_options
+            query_name, query, self._database_id, resample_options
         )
 
     def log_meta_information(
@@ -223,17 +223,17 @@ class StorageConnectionFactory:
     """Factory for creating storage cursors."""
 
     def __init__(
-        self, user: str, password: str, host: str, port: str, dbname: str,
+        self, user: str, password: str, host: str, port: str, database_id: str,
     ):
         """Initialize the connection attributes."""
         self._host: str = host
         self._port: str = port
         self._user: str = user
         self._password: str = password
-        self._dbname: str = dbname
+        self._database_id: str = database_id
 
     def create_cursor(self) -> StorageCursor:
         """Create new StorageCursor."""
         return StorageCursor(
-            self._host, self._port, self._user, self._password, self._dbname
+            self._host, self._port, self._user, self._password, self._database_id
         )
