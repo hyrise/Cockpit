@@ -78,30 +78,32 @@ export default defineComponent({
       watch(
         () => props.pluginEventData,
         () => {
-          if (!multipleDatabasesAllowed && props.pluginEventData) {
-            const currentPluginEventData =
-              props.pluginEventData[props.selectedDatabases[0]];
-            if (currentPluginEventData) {
-              Plotly.restyle(
-                props.graphId,
-                {
-                  y: [
-                    currentPluginEventData.timestamps.map((x: Date) =>
-                      getYMax()
-                    ),
-                  ],
-                  x: [currentPluginEventData.timestamps],
-                  text: [currentPluginEventData.events],
-                  width: 100,
-                  hoverinfo: "text",
-                },
-                [1]
-              );
-            }
-          }
+          updatePluginEventData();
         }
       );
     });
+
+    function updatePluginEventData(): void {
+      if (!multipleDatabasesAllowed && props.pluginEventData) {
+        const currentPluginEventData =
+          props.pluginEventData[props.selectedDatabases[0]];
+        if (currentPluginEventData) {
+          Plotly.restyle(
+            props.graphId,
+            {
+              y: [
+                currentPluginEventData.timestamps.map((x: Date) => getYMax()),
+              ],
+              x: [currentPluginEventData.timestamps],
+              text: [currentPluginEventData.events],
+              width: 100,
+              hoverinfo: "text",
+            },
+            [1]
+          );
+        }
+      }
+    }
 
     function handleDatabaseChange(): void {
       Plotly.react(
