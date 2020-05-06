@@ -18,7 +18,7 @@ print(intro)
 cockpit = Cockpit()  # type: ignore
 cockpit.start()
 
-show_bar("Starting cockpit...                 ", 3)
+show_bar("Starting cockpit...", 3)
 
 with DoneStatus("Adding database..."):
     cockpit.backend.add_database(database_id, DATABASE_HOST, DATABASE_PORT)
@@ -35,7 +35,7 @@ startts = time_ns()
 with DoneStatus(f"Activate {plugin} plugin..."):
     response = cockpit.backend.activate_plugin(database_id, plugin)
 
-show_bar("Executing a workload...             ", workload_execution_time)
+show_bar("Executing a workload...", workload_execution_time)
 
 endts = time_ns()
 sleep(1.0)
@@ -49,7 +49,7 @@ with DoneStatus("Removing the database..."):
 
 cockpit.shutdown()
 
-show_bar("Cockpit shutdown...                 ", 3)
+show_bar("Cockpit shutdown...", 3)
 
 with DoneStatus("Export..."):
     exporter = Exporter()
