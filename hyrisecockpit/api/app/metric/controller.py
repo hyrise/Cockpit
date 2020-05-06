@@ -4,7 +4,12 @@ from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 
 from .interface import TimeIntervalInterface
-from .schema import LatencySchema, QueueLengthSchema, ThroughputSchema
+from .schema import (
+    DetailedQueryInformationSchema,
+    LatencySchema,
+    QueueLengthSchema,
+    ThroughputSchema,
+)
 from .service import MetricService
 
 api = Namespace("Metric", description="Metric data.")
@@ -71,3 +76,13 @@ class QueueLengthController(Resource):
             precision=request.parsed_args["precision"],
         )
         return MetricService.get_queue_length(interface)
+
+
+@api.route("/detailed_query_information")
+class DetailedQueryInformationController(Resource):
+    """Controller for detailed query information."""
+
+    @responds(schema=DetailedQueryInformationSchema(many=True), api=api)
+    def get(self):
+        """Get detailed query information."""
+        return MetricService.get_detailed_query_information()

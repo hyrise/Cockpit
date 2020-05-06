@@ -85,3 +85,44 @@ class QueueLengthSchema(Schema):
         example="hyrise-1",
     )
     queue_length = List(Nested(QueueLengthEntrySchema))
+
+
+class DetailedQueryInformationEntrySchema(Schema):
+    """Schema of a Latency entry."""
+
+    benchmark = String(
+        title="workload_type",
+        description="Type of the executed query.",
+        required=True,
+        example="tpch_0.1",
+    )
+    query_number = String(
+        title="query_number",
+        description="Number of the executed query",
+        required=True,
+        example=5,
+    )
+    throughput = Integer(
+        title="throughput",
+        description="Number of successfully executed queries in given time interval.",
+        required=True,
+        example=55,
+    )
+    latency = Float(
+        title="Latency",
+        description="Average query latency (ns) of a given time interval.",
+        required=True,
+        example=923.263,
+    )
+
+
+class DetailedQueryInformationSchema(Schema):
+    """Schema of a detailed query information metric."""
+
+    id = String(
+        title="Database ID",
+        description="Used to identify a database.",
+        required=True,
+        example="hyrise-1",
+    )
+    detailed_query_information = List(Nested(DetailedQueryInformationEntrySchema))

@@ -1,4 +1,5 @@
 """Services for metrics."""
+from time import time_ns
 from typing import Dict, List, Union
 
 from hyrisecockpit.api.app.connection_manager import StorageConnection
@@ -6,8 +7,10 @@ from hyrisecockpit.api.app.historical_data_handling import (
     get_historical_metric,
     get_interval_limits,
 )
+from hyrisecockpit.api.app.shared import _get_active_databases
 
 from .interface import TimeIntervalInterface
+from .model import DetailedQueryEntry, DetailedQueryInformation
 
 
 class MetricService:
@@ -47,3 +50,36 @@ class MetricService:
     def get_queue_length(time_interval: TimeIntervalInterface):
         """Get queue length data."""
         return MetricService.get_data(time_interval, "queue_length", ["queue_length"])
+
+    @staticmethod
+    def get_detailed_query_information():
+        """Return detailed throughput and latency information from the stored queries."""
+        currentts = time_ns()
+        offset = 3_000_000_000
+        interval_length = 1_000_000_000
+        startts = currentts - offset - interval_length
+        endts = currentts - offset
+        response: List[DetailedQueryInformation] = []
+
+        with StorageConnection() as client:
+            for database in _get_active_databases():
+                result = client.query(
+                    'SELECT COUNT("latency") as "throughput", MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
+                    database=database,
+                    bind_params={"startts": startts, "endts": endts},
+                )
+                query_information: List[DetailedQueryEntry] = [
+                    DetailedQueryEntry(
+                        benchmark=tags["benchmark"],
+                        query_number=tags["query_no"],
+                        throughput=list(result[table, tags])[0]["throughput"],
+                        latency=list(result[table, tags])[0]["latency"],
+                    )
+                    for table, tags in list(result.keys())
+                ]
+                response.append(
+                    DetailedQueryInformation(
+                        id=database, detailed_query_information=query_information
+                    )
+                )
+        return response

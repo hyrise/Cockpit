@@ -2,19 +2,25 @@
 from typing import List
 
 
-class ThroughputEntry:
+class DetailedQueryEntry:
     """Model of a ThroughputEntry."""
 
-    def __init__(self, timestamp: int, throughput: float):
-        """Initialize a ThroughputEntry model."""
-        self.timestamp = timestamp
-        self.throughput = throughput
+    def __init__(
+        self, benchmark: str, query_number: str, throughput: float, latency: float
+    ):
+        """Initialize a DetailedQueryEntry model."""
+        self.benchmark: str = benchmark
+        self.query_number: str = query_number
+        self.throughput: float = throughput
+        self.latency: float = latency
 
 
-class Throughput:
-    """Model of a Throughput."""
+class DetailedQueryInformation:
+    """Model of a DetailedQueryInformation."""
 
-    def __init__(self, id: str, throughput: List[ThroughputEntry]):
-        """Initialize a ThroughputEntry model."""
+    def __init__(self, id: str, detailed_query_information: List[DetailedQueryEntry]):
+        """Initialize a DetailedQueryInformation model."""
         self.id: str = id
-        self.throughput: List[ThroughputEntry] = throughput
+        self.detailed_query_information: List[
+            DetailedQueryEntry
+        ] = detailed_query_information
