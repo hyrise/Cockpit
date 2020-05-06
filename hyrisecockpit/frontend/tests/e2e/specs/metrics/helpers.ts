@@ -40,6 +40,8 @@ export const historicRanges: Record<
   60: { title: "last 60 minutes", value: 60 * 60 },
 };
 
+export const basicPrecision = [1, 5, 15];
+
 export function getSelector(component: string): string {
   return getSelectorByConfig(
     selectors[component].element,
@@ -70,8 +72,16 @@ export function assertDataRequest(url: string, range: number): void {
   const endIndex = url.indexOf("=", startIndex) + 1;
   const startTime = parseInt(url.substring(startIndex, url.indexOf("&")), 10);
   const endTime = parseInt(url.substring(endIndex), 10);
+  const split = url.split("=");
+  const precision = parseInt(split[split.length - 1], 10);
 
-  expect(endTime - startTime).to.eq(range * Math.pow(10, 9));
+  expect(endTime - startTime).to.eq((range + 3) * Math.pow(10, 9) + precision);
+}
+
+export function assertPrecisionRequest(url: string, range: number): void {
+  const split = url.split("=");
+  const time = parseInt(split[split.length - 1], 10);
+  expect(time).to.eq(range * Math.pow(10, 9));
 }
 
 export function assertLineChartData(
