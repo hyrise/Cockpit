@@ -11,6 +11,7 @@ export function useFormatting(): {
   formatDateToNanoSec: (date: Date) => number;
   addSeconds: (date: Date, seconds: number) => Date;
   subSeconds: (date: Date, seconds: number) => Date;
+  trimString: (string: string, length: number) => string;
   formatMinutesToSeconds: (minutes: number) => number;
   getNanoSeconds: (seconds: number) => number;
 } {
@@ -63,6 +64,12 @@ export function useFormatting(): {
     return even ? Math.floor(rounded) : rounded;
   }
 
+  function trimString(string: string, length: number): string {
+    return string.length > length
+      ? string.substring(0, length - 3) + "..."
+      : string;
+  }
+
   function formatMinutesToSeconds(minutes: number): number {
     return minutes * 60;
   }
@@ -75,6 +82,7 @@ export function useFormatting(): {
     formatDateToNanoSec,
     addSeconds,
     subSeconds,
+    trimString,
     formatMinutesToSeconds,
     getNanoSeconds,
   };
