@@ -13,6 +13,7 @@
       :max-value="maxValue"
       :timestamps="timestamps"
       :max-chart-width="maxChartWidth"
+      :pluginEventData="pluginEventData"
     />
   </div>
 </template>

@@ -21,7 +21,7 @@ const transformationServiceMap: Record<Metric, TransformationService> = {
   throughput: getReadOnlyData,
 };
 
-const { roundNumber } = useFormatting();
+const { roundNumber, subSeconds, trimString } = useFormatting();
 const {
   getTableMemoryFootprint,
   getDatabaseMemoryFootprint,
