@@ -215,23 +215,30 @@ class Database(object):
                 return False
         return False
 
-    def get_plugin_setting(self) -> Optional[List[Dict[str, str]]]:
-        """Read currently set plugin settings."""  # It reads *all* settings, not just plugin settings.
+    def get_plugin_setting(self) -> Optional[Dict[str, List[Dict[str, str]]]]:
+        """Read currently set plugin settings."""
         if not self._database_blocked.value:
             try:
                 with self._connection_factory.create_cursor() as cur:
                     cur.execute(
-                        "SELECT name, value, description FROM meta_settings;", None
+                        'SELECT name, value, description FROM meta_settings WHERE name LIKE "Plugin::";"',
+                        None,
                     )
                     rows = cur.fetchall()
-                return (
-                    [
-                        {"name": row[0], "value": row[1], "description": row[2]}
-                        for row in rows
-                    ]
-                    if rows
-                    else []
-                )
+                plugins: Dict[str, List[Dict[str, str]]] = {}
+                for row in rows:
+                    _, plugin_name, setting_name = row[0].split("::")
+                    value, description = row[1], row[2]
+                    if plugins.get(plugin_name) is None:
+                        plugins[plugin_name] = []
+                    plugins[plugin_name].append(
+                        {
+                            "name": setting_name,
+                            "value": value,
+                            "description": description,
+                        }
+                    )
+                return plugins
             except (DatabaseError, InterfaceError):
                 return None
         return None
