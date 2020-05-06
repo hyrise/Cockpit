@@ -32,6 +32,7 @@ class DetailedPluginSchema(PluginSchema):
         description="Settings of the Plugin",
         many=True,
         required=True,
+        allow_none=True,
     )
 
 

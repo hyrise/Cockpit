@@ -52,27 +52,29 @@ class TestPluginController:
 
     def test_gets_all_plugins(self, client: FlaskClient):
         """A PluginController routes get correctly."""
-        expected = DetailedPluginIDInterface(
-            id="york",
-            plugins=[
-                DetailedPluginInterface(
-                    name="Compression",
-                    settings=[
-                        PluginSettingInterface(
-                            name="MemoryBudget", value="5000", description="..."
-                        )
-                    ],
-                ),
-                DetailedPluginInterface(
-                    name="Clustering",
-                    settings=[
-                        PluginSettingInterface(
-                            name="SomeOtherSetting", value="true", description="..."
-                        )
-                    ],
-                ),
-            ],
-        )
+        expected = [
+            DetailedPluginIDInterface(
+                id="york",
+                plugins=[
+                    DetailedPluginInterface(
+                        name="Compression",
+                        settings=[
+                            PluginSettingInterface(
+                                name="MemoryBudget", value="5000", description="..."
+                            )
+                        ],
+                    ),
+                    DetailedPluginInterface(
+                        name="Clustering",
+                        settings=[
+                            PluginSettingInterface(
+                                name="SomeOtherSetting", value="true", description="..."
+                            )
+                        ],
+                    ),
+                ],
+            )
+        ]
         with patch(
             "hyrisecockpit.api.app.plugin.service.PluginService.get_all"
         ) as get_all:

@@ -21,10 +21,29 @@ def service() -> Type[PluginService]:
 class TestPluginService:
     """Tests for the Plugin controller."""
 
-    def test_gets_all_plugins(self, service: PluginService, interface: PluginInterface):
+    def test_gets_all_plugins(self, service: PluginService):
         """A Plugin service gets all activated plugins per database."""
-        expected = get_response(200)
-        expected["body"]["plugins"] = [
+        mocked = get_response(200)
+        mocked["body"]["plugins"] = [
+            {
+                "id": "york",
+                "plugins": {
+                    "Compression": [
+                        {"name": "MemoryBudget", "value": "5000", "description": "..."}
+                    ]
+                },
+            },
+            {
+                "id": "citadelle",
+                "plugins": {
+                    "Compression": [
+                        {"name": "MemoryBudget", "value": "5000", "description": "..."}
+                    ],
+                    "Clustering": [],
+                },
+            },
+        ]
+        expected = [
             {
                 "id": "york",
                 "plugins": [
@@ -57,41 +76,36 @@ class TestPluginService:
                 ],
             },
         ]
-        service._send_message_to_dbm.return_value = expected  # type: ignore
+        service._send_message_to_dbm.return_value = mocked  # type: ignore
         result = service.get_all()
         assert not isinstance(result, int)
         assert isinstance(result, list)
-        assert result == expected["body"]["plugins"]
+        assert result == expected
 
     def test_doesnt_get_plugins_if_a_database_error_occurs(
         self, service: PluginService, interface: PluginInterface
     ):
         """A Plugin service does not get all plugins if a database error occurs."""
-        expected = get_response(200)
-        expected["body"]["plugins"] = [
+        mocked = get_response(200)
+        mocked["body"]["plugins"] = [
+            {"id": "york", "plugins": None},
+            {"id": "citadelle", "plugins": {"Compression": None, "Clustering": None}},
+        ]
+        expected = [
             {"id": "york", "plugins": None},
             {
                 "id": "citadelle",
                 "plugins": [
-                    {
-                        "name": "Compression",
-                        "settings": [
-                            {
-                                "name": "MemoryBudget",
-                                "value": "5000",
-                                "description": "...",
-                            }
-                        ],
-                    },
-                    {"name": "Clustering", "settings": []},
+                    {"name": "Compression", "settings": None},
+                    {"name": "Clustering", "settings": None},
                 ],
             },
         ]
-        service._send_message_to_dbm.return_value = expected  # type: ignore
+        service._send_message_to_dbm.return_value = mocked  # type: ignore
         result = service.get_all()
         assert not isinstance(result, int)
         assert isinstance(result, list)
-        assert result == expected["body"]["plugins"]
+        assert result == expected
 
     @mark.parametrize("status", [200, 400, 500])
     def test_doesnt_get_plugins_if_an_unexpected_error_occurs(

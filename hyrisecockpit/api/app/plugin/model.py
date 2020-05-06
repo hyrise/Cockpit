@@ -34,7 +34,7 @@ class DetailedPlugin(Plugin):
     def __init__(self, name: str, settings: List[PluginSetting]) -> None:
         """Initialize a detailed Plugin."""
         super().__init__(name)
-        self.settings: List[PluginSetting] = settings
+        self.settings: Optional[List[PluginSetting]] = settings
 
 
 class DetailedPluginID:

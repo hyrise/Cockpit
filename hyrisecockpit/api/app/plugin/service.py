@@ -5,7 +5,12 @@ from hyrisecockpit.api.app.socket_manager import ManagerSocket
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
-from .interface import DetailedPluginIDInterface, PluginInterface
+from .interface import (
+    DetailedPluginIDInterface,
+    DetailedPluginInterface,
+    PluginInterface,
+    PluginSettingInterface,
+)
 
 
 class PluginService:
@@ -24,8 +29,33 @@ class PluginService:
             Request(header=Header(message="get plugins"), body={})
         )
         if response["header"]["status"] == 200:
-            plugins: List[DetailedPluginIDInterface] = response["body"]["plugins"]
-            return plugins
+            result = []
+            for database in response["body"]["plugins"]:
+                if database["plugins"] is not None:
+                    plugins: List[DetailedPluginInterface] = []
+                    for plugin_name, plugin_settings in database["plugins"].items():
+                        detailed_plugin = DetailedPluginInterface(
+                            name=plugin_name,
+                            settings=[
+                                PluginSettingInterface(
+                                    name=plugin_setting["name"],
+                                    value=plugin_setting["value"],
+                                    description=plugin_setting["description"],
+                                )
+                                for plugin_setting in plugin_settings
+                            ]
+                            if plugin_settings is not None
+                            else None,
+                        )
+                        plugins.append(detailed_plugin)
+                    result.append(
+                        DetailedPluginIDInterface(id=database["id"], plugins=plugins)
+                    )
+                else:
+                    result.append(
+                        DetailedPluginIDInterface(id=database["id"], plugins=None)
+                    )
+            return result
         else:
             return response["header"]["status"]
 

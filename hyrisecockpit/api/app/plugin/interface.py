@@ -24,7 +24,7 @@ class PluginSettingInterface(PluginSettingBaseInterface):
 class DetailedPluginInterface(PluginInterface):
     """Interface of a detailed Plugin."""
 
-    settings: List[PluginSettingInterface]
+    settings: Optional[List[PluginSettingInterface]]
 
 
 class DetailedPluginIDInterface(TypedDict):

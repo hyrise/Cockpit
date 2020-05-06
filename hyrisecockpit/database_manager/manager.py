@@ -18,7 +18,8 @@ from .cursor import PoolCursor
 from .database import Database
 
 DatabaseActivatedPlugins = TypedDict(
-    "DatabaseActivatedPlugins", {"id": str, "plugins": Dict[str, List]}
+    "DatabaseActivatedPlugins",
+    {"id": str, "plugins": Optional[Dict[str, Optional[List]]]},
 )
 
 
@@ -209,15 +210,20 @@ class DatabaseManager(object):
             plugins = database.get_plugins()
             database_activated_plugins = DatabaseActivatedPlugins(
                 id=id,
-                plugins={name: [] for name in plugins} if plugins is not None else {},
+                plugins={name: [] for name in plugins} if plugins is not None else None,
             )
             settings = database.get_plugin_setting()
             if plugins is not None and settings is not None:
+                assert database_activated_plugins["plugins"] is not None  # nosec
                 for plugin_name in plugins:
                     if plugin_name in settings.keys():
                         database_activated_plugins["plugins"][plugin_name] = settings[
                             plugin_name
                         ]
+            elif plugins is not None and settings is None:
+                for plugin_name in plugins:
+                    assert database_activated_plugins["plugins"] is not None  # nosec
+                    database_activated_plugins["plugins"][plugin_name] = None
             activated_plugins.append(database_activated_plugins)
         response = get_response(200)
         response["body"]["plugins"] = activated_plugins
