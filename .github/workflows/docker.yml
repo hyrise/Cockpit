@@ -15,10 +15,10 @@ jobs:
     - name: Check running containers
       run: docker ps -a
     - name: Check logs Backend
-      run: docker logs backend
+      run: docker logs cockpit_backend_1
     - name: Check logs Generator
-      run: docker logs generator
+      run: docker logs cockpit_generator_1
     - name: Check logs Manager
-      run: docker logs manager
+      run: docker logs cockpit_manager_1
     - name: Check logs Frontend
-      run: docker logs frontend
+      run: docker logs cockpit_frontend_1
