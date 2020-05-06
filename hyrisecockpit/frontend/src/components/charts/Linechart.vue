@@ -18,7 +18,6 @@ import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
 import { ChartProps, ChartPropsValidation } from "../../types/charts";
 import { useFormatting } from "@/meta/formatting";
 import colors from "vuetify/lib/util/colors";
-import { eventBus } from "@/plugins/eventBus";
 
 interface Props extends ChartProps {
   maxValue: number;
@@ -44,7 +43,6 @@ export default defineComponent({
   },
   setup(props: Props, context: SetupContext): void {
     const { databasesUpdated } = context.root.$databaseController;
-    const { pluginEventData } = context.root.$pluginService;
     const { selectedRange } = context.root.$selectionController;
     const { updateLayout } = useResizingOnChange(props);
     const multipleDatabasesAllowed = inject<boolean>(

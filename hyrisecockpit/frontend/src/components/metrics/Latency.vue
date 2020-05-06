@@ -6,7 +6,6 @@
       :databases="selectedDatabases"
     />
     <Linechart
-      :pluginEventData="pluginEventData"
       :selected-databases="selectedDatabases"
       :data="data"
       :graph-id="graphId || 'latency'"
@@ -14,6 +13,7 @@
       :max-value="maxValue"
       :timestamps="timestamps"
       :max-chart-width="maxChartWidth"
+      :pluginEventData="pluginEventData"
     />
   </div>
 </template>
@@ -42,11 +42,8 @@ export default defineComponent({
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
-    const { pluginEventData } = context.root.$pluginService;
-
     return {
       ...useLineChartComponent(props, context),
-      pluginEventData,
     };
   },
 });
