@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
 
-  build and test backend:
+  backend_build_and_test:
 
     runs-on: ubuntu-latest
 
@@ -43,7 +43,7 @@ jobs:
     - name: Check logs Manager
       run: docker logs cockpit_manager_1
 
-  build frontend:
+  frontend_build:
 
     runs-on: ubuntu-latest
 
