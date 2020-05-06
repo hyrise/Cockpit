@@ -217,3 +217,23 @@ class StorageCursor:
             )
             for row in plugin_log
         )
+
+
+class StorageConnectionFactory:
+    """Factory for creating storage cursors."""
+
+    def __init__(
+        self, user: str, password: str, host: str, port: str, dbname: str,
+    ):
+        """Initialize the connection attributes."""
+        self._host: str = host
+        self._port: str = port
+        self._user: str = user
+        self._password: str = password
+        self._dbname: str = dbname
+
+    def create_cursor(self) -> StorageCursor:
+        """Create new StorageCursor."""
+        return StorageCursor(
+            self._host, self._port, self._user, self._password, self._dbname
+        )

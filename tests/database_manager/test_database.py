@@ -776,18 +776,17 @@ class TestDatabase(object):
         mocked_worker_pool.terminate.assert_called_once()
         mocked_background_scheduler.close.assert_called_once()
 
-    @patch("hyrisecockpit.database_manager.database.StorageCursor")
-    def test_initializes_influx(
-        self, mock_storage_cursor_constructor: MagicMock, database: Database
-    ) -> None:
+    def test_initializes_influx(self, database: Database) -> None:
         """Test intialization of the corresponding influx database."""
         mock_storage_cursor = MagicMock()
+        mock_storage_cursor_constructor = MagicMock()
         mock_storage_cursor.create_database.return_value = None
         mock_storage_cursor.drop_database.return_value = None
         mock_storage_cursor.create_continuous_query.return_value = None
-        mock_storage_cursor_constructor.return_value.__enter__.return_value = (
+        mock_storage_cursor_constructor.create_cursor.return_value.__enter__.return_value = (
             mock_storage_cursor
         )
+        database._storage_connection_factory = mock_storage_cursor_constructor
 
         throughput_query = """SELECT count("latency") AS "throughput"
                 INTO "throughput"
@@ -801,7 +800,7 @@ class TestDatabase(object):
 
         database._initialize_influx()
 
-        mock_storage_cursor_constructor.assert_called_once()
+        mock_storage_cursor_constructor.create_cursor.assert_called_once()
         mock_storage_cursor.drop_database.assert_called_once()
         mock_storage_cursor.create_database.assert_called_once()
         mock_storage_cursor.create_continuous_query.assert_any_call(

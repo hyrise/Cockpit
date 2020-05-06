@@ -8,6 +8,7 @@ from pytest import fixture, mark
 from hyrisecockpit.database_manager.cursor import (
     ConnectionFactory,
     PoolCursor,
+    StorageConnectionFactory,
     StorageCursor,
 )
 
@@ -314,4 +315,45 @@ class TestCursor:
         assert cursor == mock_cursor
         mock_pool_cursor_constructor.assert_called_once_with(
             "host", "port", "user", "password", "dbname"
+        )
+
+    def test_storage_connection_factory_initializes(self) -> None:
+        """Test initialization of StorageConnectionFactory."""
+        fake_user: str = "user"
+        fake_password: str = "password"
+        fake_host: str = "host"
+        fake_port: str = "port"
+        fake_dbname: str = "dbname"
+
+        factory = StorageConnectionFactory(
+            fake_user, fake_password, fake_host, fake_port, fake_dbname
+        )
+
+        assert factory._user == "user"
+        assert factory._password == "password"
+        assert factory._host == "host"
+        assert factory._port == "port"
+        assert factory._dbname == "dbname"
+
+    @patch("hyrisecockpit.database_manager.cursor.StorageCursor",)
+    def test_create_storage_cursor(
+        self, mock_storage_cursor_constructor: MagicMock
+    ) -> None:
+        """Test creation of StorageCursor."""
+        fake_user: str = "user"
+        fake_password: str = "password"
+        fake_host: str = "host"
+        fake_port: str = "port"
+        fake_dbname: str = "dbname"
+
+        mock_cursor = MagicMock()
+        mock_storage_cursor_constructor.return_value = mock_cursor
+        factory = StorageConnectionFactory(
+            fake_user, fake_password, fake_host, fake_port, fake_dbname
+        )
+        cursor = factory.create_cursor()
+
+        assert cursor == mock_cursor
+        mock_storage_cursor_constructor.assert_called_once_with(
+            fake_host, fake_port, fake_user, fake_password, fake_dbname
         )
