@@ -376,7 +376,6 @@ export function usePluginTransformationSevice(): any {
   }
 
   function getPluginEventData(data: any): any {
-    console.log(Vue.prototype.$selectionController.selectedRange.value);
     const relevantTime = subSeconds(
       new Date(),
       Vue.prototype.$selectionController.selectedRange.value +
