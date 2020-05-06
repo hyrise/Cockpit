@@ -68,13 +68,13 @@ export default defineComponent({
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const { updatePluginSettings } = context.root.$pluginService;
-    let value = props.setting.value;
-    const pluginName = props.setting.name.substring(
-      props.setting.name.indexOf("_") + 1
-    );
-
-    return { updatePluginSettings, value, pluginName };
+    return {
+      updatePluginSettings: context.root.$pluginController.changePluginSetting,
+      value: props.setting.value,
+      pluginName: props.setting.name.substring(
+        props.setting.name.indexOf("_") + 1
+      ),
+    };
   },
 });
 </script>
