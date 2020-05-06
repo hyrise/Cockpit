@@ -1,7 +1,7 @@
 """Module for managing databases."""
 
 from types import TracebackType
-from typing import Callable, Dict, Optional, Tuple, Type
+from typing import Callable, Dict, List, Optional, Tuple, Type, TypedDict
 
 from hyrisecockpit.message import (
     add_database_request_schema,
@@ -16,6 +16,10 @@ from hyrisecockpit.server import Server
 
 from .cursor import PoolCursor
 from .database import Database
+
+DatabaseActivatedPlugins = TypedDict(
+    "DatabaseActivatedPlugins", {"id": str, "plugins": Dict[str, List]}
+)
 
 
 class DatabaseManager(object):
@@ -88,7 +92,6 @@ class DatabaseManager(object):
                 self._call_plugin_setting,
                 set_plugin_request_schema,
             ),
-            "get plugin setting": (self._call_get_plugin_setting, None),
             "execute sql query": (self._call_execute_sql_query, None),
         }
 
@@ -201,10 +204,21 @@ class DatabaseManager(object):
         return response
 
     def _call_get_plugins(self, body: Body) -> Response:
-        activated_plugins = [
-            {"id": id, "plugins": database.get_plugins()}
-            for id, database in self._databases.items()
-        ]
+        activated_plugins = []
+        for id, database in self._databases.items():
+            plugins = database.get_plugins()
+            database_activated_plugins = DatabaseActivatedPlugins(
+                id=id,
+                plugins={name: [] for name in plugins} if plugins is not None else {},
+            )
+            settings = database.get_plugin_setting()
+            if plugins is not None and settings is not None:
+                for plugin_name in plugins:
+                    if plugin_name in settings.keys():
+                        database_activated_plugins["plugins"][plugin_name] = settings[
+                            plugin_name
+                        ]
+            activated_plugins.append(database_activated_plugins)
         response = get_response(200)
         response["body"]["plugins"] = activated_plugins
         return response
@@ -241,15 +255,6 @@ class DatabaseManager(object):
             response = get_response(200)
         else:
             response = get_response(423)
-        return response
-
-    def _call_get_plugin_setting(self, body: Body) -> Response:
-        plugin_settings = [
-            {"id": id, "plugin_settings": database.get_plugin_setting()}
-            for id, database in self._databases.items()
-        ]
-        response = get_response(200)
-        response["body"]["plugin_settings"] = plugin_settings
         return response
 
     def _check_if_database_blocked(self) -> bool:

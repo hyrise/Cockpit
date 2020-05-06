@@ -2,7 +2,7 @@
 
 from collections import Counter
 from multiprocessing.sharedctypes import Synchronized as ValueType
-from typing import Any, Dict, List, Optional
+from typing import Dict, List, Optional
 from unittest.mock import MagicMock, patch
 
 from psycopg2 import DatabaseError, Error, InterfaceError
@@ -571,7 +571,7 @@ class TestDatabase(object):
 
         assert not result
 
-    def test_gets_plugins_settings_when_database_unblocked_and_no_plugins_exists(
+    def test_gets_plugins_settings_when_database_unblocked_and_no_plugins_exist(
         self, database: Database
     ) -> None:
         """Test get not existing plug-ins settings."""
@@ -583,19 +583,20 @@ class TestDatabase(object):
         database._connection_factory = mock_connection_factory
         database._database_blocked.value = False
 
-        result: Optional[List] = database.get_plugin_setting()
+        result = database.get_plugin_setting()
 
         mock_cursor.execute.assert_called_once_with(
-            "SELECT name, value, description FROM meta_settings;", None
+            'SELECT name, value, description FROM meta_settings WHERE name LIKE "Plugin::";',
+            None,
         )
 
-        assert type(result) is list
-        assert result == []
+        assert isinstance(result, dict)
+        assert result == {}
 
     def test_gets_plugins_settings_when_database_blocked(
         self, database: Database
     ) -> None:
-        """Test get plug-ins settings when database is blocked."""
+        """Test get plugins settings when database is blocked."""
         mock_cursor = MagicMock()
         mock_connection_factory = MagicMock()
         mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
@@ -604,24 +605,20 @@ class TestDatabase(object):
         database._connection_factory = mock_connection_factory
         database._database_blocked.value = True
 
-        result: Optional[List] = database.get_plugin_setting()
+        result = database.get_plugin_setting()
 
         mock_cursor.execute.assert_not_called()
 
         assert not result
 
-    def test_gets_plugins_settings_when_database_unblocked_and_plugins_exists(
+    def test_gets_plugins_settings_when_database_unblocked_and_plugins_exist(
         self, database: Database
     ) -> None:
         """Test get existing plug-ins settings."""
         mock_cursor = MagicMock()
         mock_cursor.fetchall.return_value = [
-            ("Hildegunst von Mythenmetz", "Lindwurm", "sprachliche Begabung"),
-            (
-                "Rumo von Zamonien",
-                "Wolpertinger",
-                "gute Schachspieler und gute Kämpfer",
-            ),
+            ("Plugin::Compression::MemoryBudget", "55555", "..."),
+            ("Plugin::Something::SomeSetting", "true", "this should show up"),
         ]
         mock_connection_factory = MagicMock()
         mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
@@ -630,22 +627,23 @@ class TestDatabase(object):
         database._connection_factory = mock_connection_factory
         database._database_blocked.value = False
 
-        expected_plugin_one: Dict[str, str] = {
-            "name": "Hildegunst von Mythenmetz",
-            "value": "Lindwurm",
-            "description": "sprachliche Begabung",
-        }
-        expected_plugin_two: Dict[str, str] = {
-            "name": "Rumo von Zamonien",
-            "value": "Wolpertinger",
-            "description": "gute Schachspieler und gute Kämpfer",
+        expected = {
+            "Compression": [
+                {"name": "MemoryBudget", "value": "55555", "description": "..."}
+            ],
+            "Something": [
+                {
+                    "name": "SomeSetting",
+                    "value": "true",
+                    "description": "this should show up",
+                }
+            ],
         }
 
-        expected = [expected_plugin_one, expected_plugin_two]
-        result: Optional[List] = database.get_plugin_setting()
+        result = database.get_plugin_setting()
 
-        assert type(result) is list
-        assert result[:] == expected[:]  # type: ignore
+        assert isinstance(result, dict)
+        assert result == expected
 
     @mark.parametrize(
         "exceptions", [DatabaseError(), InterfaceError()],
@@ -668,7 +666,7 @@ class TestDatabase(object):
         database._connection_factory = mock_connection_factory
         database._database_blocked.value = False
 
-        result: Optional[List[Any]] = database.get_plugin_setting()
+        result = database.get_plugin_setting()
 
         assert result is None
 
