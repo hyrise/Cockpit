@@ -30,3 +30,29 @@ class ThroughputSchema(Schema):
         example="hyrise-1",
     )
     throughput = List(Nested(ThroughputEntry))
+
+
+class LatencyEntry(Schema):
+    """Schema of a Latency entry."""
+
+    timestamp = Integer(
+        title="Latency",
+        description="Timestamp in nanoseconds since epoch",
+        required=True,
+        example=1585762457000000000,
+    )
+    latency = Float(
+        title="Latency", description="Latency value", required=True, example=273.9,
+    )
+
+
+class LatencySchema(Schema):
+    """Schema of a Latency metric."""
+
+    id = String(
+        title="Database ID",
+        description="Used to identify a database.",
+        required=True,
+        example="hyrise-1",
+    )
+    latency = List(Nested(LatencyEntry))

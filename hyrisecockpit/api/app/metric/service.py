@@ -37,3 +37,8 @@ class MetricService:
     def get_throughput(time_interval: TimeIntervalInterface):
         """Get throughput data."""
         return MetricService.get_data(time_interval, "throughput", ["throughput"])
+
+    @staticmethod
+    def get_latency(time_interval: TimeIntervalInterface):
+        """Get latency data."""
+        return MetricService.get_data(time_interval, "latency", ["latency"])
