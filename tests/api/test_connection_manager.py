@@ -7,6 +7,7 @@ from hyrisecockpit.api.app.connection_manager import (
     BaseSocket,
     GeneratorSocket,
     ManagerSocket,
+    StorageConnection,
 )
 
 
@@ -131,3 +132,26 @@ class TestSocketManager:
         manager_socket.send_message("hi")  # type: ignore
 
         mocked_base_socket.send_req.assert_called_once_with("hi")
+
+    @patch("hyrisecockpit.api.app.connection_manager.InfluxDBClient")
+    @patch("hyrisecockpit.api.app.connection_manager.STORAGE_HOST", "fake_host")
+    @patch("hyrisecockpit.api.app.connection_manager.STORAGE_PORT", "fake_port")
+    @patch("hyrisecockpit.api.app.connection_manager.STORAGE_USER", "fake_user")
+    @patch("hyrisecockpit.api.app.connection_manager.STORAGE_PASSWORD", "fake_password")
+    def test_storage_connection(
+        self, mock_influx_db_client_constructor: MagicMock
+    ) -> None:
+        """Test use of storage connection object."""
+        mock_client: MagicMock = MagicMock()
+        mock_influx_db_client_constructor.return_value = mock_client
+
+        with StorageConnection() as client:  # noqa
+            pass
+
+        mock_influx_db_client_constructor.assert_called_once_with(
+            host="fake_host",
+            port="fake_port",
+            username="fake_user",
+            password="fake_password",
+        )
+        mock_client.close.assert_called_once()
