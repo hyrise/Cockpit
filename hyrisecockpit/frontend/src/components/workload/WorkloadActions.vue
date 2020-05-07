@@ -6,7 +6,7 @@
         @click="$emit('start')"
         :disabled="actions.start.loading || disabled"
         :loading="actions.start.loading"
-        :style="{ color: actions.start.active ? 'green' : '' }"
+        :color="actions.start.active ? colorValueDefinition.green : ''"
       >
         <v-icon>
           mdi-play
@@ -17,7 +17,7 @@
         @click="$emit('pause')"
         :disabled="actions.pause.loading || disabled"
         :loading="actions.pause.loading"
-        :style="{ color: actions.pause.active ? 'blue' : '' }"
+        :color="actions.pause.active ? colorValueDefinition.blue : ''"
       >
         <v-icon>
           mdi-pause
@@ -28,7 +28,7 @@
         @click="$emit('stop')"
         :disabled="actions.stop.loading || disabled"
         :loading="actions.stop.loading"
-        :style="{ color: actions.stop.active ? 'red' : '' }"
+        :color="actions.stop.active ? colorValueDefinition.red : ''"
       >
         <v-icon>
           mdi-stop
@@ -39,10 +39,15 @@
 </template>
 <script lang="ts">
 import { defineComponent, SetupContext } from "@vue/composition-api";
+import { colorValueDefinition } from "../../meta/colors";
 
 interface Props {
   actions: Record<string, { active: boolean; loading: boolean }>;
   disabled: boolean;
+}
+
+interface Data {
+  colorValueDefinition: Record<string, string>;
 }
 
 export default defineComponent({
@@ -56,6 +61,11 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+  },
+  setup(props: Props, context: SetupContext): Data {
+    return {
+      colorValueDefinition,
+    };
   },
 });
 </script>
