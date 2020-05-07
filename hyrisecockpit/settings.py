@@ -32,7 +32,7 @@ WORKLOAD_SUB_HOST: str = getenv("WORKLOAD_SUB_HOST", "generator")
 WORKLOAD_PUBSUB_PORT: str = getenv("WORKLOAD_PUBSUB_PORT", "8003")
 WORKLOAD_LISTENING: str = getenv("WORKLOAD_LISTENING", "*")
 
-DEFAULT_TABLES: str = getenv("DEFAULT_TABLES", "tpch_0.1")
+DEFAULT_TABLES: str = getenv("DEFAULT_TABLES", "tpch_0_1")
 
 STORAGE_HOST: str = getenv("STORAGE_HOST", "influxdb")
 STORAGE_PORT: str = getenv("STORAGE_PORT", "8086")
