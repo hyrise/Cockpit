@@ -1,20 +1,25 @@
 <template>
-  <v-row>
-    <v-slider
-      v-model="weights[key]"
-      v-for="(weight, key) in weights"
-      :key="key"
-      :label="key"
-      :value="weight"
-      thumb-label
-      thumb-size="20"
-      min="0"
-      max="200"
-      vertical
-      @click="$emit('change', weights)"
-    >
-    </v-slider>
-  </v-row>
+  <span>
+    <p class="subtitle-1 font-weight-medium">
+      {{ getDisplayedWorkload(workload) }}
+      <v-row>
+        <v-slider
+          v-model="weights[key]"
+          v-for="(weight, key) in weights"
+          :key="key"
+          :label="key"
+          :value="weight"
+          thumb-label
+          thumb-size="20"
+          min="0"
+          max="200"
+          vertical
+          @click="$emit('change', weights)"
+        >
+        </v-slider>
+      </v-row>
+    </p>
+  </span>
 </template>
 <script lang="ts">
 import {
@@ -24,12 +29,16 @@ import {
   ref,
   watch,
 } from "@vue/composition-api";
+import { Workload } from "../../types/workloads";
+import { getDisplayedWorkload } from "../../meta/workloads";
 
 interface Props {
   initialWeights: Object;
+  workload: Workload;
 }
 interface Data {
   weights: Ref<Object>;
+  getDisplayedWorkload: (workload: Workload) => void;
 }
 
 export default defineComponent({
@@ -38,6 +47,10 @@ export default defineComponent({
     initialWeights: {
       type: Object,
       default: {},
+    },
+    workload: {
+      type: String,
+      default: "",
     },
   },
   setup(props: Props, context: SetupContext): Data {
@@ -50,6 +63,7 @@ export default defineComponent({
     );
     return {
       weights,
+      getDisplayedWorkload,
     };
   },
 });

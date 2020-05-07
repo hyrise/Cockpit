@@ -87,6 +87,7 @@
             <v-card-text>
               <weights-handler
                 :initial-weights="weights"
+                :workload="workload"
                 @change="handleWeightChange"
               ></weights-handler>
             </v-card-text>
