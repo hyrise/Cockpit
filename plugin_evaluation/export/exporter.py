@@ -21,4 +21,4 @@ class Exporter:
         )
         x_values, y_values = points_function(points, column_name, parameter)  # type: ignore
 
-        plot_function(x_values, y_values, metric, metric_config["x_label"], metric_config["y_label"])  # type: ignore
+        plot_function(x_values, y_values, metric, metric_config["x_label"], metric_config["y_label"], parameter)  # type: ignore

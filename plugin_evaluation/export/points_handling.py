@@ -43,7 +43,7 @@ def calculate_footprint(points: List, column_name: str, parameter):
 def calculate_footprint_for_table(  # noqa
     points: List, metric_column_name: str, table_name
 ):
-    """Calculate footprint for specific table."""
+    """Calculate footprint for a specific table."""
 
     def sort_function(tuple):
         return tuple[1][0] if len(tuple[1]) > 0 else 0.0

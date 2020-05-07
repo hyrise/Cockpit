@@ -10,7 +10,12 @@ absolute_report_directory_path = str(Path(__file__).parent.parent.absolute())
 
 
 def plot_line_chart(
-    time_values: List, metric_values: List, metric: str, x_label: str, y_label: str
+    time_values: List,
+    metric_values: List,
+    metric: str,
+    x_label: str,
+    y_label: str,
+    parameter=None,
 ):
     """Plot line chart to file."""
     figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
@@ -26,7 +31,12 @@ def plot_line_chart(
 
 
 def plot_line_chart_with_multiple_metrics(
-    time_values: List, metric_values: Dict, metric: str, x_label: str, y_label: str
+    time_values: List,
+    metric_values: Dict,
+    metric: str,
+    x_label: str,
+    y_label: str,
+    parameter,
 ):
     """Plot line chart to file."""
     print(metric_values)
@@ -35,9 +45,9 @@ def plot_line_chart_with_multiple_metrics(
     colors = prop_cycle.by_key()["color"]
 
     maximum_value = np.amax([np.amax(values) for values in metric_values.values()])
-    plt.title(f"{metric}")
-    plt.ticklabel_format(style="plain")
 
+    plt.title(f"{metric} ({parameter})")
+    plt.ticklabel_format(style="plain")
     plt.ylim(bottom=0.0, top=maximum_value * 1.1)
 
     for (metric_name, values), index in zip(
@@ -50,11 +60,18 @@ def plot_line_chart_with_multiple_metrics(
     plt.xlabel(f"{x_label}")
     plt.legend(loc="upper right")
 
-    plt.savefig(f"{absolute_report_directory_path}/report/{metric}.png", dpi=300)
+    plt.savefig(
+        f"{absolute_report_directory_path}/report/{metric} ({parameter}).png", dpi=300
+    )
 
 
 def plot_bar_chart(
-    labels: List, metric_values: List, metric: str, x_label: str, y_label: str
+    labels: List,
+    metric_values: List,
+    metric: str,
+    x_label: str,
+    y_label: str,
+    parameter=None,
 ):
     """Plot line chart to file."""
     max_value = np.amax(metric_values)
