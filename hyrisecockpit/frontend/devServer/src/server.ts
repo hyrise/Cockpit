@@ -72,11 +72,13 @@ mockPostRoute("workload/");
 mockPostRoute("plugin", "control");
 mockPostRoute("plugin_settings", "control", true);
 mockPostRoute("sql/", "control");
+mockPostRoute("database/worker", "control", true);
 
 mockDeleteRoute("database/", "control");
 mockDeleteRoute("database/benchmark_tables", "control");
 mockDeleteRoute("workload/*");
 mockDeleteRoute("plugin", "control");
+mockDeleteRoute("database/worker", "control", true);
 
 mockPutRoute("workload/*");
 
@@ -139,14 +141,16 @@ function mockPostRoute(
 
 function mockDeleteRoute(
   route: string,
-  backendRoute?: "control" | "monitor"
+  backendRoute?: "control" | "monitor",
+  stub = false
 ): void {
   const request = getRequestOfRoute(route);
   server.delete(getBackendRoute(route, backendRoute), (req, res) => {
     logRequest(req, res);
-    mocks.getMockedDeleteCallback(request)(
-      handleRequestBody(request, req, true)
-    );
+    if (!stub)
+      mocks.getMockedDeleteCallback(request)(
+        handleRequestBody(request, req, true)
+      );
     res.send({});
   });
 }
