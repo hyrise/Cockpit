@@ -23,7 +23,7 @@ jobs:
     - name: Check logs Manager
       run: docker logs cockpit_manager_1
     - name: Check Swagger Availability
-      uses: docker exec checker curl -X GET http://backend:8000/
+      uses: docker exec cockpit_curler_1 curl http://backend:8000
     - name: Check running containers
       run: docker ps -a
     - name: Check logs Backend

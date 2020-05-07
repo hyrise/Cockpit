@@ -49,4 +49,9 @@ services:
       - ./cached_tables:/usr/local/hyrise/cached_tables
     ports:
       - "5432:5432"
+
+  curler:
+    image: curlimages/curl:7.70.0
+    command: sleep infinity    
+    
       
