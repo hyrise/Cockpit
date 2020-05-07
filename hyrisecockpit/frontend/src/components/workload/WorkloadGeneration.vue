@@ -302,8 +302,10 @@ function useWorkloadDataHandler(context: SetupContext): WorkloadDataHandler {
       if (response.data.length !== 0) {
         let loadedWorkloadData: string[] = response.data[0].loaded_benchmarks;
         Object.values(response.data).forEach((database: any) => {
-          loadedWorkloadData = loadedWorkloadData.filter((benchmark: any) =>
-            database.loaded_benchmarks.includes(benchmark)
+          loadedWorkloadData = loadedWorkloadData.filter(
+            (benchmark: any) =>
+              database.loaded_benchmarks.includes(benchmark) &&
+              !["no-ops_0_1", "no-ops_1"].includes(benchmark)
           );
           emitDatabaseStatusChangedEvent(
             database.id,
