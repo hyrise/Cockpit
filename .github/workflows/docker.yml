@@ -13,7 +13,7 @@ jobs:
     - name: Copy environment file
       run: cp .env.example .env
     - name: Build the docker-compose stack
-      run: docker-compose -f docker-compose.ci.yml up --build --quiet-pull -d backend generator manager influxdb hyrise
+      run: docker-compose -f docker-compose.ci.yml up --build --quiet-pull -d backend generator manager influxdb hyrise checker
     - name: Check running containers
       run: docker ps -a
     - name: Check logs Backend
@@ -23,21 +23,7 @@ jobs:
     - name: Check logs Manager
       run: docker logs cockpit_manager_1
     - name: Check Swagger Availability
-      uses: wei/curl@v1
-      with:
-        args: -X GET http://backend:8000/
-    - name: Register database
-      uses: wei/curl@v1
-      with:
-        args: '-X POST http://backend:8000/control/database/ -H accept: application/json -H Content-Type: application/json -d {  "password": "password",  "dbname": "postgres",  "port": "5432",  "host": "hyrise",  "user": "user",  "number_workers": 8,  "id": "hyrise" }'
-    - name: Check database
-      uses: wei/curl@v1
-      with:
-        args: '-X GET http://backend:8000/control/database/ -H accept: application/json'
-    - name: De-register database
-      uses: wei/curl@v1
-      with:
-        args: '-X DELETE http://backend:8000/control/database/ -H accept: application/json -H Content-Type: application/json -d {  "id": "hyrise" }'
+      uses: docker exec checker curl -X GET http://backend:8000/
     - name: Check running containers
       run: docker ps -a
     - name: Check logs Backend
