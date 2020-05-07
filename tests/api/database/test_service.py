@@ -15,7 +15,7 @@ from hyrisecockpit.api.app.database.model import (
 )
 from hyrisecockpit.api.app.database.schema import DetailedDatabaseSchema
 from hyrisecockpit.api.app.database.service import DatabaseService
-from hyrisecockpit.api.app.shared import _add_active_database, _get_active_databases
+from hyrisecockpit.api.app.shared import _add_active_database
 from hyrisecockpit.request import Header, Request
 
 mocked_socket = MagicMock()
@@ -93,7 +93,12 @@ class TestDatabaseService:
         assert isinstance(response[0], DetailedDatabase)
         assert schema.dumps(response[0]) == schema.dumps(expected[0])
 
-    def test_registers_database(self, mocked_database_service: DatabaseService) -> None:
+    @patch("hyrisecockpit.api.app.database.service._add_active_database")
+    def test_registers_database(
+        self,
+        mock_add_active_databases: MagicMock,
+        mocked_database_service: DatabaseService,
+    ) -> None:
         """A database service registers a database."""
         interface = DetailedDatabaseInterface(
             id="hycrash",
@@ -104,7 +109,7 @@ class TestDatabaseService:
             user="Alex",
             password="1234",
         )
-        fake_response = {"header": {"status": 42}}
+        fake_response = {"header": {"status": 200}}
         mocked_database_service._send_message.return_value = fake_response  # type: ignore
 
         response: int = mocked_database_service.register_database(interface)
@@ -112,8 +117,35 @@ class TestDatabaseService:
         mocked_database_service._send_message.assert_called_once_with(  # type: ignore
             Request(header=Header(message="add database"), body=dict(interface))
         )
-        assert "hycrash" in _get_active_databases()
-        assert response == 42
+        mock_add_active_databases.assert_called_once_with("hycrash")
+        assert response == 200
+
+    @patch("hyrisecockpit.api.app.database.service._add_active_database")
+    def test_registers_database_unsuccessful(
+        self,
+        mock_add_active_databases: MagicMock,
+        mocked_database_service: DatabaseService,
+    ) -> None:
+        """A database service tries to register a database without success."""
+        interface = DetailedDatabaseInterface(
+            id="hycrash",
+            host="linux",
+            port="666",
+            number_workers=42,
+            dbname="post",
+            user="Alex",
+            password="1234",
+        )
+        fake_response = {"header": {"status": 400}}
+        mocked_database_service._send_message.return_value = fake_response  # type: ignore
+
+        response: int = mocked_database_service.register_database(interface)
+
+        mocked_database_service._send_message.assert_called_once_with(  # type: ignore
+            Request(header=Header(message="add database"), body=dict(interface))
+        )
+        mock_add_active_databases.assert_not_called()
+        assert response == 400
 
     def test_deregisters_database(
         self, mocked_database_service: DatabaseService
