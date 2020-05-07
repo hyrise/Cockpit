@@ -25,3 +25,18 @@ export interface DatabaseController {
   getDatabasesByIds: (ids: string[]) => Database[];
   getDatabaseById: (id: string) => Database;
 }
+
+export interface PluginController {
+  availablePlugins: Ref<string[]>;
+  activePlugins: Ref<string[]>;
+  pluginLogs: Ref<any>;
+  pluginSettings: Ref<any>;
+  pluginEventData: Ref<any>;
+  changePluginSetting: (
+    databaseId: string,
+    settingId: string,
+    settingValue: string
+  ) => Promise<void>;
+  changePlugin: (databaseId: string, plugin: string) => Promise<void>;
+  isActivated: (databaseId: string, plugin: string) => boolean;
+}

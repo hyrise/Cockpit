@@ -16,22 +16,28 @@ export type TransformationService = (
 ) => any;
 
 export interface PluginService {
-  plugins: Ref<string[]>;
-  activePlugins: Ref<string[]>;
-  updatePlugins: (databaseId: string, plugin: string) => Promise<void>;
-  pluginLogs: Ref<any>;
-  pluginSettings: Ref<any>;
-  updatePluginSettings: (
+  fetchActivePlugins: () => Promise<string[]>;
+  fetchAvailablePlugins: () => Promise<string[]>;
+  fetchPluginLogs: () => Promise<Object>;
+  fetchPluginSettings: () => Promise<Object>;
+  setPluginSetting: (
     databaseId: string,
     settingId: string,
     settingValue: string
-  ) => void;
+  ) => Promise<void>;
+  togglePlugin: (
+    databaseId: string,
+    plugin: string,
+    isActivated: boolean
+  ) => Promise<void>;
 }
 
 export interface WorkloadService {
   getLoadedWorkloadData: () => Promise<string[]>;
   loadWorkloadData: (workload: Workload) => Promise<void>;
   deleteWorkloadData: (workload: Workload) => Promise<void>;
+  startWorker: () => Promise<void>;
+  stopWorker: () => Promise<void>;
   getWorkload: (workload: Workload) => Promise<void>;
   getWorkloads: () => Promise<void>;
   startWorkload: (workload: Workload, frequency: number) => Promise<void>;
