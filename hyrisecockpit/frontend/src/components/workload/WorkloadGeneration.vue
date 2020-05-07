@@ -23,16 +23,13 @@
               @change="handleFrequencyChange"
             />
             <workload-selector
-              :initial-workload="workload"
               :workload-data="workloadData"
               :disabled="disabled"
               @change="handleWorkloadChange"
             />
             <workload-actions
               :actions="actions"
-              :disabled="
-                disabled || workload === '' || !workloadData[workload].loaded
-              "
+              :disabled="disabled"
               @start="startingWorkload()"
               @pause="pausingWorkload()"
               @stop="stoppingWorkload()"
@@ -78,13 +75,8 @@ interface Props {
   open: boolean;
 }
 
-interface Data extends WorkloadHandler, WorkloadAction, WorkloadDataHandler {
+interface Data extends WorkloadAction, WorkloadDataHandler {
   databases: Ref<readonly string[]>;
-}
-
-interface WorkloadHandler {
-  workload: Ref<Workload>;
-  handleWorkloadChange: (workload: Workload) => void;
 }
 
 interface WorkloadAction {
@@ -94,10 +86,14 @@ interface WorkloadAction {
   pausingWorkload: () => void;
   stoppingWorkload: () => void;
   handleFrequencyChange: (frequency: number) => void;
+  handleWorkloadChange: (workload: Workload) => void;
 }
 
 interface WorkloadDataHandler {
-  workloadData: Record<string, { loaded: boolean; loading: boolean }>;
+  workloadData: Record<
+    string,
+    { loaded: boolean; loading: boolean; selected: boolean }
+  >;
   runningWorkload: Ref<boolean>;
   disabled: Ref<boolean>;
   handleWorkloadDataChange: (workload: Workload) => void;
@@ -119,32 +115,24 @@ export default defineComponent({
     },
   },
   setup(props: {}, context: SetupContext): Data {
-    const workloadHandler = useWorkloadHandler();
-
+    const workloadDataHandler = useWorkloadDataHandler(context);
+    //TODO: disable workload actions :disabled="disabled || workload === '' || !workloadData[workload].loaded"
     return {
       databases: computed(
         () => context.root.$databaseController.availableDatabasesById.value
       ),
-      ...workloadHandler,
-      ...useWorkloadAction(workloadHandler.workload),
-      ...useWorkloadDataHandler(context),
+      ...useWorkloadAction(workloadDataHandler.workloadData),
+      ...workloadDataHandler,
     };
   },
 });
 
-function useWorkloadHandler(): WorkloadHandler {
-  const workload = ref<Workload>("");
-
-  function handleWorkloadChange(changedWorkload: Workload): void {
-    workload.value = changedWorkload;
-  }
-  return {
-    workload,
-    handleWorkloadChange,
-  };
-}
-
-function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
+function useWorkloadAction(
+  workloadData: Record<
+    string,
+    { loaded: boolean; loading: boolean; selected: boolean }
+  >
+): WorkloadAction {
   const frequency = ref<number>(200);
   const {
     startWorker,
@@ -175,7 +163,8 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
 
   getWorkloads().then((response: any) => {
     if (response.data.length > 0) {
-      workload.value = getWorkloadFromTransferred(response.data[0].folder_name);
+      //TODO: set workload if running
+      //workload.value = getWorkloadFromTransferred(response.data[0].folder_name);
       frequency.value = response.data[0].frequency;
       frequency.value > 0
         ? (actions.start.active = true)
@@ -198,13 +187,21 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     getWorkloads().then((response: any) => {
       if (response.data.length === 0) {
         startWorker().then(() => {
-          startWorkload(workload.value, frequency.value).then(() => {
-            stopLoading("start");
+          Object.keys(workloadData).forEach((workload: any) => {
+            if (workloadData[workload].selected) {
+              startWorkload(workload, frequency.value).then(() => {
+                stopLoading("start");
+              });
+            }
           });
         });
       } else {
-        updateWorkload(workload.value, frequency.value).then(() => {
-          stopLoading("start");
+        Object.keys(workloadData).forEach((workload: any) => {
+          if (workloadData[workload].selected) {
+            updateWorkload(workload.value, frequency.value).then(() => {
+              stopLoading("start");
+            });
+          }
         });
       }
     });
@@ -214,13 +211,21 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     getWorkloads().then((response: any) => {
       if (response.data.length === 0) {
         startWorker().then(() => {
-          startWorkload(workload.value, 0).then(() => {
-            stopLoading("pause");
+          Object.keys(workloadData).forEach((workload: any) => {
+            if (workloadData[workload].selected) {
+              startWorkload(workload, 0).then(() => {
+                stopLoading("pause");
+              });
+            }
           });
         });
       } else {
-        updateWorkload(workload.value, 0).then(() => {
-          stopLoading("pause");
+        Object.keys(workloadData).forEach((workload: any) => {
+          if (workloadData[workload].selected) {
+            updateWorkload(workload, 0).then(() => {
+              stopLoading("pause");
+            });
+          }
         });
       }
     });
@@ -229,9 +234,13 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     startLoading("stop");
     getWorkloads().then((response: any) => {
       if (response.data.length !== 0) {
-        stopWorkload(workload.value).then(() => {
-          stopWorker();
-          stopLoading("stop");
+        Object.keys(workloadData).forEach((workload: any) => {
+          if (workloadData[workload].selected) {
+            stopWorkload(workload).then(() => {
+              stopWorker();
+              stopLoading("stop");
+            });
+          }
         });
       }
     });
@@ -239,8 +248,18 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
   function handleFrequencyChange(changedFrequency: number): void {
     frequency.value = changedFrequency;
     if (actions.start.active) {
-      updateWorkload(workload.value, frequency.value);
+      Object.keys(workloadData).forEach((workload: any) => {
+        if (workloadData[workload].selected) {
+          updateWorkload(workload, frequency.value).then(() => {
+            stopLoading("start");
+          });
+        }
+      });
     }
+  }
+  function handleWorkloadChange(workload: Workload): void {
+    //TODO: seperate start and update workload
+    workloadData[workload].selected = !workloadData[workload].selected;
   }
   return {
     frequency,
@@ -249,29 +268,34 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     pausingWorkload,
     stoppingWorkload,
     handleFrequencyChange,
+    handleWorkloadChange,
   };
 }
 
 function useWorkloadDataHandler(context: SetupContext): WorkloadDataHandler {
   const workloadData: Record<
     string,
-    { loaded: boolean; loading: boolean }
+    { loaded: boolean; loading: boolean; selected: boolean }
   > = reactive({
     tpch01: {
       loaded: false,
       loading: false,
+      selected: false,
     },
     tpch1: {
       loaded: false,
       loading: false,
+      selected: false,
     },
     tpcds: {
       loaded: false,
       loading: false,
+      selected: false,
     },
     job: {
       loaded: false,
       loading: false,
+      selected: false,
     },
   });
   const {
