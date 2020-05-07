@@ -5,12 +5,16 @@ If run as a module, a flask server application will be started.
 """
 
 from json import loads
-from time import time_ns
-from typing import Any, Dict, List, Tuple, Union
+from typing import Dict, List, Union
 
 from flask import request
 from flask_restx import Namespace, Resource, fields
 
+from hyrisecockpit.api.app.connection_manager import StorageConnection
+from hyrisecockpit.api.app.historical_data_handling import (
+    get_historical_metric,
+    get_interval_limits,
+)
 from hyrisecockpit.api.app.shared import (
     _get_active_databases,
     _send_message,
@@ -36,133 +40,6 @@ model_database = api.model(
     },
 )
 
-model_throughput = api.clone(
-    "Throughput",
-    model_database,
-    {
-        "throughput": fields.List(
-            fields.Nested(
-                api.model(
-                    "Throughput values",
-                    {
-                        "timestamp": fields.Integer(
-                            title="Timestamp",
-                            description="Timestamp in nanoseconds since epoch",
-                            required=True,
-                            example=1585762457000000000,
-                        ),
-                        "throughput": fields.Integer(
-                            title="Throughput",
-                            description="Throughput value",
-                            required=True,
-                            example=273,
-                        ),
-                    },
-                )
-            ),
-            required=True,
-        ),
-    },
-)
-
-model_query_information = api.clone(
-    "Detailed Throughput and Latency",
-    model_database,
-    {
-        "detailed_query_information": fields.List(
-            fields.Nested(
-                api.model(
-                    "Throughput and latency per query",
-                    {
-                        "workload_type": fields.String(
-                            title="workload_type",
-                            description="Type of the executed query.",
-                            required=True,
-                            example="tpch_0.1",
-                        ),
-                        "query_number": fields.Integer(
-                            title="query_number",
-                            description="Number of the executed query",
-                            required=True,
-                            example=5,
-                        ),
-                        "throughput": fields.Integer(
-                            title="throughput",
-                            description="Number of successfully executed queries in given time interval.",
-                            required=True,
-                            example=55,
-                        ),
-                        "latency": fields.Float(
-                            title="Latency",
-                            description="Average query latency (ns) of a given time interval.",
-                            required=True,
-                            example=923.263,
-                        ),
-                    },
-                )
-            ),
-            required=True,
-        )
-    },
-)
-
-model_latency = api.clone(
-    "Latency",
-    model_database,
-    {
-        "latency": fields.List(
-            fields.Nested(
-                api.model(
-                    "Latency values",
-                    {
-                        "timestamp": fields.Integer(
-                            title="Timestamp",
-                            description="Timestamp in nanoseconds since epoch",
-                            required=True,
-                            example=1585762457000000000,
-                        ),
-                        "latency": fields.Float(
-                            title="Latency",
-                            description="Average latency value in nanoseconds",
-                            required=True,
-                            example=66064020.96710526,
-                        ),
-                    },
-                )
-            ),
-            required=True,
-        ),
-    },
-)
-
-model_queue_length = api.clone(
-    "Queue length",
-    model_database,
-    {
-        "queue_length": fields.List(
-            fields.Nested(
-                api.model(
-                    "Queue_length values",
-                    {
-                        "timestamp": fields.Integer(
-                            title="Timestamp",
-                            description="Timestamp in nanoseconds since epoch",
-                            required=True,
-                            example=1585762457000000000,
-                        ),
-                        "queue_length": fields.Integer(
-                            title="Queue length",
-                            description="Queue_length",
-                            required=True,
-                            example=450,
-                        ),
-                    },
-                )
-            ),
-            required=True,
-        ),
-    },
-)
 
 model_system_data = api.clone(
     "System data",
@@ -367,210 +244,6 @@ model_database_status = api.clone(
 )
 
 
-def get_historical_data(
-    startts: int,
-    endts: int,
-    precision_ns: int,
-    table: str,
-    metrics: List[str],
-    database: str,
-) -> List[Dict[str, Union[int, float]]]:
-    """Retrieve historical data for provided metrics and precision."""
-    select_clause = ",".join(f" mean({metric}) as {metric}" for metric in metrics)
-    subquery = f"""SELECT {select_clause}
-        FROM {table}
-        WHERE time >=  $startts AND
-        time < $endts
-        GROUP BY TIME(1s)
-        FILL(0.0)"""  # fill empty 1s-slots with 0
-
-    query = f"""SELECT {select_clause}
-        FROM ({subquery})
-        WHERE time >= $startts AND time < $endts
-        GROUP BY TIME({precision_ns}ns)
-        FILL(0.0);"""  # do aggregation over time intervals of the precision_ns length
-
-    points = storage_connection.query(
-        query,
-        database=database,
-        bind_params={"startts": startts, "endts": endts},
-        epoch=True,
-    )
-    return list(points[table, None])
-
-
-def fill_missing_points(
-    startts: int,
-    endts: int,
-    precision: int,
-    table_name: str,
-    metrics: List[str],
-    points: List[Dict],
-) -> List[Dict]:
-    """Fill missing points with zero."""
-    result: List[Dict[str, Union[int, float]]] = []
-    index: int = 0
-
-    for timestamp in range(startts, endts, precision):
-        point: Dict = {"timestamp": timestamp}
-        if index < len(points) and points[index]["time"] == timestamp:
-            for metric in metrics:
-                point[metric] = points[index][metric]
-            index = index + 1
-        else:
-            for metric in metrics:
-                point[metric] = 0.0
-        result.append(point)
-
-    return result
-
-
-def get_interval_limits(
-    precise_startts: int, precise_endts: int, precision_ns: int
-) -> Tuple[int, int]:
-    """Get interval limits for historical data."""
-    startts_rounded: int = int(precise_startts / precision_ns) * precision_ns
-    endts_rounded: int = int(precise_endts / precision_ns) * precision_ns
-
-    return startts_rounded, endts_rounded
-
-
-def get_historical_metric(
-    startts: int, endts: int, precision_ns: int, table_name: str, metrics: List
-) -> List[Dict[str, Union[str, List]]]:
-    """Get historical metric data for all databases."""
-    result: List = []
-    for database in _get_active_databases():
-        metric_points: List[Dict[str, Union[int, float]]] = get_historical_data(
-            startts, endts, precision_ns, table_name, metrics, database
-        )
-        metric: List[Dict[str, float]] = fill_missing_points(
-            startts, endts, precision_ns, table_name, metrics, metric_points
-        )
-        database_data: Dict[str, Union[str, List]] = {
-            "id": database,
-            table_name: metric,
-        }
-        result.append(database_data)
-    return result
-
-
-@api.route("/throughput")
-class Throughput(Resource):
-    """Throughput information of all databases."""
-
-    @api.doc(
-        model=[model_throughput],
-        params={
-            "startts": "Start of a time interval",
-            "endts": "End of a time interval",
-            "precision": "Length of the aggregation interval",
-        },
-    )
-    def get(self) -> Union[int, List]:
-        """Return throughput information in a given time range."""
-        precise_startts: int = int(request.args.get("startts"))  # type: ignore
-        precise_endts: int = int(request.args.get("endts"))  # type: ignore
-        precision_ns: int = int(request.args.get("precision"))  # type: ignore
-
-        (startts, endts) = get_interval_limits(
-            precise_startts, precise_endts, precision_ns
-        )
-        response: List[Dict[str, Union[str, List]]] = get_historical_metric(
-            startts, endts, precision_ns, "throughput", ["throughput"]
-        )
-
-        return response
-
-
-@api.route("/latency")
-class Latency(Resource):
-    """Latency information of all databases."""
-
-    @api.doc(
-        model=[model_latency],
-        params={
-            "startts": "Start of a time interval",
-            "endts": "End of a time interval",
-            "precision": "Length of the aggregation interval",
-        },
-    )
-    def get(self) -> Union[int, List]:
-        """Return latency information in a given time range."""
-        precise_startts: int = int(request.args.get("startts"))  # type: ignore
-        precise_endts: int = int(request.args.get("endts"))  # type: ignore
-        precision_ns: int = int(request.args.get("precision"))  # type: ignore
-
-        (startts, endts) = get_interval_limits(
-            precise_startts, precise_endts, precision_ns
-        )
-        response: List[Dict[str, Union[str, List]]] = get_historical_metric(
-            startts, endts, precision_ns, "latency", ["latency"]
-        )
-
-        return response
-
-
-@api.route("/detailed_query_information")
-class DetailedQueryInformation(Resource):
-    """Detailed throughput and latency information of all databases."""
-
-    @api.doc(model=[model_query_information])
-    def get(self) -> Union[int, List[Dict[str, Any]]]:
-        """Return detailed throughput and latency information from the stored queries."""
-        currentts = time_ns()
-        startts = currentts - 2_000_000_000
-        endts = currentts - 1_000_000_000
-        active_databases = _get_active_databases()
-        response: List[Dict] = []
-        for database in active_databases:
-            result = storage_connection.query(
-                'SELECT COUNT("latency") as "throughput", MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
-                database=database,
-                bind_params={"startts": startts, "endts": endts},
-            )
-            query_information: List[Dict[str, int]] = [
-                {
-                    "benchmark": tags["benchmark"],
-                    "query_number": tags["query_no"],
-                    "throughput": list(result[table, tags])[0]["throughput"],
-                    "latency": list(result[table, tags])[0]["latency"],
-                }
-                for table, tags in list(result.keys())
-            ]
-            response.append({"id": database, "query_information": query_information})
-
-        return response
-
-
-@api.route("/queue_length")
-class QueueLength(Resource):
-    """Queue length information of all databases."""
-
-    @api.doc(
-        model=[model_queue_length],
-        params={
-            "startts": "Start of a time interval",
-            "endts": "End of a time interval",
-            "precision": "Length of the aggregation interval",
-        },
-    )
-    def get(self) -> Union[int, List]:
-        """Return queue length information in a given time range."""
-        precise_startts: int = int(request.args.get("startts"))  # type: ignore
-        precise_endts: int = int(request.args.get("endts"))  # type: ignore
-        precision_ns: int = int(request.args.get("precision"))  # type: ignore
-
-        (startts, endts) = get_interval_limits(
-            precise_startts, precise_endts, precision_ns
-        )
-        response: List[Dict[str, Union[str, List]]] = get_historical_metric(
-            startts, endts, precision_ns, "queue_length", ["queue_length"]
-        )
-
-        return response
-
-
 @api.route("/failed_tasks")
 class FailedTasks(Resource):
     """Failed tasks information of all databases."""
@@ -611,22 +284,24 @@ class System(Resource):
         (startts, endts) = get_interval_limits(
             precise_startts, precise_endts, precision_ns
         )
-        historical_system_data: List[Dict] = get_historical_metric(
-            startts,
-            endts,
-            precision_ns,
-            "system_data",
-            [
-                "cpu_clock_speed",
-                "cpu_count",
-                "cpu_process_usage",
-                "cpu_system_usage",
-                "database_threads",
-                "free_memory",
-                "total_memory",
-                "used_memory",
-            ],
-        )
+        with StorageConnection() as client:
+            historical_system_data: List[Dict] = get_historical_metric(
+                startts,
+                endts,
+                precision_ns,
+                "system_data",
+                [
+                    "cpu_clock_speed",
+                    "cpu_count",
+                    "cpu_process_usage",
+                    "cpu_system_usage",
+                    "database_threads",
+                    "free_memory",
+                    "total_memory",
+                    "used_memory",
+                ],
+                client,
+            )
         response: List[Dict] = [
             {
                 "id": database_data["id"],
