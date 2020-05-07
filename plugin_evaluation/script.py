@@ -9,7 +9,7 @@ from plugin_evaluation.utils.figlet import intro
 from plugin_evaluation.utils.user_interface import DoneStatus, show_bar
 
 database_id = "momentum"
-workload_execution_time = 10
+workload_execution_time = 100
 plugin = "Clustering"
 
 
@@ -66,4 +66,10 @@ with DoneStatus("Export..."):
     exporter.plot_metric("detailed latency", "momentum", startts, endts)
     exporter.plot_metric(
         "table footprint", "momentum", startts, endts, "customer_tpch_0_1"
+    )
+    exporter.plot_metric(
+        "table access frequency", "momentum", startts, endts, "customer_tpch_0_1"
+    )
+    exporter.plot_metric(
+        "table access frequency", "momentum", startts, endts, "lineitem_tpch_0_1"
     )

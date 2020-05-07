@@ -39,7 +39,6 @@ def plot_line_chart_with_multiple_metrics(
     parameter,
 ):
     """Plot line chart to file."""
-    print(metric_values)
     figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
     prop_cycle = plt.rcParams["axes.prop_cycle"]
     colors = prop_cycle.by_key()["color"]
@@ -54,7 +53,11 @@ def plot_line_chart_with_multiple_metrics(
         metric_values.items(), range(len(metric_values.keys()))
     ):
         plt.plot_date(
-            time_values, values, "-b", color=colors[index], label=f"{metric_name}"
+            time_values,
+            values,
+            "-b",
+            color=colors[index % len(colors)],
+            label=f"{metric_name}",
         )
     plt.ylabel(f"{y_label}")
     plt.xlabel(f"{x_label}")

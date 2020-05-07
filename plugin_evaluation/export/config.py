@@ -11,6 +11,7 @@ from plugin_evaluation.export.plot_handling import (
     plot_line_chart_with_multiple_metrics,
 )
 from plugin_evaluation.export.points_handling import (
+    calculate_access_frequency_for_table,
     calculate_footprint,
     calculate_footprint_for_table,
     default_function,
@@ -80,6 +81,15 @@ config = {
         "y_label": "MB",
         "influx_function": get_metric_data,
         "points_function": calculate_footprint_for_table,
+        "plot_function": plot_line_chart_with_multiple_metrics,
+    },
+    "table access frequency": {
+        "table_name": "chunks_data",
+        "column_name": "chunks_data_meta_information",
+        "x_label": "Time",
+        "y_label": "Number of accesses",
+        "influx_function": get_metric_data,
+        "points_function": calculate_access_frequency_for_table,
         "plot_function": plot_line_chart_with_multiple_metrics,
     },
 }

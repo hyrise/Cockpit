@@ -69,7 +69,7 @@ def calculate_footprint_for_table(  # noqa
         storage = loads(point["storage_meta_information"])
         if table_name in storage.keys():
             for column_name in column_footprints.keys():
-                if column_name in storage[table_name]["data"]:
+                if column_name in storage[table_name]["data"].keys():
                     column_footprints[column_name].append(
                         storage[table_name]["data"][column_name]["size"] / 1_000_000
                     )
@@ -83,6 +83,49 @@ def calculate_footprint_for_table(  # noqa
     footprint_items.sort(key=sort_function, reverse=True)
 
     return secs, dict(footprint_items)
+
+
+def calculate_access_frequency_for_table(  # noqa
+    points: List, metric_column_name: str, table_name
+):
+    """Calculate access frequency for a specific table."""
+
+    def sort_function(tuple):
+        return tuple[1][0] if len(tuple[1]) > 0 else 0.0
+
+    time = [int(point["time"] / 1_000_000_000) for point in points]
+    secs = mdate.epoch2num(time)
+
+    available_column_names = set()
+
+    for point in points:
+        access_data = loads(point["chunks_data_meta_information"])
+        if table_name in access_data.keys():
+            for column_name in access_data[table_name].keys():
+                available_column_names.add(column_name)
+
+    column_accesses: Dict = {column_name: [] for column_name in available_column_names}
+
+    for point in points:
+        access_data = loads(point["chunks_data_meta_information"])
+        if table_name in access_data.keys():
+            for column_name in column_accesses.keys():
+                if column_name in access_data[table_name].keys():
+                    chunk_accesses = access_data[table_name][column_name]
+                    n_accesses = 0
+                    for entry in chunk_accesses:
+                        n_accesses = n_accesses + entry
+                    column_accesses[column_name].append(n_accesses)
+                else:
+                    column_accesses[column_name].append(0)
+        else:
+            for column_name in column_accesses.keys():
+                column_accesses[column_name].append(0)
+
+    access_items = list(column_accesses.items())
+    access_items.sort(key=sort_function, reverse=True)
+
+    return secs, dict(access_items)
 
 
 def sort_detailed_latency_points(points: List, column_name: str, parameter):
