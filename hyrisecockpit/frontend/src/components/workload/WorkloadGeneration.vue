@@ -184,29 +184,17 @@ function useWorkloadAction(
   }
   function startingWorkload(): void {
     startLoading("start");
-    getWorkloads().then((response: any) => {
-      if (response.data.length === 0) {
-        startWorker().then(() => {
-          Object.keys(workloadData).forEach((workload: any) => {
-            if (workloadData[workload].selected) {
-              startWorkload(workload, frequency.value).then(() => {
-                stopLoading("start");
-              });
-            }
-          });
-        });
-      } else {
-        Object.keys(workloadData).forEach((workload: any) => {
-          if (workloadData[workload].selected) {
-            updateWorkload(workload.value, frequency.value).then(() => {
-              stopLoading("start");
-            });
-          }
-        });
-      }
+    startWorker().then(() => {
+      stopLoading("start");
     });
   }
   function pausingWorkload(): void {
+    startLoading("pause");
+    startWorker().then(() => {
+      stopLoading("pause");
+    });
+  }
+  /* function pausingWorkload(): void {
     startLoading("pause");
     getWorkloads().then((response: any) => {
       if (response.data.length === 0) {
@@ -229,7 +217,7 @@ function useWorkloadAction(
         });
       }
     });
-  }
+  } */
   function stoppingWorkload(): void {
     startLoading("stop");
     getWorkloads().then((response: any) => {
@@ -260,6 +248,12 @@ function useWorkloadAction(
   function handleWorkloadChange(workload: Workload): void {
     //TODO: seperate start and update workload
     workloadData[workload].selected = !workloadData[workload].selected;
+    if (workloadData[workload].selected) {
+      startWorkload(workload, frequency.value);
+    }
+    else {
+      stopWorkload(workload);
+    }
   }
   return {
     frequency,
