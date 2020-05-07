@@ -46,17 +46,12 @@ class TestWorkloadService:
         self, service: WorkloadService, interface: WorkloadInterface
     ):
         """A Workload service gets all workloads."""
-        service._send_message_to_dbm.return_value = get_response(200)  # type: ignore
-
         response = get_response(200)
         response["body"]["workload"] = interface
         service._send_message_to_gen.return_value = response  # type: ignore
 
         result = service.create(interface)
 
-        service._send_message_to_dbm.assert_called_once_with(  # type: ignore
-            Request(header=Header(message="start worker"), body={})
-        )
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(header=Header(message="start workload"), body=dict(interface))
         )
@@ -67,15 +62,10 @@ class TestWorkloadService:
         self, service: WorkloadService, interface: WorkloadInterface
     ):
         """A Workload service gets all workloads."""
-        service._send_message_to_dbm.return_value = get_response(200)  # type: ignore
-
         service._send_message_to_gen.return_value = get_response(409)  # type: ignore
 
         result = service.create(interface)
 
-        service._send_message_to_dbm.assert_called_once_with(  # type: ignore
-            Request(header=Header(message="start worker"), body={})
-        )
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(header=Header(message="start workload"), body=dict(interface))
         )
@@ -118,17 +108,12 @@ class TestWorkloadService:
         self, service: WorkloadService, detailed_interface: DetailedWorkloadInterface
     ):
         """A Workload service gets all workloads."""
-        service._send_message_to_dbm.return_value = get_response(200)  # type: ignore
-
         response = get_response(200)
         response["body"]["folder_name"] = detailed_interface["folder_name"]
         service._send_message_to_gen.return_value = response  # type: ignore
 
         result = service.delete_by_id(detailed_interface["folder_name"])
 
-        service._send_message_to_dbm.assert_called_once_with(  # type: ignore
-            Request(header=Header(message="close worker"), body={})
-        )
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="stop workload"),
@@ -142,14 +127,10 @@ class TestWorkloadService:
         self, service: WorkloadService, detailed_interface: DetailedWorkloadInterface
     ):
         """A Workload service gets all workloads."""
-        service._send_message_to_dbm.return_value = get_response(200)  # type: ignore
         service._send_message_to_gen.return_value = get_response(404)  # type: ignore
 
         result = service.delete_by_id(detailed_interface["folder_name"])
 
-        service._send_message_to_dbm.assert_called_once_with(  # type: ignore
-            Request(header=Header(message="close worker"), body={})
-        )
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="stop workload"),
