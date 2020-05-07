@@ -26,7 +26,7 @@
                     Start, pause and stop a workload
                   </p>
                   <v-row>
-                    <v-col class="pt-0">
+                    <v-col class="py-0">
                       <frequency-handler
                         :initial-frequency="frequency"
                         @change="handleFrequencyChange"
@@ -196,6 +196,8 @@ function useWorkloadHandler(): WorkloadHandler {
 function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
   const frequency = ref<number>(200);
   const {
+    startWorker,
+    stopWorker,
     getWorkload,
     getWorkloads,
     startWorkload,
@@ -264,8 +266,10 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     startLoading("start");
     getWorkloads().then((response: any) => {
       if (response.data.length === 0) {
-        startWorkload(workload.value, frequency.value).then(() => {
-          updatingWorkload("start");
+        startWorker().then(() => {
+          startWorkload(workload.value, frequency.value).then(() => {
+            updatingWorkload("start");
+          });
         });
       } else {
         updatingWorkload("start");
@@ -276,8 +280,10 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     startLoading("pause");
     getWorkloads().then((response: any) => {
       if (response.data.length === 0) {
-        startWorkload(workload.value, 0).then(() => {
-          updatingWorkload("pause");
+        startWorker().then(() => {
+          startWorkload(workload.value, 0).then(() => {
+            updatingWorkload("pause");
+          });
         });
       } else {
         updatingWorkload("pause");
@@ -289,6 +295,7 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     getWorkloads().then((response: any) => {
       if (response.data.length !== 0) {
         stopWorkload(workload.value).then(() => {
+          stopWorker();
           stopLoading("stop");
         });
       }
