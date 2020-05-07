@@ -22,6 +22,8 @@ jobs:
       run: docker logs cockpit_generator_1
     - name: Check logs Manager
       run: docker logs cockpit_manager_1
+    - name: Check database
+      run: 'curl -X GET http://docker:8000/control/database/ -H  accept: application/json'
     - name: Register database
       run: 'curl -X POST http://docker:8000/control/database/ -H  accept: application/json -H Content-Type: application/json -d {  "password": "password",  "dbname": "postgres",  "port": "5432",  "host": "hyrise",  "user": "user",  "number_workers": 8,  "id": "hyrise"}'
     - name: Check database
