@@ -1,5 +1,4 @@
 """Tests for the background_scheduler module."""
-
 from multiprocessing import Value
 from typing import Any, Callable, Tuple
 from unittest.mock import call, patch
