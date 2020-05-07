@@ -450,8 +450,8 @@ class TestBackgroundJobManager:
 
         background_job_manager._load_tables_job(table_names, folder_name)
 
-        background_job_manager._generate_table_loading_queries.assert_called_once()  # type: ignore
-        background_job_manager._execute_queries_parallel.assert_called_once()  # type: ignore
+        background_job_manager._generate_table_loading_queries.assert_called_once()
+        background_job_manager._execute_queries_parallel.assert_called_once()
 
         assert not background_job_manager._database_blocked.value
 
@@ -460,12 +460,12 @@ class TestBackgroundJobManager:
     ) -> None:
         """Test gets table names of not imported tables."""
         background_job_manager._get_required_table_names = MagicMock()  # type: ignore
-        background_job_manager._get_required_table_names.return_value = [  # type: ignore
+        background_job_manager._get_required_table_names.return_value = [
             "table_1",
             "table_2",
         ]
         background_job_manager._get_existing_tables = MagicMock()  # type: ignore
-        background_job_manager._get_existing_tables.return_value = {  # type: ignore
+        background_job_manager._get_existing_tables.return_value = {
             "existing": ["table_1"],
             "not_existing": ["table_2"],
         }
@@ -477,10 +477,10 @@ class TestBackgroundJobManager:
         expected = ["table_2"]
 
         assert received == expected
-        background_job_manager._get_required_table_names.assert_called_once_with(  # type: ignore
+        background_job_manager._get_required_table_names.assert_called_once_with(
             "alternative"
         )
-        background_job_manager._get_existing_tables.assert_called_once_with(  # type: ignore
+        background_job_manager._get_existing_tables.assert_called_once_with(
             ["table_1", "table_2"]
         )
 
@@ -496,7 +496,7 @@ class TestBackgroundJobManager:
 
         result = background_job_manager.load_tables("")
 
-        background_job_manager._get_load_table_names.assert_not_called()  # type: ignore
+        background_job_manager._get_load_table_names.assert_not_called()
         background_job_manager._scheduler.add_job.assert_not_called()
 
         assert not result
@@ -690,7 +690,7 @@ class TestBackgroundJobManager:
         }
 
         background_job_manager._get_existing_tables = MagicMock()  # type: ignore
-        background_job_manager._get_existing_tables.return_value = (  # type: ignore
+        background_job_manager._get_existing_tables.return_value = (
             fake_existing_table_names
         )
 
@@ -729,10 +729,10 @@ class TestBackgroundJobManager:
 
         background_job_manager._delete_tables_job(fake_table_names)
 
-        background_job_manager._generate_table_drop_queries.assert_called_once_with(  # type: ignore
+        background_job_manager._generate_table_drop_queries.assert_called_once_with(
             fake_table_names
         )
-        background_job_manager._execute_queries_parallel.assert_called_once_with(  # type: ignore
+        background_job_manager._execute_queries_parallel.assert_called_once_with(
             fake_table_names, fake_drop_queries, None
         )
         assert not background_job_manager._database_blocked.value
@@ -742,12 +742,12 @@ class TestBackgroundJobManager:
     ) -> None:
         """Test gets table names of not imported tables."""
         background_job_manager._get_required_table_names = MagicMock()  # type: ignore
-        background_job_manager._get_required_table_names.return_value = [  # type: ignore
+        background_job_manager._get_required_table_names.return_value = [
             "table_1",
             "table_2",
         ]
         background_job_manager._get_existing_tables = MagicMock()  # type: ignore
-        background_job_manager._get_existing_tables.return_value = {  # type: ignore
+        background_job_manager._get_existing_tables.return_value = {
             "existing": ["table_1"],
             "not_existing": ["table_2"],
         }
@@ -759,10 +759,10 @@ class TestBackgroundJobManager:
         expected = ["table_1"]
 
         assert received == expected
-        background_job_manager._get_required_table_names.assert_called_once_with(  # type: ignore
+        background_job_manager._get_required_table_names.assert_called_once_with(
             "alternative"
         )
-        background_job_manager._get_existing_tables.assert_called_once_with(  # type: ignore
+        background_job_manager._get_existing_tables.assert_called_once_with(
             ["table_1", "table_2"]
         )
 
@@ -778,7 +778,7 @@ class TestBackgroundJobManager:
 
         result: bool = background_job_manager.delete_tables("")
 
-        background_job_manager._get_delete_table_names.assert_not_called()  # type: ignore
+        background_job_manager._get_delete_table_names.assert_not_called()
         background_job_manager._scheduler.add_job.assert_not_called()
 
         assert not result
