@@ -23,7 +23,7 @@ jobs:
     - name: Check logs Manager
       run: docker logs cockpit_manager_1
     - name: Check Swagger Availability
-      run: 'docker exec cockpit_curler_1 curl -X POST http://backend:8000/control/database/ -H accept: application/json -H Content-Type: application/json -d {  "password": "password",  "dbname": "postgres",  "port": "5432",  "host": "hyrise",  "user": "user",  "number_workers": 8,  "id": "hyrise" }'
+      run: docker exec cockpit_curler_1 curl -X POST 'http://backend:8000/control/database/' -H 'accept: application/json' -H 'Content-Type: application/json' -d '{  "password": "password",  "dbname": "postgres",  "port": "5432",  "host": "hyrise",  "user": "user",  "number_workers": 8,  "id": "hyrise" }'
     - name: Check running containers
       run: docker ps -a
     - name: Check logs Backend
