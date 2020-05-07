@@ -18,8 +18,12 @@
             <p class="subtitle-1 font-weight-medium">
               Start, pause and stop a workload
             </p>
-            <frequency-handler @change="handleFrequencyChange" />
+            <frequency-handler
+              :initial-frequency="frequency"
+              @change="handleFrequencyChange"
+            />
             <workload-selector
+              :initial-workload="workload"
               :workload-data="workloadData"
               :disabled="disabled"
               @change="handleWorkloadChange"
@@ -84,6 +88,7 @@ interface WorkloadHandler {
 }
 
 interface WorkloadAction {
+  frequency: Ref<number>;
   actions: Record<string, { active: boolean; loading: boolean }>;
   startingWorkload: () => void;
   pausingWorkload: () => void;
@@ -115,6 +120,7 @@ export default defineComponent({
   },
   setup(props: {}, context: SetupContext): Data {
     const workloadHandler = useWorkloadHandler();
+
     return {
       databases: computed(
         () => context.root.$databaseController.availableDatabasesById.value
@@ -163,6 +169,16 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
       active: false,
       loading: false,
     },
+  });
+
+  getWorkloads().then((response: any) => {
+    if (response.data.length > 0) {
+      workload.value = getWorkloadFromTransferred(response.data[0].folder_name);
+      frequency.value = response.data[0].frequency;
+      frequency.value > 0
+        ? (actions.start.active = true)
+        : (actions.pause.active = true);
+    }
   });
 
   function startLoading(action: string): void {
@@ -220,6 +236,7 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     }
   }
   return {
+    frequency,
     actions,
     startingWorkload,
     pausingWorkload,
