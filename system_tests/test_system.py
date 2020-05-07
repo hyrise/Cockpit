@@ -160,7 +160,7 @@ class TestSystem:
         response = self.backend.start_workers()
         assert response.status_code == 200  # nosec
 
-        sleep(5.0)  # wait for query executions
+        sleep(6.0)  # wait for query executions
 
         metrics = ["throughput", "latency", "queue_length"]
         for metric in metrics:
