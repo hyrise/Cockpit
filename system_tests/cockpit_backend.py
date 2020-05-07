@@ -51,21 +51,16 @@ class CockpitBackend:
             output = out.read()
         return output
 
-    def get_monitor_property(self, property: str):
+    def get_property(self, property: str):
         """Get monitor property."""
-        url = f"http://{self._backend_host}:{self._backend_port}/monitor/{property}"
+        url = f"http://{self._backend_host}:{self._backend_port}/{property}"
         return get(url, timeout=REQUEST_TIMEOUT).json()
 
-    def get_historical_monitor_property(
+    def get_historical_property(
         self, property: str, startts: int, endts: int, precision: int
     ):
         """Get monitor property."""
-        url = f"http://{self._backend_host}:{self._backend_port}/monitor/{property}?startts={startts}&endts={endts}&precision={precision}"
-        return get(url, timeout=REQUEST_TIMEOUT).json()
-
-    def get_control_property(self, property: str):
-        """Get control property."""
-        url = f"http://{self._backend_host}:{self._backend_port}/control/{property}"
+        url = f"http://{self._backend_host}:{self._backend_port}/{property}?startts={startts}&endts={endts}&precision={precision}"
         return get(url, timeout=REQUEST_TIMEOUT).json()
 
     def add_database(self, id: str, host: str, port: str):

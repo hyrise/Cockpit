@@ -72,14 +72,14 @@ class TestSystem:
             ],
         }
 
-        status = self.backend.get_monitor_property("status")
+        status = self.backend.get_property("monitor/status")
         assert expected_status in status  # nosec
 
     def test_database_manager_initialization(self):
         """Ensure initialized database manager has no monitor metrics."""
         metrics = [
-            "chunks",
-            "storage",
+            "monitor/chunks",
+            "monitor/storage",
         ]
         metrics_attributes = [
             "chunks_data",
@@ -87,29 +87,34 @@ class TestSystem:
         ]
 
         for i in range(len(metrics)):
-            response = self.backend.get_monitor_property(metrics[i])
+            response = self.backend.get_property(metrics[i])
             assert response["body"][metrics_attributes[i]] == {}  # nosec
 
-        available_datasets = self.backend.get_control_property(
-            "database/benchmark_tables"
+        available_datasets = self.backend.get_property(
+            "control/database/benchmark_tables"
         )
-        available_databases = self.backend.get_control_property("database")
-
-        historical_metrics = ["throughput", "latency", "queue_length", "system"]
-        for metric in historical_metrics:
-            timestamp: int = time_ns()
-            offset: int = 3_000_000_000
-            startts: int = timestamp - offset - 1_000_000_000
-            endts: int = timestamp - offset
-            response = self.backend.get_historical_monitor_property(
-                metric, startts, endts, 1_000_000_000
-            )
-            assert response == []  # nosec
+        available_databases = self.backend.get_property("control/database")
 
         assert available_datasets == {  # nosec
             "folder_names": ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
         }
         assert available_databases == []  # nosec
+
+        historical_metrics = [
+            "metric/throughput",
+            "metric/latency",
+            "metric/queue_length",
+            "monitor/system",
+        ]
+        for metric in historical_metrics:
+            timestamp: int = time_ns()
+            offset: int = 3_000_000_000
+            startts: int = timestamp - offset - 1_000_000_000
+            endts: int = timestamp - offset
+            response = self.backend.get_historical_property(
+                metric, startts, endts, 1_000_000_000
+            )
+            assert response == []  # nosec
 
         self.check_stderr()
 
@@ -120,7 +125,7 @@ class TestSystem:
         )
         assert response.status_code == 200  # nosec
 
-        available_databases = self.backend.get_control_property("database")
+        available_databases = self.backend.get_property("control/database")
         assert available_databases == [  # nosec
             {
                 "id": "test_database1",
@@ -160,18 +165,19 @@ class TestSystem:
         response = self.backend.start_workers()
         assert response.status_code == 200  # nosec
 
-        sleep(5.0)  # wait for query executions
+        sleep(6.0)  # wait for query executions
 
-        metrics = ["throughput", "latency", "queue_length"]
-        for metric in metrics:
+        metrics = ["metric/throughput", "metric/latency", "metric/queue_length"]
+        metric_keys = ["throughput", "latency", "queue_length"]
+        for metric_key, metric in zip(metric_keys, metrics):
             timestamp: int = time_ns()
             offset: int = 3_000_000_000
             startts: int = timestamp - offset - 1_000_000_000
             endts: int = timestamp - offset
-            response = self.backend.get_historical_monitor_property(
+            response = self.backend.get_historical_property(
                 metric, startts, endts, 1_000_000_000
             )
-            assert response[0][metric][0][metric] > 0  # nosec
+            assert response[0][metric_key][0][metric_key] > 0  # nosec
 
         response = self.backend.stop_workload("tpch_0_1")
         assert response.status_code == 200  # nosec
