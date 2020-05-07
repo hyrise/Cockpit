@@ -27,6 +27,7 @@ with DoneStatus("Waiting default tables to load..."):
     cockpit.backend.wait_for_unblocked_status()
 
 with DoneStatus("Starting a workload..."):
+    cockpit.backend.start_workers()
     cockpit.backend.start_workload("tpch_0_1", 300)
     cockpit.backend.wait_for_unblocked_status()
 
@@ -45,10 +46,11 @@ sleep(1.0)
 
 with DoneStatus("Stopping a workload..."):
     cockpit.backend.stop_workload("tpch_0_1")
+    cockpit.backend.stop_workers()
+    cockpit.backend.wait_for_unblocked_status()
 
 with DoneStatus("Removing the database..."):
     cockpit.backend.remove_database(database_id)
-    cockpit.backend.wait_for_unblocked_status()
 
 cockpit.shutdown()
 
