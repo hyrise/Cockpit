@@ -20,11 +20,13 @@
             </p>
             <frequency-handler
               :enable-equalizer="actions.start.active || actions.pause.active"
+              :initial-frequency="frequency"
               :initial-weights="weights"
               @change="handleFrequencyChange"
               @update="handleWeightChange"
             />
             <workload-selector
+              :initial-workload="workload"
               :workload-data="workloadData"
               :disabled="disabled"
               @change="handleWorkloadChange"
@@ -89,6 +91,7 @@ interface WorkloadHandler {
 }
 
 interface WorkloadAction {
+  frequency: Ref<number>;
   actions: Record<string, { active: boolean; loading: boolean }>;
   weights: Ref<Object>;
   startingWorkload: () => void;
@@ -122,6 +125,7 @@ export default defineComponent({
   },
   setup(props: {}, context: SetupContext): Data {
     const workloadHandler = useWorkloadHandler();
+
     return {
       databases: computed(
         () => context.root.$databaseController.availableDatabasesById.value
@@ -172,6 +176,16 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     },
   });
   let weights = ref<Object>({});
+
+  getWorkloads().then((response: any) => {
+    if (response.data.length > 0) {
+      workload.value = getWorkloadFromTransferred(response.data[0].folder_name);
+      frequency.value = response.data[0].frequency;
+      frequency.value > 0
+        ? (actions.start.active = true)
+        : (actions.pause.active = true);
+    }
+  });
 
   function startLoading(action: string): void {
     actions[action].loading = true;
@@ -245,6 +259,7 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     }
   }
   return {
+    frequency,
     actions,
     weights,
     startingWorkload,
@@ -305,8 +320,10 @@ function useWorkloadDataHandler(context: SetupContext): WorkloadDataHandler {
       if (response.data.length !== 0) {
         let loadedWorkloadData: string[] = response.data[0].loaded_benchmarks;
         Object.values(response.data).forEach((database: any) => {
-          loadedWorkloadData = loadedWorkloadData.filter((benchmark: any) =>
-            database.loaded_benchmarks.includes(benchmark)
+          loadedWorkloadData = loadedWorkloadData.filter(
+            (benchmark: any) =>
+              database.loaded_benchmarks.includes(benchmark) &&
+              !["no-ops_0_1", "no-ops_1"].includes(benchmark)
           );
           emitDatabaseStatusChangedEvent(
             database.id,

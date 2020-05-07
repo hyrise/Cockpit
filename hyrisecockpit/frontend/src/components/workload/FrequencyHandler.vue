@@ -64,11 +64,12 @@ import {
 
 interface Props {
   enableEqualizer: boolean;
+  initialFrequency: number;
   initialWeights: Object;
 }
 interface Data {
-  frequency: Ref<number>;
   showEqualizer: Ref<boolean>;
+  frequency: Ref<number>;
   weights: Ref<Object>;
 }
 
@@ -79,15 +80,25 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    initialFrequency: {
+      type: Number,
+      default: 0,
+    },
     initialWeights: {
       type: Object,
       default: {},
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const frequency = ref<number>(200);
     const showEqualizer = ref<boolean>(false);
+    const frequency = ref<number>(200);
     const weights = ref<Object>({});
+    watch(
+      () => props.initialFrequency,
+      () => {
+        frequency.value = props.initialFrequency;
+      }
+    );
     watch(
       () => props.initialWeights,
       () => {
@@ -95,8 +106,8 @@ export default defineComponent({
       }
     );
     return {
-      frequency,
       showEqualizer,
+      frequency,
       weights,
     };
   },
