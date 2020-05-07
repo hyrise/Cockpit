@@ -98,3 +98,17 @@ class CockpitBackend:
         """Stop workload execution."""
         url = f"http://{self._backend_host}:{self._backend_port}/workload/{workload_folder}"
         return delete(url, timeout=REQUEST_TIMEOUT)
+
+    def start_workers(self):
+        """Start worker pool."""
+        url = (
+            f"http://{self._backend_host}:{self._backend_port}/control/database/worker"
+        )
+        return post(url, timeout=REQUEST_TIMEOUT)
+
+    def stop_workers(self):
+        """Stop worker pool."""
+        url = (
+            f"http://{self._backend_host}:{self._backend_port}/control/database/worker"
+        )
+        return delete(url, timeout=REQUEST_TIMEOUT)

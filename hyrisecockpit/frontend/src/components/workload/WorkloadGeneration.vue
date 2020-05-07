@@ -18,8 +18,12 @@
             <p class="subtitle-1 font-weight-medium">
               Start, pause and stop a workload
             </p>
-            <frequency-handler @change="handleFrequencyChange" />
+            <frequency-handler
+              :initial-frequency="frequency"
+              @change="handleFrequencyChange"
+            />
             <workload-selector
+              :initial-workload="workload"
               :workload-data="workloadData"
               :disabled="disabled"
               @change="handleWorkloadChange"
@@ -84,6 +88,7 @@ interface WorkloadHandler {
 }
 
 interface WorkloadAction {
+  frequency: Ref<number>;
   actions: Record<string, { active: boolean; loading: boolean }>;
   startingWorkload: () => void;
   pausingWorkload: () => void;
@@ -115,6 +120,7 @@ export default defineComponent({
   },
   setup(props: {}, context: SetupContext): Data {
     const workloadHandler = useWorkloadHandler();
+
     return {
       databases: computed(
         () => context.root.$databaseController.availableDatabasesById.value
@@ -141,6 +147,8 @@ function useWorkloadHandler(): WorkloadHandler {
 function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
   const frequency = ref<number>(200);
   const {
+    startWorker,
+    stopWorker,
     getWorkload,
     getWorkloads,
     startWorkload,
@@ -165,6 +173,16 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     },
   });
 
+  getWorkloads().then((response: any) => {
+    if (response.data.length > 0) {
+      workload.value = getWorkloadFromTransferred(response.data[0].folder_name);
+      frequency.value = response.data[0].frequency;
+      frequency.value > 0
+        ? (actions.start.active = true)
+        : (actions.pause.active = true);
+    }
+  });
+
   function startLoading(action: string): void {
     actions[action].loading = true;
     Object.values(actions).forEach((action: any) => {
@@ -179,8 +197,10 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     startLoading("start");
     getWorkloads().then((response: any) => {
       if (response.data.length === 0) {
-        startWorkload(workload.value, frequency.value).then(() => {
-          stopLoading("start");
+        startWorker().then(() => {
+          startWorkload(workload.value, frequency.value).then(() => {
+            stopLoading("start");
+          });
         });
       } else {
         updateWorkload(workload.value, frequency.value).then(() => {
@@ -193,8 +213,10 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     startLoading("pause");
     getWorkloads().then((response: any) => {
       if (response.data.length === 0) {
-        startWorkload(workload.value, 0).then(() => {
-          stopLoading("pause");
+        startWorker().then(() => {
+          startWorkload(workload.value, 0).then(() => {
+            stopLoading("pause");
+          });
         });
       } else {
         updateWorkload(workload.value, 0).then(() => {
@@ -208,6 +230,7 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     getWorkloads().then((response: any) => {
       if (response.data.length !== 0) {
         stopWorkload(workload.value).then(() => {
+          stopWorker();
           stopLoading("stop");
         });
       }
@@ -220,6 +243,7 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     }
   }
   return {
+    frequency,
     actions,
     startingWorkload,
     pausingWorkload,
@@ -278,8 +302,10 @@ function useWorkloadDataHandler(context: SetupContext): WorkloadDataHandler {
       if (response.data.length !== 0) {
         let loadedWorkloadData: string[] = response.data[0].loaded_benchmarks;
         Object.values(response.data).forEach((database: any) => {
-          loadedWorkloadData = loadedWorkloadData.filter((benchmark: any) =>
-            database.loaded_benchmarks.includes(benchmark)
+          loadedWorkloadData = loadedWorkloadData.filter(
+            (benchmark: any) =>
+              database.loaded_benchmarks.includes(benchmark) &&
+              !["no-ops_0_1", "no-ops_1"].includes(benchmark)
           );
           emitDatabaseStatusChangedEvent(
             database.id,
