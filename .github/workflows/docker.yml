@@ -23,13 +23,21 @@ jobs:
     - name: Check logs Manager
       run: docker logs cockpit_manager_1
     - name: Check database
-      run: curl -X GET 'http://docker:8000/control/database/' -H 'accept: application/json'
+      uses: wei/curl@v1
+      with:
+        args: -X GET http://docker:8000/control/database/ -H accept: application/json
     - name: Register database
-      run: curl -X POST 'http://docker:8000/control/database/' -H 'accept: application/json' -H 'Content-Type: application/json' -d '{  "password": "password",  "dbname": "postgres",  "port": "5432",  "host": "hyrise",  "user": "user",  "number_workers": 8,  "id": "hyrise"}'
+      uses: wei/curl@v1
+      with:
+        args: -X POST http://docker:8000/control/database/ -H accept: application/json -H Content-Type: application/json -d {  "password": "password",  "dbname": "postgres",  "port": "5432",  "host": "hyrise",  "user": "user",  "number_workers": 8,  "id": "hyrise" }
     - name: Check database
-      run: curl -X GET 'http://docker:8000/control/database/' -H 'accept: application/json'
+      uses: wei/curl@v1
+      with:
+        args: -X GET http://docker:8000/control/database/ -H accept: application/json
     - name: De-register database
-      run: curl -X DELETE 'http://docker:8000/control/database/' -H 'accept: application/json' -H  'Content-Type: application/json' -d '{  "id": "hyrise"}'
+      uses: wei/curl@v1
+      with:
+        args: -X DELETE http://docker:8000/control/database/ -H accept: application/json -H  Content-Type: application/json -d {  "id": "hyrise" }
     - name: Check running containers
       run: docker ps -a
     - name: Check logs Backend
