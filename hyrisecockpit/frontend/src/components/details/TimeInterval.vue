@@ -1,5 +1,5 @@
 <template>
-  <b class="interval secondary--text">{{ interval }}</b>
+  <div class="body-2 interval secondary--text">{{ interval }}</div>
 </template>
 
 <script lang="ts">
@@ -70,7 +70,6 @@ export function useUpdatingInterval(
 </script>
 <style scoped>
 .interval {
-  font-size: 14px;
   word-break: normal;
   line-height: normal;
 }
