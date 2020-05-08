@@ -5,6 +5,7 @@ from hyrisecockpit.api.app.plugin.model import (
     Plugin,
     PluginSetting,
     PluginSettingBase,
+    UpdatePluginSetting,
 )
 
 
@@ -30,6 +31,14 @@ class TestPluginSetting:
     def test_creates(self, plugin_setting: PluginSetting):
         """A PluginSetting model can be created."""
         assert plugin_setting
+
+
+class TestUpdatePluginSetting:
+    """Tests for the UpdatePluginSetting model."""
+
+    def test_creates(self, update_plugin_setting: UpdatePluginSetting):
+        """A UpdatePluginSetting model can be created."""
+        assert update_plugin_setting
 
 
 class TestDetailedPlugin:

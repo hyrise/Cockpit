@@ -6,6 +6,7 @@ from hyrisecockpit.api.app.plugin.interface import (
     PluginInterface,
     PluginSettingBaseInterface,
     PluginSettingInterface,
+    UpdatePluginSettingInterface,
 )
 from hyrisecockpit.api.app.plugin.model import (
     DetailedPlugin,
@@ -13,6 +14,7 @@ from hyrisecockpit.api.app.plugin.model import (
     Plugin,
     PluginSetting,
     PluginSettingBase,
+    UpdatePluginSetting,
 )
 from hyrisecockpit.api.app.plugin.schema import (
     DetailedPluginIDSchema,
@@ -20,6 +22,7 @@ from hyrisecockpit.api.app.plugin.schema import (
     PluginSchema,
     PluginSettingBaseSchema,
     PluginSettingSchema,
+    UpdatePluginSettingSchema,
 )
 
 
@@ -176,6 +179,55 @@ class TestPluginSettingSchema:
             interface_setting["description"]
             == plugin_setting.description
             == serialized["description"]
+        )
+
+
+class TestUpdatePluginSettingSchema:
+    """Tests for the PluginSetting schema."""
+
+    def test_creates(self, schema_update_plugin_setting: UpdatePluginSettingSchema):
+        """An UpdatePluginSetting schema can be created."""
+        assert schema_update_plugin_setting
+        assert isinstance(schema_update_plugin_setting, UpdatePluginSettingSchema)
+
+    def test_extends_base(
+        self, schema_update_plugin_setting: UpdatePluginSettingSchema
+    ):
+        """An UpdatePluginSetting schema extends the PluginSettingBase schema."""
+        assert isinstance(schema_update_plugin_setting, PluginSchema)
+
+    def test_deserializes(
+        self,
+        schema_update_plugin_setting: UpdatePluginSettingSchema,
+        interface_update_plugin_setting: UpdatePluginSettingInterface,
+    ):
+        """An UpdatePluginSetting schema can create an UpdatePluginSetting model."""
+        deserialized: UpdatePluginSettingInterface = schema_update_plugin_setting.load(
+            interface_update_plugin_setting
+        )
+        assert deserialized
+        update_plugin_setting = UpdatePluginSetting(**deserialized)  # type: ignore
+        assert update_plugin_setting
+        assert (
+            interface_update_plugin_setting["setting"]  # type: ignore
+            == deserialized["setting"]
+            == update_plugin_setting.setting
+        )
+
+    def test_serializes(
+        self,
+        schema_update_plugin_setting: UpdatePluginSettingSchema,
+        interface_update_plugin_setting: UpdatePluginSettingInterface,
+    ):
+        """An UpdatePluginSetting model can be serialized with an UpdatePluginSetting schema."""
+        update_plugin_setting = UpdatePluginSetting(**interface_update_plugin_setting)  # type: ignore
+        serialized: UpdatePluginSettingInterface = schema_update_plugin_setting.dump(
+            update_plugin_setting
+        )
+        assert (
+            interface_update_plugin_setting["setting"]  # type: ignore
+            == update_plugin_setting.setting
+            == serialized["setting"]
         )
 
 

@@ -19,6 +19,15 @@ class PluginSettingBase:
         self.value: str = value
 
 
+class UpdatePluginSetting(Plugin):
+    """Model of an UpdatePluginSetting."""
+
+    def __init__(self, name: str, setting: PluginSettingBase):
+        """Initialize an UpdatePluginSetting."""
+        super().__init__(name)
+        self.setting: PluginSettingBase = setting
+
+
 class PluginSetting(PluginSettingBase):
     """Model of a Plugin Setting."""
 

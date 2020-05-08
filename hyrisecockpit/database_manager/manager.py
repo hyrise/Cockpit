@@ -3,6 +3,7 @@
 from types import TracebackType
 from typing import Callable, Dict, List, Optional, Tuple, Type, TypedDict
 
+from hyrisecockpit.api.app.plugin.interface import UpdatePluginSettingInterface
 from hyrisecockpit.message import (
     add_database_request_schema,
     delete_data_request_schema,
@@ -253,15 +254,18 @@ class DatabaseManager(object):
 
     def _call_plugin_setting(self, body: Body) -> Response:
         id: str = body["id"]
-        name: str = body["name"]
-        value: str = body["value"]
+        update: UpdatePluginSettingInterface = body["update"]
+        setting_name: str = "::".join(
+            ["Plugin", update["name"], update["setting"]["name"]]
+        )
         if id not in self._databases.keys():
-            response = get_response(400)
-        elif self._databases[id].set_plugin_setting(name, value):
-            response = get_response(200)
+            return get_response(404)
+        elif self._databases[id].set_plugin_setting(
+            setting_name, update["setting"]["value"]
+        ):
+            return get_response(200)
         else:
-            response = get_response(423)
-        return response
+            return get_response(423)
 
     def _check_if_database_blocked(self) -> bool:
         database_blocked_status = False

@@ -8,18 +8,10 @@ from flask_restx import Namespace, Resource
 
 from .interface import (
     DetailedPluginIDInterface,
-    DetailedPluginInterface,
     PluginInterface,
-    PluginSettingBaseInterface,
-    PluginSettingInterface,
+    UpdatePluginSettingInterface,
 )
-from .schema import (
-    DetailedPluginIDSchema,
-    DetailedPluginSchema,
-    PluginSchema,
-    PluginSettingBaseSchema,
-    PluginSettingSchema,
-)
+from .schema import DetailedPluginIDSchema, PluginSchema, UpdatePluginSettingSchema
 from .service import PluginService
 
 api = Namespace("Plugin", description="Control Plugins per database.")
@@ -46,11 +38,6 @@ class PluginController(Resource):
 class PluginIdController(Resource):
     """Controller of a Plugin per database."""
 
-    @responds(schema=DetailedPluginSchema, api=api)
-    def get(self, database_id: str) -> DetailedPluginInterface:
-        """Get all settings of a Plugin in a database."""
-        pass
-
     @accepts(schema=PluginSchema, api=api)
     def post(self, database_id: str) -> Response:
         """Activate a Plugin in a database."""
@@ -71,9 +58,12 @@ class PluginIdController(Resource):
         else:
             raise ValueError()
 
-    @accepts(schema=PluginSettingBaseSchema, api=api)
-    @responds(schema=PluginSettingSchema, api=api)
-    def put(self, database_id: str) -> PluginSettingInterface:  # type: ignore
+    @accepts(schema=UpdatePluginSettingSchema, api=api)
+    def put(self, database_id: str) -> Response:
         """Set a setting of a Plugin in a database."""
-        interface: PluginSettingBaseInterface = request.parsed_obj  # noqa: F841
-        pass
+        interface: UpdatePluginSettingInterface = request.parsed_obj
+        status = PluginService.update_plugin_setting(database_id, interface)
+        if status in {200, 404, 423}:
+            return Response(status=status)
+        else:
+            raise ValueError()

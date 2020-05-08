@@ -6,6 +6,7 @@ from hyrisecockpit.api.app.plugin.interface import (
     PluginInterface,
     PluginSettingBaseInterface,
     PluginSettingInterface,
+    UpdatePluginSettingInterface,
 )
 from hyrisecockpit.api.app.plugin.model import (
     DetailedPlugin,
@@ -13,6 +14,7 @@ from hyrisecockpit.api.app.plugin.model import (
     Plugin,
     PluginSetting,
     PluginSettingBase,
+    UpdatePluginSetting,
 )
 
 
@@ -50,6 +52,20 @@ class TestPluginSettingInterface:
     def test_works(self, interface_setting: PluginSettingInterface):
         """A PluginSetting model can be created from an interface."""
         assert PluginSetting(**interface_setting)
+
+
+class TestUpdatePluginSettingInterface:
+    """Tests for the UpdatePluginSetting interface."""
+
+    def test_creates(
+        self, interface_update_plugin_setting: UpdatePluginSettingInterface
+    ):
+        """An UpdatePluginSetting interface can be created."""
+        assert interface_update_plugin_setting
+
+    def test_works(self, interface_update_plugin_setting: UpdatePluginSettingInterface):
+        """An UpdatePluginSetting model can be created from an interface."""
+        assert UpdatePluginSetting(**interface_update_plugin_setting)  # type: ignore
 
 
 class TestDetailedPluginInterface:

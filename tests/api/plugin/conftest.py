@@ -7,6 +7,7 @@ from hyrisecockpit.api.app.plugin.interface import (
     PluginInterface,
     PluginSettingBaseInterface,
     PluginSettingInterface,
+    UpdatePluginSettingInterface,
 )
 from hyrisecockpit.api.app.plugin.model import (
     DetailedPlugin,
@@ -14,6 +15,7 @@ from hyrisecockpit.api.app.plugin.model import (
     Plugin,
     PluginSetting,
     PluginSettingBase,
+    UpdatePluginSetting,
 )
 from hyrisecockpit.api.app.plugin.schema import (
     DetailedPluginIDSchema,
@@ -21,6 +23,7 @@ from hyrisecockpit.api.app.plugin.schema import (
     PluginSchema,
     PluginSettingBaseSchema,
     PluginSettingSchema,
+    UpdatePluginSettingSchema,
 )
 
 
@@ -75,6 +78,12 @@ def plugin_setting(
 
 
 @fixture
+def update_plugin_setting(name: str, plugin_setting: PluginSetting):
+    """Return an UpdatePluginSetting model."""
+    return UpdatePluginSetting(name=name, setting=plugin_setting)
+
+
+@fixture
 def detailed_plugin(name: str, plugin_setting: PluginSetting) -> DetailedPlugin:
     """Return a DetailedPlugin model."""
     return DetailedPlugin(name, [plugin_setting])
@@ -111,6 +120,14 @@ def interface_setting(
 
 
 @fixture
+def interface_update_plugin_setting(
+    name: str, interface_setting_base: PluginSettingBaseInterface
+):
+    """Retrun an UpdatePluginSetting interface."""
+    return UpdatePluginSettingInterface(name=name, setting=interface_setting_base)
+
+
+@fixture
 def interface_detailed_plugin(
     name: str, interface_setting: PluginSettingInterface
 ) -> DetailedPluginInterface:
@@ -142,6 +159,12 @@ def schema_setting_base() -> PluginSettingBaseSchema:
 def schema_setting() -> PluginSettingSchema:
     """Return a PluginSetting schema."""
     return PluginSettingSchema()
+
+
+@fixture
+def schema_update_plugin_setting() -> UpdatePluginSettingSchema:
+    """Return an UpdatePluginSetting schema."""
+    return UpdatePluginSettingSchema()
 
 
 @fixture

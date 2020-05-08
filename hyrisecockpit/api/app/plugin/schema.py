@@ -16,6 +16,14 @@ class PluginSettingBaseSchema(Schema):
     value = String(description="Value the setting should have.", required=True)
 
 
+class UpdatePluginSettingSchema(PluginSchema):
+    """Schema to update a plugin setting."""
+
+    setting = Nested(
+        PluginSettingBaseSchema, description="Settings of the Plugin", required=True
+    )
+
+
 class PluginSettingSchema(PluginSettingBaseSchema):
     """Schema of a Plugin Setting."""
 

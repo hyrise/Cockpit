@@ -15,6 +15,12 @@ class PluginSettingBaseInterface(TypedDict):
     value: str
 
 
+class UpdatePluginSettingInterface(PluginInterface):
+    """Interface of an UpdatePluginSetting."""
+
+    setting: PluginSettingBaseInterface
+
+
 class PluginSettingInterface(PluginSettingBaseInterface):
     """Interface of a Plugin Setting."""
 

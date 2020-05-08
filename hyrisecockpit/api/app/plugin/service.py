@@ -10,6 +10,7 @@ from .interface import (
     DetailedPluginInterface,
     PluginInterface,
     PluginSettingInterface,
+    UpdatePluginSettingInterface,
 )
 
 
@@ -76,5 +77,17 @@ class PluginService:
             Request(
                 header=Header(message="deactivate plugin"),
                 body={"id": database_id, "plugin": interface["name"]},
+            )
+        )["header"]["status"]
+
+    @classmethod
+    def update_plugin_setting(
+        cls, database_id: str, interface: UpdatePluginSettingInterface
+    ) -> int:
+        """Update a plugin setting."""
+        return cls._send_message_to_dbm(
+            Request(
+                header=Header(message="set plugin setting"),
+                body={"id": database_id, "update": interface},
             )
         )["header"]["status"]
