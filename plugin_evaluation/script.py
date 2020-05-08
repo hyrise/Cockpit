@@ -9,7 +9,7 @@ from plugin_evaluation.utils.figlet import intro
 from plugin_evaluation.utils.user_interface import DoneStatus, show_bar
 
 database_id = "momentum"
-workload_execution_time = 10
+workload_execution_time = 100
 plugin = "Clustering"
 
 metrics = [
@@ -81,6 +81,6 @@ endts = int(endts / 1_000_000_000) * 1_000_000_000
 
 with DoneStatus("Export..."):
     for metric in metrics:
-        exporter.plot_metric(metric, "momentum", startts, endts)
+        exporter.plot_metric(metric, database_id, startts, endts)
     for metric, parameter in metrics_with_parameters:
-        exporter.plot_metric(metric, "momentum", startts, endts, parameter)
+        exporter.plot_metric(metric, database_id, startts, endts, parameter)
