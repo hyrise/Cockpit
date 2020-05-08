@@ -2,10 +2,11 @@
   <v-navigation-drawer app fixed width="200" color="grey lighten-4">
     <v-list subheader>
       <v-list-item>
-        <v-list-item-avatar tile size="55" class="mb-3 mr-3">
+        <v-list-item-avatar tile size="70" class="mt-0 mb-2 mr-2">
           <img src="../../src/assets/images/hyrise_logo.png" />
         </v-list-item-avatar>
-        <v-list-item-title class="mt-2 body-1 font-weight-light"
+        <v-list-item-title
+          class="title font-weight-regular text--secondary mt-2"
           >Cockpit</v-list-item-title
         >
       </v-list-item>
