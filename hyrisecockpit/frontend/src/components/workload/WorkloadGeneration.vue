@@ -240,11 +240,9 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     if (response.data.length > 0) {
       workload.value = getWorkloadFromTransferred(response.data[0].folder_name);
       frequency.value = response.data[0].frequency;
-      updateWorkload(
-        workload.value,
-        frequency.value,
-        weights.value
-      ).then((response: any) => handleWeightChange(response.data.weights));
+      updatingWorkload().then((response: any) =>
+        handleWeightChange(response.data.weights)
+      );
       if (frequency.value > 0) {
         actions.start.active = true;
       } else {
@@ -271,7 +269,10 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
       if (response.data.length === 0) {
         startWorker().then(() => {
           startWorkload(workload.value, frequency.value).then(() => {
-            updatingWorkload().then(() => stopLoading(action));
+            updatingWorkload().then((response: any) => {
+              handleWeightChange(response.data.weights);
+              stopLoading(action);
+            });
           });
         });
       } else {
