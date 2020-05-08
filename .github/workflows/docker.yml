@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
 
-  backend_build_and_test:
+  backend_build:
 
     runs-on: ubuntu-latest
 
