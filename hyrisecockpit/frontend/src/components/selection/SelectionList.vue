@@ -52,7 +52,8 @@
                   block
                   :disabled="!staticRange"
                   @click="resetTimeRange"
-                >Set Continuous Time Range</v-btn>
+                  >Set Continuous Time Range</v-btn
+                >
               </v-sheet>
             </v-window-item>
             <v-window-item :value="2">
@@ -63,8 +64,8 @@
                     <v-col class="flex-item select">
                       <timestamp-selection
                         label="Start"
-                        @dateChanged="(newDate) => startDate = newDate"
-                        @timeChanged="(newTime) => startTime = newTime"
+                        @dateChanged="(newDate) => (startDate = newDate)"
+                        @timeChanged="(newTime) => (startTime = newTime)"
                       />
                     </v-col>
                     <v-col class="flex-item select">
@@ -72,8 +73,8 @@
                         label="End"
                         :min-date="startDate"
                         :min-time="startTime"
-                        @dateChanged="(newDate) => endDate = newDate"
-                        @timeChanged="(newTime) => endTime = newTime"
+                        @dateChanged="(newDate) => (endDate = newDate)"
+                        @timeChanged="(newTime) => (endTime = newTime)"
                       />
                     </v-col>
                   </v-row>
@@ -85,7 +86,9 @@
                         :available-precisions="availableStaticPrecisions"
                         :global="false"
                         :max-precision="maxPrecision"
-                        @precisionChanged="(newPrecision) => staticPrecision = newPrecision"
+                        @precisionChanged="
+                          (newPrecision) => (staticPrecision = newPrecision)
+                        "
                       />
                     </v-col>
                   </v-row>
@@ -96,7 +99,8 @@
                   block
                   :disabled="invalidDates"
                   @click="setStaticTimeRange"
-                >Set Static Time Range</v-btn>
+                  >Set Static Time Range</v-btn
+                >
               </v-sheet>
             </v-window-item>
           </v-window>
@@ -111,10 +115,14 @@
                     v-on="on"
                     color="white"
                     depressed
-                    @click="window = window == 1? 2: 1"
-                  >{{window==1? 'STATIC': "CONTINUOUS"}}</v-btn>
+                    @click="window = window == 1 ? 2 : 1"
+                    >{{ window == 1 ? "STATIC" : "CONTINUOUS" }}</v-btn
+                  >
                 </template>
-                <span>Select {{window==1? 'Static': "Continuous"}} Range Type</span>
+                <span
+                  >Select {{ window == 1 ? "Static" : "Continuous" }} Range
+                  Type</span
+                >
               </v-tooltip>
             </v-card-actions>
           </v-card>
