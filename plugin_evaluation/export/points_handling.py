@@ -5,6 +5,13 @@ from typing import Dict, List
 import matplotlib.dates as mdate
 
 
+def _format_query_name(benchmark: str, query_number: str):
+    """Pretty print number name."""
+    benchmark_name = benchmark.split("_")[0].upper()
+    scale_factor = ".".join(f"{number}" for number in benchmark.split("_")[1:])
+    return f"{benchmark_name}({scale_factor})-{query_number}"
+
+
 def default_function(points: List, column_name: str, parameter):
     """Doesn't change the input value."""
     sec_values = [int(point["time"] / 1_000_000_000) for point in points]
@@ -30,9 +37,7 @@ def handle_query_latency(points: List, column_name: str, parameter):
     benchmark = parameter[0]
     query_number = parameter[1]
 
-    benchmark_name = benchmark.split("_")[0].upper()
-    scale_factor = ".".join(f"{number}" for number in benchmark.split("_")[1:])
-    label = f"{benchmark_name}({scale_factor})-{query_number}"
+    label = _format_query_name(benchmark, query_number)
 
     sec_values = [int(point["time"] / 1_000_000_000) for point in points]
     formatted_time = mdate.epoch2num(sec_values)
@@ -163,12 +168,10 @@ def sort_detailed_latency_points(points: List, column_name: str, parameter):
 
     labels = []
     for point in points:
-        benchmark_name = point["benchmark"].split("_")[0].upper()
-        scale_factor = ".".join(
-            f"{number}" for number in point["benchmark"].split("_")[1:]
+        formatted_query_name = _format_query_name(
+            point["benchmark"], point["query_number"]
         )
-        query_number = point["query_number"]
-        labels.append(f"{benchmark_name}({scale_factor})-{query_number}")
+        labels.append(formatted_query_name)
 
     latency = [point["latency"] / 1_000_000 for point in points]
 
