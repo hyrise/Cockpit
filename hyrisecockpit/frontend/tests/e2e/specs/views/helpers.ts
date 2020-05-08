@@ -40,6 +40,11 @@ const selectors: Record<string, string> = {
   ),
   metricChip: getSelectorByConfig("span", "metric-chip"),
   loadingAnimation: getSelectorByConfig("div", "loading-animation"),
+  historicRangeSelection: getSelectorByConfig(
+    "input",
+    "historic-range-selection"
+  ),
+  precisionSelection: getSelectorByConfig("input", "precision-selection"),
 };
 
 const metrics: Record<string, string[]> = {

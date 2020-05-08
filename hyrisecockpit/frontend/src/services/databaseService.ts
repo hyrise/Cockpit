@@ -12,7 +12,7 @@ import { useDatabaseEvents } from "@/meta/events";
 import { useFormatting } from "@/meta/formatting";
 
 export function useDatabaseService(): DatabaseService {
-  const { formatDateToNanoSec, subSeconds } = useFormatting();
+  const { formatDateToNanoSec, subSeconds, getNanoSeconds } = useFormatting();
   const {
     emitDatabaseAddedEvent,
     emitDatabaseRemovedEvent,
@@ -50,12 +50,13 @@ export function useDatabaseService(): DatabaseService {
     DatabaseCPUResponse[]
   > {
     let databasesWithCPUInformation: DatabaseCPUResponse[] = [];
-    const currentDate = new Date();
+    const currentDate = subSeconds(new Date(), 3);
     await axios
       .get(monitorBackend + "system", {
         params: {
           startts: formatDateToNanoSec(subSeconds(currentDate, 1)),
           endts: formatDateToNanoSec(currentDate),
+          precision: getNanoSeconds(1),
         },
       })
       .then((response) => {

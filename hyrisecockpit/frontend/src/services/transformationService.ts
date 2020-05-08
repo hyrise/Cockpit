@@ -21,7 +21,7 @@ const transformationServiceMap: Record<Metric, TransformationService> = {
   throughput: getReadOnlyData,
 };
 
-const { roundNumber } = useFormatting();
+const { roundNumber, subSeconds, trimString } = useFormatting();
 const {
   getTableMemoryFootprint,
   getDatabaseMemoryFootprint,
@@ -128,7 +128,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
       size: `${totalDatabaseMemory} MB`,
       encoding: "",
       dataType: "",
-      percentOfDatabase: "100% of total footprint",
+      percentOfDatabase: "",
       percentOfTable: "",
     },
   ];
@@ -268,6 +268,33 @@ function getAccessData(
   return { chunks, columns, dataByChunks, descriptions };
 }
 
+export function useMaxValueHelper(
+  metric: Metric
+): ((data: any) => number) | undefined {
+  const maxValueHelper: Partial<Record<Metric, (data: any) => number>> = {
+    access: getAccessMaxValue,
+  };
+
+  function getAccessMaxValue(data: any): number {
+    return Object.values(data).reduce((maxValue: number, dbData: any) => {
+      const tableMaxValue = Object.values(dbData).reduce(
+        (maxValue: number, tableData: any) => {
+          const columnMaxValue = Object.values(tableData).reduce(
+            (maxValue: number, columnData: any) =>
+              Math.max(...columnData, maxValue),
+            0
+          );
+          return Math.max(maxValue, columnMaxValue);
+        },
+        0
+      );
+      return Math.max(maxValue, tableMaxValue);
+    }, 0);
+  }
+
+  return maxValueHelper[metric];
+}
+
 export function useDataTransformationHelpers(): {
   getDatabaseMemoryFootprint: (data: any) => number;
   getTableMemoryFootprint: (data: any) => number;
@@ -309,71 +336,5 @@ export function useDataTransformationHelpers(): {
     getDatabaseMemoryFootprint,
     getDatabaseMainMemoryCapacity,
     getTableMemoryFootprint,
-  };
-}
-
-export function usePluginTransformationSevice(): any {
-  const { formatDateToHHMMSS } = useFormatting();
-
-  function getActivePluginData(data: any): any {
-    return data.reduce((result: string[], currentDatabase: any) => {
-      return currentDatabase.plugins
-        ? [
-            ...result,
-            ...currentDatabase.plugins.map(
-              (plugin: string) =>
-                currentDatabase.id + "_" + plugin.replace("Plugin", "")
-            ),
-          ]
-        : result;
-    }, []);
-  }
-
-  function getPluginLogsData(data: any): any {
-    return data.reduce((result: any, currentDatabase: any) => {
-      result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
-        (databaseLog: string, currentLog: any) => {
-          return (
-            databaseLog +
-            `${currentLog.reporter} [${formatDateToHHMMSS(
-              new Date(parseInt(currentLog.timestamp))
-            )}]: ${currentLog.message}\n`
-          );
-        },
-        ""
-      );
-      return result;
-    }, {});
-  }
-
-  function getPluginSettingsData(data: any): any {
-    return data.reduce((result: any, currentDatabase: any) => {
-      const allDatabaseSettings =
-        currentDatabase.plugin_settings &&
-        currentDatabase.plugin_settings.reduce(
-          (allSettings: any, currentSetting: any) => {
-            const pluginName = currentSetting.name.substring(
-              0,
-              currentSetting.name.indexOf("Plugin")
-            );
-            allSettings[pluginName]
-              ? (allSettings[pluginName] = [
-                  ...allSettings[pluginName],
-                  currentSetting,
-                ])
-              : (allSettings[pluginName] = [currentSetting]);
-            return allSettings;
-          },
-          {}
-        );
-      result[currentDatabase.id] = allDatabaseSettings;
-      return result;
-    }, {});
-  }
-
-  return {
-    getActivePluginData,
-    getPluginLogsData,
-    getPluginSettingsData,
   };
 }

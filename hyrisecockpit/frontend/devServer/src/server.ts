@@ -7,7 +7,9 @@ import express from "express";
 import bodyParser from "body-parser";
 
 const server = express();
-const mocks = useMocks(getInitialNumbers({}));
+let mocks = useMocks(
+  process.env.TEST ? getInitialNumbers({ databases: 1 }) : getInitialNumbers({})
+);
 
 function getInitialNumbers(numbers: Partial<Record<Entity, number>>) {
   return {
@@ -16,9 +18,10 @@ function getInitialNumbers(numbers: Partial<Record<Entity, number>>) {
     columns: 2,
     databases: 2,
     loaded_benchmarks: 1,
-    plugins: 2,
+    plugins: 3,
     queries: 10,
     tables: 2,
+    workloads: 0,
     ...numbers,
   };
 }
@@ -33,7 +36,7 @@ server.use((_, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept",
+    "Origin, X-Requested-With, Content-Type, Accept"
   );
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
   next();
@@ -61,21 +64,45 @@ mockGetRoute("available_plugins", "control");
 mockGetRoute("plugin", "control");
 mockGetRoute("plugin_settings", "control", true);
 mockGetRoute("plugin_log", "control");
+mockGetRoute("workload/");
 
 mockPostRoute("database/", "control");
 mockPostRoute("database/benchmark_tables", "control");
 mockPostRoute("workload/");
 mockPostRoute("plugin", "control");
+mockPostRoute("plugin_settings", "control", true);
+mockPostRoute("sql/", "control");
+mockPostRoute("database/worker", "control", true);
 
 mockDeleteRoute("database/", "control");
 mockDeleteRoute("database/benchmark_tables", "control");
-mockDeleteRoute("workload/");
+mockDeleteRoute("workload/*");
 mockDeleteRoute("plugin", "control");
+mockDeleteRoute("database/worker", "control", true);
+
+mockPutRoute("workload/*");
+
+/* route for manual state cleaning */
+server.post("/clean/", (req, res) => {
+  logRequest(req, res);
+  if (req.body.method === "POST")
+    mocks.getMockedPostCallback(req.body.request)(req.body.id);
+  if (req.body.method === "DELETE")
+    mocks.getMockedDeleteCallback(req.body.request)(req.body.id);
+  res.send({});
+});
+
+/* route for manual restarting with different numbers */
+server.post("/restart/", (req, res) => {
+  logRequest(req, res);
+  mocks = useMocks(getInitialNumbers(req.body));
+  res.send({});
+});
 
 function mockGetRoute(
   route: string,
   backendRoute?: "control" | "monitor",
-  withBody: boolean = false,
+  withBody: boolean = false
 ): void {
   const request = getRequestOfRoute(route);
   server.get(getBackendRoute(route, backendRoute), (req, res) => {
@@ -87,22 +114,27 @@ function mockGetRoute(
   });
 }
 
-function logRequest(req, res): void {
-  console.log(
-    `${new Date().toLocaleTimeString()} - ${req.method} - ${res.statusCode} - ${
-      req.url
-    }`,
-  );
+function mockPutRoute(
+  route: string,
+  backendRoute?: "control" | "monitor"
+): void {
+  const request = getRequestOfRoute(route);
+  server.put(getBackendRoute(route, backendRoute), (req, res) => {
+    logRequest(req, res);
+    res.send({});
+  });
 }
 
 function mockPostRoute(
   route: string,
   backendRoute?: "control" | "monitor",
+  stub = false
 ): void {
   const request = getRequestOfRoute(route);
   server.post(getBackendRoute(route, backendRoute), (req, res) => {
     logRequest(req, res);
-    mocks.getMockedPostCallback(request)(handleRequestBody(request, req));
+    if (!stub)
+      mocks.getMockedPostCallback(request)(handleRequestBody(request, req));
     res.send({});
   });
 }
@@ -110,16 +142,24 @@ function mockPostRoute(
 function mockDeleteRoute(
   route: string,
   backendRoute?: "control" | "monitor",
+  stub = false
 ): void {
   const request = getRequestOfRoute(route);
   server.delete(getBackendRoute(route, backendRoute), (req, res) => {
     logRequest(req, res);
-    mocks.getMockedDeleteCallback(request)(handleRequestBody(request, req));
+    if (!stub)
+      mocks.getMockedDeleteCallback(request)(
+        handleRequestBody(request, req, true)
+      );
     res.send({});
   });
 }
 
-function handleRequestBody(request: Request, req): string {
+function handleRequestBody(
+  request: Request,
+  req: any,
+  del: boolean = false
+): string {
   let id = "";
   if (request === "database") {
     id = req.body.id;
@@ -127,6 +167,13 @@ function handleRequestBody(request: Request, req): string {
     id = req.body.folder_name;
   } else if (request === "plugin") {
     id = req.body.plugin;
+  } else if (request === "workload") {
+    if (del) {
+      const split = req.url.split("/");
+      id = split[split.length - 1];
+    } else {
+      id = req.body.folder_name;
+    }
   }
   return id;
 }
@@ -136,7 +183,7 @@ function getRequestOfRoute(route: string): Request {
   if (split.length === 1) {
     return split[0] as Request;
   } else {
-    if (split[split.length - 1] === "") {
+    if (split[split.length - 1] === "" || split[split.length - 1] === "*") {
       return split[split.length - 2] as Request;
     }
     return split[split.length - 1] as Request;
@@ -145,7 +192,17 @@ function getRequestOfRoute(route: string): Request {
 
 function getBackendRoute(
   route: string,
-  prefix?: "control" | "monitor",
+  prefix?: "control" | "monitor"
 ): string {
   return prefix ? `/${prefix}/${route}` : `/${route}`;
+}
+
+function logRequest(req, res): void {
+  if (!process.env.QUIET) {
+    console.log(
+      `${new Date().toLocaleTimeString()} - ${req.method} - ${
+        res.statusCode
+      } - ${req.url}`
+    );
+  }
 }

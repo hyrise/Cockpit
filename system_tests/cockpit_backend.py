@@ -56,9 +56,11 @@ class CockpitBackend:
         url = f"http://{self._backend_host}:{self._backend_port}/monitor/{property}"
         return get(url, timeout=REQUEST_TIMEOUT).json()
 
-    def get_historical_monitor_property(self, property: str, startts: int, endts: int):
+    def get_historical_monitor_property(
+        self, property: str, startts: int, endts: int, precision: int
+    ):
         """Get monitor property."""
-        url = f"http://{self._backend_host}:{self._backend_port}/monitor/{property}?startts={startts}&endts={endts}"
+        url = f"http://{self._backend_host}:{self._backend_port}/monitor/{property}?startts={startts}&endts={endts}&precision={precision}"
         return get(url, timeout=REQUEST_TIMEOUT).json()
 
     def get_control_property(self, property: str):
@@ -95,4 +97,18 @@ class CockpitBackend:
     def stop_workload(self, workload_folder: str):
         """Stop workload execution."""
         url = f"http://{self._backend_host}:{self._backend_port}/workload/{workload_folder}"
+        return delete(url, timeout=REQUEST_TIMEOUT)
+
+    def start_workers(self):
+        """Start worker pool."""
+        url = (
+            f"http://{self._backend_host}:{self._backend_port}/control/database/worker"
+        )
+        return post(url, timeout=REQUEST_TIMEOUT)
+
+    def stop_workers(self):
+        """Stop worker pool."""
+        url = (
+            f"http://{self._backend_host}:{self._backend_port}/control/database/worker"
+        )
         return delete(url, timeout=REQUEST_TIMEOUT)
