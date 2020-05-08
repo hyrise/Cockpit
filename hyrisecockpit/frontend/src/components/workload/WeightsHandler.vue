@@ -36,6 +36,7 @@ interface Props {
   initialWeights: Object;
   workload: Workload;
 }
+
 interface Data {
   weights: Ref<Object>;
   getDisplayedWorkload: (workload: Workload) => void;

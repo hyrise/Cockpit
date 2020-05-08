@@ -240,12 +240,15 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     if (response.data.length > 0) {
       workload.value = getWorkloadFromTransferred(response.data[0].folder_name);
       frequency.value = response.data[0].frequency;
+      updateWorkload(
+        workload.value,
+        frequency.value,
+        weights.value
+      ).then((response: any) => handleWeightChange(response.data.weights));
       if (frequency.value > 0) {
         actions.start.active = true;
-        updatingWorkload("start");
       } else {
         actions.pause.active = true;
-        updatingWorkload("pause");
       }
     }
   });
@@ -255,53 +258,35 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     Object.values(actions).forEach((action: any) => {
       action.active = false;
     });
+    actions[action].active = true;
   }
   function stopLoading(action: string): void {
     actions[action].loading = false;
-    actions[action].active = true;
   }
-  function updatingWorkload(action: string): void {
-    if (action === "start") {
-      updateWorkload(workload.value, frequency.value, weights.value).then(
-        (response: any) => {
-          handleWeightChange(response.data.weights);
-          stopLoading(action);
-        }
-      );
-    } else {
-      updateWorkload(workload.value, 0, weights.value).then((response: any) => {
-        handleWeightChange(response.data.weights);
-        stopLoading(action);
-      });
-    }
+  function updatingWorkload(): Promise<void> {
+    return updateWorkload(workload.value, frequency.value, weights.value);
   }
-  function startingWorkload(): void {
-    startLoading("start");
+  function startOrUpdateWorkload(action: string): void {
     getWorkloads().then((response: any) => {
       if (response.data.length === 0) {
         startWorker().then(() => {
           startWorkload(workload.value, frequency.value).then(() => {
-            updatingWorkload("start");
+            updatingWorkload().then(() => stopLoading(action));
           });
         });
       } else {
-        updatingWorkload("start");
+        updatingWorkload().then(() => stopLoading(action));
       }
     });
   }
+  function startingWorkload(): void {
+    startLoading("start");
+    startOrUpdateWorkload("start");
+  }
   function pausingWorkload(): void {
     startLoading("pause");
-    getWorkloads().then((response: any) => {
-      if (response.data.length === 0) {
-        startWorker().then(() => {
-          startWorkload(workload.value, 0).then(() => {
-            updatingWorkload("pause");
-          });
-        });
-      } else {
-        updatingWorkload("pause");
-      }
-    });
+    frequency.value = 0;
+    startOrUpdateWorkload("pause");
   }
   function stoppingWorkload(): void {
     startLoading("stop");
@@ -317,14 +302,12 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
   function handleFrequencyChange(changedFrequency: number): void {
     frequency.value = changedFrequency;
     if (actions.start.active) {
-      updateWorkload(workload.value, frequency.value, weights.value);
+      updatingWorkload();
     }
   }
   function handleWeightChange(changedWeights: Object): void {
     weights.value = changedWeights;
-    if (actions.start.active) {
-      updateWorkload(workload.value, frequency.value, weights.value);
-    }
+    updatingWorkload();
   }
   return {
     enableEqualizer: computed(

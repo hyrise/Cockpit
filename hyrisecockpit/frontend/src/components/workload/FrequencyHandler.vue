@@ -31,6 +31,7 @@ import {
 interface Props {
   initialFrequency: number;
 }
+
 interface Data {
   frequency: Ref<number>;
 }
