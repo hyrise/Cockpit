@@ -157,6 +157,9 @@ class TestSystem:
         response = self.backend.start_workload("tpch_0_1", 300)
         assert response.status_code == 200  # nosec
 
+        response = self.backend.start_workers()
+        assert response.status_code == 200  # nosec
+
         sleep(5.0)  # wait for query executions
 
         metrics = ["throughput", "latency", "queue_length"]
@@ -171,6 +174,9 @@ class TestSystem:
             assert response[0][metric][0][metric] > 0  # nosec
 
         response = self.backend.stop_workload("tpch_0_1")
+        assert response.status_code == 200  # nosec
+
+        response = self.backend.stop_workers()
         assert response.status_code == 200  # nosec
 
         self.check_stderr()

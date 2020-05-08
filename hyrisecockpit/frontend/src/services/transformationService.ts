@@ -7,7 +7,6 @@ import {
 import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
 import { colorValueDefinition } from "@/meta/colors";
-import Vue from "vue";
 
 const transformationServiceMap: Record<Metric, TransformationService> = {
   access: getAccessData,
@@ -337,103 +336,5 @@ export function useDataTransformationHelpers(): {
     getDatabaseMemoryFootprint,
     getDatabaseMainMemoryCapacity,
     getTableMemoryFootprint,
-  };
-}
-
-export function usePluginTransformationSevice(): any {
-  const { formatDateToHHMMSS } = useFormatting();
-
-  function getActivePluginData(data: any): any {
-    return data.reduce((result: string[], currentDatabase: any) => {
-      return currentDatabase.plugins
-        ? [
-            ...result,
-            ...currentDatabase.plugins.map(
-              (plugin: string) =>
-                currentDatabase.id + "_" + plugin.replace("Plugin", "")
-            ),
-          ]
-        : result;
-    }, []);
-  }
-
-  function producePluginLogString(currentLog: any) {
-    return `${currentLog.reporter} [${formatDateToHHMMSS(
-      new Date(parseInt(currentLog.timestamp))
-    )}]: ${currentLog.message}`;
-  }
-
-  function getPluginLogsData(data: any): any {
-    return data.reduce((result: any, currentDatabase: any) => {
-      result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
-        (databaseLog: string, currentLog: any) => {
-          return databaseLog + `${producePluginLogString(currentLog)}\n`;
-        },
-        ""
-      );
-      return result;
-    }, {});
-  }
-
-  function getPluginEventData(data: any): any {
-    const relevantTime = subSeconds(
-      new Date(),
-      Vue.prototype.$selectionController.selectedRange.value +
-        Vue.prototype.$selectionController.selectedPrecision.value
-    );
-    return data.reduce((result: any, currentDatabase: any) => {
-      result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
-        (databaseEvents: any, currentLog: any) => {
-          if (currentLog.timestamp > relevantTime) {
-            return {
-              timestamps: [
-                ...databaseEvents.timestamps,
-                new Date(parseInt(currentLog.timestamp)),
-              ],
-              events: [
-                ...databaseEvents.events,
-                trimString(producePluginLogString(currentLog), 50),
-              ],
-            };
-          } else {
-            return databaseEvents;
-          }
-        },
-        { timestamps: [], events: [] }
-      );
-      return result;
-    }, {});
-  }
-
-  function getPluginSettingsData(data: any): any {
-    return data.reduce((result: any, currentDatabase: any) => {
-      const allDatabaseSettings =
-        currentDatabase.plugin_settings &&
-        currentDatabase.plugin_settings.reduce(
-          (allSettings: any, currentSetting: any) => {
-            const pluginName = currentSetting.name.substring(
-              0,
-              currentSetting.name.indexOf("Plugin")
-            );
-            allSettings[pluginName]
-              ? (allSettings[pluginName] = [
-                  ...allSettings[pluginName],
-                  currentSetting,
-                ])
-              : (allSettings[pluginName] = [currentSetting]);
-            return allSettings;
-          },
-          {}
-        );
-      result[currentDatabase.id] = allDatabaseSettings;
-      return result;
-    }, {});
-  }
-
-  return {
-    getActivePluginData,
-    getPluginLogsData,
-    getPluginSettingsData,
-    getPluginEventData,
   };
 }

@@ -66,10 +66,13 @@ describe("opening workload generation", () => {
         .check({ force: true });
       cy.get(getSelector("startButton")).click();
 
+      cy.wait("@" + getPostAlias("worker"));
       cy.wait("@" + getPostAlias("workload"));
       cy.get("@" + getPostAlias("workload")).should((xhr: any) => {
         assertStartedWorkload(xhr.request.body, activeBenchmark);
       });
+
+      cy.numberOfRequests(getPostAlias("worker")).should("eq", 1);
       cy.numberOfRequests(getPostAlias("workload")).should("eq", 1);
 
       // update tmp state
@@ -91,7 +94,9 @@ describe("opening workload generation", () => {
 
       cy.get(getSelector("stopButton")).click();
 
+      cy.wait("@" + getDeleteAlias("worker"));
       cy.wait("@" + getDeleteAlias("workload"));
+      cy.numberOfRequests(getDeleteAlias("worker")).should("eq", 1);
       cy.numberOfRequests(getDeleteAlias("workload")).should("eq", 1);
 
       // update tmp state
@@ -173,10 +178,14 @@ describe("opening workload generation", () => {
         .eq(getBenchmarkIndex(activeBenchmark))
         .check({ force: true });
       cy.get(getSelector("startButton")).click();
+
+      cy.wait("@" + getPostAlias("worker"));
       cy.wait("@" + getPostAlias("workload"));
       cy.get("@" + getPostAlias("workload")).should((xhr: any) => {
         assertStartedWorkload(xhr.request.body, activeBenchmark);
       });
+
+      cy.numberOfRequests(getPostAlias("worker")).should("eq", 1);
       cy.numberOfRequests(getPostAlias("workload")).should("eq", 1);
 
       clickElement(getViewSelector("workloadGenerationButton"));
