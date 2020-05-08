@@ -111,7 +111,6 @@ export default defineComponent({
   flex-direction: column;
   margin-right: 6px;
   margin-left: 6px;
-  /*border-radius: 0px 0px 0px 0px;*/
 }
 .leftcol {
   padding-right: 8px;
