@@ -7,37 +7,41 @@ import matplotlib.dates as mdate
 
 def default_function(points: List, column_name: str, parameter):
     """Doesn't change the input value."""
-    time = [int(point["time"] / 1_000_000_000) for point in points]
-    metric_values = [point[column_name] for point in points]
-    secs = mdate.epoch2num(time)
+    sec_values = [int(point["time"] / 1_000_000_000) for point in points]
+    formatted_time = mdate.epoch2num(sec_values)
 
-    return secs, metric_values
+    metric_values = {column_name: [point[column_name] for point in points]}
+
+    return formatted_time, metric_values, column_name
 
 
 def ns_to_ms(points: List, column_name: str, parameter):
     """Convert ns to ms."""
-    time = [int(point["time"] / 1_000_000_000) for point in points]
-    metric_values = [point[column_name] / 1_000_000 for point in points]
-    secs = mdate.epoch2num(time)
+    sec_values = [int(point["time"] / 1_000_000_000) for point in points]
+    formatted_time = mdate.epoch2num(sec_values)
 
-    return secs, metric_values
+    metric_values = {column_name: [point[column_name] / 1_000_000 for point in points]}
+
+    return formatted_time, metric_values, column_name
 
 
 def calculate_footprint(points: List, column_name: str, parameter):
     """Convert ns to ms."""
-    time = [int(point["time"] / 1_000_000_000) for point in points]
-    secs = mdate.epoch2num(time)
+    sec_values = [int(point["time"] / 1_000_000_000) for point in points]
+    formatted_time = mdate.epoch2num(sec_values)
 
-    metric_values = []
+    footprint_values = []
     for point in points:
         footprint = 0
         storage = loads(point["storage_meta_information"])
         for table_name in storage.keys():
             for column_name in storage[table_name]["data"].keys():
                 footprint = footprint + storage[table_name]["data"][column_name]["size"]
-        metric_values.append(footprint / 1_000_000)
+        footprint_values.append(footprint / 1_000_000)
 
-    return secs, metric_values
+    metric_values = {"Total memory footprint": footprint_values}
+
+    return formatted_time, metric_values, "Total Footprint"
 
 
 def calculate_footprint_for_table(  # noqa
@@ -48,8 +52,8 @@ def calculate_footprint_for_table(  # noqa
     def sort_function(tuple):
         return tuple[1][0] if len(tuple[1]) > 0 else 0.0
 
-    time = [int(point["time"] / 1_000_000_000) for point in points]
-    secs = mdate.epoch2num(time)
+    sec_values = [int(point["time"] / 1_000_000_000) for point in points]
+    formatted_time = mdate.epoch2num(sec_values)
 
     available_column_names = set()
     variable = []
@@ -82,7 +86,11 @@ def calculate_footprint_for_table(  # noqa
     footprint_items = list(column_footprints.items())
     footprint_items.sort(key=sort_function, reverse=True)
 
-    return secs, dict(footprint_items)
+    return (
+        formatted_time,
+        dict(footprint_items),
+        f"Footprint ({table_name})",
+    )
 
 
 def calculate_access_frequency_for_table(  # noqa
@@ -93,8 +101,8 @@ def calculate_access_frequency_for_table(  # noqa
     def sort_function(tuple):
         return tuple[1][0] if len(tuple[1]) > 0 else 0.0
 
-    time = [int(point["time"] / 1_000_000_000) for point in points]
-    secs = mdate.epoch2num(time)
+    sec_values = [int(point["time"] / 1_000_000_000) for point in points]
+    formatted_time = mdate.epoch2num(sec_values)
 
     available_column_names = set()
 
@@ -125,7 +133,7 @@ def calculate_access_frequency_for_table(  # noqa
     access_items = list(column_accesses.items())
     access_items.sort(key=sort_function, reverse=True)
 
-    return secs, dict(access_items)
+    return formatted_time, dict(access_items), f"Access frequency ({table_name})"
 
 
 def sort_detailed_latency_points(points: List, column_name: str, parameter):
@@ -147,4 +155,4 @@ def sort_detailed_latency_points(points: List, column_name: str, parameter):
 
     latency = [point["latency"] / 1_000_000 for point in points]
 
-    return labels, latency
+    return labels, latency, "Average latency of the queries"

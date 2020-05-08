@@ -12,6 +12,9 @@ class Exporter:
         metric_config = config[metric]
 
         column_name = metric_config["column_name"]
+        x_label = metric_config["x_label"]
+        y_label = metric_config["y_label"]
+
         influx_function = metric_config["influx_function"]
         points_function = metric_config["points_function"]
         plot_function = metric_config["plot_function"]
@@ -24,6 +27,6 @@ class Exporter:
             endts,
             parameter,
         )
-        x_values, y_values = points_function(points, column_name, parameter)  # type: ignore
+        x_values, y_values, title = points_function(points, column_name, parameter)  # type: ignore
 
-        plot_function(x_values, y_values, metric, metric_config["x_label"], metric_config["y_label"], parameter)  # type: ignore
+        plot_function(x_values, y_values, x_label, y_label, title)  # type: ignore

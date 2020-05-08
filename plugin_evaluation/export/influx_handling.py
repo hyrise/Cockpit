@@ -13,14 +13,14 @@ from plugin_evaluation.settings import (
 
 def get_metric_data_with_fill(
     table_name: str,
-    metric: str,
+    column_name: str,
     database: str,
     startts: int,
     endts: int,
     parameter=None,
 ):
     """Get metric data for provided time range, fill with 0 if points missed."""
-    query: str = f"""SELECT MEAN({metric}) AS {metric}
+    query: str = f"""SELECT MEAN({column_name}) AS {column_name}
         FROM {table_name}
         WHERE time >= $startts
         AND time < $endts
@@ -41,14 +41,14 @@ def get_metric_data_with_fill(
 
 def get_metric_data(
     table_name: str,
-    metric: str,
+    column_name: str,
     database: str,
     startts: int,
     endts: int,
     parameter=None,
 ):
     """Get metric data for provided time range."""
-    query: str = f"""SELECT {metric}
+    query: str = f"""SELECT {column_name}
         FROM {table_name}
         WHERE time >= $startts
         AND time < $endts"""
@@ -67,7 +67,7 @@ def get_metric_data(
 
 def get_detailed_latency_information(
     table_name: str,
-    metric: str,
+    column_name: str,
     database: str,
     startts: int,
     endts: int,
@@ -101,13 +101,18 @@ def get_detailed_latency_information(
 
 
 def get_query_latency(
-    table_name: str, metric: str, database: str, startts: int, endts: int, parameter
+    table_name: str,
+    column_name: str,
+    database: str,
+    startts: int,
+    endts: int,
+    parameter,
 ):
     """Get latency of the provided query."""
     benchmark = parameter[0]
     query_number = parameter[1]
 
-    query: str = f"""SELECT MEAN("latency") AS "latency"
+    query: str = f"""SELECT MEAN("latency") AS "query_latency"
         FROM successful_queries
         WHERE time > $startts
         AND time <= $endts
@@ -126,4 +131,4 @@ def get_query_latency(
 
     points = list(result[table_name, None])
 
-    return [point for point in points if point["latency"] is not None]
+    return [point for point in points if point["query_latency"] is not None]

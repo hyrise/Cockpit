@@ -6,11 +6,7 @@ from plugin_evaluation.export.influx_handling import (
     get_metric_data_with_fill,
     get_query_latency,
 )
-from plugin_evaluation.export.plot_handling import (
-    plot_bar_chart,
-    plot_line_chart,
-    plot_line_chart_with_multiple_metrics,
-)
+from plugin_evaluation.export.plot_handling import plot_bar_chart, plot_line_chart
 from plugin_evaluation.export.points_handling import (
     calculate_access_frequency_for_table,
     calculate_footprint,
@@ -82,7 +78,7 @@ config = {
         "y_label": "MB",
         "influx_function": get_metric_data,
         "points_function": calculate_footprint_for_table,
-        "plot_function": plot_line_chart_with_multiple_metrics,
+        "plot_function": plot_line_chart,
     },
     "table access frequency": {
         "table_name": "chunks_data",
@@ -91,11 +87,11 @@ config = {
         "y_label": "Number of accesses",
         "influx_function": get_metric_data,
         "points_function": calculate_access_frequency_for_table,
-        "plot_function": plot_line_chart_with_multiple_metrics,
+        "plot_function": plot_line_chart,
     },
     "query latency": {
         "table_name": "successful_queries",
-        "column_name": "latency",
+        "column_name": "query_latency",
         "x_label": "Time",
         "y_label": "ms",
         "influx_function": get_query_latency,

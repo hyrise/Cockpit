@@ -10,33 +10,7 @@ absolute_report_directory_path = str(Path(__file__).parent.parent.absolute())
 
 
 def plot_line_chart(
-    time_values: List,
-    metric_values: List,
-    metric: str,
-    x_label: str,
-    y_label: str,
-    parameter=None,
-):
-    """Plot line chart to file."""
-    figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
-    plt.title(f"{metric}")
-    plt.ticklabel_format(style="plain")
-    plt.ylim(bottom=0.0, top=np.amax(metric_values) * 1.3)
-    plt.plot_date(time_values, metric_values, "-b", label=f"{metric}")
-    plt.ylabel(f"{y_label}")
-    plt.xlabel(f"{x_label}")
-    plt.legend()
-
-    plt.savefig(f"{absolute_report_directory_path}/report/{metric}.png", dpi=300)
-
-
-def plot_line_chart_with_multiple_metrics(
-    time_values: List,
-    metric_values: Dict,
-    metric: str,
-    x_label: str,
-    y_label: str,
-    parameter,
+    time_values: List, metric_values: Dict, x_label: str, y_label: str, title: str,
 ):
     """Plot line chart to file."""
     figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
@@ -45,7 +19,7 @@ def plot_line_chart_with_multiple_metrics(
 
     maximum_value = np.amax([np.amax(values) for values in metric_values.values()])
 
-    plt.title(f"{metric} ({parameter})")
+    plt.title(f"{title}")
     plt.ticklabel_format(style="plain")
     plt.ylim(bottom=0.0, top=maximum_value * 1.1)
 
@@ -63,32 +37,25 @@ def plot_line_chart_with_multiple_metrics(
     plt.xlabel(f"{x_label}")
     plt.legend(loc="upper right")
 
-    plt.savefig(
-        f"{absolute_report_directory_path}/report/{metric} ({parameter}).png", dpi=300
-    )
+    plt.savefig(f"{absolute_report_directory_path}/report/{title}.png", dpi=300)
 
 
 def plot_bar_chart(
-    labels: List,
-    metric_values: List,
-    metric: str,
-    x_label: str,
-    y_label: str,
-    parameter=None,
+    labels: List, metric_values: List, x_label: str, y_label: str, title: str,
 ):
     """Plot line chart to file."""
     max_value = np.amax(metric_values)
     figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
-    plt.title(f"{metric}")
+    plt.title(f"{title}")
     plt.ticklabel_format(style="plain")
     plt.xticks(rotation=45, ha="right")
     plt.subplots_adjust(bottom=0.15)
     plt.ylim(bottom=0.0, top=max_value * 1.3)
-    plt.bar(labels, metric_values, label=f"{metric}")
+    plt.bar(labels, metric_values, label=f"{title}")
     for index, value in enumerate(metric_values):
         plt.text(index - 0.25, value + max_value * 0.02, ("%.1f" % value), rotation=45)
     plt.ylabel(f"{y_label}")
     plt.xlabel(f"{x_label}")
     plt.legend()
 
-    plt.savefig(f"{absolute_report_directory_path}/report/{metric}.png", dpi=300)
+    plt.savefig(f"{absolute_report_directory_path}/report/{title}.png", dpi=300)
