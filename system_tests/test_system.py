@@ -77,6 +77,7 @@ class TestSystem:
 
     def test_database_manager_initialization(self):
         """Ensure initialized database manager has no monitor metrics."""
+        self.check_stderr()
         metrics = [
             "chunks",
             "storage",
