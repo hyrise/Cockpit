@@ -9,12 +9,29 @@ from plugin_evaluation.utils.figlet import intro
 from plugin_evaluation.utils.user_interface import DoneStatus, show_bar
 
 database_id = "momentum"
-workload_execution_time = 100
+workload_execution_time = 10
 plugin = "Clustering"
 
+metrics = [
+    "throughput",
+    "latency",
+    "queue_length",
+    "cpu_process_usage",
+    "footprint",
+    "detailed latency",
+]
+
+metrics_with_parameters = [
+    ("table footprint", "customer_tpch_0_1"),
+    ("table access frequency", "customer_tpch_0_1"),
+    ("table access frequency", "lineitem_tpch_0_1"),
+]
+
+#############################################################
 
 print(intro)
 
+exporter = Exporter()
 cockpit = Cockpit()  # type: ignore
 cockpit.start()
 
@@ -57,19 +74,7 @@ cockpit.shutdown()
 show_bar("Cockpit shutdown...", 3)
 
 with DoneStatus("Export..."):
-    exporter = Exporter()
-    exporter.plot_metric("throughput", "momentum", startts, endts)
-    exporter.plot_metric("latency", "momentum", startts, endts)
-    exporter.plot_metric("queue_length", "momentum", startts, endts)
-    exporter.plot_metric("cpu_process_usage", "momentum", startts, endts)
-    exporter.plot_metric("footprint", "momentum", startts, endts)
-    exporter.plot_metric("detailed latency", "momentum", startts, endts)
-    exporter.plot_metric(
-        "table footprint", "momentum", startts, endts, "customer_tpch_0_1"
-    )
-    exporter.plot_metric(
-        "table access frequency", "momentum", startts, endts, "customer_tpch_0_1"
-    )
-    exporter.plot_metric(
-        "table access frequency", "momentum", startts, endts, "lineitem_tpch_0_1"
-    )
+    for metric in metrics:
+        exporter.plot_metric(metric, "momentum", startts, endts)
+    for metric, parameter in metrics_with_parameters:
+        exporter.plot_metric(metric, "momentum", startts, endts, parameter)
