@@ -2,11 +2,18 @@
   <v-dialog v-model="open" persistent max-width="900px">
     <v-card id="workload-generation">
       <v-system-bar :height="50" color="secondary">
-        <v-tabs v-model="tab" background-color="secondary">
+        <v-tabs v-model="tab" background-color="grey lighten-1">
           <v-tab> Workload Settings </v-tab>
-          <v-tab v-if="actions.start.active || actions.pause.active">
-            Equalizer
-          </v-tab>
+          <v-tooltip right>
+            <template v-slot:activator="{ on }">
+              <div v-on="on">
+                <v-tab :disabled="!enableEqualizer"> Equalizer </v-tab>
+              </div>
+            </template>
+            <span>{{
+              enableEqualizer ? "Customize workload" : "Start a workload first"
+            }}</span>
+          </v-tooltip>
         </v-tabs>
         <v-spacer></v-spacer>
         <v-icon @click="$emit('close')">mdi-close</v-icon>
@@ -35,17 +42,22 @@
                     <v-col cols="1">
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on }">
-                          <v-icon
-                            v-on="on"
-                            class="mt-8"
-                            :disabled="
-                              !(actions.start.active || actions.pause.active)
-                            "
-                            @click="tab = 1"
-                            >mdi-cog-outline</v-icon
-                          >
+                          <div v-on="on">
+                            <v-icon
+                              class="mt-8"
+                              :disabled="!enableEqualizer"
+                              @click="tab = 1"
+                              >mdi-cog-outline</v-icon
+                            >
+                          </div>
                         </template>
-                        <span>Customize</span>
+                        <span>
+                          {{
+                            enableEqualizer
+                              ? "Customize workload"
+                              : "Start a workload first"
+                          }}
+                        </span>
                       </v-tooltip>
                     </v-col>
                   </v-row>
@@ -133,6 +145,7 @@ interface WorkloadHandler {
 }
 
 interface WorkloadAction {
+  enableEqualizer: Ref<boolean>;
   frequency: Ref<number>;
   actions: Record<string, { active: boolean; loading: boolean }>;
   weights: Ref<Object>;
@@ -314,6 +327,9 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     }
   }
   return {
+    enableEqualizer: computed(
+      () => actions.start.active || actions.pause.active
+    ),
     frequency,
     actions,
     weights,
@@ -425,3 +441,10 @@ function useWorkloadDataHandler(context: SetupContext): WorkloadDataHandler {
   };
 }
 </script>
+<style scoped>
+.v-tab {
+  height: 48px;
+  text-transform: none !important;
+  font-size: medium;
+}
+</style>

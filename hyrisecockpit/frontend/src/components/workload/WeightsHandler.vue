@@ -2,23 +2,23 @@
   <span>
     <p class="subtitle-1 font-weight-medium">
       {{ getDisplayedWorkload(workload) }}
-      <v-row>
-        <v-slider
-          v-model="weights[key]"
-          v-for="(weight, key) in weights"
-          :key="key"
-          :label="key"
-          :value="weight"
-          thumb-label
-          thumb-size="20"
-          min="0"
-          max="200"
-          vertical
-          @click="$emit('change', weights)"
-        >
-        </v-slider>
-      </v-row>
     </p>
+    <v-row>
+      <v-slider
+        v-model="weights[key]"
+        v-for="(weight, key) in weights"
+        :key="key"
+        :label="key"
+        :value="weight"
+        thumb-label
+        thumb-size="20"
+        min="0"
+        max="200"
+        vertical
+        @click="$emit('change', weights)"
+      >
+      </v-slider>
+    </v-row>
   </span>
 </template>
 <script lang="ts">
