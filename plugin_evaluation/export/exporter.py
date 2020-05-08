@@ -17,7 +17,12 @@ class Exporter:
         plot_function = metric_config["plot_function"]
 
         points = influx_function(  # type: ignore
-            metric_config["table_name"], column_name, database, startts, endts,
+            metric_config["table_name"],
+            column_name,
+            database,
+            startts,
+            endts,
+            parameter,
         )
         x_values, y_values = points_function(points, column_name, parameter)  # type: ignore
 

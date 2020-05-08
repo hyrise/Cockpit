@@ -4,6 +4,7 @@ from plugin_evaluation.export.influx_handling import (
     get_detailed_latency_information,
     get_metric_data,
     get_metric_data_with_fill,
+    get_query_latency,
 )
 from plugin_evaluation.export.plot_handling import (
     plot_bar_chart,
@@ -91,5 +92,14 @@ config = {
         "influx_function": get_metric_data,
         "points_function": calculate_access_frequency_for_table,
         "plot_function": plot_line_chart_with_multiple_metrics,
+    },
+    "query latency": {
+        "table_name": "successful_queries",
+        "column_name": "latency",
+        "x_label": "Time",
+        "y_label": "ms",
+        "influx_function": get_query_latency,
+        "points_function": ns_to_ms,
+        "plot_function": plot_line_chart,
     },
 }

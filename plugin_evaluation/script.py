@@ -25,6 +25,7 @@ metrics_with_parameters = [
     ("table footprint", "customer_tpch_0_1"),
     ("table access frequency", "customer_tpch_0_1"),
     ("table access frequency", "lineitem_tpch_0_1"),
+    ("query latency", ("tpch_0_1", "06")),
 ]
 
 #############################################################

@@ -12,7 +12,12 @@ from plugin_evaluation.settings import (
 
 
 def get_metric_data_with_fill(
-    table_name: str, metric: str, database: str, startts: int, endts: int
+    table_name: str,
+    metric: str,
+    database: str,
+    startts: int,
+    endts: int,
+    parameter=None,
 ):
     """Get metric data for provided time range, fill with 0 if points missed."""
     query: str = f"""SELECT MEAN({metric}) AS {metric}
@@ -35,7 +40,12 @@ def get_metric_data_with_fill(
 
 
 def get_metric_data(
-    table_name: str, metric: str, database: str, startts: int, endts: int
+    table_name: str,
+    metric: str,
+    database: str,
+    startts: int,
+    endts: int,
+    parameter=None,
 ):
     """Get metric data for provided time range."""
     query: str = f"""SELECT {metric}
@@ -56,7 +66,12 @@ def get_metric_data(
 
 
 def get_detailed_latency_information(
-    table_name: str, metric: str, database: str, startts: int, endts: int
+    table_name: str,
+    metric: str,
+    database: str,
+    startts: int,
+    endts: int,
+    parameter=None,
 ):
     """Get metric data for provided time range."""
     query: str = """SELECT MEAN("latency") AS "latency"
@@ -83,3 +98,32 @@ def get_detailed_latency_information(
         for table, tags in list(result.keys())
     ]
     return detailed_latency
+
+
+def get_query_latency(
+    table_name: str, metric: str, database: str, startts: int, endts: int, parameter
+):
+    """Get latency of the provided query."""
+    benchmark = parameter[0]
+    query_number = parameter[1]
+
+    query: str = f"""SELECT MEAN("latency") AS "latency"
+        FROM successful_queries
+        WHERE time > $startts
+        AND time <= $endts
+        AND benchmark = '{benchmark}'
+        AND query_no = '{query_number}'
+        GROUP BY time(1s);"""
+
+    client = InfluxDBClient(STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD)
+    result = client.query(
+        query,
+        database=database,
+        bind_params={"startts": startts, "endts": endts},
+        epoch=True,
+    )
+    client.close()
+
+    points = list(result[table_name, None])
+
+    return [point for point in points if point["latency"] is not None]
