@@ -4,8 +4,7 @@
       :conditions="[$databaseController.databasesUpdated]"
       :evaluations="[false]"
     />
-    <div v-if="$databaseController.databasesUpdated.value" class="mx-6">
-      <database-system-details :selected-databases="selectedDatabases" />
+    <div v-if="$databaseController.databasesUpdated.value" class="mx-2">
       <unselected-warning :condition="selectedDatabases">
         <template #message>
           No databases selected.
@@ -16,6 +15,7 @@
           No metrics selected.
         </template>
       </unselected-warning>
+      <database-system-details :selected-databases="selectedDatabases" />
       <metrics-comparison-table
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"
@@ -60,9 +60,3 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
-.select {
-  margin-top: 0.5%;
-  margin-bottom: 0.5%;
-}
-</style>

@@ -4,7 +4,7 @@
       :conditions="[$databaseController.databasesUpdated]"
       :evaluations="[false]"
     />
-    <div v-if="$databaseController.databasesUpdated.value" class="mx-6">
+    <div v-if="$databaseController.databasesUpdated.value" class="mx-2">
       <database-details-panel
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"
@@ -63,12 +63,3 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
-.select {
-  margin-top: 0.5%;
-  margin-bottom: 0.5%;
-}
-.list {
-  margin-top: 1%;
-}
-</style>

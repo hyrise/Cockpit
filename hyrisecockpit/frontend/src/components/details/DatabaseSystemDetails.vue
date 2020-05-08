@@ -1,69 +1,56 @@
 <template>
   <div class="flex">
-    <v-card
+    <div
       id="database-system-details"
-      class="card"
-      :color="database.color"
       :style="databaseFlex"
       v-for="database in databases"
       :key="database.id"
     >
-      <v-container fluid>
-        <v-row id="database-id" justify="center" class="top-entry" no-gutters>
-          <database-chip :database-id="database.id" />
-        </v-row>
-
-        <v-divider class="divider" />
-
-        <v-row no-gutters>
-          <v-col class="entry">
-            <v-icon left> mdi-desktop-classic</v-icon>
-            <small>Host:</small>
+      <v-card class="card" :color="database.color" tile>
+        <v-row>
+          <v-col id="database-host" class="leftcol">
+            <v-card-title class="ml-6 font-weight-regular white--text">{{
+              database.systemDetails.host
+            }}</v-card-title>
+            <v-card-text class="ml-6 font-weight-regular white--text"
+              >Host</v-card-text
+            >
           </v-col>
-          <v-col id="database-host" class="entry body-2">
-            {{ database.systemDetails.host }}
+          <v-col id="database-memory-capacity">
+            <v-card-title class="font-weight-light white--text"
+              >{{ database.systemDetails.memoryCapacity }} GB</v-card-title
+            >
+            <v-card-text class="font-weight-light white--text"
+              >Data Size</v-card-text
+            >
           </v-col>
-        </v-row>
-
-        <v-row no-gutters>
-          <v-col class="entry">
-            <v-icon left> mdi-memory</v-icon>
-            <small>Memory capacity:</small>
+          <v-col id="database-numbers-cpu">
+            <v-card-title class="font-weight-light white--text">{{
+              database.systemDetails.numberOfCPUs
+            }}</v-card-title>
+            <v-card-text class="font-weight-light white--text"
+              >Number of CPUs</v-card-text
+            >
           </v-col>
-          <v-col id="database-memory-capacity" class="entry body-2">
-            {{ database.systemDetails.memoryCapacity }} GB
+          <v-col id="database-number-workers">
+            <v-card-title class="font-weight-light white--text">{{
+              database.systemDetails.numberOfWorkers
+            }}</v-card-title>
+            <v-card-text class="font-weight-light white--text"
+              >Number of Workers</v-card-text
+            >
           </v-col>
-        </v-row>
-
-        <v-row no-gutters>
-          <v-col class="entry">
-            <v-icon left> mdi-shoe-print</v-icon>
-            <small>Memory footprint:</small>
-          </v-col>
-          <v-col id="database-memory-footprint" class="entry body-2">
-            {{ database.systemDetails.memoryFootprint }} MB
-          </v-col>
-        </v-row>
-        <v-row no-gutters>
-          <v-col class="entry">
-            <v-icon left> mdi-cpu-64-bit</v-icon>
-            <small>Number of CPUs:</small>
-          </v-col>
-          <v-col id="database-number-cpus" class="entry body-2">
-            {{ database.systemDetails.numberOfCPUs }}
+          <v-col id="database-memory-footprint" class="mr-2">
+            <v-card-title class="mr-6 font-weight-light white--text"
+              >{{ database.systemDetails.memoryFootprint }} MB</v-card-title
+            >
+            <v-card-text class="mr-10 font-weight-light white--text"
+              >Process Memory (RSS)</v-card-text
+            >
           </v-col>
         </v-row>
-        <v-row no-gutters>
-          <v-col class="entry">
-            <v-icon left> mdi-account-hard-hat </v-icon>
-            <small>Number of workers:</small>
-          </v-col>
-          <v-col id="database-number-workers" class="entry body-2">
-            {{ database.systemDetails.numberOfWorkers }}
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-card>
+      </v-card>
+    </div>
   </div>
 </template>
 
@@ -113,24 +100,23 @@ export default defineComponent({
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin-top: 6px;
+  margin-bottom: 0px;
 }
-.entry {
-  margin-top: 0%;
-  margin-left: 0%;
-}
-.top-entry {
-  margin-left: 0%;
+.col {
+  padding: 0px;
 }
 .card {
-  margin-bottom: 0.5%;
-  margin-top: 1%;
-  margin-right: 0.5%;
+  display: flex;
+  flex-direction: column;
+  margin-right: 6px;
+  margin-left: 6px;
+  /*border-radius: 0px 0px 0px 0px;*/
 }
-.divider {
-  margin-top: 0.5%;
-  margin-bottom: 1%;
+.leftcol {
+  padding-right: 8px;
 }
-.entry.col {
-  max-width: 40%;
+.v-card__title {
+  padding-bottom: 6px;
 }
 </style>
