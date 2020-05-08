@@ -25,6 +25,23 @@ def ns_to_ms(points: List, column_name: str, parameter):
     return formatted_time, metric_values, column_name
 
 
+def handle_query_latency(points: List, column_name: str, parameter):
+    """Convert ns to ms."""
+    benchmark = parameter[0]
+    query_number = parameter[1]
+
+    benchmark_name = benchmark.split("_")[0].upper()
+    scale_factor = ".".join(f"{number}" for number in benchmark.split("_")[1:])
+    label = f"{benchmark_name}({scale_factor})-{query_number}"
+
+    sec_values = [int(point["time"] / 1_000_000_000) for point in points]
+    formatted_time = mdate.epoch2num(sec_values)
+
+    metric_values = {label: [point[column_name] / 1_000_000 for point in points]}
+
+    return formatted_time, metric_values, f"Query latency {label}"
+
+
 def calculate_footprint(points: List, column_name: str, parameter):
     """Convert ns to ms."""
     sec_values = [int(point["time"] / 1_000_000_000) for point in points]

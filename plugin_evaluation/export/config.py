@@ -12,6 +12,7 @@ from plugin_evaluation.export.points_handling import (
     calculate_footprint,
     calculate_footprint_for_table,
     default_function,
+    handle_query_latency,
     ns_to_ms,
     sort_detailed_latency_points,
 )
@@ -95,7 +96,7 @@ config = {
         "x_label": "Time",
         "y_label": "ms",
         "influx_function": get_query_latency,
-        "points_function": ns_to_ms,
+        "points_function": handle_query_latency,
         "plot_function": plot_line_chart,
     },
 }
