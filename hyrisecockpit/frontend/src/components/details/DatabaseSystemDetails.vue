@@ -96,26 +96,37 @@ export default defineComponent({
 });
 </script>
 <style>
-.flex {
+#comparison-page .flex,
+#overview-page .flex {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 6px;
   margin-bottom: 0px;
 }
-.col {
+#comparison-page .col,
+#overview-page .col {
   padding: 0px;
 }
-.card {
+#comparison-page .card,
+#overview-page .card {
   display: flex;
   flex-direction: column;
   margin-right: 6px;
   margin-left: 6px;
 }
-.leftcol {
+#comparison-page .card {
+  border-radius: 4px 4px 0px 0px;
+}
+#overview-page .card {
+  border-radius: 4px;
+}
+#comparison-page .leftcol,
+#overview-page .leftcol {
   padding-right: 8px;
 }
-.v-card__title {
+#comparison-page .v-card__title,
+#overview-page .v-card__title {
   padding-bottom: 6px;
 }
 </style>

@@ -115,7 +115,6 @@ export default defineComponent({
 .card {
   margin-left: 6px;
   margin-right: 6px;
-  border-radius: 0px;
 }
 .card-title {
   padding-bottom: 0 !important;
@@ -140,5 +139,8 @@ export default defineComponent({
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
+}
+#comparison-page .card {
+  border-radius: 0px;
 }
 </style>

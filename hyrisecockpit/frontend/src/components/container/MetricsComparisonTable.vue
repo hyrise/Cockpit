@@ -18,6 +18,11 @@
           :max-chart-width="maxChartWidth"
         />
       </div>
+      <v-card tile class="column-bottom-border" :color="database.color"
+        ><v-card-text class="white--text">{{
+          database.id
+        }}</v-card-text></v-card
+      >
     </div>
   </div>
 </template>
@@ -85,5 +90,9 @@ export default defineComponent({
 .metrics-column {
   display: flex;
   flex-direction: column;
+}
+.column-bottom-border {
+  margin: 0px 6px 6px 6px;
+  border-radius: 0px 0px 4px 4px;
 }
 </style>
