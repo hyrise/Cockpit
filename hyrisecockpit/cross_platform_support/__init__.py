@@ -1,1 +1,1 @@
-"""Package to support multiple OS."""
+"""Package containing cross platform support modules."""

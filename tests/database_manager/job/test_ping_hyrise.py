@@ -1,5 +1,4 @@
 """Tests for the ping hyrise job."""
-
 from psycopg2 import DatabaseError, InterfaceError
 from pytest import mark
 
