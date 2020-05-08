@@ -27,13 +27,6 @@ services:
     ports:
       - "8002:8002"
       - "8003:8003"
-    
-  influxdb:
-    image: influxdb:alpine
-    volumes:
-      - ./influxdb:/var/lib/influxdb
-    ports:
-      - "8086:8086"
 
   frontend:
     image: frontend:buster
@@ -49,9 +42,4 @@ services:
       - ./cached_tables:/usr/local/hyrise/cached_tables
     ports:
       - "5432:5432"
-
-  curler:
-    image: curlimages/curl:7.70.0
-    command: sleep infinity    
-    
       
