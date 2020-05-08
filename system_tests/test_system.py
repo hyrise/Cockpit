@@ -160,12 +160,12 @@ class TestSystem:
         response = self.backend.start_workers()
         assert response.status_code == 200  # nosec
 
-        sleep(6.0)  # wait for query executions
+        sleep(4.0)  # wait for query executions
 
         metrics = ["throughput", "latency", "queue_length"]
         for metric in metrics:
             timestamp: int = time_ns()
-            offset: int = 3_000_000_000
+            offset: int = 1_000_000_000
             startts: int = timestamp - offset - 1_000_000_000
             endts: int = timestamp - offset
             response = self.backend.get_historical_monitor_property(
