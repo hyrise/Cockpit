@@ -49,6 +49,7 @@ with DoneStatus("Starting a workload..."):
     cockpit.backend.start_workload("tpch_0_1", 300)
     cockpit.backend.wait_for_unblocked_status()
 
+sleep(1.0)
 startts = time_ns()
 
 # with DoneStatus(f"Activate {plugin} plugin..."):  # noqa
@@ -73,6 +74,10 @@ with DoneStatus("Removing the database..."):
 cockpit.shutdown()
 
 show_bar("Cockpit shutdown...", 3)
+
+
+startts = int(startts / 1_000_000_000) * 1_000_000_000
+endts = int(endts / 1_000_000_000) * 1_000_000_000
 
 with DoneStatus("Export..."):
     for metric in metrics:
