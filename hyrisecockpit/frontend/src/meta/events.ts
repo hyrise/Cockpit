@@ -31,14 +31,34 @@ export function useMetricEvents(): {
 }
 
 export function useWindowEvents(): {
+  emitContiniousRangeResetEvent: () => void;
   emitPageChangedEvent: (page: PageName) => void;
+  emitStaticRangeSetEvent: (
+    startDate: Date,
+    endDate: Date,
+    precision: number
+  ) => void;
 } {
   function emitPageChangedEvent(page: PageName): void {
     eventBus.$emit("PAGE_CHANGED", page);
   }
 
+  function emitStaticRangeSetEvent(
+    startDate: Date,
+    endDate: Date,
+    precision: number
+  ): void {
+    eventBus.$emit("STATIC_RANGE_SET", { startDate, endDate, precision });
+  }
+
+  function emitContiniousRangeResetEvent(): void {
+    eventBus.$emit("CONTINUOUS_RANGE_RESET");
+  }
+
   return {
+    emitContiniousRangeResetEvent,
     emitPageChangedEvent,
+    emitStaticRangeSetEvent,
   };
 }
 

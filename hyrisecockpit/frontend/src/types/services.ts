@@ -1,10 +1,11 @@
 import { Ref } from "@vue/composition-api";
 import { Workload } from "./workloads";
 import { Metric } from "./metrics";
+import { StaticRange } from "@/controller/metricController";
 
 export interface MetricService {
   data: any;
-  getDataIfReady: (refetch?: boolean) => void;
+  getDataIfReady: (refetch?: boolean, range?: StaticRange) => void;
   maxValues: Record<Metric, number>;
   timestamps: Ref<any>;
 }

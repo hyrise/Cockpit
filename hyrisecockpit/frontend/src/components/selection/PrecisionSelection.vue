@@ -4,6 +4,7 @@
     v-model="selectedPrecision"
     :items="selectablePrecisions"
     label="Aggregation Interval"
+    :disabled="disabled"
   />
 </template>
 
@@ -23,26 +24,46 @@ interface Data {
   selectablePrecisions: any;
 }
 
-export default defineComponent({
-  setup(props: {}, context: SetupContext): Data {
-    const { formatMinutesToSeconds } = useFormatting();
+interface Props {
+  availablePrecisions: { text: string; value: number }[];
+  disabled: boolean;
+  global: boolean;
+  maxPrecision: number;
+}
 
-    const availablePrecisions = [
-      { text: "1 second", value: 1 },
-      { text: "5 seconds", value: 5 },
-      { text: "15 seconds", value: 15 },
-      { text: "30 seconds", value: 30 },
-      { text: "1 minute", value: formatMinutesToSeconds(1) },
-      { text: "5 minutes", value: formatMinutesToSeconds(5) },
-    ];
+export default defineComponent({
+  props: {
+    availablePrecisions: {
+      type: Array,
+      default: () => [],
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    global: {
+      type: Boolean,
+      default: true,
+    },
+    maxPrecision: {
+      type: Number,
+      default: null,
+    },
+  },
+  setup(props: Props, context: SetupContext): Data {
+    const localPrecision = ref(0);
 
     const selectablePrecisions = computed(() =>
-      availablePrecisions.filter(
+      props.availablePrecisions.filter(
         (precision) =>
           precision.value <
-            context.root.$selectionController.selectedRange.value &&
+            (props.global
+              ? context.root.$selectionController.selectedRange.value
+              : props.maxPrecision) &&
           precision.value >=
-            context.root.$selectionController.selectedRange.value / 60
+            (props.global
+              ? context.root.$selectionController.selectedRange.value / 60
+              : 0)
       )
     );
 
@@ -51,16 +72,30 @@ export default defineComponent({
       if (
         !selectablePrecisions.value
           .map((elem) => elem.value)
-          .includes(context.root.$selectionController.selectedPrecision.value)
+          .includes(
+            props.global
+              ? context.root.$selectionController.selectedPrecision.value
+              : localPrecision.value
+          )
       ) {
-        context.root.$selectionController.selectedPrecision.value =
-          selectablePrecisions.value[0].value;
+        if (props.global) {
+          context.root.$selectionController.selectedPrecision.value =
+            selectablePrecisions.value[0].value;
+        } else {
+          localPrecision.value = selectablePrecisions.value[0].value;
+        }
       }
+    });
+
+    watch(localPrecision, () => {
+      context.emit("precisionChanged", localPrecision.value);
     });
 
     return {
       selectablePrecisions,
-      selectedPrecision: context.root.$selectionController.selectedPrecision,
+      selectedPrecision: props.global
+        ? context.root.$selectionController.selectedPrecision
+        : localPrecision,
     };
   },
 });

@@ -5,11 +5,18 @@ import { MetricService } from "@/types/services";
 import { MetricController } from "@/types/controller";
 import { getMetricRequestTime, getMetricMetadata } from "@/meta/metrics";
 import Vue from "vue";
+import { eventBus } from "@/plugins/eventBus";
 
 type Interval = {
   id: number | undefined;
   runningState: boolean;
   time: number;
+};
+
+export type StaticRange = {
+  startDate: Date;
+  endDate: Date;
+  precision: number;
 };
 
 export function useMetricController(): MetricController {
@@ -39,6 +46,18 @@ export function useMetricController(): MetricController {
 
   /* restart requests on change */
   watch([precision, range, selectedMetrics], () => {
+    stop();
+    if (validTime.value) start(selectedMetrics.value as Metric[]);
+  });
+
+  /* request once on static time range */
+  eventBus.$on("STATIC_RANGE_SET", (payload: StaticRange) => {
+    stop();
+    startOnce(selectedMetrics.value as Metric[], payload);
+  });
+
+  /* restart intervals after static range*/
+  eventBus.$on("CONTINUOUS_RANGE_RESET", (payload: StaticRange) => {
     stop();
     if (validTime.value) start(selectedMetrics.value as Metric[]);
   });
@@ -105,6 +124,13 @@ export function useMetricController(): MetricController {
       clearInterval(interval.id);
       interval.id = undefined;
       interval.runningState = false;
+    });
+  }
+
+  function startOnce(newMetrics: Metric[], data: StaticRange): void {
+    getMetricsByEndpoint(newMetrics).forEach((metrics) => {
+      const metric = metrics[0];
+      metricServices[metric].getDataIfReady(true, data);
     });
   }
 
