@@ -21,7 +21,7 @@
 
       <v-tabs-items v-model="tab">
         <v-tab-item>
-          <v-card flat>
+          <v-card>
             <v-card-text class="py-0">
               <status-warning
                 :selected-databases="databases"
@@ -32,35 +32,10 @@
                   <p class="subtitle-1 font-weight-medium mb-2">
                     Start, pause and stop a workload
                   </p>
-                  <v-row>
-                    <v-col class="py-0">
-                      <frequency-handler
-                        :initial-frequency="frequency"
-                        @change="handleFrequencyChange"
-                      />
-                    </v-col>
-                    <v-col cols="1">
-                      <v-tooltip bottom>
-                        <template v-slot:activator="{ on }">
-                          <div v-on="on">
-                            <v-icon
-                              class="mt-8"
-                              :disabled="!enableEqualizer"
-                              @click="tab = 1"
-                              >mdi-cog-outline</v-icon
-                            >
-                          </div>
-                        </template>
-                        <span>
-                          {{
-                            enableEqualizer
-                              ? "Customize workload"
-                              : "Start a workload first"
-                          }}
-                        </span>
-                      </v-tooltip>
-                    </v-col>
-                  </v-row>
+                  <frequency-handler
+                    :initial-frequency="frequency"
+                    @change="handleFrequencyChange"
+                  />
                   <workload-selector
                     :initial-workload="workload"
                     :workload-data="workloadData"
@@ -95,13 +70,13 @@
           </v-card>
         </v-tab-item>
         <v-tab-item>
-          <v-card flat>
+          <v-card>
             <v-card-text>
-              <weights-handler
+              <equalizer
                 :initial-weights="weights"
                 :workload="workload"
                 @change="handleWeightChange"
-              ></weights-handler>
+              ></equalizer>
             </v-card-text>
           </v-card>
         </v-tab-item>
@@ -125,7 +100,7 @@ import { useDatabaseEvents } from "../../meta/events";
 import { getWorkloadFromTransferred } from "../../meta/workloads";
 import StatusWarning from "../alerts/StatusWarning.vue";
 import FrequencyHandler from "./FrequencyHandler.vue";
-import WeightsHandler from "./WeightsHandler.vue";
+import Equalizer from "./Equalizer.vue";
 import WorkloadSelector from "./WorkloadSelector.vue";
 import WorkloadActions from "./WorkloadActions.vue";
 import WorkloadDataSelector from "./WorkloadDataSelector.vue";
@@ -136,7 +111,7 @@ interface Props {
 
 interface Data extends WorkloadHandler, WorkloadAction, WorkloadDataHandler {
   databases: Ref<readonly string[]>;
-  tab: number;
+  tab: Ref<number>;
 }
 
 interface WorkloadHandler {
@@ -148,12 +123,12 @@ interface WorkloadAction {
   enableEqualizer: Ref<boolean>;
   frequency: Ref<number>;
   actions: Record<string, { active: boolean; loading: boolean }>;
-  weights: Ref<Object>;
+  weights: Ref<Record<string, number>>;
   startingWorkload: () => void;
   pausingWorkload: () => void;
   stoppingWorkload: () => void;
   handleFrequencyChange: (frequency: number) => void;
-  handleWeightChange: (weights: Object) => void;
+  handleWeightChange: (name: string, weight: number) => void;
 }
 
 interface WorkloadDataHandler {
@@ -168,7 +143,7 @@ export default defineComponent({
   components: {
     StatusWarning,
     FrequencyHandler,
-    WeightsHandler,
+    Equalizer,
     WorkloadSelector,
     WorkloadActions,
     WorkloadDataSelector,
@@ -180,7 +155,7 @@ export default defineComponent({
     },
   },
   setup(props: {}, context: SetupContext): Data {
-    const tab: number = 0;
+    const tab = ref<number>(0);
     const workloadHandler = useWorkloadHandler();
     return {
       databases: computed(
@@ -234,15 +209,15 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
       loading: false,
     },
   });
-  let weights = ref<Object>({});
+  let weights = ref<Record<string, number>>({});
 
   getWorkloads().then((response: any) => {
     if (response.data.length > 0) {
       workload.value = getWorkloadFromTransferred(response.data[0].folder_name);
       frequency.value = response.data[0].frequency;
-      updatingWorkload().then((response: any) =>
-        handleWeightChange(response.data.weights)
-      );
+      updatingWorkload().then((response: any) => {
+        handleWeightsChange(response.data.weights);
+      });
       if (frequency.value > 0) {
         actions.start.active = true;
       } else {
@@ -270,7 +245,7 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
         startWorker().then(() => {
           startWorkload(workload.value, frequency.value).then(() => {
             updatingWorkload().then((response: any) => {
-              handleWeightChange(response.data.weights);
+              handleWeightsChange(response.data.weights);
               stopLoading(action);
             });
           });
@@ -306,7 +281,11 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
       updatingWorkload();
     }
   }
-  function handleWeightChange(changedWeights: Object): void {
+  function handleWeightChange(key: string, weight: number): void {
+    weights.value[key] = weight;
+    updatingWorkload();
+  }
+  function handleWeightsChange(changedWeights: Record<string, number>): void {
     weights.value = changedWeights;
     updatingWorkload();
   }
