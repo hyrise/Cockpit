@@ -149,10 +149,16 @@ function useTimePicking(
   const allowedHours = computed(() =>
     availableHours.filter(
       (hour) =>
-        [null, ""].includes(minimumTime.value) ||
-        new Date(selectedDate.value) > new Date(props.minDate) ||
-        (!isInFuture(selectedDate.value, `${hour}:55`) &&
-          !isInPast(minimumTime.value, `${hour}:55`))
+        !isInFuture(
+          [null, ""].includes(selectedDate.value)
+            ? formatDateWithoutTime(subDays(new Date(), 7)).toString()
+            : selectedDate.value,
+          `${hour}:00`
+        ) &&
+        !isInPast(
+          [null, ""].includes(minimumTime.value) ? "0:00" : minimumTime.value,
+          `${hour}:55`
+        )
     )
   );
 
@@ -160,12 +166,23 @@ function useTimePicking(
   const allowedMinutes = computed(() =>
     availableMinutes.filter(
       (minute) =>
-        [null, ""].includes(minimumTime.value) ||
-        (!isInFuture(
-          selectedDate.value,
-          `${time.value.split(":")[0]}:${minute}`
+        !isInFuture(
+          [null, ""].includes(selectedDate.value)
+            ? formatDateWithoutTime(subDays(new Date(), 7)).toString()
+            : selectedDate.value,
+          `${time.value.split(":")[0] || "0"}:${minute}`
         ) &&
-          !isInPast(minimumTime.value, `${time.value.split(":")[0]}:${minute}`))
+        !isInPast(
+          [null, ""].includes(minimumTime.value) ? "23:59" : minimumTime.value,
+          `${time.value.split(":")[0] || "0"}:${minute}`
+        )
+
+      // [null, ""].includes(minimumTime.value) ||
+      // (!isInFuture(
+      //   selectedDate.value,
+      //   `${time.value.split(":")[0]}:${minute}`
+      // ) &&
+      //   !isInPast(minimumTime.value, `${time.value.split(":")[0]}:${minute}`))
     )
   );
 
@@ -173,9 +190,15 @@ function useTimePicking(
   function isInFuture(dateString: string, newTimeString: string): boolean {
     const currentDate = formatDateWithoutTime(new Date());
     const currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
+    console.log(currentDate, currentTime, dateString, newTimeString);
+    console.log(
+      formatDateWithoutTime(new Date(dateString)).getTime(),
+      currentDate.getTime()
+    );
     return (
-      new Date(dateString) > currentDate ||
-      (new Date(dateString) === currentDate &&
+      formatDateWithoutTime(new Date(dateString)) > currentDate ||
+      (formatDateWithoutTime(new Date(dateString)).getTime() ===
+        currentDate.getTime() &&
         !isInPast(currentTime, newTimeString))
     );
   }
@@ -199,7 +222,8 @@ function useTimePicking(
       if (
         (props.minTime &&
           time.value !== "" &&
-          (new Date(selectedDate.value) === new Date(props.minDate) ||
+          (new Date(selectedDate.value).getTime() ===
+            new Date(props.minDate).getTime() ||
             [selectedDate.value, props.minDate].includes("")) &&
           isInPast(props.minTime, minimumTime.value)) ||
         (props.minTime && time.value === "")
