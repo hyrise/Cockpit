@@ -5,17 +5,17 @@
     </p>
     <v-row>
       <v-slider
-        v-model="weights[key]"
-        v-for="(weight, key) in weights"
-        :key="key"
-        :label="key"
-        :value="weight"
+        v-for="weight in weights"
+        v-model="weight.weight"
+        :key="weight.name"
+        :label="weight.name"
+        :value="weight.weight"
         thumb-label
         thumb-size="20"
         min="0"
         max="200"
         vertical
-        @click="$emit('change', weights)"
+        @click="$emit('change', weight.name, weight.weight)"
       >
       </v-slider>
     </v-row>
@@ -28,6 +28,7 @@ import {
   Ref,
   ref,
   watch,
+  reactive,
 } from "@vue/composition-api";
 import { Workload } from "../../types/workloads";
 import { getDisplayedWorkload } from "../../meta/workloads";
@@ -38,12 +39,12 @@ interface Props {
 }
 
 interface Data {
-  weights: Ref<Object>;
+  weights: Ref<{ name: string; weight: number }[]>;
   getDisplayedWorkload: (workload: Workload) => void;
 }
 
 export default defineComponent({
-  name: "WeightsHandler",
+  name: "Equalizer",
   props: {
     initialWeights: {
       type: Object,
@@ -55,11 +56,16 @@ export default defineComponent({
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const weights = ref<Object>({});
+    const weights = ref<{ name: string; weight: number }[]>([]);
     watch(
       () => props.initialWeights,
       () => {
-        weights.value = props.initialWeights;
+        weights.value = [];
+        Object.entries(props.initialWeights)
+          .sort()
+          .forEach(([name, weight]: any) => {
+            weights.value.push({ name: name, weight: weight });
+          });
       }
     );
     return {
