@@ -87,6 +87,7 @@ export default defineComponent({
       }
     });
 
+    /* emit new precision */
     watch(localPrecision, () => {
       context.emit("precisionChanged", localPrecision.value);
     });

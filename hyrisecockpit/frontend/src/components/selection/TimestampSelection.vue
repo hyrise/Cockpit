@@ -9,19 +9,9 @@
       offset-y
     >
       <template v-slot:activator="{ on }">
-        <v-text-field
-          v-model="date"
-          label="Date"
-          prepend-icon="mdi-calendar"
-          readonly
-          v-on="on"
-        ></v-text-field>
+        <v-text-field v-model="date" label="Date" prepend-icon="mdi-calendar" readonly v-on="on"></v-text-field>
       </template>
-      <v-date-picker
-        v-model="date"
-        color="primary"
-        :allowed-dates="allowedDates"
-      ></v-date-picker>
+      <v-date-picker v-model="date" color="primary" :allowed-dates="allowedDates"></v-date-picker>
     </v-menu>
     <v-menu
       v-model="timePicker"
@@ -31,13 +21,7 @@
       offset-y
     >
       <template v-slot:activator="{ on }">
-        <v-text-field
-          v-model="time"
-          label="Time"
-          prepend-icon="mdi-clock"
-          readonly
-          v-on="on"
-        ></v-text-field>
+        <v-text-field v-model="time" label="Time" prepend-icon="mdi-clock" readonly v-on="on"></v-text-field>
       </template>
       <v-time-picker
         v-model="time"
@@ -104,6 +88,18 @@ function useDatePicking(props: Props, context: SetupContext): UseDatePicking {
   const date = ref("");
   const datePicker = ref(false);
 
+  function allowedDates(dateString: string): boolean {
+    const selectedDate = new Date(dateString);
+    const currentDate = new Date();
+    return (
+      selectedDate.getTime() >=
+        Math.max(
+          subDays(currentDate, 7).getTime(),
+          props.minDate ? new Date(props.minDate).getTime() : 0
+        ) && selectedDate < currentDate
+    );
+  }
+
   // set date on change
   watch(
     () => props.minDate,
@@ -118,19 +114,8 @@ function useDatePicking(props: Props, context: SetupContext): UseDatePicking {
     }
   );
 
+  /* emit new date */
   watch(date, () => handleDateChange());
-
-  function allowedDates(dateString: string): boolean {
-    const selectedDate = new Date(dateString);
-    const currentDate = new Date();
-    return (
-      selectedDate.getTime() >=
-        Math.max(
-          subDays(currentDate, 7).getTime(),
-          props.minDate ? new Date(props.minDate).getTime() : 0
-        ) && selectedDate < currentDate
-    );
-  }
 
   function handleDateChange(): void {
     datePicker.value = false;
@@ -152,7 +137,7 @@ function useTimePicking(
   context: SetupContext,
   selectedDate: Ref<string>
 ): UseTimePicking {
-  const { subDays } = useFormatting();
+  const { subDays, formatDateWithoutTime } = useFormatting();
 
   const time = ref("");
   const timePicker = ref(false);
@@ -166,7 +151,8 @@ function useTimePicking(
       (hour) =>
         [null, ""].includes(minimumTime.value) ||
         new Date(selectedDate.value) > new Date(props.minDate) ||
-        !isInPast(minimumTime.value, `${hour}:55`)
+        (!isInFuture(selectedDate.value, `${hour}:55`) &&
+          !isInPast(minimumTime.value, `${hour}:55`))
     )
   );
 
@@ -175,9 +161,24 @@ function useTimePicking(
     availableMinutes.filter(
       (minute) =>
         [null, ""].includes(minimumTime.value) ||
-        !isInPast(minimumTime.value, `${time.value.split(":")[0]}:${minute}`)
+        (!isInFuture(
+          selectedDate.value,
+          `${time.value.split(":")[0]}:${minute}`
+        ) &&
+          !isInPast(minimumTime.value, `${time.value.split(":")[0]}:${minute}`))
     )
   );
+
+  /* check if new time string is after current time */
+  function isInFuture(dateString: string, newTimeString: string): boolean {
+    const currentDate = formatDateWithoutTime(new Date());
+    const currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
+    return (
+      new Date(dateString) > currentDate ||
+      (new Date(dateString) === currentDate &&
+        !isInPast(currentTime, newTimeString))
+    );
+  }
 
   /* check if new time string is before base time sting */
   function isInPast(baseTimeString: string, newTimeString: string): boolean {
@@ -209,6 +210,7 @@ function useTimePicking(
     }
   );
 
+  /* emit new time */
   watch(time, () => handleTimeChange());
 
   function handleTimeChange(): void {

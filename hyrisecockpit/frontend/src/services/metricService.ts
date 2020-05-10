@@ -215,7 +215,6 @@ export function useMetricService(metrics: Metric[]): MetricService {
   ): void {
     historicFetching.value = historicRangeFetch;
     staticFetching.value = staticRangeFetch;
-    console.log("ms", staticRange.value);
     if (
       queryReadyState.value ||
       historicFetching.value ||

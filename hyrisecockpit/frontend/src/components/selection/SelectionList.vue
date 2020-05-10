@@ -31,7 +31,10 @@
         <v-tab-item>
           <v-window v-model="window">
             <v-window-item :value="1">
-              <v-subheader class="mt-2">CONTINUOUS RANGE</v-subheader>
+              <v-subheader class="mt-2">
+                CONTINUOUS RANGE
+                <v-badge class="ml-2 mt-1" :color="!staticRange ? 'green' : 'red'" dot />
+              </v-subheader>
               <v-sheet height="330">
                 <v-container class="white container flex">
                   <v-row class="top-row" no gutters>
@@ -56,7 +59,10 @@
               </v-sheet>
             </v-window-item>
             <v-window-item :value="2">
-              <v-subheader class="mt-2">STATIC RANGE</v-subheader>
+              <v-subheader class="mt-2">
+                STATIC RANGE
+                <v-badge class="ml-2 mt-1" :color="staticRange ? 'green' : 'red'" dot />
+              </v-subheader>
               <v-sheet height="330">
                 <v-container class="white container flex">
                   <v-row no gutters>

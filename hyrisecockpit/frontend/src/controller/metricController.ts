@@ -134,7 +134,7 @@ export function useMetricController(): MetricController {
   function startOnce(newMetrics: Metric[]): void {
     getMetricsByEndpoint(newMetrics).forEach((metrics) => {
       const metric = metrics[0];
-      metricServices[metric].getDataIfReady(true);
+      metricServices[metric].getDataIfReady(true, true);
     });
   }
 

@@ -3,6 +3,7 @@ const SEC_PER_DAY = 86400;
 export function useFormatting(): {
   formatNumberWithCommas: (data: number) => string;
   formatDateWithoutMilliSec: (date: Date) => Date;
+  formatDateWithoutTime: (date: Date) => Date;
   roundNumber: (
     data: number,
     ratio: number,
@@ -44,6 +45,11 @@ export function useFormatting(): {
 
   function formatDateWithoutMilliSec(date: Date): Date {
     date.setMilliseconds(0);
+    return date;
+  }
+
+  function formatDateWithoutTime(date: Date): Date {
+    date.setHours(0, 0, 0, 0);
     return date;
   }
 
@@ -90,6 +96,7 @@ export function useFormatting(): {
   return {
     formatNumberWithCommas,
     formatDateWithoutMilliSec,
+    formatDateWithoutTime,
     roundNumber,
     formatDateToHHMMSS,
     formatDateToNanoSec,
