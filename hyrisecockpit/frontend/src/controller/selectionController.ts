@@ -20,6 +20,7 @@ export type StaticRange = {
 export function useSelectionController(): SelectionController {
   const { sortElements } = useSorting();
 
+  /* selected data and times */
   const availableDatabases = computed(
     () =>
       Vue.prototype.$databaseController.availableDatabasesById.value as string[]
@@ -48,6 +49,7 @@ export function useSelectionController(): SelectionController {
   const selectedMetrics = computed(() => pageMetrics[page.value] || []);
   const selectedDatabases = computed(() => pageDatabases[page.value] || []);
 
+  // initialize databases
   watch(
     () => availableDatabases.value,
     () => {
@@ -57,6 +59,7 @@ export function useSelectionController(): SelectionController {
     }
   );
 
+  // reset page and range data
   eventBus.$on("PAGE_CHANGED", (newPage: PageName) => {
     page.value = newPage;
   });
@@ -65,6 +68,7 @@ export function useSelectionController(): SelectionController {
     selectedStaticRange.value = newRange;
   });
 
+  // reset databases and metric data for selected page
   pages.forEach((page) => {
     // database events
     eventBus.$on(

@@ -5,7 +5,6 @@ import { MetricService } from "@/types/services";
 import { MetricController } from "@/types/controller";
 import { getMetricRequestTime, getMetricMetadata } from "@/meta/metrics";
 import Vue from "vue";
-import { eventBus } from "@/plugins/eventBus";
 import { StaticRange } from "@/controller/selectionController";
 
 type Interval = {
@@ -15,6 +14,7 @@ type Interval = {
 };
 
 export function useMetricController(): MetricController {
+  /* current selected data */
   const precision = computed(
     (): number => Vue.prototype.$selectionController.selectedPrecision.value
   );
@@ -29,6 +29,7 @@ export function useMetricController(): MetricController {
       Vue.prototype.$selectionController.selectedStaticRange.value
   );
 
+  /* ensure valid time range */
   const validTime = computed(
     () => precision.value < range.value && precision.value >= range.value / 60
   );
@@ -59,6 +60,7 @@ export function useMetricController(): MetricController {
     }
   });
 
+  // initialize metric services
   function setupServices(): Record<Metric, MetricService> {
     const services: any = {};
     getMetricsByEndpoint(availableMetrics).forEach((metrics) => {
@@ -70,6 +72,7 @@ export function useMetricController(): MetricController {
     return services;
   }
 
+  /** combines metrics with same endpoint */
   function getMetricsByEndpoint(newMetrics: Metric[]): Metric[][] {
     return newMetrics.reduce(
       (metricsByEndpoint: Metric[][], metric: Metric) => {
@@ -89,6 +92,7 @@ export function useMetricController(): MetricController {
     );
   }
 
+  // initialize intervals
   function setupIntervals(): Record<Metric, Interval> {
     const intervals: any = {};
     availableMetrics.forEach((metric) => {
@@ -101,6 +105,7 @@ export function useMetricController(): MetricController {
     return intervals;
   }
 
+  /** starts requesting metric data */
   function start(newMetrics: Metric[]): void {
     getMetricsByEndpoint(newMetrics).forEach((metrics) => {
       const metric = metrics[0];
@@ -113,6 +118,7 @@ export function useMetricController(): MetricController {
     });
   }
 
+  /** stops requesting metric data */
   function stop(): void {
     const runningIntervals = Object.values(metricIntervals).filter(
       (interval) => interval.runningState == true
@@ -124,6 +130,7 @@ export function useMetricController(): MetricController {
     });
   }
 
+  /** requests metric data once */
   function startOnce(newMetrics: Metric[]): void {
     getMetricsByEndpoint(newMetrics).forEach((metrics) => {
       const metric = metrics[0];
@@ -131,6 +138,7 @@ export function useMetricController(): MetricController {
     });
   }
 
+  /** exports necessary data */
   function mapToData(services: Record<Metric, MetricService>): void {
     Object.entries(services).forEach(([metric, service]) => {
       data[metric as Metric] = computed(() => service.data[metric]);

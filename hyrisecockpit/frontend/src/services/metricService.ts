@@ -10,7 +10,7 @@ import Vue from "vue";
 import { useMaxValueHelper } from "./transformationService";
 import { StaticRange } from "@/controller/selectionController";
 
-// fetch data for all metrics with same endpoint
+/** fetch and store data for all metrics with same endpoint */
 export function useMetricService(metrics: Metric[]): MetricService {
   const queryReadyState = ref(true);
   const data: any = initializeData({});
@@ -19,6 +19,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
   const metricInfo = metricsMetaData[0];
   const maxValues = initializeData(0) as Record<Metric, number>;
 
+  /* fetching type helpers */
   const historicFetching = ref(false);
   const staticFetching = ref(false);
 
@@ -41,6 +42,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
     getNanoSeconds,
   } = useFormatting();
 
+  /* set reactive data */
   function initializeData(value: any): Object {
     const newData: any = reactive({});
     metrics.forEach((metric) => {
@@ -49,6 +51,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
     return newData;
   }
 
+  /* detect new max values */
   function handleMaxValues(data: any, idx: number): number {
     return (
       metricsMetaData[idx].staticAxesRange?.y?.max ||
@@ -59,6 +62,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
     );
   }
 
+  /* get and handle new metric data */
   function getData(): void {
     queryReadyState.value = false;
 
@@ -127,6 +131,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
     });
   }
 
+  /* fetch data from backend endpoint */
   function fetchData(start: number, end: number): Promise<any> {
     return new Promise((resolve, reject) => {
       axios
@@ -159,6 +164,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
     });
   }
 
+  /* handle metric data points */
   function handleDataChange(
     databaseId: string,
     newData: number[],
@@ -172,6 +178,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
       : handleCurrentDataPoints(data[metric][databaseId], newData);
   }
 
+  /* handle timestamp data */
   function handleTimestamps(newTimestamps: number[]): void {
     const dates = newTimestamps.map(
       (timestamp) => new Date(timestamp / Math.pow(10, 6))
@@ -181,6 +188,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
       : handleCurrentDataPoints(timestamps.value, dates);
   }
 
+  /* add new data to existing data points */
   function handleCurrentDataPoints<T>(data: T[], newData: T[]): T[] {
     const dataCopy = data;
     newData.forEach((entry: T) => {
@@ -193,12 +201,14 @@ export function useMetricService(metrics: Metric[]): MetricService {
     return dataCopy;
   }
 
+  /* reset existing data to new data */
   function handleHistoricDataPoints<T>(newData: T[]): T[] {
     return staticFetching.value
       ? newData
       : newData.slice(newData.length - range.value, newData.length - 1);
   }
 
+  /** fetch data if previous query finished or static/ historic range selected */
   function getDataIfReady(
     historicRangeFetch = false,
     staticRangeFetch = false
@@ -206,7 +216,11 @@ export function useMetricService(metrics: Metric[]): MetricService {
     historicFetching.value = historicRangeFetch;
     staticFetching.value = staticRangeFetch;
     console.log("ms", staticRange.value);
-    if (queryReadyState.value || historicFetching.value) {
+    if (
+      queryReadyState.value ||
+      historicFetching.value ||
+      staticFetching.value
+    ) {
       getData();
     }
   }
