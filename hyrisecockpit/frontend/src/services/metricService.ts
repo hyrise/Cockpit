@@ -8,7 +8,7 @@ import { useFormatting } from "@/meta/formatting";
 import { isInTestMode } from "../../config";
 import Vue from "vue";
 import { useMaxValueHelper } from "./transformationService";
-import { StaticRange } from "@/controller/metricController";
+import { StaticRange } from "@/controller/selectionController";
 
 // fetch data for all metrics with same endpoint
 export function useMetricService(metrics: Metric[]): MetricService {
@@ -18,12 +18,20 @@ export function useMetricService(metrics: Metric[]): MetricService {
   const metricsMetaData = metrics.map((metric) => getMetricMetadata(metric));
   const metricInfo = metricsMetaData[0];
   const maxValues = initializeData(0) as Record<Metric, number>;
+
   const historicFetching = ref(false);
+  const staticFetching = ref(false);
+
+  /* global selected data */
   const range = computed(
     (): number => Vue.prototype.$selectionController.selectedRange.value
   );
   const precision = computed(
     (): number => Vue.prototype.$selectionController.selectedPrecision.value
+  );
+  const staticRange = computed(
+    (): StaticRange | null =>
+      Vue.prototype.$selectionController.selectedStaticRange.value
   );
 
   const {
@@ -51,38 +59,36 @@ export function useMetricService(metrics: Metric[]): MetricService {
     );
   }
 
-  function getData(staticRange?: StaticRange): void {
+  function getData(): void {
     queryReadyState.value = false;
 
     const currentTimestamp = subSeconds(new Date(), 3);
     const startTime = formatDateToNanoSec(
-      staticRange
-        ? staticRange.startDate
+      staticFetching.value
+        ? staticRange.value!.startDate
         : subSeconds(
             currentTimestamp,
             historicFetching.value ? range.value : precision.value
           )
     );
     const endTime = formatDateToNanoSec(
-      staticRange
-        ? staticRange.endDate
+      staticFetching.value
+        ? staticRange.value!.endDate
         : historicFetching.value
         ? addSeconds(currentTimestamp, precision.value + 3)
         : currentTimestamp
     );
 
-    fetchData(startTime, endTime, staticRange).then((result) => {
+    fetchData(startTime, endTime).then((result) => {
       useUpdatingData(result, metrics);
       metrics.forEach((metric, idx) => {
         if (metricsMetaData[idx].fetchType === "modify") {
-          // damn backend
           if (!Array.isArray(result)) {
             Object.entries(result).forEach(([id, data]: [string, any]) => {
               handleDataChange(
                 id,
                 metricsMetaData[idx].transformationService(data),
-                metric,
-                !!staticRange
+                metric
               );
             });
           } else {
@@ -93,8 +99,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
                   data[metricInfo.base],
                   metricInfo.base
                 ),
-                metric,
-                !!staticRange
+                metric
               );
             });
           }
@@ -116,18 +121,13 @@ export function useMetricService(metrics: Metric[]): MetricService {
       handleTimestamps(
         isInTestMode
           ? [formatDateToNanoSec(subSeconds(currentTimestamp, 1))]
-          : newTimestamps,
-        !!staticRange
+          : newTimestamps
       );
       queryReadyState.value = true;
     });
   }
 
-  function fetchData(
-    start: number,
-    end: number,
-    staticRange?: StaticRange
-  ): Promise<any> {
+  function fetchData(start: number, end: number): Promise<any> {
     return new Promise((resolve, reject) => {
       axios
         .get(metricInfo.endpoint, {
@@ -135,7 +135,9 @@ export function useMetricService(metrics: Metric[]): MetricService {
             startts: start,
             endts: end,
             precision: getNanoSeconds(
-              staticRange ? staticRange.precision : precision.value
+              staticFetching.value
+                ? staticRange.value!.precision
+                : precision.value
             ),
           },
         })
@@ -160,23 +162,22 @@ export function useMetricService(metrics: Metric[]): MetricService {
   function handleDataChange(
     databaseId: string,
     newData: number[],
-    metric: Metric,
-    all: boolean
+    metric: Metric
   ): void {
     if (!data[metric][databaseId]) {
       data[metric][databaseId] = [];
     }
     data[metric][databaseId] = historicFetching.value
-      ? handleHistoricDataPoints(newData, all)
+      ? handleHistoricDataPoints(newData)
       : handleCurrentDataPoints(data[metric][databaseId], newData);
   }
 
-  function handleTimestamps(newTimestamps: number[], all: boolean): void {
+  function handleTimestamps(newTimestamps: number[]): void {
     const dates = newTimestamps.map(
       (timestamp) => new Date(timestamp / Math.pow(10, 6))
     );
     timestamps.value = historicFetching.value
-      ? handleHistoricDataPoints(dates, all)
+      ? handleHistoricDataPoints(dates)
       : handleCurrentDataPoints(timestamps.value, dates);
   }
 
@@ -192,16 +193,21 @@ export function useMetricService(metrics: Metric[]): MetricService {
     return dataCopy;
   }
 
-  function handleHistoricDataPoints<T>(newData: T[], all = false): T[] {
-    return all
+  function handleHistoricDataPoints<T>(newData: T[]): T[] {
+    return staticFetching.value
       ? newData
       : newData.slice(newData.length - range.value, newData.length - 1);
   }
 
-  function getDataIfReady(refetch: boolean = false, range?: StaticRange): void {
-    historicFetching.value = refetch;
+  function getDataIfReady(
+    historicRangeFetch = false,
+    staticRangeFetch = false
+  ): void {
+    historicFetching.value = historicRangeFetch;
+    staticFetching.value = staticRangeFetch;
+    console.log("ms", staticRange.value);
     if (queryReadyState.value || historicFetching.value) {
-      getData(range);
+      getData();
     }
   }
 

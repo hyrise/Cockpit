@@ -6,17 +6,12 @@ import { MetricController } from "@/types/controller";
 import { getMetricRequestTime, getMetricMetadata } from "@/meta/metrics";
 import Vue from "vue";
 import { eventBus } from "@/plugins/eventBus";
+import { StaticRange } from "@/controller/selectionController";
 
 type Interval = {
   id: number | undefined;
   runningState: boolean;
   time: number;
-};
-
-export type StaticRange = {
-  startDate: Date;
-  endDate: Date;
-  precision: number;
 };
 
 export function useMetricController(): MetricController {
@@ -28,6 +23,10 @@ export function useMetricController(): MetricController {
   );
   const selectedMetrics = computed(
     (): Metric[] => Vue.prototype.$selectionController.selectedMetrics.value
+  );
+  const selectedStaticRange = computed(
+    (): StaticRange | null =>
+      Vue.prototype.$selectionController.selectedStaticRange.value
   );
 
   const validTime = computed(
@@ -50,16 +49,14 @@ export function useMetricController(): MetricController {
     if (validTime.value) start(selectedMetrics.value as Metric[]);
   });
 
-  /* request once on static time range */
-  eventBus.$on("STATIC_RANGE_SET", (payload: StaticRange) => {
+  /* request once on static time range, restart if not present */
+  watch(selectedStaticRange, () => {
     stop();
-    startOnce(selectedMetrics.value as Metric[], payload);
-  });
-
-  /* restart intervals after static range*/
-  eventBus.$on("CONTINUOUS_RANGE_RESET", (payload: StaticRange) => {
-    stop();
-    if (validTime.value) start(selectedMetrics.value as Metric[]);
+    if (!!selectedStaticRange.value) {
+      startOnce(selectedMetrics.value as Metric[]);
+    } else {
+      start(selectedMetrics.value as Metric[]);
+    }
   });
 
   function setupServices(): Record<Metric, MetricService> {
@@ -127,10 +124,10 @@ export function useMetricController(): MetricController {
     });
   }
 
-  function startOnce(newMetrics: Metric[], data: StaticRange): void {
+  function startOnce(newMetrics: Metric[]): void {
     getMetricsByEndpoint(newMetrics).forEach((metrics) => {
       const metric = metrics[0];
-      metricServices[metric].getDataIfReady(true, data);
+      metricServices[metric].getDataIfReady(true);
     });
   }
 

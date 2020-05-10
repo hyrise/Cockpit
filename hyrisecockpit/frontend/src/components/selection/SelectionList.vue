@@ -52,8 +52,7 @@
                   block
                   :disabled="!staticRange"
                   @click="resetTimeRange"
-                  >Set Continuous Time Range</v-btn
-                >
+                >Set Continuous Time Range</v-btn>
               </v-sheet>
             </v-window-item>
             <v-window-item :value="2">
@@ -99,8 +98,7 @@
                   block
                   :disabled="invalidDates"
                   @click="setStaticTimeRange"
-                  >Set Static Time Range</v-btn
-                >
+                >Set Static Time Range</v-btn>
               </v-sheet>
             </v-window-item>
           </v-window>
@@ -116,13 +114,12 @@
                     color="white"
                     depressed
                     @click="window = window == 1 ? 2 : 1"
-                    >{{ window == 1 ? "STATIC" : "CONTINUOUS" }}</v-btn
-                  >
+                  >{{ window == 1 ? "STATIC" : "CONTINUOUS" }}</v-btn>
                 </template>
-                <span
-                  >Select {{ window == 1 ? "Static" : "Continuous" }} Range
-                  Type</span
-                >
+                <span>
+                  Select {{ window == 1 ? "Static" : "Continuous" }} Range
+                  Type
+                </span>
               </v-tooltip>
             </v-card-actions>
           </v-card>
@@ -269,10 +266,7 @@ function useStaticRangeSelection(
   context: SetupContext
 ): UseStaticRangeSelection {
   const { formatMinutesToSeconds } = useFormatting();
-  const {
-    emitStaticRangeSetEvent,
-    emitContiniousRangeResetEvent,
-  } = useWindowEvents();
+  const { emitStaticRangeChangedEvent } = useWindowEvents();
 
   const startDate = ref("");
   const startTime = ref("");
@@ -286,19 +280,9 @@ function useStaticRangeSelection(
         getDate(startDate.value, startTime.value).getTime()) /
         Math.pow(10, 3) || 60
   );
-  const staticRange = ref(false);
-
-  const availableStaticPrecisions = [
-    { text: "1 second", value: 1 },
-    { text: "5 seconds", value: 5 },
-    { text: "15 seconds", value: 15 },
-    { text: "30 seconds", value: 30 },
-    { text: "1 minute", value: formatMinutesToSeconds(1) },
-    { text: "5 minutes", value: formatMinutesToSeconds(5) },
-    { text: "15 minutes", value: formatMinutesToSeconds(15) },
-    { text: "30 minutes", value: formatMinutesToSeconds(30) },
-    { text: "1 hour", value: formatMinutesToSeconds(60) },
-  ];
+  const staticRange = computed(
+    () => !!context.root.$selectionController.selectedStaticRange.value
+  );
 
   function getDate(dateString: string, timeString: string): Date {
     return new Date(`${dateString}T${timeString}`);
@@ -315,8 +299,7 @@ function useStaticRangeSelection(
   );
 
   function setStaticTimeRange(): void {
-    staticRange.value = true;
-    emitStaticRangeSetEvent(
+    emitStaticRangeChangedEvent(
       getDate(startDate.value, startTime.value),
       getDate(endDate.value, endTime.value),
       staticPrecision.value
@@ -324,8 +307,7 @@ function useStaticRangeSelection(
   }
 
   function resetTimeRange(): void {
-    staticRange.value = false;
-    emitContiniousRangeResetEvent();
+    emitStaticRangeChangedEvent();
   }
 
   return {
@@ -336,7 +318,17 @@ function useStaticRangeSelection(
     invalidDates,
     setStaticTimeRange,
     staticPrecision,
-    availableStaticPrecisions,
+    availableStaticPrecisions: [
+      { text: "1 second", value: 1 },
+      { text: "5 seconds", value: 5 },
+      { text: "15 seconds", value: 15 },
+      { text: "30 seconds", value: 30 },
+      { text: "1 minute", value: formatMinutesToSeconds(1) },
+      { text: "5 minutes", value: formatMinutesToSeconds(5) },
+      { text: "15 minutes", value: formatMinutesToSeconds(15) },
+      { text: "30 minutes", value: formatMinutesToSeconds(30) },
+      { text: "1 hour", value: formatMinutesToSeconds(60) },
+    ],
     maxPrecision,
     staticRange,
     resetTimeRange,
