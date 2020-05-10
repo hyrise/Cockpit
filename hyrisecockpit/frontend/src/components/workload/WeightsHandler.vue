@@ -4,20 +4,31 @@
       {{ getDisplayedWorkload(workload) }}
     </p>
     <v-row>
-      <v-slider
-        v-model="weights[key]"
-        v-for="(weight, key) in weights"
-        :key="key"
-        :label="key"
-        :value="weight"
-        thumb-label
-        thumb-size="20"
-        min="0"
-        max="200"
-        vertical
-        @click="$emit('change', weights)"
-      >
-      </v-slider>
+      <div class="value-col">
+        <div>
+          200
+        </div>
+        <div>
+          -200
+        </div>
+      </div>
+      <div v-for="(weight, key) in weights" :key="key" class="query-div">
+        {{ key }}
+        <div class="top-line"></div>
+        <v-slider
+          v-model="weights[key]"
+          :value="weight"
+          thumb-label
+          thumb-size="24"
+          min="0"
+          max="200"
+          vertical
+          class="query-slider"
+          @click="$emit('change', weights)"
+        />
+        <div class="bottom-line"></div>
+        <div class="line"></div>
+      </div>
     </v-row>
   </span>
 </template>
@@ -69,3 +80,32 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.query-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.query-slider {
+  padding: 0px 24px 0px 24px;
+}
+
+.top-line {
+  border-top: 2px solid #dfdfdf;
+  width: 100%;
+  margin-top: 50%;
+  margin-bottom: -20px;
+}
+.bottom-line {
+  border-top: 2px solid #dfdfdf;
+  width: 100%;
+  margin-top: -20px;
+  margin-bottom: 50%;
+}
+.value-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+</style>
