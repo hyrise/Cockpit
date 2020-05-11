@@ -33,7 +33,11 @@
             <v-window-item :value="1">
               <v-subheader class="mt-2">
                 CONTINUOUS RANGE
-                <v-badge class="ml-2 mt-1" :color="!staticRange ? 'green' : 'red'" dot />
+                <v-badge
+                  class="ml-2 mt-1"
+                  :color="!staticRange ? 'green' : 'red'"
+                  dot
+                />
               </v-subheader>
               <v-sheet height="330">
                 <v-container class="white container flex">
@@ -55,13 +59,18 @@
                   block
                   :disabled="!staticRange"
                   @click="resetTimeRange"
-                >Set Continuous Time Range</v-btn>
+                  >Set Continuous Time Range</v-btn
+                >
               </v-sheet>
             </v-window-item>
             <v-window-item :value="2">
               <v-subheader class="mt-2">
                 STATIC RANGE
-                <v-badge class="ml-2 mt-1" :color="staticRange ? 'green' : 'red'" dot />
+                <v-badge
+                  class="ml-2 mt-1"
+                  :color="staticRange ? 'green' : 'red'"
+                  dot
+                />
               </v-subheader>
               <v-sheet height="330">
                 <v-container class="white container flex">
@@ -104,7 +113,8 @@
                   block
                   :disabled="invalidDates"
                   @click="setStaticTimeRange"
-                >Set Static Time Range</v-btn>
+                  >Set Static Time Range</v-btn
+                >
               </v-sheet>
             </v-window-item>
           </v-window>
@@ -120,11 +130,11 @@
                     color="white"
                     depressed
                     @click="window = window == 1 ? 2 : 1"
-                  >{{ window == 1 ? "STATIC" : "CONTINUOUS" }}</v-btn>
+                    >{{ window == 1 ? "STATIC" : "CONTINUOUS" }}</v-btn
+                  >
                 </template>
                 <span>
-                  Select {{ window == 1 ? "Static" : "Continuous" }} Range
-                  Type
+                  Select {{ window == 1 ? "Static" : "Continuous" }} Range Type
                 </span>
               </v-tooltip>
             </v-card-actions>
@@ -237,6 +247,7 @@ function useDataChangeHandling(
   const { emitSelectedMetricsChangedWithinEvent } = useMetricEvents();
   const { emitPageChangedEvent } = useWindowEvents();
 
+  // update page
   watch(page, () => {
     emitPageChangedEvent(page.value);
   });
@@ -280,6 +291,8 @@ function useStaticRangeSelection(
   const endTime = ref("");
 
   const staticPrecision = ref(0);
+
+  /* set max selectable precision, depending on start and end date */
   const maxPrecision = computed(() =>
     ![
       startDate.value,
@@ -292,14 +305,8 @@ function useStaticRangeSelection(
         Math.pow(10, 3)
       : 60
   );
-  const staticRange = computed(
-    () => !!context.root.$selectionController.selectedStaticRange.value
-  );
 
-  function getDate(dateString: string, timeString: string): Date {
-    return new Date(`${dateString}T${timeString}`);
-  }
-
+  /* disable buttons on invalid dates */
   const invalidDates = computed(
     () =>
       [
@@ -313,6 +320,15 @@ function useStaticRangeSelection(
         staticPrecision.value * Math.pow(10, 3)
   );
 
+  const staticRange = computed(
+    () => !!context.root.$selectionController.selectedStaticRange.value
+  );
+
+  function getDate(dateString: string, timeString: string): Date {
+    return new Date(`${dateString}T${timeString}`);
+  }
+
+  /* range handlers */
   function setStaticTimeRange(): void {
     emitStaticRangeChangedEvent(
       getDate(startDate.value, startTime.value),

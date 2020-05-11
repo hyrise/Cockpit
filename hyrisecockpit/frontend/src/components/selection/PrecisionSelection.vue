@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <v-select
-      id="precision-selection"
-      v-model="selectedPrecision"
-      :items="selectablePrecisions"
-      label="Aggregation Interval"
-      :disabled="disabled"
-    />
-  </div>
+  <v-select
+    id="precision-selection"
+    v-model="selectedPrecision"
+    :items="selectablePrecisions"
+    label="Aggregation Interval"
+    :disabled="disabled"
+  />
 </template>
 
 <script lang="ts">

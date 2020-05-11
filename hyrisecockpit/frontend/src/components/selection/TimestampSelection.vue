@@ -9,9 +9,19 @@
       offset-y
     >
       <template v-slot:activator="{ on }">
-        <v-text-field v-model="date" label="Date" prepend-icon="mdi-calendar" readonly v-on="on"></v-text-field>
+        <v-text-field
+          v-model="date"
+          label="Date"
+          prepend-icon="mdi-calendar"
+          readonly
+          v-on="on"
+        ></v-text-field>
       </template>
-      <v-date-picker v-model="date" color="primary" :allowed-dates="allowedDates"></v-date-picker>
+      <v-date-picker
+        v-model="date"
+        color="primary"
+        :allowed-dates="allowedDates"
+      ></v-date-picker>
     </v-menu>
     <v-menu
       v-model="timePicker"
@@ -21,9 +31,21 @@
       offset-y
     >
       <template v-slot:activator="{ on }">
-        <v-text-field v-model="time" label="Time" prepend-icon="mdi-clock" readonly v-on="on"></v-text-field>
+        <v-text-field
+          v-model="time"
+          label="Time"
+          prepend-icon="mdi-clock"
+          readonly
+          v-on="on"
+        ></v-text-field>
       </template>
-      <v-time-picker v-model="time" format="24hr" color="primary" :min="minTime" :max="maxTime"></v-time-picker>
+      <v-time-picker
+        v-model="time"
+        format="24hr"
+        color="primary"
+        :min="minTime"
+        :max="maxTime"
+      ></v-time-picker>
     </v-menu>
   </div>
 </template>
