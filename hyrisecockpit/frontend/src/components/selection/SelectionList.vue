@@ -67,8 +67,9 @@
                   block
                   :disabled="!staticRange"
                   @click="resetTimeRange"
-                  >Set Continuous Time Range</v-btn
                 >
+                  Set Continuous Time Range
+                </v-btn>
               </v-sheet>
             </v-window-item>
             <v-window-item :value="2">
@@ -121,8 +122,9 @@
                   block
                   :disabled="invalidDates"
                   @click="setStaticTimeRange"
-                  >Set Static Time Range</v-btn
                 >
+                  Set Static Time Range
+                </v-btn>
               </v-sheet>
             </v-window-item>
           </v-window>
@@ -144,10 +146,9 @@
                     <v-icon v-if="window === 1" right>mdi-chevron-right</v-icon>
                   </v-btn>
                 </template>
-                <span
-                  >Select {{ window == 1 ? "Static" : "Continuous" }} Range
-                  Type</span
-                >
+                <span>
+                  Select {{ window == 1 ? "Static" : "Continuous" }} Range Type
+                </span>
               </v-tooltip>
             </v-card-actions>
           </v-card>
@@ -214,13 +215,12 @@ export default defineComponent({
   },
   setup(props: Props, context: SetupContext): Data {
     const page = computed(() => context.root.$route.name! as PageName);
-    const tab = ref<number>(0);
 
     return {
       pageName: computed(
         () => page.value[0].toUpperCase() + page.value.substring(1)
       ),
-      tab,
+      tab: ref(0),
       window: ref(1),
       ...useDataChangeHandling(context, page),
       ...useGlobalInstances(context, page),
