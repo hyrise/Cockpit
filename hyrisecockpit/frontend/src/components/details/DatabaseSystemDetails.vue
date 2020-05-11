@@ -21,7 +21,7 @@
               >{{ database.systemDetails.memoryCapacity }} GB</v-card-title
             >
             <v-card-text class="font-weight-light white--text"
-              >Data Size</v-card-text
+              >Memory Capacity</v-card-text
             >
           </v-col>
           <v-col id="database-number-cpus" cols="2">
@@ -45,7 +45,7 @@
               >{{ database.systemDetails.memoryFootprint }} MB</v-card-title
             >
             <v-card-text class="mr-10 font-weight-light white--text"
-              >Process Memory (RSS)</v-card-text
+              >Data Size</v-card-text
             >
           </v-col>
         </v-row>

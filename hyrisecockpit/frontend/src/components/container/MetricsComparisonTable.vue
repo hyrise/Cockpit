@@ -40,7 +40,6 @@ import {
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
 import { useDatabaseFlex } from "../../meta/components";
 import MetricTile from "@/components/container/MetricTile.vue";
-import DatabaseSystemDetails from "../../components/details/DatabaseSystemDetails.vue";
 import { Database } from "@/types/database";
 import { useUpdatingDatabases } from "@/meta/databases";
 
@@ -57,7 +56,6 @@ interface Data {
 export default defineComponent({
   components: {
     MetricTile,
-    DatabaseSystemDetails,
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {

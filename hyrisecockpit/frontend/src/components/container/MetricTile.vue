@@ -1,8 +1,8 @@
 <template>
   <v-card
+    :id="`${tileDatabase}-${metric}-tile`"
     class="card"
     :style="getBorderColor(tileDatabase)"
-    :id="`${tileDatabase}-${metric}-tile`"
     tile
   >
     <v-card-title
@@ -57,7 +57,6 @@ import {
 import { Database } from "../../types/database";
 import DatabaseChip from "@/components/details/DatabaseChip.vue";
 import TimeInterval from "@/components/details/TimeInterval.vue";
-import { Color } from "plotly.js";
 
 interface Props extends MetricProps {
   tileDatabase: string;
