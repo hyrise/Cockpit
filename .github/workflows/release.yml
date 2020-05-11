@@ -22,25 +22,25 @@ jobs:
     - name: Use example environment file
       run: cp .env.example .env
 
-    - name: Build the Backend Docker image
+    - name: Build the Docker stack
       run: docker-compose -f docker-compose.ci.yml build --parallel backend generator manager frontend
       
-    - name: Tag the Generator Docker image
-      run: docker tag cockpit-generator udopigorsch/workload_generator
+    - name: Tag the Backend Docker image
+      run: docker tag cockpit-backend udopigorsch/workload-backend
     - name: Push the Backend Docker image
-      run: docker push cockpit-backend udopigorsch/cockpit-backend
+      run: docker push udopigorsch/cockpit-backend
 
     - name: Tag the Generator Docker image
-      run: docker tag cockpit-generator udopigorsch/workload_generator
+      run: docker tag cockpit-generator udopigorsch/workload-generator
     - name: Push the Generator Docker image
-      run: docker push cockpit-generator udopigorsch/cockpit-generator
+      run: docker push udopigorsch/cockpit-generator
 
     - name: Tag the Manager Docker image
-      run: docker tag cockpit-manager udopigorsch/database_manager
+      run: docker tag cockpit-manager udopigorsch/database-manager
     - name: Push Manager Docker image
-      run: docker push cockpit-manager udopigorsch/cockpit-manager
+      run: docker push udopigorsch/cockpit-manager
    
     - name: Tag the Frontend Docker image
-      run: docker tag cockpit-frontend udopigorsch/frontend
+      run: docker tag cockpit-frontend udopigorsch/cockpit-frontend
     - name: Push the Frontend Docker image
-      run: docker push cockpit-frontend udopigorsch/cockpit-frontend
+      run: docker push udopigorsch/cockpit-frontend
