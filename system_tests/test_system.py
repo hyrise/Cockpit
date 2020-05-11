@@ -78,8 +78,10 @@ class TestSystem:
             ],
         }
 
-        status = cls.backend.get_monitor_property("status")  # type: ignore
-        assert expected_status in status  # nosec
+        response = cls.backend.get_monitor_property("status")  # type: ignore
+
+        assert response.status_code == 200  # nosec
+        assert expected_status in response.json()  # nosec
 
     def test_initializes_backend_without_errors(self):
         """Test backend initializes without errors."""
@@ -98,7 +100,9 @@ class TestSystem:
 
         for i in range(len(metrics)):
             response = self.backend.get_monitor_property(metrics[i])
-            assert response["body"][metrics_attributes[i]] == {}  # nosec
+
+            assert response.status_code == 200  # nosec
+            assert response.json()["body"][metrics_attributes[i]] == {}  # nosec
 
     def test_returns_historical_metric_values(self):
         """Test historical metric endpoints return correct values."""
@@ -111,19 +115,23 @@ class TestSystem:
             response = self.backend.get_historical_monitor_property(
                 metric, startts, endts, 1_000_000_000
             )
-            assert response == []  # nosec
+
+            assert response.status_code == 200  # nosec
+            assert response.json() == []  # nosec
 
     def test_returns_available_databases(self):
         """Ensure a new backend has no databases."""
-        available_databases = self.backend.get_control_property("database")
-        assert available_databases == []  # nosec
+        response = self.backend.get_control_property("database")
+
+        assert response.status_code == 200  # nosec
+        assert response.json() == []  # nosec
 
     def test_returns_available_datasets(self):
         """Test available datasets."""
-        available_datasets = self.backend.get_control_property(
-            "database/benchmark_tables"
-        )
-        assert available_datasets == {  # nosec
+        response = self.backend.get_control_property("database/benchmark_tables")
+
+        assert response.status_code == 200  # nosec
+        assert response.json() == {  # nosec
             "folder_names": ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
         }
 
@@ -140,8 +148,10 @@ class TestSystem:
 
     def test_added_database_is_in_available_databases(self):
         """Test added database is in available databases."""
-        available_databases = self.backend.get_control_property("database")
-        assert available_databases == [  # nosec
+        response = self.backend.get_control_property("database")
+
+        assert response.status_code == 200  # nosec
+        assert response.json() == [  # nosec
             {
                 "id": "test_database1",
                 "host": DATABASE_HOST,
@@ -189,7 +199,9 @@ class TestSystem:
             response = self.backend.get_historical_monitor_property(
                 metric, startts, endts, 1_000_000_000
             )
-            assert response[0][metric][0][metric] > 0  # nosec
+
+            assert response.status_code == 200  # nosec
+            assert response.json()[0][metric][0][metric] > 0  # nosec
 
     def test_activates_plugin(self):
         """Test activation of the plugin."""
