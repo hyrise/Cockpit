@@ -166,12 +166,12 @@ class TestSystem:
         """Test database handling had no errors."""
         self.check_stderr()
 
-    def test_starting_workload_generator(self):
+    def test_starts_workload_generator(self):
         """Test starting of the workload generator."""
         response = self.backend.start_workload("tpch_0_1", 300)
         assert response.status_code == 200  # nosec
 
-    def test_starting_worker_pool(self):
+    def test_starts_worker_pool(self):
         """Test starting of the worker pool."""
         response = self.backend.start_workers()
         assert response.status_code == 200  # nosec
@@ -191,12 +191,99 @@ class TestSystem:
             )
             assert response[0][metric][0][metric] > 0  # nosec
 
-    def test_stopping_workload_generator(self):
+    def test_activates_plugin(self):
+        """Test activation of the plugin."""
+        response = self.backend.activate_plugin("test_database1", "Compression")
+
+        assert response.status_code == 200  # nosec
+        assert response.json()["header"]["status"] == 200  # nosec
+
+    def test_check_activated_plugins(self):
+        """Test activation of the plugin."""
+        sleep(1.0)
+        response = self.backend.get_activated_plugins()
+
+        assert response.status_code == 200  # nosec
+        assert response.json() == [  # nosec
+            {"id": "test_database1", "plugins": ["CompressionPlugin"]}
+        ]
+
+    def test_check_initial_plugin_settings(self):
+        """Test initial plugin settings."""
+        response = self.backend.get_plugin_settings()
+
+        assert response.status_code == 200  # nosec
+        assert response.json()["header"]["status"] == 200  # nosec
+        assert response.json()["body"] == {  # nosec
+            "plugin_settings": [
+                {
+                    "id": "test_database1",
+                    "plugin_settings": [
+                        {
+                            "name": "CompressionPlugin_MemoryBudget",
+                            "value": "5000000000",
+                            "description": "The memory budget to target for the CompressionPlugin.",
+                        }
+                    ],
+                }
+            ]
+        }
+
+    def test_set_plugin_settings(self):
+        """Test set plugin settings."""
+        response = self.backend.set_plugin_settings(
+            "test_database1", "CompressionPlugin_MemoryBudget", "50000"
+        )
+
+        assert response.status_code == 200  # nosec
+        assert response.json()["header"]["status"] == 200  # nosec
+
+    def test_check_new_plugin_settings(self):
+        """Test new plugin settings."""
+        response = self.backend.get_plugin_settings()
+
+        assert response.status_code == 200  # nosec
+        assert response.json()["header"]["status"] == 200  # nosec
+        assert response.json()["body"] == {  # nosec
+            "plugin_settings": [
+                {
+                    "id": "test_database1",
+                    "plugin_settings": [
+                        {
+                            "name": "CompressionPlugin_MemoryBudget",
+                            "value": "50000",
+                            "description": "The memory budget to target for the CompressionPlugin.",
+                        }
+                    ],
+                }
+            ]
+        }
+
+    def test_plugin_log(self):
+        """Test plugin log."""
+        sleep(1.0)
+        response = self.backend.get_plugin_log()
+
+        assert response.json()[0]["id"] == "test_database1"  # nosec
+        assert response.json()[0]["plugin_log"] != []  # nosec
+        assert (  # nosec
+            response.json()[0]["plugin_log"][0]["reporter"] == "CompressionPlugin"
+        )
+        assert response.json()[0]["plugin_log"][0]["message"] == "Initialized!"  # nosec
+
+    def test_deactivates_plugin(self):
+        """Test deactivation of the plugin."""
+        response = self.backend.deactivate_plugin("test_database1", "Compression")
+
+        assert response.status_code == 200  # nosec
+        assert response.json()["header"]["status"] == 200  # nosec
+
+    def test_stops_workload_generator(self):
         """Test stopping of the workload generator."""
         response = self.backend.stop_workload("tpch_0_1")
         assert response.status_code == 200  # nosec
 
-    def test_stopping_worker_pool(self):
+    def test_stops_worker_pool(self):
         """Test stopping of the worker pool."""
         response = self.backend.stop_workers()
         assert response.status_code == 200  # nosec
