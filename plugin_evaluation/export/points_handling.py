@@ -1,8 +1,7 @@
 """Functions for metric handling."""
+from datetime import datetime
 from json import loads
 from typing import Dict, List
-
-import matplotlib.dates as mdate
 
 
 def _format_query_name(benchmark: str, query_number: str):
@@ -26,9 +25,9 @@ def _sort_metric_dictionary(metrics: Dict):
 
 def default_function(points: List, column_name: str, parameter):
     """Doesn't change the input value."""
-    sec_values = [int(point["time"] / 1_000_000_000) for point in points]
-    formatted_time = mdate.epoch2num(sec_values)
-
+    formatted_time = [
+        datetime.fromtimestamp(point["time"] / 1_000_000_000) for point in points
+    ]
     metric_values = {column_name: [point[column_name] for point in points]}
 
     return formatted_time, metric_values, column_name
@@ -36,9 +35,9 @@ def default_function(points: List, column_name: str, parameter):
 
 def ns_to_ms(points: List, column_name: str, parameter):
     """Convert ns to ms."""
-    sec_values = [int(point["time"] / 1_000_000_000) for point in points]
-    formatted_time = mdate.epoch2num(sec_values)
-
+    formatted_time = [
+        datetime.fromtimestamp(point["time"] / 1_000_000_000) for point in points
+    ]
     metric_values = {column_name: [point[column_name] / 1_000_000 for point in points]}
 
     return formatted_time, metric_values, column_name
@@ -50,10 +49,9 @@ def handle_query_latency(points: List, column_name: str, parameter):
     query_number = parameter[1]
 
     label = _format_query_name(benchmark, query_number)
-
-    sec_values = [int(point["time"] / 1_000_000_000) for point in points]
-    formatted_time = mdate.epoch2num(sec_values)
-
+    formatted_time = [
+        datetime.fromtimestamp(point["time"] / 1_000_000_000) for point in points
+    ]
     metric_values = {label: [point[column_name] / 1_000_000 for point in points]}
 
     return formatted_time, metric_values, f"Query latency {label}"
@@ -61,9 +59,9 @@ def handle_query_latency(points: List, column_name: str, parameter):
 
 def calculate_footprint(points: List, column_name: str, parameter):  # noqa
     """Convert ns to ms."""
-    sec_values = [int(point["time"] / 1_000_000_000) for point in points]
-    formatted_time = mdate.epoch2num(sec_values)
-
+    formatted_time = [
+        datetime.fromtimestamp(point["time"] / 1_000_000_000) for point in points
+    ]
     loaded_points = [loads(point["storage_meta_information"]) for point in points]
     available_table_names = set()
 
@@ -98,9 +96,9 @@ def calculate_footprint_for_table(  # noqa
     points: List, metric_column_name: str, table_name
 ):
     """Calculate footprint for a specific table."""
-    sec_values = [int(point["time"] / 1_000_000_000) for point in points]
-    formatted_time = mdate.epoch2num(sec_values)
-
+    formatted_time = [
+        datetime.fromtimestamp(point["time"] / 1_000_000_000) for point in points
+    ]
     loaded_points = [loads(point["storage_meta_information"]) for point in points]
     available_column_names = set()
 
@@ -137,8 +135,9 @@ def calculate_access_frequency_for_table(  # noqa
     points: List, metric_column_name: str, table_name
 ):
     """Calculate access frequency for a specific table."""
-    sec_values = [int(point["time"] / 1_000_000_000) for point in points]
-    formatted_time = mdate.epoch2num(sec_values)
+    formatted_time = [
+        datetime.fromtimestamp(point["time"] / 1_000_000_000) for point in points
+    ]
 
     loaded_points = [loads(point["chunks_data_meta_information"]) for point in points]
     available_column_names = set()
