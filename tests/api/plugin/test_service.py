@@ -5,7 +5,10 @@ from unittest.mock import MagicMock
 
 from pytest import fixture, mark, raises
 
-from hyrisecockpit.api.app.plugin.interface import PluginInterface
+from hyrisecockpit.api.app.plugin.interface import (
+    PluginInterface,
+    UpdatePluginSettingInterface,
+)
 from hyrisecockpit.api.app.plugin.service import PluginService
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import get_response
@@ -121,13 +124,14 @@ class TestPluginService:
             assert isinstance(result, int)
             assert result == status
 
+    @mark.parametrize("status", [200, 404, 423])
     def test_activates_a_plugin(
-        self, service: PluginService, id: str, interface: PluginInterface
+        self, service: PluginService, id: str, interface: PluginInterface, status: int
     ):
         """A Plugin service activates a plugin."""
-        service._send_message_to_dbm.return_value = get_response(200)  # type: ignore
+        service._send_message_to_dbm.return_value = get_response(status)  # type: ignore
         result = service.activate_by_id(id, interface)
-        assert result == 200
+        assert result == status
         service._send_message_to_dbm.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="activate plugin"),
@@ -135,41 +139,14 @@ class TestPluginService:
             )
         )
 
-    def test_doesnt_activate_when_id_not_available(
-        self, service: PluginService, id: str, interface: PluginInterface
-    ):
-        """A Plugin service activates a plugin."""
-        service._send_message_to_dbm.return_value = get_response(404)  # type: ignore
-        result = service.activate_by_id(id, interface)
-        assert result == 404
-        service._send_message_to_dbm.assert_called_once_with(  # type: ignore
-            Request(
-                header=Header(message="activate plugin"),
-                body={"id": id, "plugin": interface["name"]},
-            )
-        )
-
-    def test_doesnt_activate_when_database_blocked(
-        self, service: PluginService, id: str, interface: PluginInterface
-    ):
-        """A Plugin service activates a plugin."""
-        service._send_message_to_dbm.return_value = get_response(423)  # type: ignore
-        result = service.activate_by_id(id, interface)
-        assert result == 423
-        service._send_message_to_dbm.assert_called_once_with(  # type: ignore
-            Request(
-                header=Header(message="activate plugin"),
-                body={"id": id, "plugin": interface["name"]},
-            )
-        )
-
+    @mark.parametrize("status", [200, 404, 423])
     def test_deactivates_a_plugin(
-        self, service: PluginService, id: str, interface: PluginInterface
+        self, service: PluginService, id: str, interface: PluginInterface, status: int
     ):
         """A Plugin service deactivates a plugin."""
-        service._send_message_to_dbm.return_value = get_response(200)  # type: ignore
+        service._send_message_to_dbm.return_value = get_response(status)  # type: ignore
         result = service.deactivate_by_id(id, interface)
-        assert result == 200
+        assert result == status
         service._send_message_to_dbm.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="deactivate plugin"),
@@ -177,30 +154,21 @@ class TestPluginService:
             )
         )
 
-    def test_doesnt_deactivate_when_id_not_available(
-        self, service: PluginService, id: str, interface: PluginInterface
+    @mark.parametrize("status", [200, 404, 423])
+    def test_updates_plugin_setting(
+        self,
+        service: PluginService,
+        id: str,
+        interface_update_plugin_setting: UpdatePluginSettingInterface,
+        status: int,
     ):
-        """A Plugin service deactivates a plugin."""
-        service._send_message_to_dbm.return_value = get_response(404)  # type: ignore
-        result = service.deactivate_by_id(id, interface)
-        assert result == 404
+        """A Plugin service updates a plugin."""
+        service._send_message_to_dbm.return_value = get_response(status)  # type: ignore
+        result = service.update_plugin_setting(id, interface_update_plugin_setting)
+        assert result == status
         service._send_message_to_dbm.assert_called_once_with(  # type: ignore
             Request(
-                header=Header(message="deactivate plugin"),
-                body={"id": id, "plugin": interface["name"]},
-            )
-        )
-
-    def test_doesnt_deactivate_when_database_blocked(
-        self, service: PluginService, id: str, interface: PluginInterface
-    ):
-        """A Plugin service deactivates a plugin."""
-        service._send_message_to_dbm.return_value = get_response(423)  # type: ignore
-        result = service.deactivate_by_id(id, interface)
-        assert result == 423
-        service._send_message_to_dbm.assert_called_once_with(  # type: ignore
-            Request(
-                header=Header(message="deactivate plugin"),
-                body={"id": id, "plugin": interface["name"]},
+                header=Header(message="set plugin setting"),
+                body={"id": id, "update": interface_update_plugin_setting},
             )
         )
