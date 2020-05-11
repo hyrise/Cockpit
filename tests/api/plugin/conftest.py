@@ -1,6 +1,9 @@
 """Shared fixtures for the plugin tests."""
+from flask import Flask
+from flask.testing import FlaskClient
 from pytest import fixture
 
+from hyrisecockpit.api.app import create_app
 from hyrisecockpit.api.app.plugin.interface import (
     DetailedPluginIDInterface,
     DetailedPluginInterface,
@@ -177,3 +180,18 @@ def schema_detailed_plugin() -> DetailedPluginSchema:
 def schema_detailed_plugin_id() -> DetailedPluginIDSchema:
     """Return a PluginID schema."""
     return DetailedPluginIDSchema()
+
+
+@fixture
+def app() -> Flask:
+    """Return a testing app."""
+    app = create_app()
+    app.testing = True
+    return app
+
+
+@fixture
+def client(app: Flask) -> FlaskClient:
+    """Return a test client."""
+    with app.test_client() as client:
+        return client
