@@ -47,7 +47,8 @@ export function useMetricController(): MetricController {
   /* restart requests on change */
   watch([precision, range, selectedMetrics], () => {
     stop();
-    if (validTime.value) start(selectedMetrics.value as Metric[]);
+    if (validTime.value && !selectedStaticRange.value)
+      start(selectedMetrics.value as Metric[]);
   });
 
   /* request once on static time range, restart if not present */

@@ -4,10 +4,12 @@
       <div class="header">{{ pageName }}</div>
     </v-card-title>
     <v-card-text>
-      <v-tabs v-model="tab" grow background-color="white">
+      <v-tabs v-if="open" v-model="tab" background-color="white" color="primary" grow>
+        <v-tabs-slider color="primary"></v-tabs-slider>
         <v-tab>DATA</v-tab>
         <v-tab>TIME</v-tab>
       </v-tabs>
+      <v-divider />
       <v-tabs-items v-model="tab" color="primary">
         <v-tab-item>
           <v-container class="white container flex">
@@ -33,11 +35,7 @@
             <v-window-item :value="1">
               <v-subheader class="mt-2">
                 CONTINUOUS RANGE
-                <v-badge
-                  class="ml-2 mt-1"
-                  :color="!staticRange ? 'green' : 'red'"
-                  dot
-                />
+                <v-badge class="ml-2 mt-1" :color="!staticRange ? 'green' : 'red'" dot />
               </v-subheader>
               <v-sheet height="330">
                 <v-container class="white container flex">
@@ -59,18 +57,13 @@
                   block
                   :disabled="!staticRange"
                   @click="resetTimeRange"
-                  >Set Continuous Time Range</v-btn
-                >
+                >Set Continuous Time Range</v-btn>
               </v-sheet>
             </v-window-item>
             <v-window-item :value="2">
               <v-subheader class="mt-2">
                 STATIC RANGE
-                <v-badge
-                  class="ml-2 mt-1"
-                  :color="staticRange ? 'green' : 'red'"
-                  dot
-                />
+                <v-badge class="ml-2 mt-1" :color="staticRange ? 'green' : 'red'" dot />
               </v-subheader>
               <v-sheet height="330">
                 <v-container class="white container flex">
@@ -113,15 +106,14 @@
                   block
                   :disabled="invalidDates"
                   @click="setStaticTimeRange"
-                  >Set Static Time Range</v-btn
-                >
+                >Set Static Time Range</v-btn>
               </v-sheet>
             </v-window-item>
           </v-window>
           <v-divider class="my-2" />
           <v-card flat>
             <v-card-actions>
-              <v-spacer />
+              <v-spacer v-if="window===1" />
               <v-tooltip top>
                 <template v-slot:activator="{ on }">
                   <v-btn
@@ -130,12 +122,13 @@
                     color="white"
                     depressed
                     @click="window = window == 1 ? 2 : 1"
-                    >{{ window == 1 ? "STATIC" : "CONTINUOUS" }}</v-btn
                   >
+                    <v-icon v-if="window===2" left>mdi-chevron-left</v-icon>
+                    {{ window == 1 ? "STATIC" : "CONTINUOUS" }}
+                    <v-icon v-if="window===1" right>mdi-chevron-right</v-icon>
+                  </v-btn>
                 </template>
-                <span>
-                  Select {{ window == 1 ? "Static" : "Continuous" }} Range Type
-                </span>
+                <span>Select {{ window == 1 ? "Static" : "Continuous" }} Range Type</span>
               </v-tooltip>
             </v-card-actions>
           </v-card>
@@ -172,6 +165,10 @@ import { PageName } from "@/types/views";
 import { Metric } from "@/types/metrics";
 import { useFormatting } from "@/meta/formatting";
 
+interface Props {
+  open: boolean;
+}
+
 interface Data
   extends UseGlobalInstances,
     UseDataChangeHandling,
@@ -189,14 +186,21 @@ export default defineComponent({
     RangeSelection,
     TimestampSelection,
   },
-  setup(props: {}, context: SetupContext): Data {
+  props: {
+    open: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  setup(props: Props, context: SetupContext): Data {
     const page = computed(() => context.root.$route.name! as PageName);
+    const tab = ref<number>(0);
 
     return {
       pageName: computed(
         () => page.value[0].toUpperCase() + page.value.substring(1)
       ),
-      tab: ref(0),
+      tab,
       window: ref(1),
       ...useDataChangeHandling(context, page),
       ...useGlobalInstances(context, page),
@@ -291,15 +295,15 @@ function useStaticRangeSelection(
   const endTime = ref("");
 
   const staticPrecision = ref(0);
+  const invalidInput = computed(() =>
+    [startDate.value, startTime.value, endDate.value, endTime.value].some(
+      (value) => ["", null].includes(value) || !isValidDate(value)
+    )
+  );
 
   /* set max selectable precision, depending on start and end date */
   const maxPrecision = computed(() =>
-    ![
-      startDate.value,
-      startTime.value,
-      endDate.value,
-      endTime.value,
-    ].some((value) => ["", null].includes(value))
+    !invalidInput.value
       ? (getDate(endDate.value, endTime.value).getTime() -
           getDate(startDate.value, startTime.value).getTime()) /
         Math.pow(10, 3)
@@ -309,16 +313,25 @@ function useStaticRangeSelection(
   /* disable buttons on invalid dates */
   const invalidDates = computed(
     () =>
-      [
-        startDate.value,
-        startTime.value,
-        endDate.value,
-        endTime.value,
-      ].some((value) => ["", null].includes(value)) ||
+      invalidInput.value ||
       getDate(endDate.value, endTime.value).getTime() -
         getDate(startDate.value, startTime.value).getTime() <=
         staticPrecision.value * Math.pow(10, 3)
   );
+
+  function isValidDate(value: string): boolean {
+    const hour = parseInt(value.split(":")[0], 10);
+    const minute = parseInt(value.split(":")[1], 10);
+    return (
+      !isNaN(Date.parse(value)) ||
+      (!!hour &&
+        !!minute &&
+        hour >= 0 &&
+        hour < 24 &&
+        minute >= 0 &&
+        minute < 60)
+    );
+  }
 
   const staticRange = computed(
     () => !!context.root.$selectionController.selectedStaticRange.value
