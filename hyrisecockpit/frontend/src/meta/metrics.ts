@@ -142,12 +142,12 @@ const queryLabel = "Number of queries";
 
 const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
   access: {
-    title: "Access Frequency",
+    title: "Segment Access Frequencies", //Access Frequency
     xaxis: "Columns",
     yaxis: "Chunks",
   },
   cpu: {
-    title: "CPU",
+    title: "CPU Utilization", //CPU (from hyrise utilization table)
     xaxis: timeLabel,
     yaxis: "Workload in %",
   },
@@ -162,7 +162,7 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
     yaxis: "Proportion of queries in %",
   },
   memoryFootprint: {
-    title: "Memory Footprint",
+    title: "Data Size", //Memory Footprint (Sum of all tables)
     xaxis: timeLabel,
     yaxis: "Memory Footprint in MB",
   },
@@ -177,12 +177,12 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
     yaxis: queryLabel,
   },
   ram: {
-    title: "RAM",
+    title: "Process Memory (RSS)", //RAM
     xaxis: timeLabel,
     yaxis: "Memory usage in %",
   },
   storage: {
-    title: "Storage",
+    title: "Data Size - Overview", //Storage
   },
   throughput: {
     title: "Throughput",
