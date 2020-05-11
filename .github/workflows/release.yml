@@ -13,10 +13,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       env: 
-        DOCKER_HUB_USERNAME: ${{secrets.DOCKER_HUB_USERNAME}}
-        DOCKER_HUB_TOKEN: ${{secrets.DOCKER_HUB_TOKEN}}
+        DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+        DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
     - name: Login to Docker
-      run: echo "$DOCKER_HUB_TOKEN" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+      run: echo "$DOCKER_HUB_TOKEN" | docker login --username "$DOCKER_HUB_USERNAME" --password-stdin
 
     - name: Copy environment file
       run: cp .env.example .env
