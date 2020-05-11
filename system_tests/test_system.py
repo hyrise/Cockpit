@@ -81,11 +81,11 @@ class TestSystem:
         status = cls.backend.get_monitor_property("status")  # type: ignore
         assert expected_status in status  # nosec
 
-    def test_backend_initializes_without_errors(self):
+    def test_initializes_backend_without_errors(self):
         """Test backend initializes without errors."""
         self.check_stderr()
 
-    def test_check_static_metric_endpoints(self):
+    def test_returns_metric_values(self):
         """Test static metric endpoints return correct values."""
         metrics = [
             "chunks",
@@ -100,7 +100,7 @@ class TestSystem:
             response = self.backend.get_monitor_property(metrics[i])
             assert response["body"][metrics_attributes[i]] == {}  # nosec
 
-    def test_check_historical_metric_endpoints(self):
+    def test_returns_historical_metric_values(self):
         """Test historical metric endpoints return correct values."""
         historical_metrics = ["throughput", "latency", "queue_length", "system"]
         for metric in historical_metrics:
@@ -113,12 +113,12 @@ class TestSystem:
             )
             assert response == []  # nosec
 
-    def test_check_available_databases(self):
+    def test_returns_available_databases(self):
         """Ensure a new backend has no databases."""
         available_databases = self.backend.get_control_property("database")
         assert available_databases == []  # nosec
 
-    def test_check_available_datasets(self):
+    def test_returns_available_datasets(self):
         """Test available datasets."""
         available_datasets = self.backend.get_control_property(
             "database/benchmark_tables"
@@ -127,11 +127,11 @@ class TestSystem:
             "folder_names": ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
         }
 
-    def test_initialization_calls_had_no_errors(self):
+    def test_initialization_calls_without_errors(self):
         """Test initialization calls had no errors."""
         self.check_stderr()
 
-    def test_adding_database(self):
+    def test_adds_database(self):
         """Test adding a database."""
         response = self.backend.add_database(
             "test_database1", DATABASE_HOST, DATABASE_PORT
@@ -151,18 +151,18 @@ class TestSystem:
             }
         ]
 
-    def test_loading_default_tables(self):
+    def test_loads_default_tables(self):
         """Test loading default tables."""
         sleep(5.0)  # wait until default tables are loaded
 
         self.check_loading_default_tables("test_database1")
 
-    def test_check_influx_database_creation(self):
+    def test_creates_influx_database(self):
         """Test the corresponding influx database is created."""
         influx_databases = self.influx_client.get_list_database()
         assert {"name": "test_database1"} in influx_databases  # nosec
 
-    def test_database_handling_had_no_errors(self):
+    def test_handles_database_without_errors(self):
         """Test database handling had no errors."""
         self.check_stderr()
 
@@ -176,7 +176,7 @@ class TestSystem:
         response = self.backend.start_workers()
         assert response.status_code == 200  # nosec
 
-    def test_historical_metric_responses(self):
+    def test_returns_historical_metric_values_during_workload_execution(self):
         """Test responses of the historical metrics."""
         sleep(4.0)  # wait for query executions
 
@@ -198,7 +198,7 @@ class TestSystem:
         assert response.status_code == 200  # nosec
         assert response.json()["header"]["status"] == 200  # nosec
 
-    def test_check_activated_plugins(self):
+    def test_returns_activated_plugins(self):
         """Test activation of the plugin."""
         sleep(1.0)
         response = self.backend.get_activated_plugins()
@@ -208,7 +208,7 @@ class TestSystem:
             {"id": "test_database1", "plugins": ["CompressionPlugin"]}
         ]
 
-    def test_check_initial_plugin_settings(self):
+    def test_returns_initial_plugin_settings(self):
         """Test initial plugin settings."""
         response = self.backend.get_plugin_settings()
 
@@ -229,7 +229,7 @@ class TestSystem:
             ]
         }
 
-    def test_set_plugin_settings(self):
+    def test_sets_plugin_settings(self):
         """Test set plugin settings."""
         response = self.backend.set_plugin_settings(
             "test_database1", "CompressionPlugin_MemoryBudget", "50000"
@@ -238,7 +238,7 @@ class TestSystem:
         assert response.status_code == 200  # nosec
         assert response.json()["header"]["status"] == 200  # nosec
 
-    def test_check_new_plugin_settings(self):
+    def test_returns_new_plugin_settings(self):
         """Test new plugin settings."""
         response = self.backend.get_plugin_settings()
 
@@ -259,7 +259,7 @@ class TestSystem:
             ]
         }
 
-    def test_plugin_log(self):
+    def test_returns_plugin_log(self):
         """Test plugin log."""
         sleep(1.0)
         response = self.backend.get_plugin_log()
@@ -288,16 +288,16 @@ class TestSystem:
         response = self.backend.stop_workers()
         assert response.status_code == 200  # nosec
 
-    def test_removing_database(self):
+    def test_removes_database(self):
         """Test removing of the database."""
         response = self.backend.remove_database("test_database1")
         assert response.status_code == 200  # nosec
 
-    def test_workload_execution_had_no_errors(self):
+    def test_executes_workload_without_errors(self):
         """Test workload execution had no errors."""
         self.check_stderr()
 
-    def test_influx_database_remains(self):
+    def test_remains_influx_database(self):
         """Test the corresponding influx database is remained."""
         influx_databases = self.influx_client.get_list_database()
         assert {"name": "test_database1"} in influx_databases  # nosec
