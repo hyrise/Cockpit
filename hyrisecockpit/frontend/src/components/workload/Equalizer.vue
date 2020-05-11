@@ -15,7 +15,7 @@
               200
             </div>
             <div class="min-value">
-              -200
+              0
             </div>
           </div>
         </div>
