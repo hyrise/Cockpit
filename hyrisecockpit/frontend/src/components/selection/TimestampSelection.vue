@@ -38,6 +38,7 @@ import {
   computed,
 } from "@vue/composition-api";
 import { useFormatting } from "@/meta/formatting";
+import { isValidDate } from "@/utils/methods";
 
 interface Data extends UseDatePicking, UseTimePicking {}
 
@@ -175,7 +176,7 @@ function useTimePicking(
             new Date(props.minDate).getTime() ||
             [selectedDate.value, props.minDate].includes("")) &&
           isInPast(props.minTime, time.value)) ||
-        (props.minTime && time.value === "")
+        (props.minTime && (time.value === "" || !isValidDate(time.value)))
       ) {
         time.value = props.minTime;
       }

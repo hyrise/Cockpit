@@ -164,6 +164,7 @@ import {
 import { PageName } from "@/types/views";
 import { Metric } from "@/types/metrics";
 import { useFormatting } from "@/meta/formatting";
+import { isValidDate } from "@/utils/methods";
 
 interface Props {
   open: boolean;
@@ -318,20 +319,6 @@ function useStaticRangeSelection(
         getDate(startDate.value, startTime.value).getTime() <=
         staticPrecision.value * Math.pow(10, 3)
   );
-
-  function isValidDate(value: string): boolean {
-    const hour = parseInt(value.split(":")[0], 10);
-    const minute = parseInt(value.split(":")[1], 10);
-    return (
-      !isNaN(Date.parse(value)) ||
-      (!!hour &&
-        !!minute &&
-        hour >= 0 &&
-        hour < 24 &&
-        minute >= 0 &&
-        minute < 60)
-    );
-  }
 
   const staticRange = computed(
     () => !!context.root.$selectionController.selectedStaticRange.value
