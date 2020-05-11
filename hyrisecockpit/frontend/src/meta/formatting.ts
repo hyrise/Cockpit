@@ -21,7 +21,7 @@ export function useFormatting(): {
     let index = parts[0].length - 1;
     for (let i = 0; i < parts[0].length; i++) {
       if (i !== 0 && i % 3 == 0) {
-        formatted = "´" + formatted;
+        formatted = " " + formatted;
       }
       formatted = parts[0][index] + formatted;
       index--;
