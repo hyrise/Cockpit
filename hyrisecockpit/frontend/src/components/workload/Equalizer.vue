@@ -3,8 +3,12 @@
     <p class="subtitle-1 font-weight-medium">
       {{ getDisplayedWorkload(workload) }}
     </p>
-    <v-row class="equalizer-row">
-      <div v-for="(weight, idx) in weights" :key="weight.name" class="test">
+    <v-row class="equalizer">
+      <div
+        v-for="(weight, idx) in weights"
+        :key="weight.name"
+        class="equalizer-row"
+      >
         <div v-if="idx % 15 === 0">
           <div class="value-col">
             <div class="max-value">
@@ -16,7 +20,9 @@
           </div>
         </div>
         <div class="query-div">
-          {{ weight.name }}
+          <div class="query-name">
+            {{ weight.name }}
+          </div>
           <div class="top-line"></div>
           <v-slider
             v-model="weight.weight"
@@ -127,7 +133,7 @@ export default defineComponent({
   margin-top: 115px;
 }
 .max-value {
-  margin-top: 35px;
+  margin-top: 20px;
 }
 .query-text-field >>> input {
   text-align: center;
@@ -137,16 +143,19 @@ export default defineComponent({
   margin-top: -20px;
   text-align: center !important;
 }
-.equalizer-row {
+.equalizer {
   margin-left: 20px;
   margin-right: 20px;
 }
-
+.query-name {
+  margin-bottom: -15px;
+}
 .break {
   flex-basis: 100%;
   height: 0;
 }
-.test {
+.equalizer-row {
   display: flex;
+  margin-bottom: 10px;
 }
 </style>
