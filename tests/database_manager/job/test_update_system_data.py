@@ -21,35 +21,36 @@ class TestUpdateSystemDataJob:
 
     def test_successfully_create_system_data_dict(self) -> None:
         """Test creates system data dict successfully."""
-        fake_database_threads: int = 16
         fake_utilization_df: DataFrame = DataFrame(
             {
-                "cpu_system_usage": [120],
-                "cpu_process_usage": [300],
-                "system_memory_free_bytes": [0],
-                "process_physical_memory_bytes": [42],
+                "cpu_system_time": [120],
+                "cpu_process_time": [300],
+                "system_memory_free": [0],
+                "system_memory_available": [0],
+                "process_virtual_memory": [42],
+                "cpu_affinity_count": [16],
             }
         )
         fake_system_df: DataFrame = DataFrame(
             {
-                "cpu_count": [16],
-                "cpu_clock_speed": [120],
+                "cpu_count": [10],
+                "cpu_model": [120],
                 "system_memory_total_bytes": [1234],
             }
         )
         expected_dict: Dict[str, float] = {
-            "cpu_system_usage": 120.0,
-            "cpu_process_usage": 300.0,
-            "cpu_count": 16,
-            "cpu_clock_speed": 120,
+            "cpu_system_time": 12.0,
+            "cpu_process_time": 30.0,
+            "cpu_count": 10,
+            "cpu_model": 120,
             "free_memory": 0,
-            "used_memory": 42,
+            "available_memory": 0,
             "total_memory": 1234,
-            "database_threads": fake_database_threads,
+            "database_threads": 16,
         }
 
         received_dict: Dict[str, Union[int, float]] = _create_system_data_dict(
-            fake_utilization_df, fake_system_df, fake_database_threads
+            fake_utilization_df, fake_system_df
         )
 
         assert received_dict == expected_dict

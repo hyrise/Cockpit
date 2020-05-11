@@ -747,14 +747,14 @@ class System(Resource):
             precision_ns,
             "system_data",
             [
-                "cpu_clock_speed",
+                "cpu_model",
                 "cpu_count",
-                "cpu_process_usage",
-                "cpu_system_usage",
+                "cpu_process_time",
+                "cpu_system_time",
                 "database_threads",
                 "free_memory",
                 "total_memory",
-                "used_memory",
+                "available_memory",
             ],
         )
         response: List[Dict] = [
@@ -765,14 +765,14 @@ class System(Resource):
                         "timestamp": point["timestamp"],
                         "system_data": {
                             "cpu": {
-                                "cpu_system_usage": point["cpu_system_usage"],
-                                "cpu_process_usage": point["cpu_process_usage"],
+                                "cpu_system_time": point["cpu_system_time"],
+                                "cpu_process_time": point["cpu_process_time"],
                                 "cpu_count": point["cpu_count"],
-                                "cpu_clock_speed": point["cpu_clock_speed"],
+                                "cpu_model": point["cpu_model"],
                             },
                             "memory": {
                                 "free": point["free_memory"],
-                                "used": point["used_memory"],
+                                "available": point["available_memory"],
                                 "total": point["total_memory"],
                                 "percent": (
                                     point["used_memory"] / point["total_memory"]
