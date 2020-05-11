@@ -1,0 +1,40 @@
+name: Release Docker Image
+
+on:
+  push:
+    branches: [ dev ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Login to Docker
+      run: docker login -u {{DOCKER_HUB_USERNAME}} -p {{DOCKER_HUB_TOKEN}}
+
+    - name: Copy environment file
+      run: cp .env.example .env
+
+    - name: Build the Backend Docker image
+      run: docker build --tag udopigorsch/cockpit-backend:latest -f hyrisecockpit/api/Dockerfile
+    - name: Push Backend Docker image
+      run: docker push udopigorsch/cockpit-backend:latest
+
+    - name: Build the Generator Docker image
+      run: docker build --tag udopigorsch/cockpit-generator:latest -f hyrisecockpit/workload_generator/Dockerfile
+    - name: Push Generator Docker image
+      run: docker push udopigorsch/cockpit-generator:latest
+
+    - name: Build the Manager Docker image
+      run: docker build --tag udopigorsch/cockpit-manager:latest -f hyrisecockpit/database_manager/Dockerfile
+    - name: Push Manager Docker image
+      run: docker push udopigorsch/cockpit-manager:latest
+   
+    - name: Build the Frontend Docker image
+      run: docker build --tag udopigorsch/cockpit-frontend:latest -f hyrisecockpit/frontend/Dockerfile
+    - name: Push Frontend Docker image
+      run: docker push udopigorsch/cockpit-frontend:latest
