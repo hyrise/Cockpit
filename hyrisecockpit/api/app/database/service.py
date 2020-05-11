@@ -47,7 +47,8 @@ class DatabaseService:
         response = cls._send_message(
             Request(header=Header(message="add database"), body=dict(interface))
         )
-        _add_active_database(interface["id"])
+        if response["header"]["status"] == 200:
+            _add_active_database(interface["id"])
         return response["header"]["status"]
 
     @classmethod
@@ -56,7 +57,8 @@ class DatabaseService:
         response = cls._send_message(
             Request(header=Header(message="delete database"), body=dict(interface))
         )
-        _remove_active_database(interface["id"])
+        if response["header"]["status"] == 200:
+            _remove_active_database(interface["id"])
         return response["header"]["status"]
 
     @classmethod

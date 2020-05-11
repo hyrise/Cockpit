@@ -1,0 +1,46 @@
+name: Release Docker Image
+
+on:
+  push:
+    branches: [ dev ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Login to Docker
+      run: docker login -u "${DOCKER_HUB_USERNAME}" -p "${DOCKER_HUB_TOKEN}"
+      env: 
+        DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+        DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+    - name: Use example environment file
+      run: cp .env.example .env
+
+    - name: Build the Docker stack
+      run: docker-compose -f docker-compose.ci.yml build --parallel backend generator manager frontend
+      
+    - name: Tag the Backend Docker image
+      run: docker tag cockpit-backend udopigorsch/workload-backend
+    - name: Push the Backend Docker image
+      run: docker push udopigorsch/cockpit-backend
+
+    - name: Tag the Generator Docker image
+      run: docker tag cockpit-generator udopigorsch/workload-generator
+    - name: Push the Generator Docker image
+      run: docker push udopigorsch/cockpit-generator
+
+    - name: Tag the Manager Docker image
+      run: docker tag cockpit-manager udopigorsch/database-manager
+    - name: Push Manager Docker image
+      run: docker push udopigorsch/cockpit-manager
+   
+    - name: Tag the Frontend Docker image
+      run: docker tag cockpit-frontend udopigorsch/cockpit-frontend
+    - name: Push the Frontend Docker image
+      run: docker push udopigorsch/cockpit-frontend
