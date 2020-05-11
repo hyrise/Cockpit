@@ -132,9 +132,11 @@ export default defineComponent({
 }
 .min-value {
   margin-top: 115px;
+  text-align: right;
 }
 .max-value {
   margin-top: 20px;
+  text-align: right;
 }
 .query-text-field >>> input {
   text-align: center;
