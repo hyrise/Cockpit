@@ -47,23 +47,49 @@ def handle_query_latency(points: List, column_name: str, parameter):
     return formatted_time, metric_values, f"Query latency {label}"
 
 
-def calculate_footprint(points: List, column_name: str, parameter):
+def calculate_footprint(points: List, column_name: str, parameter):  # noqa
     """Convert ns to ms."""
+
+    def sort_function(tuple):
+        return tuple[1][0] if len(tuple[1]) > 0 else 0.0
+
     sec_values = [int(point["time"] / 1_000_000_000) for point in points]
     formatted_time = mdate.epoch2num(sec_values)
 
-    footprint_values = []
+    available_table_names = set()
+
     for point in points:
-        footprint = 0
         storage = loads(point["storage_meta_information"])
         for table_name in storage.keys():
-            for column_name in storage[table_name]["data"].keys():
-                footprint = footprint + storage[table_name]["data"][column_name]["size"]
-        footprint_values.append(footprint / 1_000_000)
+            available_table_names.add(table_name)
 
-    metric_values = {"Total memory footprint": footprint_values}
+    footprint: Dict = {table_name: [] for table_name in available_table_names}
 
-    return formatted_time, metric_values, "Total Footprint"
+    total_footprint = []
+
+    for point in points:
+        storage = loads(point["storage_meta_information"])
+        current_total_footprint = 0.0
+        for table_name in footprint.keys():
+            table_footprint = 0.0
+            if table_name in storage.keys():
+                for column_name in storage[table_name]["data"].keys():
+                    table_footprint = (
+                        table_footprint
+                        + storage[table_name]["data"][column_name]["size"]
+                    )
+            footprint[table_name].append(table_footprint / 1_000_000)
+            current_total_footprint = (
+                current_total_footprint + table_footprint / 1_000_000
+            )
+        total_footprint.append(current_total_footprint)
+
+    footprint["total"] = total_footprint
+
+    footprint_items = list(footprint.items())
+    footprint_items.sort(key=sort_function, reverse=True)
+
+    return formatted_time, dict(footprint_items), "Footprint"
 
 
 def calculate_footprint_for_table(  # noqa
@@ -78,14 +104,11 @@ def calculate_footprint_for_table(  # noqa
     formatted_time = mdate.epoch2num(sec_values)
 
     available_column_names = set()
-    variable = []
-
     for point in points:
         storage = loads(point["storage_meta_information"])
         if table_name in storage.keys():
             for column_name in storage[table_name]["data"].keys():
                 available_column_names.add(column_name)
-                variable.append(column_name)
 
     column_footprints: Dict = {
         column_name: [] for column_name in available_column_names

@@ -9,7 +9,7 @@ from plugin_evaluation.utils.figlet import intro
 from plugin_evaluation.utils.user_interface import DoneStatus, show_bar
 
 database_id = "momentum"
-workload_execution_time = 100
+workload_execution_time = 10
 plugin = "Clustering"
 
 metrics = [
