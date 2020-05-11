@@ -23,21 +23,21 @@ jobs:
       run: cp .env.example .env
 
     - name: Build the Backend Docker image
-      run: docker build --tag udopigorsch/cockpit-backend:latest -f hyrisecockpit/api/Dockerfile
+      run: docker build --tag udopigorsch/cockpit-backend:latest hyrisecockpit/api
     - name: Push Backend Docker image
       run: docker push udopigorsch/cockpit-backend:latest
 
     - name: Build the Generator Docker image
-      run: docker build --tag udopigorsch/cockpit-generator:latest -f hyrisecockpit/workload_generator/Dockerfile
+      run: docker build --tag udopigorsch/cockpit-generator:latest hyrisecockpit/workload_generator
     - name: Push Generator Docker image
       run: docker push udopigorsch/cockpit-generator:latest
 
     - name: Build the Manager Docker image
-      run: docker build --tag udopigorsch/cockpit-manager:latest -f hyrisecockpit/database_manager/Dockerfile
+      run: docker build --tag udopigorsch/cockpit-manager:latest hyrisecockpit/database_manager
     - name: Push Manager Docker image
       run: docker push udopigorsch/cockpit-manager:latest
    
     - name: Build the Frontend Docker image
-      run: docker build --tag udopigorsch/cockpit-frontend:latest -f hyrisecockpit/frontend/Dockerfile
+      run: docker build --tag udopigorsch/cockpit-frontend:latest hyrisecockpit/frontend
     - name: Push Frontend Docker image
       run: docker push udopigorsch/cockpit-frontend:latest
