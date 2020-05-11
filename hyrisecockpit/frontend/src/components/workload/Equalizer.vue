@@ -41,7 +41,7 @@
             class="query-text-field"
             dense
             single-line
-            @click="$emit('change', weight.name, weight.weight)"
+            @change="$emit('change', weight.name, weight.weight)"
           />
         </div>
       </div>
