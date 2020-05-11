@@ -101,24 +101,24 @@ def calculate_footprint_for_table(  # noqa
     sec_values = [int(point["time"] / 1_000_000_000) for point in points]
     formatted_time = mdate.epoch2num(sec_values)
 
+    loaded_points = [loads(point["storage_meta_information"]) for point in points]
+
     available_column_names = set()
-    for point in points:
-        storage = loads(point["storage_meta_information"])
-        if table_name in storage.keys():
-            for column_name in storage[table_name]["data"].keys():
+    for point in loaded_points:
+        if table_name in point.keys():
+            for column_name in point[table_name]["data"].keys():
                 available_column_names.add(column_name)
 
     column_footprints: Dict = {
         column_name: [] for column_name in available_column_names
     }
 
-    for point in points:
-        storage = loads(point["storage_meta_information"])
-        if table_name in storage.keys():
+    for point in loaded_points:
+        if table_name in point.keys():
             for column_name in column_footprints.keys():
-                if column_name in storage[table_name]["data"].keys():
+                if column_name in point[table_name]["data"].keys():
                     column_footprints[column_name].append(
-                        storage[table_name]["data"][column_name]["size"] / 1_000_000
+                        point[table_name]["data"][column_name]["size"] / 1_000_000
                     )
                 else:
                     column_footprints[column_name].append(0.0)
