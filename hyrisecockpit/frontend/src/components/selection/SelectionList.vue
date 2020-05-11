@@ -164,7 +164,7 @@ import { useFormatting } from "@/meta/formatting";
 
 interface Data
   extends UseGlobalInstances,
-    UseChangeHandling,
+    UseDataChangeHandling,
     UseStaticRangeSelection {
   pageName: Ref<string>;
   tab: Ref<number>;
@@ -188,7 +188,7 @@ export default defineComponent({
       ),
       tab: ref(0),
       window: ref(1),
-      ...useChangeHandling(context, page),
+      ...useDataChangeHandling(context, page),
       ...useGlobalInstances(context, page),
       ...useStaticRangeSelection(context),
     };
@@ -224,15 +224,15 @@ function useGlobalInstances(
   };
 }
 
-interface UseChangeHandling {
+interface UseDataChangeHandling {
   handleDatabaseChange: (databaseId: string, value: boolean) => void;
   handleMetricChange: (metric: Metric, value: boolean) => void;
 }
 
-function useChangeHandling(
+function useDataChangeHandling(
   context: SetupContext,
   page: Ref<PageName>
-): UseChangeHandling {
+): UseDataChangeHandling {
   const { emitSelectedDatabasesChangedWithinEvent } = useDatabaseEvents();
   const { emitSelectedMetricsChangedWithinEvent } = useMetricEvents();
   const { emitPageChangedEvent } = useWindowEvents();
@@ -280,11 +280,17 @@ function useStaticRangeSelection(
   const endTime = ref("");
 
   const staticPrecision = ref(0);
-  const maxPrecision = computed(
-    () =>
-      (getDate(endDate.value, endTime.value).getTime() -
-        getDate(startDate.value, startTime.value).getTime()) /
-        Math.pow(10, 3) || 60
+  const maxPrecision = computed(() =>
+    ![
+      startDate.value,
+      startTime.value,
+      endDate.value,
+      endTime.value,
+    ].some((value) => ["", null].includes(value))
+      ? (getDate(endDate.value, endTime.value).getTime() -
+          getDate(startDate.value, startTime.value).getTime()) /
+        Math.pow(10, 3)
+      : 60
   );
   const staticRange = computed(
     () => !!context.root.$selectionController.selectedStaticRange.value
@@ -296,9 +302,12 @@ function useStaticRangeSelection(
 
   const invalidDates = computed(
     () =>
-      [startDate.value, startTime.value, endDate.value, endTime.value].some(
-        (value) => value === ""
-      ) ||
+      [
+        startDate.value,
+        startTime.value,
+        endDate.value,
+        endTime.value,
+      ].some((value) => ["", null].includes(value)) ||
       getDate(endDate.value, endTime.value).getTime() -
         getDate(startDate.value, startTime.value).getTime() <=
         staticPrecision.value * Math.pow(10, 3)

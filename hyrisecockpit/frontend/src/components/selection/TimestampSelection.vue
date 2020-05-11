@@ -23,13 +23,7 @@
       <template v-slot:activator="{ on }">
         <v-text-field v-model="time" label="Time" prepend-icon="mdi-clock" readonly v-on="on"></v-text-field>
       </template>
-      <v-time-picker
-        v-model="time"
-        format="24hr"
-        color="primary"
-        :allowed-hours="allowedHours"
-        :allowed-minutes="allowedMinutes"
-      ></v-time-picker>
+      <v-time-picker v-model="time" format="24hr" color="primary" :min="minTime" :max="maxTime"></v-time-picker>
     </v-menu>
   </div>
 </template>
@@ -107,7 +101,7 @@ function useDatePicking(props: Props, context: SetupContext): UseDatePicking {
       if (
         (props.minDate &&
           date.value !== "" &&
-          new Date(date.value) < new Date(props.minDate)) ||
+          new Date(date.value).getTime() < new Date(props.minDate).getTime()) ||
         (props.minDate && date.value === "")
       )
         date.value = props.minDate;
@@ -128,8 +122,7 @@ function useDatePicking(props: Props, context: SetupContext): UseDatePicking {
 interface UseTimePicking {
   time: Ref<string>;
   timePicker: Ref<boolean>;
-  allowedHours: Ref<readonly number[]>;
-  allowedMinutes: Ref<readonly number[]>;
+  maxTime: Ref<string>;
 }
 
 function useTimePicking(
@@ -141,66 +134,22 @@ function useTimePicking(
 
   const time = ref("");
   const timePicker = ref(false);
-  const minimumTime = ref(props.minTime);
+  const currentDate = ref<Date>(new Date());
 
-  const availableHours = [...Array(24).keys()];
-  const availableMinutes = [...Array(12).keys()].map((key) => key * 5);
+  /* update current time manually every 1 min */
+  const resetTime = setInterval(() => {
+    currentDate.value = new Date();
+  }, 1000 * 60);
 
-  const allowedHours = computed(() =>
-    availableHours.filter(
-      (hour) =>
-        !isInFuture(
-          [null, ""].includes(selectedDate.value)
-            ? formatDateWithoutTime(subDays(new Date(), 7)).toString()
-            : selectedDate.value,
-          `${hour}:00`
-        ) &&
-        !isInPast(
-          [null, ""].includes(minimumTime.value) ? "0:00" : minimumTime.value,
-          `${hour}:55`
-        )
-    )
+  const maxTime = computed(() =>
+    formatDateWithoutTime(new Date(selectedDate.value)).getTime() ===
+    formatDateWithoutTime(currentDate.value).getTime()
+      ? getTime(currentDate.value)
+      : "23:59"
   );
 
-  //TODO: show only values before current date
-  const allowedMinutes = computed(() =>
-    availableMinutes.filter(
-      (minute) =>
-        !isInFuture(
-          [null, ""].includes(selectedDate.value)
-            ? formatDateWithoutTime(subDays(new Date(), 7)).toString()
-            : selectedDate.value,
-          `${time.value.split(":")[0] || "0"}:${minute}`
-        ) &&
-        !isInPast(
-          [null, ""].includes(minimumTime.value) ? "23:59" : minimumTime.value,
-          `${time.value.split(":")[0] || "0"}:${minute}`
-        )
-
-      // [null, ""].includes(minimumTime.value) ||
-      // (!isInFuture(
-      //   selectedDate.value,
-      //   `${time.value.split(":")[0]}:${minute}`
-      // ) &&
-      //   !isInPast(minimumTime.value, `${time.value.split(":")[0]}:${minute}`))
-    )
-  );
-
-  /* check if new time string is after current time */
-  function isInFuture(dateString: string, newTimeString: string): boolean {
-    const currentDate = formatDateWithoutTime(new Date());
-    const currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
-    console.log(currentDate, currentTime, dateString, newTimeString);
-    console.log(
-      formatDateWithoutTime(new Date(dateString)).getTime(),
-      currentDate.getTime()
-    );
-    return (
-      formatDateWithoutTime(new Date(dateString)) > currentDate ||
-      (formatDateWithoutTime(new Date(dateString)).getTime() ===
-        currentDate.getTime() &&
-        !isInPast(currentTime, newTimeString))
-    );
+  function getTime(date: Date): string {
+    return `${new Date().getHours()}:${new Date().getMinutes()}`;
   }
 
   /* check if new time string is before base time sting */
@@ -225,11 +174,10 @@ function useTimePicking(
           (new Date(selectedDate.value).getTime() ===
             new Date(props.minDate).getTime() ||
             [selectedDate.value, props.minDate].includes("")) &&
-          isInPast(props.minTime, minimumTime.value)) ||
+          isInPast(props.minTime, time.value)) ||
         (props.minTime && time.value === "")
       ) {
         time.value = props.minTime;
-        minimumTime.value = props.minTime;
       }
     }
   );
@@ -242,6 +190,10 @@ function useTimePicking(
     context.emit("timeChanged", time.value);
   }
 
-  return { time, timePicker, allowedHours, allowedMinutes };
+  return {
+    time,
+    timePicker,
+    maxTime,
+  };
 }
 </script>

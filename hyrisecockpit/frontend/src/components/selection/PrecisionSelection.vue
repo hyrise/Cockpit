@@ -1,11 +1,13 @@
 <template>
-  <v-select
-    id="precision-selection"
-    v-model="selectedPrecision"
-    :items="selectablePrecisions"
-    label="Aggregation Interval"
-    :disabled="disabled"
-  />
+  <div>
+    <v-select
+      id="precision-selection"
+      v-model="selectedPrecision"
+      :items="selectablePrecisions"
+      label="Aggregation Interval"
+      :disabled="disabled"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -59,7 +61,9 @@ export default defineComponent({
           precision.value <
             (props.global
               ? context.root.$selectionController.selectedRange.value
-              : props.maxPrecision) &&
+              : props.maxPrecision !== 0
+              ? props.maxPrecision
+              : 60) &&
           precision.value >=
             (props.global
               ? context.root.$selectionController.selectedRange.value / 60
