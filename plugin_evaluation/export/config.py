@@ -26,6 +26,7 @@ config = {
         "influx_function": get_metric_data_with_fill,
         "points_function": default_function,
         "plot_function": plot_line_chart,
+        "path": "",
     },
     "latency": {
         "table_name": "latency",
@@ -35,6 +36,7 @@ config = {
         "influx_function": get_metric_data_with_fill,
         "points_function": ns_to_ms,
         "plot_function": plot_line_chart,
+        "path": "",
     },
     "queue_length": {
         "table_name": "queue_length",
@@ -44,6 +46,7 @@ config = {
         "influx_function": get_metric_data,
         "points_function": default_function,
         "plot_function": plot_line_chart,
+        "path": "",
     },
     "cpu_process_usage": {
         "table_name": "system_data",
@@ -53,6 +56,7 @@ config = {
         "influx_function": get_metric_data,
         "points_function": default_function,
         "plot_function": plot_line_chart,
+        "path": "",
     },
     "footprint": {
         "table_name": "storage",
@@ -62,6 +66,7 @@ config = {
         "influx_function": get_metric_data,
         "points_function": calculate_footprint,
         "plot_function": plot_line_chart,
+        "path": "",
     },
     "detailed latency": {
         "table_name": "successful_queries",  # ignored
@@ -71,6 +76,7 @@ config = {
         "influx_function": get_detailed_latency_information,
         "points_function": sort_detailed_latency_points,
         "plot_function": plot_bar_chart,
+        "path": "",
     },
     "table footprint": {
         "table_name": "storage",
@@ -80,6 +86,7 @@ config = {
         "influx_function": get_metric_data,
         "points_function": calculate_footprint_for_table,
         "plot_function": plot_line_chart,
+        "path": "Footprint/",
     },
     "table access frequency": {
         "table_name": "chunks_data",
@@ -89,6 +96,7 @@ config = {
         "influx_function": get_metric_data,
         "points_function": calculate_access_frequency_for_table,
         "plot_function": plot_line_chart,
+        "path": "Access frequency/",
     },
     "query latency": {
         "table_name": "successful_queries",
@@ -98,5 +106,6 @@ config = {
         "influx_function": get_query_latency,
         "points_function": handle_query_latency,
         "plot_function": plot_line_chart,
+        "path": "Query latency/",
     },
 }

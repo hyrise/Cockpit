@@ -14,6 +14,7 @@ class Exporter:
         column_name = metric_config["column_name"]
         x_label = metric_config["x_label"]
         y_label = metric_config["y_label"]
+        path = metric_config["path"]
 
         influx_function = metric_config["influx_function"]
         points_function = metric_config["points_function"]
@@ -29,4 +30,4 @@ class Exporter:
         )
         x_values, y_values, title = points_function(points, column_name, parameter)  # type: ignore
 
-        plot_function(x_values, y_values, x_label, y_label, title)  # type: ignore
+        plot_function(x_values, y_values, x_label, y_label, title, path)  # type: ignore

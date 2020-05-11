@@ -10,7 +10,12 @@ absolute_report_directory_path = str(Path(__file__).parent.parent.absolute())
 
 
 def plot_line_chart(
-    time_values: List, metric_values: Dict, x_label: str, y_label: str, title: str,
+    time_values: List,
+    metric_values: Dict,
+    x_label: str,
+    y_label: str,
+    title: str,
+    path: str,
 ):
     """Plot line chart to file."""
     figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
@@ -37,11 +42,11 @@ def plot_line_chart(
     plt.xlabel(f"{x_label}")
     plt.legend(loc="upper right")
 
-    plt.savefig(f"{absolute_report_directory_path}/report/{title}.png", dpi=300)
+    plt.savefig(f"{absolute_report_directory_path}/report/{path}{title}.png", dpi=300)
 
 
 def plot_bar_chart(
-    labels: List, metric_values: List, x_label: str, y_label: str, title: str,
+    labels: List, metric_values: List, x_label: str, y_label: str, title: str, path: str
 ):
     """Plot line chart to file."""
     max_value = np.amax(metric_values)
@@ -58,4 +63,4 @@ def plot_bar_chart(
     plt.xlabel(f"{x_label}")
     plt.legend()
 
-    plt.savefig(f"{absolute_report_directory_path}/report/{title}.png", dpi=300)
+    plt.savefig(f"{absolute_report_directory_path}/report/{path}{title}.png", dpi=300)
