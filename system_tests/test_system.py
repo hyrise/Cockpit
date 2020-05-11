@@ -15,44 +15,50 @@ from system_tests.settings import (
     STORAGE_USER,
 )
 
-influx_client = InfluxDBClient(
-    STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD
-)
 SETUP_TIMEOUT = 3.0
 
 
 class TestSystem:
     """Tests for the whole cockpit system."""
 
-    def setup_method(self, test_method):
+    @classmethod
+    def setup_class(cls):
         """Run before every test."""
-        self.clean_influx()
-        self.backend = CockpitBackend()
-        self.backend.start()
-        self.manager = CockpitManager()
-        self.manager.start()
-        self.generator = CockpitGenerator()
-        self.generator.start()
+        cls.influx_client = InfluxDBClient(
+            STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD
+        )
+        cls.clean_influx()
+        cls.backend = CockpitBackend()
+        cls.backend.start()
+        cls.manager = CockpitManager()
+        cls.manager.start()
+        cls.generator = CockpitGenerator()
+        cls.generator.start()
         sleep(SETUP_TIMEOUT)
 
-    def teardown_method(self, test_method):
+    @classmethod
+    def teardown_class(cls):
         """Run after every test."""
-        self.manager.shutdown()
-        self.backend.shutdown()
-        self.generator.shutdown()
-        self.clean_influx()
+        cls.manager.shutdown()
+        cls.backend.shutdown()
+        cls.generator.shutdown()
+        cls.clean_influx()
+        cls.influx_client.close()
 
-    def clean_influx(self):
-        """Delete Influx databases which were created while executing of the tests."""
-        influx_client.drop_database("test_database1")
-
-    def check_stderr(self):
+    @classmethod
+    def check_stderr(cls):
         """Check standard error output of the components."""
-        assert self.generator.get_stderr() == ""  # nosec
-        assert self.backend.get_stderr() == ""  # nosec
-        assert self.manager.get_stderr() == ""  # nosec
+        assert cls.generator.get_stderr() == ""  # nosec
+        assert cls.backend.get_stderr() == ""  # nosec
+        assert cls.manager.get_stderr() == ""  # nosec
 
-    def check_loading_default_tables(self, database_id: str) -> None:
+    @classmethod
+    def clean_influx(cls):
+        """Delete Influx databases which were created while executing of the tests."""
+        cls.influx_client.drop_database("test_database1")
+
+    @classmethod
+    def check_loading_default_tables(cls, database_id: str) -> None:
         """Check if database has successfully load default tables."""
         expected_status = {
             "id": database_id,
@@ -72,12 +78,15 @@ class TestSystem:
             ],
         }
 
-        status = self.backend.get_monitor_property("status")
+        status = cls.backend.get_monitor_property("status")  # type: ignore
         assert expected_status in status  # nosec
 
-    def test_database_manager_initialization(self):
-        """Ensure initialized database manager has no monitor metrics."""
+    def test_backend_initializes_without_errors(self):
+        """Test backend initializes without errors."""
         self.check_stderr()
+
+    def test_check_static_metric_endpoints(self):
+        """Test static metric endpoints return correct values."""
         metrics = [
             "chunks",
             "storage",
@@ -91,11 +100,8 @@ class TestSystem:
             response = self.backend.get_monitor_property(metrics[i])
             assert response["body"][metrics_attributes[i]] == {}  # nosec
 
-        available_datasets = self.backend.get_control_property(
-            "database/benchmark_tables"
-        )
-        available_databases = self.backend.get_control_property("database")
-
+    def test_check_historical_metric_endpoints(self):
+        """Test historical metric endpoints return correct values."""
         historical_metrics = ["throughput", "latency", "queue_length", "system"]
         for metric in historical_metrics:
             timestamp: int = time_ns()
@@ -107,20 +113,33 @@ class TestSystem:
             )
             assert response == []  # nosec
 
+    def test_check_available_databases(self):
+        """Ensure a new backend has no databases."""
+        available_databases = self.backend.get_control_property("database")
+        assert available_databases == []  # nosec
+
+    def test_check_available_datasets(self):
+        """Test available datasets."""
+        available_datasets = self.backend.get_control_property(
+            "database/benchmark_tables"
+        )
         assert available_datasets == {  # nosec
             "folder_names": ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
         }
-        assert available_databases == []  # nosec
 
+    def test_initialization_calls_had_no_errors(self):
+        """Test initialization calls had no errors."""
         self.check_stderr()
 
-    def test_database_handling(self):
-        """Add and remove database."""
+    def test_adding_database(self):
+        """Test adding a database."""
         response = self.backend.add_database(
             "test_database1", DATABASE_HOST, DATABASE_PORT
         )
         assert response.status_code == 200  # nosec
 
+    def test_added_database_is_in_available_databases(self):
+        """Test added database is in available databases."""
         available_databases = self.backend.get_control_property("database")
         assert available_databases == [  # nosec
             {
@@ -132,35 +151,33 @@ class TestSystem:
             }
         ]
 
+    def test_loading_default_tables(self):
+        """Test loading default tables."""
         sleep(5.0)  # wait until default tables are loaded
 
         self.check_loading_default_tables("test_database1")
 
-        influx_databases = influx_client.get_list_database()
+    def test_check_influx_database_creation(self):
+        """Test the corresponding influx database is created."""
+        influx_databases = self.influx_client.get_list_database()
         assert {"name": "test_database1"} in influx_databases  # nosec
 
-        response = self.backend.remove_database("test_database1")
-        assert response.status_code == 200  # nosec
-
+    def test_database_handling_had_no_errors(self):
+        """Test database handling had no errors."""
         self.check_stderr()
 
-    def test_execute_workload(self):
-        """Execute workload."""
-        response = self.backend.add_database(
-            "test_database1", DATABASE_HOST, DATABASE_PORT
-        )
-        assert response.status_code == 200  # nosec
-
-        sleep(5.0)  # wait until default tables are loaded
-
-        self.check_loading_default_tables("test_database1")
-
+    def test_starting_workload_generator(self):
+        """Test starting of the workload generator."""
         response = self.backend.start_workload("tpch_0_1", 300)
         assert response.status_code == 200  # nosec
 
+    def test_starting_worker_pool(self):
+        """Test starting of the worker pool."""
         response = self.backend.start_workers()
         assert response.status_code == 200  # nosec
 
+    def test_historical_metric_responses(self):
+        """Test responses of the historical metrics."""
         sleep(4.0)  # wait for query executions
 
         metrics = ["throughput", "latency", "queue_length"]
@@ -174,10 +191,21 @@ class TestSystem:
             )
             assert response[0][metric][0][metric] > 0  # nosec
 
+    def test_stopping_workload_generator(self):
+        """Test stopping of the workload generator."""
         response = self.backend.stop_workload("tpch_0_1")
         assert response.status_code == 200  # nosec
 
+    def test_stopping_worker_pool(self):
+        """Test stopping of the worker pool."""
         response = self.backend.stop_workers()
         assert response.status_code == 200  # nosec
 
+    def test_removing_database(self):
+        """Test removing of the database."""
+        response = self.backend.remove_database("test_database1")
+        assert response.status_code == 200  # nosec
+
+    def test_workload_execution_had_no_errors(self):
+        """Test workload execution had no errors."""
         self.check_stderr()
