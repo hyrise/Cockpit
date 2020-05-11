@@ -4,7 +4,13 @@
       <div class="header">{{ pageName }}</div>
     </v-card-title>
     <v-card-text>
-      <v-tabs v-if="open" v-model="tab" background-color="white" color="primary" grow>
+      <v-tabs
+        v-if="open"
+        v-model="tab"
+        background-color="white"
+        color="primary"
+        grow
+      >
         <v-tabs-slider color="primary"></v-tabs-slider>
         <v-tab>DATA</v-tab>
         <v-tab>TIME</v-tab>
@@ -35,7 +41,11 @@
             <v-window-item :value="1">
               <v-subheader class="mt-2">
                 CONTINUOUS RANGE
-                <v-badge class="ml-2 mt-1" :color="!staticRange ? 'green' : 'red'" dot />
+                <v-badge
+                  class="ml-2 mt-1"
+                  :color="!staticRange ? 'green' : 'red'"
+                  dot
+                />
               </v-subheader>
               <v-sheet height="330">
                 <v-container class="white container flex">
@@ -57,13 +67,18 @@
                   block
                   :disabled="!staticRange"
                   @click="resetTimeRange"
-                >Set Continuous Time Range</v-btn>
+                  >Set Continuous Time Range</v-btn
+                >
               </v-sheet>
             </v-window-item>
             <v-window-item :value="2">
               <v-subheader class="mt-2">
                 STATIC RANGE
-                <v-badge class="ml-2 mt-1" :color="staticRange ? 'green' : 'red'" dot />
+                <v-badge
+                  class="ml-2 mt-1"
+                  :color="staticRange ? 'green' : 'red'"
+                  dot
+                />
               </v-subheader>
               <v-sheet height="330">
                 <v-container class="white container flex">
@@ -106,14 +121,15 @@
                   block
                   :disabled="invalidDates"
                   @click="setStaticTimeRange"
-                >Set Static Time Range</v-btn>
+                  >Set Static Time Range</v-btn
+                >
               </v-sheet>
             </v-window-item>
           </v-window>
           <v-divider class="my-2" />
           <v-card flat>
             <v-card-actions>
-              <v-spacer v-if="window===1" />
+              <v-spacer v-if="window === 1" />
               <v-tooltip top>
                 <template v-slot:activator="{ on }">
                   <v-btn
@@ -123,12 +139,15 @@
                     depressed
                     @click="window = window == 1 ? 2 : 1"
                   >
-                    <v-icon v-if="window===2" left>mdi-chevron-left</v-icon>
+                    <v-icon v-if="window === 2" left>mdi-chevron-left</v-icon>
                     {{ window == 1 ? "STATIC" : "CONTINUOUS" }}
-                    <v-icon v-if="window===1" right>mdi-chevron-right</v-icon>
+                    <v-icon v-if="window === 1" right>mdi-chevron-right</v-icon>
                   </v-btn>
                 </template>
-                <span>Select {{ window == 1 ? "Static" : "Continuous" }} Range Type</span>
+                <span
+                  >Select {{ window == 1 ? "Static" : "Continuous" }} Range
+                  Type</span
+                >
               </v-tooltip>
             </v-card-actions>
           </v-card>
