@@ -1,5 +1,4 @@
 """Prototype of the scenario script."""
-
 from time import sleep, time_ns
 
 from plugin_evaluation.cockpit_management.cockpit import Cockpit
@@ -19,13 +18,6 @@ metrics = [
     "cpu_process_usage",
     "footprint",
     "detailed latency",
-]
-
-metrics_with_parameters = [
-    ("table footprint", "customer_tpch_0_1"),
-    ("table access frequency", "customer_tpch_0_1"),
-    ("table access frequency", "lineitem_tpch_0_1"),
-    ("query latency", ("tpch_0_1", "10")),
 ]
 
 #############################################################
@@ -82,5 +74,12 @@ endts = int(endts / 1_000_000_000) * 1_000_000_000
 with DoneStatus("Export..."):
     for metric in metrics:
         exporter.plot_metric(metric, database_id, startts, endts)
-    for metric, parameter in metrics_with_parameters:
-        exporter.plot_metric(metric, database_id, startts, endts, parameter)
+    exporter.plot_metric_for_benchmark(
+        "table access frequency", "tpch_0_1", database_id, startts, endts
+    )
+    exporter.plot_metric_for_benchmark(
+        "table footprint", "tpch_0_1", database_id, startts, endts
+    )
+    exporter.plot_query_metric_for_benchmark(
+        "query latency", "tpch_0_1", database_id, startts, endts
+    )

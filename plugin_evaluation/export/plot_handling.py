@@ -18,7 +18,7 @@ def plot_line_chart(
     path: str,
 ):
     """Plot line chart to file."""
-    figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
+    fig = figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
     prop_cycle = plt.rcParams["axes.prop_cycle"]
     colors = prop_cycle.by_key()["color"]
 
@@ -43,6 +43,7 @@ def plot_line_chart(
     plt.legend(loc="upper right")
 
     plt.savefig(f"{absolute_report_directory_path}/report/{path}{title}.png", dpi=300)
+    plt.close(fig)
 
 
 def plot_bar_chart(
@@ -50,7 +51,7 @@ def plot_bar_chart(
 ):
     """Plot line chart to file."""
     max_value = np.amax(metric_values)
-    figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
+    fig = figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
     plt.title(f"{title}")
     plt.ticklabel_format(style="plain")
     plt.xticks(rotation=45, ha="right")
@@ -64,3 +65,4 @@ def plot_bar_chart(
     plt.legend()
 
     plt.savefig(f"{absolute_report_directory_path}/report/{path}{title}.png", dpi=300)
+    plt.close(fig)
