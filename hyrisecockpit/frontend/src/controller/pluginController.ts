@@ -16,7 +16,7 @@ export function usePluginController(): PluginController {
   const pluginEventData = ref<any>({});
 
   updatePluginData();
-  //setInterval(() => updatePluginLogs(), 1000);
+  setInterval(() => updatePluginLogs(), 1000);
 
   eventBus.$on(["DATABASE_ADDED", "DATABASE_REMOVED"], () => {
     updatePluginData();
