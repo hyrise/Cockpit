@@ -19,25 +19,28 @@ jobs:
         DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
         DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-    - name: Copy environment file
+    - name: Use example environment file
       run: cp .env.example .env
 
     - name: Build the Backend Docker image
-      run: docker build --tag udopigorsch/cockpit-backend:latest hyrisecockpit/api
-    - name: Push Backend Docker image
-      run: docker push udopigorsch/cockpit-backend:latest
+      run: docker-compose -f docker-compose.ci.yml build --parallel backend generator manager frontend
+      
+    - name: Tag the Generator Docker image
+      run: docker tag cockpit-generator udopigorsch/workload_generator
+    - name: Push the Backend Docker image
+      run: docker push cockpit-backend udopigorsch/cockpit-backend
 
-    - name: Build the Generator Docker image
-      run: docker build --tag udopigorsch/cockpit-generator:latest hyrisecockpit/workload_generator
-    - name: Push Generator Docker image
-      run: docker push udopigorsch/cockpit-generator:latest
+    - name: Tag the Generator Docker image
+      run: docker tag cockpit-generator udopigorsch/workload_generator
+    - name: Push the Generator Docker image
+      run: docker push cockpit-generator udopigorsch/cockpit-generator
 
-    - name: Build the Manager Docker image
-      run: docker build --tag udopigorsch/cockpit-manager:latest hyrisecockpit/database_manager
+    - name: Tag the Manager Docker image
+      run: docker tag cockpit-manager udopigorsch/database_manager
     - name: Push Manager Docker image
-      run: docker push udopigorsch/cockpit-manager:latest
+      run: docker push cockpit-manager udopigorsch/cockpit-manager
    
-    - name: Build the Frontend Docker image
-      run: docker build --tag udopigorsch/cockpit-frontend:latest hyrisecockpit/frontend
-    - name: Push Frontend Docker image
-      run: docker push udopigorsch/cockpit-frontend:latest
+    - name: Tag the Frontend Docker image
+      run: docker tag cockpit-frontend udopigorsch/frontend
+    - name: Push the Frontend Docker image
+      run: docker push cockpit-frontend udopigorsch/cockpit-frontend
