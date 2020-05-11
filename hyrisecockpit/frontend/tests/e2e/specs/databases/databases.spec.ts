@@ -46,7 +46,7 @@ describe("when observing the database data and details", () => {
     cy.restartAppState(backend, {});
   });
 
-  // test panel opening
+  // test showing details on visit
   it("will directly show the details panel", () => {
     testElementExistence(getSelector("databaseSystemDetails"));
     testElementVisibility(getSelector("databaseSystemDetails"));
@@ -71,7 +71,6 @@ describe("when observing the database data and details", () => {
   it("will show the correct system details for every database", () => {
     // test correct data existence
     databases.forEach((database: any, idx: number) => {
-      cy.get(getSelector("idDetails")).eq(idx).contains(database.id);
       cy.get(getSelector("hostDetails")).eq(idx).contains(database.host);
       cy.get(getSelector("workerDetails"))
         .eq(idx)
@@ -105,21 +104,6 @@ describe("when observing the database data and details", () => {
         .then((text: any) => {
           testMaxDecimalDigits(text, 3);
         });
-    });
-  });
-
-  // test panel closing
-  describe("when clicking the panel two times", () => {
-    it("will close the details and open it again", () => {
-      cy.get(getSelector("databaseDetailsPanel")).within(() => {
-        cy.get("button").click();
-      });
-      testElementNoVisibility(getSelector("databaseSystemDetails"));
-
-      cy.get(getSelector("databaseDetailsPanel")).within(() => {
-        cy.get("button").click();
-      });
-      testElementVisibility(getSelector("databaseSystemDetails"));
     });
   });
 

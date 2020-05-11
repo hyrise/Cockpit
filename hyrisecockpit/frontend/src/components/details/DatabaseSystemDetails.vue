@@ -9,9 +9,9 @@
       <v-card class="card" :color="database.color" tile>
         <v-row>
           <v-col id="database-host" class="leftcol" cols="3">
-            <v-card-title class="ml-6 font-weight-regular white--text">{{
-              database.systemDetails.host
-            }}</v-card-title>
+            <v-card-title class="ml-6 font-weight-regular white--text">
+              {{ database.systemDetails.host }}
+            </v-card-title>
             <v-card-text class="ml-6 font-weight-regular white--text"
               >Host</v-card-text
             >
@@ -24,18 +24,18 @@
               >Data Size</v-card-text
             >
           </v-col>
-          <v-col id="database-numbers-cpu" cols="2">
-            <v-card-title class="font-weight-light white--text">{{
-              database.systemDetails.numberOfCPUs
-            }}</v-card-title>
+          <v-col id="database-number-cpus" cols="2">
+            <v-card-title class="font-weight-light white--text">
+              {{ database.systemDetails.numberOfCPUs }}
+            </v-card-title>
             <v-card-text class="font-weight-light white--text"
               >Number of CPUs</v-card-text
             >
           </v-col>
           <v-col id="database-number-workers" cols="2">
-            <v-card-title class="font-weight-light white--text">{{
-              database.systemDetails.numberOfWorkers
-            }}</v-card-title>
+            <v-card-title class="font-weight-light white--text">
+              {{ database.systemDetails.numberOfWorkers }}
+            </v-card-title>
             <v-card-text class="font-weight-light white--text"
               >Number of Workers</v-card-text
             >
