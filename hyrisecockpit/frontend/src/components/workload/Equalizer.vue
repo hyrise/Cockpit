@@ -3,31 +3,40 @@
     <p class="subtitle-1 font-weight-medium">
       {{ getDisplayedWorkload(workload) }}
     </p>
-    <v-row>
-      <div class="value-col">
-        <div>
-          200
+    <v-row class="equalizer-row">
+      <div v-for="(weight, idx) in weights" :key="weight.name" class="test">
+        <div v-if="idx % 15 === 0">
+          <div class="value-col">
+            <div class="max-value">
+              200
+            </div>
+            <div class="min-value">
+              -200
+            </div>
+          </div>
         </div>
-        <div>
-          -200
+        <div class="query-div">
+          {{ weight.name }}
+          <div class="top-line"></div>
+          <v-slider
+            v-model="weight.weight"
+            :value="weight.weight"
+            thumb-label
+            thumb-size="24"
+            min="0"
+            max="200"
+            vertical
+            class="query-slider"
+            @click="$emit('change', weight.name, weight.weight)"
+          />
+          <div class="bottom-line"></div>
+          <v-text-field
+            v-model="weight.weight"
+            class="query-text-field"
+            dense
+            single-line
+          />
         </div>
-      </div>
-      <div v-for="weight in weights" :key="weight.name" class="query-div">
-        {{ weight.name }}
-        <div class="top-line"></div>
-        <v-slider
-          v-model="weight.weight"
-          :value="weight.weight"
-          thumb-label
-          thumb-size="24"
-          min="0"
-          max="200"
-          vertical
-          class="query-slider"
-          @click="$emit('change', weight.name, weight.weight)"
-        />
-        <div class="bottom-line"></div>
-        <div class="line"></div>
       </div>
     </v-row>
   </span>
@@ -112,6 +121,32 @@ export default defineComponent({
 .value-col {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  margin-right: 8px;
+}
+.min-value {
+  margin-top: 115px;
+}
+.max-value {
+  margin-top: 35px;
+}
+.query-text-field >>> input {
+  text-align: center;
+}
+.query-text-field {
+  width: 40px;
+  margin-top: -20px;
+  text-align: center !important;
+}
+.equalizer-row {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.break {
+  flex-basis: 100%;
+  height: 0;
+}
+.test {
+  display: flex;
 }
 </style>
