@@ -315,7 +315,7 @@ class TestSystem:
         """Test workload execution had no errors."""
         self.check_stderr()
 
-    def test_remains_influx_database(self):
-        """Test the corresponding influx database is remained."""
+    def test_keeps_influx_database(self):
+        """Test the corresponding influx database is kept after database removing."""
         influx_databases = self.influx_client.get_list_database()
         assert {"name": "test_database1"} in influx_databases  # nosec
