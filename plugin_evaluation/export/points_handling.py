@@ -102,8 +102,8 @@ def calculate_footprint_for_table(  # noqa
     formatted_time = mdate.epoch2num(sec_values)
 
     loaded_points = [loads(point["storage_meta_information"]) for point in points]
-
     available_column_names = set()
+
     for point in loaded_points:
         if table_name in point.keys():
             for column_name in point[table_name]["data"].keys():
@@ -140,22 +140,21 @@ def calculate_access_frequency_for_table(  # noqa
     sec_values = [int(point["time"] / 1_000_000_000) for point in points]
     formatted_time = mdate.epoch2num(sec_values)
 
+    loaded_points = [loads(point["chunks_data_meta_information"]) for point in points]
     available_column_names = set()
 
-    for point in points:
-        access_data = loads(point["chunks_data_meta_information"])
-        if table_name in access_data.keys():
-            for column_name in access_data[table_name].keys():
+    for point in loaded_points:
+        if table_name in point.keys():
+            for column_name in point[table_name].keys():
                 available_column_names.add(column_name)
 
     column_accesses: Dict = {column_name: [] for column_name in available_column_names}
 
-    for point in points:
-        access_data = loads(point["chunks_data_meta_information"])
-        if table_name in access_data.keys():
+    for point in loaded_points:
+        if table_name in point.keys():
             for column_name in column_accesses.keys():
-                if column_name in access_data[table_name].keys():
-                    chunk_accesses = access_data[table_name][column_name]
+                if column_name in point[table_name].keys():
+                    chunk_accesses = point[table_name][column_name]
                     n_accesses = 0
                     for entry in chunk_accesses:
                         n_accesses = n_accesses + entry
