@@ -8,7 +8,7 @@
     >
       <v-card class="card" :color="database.color" tile>
         <v-row>
-          <v-col id="database-host" class="leftcol">
+          <v-col id="database-host" class="leftcol" cols="3">
             <v-card-title class="ml-6 font-weight-regular white--text">{{
               database.systemDetails.host
             }}</v-card-title>
@@ -16,7 +16,7 @@
               >Host</v-card-text
             >
           </v-col>
-          <v-col id="database-memory-capacity">
+          <v-col id="database-memory-capacity" cols="2">
             <v-card-title class="font-weight-light white--text"
               >{{ database.systemDetails.memoryCapacity }} GB</v-card-title
             >
@@ -24,7 +24,7 @@
               >Data Size</v-card-text
             >
           </v-col>
-          <v-col id="database-numbers-cpu">
+          <v-col id="database-numbers-cpu" cols="2">
             <v-card-title class="font-weight-light white--text">{{
               database.systemDetails.numberOfCPUs
             }}</v-card-title>
@@ -32,7 +32,7 @@
               >Number of CPUs</v-card-text
             >
           </v-col>
-          <v-col id="database-number-workers">
+          <v-col id="database-number-workers" cols="2">
             <v-card-title class="font-weight-light white--text">{{
               database.systemDetails.numberOfWorkers
             }}</v-card-title>
@@ -40,7 +40,7 @@
               >Number of Workers</v-card-text
             >
           </v-col>
-          <v-col id="database-memory-footprint" class="mr-2">
+          <v-col id="database-memory-footprint" class="mr-2" cols="2">
             <v-card-title class="mr-6 font-weight-light white--text"
               >{{ database.systemDetails.memoryFootprint }} MB</v-card-title
             >
