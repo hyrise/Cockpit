@@ -98,10 +98,6 @@ def calculate_footprint_for_table(  # noqa
     points: List, metric_column_name: str, table_name
 ):
     """Calculate footprint for a specific table."""
-
-    def sort_function(tuple):
-        return tuple[1][0] if len(tuple[1]) > 0 else 0.0
-
     sec_values = [int(point["time"] / 1_000_000_000) for point in points]
     formatted_time = mdate.epoch2num(sec_values)
 
@@ -130,12 +126,9 @@ def calculate_footprint_for_table(  # noqa
             for column_name in column_footprints.keys():
                 column_footprints[column_name].append(0.0)
 
-    footprint_items = list(column_footprints.items())
-    footprint_items.sort(key=sort_function, reverse=True)
-
     return (
         formatted_time,
-        dict(footprint_items),
+        _sort_metric_dictionary(column_footprints),
         f"Footprint ({table_name})",
     )
 
@@ -144,10 +137,6 @@ def calculate_access_frequency_for_table(  # noqa
     points: List, metric_column_name: str, table_name
 ):
     """Calculate access frequency for a specific table."""
-
-    def sort_function(tuple):
-        return tuple[1][0] if len(tuple[1]) > 0 else 0.0
-
     sec_values = [int(point["time"] / 1_000_000_000) for point in points]
     formatted_time = mdate.epoch2num(sec_values)
 
@@ -177,10 +166,11 @@ def calculate_access_frequency_for_table(  # noqa
             for column_name in column_accesses.keys():
                 column_accesses[column_name].append(0)
 
-    access_items = list(column_accesses.items())
-    access_items.sort(key=sort_function, reverse=True)
-
-    return formatted_time, dict(access_items), f"Access frequency ({table_name})"
+    return (
+        formatted_time,
+        _sort_metric_dictionary(column_accesses),
+        f"Access frequency ({table_name})",
+    )
 
 
 def sort_detailed_latency_points(points: List, column_name: str, parameter):
