@@ -78,7 +78,7 @@ class TestSystem:
             ],
         }
 
-        response = cls.backend.get_monitor_property("status")  # type: ignore
+        response = cls.backend.get_property("monitor/status")  # type: ignore
 
         assert response.status_code == 200  # nosec
         assert expected_status in response.json()  # nosec
@@ -90,8 +90,8 @@ class TestSystem:
     def test_returns_metric_values(self):
         """Test static metric endpoints return correct values."""
         metrics = [
-            "chunks",
-            "storage",
+            "monitor/chunks",
+            "monitor/storage",
         ]
         metrics_attributes = [
             "chunks_data",
@@ -99,20 +99,25 @@ class TestSystem:
         ]
 
         for i in range(len(metrics)):
-            response = self.backend.get_monitor_property(metrics[i])
+            response = self.backend.get_property(metrics[i])
 
             assert response.status_code == 200  # nosec
             assert response.json()["body"][metrics_attributes[i]] == {}  # nosec
 
     def test_returns_historical_metric_values(self):
         """Test historical metric endpoints return correct values."""
-        historical_metrics = ["throughput", "latency", "queue_length", "system"]
+        historical_metrics = [
+            "monitor/throughput",
+            "monitor/latency",
+            "monitor/queue_length",
+            "monitor/system",
+        ]
         for metric in historical_metrics:
             timestamp: int = time_ns()
             offset: int = 3_000_000_000
             startts: int = timestamp - offset - 1_000_000_000
             endts: int = timestamp - offset
-            response = self.backend.get_historical_monitor_property(
+            response = self.backend.get_historical_property(
                 metric, startts, endts, 1_000_000_000
             )
 
@@ -190,18 +195,19 @@ class TestSystem:
         """Test responses of the historical metrics."""
         sleep(4.0)  # wait for query executions
 
-        metrics = ["throughput", "latency", "queue_length"]
-        for metric in metrics:
+        metrics = ["monitor/throughput", "monitor/latency", "monitor/queue_length"]
+        attributes = ["throughput", "latency", "queue_length"]
+        for metric, attribute in zip(metrics, attributes):
             timestamp: int = time_ns()
             offset: int = 1_000_000_000
             startts: int = timestamp - offset - 1_000_000_000
             endts: int = timestamp - offset
-            response = self.backend.get_historical_monitor_property(
+            response = self.backend.get_historical_property(
                 metric, startts, endts, 1_000_000_000
             )
 
             assert response.status_code == 200  # nosec
-            assert response.json()[0][metric][0][metric] > 0  # nosec
+            assert response.json()[0][attribute][0][attribute] > 0  # nosec
 
     def test_activates_plugin(self):
         """Test activation of the plugin."""
