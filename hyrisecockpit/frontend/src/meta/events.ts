@@ -32,13 +32,32 @@ export function useMetricEvents(): {
 
 export function useWindowEvents(): {
   emitPageChangedEvent: (page: PageName) => void;
+  emitStaticRangeChangedEvent: (
+    startDate?: Date,
+    endDate?: Date,
+    precision?: number
+  ) => void;
 } {
   function emitPageChangedEvent(page: PageName): void {
     eventBus.$emit("PAGE_CHANGED", page);
   }
 
+  function emitStaticRangeChangedEvent(
+    startDate?: Date,
+    endDate?: Date,
+    precision?: number
+  ): void {
+    eventBus.$emit(
+      "STATIC_RANGE_CHANGED",
+      startDate && endDate && precision
+        ? { startDate, endDate, precision }
+        : null
+    );
+  }
+
   return {
     emitPageChangedEvent,
+    emitStaticRangeChangedEvent,
   };
 }
 

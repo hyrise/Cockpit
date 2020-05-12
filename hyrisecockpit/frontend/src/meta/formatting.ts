@@ -1,6 +1,9 @@
+const SEC_PER_DAY = 86400;
+
 export function useFormatting(): {
   formatNumberWithCommas: (data: number) => string;
   formatDateWithoutMilliSec: (date: Date) => Date;
+  formatDateWithoutTime: (date: Date) => Date;
   roundNumber: (
     data: number,
     ratio: number,
@@ -11,10 +14,13 @@ export function useFormatting(): {
   formatDateToNanoSec: (date: Date) => number;
   addSeconds: (date: Date, seconds: number) => Date;
   subSeconds: (date: Date, seconds: number) => Date;
+  subDays: (date: Date, days: number) => Date;
   trimString: (string: string, length: number) => string;
   formatMinutesToSeconds: (minutes: number) => number;
   getNanoSeconds: (seconds: number) => number;
 } {
+  /* STRINGS */
+
   function formatNumberWithCommas(data: number): string {
     const parts = data.toString().split(".");
     let formatted = "";
@@ -29,8 +35,21 @@ export function useFormatting(): {
     return parts[1] ? formatted + "." + parts[1] : formatted;
   }
 
+  function trimString(string: string, length: number): string {
+    return string.length > length
+      ? string.substring(0, length - 3) + "..."
+      : string;
+  }
+
+  /* DATES */
+
   function formatDateWithoutMilliSec(date: Date): Date {
     date.setMilliseconds(0);
+    return date;
+  }
+
+  function formatDateWithoutTime(date: Date): Date {
+    date.setHours(0, 0, 0, 0);
     return date;
   }
 
@@ -42,6 +61,10 @@ export function useFormatting(): {
     return new Date(date.getTime() - seconds * Math.pow(10, 3));
   }
 
+  function subDays(date: Date, days: number): Date {
+    return new Date(date.getTime() - days * SEC_PER_DAY * Math.pow(10, 3));
+  }
+
   function formatDateToHHMMSS(date: Date): string {
     return date.toLocaleTimeString("de-DE");
   }
@@ -50,9 +73,15 @@ export function useFormatting(): {
     return date.getTime() * Math.pow(10, 6);
   }
 
+  function formatMinutesToSeconds(minutes: number): number {
+    return minutes * 60;
+  }
+
   function getNanoSeconds(seconds: number): number {
     return seconds * Math.pow(10, 9);
   }
+
+  /* NUMBERS */
 
   function roundNumber(
     data: number,
@@ -64,24 +93,16 @@ export function useFormatting(): {
     return even ? Math.floor(rounded) : rounded;
   }
 
-  function trimString(string: string, length: number): string {
-    return string.length > length
-      ? string.substring(0, length - 3) + "..."
-      : string;
-  }
-
-  function formatMinutesToSeconds(minutes: number): number {
-    return minutes * 60;
-  }
-
   return {
     formatNumberWithCommas,
     formatDateWithoutMilliSec,
+    formatDateWithoutTime,
     roundNumber,
     formatDateToHHMMSS,
     formatDateToNanoSec,
     addSeconds,
     subSeconds,
+    subDays,
     trimString,
     formatMinutesToSeconds,
     getNanoSeconds,
