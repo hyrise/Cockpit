@@ -20,7 +20,7 @@ services:
       - "8003:8003"
 
   frontend:
-    image: udopigorsch/cockpit-frontend:buster
+    image: udopigorsch/cockpit-frontend:latest
     ports:
       - "5000:5000"
 
