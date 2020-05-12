@@ -586,7 +586,7 @@ class TestDatabase(object):
         result = database.get_plugin_setting()
 
         mock_cursor.execute.assert_called_once_with(
-            'SELECT name, value, description FROM meta_settings WHERE name LIKE "Plugin::";',
+            "SELECT name, value, description FROM meta_settings WHERE name LIKE 'Plugin::';",
             None,
         )
 
