@@ -20,12 +20,19 @@ services:
       - "8003:8003"
 
   frontend:
-    image: frontend:buster
+    image: udopigorsch/cockpit-frontend:buster
     ports:
       - "5000:5000"
 
+  influxdb:
+    image: influxdb:alpine
+    volumes:
+      - ./influxdb:/var/lib/influxdb
+    ports:
+      - "8086:8086"
+
   hyrise:
-    image: udopigorsch/hyrise:bensk1_multithreaded
+    image: udopigorsch/hyrise:bp1920
     volumes:
       - ./cached_tables:/usr/local/hyrise/cached_tables
     ports:
