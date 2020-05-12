@@ -4,7 +4,10 @@ import { Metric } from "./metrics";
 
 export interface MetricService {
   data: any;
-  getDataIfReady: (refetch?: boolean) => void;
+  getDataIfReady: (
+    historicRangeFetch?: boolean,
+    staticRangeFetch?: boolean
+  ) => void;
   maxValues: Record<Metric, number>;
   timestamps: Ref<any>;
 }

@@ -171,6 +171,7 @@ function useLineChartConfiguration(
 } {
   const { databases } = useUpdatingDatabases(props, context);
   const { formatDateWithoutMilliSec } = useFormatting();
+  const { selectedStaticRange } = context.root.$selectionController;
 
   function getLayout(yMax: number, xMin: number = 1): Object {
     const currentTime = formatDateWithoutMilliSec(new Date()).getTime();
@@ -179,7 +180,12 @@ function useLineChartConfiguration(
       xaxis: {
         type: "date",
         tickformat: "%H:%M:%S",
-        range: [currentTime - (xMin - 1) * 1000, currentTime],
+        range: selectedStaticRange.value
+          ? [
+              selectedStaticRange.value.startDate,
+              selectedStaticRange.value.endDate,
+            ]
+          : [currentTime - (xMin - 1) * 1000, currentTime],
       },
       yaxis: {
         title: {
