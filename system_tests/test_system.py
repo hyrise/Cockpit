@@ -83,7 +83,7 @@ class TestSystem:
         assert response.status_code == 200  # nosec
         assert expected_status in response.json()  # nosec
 
-    def test_initializes_backend_without_errors(self):
+    def test_initializes_backend(self):
         """Test backend initializes without errors."""
         self.check_stderr()
 
@@ -104,7 +104,7 @@ class TestSystem:
             assert response.status_code == 200  # nosec
             assert response.json()["body"][metrics_attributes[i]] == {}  # nosec
 
-    def test_returns_historical_metric_values(self):
+    def test_returns_historical_metric_values_with_no_database_registered(self):
         """Test historical metric endpoints return correct values."""
         historical_metrics = [
             "monitor/throughput",
@@ -140,7 +140,7 @@ class TestSystem:
             "folder_names": ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
         }
 
-    def test_initialization_calls_without_errors(self):
+    def test_initialization_calls(self):
         """Test initialization calls had no errors."""
         self.check_stderr()
 
@@ -311,7 +311,7 @@ class TestSystem:
         response = self.backend.remove_database("test_database1")
         assert response.status_code == 200  # nosec
 
-    def test_executes_workload_without_errors(self):
+    def test_executes_workload(self):
         """Test workload execution had no errors."""
         self.check_stderr()
 
