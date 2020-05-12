@@ -1,5 +1,6 @@
 """Module for export of the Influx data to PDF."""
-from os import listdir
+from os import listdir, mkdir, remove
+from os.path import isdir, isfile, join
 from pathlib import Path
 from typing import List
 
@@ -9,6 +10,35 @@ from plugin_evaluation.export.config import config
 
 class Exporter:
     """Exports time series data to PDF."""
+
+    def _clear_directory(self, directory_path: str):
+        """Clear directory from files."""
+        files_to_be_deleted = [
+            f"{directory_path}/{item}"
+            for item in listdir(directory_path)
+            if isfile(join(directory_path, item))
+        ]
+        for file in files_to_be_deleted:
+            remove(file)
+
+    def _reset_directory(self, directory_path: str):
+        """Reset directory."""
+        if isdir(directory_path):
+            self._clear_directory(directory_path)
+        else:
+            mkdir(directory_path)
+
+    def __init__(self):
+        """Clear folder structure."""
+        absolute_plugin_evaluation_path: str = str(
+            Path(__file__).parent.parent.absolute()
+        )
+        self._reset_directory(f"{absolute_plugin_evaluation_path}/report")
+        self._reset_directory(f"{absolute_plugin_evaluation_path}/report/Footprint")
+        self._reset_directory(
+            f"{absolute_plugin_evaluation_path}/report/Access frequency"
+        )
+        self._reset_directory(f"{absolute_plugin_evaluation_path}/report/Query latency")
 
     def plot_metric(
         self, metric: str, database: str, startts: int, endts: int, parameter=None
