@@ -42,6 +42,21 @@ def plot_line_chart(
     plt.xlabel(f"{x_label}")
     plt.legend(loc="upper right")
 
+    rows = [
+        ["%.3f" % func(values) for metric, values in metric_values.items()]
+        for func in (np.amax, np.mean, np.amin)
+    ]
+    row_labels = ["MAX", "AVG", "MIN"]
+    plt.table(
+        cellText=rows,
+        rowLabels=row_labels,
+        cellLoc="center",
+        colLabels=list(metric_values.keys()),
+        loc="bottom",
+        bbox=[0, -0.29, 1, 0.17],
+    )
+    plt.subplots_adjust(left=0.2, bottom=0.2)
+
     plt.savefig(f"{absolute_report_directory_path}/report/{path}{title}.png", dpi=300)
     plt.close(fig)
 
