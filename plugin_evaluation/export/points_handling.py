@@ -189,3 +189,16 @@ def sort_detailed_latency_points(points: List, column_name: str, parameter):
     latency = [point["latency"] / 1_000_000 for point in points]
 
     return labels, latency, "Average latency of the queries"
+
+
+def handle_plugin_log(plugin_logs: List):
+    """Handle plugin log."""
+    return [
+        {
+            "id": index,
+            "timestamp": datetime.fromtimestamp(int(plugin_log["timestamp"]) / 1_000),
+            "reporter": plugin_log["reporter"],
+            "message": plugin_log["message"],
+        }
+        for index, plugin_log in enumerate(plugin_logs)
+    ]

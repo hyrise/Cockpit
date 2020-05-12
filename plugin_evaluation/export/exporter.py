@@ -6,6 +6,9 @@ from typing import List
 
 from hyrisecockpit.database_manager.table_names import table_names
 from plugin_evaluation.export.config import config
+from plugin_evaluation.export.influx_handling import get_plugin_log
+from plugin_evaluation.export.plot_handling import plot_plugin_log_table
+from plugin_evaluation.export.points_handling import handle_plugin_log
 
 
 class Exporter:
@@ -30,6 +33,7 @@ class Exporter:
 
     def __init__(self):
         """Clear folder structure."""
+        self.plugin_logs = None
         absolute_plugin_evaluation_path: str = str(
             Path(__file__).parent.parent.absolute()
         )
@@ -39,6 +43,12 @@ class Exporter:
             f"{absolute_plugin_evaluation_path}/report/Access frequency"
         )
         self._reset_directory(f"{absolute_plugin_evaluation_path}/report/Query latency")
+
+    def initialize_plugin_log(self, database: str, startts: int, endts: int):
+        """Initialize plugin_log_values."""
+        raw_plugin_logs = get_plugin_log(database, startts, endts)
+        self.plugin_logs = handle_plugin_log(raw_plugin_logs)
+        plot_plugin_log_table(self.plugin_logs)
 
     def plot_metric(
         self, metric: str, database: str, startts: int, endts: int, parameter=None

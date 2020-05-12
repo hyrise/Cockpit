@@ -24,7 +24,7 @@ metrics = [
 
 print(intro)
 
-exporter = Exporter()
+exporter = Exporter()  # type: ignore
 cockpit = Cockpit()  # type: ignore
 cockpit.start()
 
@@ -44,16 +44,16 @@ with DoneStatus("Starting a workload..."):
 sleep(1.0)
 startts = time_ns()
 
-# with DoneStatus(f"Activate {plugin} plugin..."):  # noqa
-#     response = cockpit.backend.activate_plugin(database_id, plugin)   # noqa
+with DoneStatus(f"Activate {plugin} plugin..."):  # noqa
+    response = cockpit.backend.activate_plugin(database_id, plugin)  # noqa
 
 show_bar("Executing a workload...", workload_execution_time)
 
 endts = time_ns()
 sleep(1.0)
 
-# with DoneStatus(f"Deactivate {plugin} plugin..."):    # noqa
-#     response = cockpit.backend.deactivate_plugin(database_id, plugin) # noqa
+with DoneStatus(f"Deactivate {plugin} plugin..."):  # noqa
+    response = cockpit.backend.deactivate_plugin(database_id, plugin)  # noqa
 
 with DoneStatus("Stopping a workload..."):
     cockpit.backend.stop_workload("tpch_0_1")
@@ -72,14 +72,15 @@ startts = int(startts / 1_000_000_000) * 1_000_000_000
 endts = int(endts / 1_000_000_000) * 1_000_000_000
 
 with DoneStatus("Export..."):
+    exporter.initialize_plugin_log(database_id, startts, endts)
     for metric in metrics:
         exporter.plot_metric(metric, database_id, startts, endts)
-    exporter.plot_metric_for_benchmark(
-        "table access frequency", "tpch_0_1", database_id, startts, endts
-    )
-    exporter.plot_metric_for_benchmark(
-        "table footprint", "tpch_0_1", database_id, startts, endts
-    )
-    exporter.plot_query_metric_for_benchmark(
-        "query latency", "tpch_0_1", database_id, startts, endts
-    )
+    # exporter.plot_metric_for_benchmark( # noqa
+    #     "table access frequency", "tpch_0_1", database_id, startts, endts # noqa
+    # ) # noqa
+    # exporter.plot_metric_for_benchmark( # noqa
+    #     "table footprint", "tpch_0_1", database_id, startts, endts # noqa
+    # ) # noqa
+    # exporter.plot_query_metric_for_benchmark( # noqa
+    #     "query latency", "tpch_0_1", database_id, startts, endts # noqa
+    # ) # noqa

@@ -132,3 +132,26 @@ def get_query_latency(
     points = list(result[table_name, None])
 
     return [point for point in points if point["query_latency"] is not None]
+
+
+def get_plugin_log(
+    database: str, startts: int, endts: int,
+):
+    """Get plugin log (startts and endts are in ns)."""
+    query: str = """SELECT *
+        FROM plugin_log
+        WHERE time > $startts
+        AND time <= $endts;"""
+
+    client = InfluxDBClient(STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD)
+    result = client.query(
+        query,
+        database=database,
+        bind_params={"startts": startts / 1_000_000, "endts": endts / 1_000_000},
+        epoch=True,
+    )
+    client.close()
+
+    points = list(result["plugin_log", None])
+
+    return points

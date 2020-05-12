@@ -66,3 +66,33 @@ def plot_bar_chart(
 
     plt.savefig(f"{absolute_report_directory_path}/report/{path}{title}.png", dpi=300)
     plt.close(fig)
+
+
+def plot_plugin_log_table(plugin_logs: List):
+    """Plot plugin log table."""
+    fig, ax = plt.subplots()
+
+    ax.xaxis.set_visible(False)
+    ax.yaxis.set_visible(False)
+
+    # Table from Ed Smith answer
+    rows = [
+        (
+            plugin_log["id"],
+            plugin_log["timestamp"],
+            plugin_log["reporter"],
+            plugin_log["message"],
+        )
+        for plugin_log in plugin_logs
+    ]
+    collabel = ("id", "timestamp", "reporter", "message")
+    ax.table(
+        cellText=rows,
+        colWidths=[0.1, 0.2, 0.2, 0.5],
+        colLabels=collabel,
+        loc="center",
+        colLoc="center",
+    )
+
+    plt.savefig(f"{absolute_report_directory_path}/report/plugin_log.png", dpi=300)
+    plt.close(fig)
