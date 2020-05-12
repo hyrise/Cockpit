@@ -4,6 +4,7 @@
     v-model="selectedHistoricRange"
     :items="availableHistoricRanges"
     label="Observed Time Range"
+    :disabled="disabled"
   />
 </template>
 
@@ -16,7 +17,17 @@ interface Data {
   availableHistoricRanges: any;
 }
 
+interface Props {
+  disabled: boolean;
+}
+
 export default defineComponent({
+  props: {
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+  },
   setup(props: {}, context: SetupContext): Data {
     const { formatMinutesToSeconds } = useFormatting();
 
