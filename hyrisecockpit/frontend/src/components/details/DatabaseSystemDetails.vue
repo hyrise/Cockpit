@@ -95,21 +95,18 @@ export default defineComponent({
   },
 });
 </script>
-<style>
-#comparison-page .flex,
-#overview-page .flex {
+<style scoped>
+.flex {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 6px;
   margin-bottom: 0px;
 }
-#comparison-page .col,
-#overview-page .col {
+.col {
   padding: 0px;
 }
-#comparison-page .card,
-#overview-page .card {
+.card {
   display: flex;
   flex-direction: column;
   margin-right: 6px;
@@ -121,12 +118,10 @@ export default defineComponent({
 #overview-page .card {
   border-radius: 4px;
 }
-#comparison-page .leftcol,
-#overview-page .leftcol {
+.leftcol {
   padding-right: 8px;
 }
-#comparison-page .v-card__title,
-#overview-page .v-card__title {
+.v-card__title {
   padding-bottom: 6px;
 }
 </style>
