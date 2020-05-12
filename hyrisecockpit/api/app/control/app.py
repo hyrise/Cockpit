@@ -8,15 +8,8 @@ from typing import Dict, List, Union
 
 from flask_restx import Namespace, Resource, fields
 
-from hyrisecockpit.api.app.shared import (
-    _get_active_databases,
-    _send_message,
-    db_manager_socket,
-    storage_connection,
-)
+from hyrisecockpit.api.app.shared import _get_active_databases, storage_connection
 from hyrisecockpit.plugins import available_plugins
-from hyrisecockpit.request import Header, Request
-from hyrisecockpit.response import Response
 
 api = Namespace("control", description="Control multiple databases at once.")
 
@@ -79,38 +72,6 @@ model_get_all_plugins = api.model(
     "Available Plugins", {"plugins": fields.List(modelhelper_plugin, required=True,)},
 )
 
-model_plugin_setting = api.clone(
-    "Set Plugin Setting",
-    model_database,
-    {
-        "name": fields.String(
-            title="Setting name",
-            description="Name of the setting that shall be set.",
-            required=True,
-            example="CompressionPlugin_MemoryBudget",
-        ),
-        "value": fields.String(
-            title="Setting value",
-            description="Value the setting should have.",
-            required=True,
-            example="5000",
-        ),
-    },
-)
-
-model_get_plugin_setting = api.clone(
-    "Get Plugin Setting",
-    model_plugin_setting,
-    {
-        "description": fields.String(
-            title="Setting description",
-            description="Description of the plugin setting.",
-            required=True,
-            example="The memory budget to target for the Compression...",
-        ),
-    },
-)
-
 
 @api.route("/available_plugins")
 class AvailablePlugin(Resource):
@@ -148,29 +109,3 @@ class PluginLog(Resource):
             }
             for database in _get_active_databases()
         ]
-
-
-@api.route("/plugin_settings")
-class PluginSettings(Resource):
-    """Set settings for plugins."""
-
-    @api.doc(model=[model_get_plugin_setting])  # TODO: fix model
-    def get(self) -> Response:
-        """Read settings for plugins."""
-        message = Request(header=Header(message="get plugin setting"), body={},)
-        response = _send_message(db_manager_socket, message)
-        return response
-
-    @api.doc(body=model_plugin_setting)
-    def post(self) -> Response:
-        """Set settings for plugins."""
-        message = Request(
-            header=Header(message="set plugin setting"),
-            body={
-                "id": api.payload["id"],
-                "name": api.payload["name"],
-                "value": api.payload["value"],
-            },
-        )
-        response = _send_message(db_manager_socket, message)
-        return response
