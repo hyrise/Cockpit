@@ -9,7 +9,6 @@ from hyrisecockpit.message import (
     delete_data_request_schema,
     delete_database_request_schema,
     load_data_request_schema,
-    set_plugin_request_schema,
 )
 from hyrisecockpit.request import Body
 from hyrisecockpit.response import Response, get_error_response, get_response
@@ -85,15 +84,9 @@ class DatabaseManager(object):
             "delete data": (self._call_delete_data, delete_data_request_schema),
             "status": (self._call_status, None),
             "get plugins": (self._call_get_plugins, None),
-            "activate plugin": (
-                self._call_activate_plugin,
-                None,
-            ),  # TODO add validation schema
-            "deactivate plugin": (self._call_deactivate_plugin, None,),
-            "set plugin setting": (
-                self._call_plugin_setting,
-                set_plugin_request_schema,
-            ),
+            "activate plugin": (self._call_activate_plugin, None),
+            "deactivate plugin": (self._call_deactivate_plugin, None),
+            "set plugin setting": (self._call_plugin_setting, None),
             "execute sql query": (self._call_execute_sql_query, None),
         }
 
