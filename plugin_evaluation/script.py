@@ -10,6 +10,7 @@ from plugin_evaluation.utils.user_interface import DoneStatus, show_bar
 database_id = "momentum"
 workload_execution_time = 10
 plugin = "Clustering"
+benchmark = "tpch_0_1"
 
 metrics = [
     "throughput",
@@ -38,7 +39,7 @@ with DoneStatus("Waiting default tables to load..."):
 
 with DoneStatus("Starting a workload..."):
     cockpit.backend.start_workers()
-    cockpit.backend.start_workload("tpch_0_1", 300)
+    cockpit.backend.start_workload(benchmark, 300)
     cockpit.backend.wait_for_unblocked_status()
 
 sleep(1.0)
@@ -56,7 +57,7 @@ with DoneStatus(f"Deactivate {plugin} plugin..."):  # noqa
     response = cockpit.backend.deactivate_plugin(database_id, plugin)  # noqa
 
 with DoneStatus("Stopping a workload..."):
-    cockpit.backend.stop_workload("tpch_0_1")
+    cockpit.backend.stop_workload(benchmark)
     cockpit.backend.stop_workers()
     cockpit.backend.wait_for_unblocked_status()
 
@@ -75,12 +76,12 @@ with DoneStatus("Export..."):
     exporter.initialize_plugin_log(database_id, startts, endts)
     for metric in metrics:
         exporter.plot_metric(metric, database_id, startts, endts)
-    # exporter.plot_metric_for_benchmark( # noqa
-    #     "table access frequency", "tpch_0_1", database_id, startts, endts # noqa
-    # ) # noqa
-    # exporter.plot_metric_for_benchmark( # noqa
-    #     "table footprint", "tpch_0_1", database_id, startts, endts # noqa
-    # ) # noqa
-    # exporter.plot_query_metric_for_benchmark( # noqa
-    #     "query latency", "tpch_0_1", database_id, startts, endts # noqa
-    # ) # noqa
+    exporter.plot_metric_for_benchmark(  # noqa
+        "table access frequency", benchmark, database_id, startts, endts  # noqa
+    )  # noqa
+    exporter.plot_metric_for_benchmark(  # noqa
+        "table footprint", benchmark, database_id, startts, endts  # noqa
+    )  # noqa
+    exporter.plot_query_metric_for_benchmark(  # noqa
+        "query latency", benchmark, database_id, startts, endts  # noqa
+    )  # noqa
