@@ -24,6 +24,13 @@ services:
     ports:
       - "5000:5000"
 
+  influxdb:
+    image: influxdb:alpine
+    volumes:
+      - ./influxdb:/var/lib/influxdb
+    ports:
+      - "8086:8086"
+
   hyrise:
     image: udopigorsch/hyrise:bp1920
     volumes:
