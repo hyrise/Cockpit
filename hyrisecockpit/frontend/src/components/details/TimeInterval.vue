@@ -51,7 +51,9 @@ export function useUpdatingInterval(
     let type = "";
     const intervalTime = Math.max(
       Math.floor(getMetricRequestTime(metric) / Math.pow(10, 3)),
-      context.root.$selectionController.selectedPrecision.value
+      context.root.$selectionController.selectedPrecision.value,
+      context.root.$selectionController.selectedStaticRange.value?.precision ??
+        0
     );
     if (timestamps.value.length > 0) {
       currentTimeStamp = timestamps.value[timestamps.value.length - 1];
