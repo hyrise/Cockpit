@@ -84,6 +84,7 @@ describe("opening workload generation", () => {
 
       cy.wait("@" + getGetAlias("status"));
       assertButtonState("checkbox", true);
+      cy.wait(1000);
 
       cy.get(getSelector("pauseButton")).click();
       cy.wait("@" + getPutAlias("workload"));
