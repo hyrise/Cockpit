@@ -60,7 +60,9 @@ describe("opening workload generation", () => {
   describe("when clicking the start, pause and stop buttons", () => {
     it("will start, pause and stop workload", () => {
       const activeBenchmark = statusData[0].loaded_benchmarks[0];
+
       clickElement(getViewSelector("workloadGenerationButton"));
+
       cy.get("input[type=radio]")
         .eq(getBenchmarkIndex(activeBenchmark))
         .check({ force: true });
@@ -71,6 +73,9 @@ describe("opening workload generation", () => {
       cy.get("@" + getPostAlias("workload")).should((xhr: any) => {
         assertStartedWorkload(xhr.request.body, activeBenchmark);
       });
+      cy.wait("@" + getPutAlias("workload"));
+
+      cy.wait("@" + getPutAlias("workload"));
 
       cy.numberOfRequests(getPostAlias("worker")).should("eq", 1);
       cy.numberOfRequests(getPostAlias("workload")).should("eq", 1);
@@ -84,7 +89,6 @@ describe("opening workload generation", () => {
 
       cy.wait("@" + getGetAlias("status"));
       assertButtonState("checkbox", true);
-      cy.wait(1000);
 
       cy.get(getSelector("pauseButton")).click();
       cy.wait("@" + getPutAlias("workload"));
