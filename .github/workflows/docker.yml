@@ -35,3 +35,17 @@ jobs:
       run: docker ps -a
     - name: Check logs Frontend
       run: docker logs cockpit_frontend_1
+
+  frontend_push:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_TOKEN }}
+        repository: udopigorsch/cockpit-frontend
+        tag_with_ref: true
+        dockerfile: ./hyrisecockpit/frontend/Dockerfile
+  
