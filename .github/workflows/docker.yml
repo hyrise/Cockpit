@@ -47,5 +47,5 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_TOKEN }}
         repository: udopigorsch/cockpit-frontend
         tag_with_ref: true
-        dockerfile: {path}/hyrisecockpit/frontend/Dockerfile
+        dockerfile: ./hyrisecockpit/frontend/Dockerfile
   
