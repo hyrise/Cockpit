@@ -67,9 +67,8 @@
                   block
                   :disabled="!staticRange"
                   @click="resetTimeRange"
+                  >Set Continuous Time Range</v-btn
                 >
-                  Set Continuous Time Range
-                </v-btn>
               </v-sheet>
             </v-window-item>
             <v-window-item :value="2">
@@ -122,16 +121,15 @@
                   block
                   :disabled="invalidDates"
                   @click="setStaticTimeRange"
+                  >Set Static Time Range</v-btn
                 >
-                  Set Static Time Range
-                </v-btn>
               </v-sheet>
             </v-window-item>
           </v-window>
           <v-divider class="my-2" />
           <v-card flat>
             <v-card-actions>
-              <v-spacer v-if="window === 1" />
+              <v-spacer v-show="window === 1" />
               <v-tooltip top>
                 <template v-slot:activator="{ on }">
                   <v-btn
@@ -146,9 +144,10 @@
                     <v-icon v-if="window === 1" right>mdi-chevron-right</v-icon>
                   </v-btn>
                 </template>
-                <span>
-                  Select {{ window == 1 ? "Static" : "Continuous" }} Range Type
-                </span>
+                <span
+                  >Select {{ window == 1 ? "Static" : "Continuous" }} Range
+                  Type</span
+                >
               </v-tooltip>
             </v-card-actions>
           </v-card>
