@@ -1,10 +1,10 @@
 <template>
   <div id="metric-comparison-table" class="metrics-table">
     <div
-      class="metrics-column"
-      :style="databaseFlex"
       v-for="database in selectedDatabases"
       :key="database"
+      class="metrics-column"
+      :style="databaseFlex"
     >
       <div v-for="metric in selectedMetrics" :key="metric">
         <metric-tile

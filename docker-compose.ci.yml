@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   backend:
-    image: cockpit-backend:3.8.2
+    image: cockpit-backend:latest
     build: 
       context: .
       dockerfile: ./hyrisecockpit/api/Dockerfile
@@ -10,7 +10,7 @@ services:
       - "8000:8000"
 
   manager:
-    image: cockpit-manager:3.8.2
+    image: cockpit-manager:latest
     build: 
       context: .
       dockerfile: ./hyrisecockpit/database_manager/Dockerfile
@@ -18,7 +18,7 @@ services:
       - "8001:8001"
     
   generator:
-    image: cockpit-generator:3.8.2
+    image: cockpit-generator:latest
     build: 
       context: .
       dockerfile: ./hyrisecockpit/workload_generator/Dockerfile
@@ -27,16 +27,9 @@ services:
     ports:
       - "8002:8002"
       - "8003:8003"
-    
-  influxdb:
-    image: influxdb:alpine
-    volumes:
-      - ./influxdb:/var/lib/influxdb
-    ports:
-      - "8086:8086"
 
   frontend:
-    image: frontend:buster
+    image: cockpit-frontend:latest
     build:
         context: .
         dockerfile: ./hyrisecockpit/frontend/Dockerfile
@@ -44,11 +37,9 @@ services:
       - "5000:5000"
 
   hyrise:
-    image: hyrise:bp1920
-    build: 
-      context: .
-      dockerfile: ./hyrise/Dockerfile
+    image: udopigorsch/hyrise:bp1920
     volumes:
       - ./cached_tables:/usr/local/hyrise/cached_tables
     ports:
       - "5432:5432"
+      

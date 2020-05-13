@@ -1,0 +1,40 @@
+version: "3.5"
+
+services:
+  backend:
+    image: udopigorsch/cockpit-backend:latest
+    ports:
+      - "8000:8000"
+
+  manager:
+    image: udopigorsch/cockpit-manager:latest
+    ports:
+      - "8001:8001"
+    
+  generator:
+    image: udopigorsch/cockpit-generator:latest
+    volumes:
+        - ./hyrisecockpit/workload_generator/workloads:/usr/local/lib/python3.8/site-packages/hyrisecockpit/workload_generator/workloads
+    ports:
+      - "8002:8002"
+      - "8003:8003"
+
+  frontend:
+    image: udopigorsch/cockpit-frontend:latest
+    ports:
+      - "5000:5000"
+
+  influxdb:
+    image: influxdb:alpine
+    volumes:
+      - ./influxdb:/var/lib/influxdb
+    ports:
+      - "8086:8086"
+
+  hyrise:
+    image: udopigorsch/hyrise:bp1920
+    volumes:
+      - ./cached_tables:/usr/local/hyrise/cached_tables
+    ports:
+      - "5432:5432"
+      
