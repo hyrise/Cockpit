@@ -6,15 +6,15 @@ import {
   comparisonRequests,
   workloadMonitoringRequests,
 } from "../../setup/helpers";
-import { getRoute } from "../views/helpers";
+import { getRoute } from "./helpers";
+import { clickElement } from "../helpers";
 import {
+  getSelector as getSelectionSelector,
   assertDataRequest,
   historicRanges,
   basicPrecision,
   assertPrecisionRequest,
 } from "./helpers";
-import { clickElement } from "../helpers";
-import { getSelector as getSelectionSelector } from "../views/helpers";
 
 const backend = useBackendMock();
 
