@@ -41,11 +41,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v2
     - uses: docker/build-push-action@v1
       with:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_TOKEN }}
         repository: udopigorsch/cockpit-frontend
         tag_with_ref: true
-        dockerfile: Cockpit/hyrisecockpit/frontend/Dockerfile
+        dockerfile: ./hyrisecockpit/frontend/Dockerfile
   
