@@ -51,22 +51,22 @@ class CockpitBackend:
             output = out.read()
         return output
 
-    def get_monitor_property(self, property: str):
-        """Get monitor property."""
-        url = f"http://{self._backend_host}:{self._backend_port}/monitor/{property}"
-        return get(url, timeout=REQUEST_TIMEOUT).json()
+    def get_property(self, property: str):
+        """Get property."""
+        url = f"http://{self._backend_host}:{self._backend_port}/{property}"
+        return get(url, timeout=REQUEST_TIMEOUT)
 
-    def get_historical_monitor_property(
+    def get_historical_property(
         self, property: str, startts: int, endts: int, precision: int
     ):
-        """Get monitor property."""
-        url = f"http://{self._backend_host}:{self._backend_port}/monitor/{property}?startts={startts}&endts={endts}&precision={precision}"
-        return get(url, timeout=REQUEST_TIMEOUT).json()
+        """Get historical property."""
+        url = f"http://{self._backend_host}:{self._backend_port}/{property}?startts={startts}&endts={endts}&precision={precision}"
+        return get(url, timeout=REQUEST_TIMEOUT)
 
     def get_control_property(self, property: str):
         """Get control property."""
         url = f"http://{self._backend_host}:{self._backend_port}/control/{property}"
-        return get(url, timeout=REQUEST_TIMEOUT).json()
+        return get(url, timeout=REQUEST_TIMEOUT)
 
     def add_database(self, id: str, host: str, port: str):
         """Add database."""
@@ -112,3 +112,40 @@ class CockpitBackend:
             f"http://{self._backend_host}:{self._backend_port}/control/database/worker"
         )
         return delete(url, timeout=REQUEST_TIMEOUT)
+
+    def activate_plugin(self, database_id: str, plugin: int):
+        """Activate plugin."""
+        body = {"id": database_id, "plugin": plugin}
+        url = f"http://{self._backend_host}:{self._backend_port}/control/plugin"
+        return post(url, json=body, timeout=REQUEST_TIMEOUT)
+
+    def deactivate_plugin(self, database_id: str, plugin: int):
+        """Deactivate plugin."""
+        body = {"id": database_id, "plugin": plugin}
+        url = f"http://{self._backend_host}:{self._backend_port}/control/plugin"
+        return delete(url, json=body, timeout=REQUEST_TIMEOUT)
+
+    def get_activated_plugins(self):
+        """Get activated plugins."""
+        url = f"http://{self._backend_host}:{self._backend_port}/control/plugin"
+        return get(url, timeout=REQUEST_TIMEOUT)
+
+    def get_plugin_settings(self):
+        """Get plugin settings."""
+        url = (
+            f"http://{self._backend_host}:{self._backend_port}/control/plugin_settings"
+        )
+        return get(url, timeout=REQUEST_TIMEOUT)
+
+    def set_plugin_settings(self, database_id: str, setting_name: str, value: str):
+        """Set plugin settings."""
+        body = {"id": database_id, "name": setting_name, "value": value}
+        url = (
+            f"http://{self._backend_host}:{self._backend_port}/control/plugin_settings"
+        )
+        return post(url, json=body, timeout=REQUEST_TIMEOUT)
+
+    def get_plugin_log(self):
+        """Get plugin log."""
+        url = f"http://{self._backend_host}:{self._backend_port}/control/plugin_log"
+        return get(url, timeout=REQUEST_TIMEOUT)
