@@ -876,3 +876,23 @@ class ProcessTableStatus(Resource):
         return _send_message(
             db_manager_socket, Request(header=Header(message="status"), body={}),
         )["body"]["status"]
+
+
+@api.route("/operator")
+class OperatorData(Resource):
+    """Operator information of all databases."""
+
+    def get(self) -> List[Dict]:
+        """Return operator metadata."""
+        operator_data: List[Dict] = []
+        active_databases = _get_active_databases()
+        for database in active_databases:
+            database_data: Dict = {"id": database, "operator_data": []}
+            result = storage_connection.query(
+                'SELECT LAST("operator_data") FROM operator_data', database=database,
+            )
+            operator_rows = list(result["operator_data", None])
+            if len(operator_rows) > 0:
+                database_data["operator_data"] = loads(operator_rows[0]["last"])
+            operator_data.append(database_data)
+        return operator_data
