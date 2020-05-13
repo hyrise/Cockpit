@@ -13,12 +13,12 @@
       </template>
       <span id="setting-description">{{ setting.description }}</span>
     </v-tooltip>
-    <div id="setting-name" class="setting-name">{{ pluginName }}:</div>
+    <div id="setting-name" class="setting-name">{{ pluginId }}:</div>
     <v-text-field id="setting-value" class="setting-text" v-model="value" />
     <v-btn
       id="setting-save"
       text
-      @click="updatePluginSettings(databaseId, setting.name, value)"
+      @click="updatePluginSettings(databaseId, pluginId, setting.name, value)"
     >
       save
     </v-btn>
@@ -44,6 +44,7 @@ interface Props {
 interface Data {
   updatePluginSettings: (
     databaseId: string,
+    pluginId: string,
     settingId: string,
     settingValue: string
   ) => void;
@@ -68,6 +69,7 @@ export default defineComponent({
     },
   },
   setup(props: Props, context: SetupContext): Data {
+    console.log(props, "setting props");
     return {
       updatePluginSettings: context.root.$pluginController.changePluginSetting,
       value: props.setting.value,

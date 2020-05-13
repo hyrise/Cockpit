@@ -25,6 +25,7 @@ export interface PluginService {
   fetchPluginSettings: () => Promise<Object>;
   setPluginSetting: (
     databaseId: string,
+    pluginId: string,
     settingId: string,
     settingValue: string
   ) => Promise<void>;

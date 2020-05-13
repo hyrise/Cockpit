@@ -55,11 +55,12 @@ export function usePluginController(): PluginController {
 
   async function changePluginSetting(
     database: string,
+    pluginId: string,
     settingId: string,
     settingValue: string
   ): Promise<void> {
     return pluginService
-      .setPluginSetting(database, settingId, settingValue)
+      .setPluginSetting(database, pluginId, settingId, settingValue)
       .then(() => {
         updatePluginData();
       });
