@@ -36,6 +36,48 @@ jobs:
     - name: Check logs Frontend
       run: docker logs cockpit_frontend_1
 
+  backend_push:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_TOKEN }}
+        repository: udopigorsch/cockpit-backend
+        tag_with_ref: true
+        dockerfile: ./hyrisecockpit/api/Dockerfile
+
+  generator_push:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_TOKEN }}
+        repository: udopigorsch/cockpit-generator
+        tag_with_ref: true
+        dockerfile: ./hyrisecockpit/workload_generator/Dockerfile
+        
+  manager_push:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_TOKEN }}
+        repository: udopigorsch/cockpit-manager
+        tag_with_ref: true
+        dockerfile: ./hyrisecockpit/database_manager/Dockerfile
+
   frontend_push:
 
     runs-on: ubuntu-latest
