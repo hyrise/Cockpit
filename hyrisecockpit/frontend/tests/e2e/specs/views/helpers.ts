@@ -157,7 +157,7 @@ export function assertItemSelect(
   }
 }
 
-export function assertDataRequest(url: string, range: number): void {
+export function assertTimeIntervalRequest(url: string, range: number): void {
   expect(getEndTimeOfRequest(url) - getStartTimeOfRequest(url)).to.eq(
     range * Math.pow(10, 9) +
       Math.max(getPrecisionOfRequest(url), 3 * Math.pow(10, 9))

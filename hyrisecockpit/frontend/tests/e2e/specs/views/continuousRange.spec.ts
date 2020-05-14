@@ -10,7 +10,7 @@ import { getRoute } from "./helpers";
 import { clickElement } from "../helpers";
 import {
   getSelector as getSelectionSelector,
-  assertDataRequest,
+  assertTimeIntervalRequest,
   historicRanges,
   basicPrecision,
   assertPrecisionRequest,
@@ -60,7 +60,7 @@ describe("requesting different time ranges", () => {
         force: true,
       });
       cy.wait("@" + rangeAlias).then((xhr: any) => {
-        assertDataRequest(xhr.url, range.value);
+        assertTimeIntervalRequest(xhr.url, range.value);
       });
       backend.restart(); // reset aliases
     });
@@ -109,7 +109,7 @@ describe("requesting different time ranges", () => {
         force: true,
       });
       cy.wait("@" + rangeAlias).then((xhr: any) => {
-        assertDataRequest(xhr.url, range.value);
+        assertTimeIntervalRequest(xhr.url, range.value);
       });
       backend.restart(); // reset aliases
     });
@@ -158,7 +158,7 @@ describe("requesting different time ranges", () => {
         force: true,
       });
       cy.wait("@" + rangeAlias).then((xhr: any) => {
-        assertDataRequest(xhr.url, range.value);
+        assertTimeIntervalRequest(xhr.url, range.value);
       });
       backend.restart(); // reset aliases
     });

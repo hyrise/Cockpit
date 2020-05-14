@@ -8,7 +8,7 @@ import {
 import {
   getRoute,
   getDate,
-  assertDataRequest,
+  assertTimeIntervalRequest,
   assertPrecisionRequest,
 } from "./helpers";
 import { clickElement } from "../helpers";
@@ -198,7 +198,7 @@ describe("requesting static historic time range", () => {
       cy.get(getSelectionSelector("resetTimeRangeButton")).click();
 
       cy.wait("@" + alias).then((xhr: any) => {
-        assertDataRequest(xhr.url, 30);
+        assertTimeIntervalRequest(xhr.url, 30);
         assertPrecisionRequest(xhr.url, 1);
       });
 
