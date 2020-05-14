@@ -31,14 +31,15 @@ export default defineComponent({
 </script>
 <style scoped>
 .metrics {
-  margin-top: 6px;
+  margin-top: 10px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 .metric-chart {
-  flex: 0 0 32.8%;
-  margin: 0px 3px 6px 3px;
+  flex: 0 0 33.3%;
+  margin-left: 0px;
+  margin-bottom: 6px;
   padding: 0px;
 }
 @media (min-width: 2400px) {

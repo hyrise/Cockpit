@@ -79,7 +79,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
       staticFetching.value
         ? staticRange.value!.endDate
         : historicFetching.value
-        ? addSeconds(currentTimestamp, precision.value + 3)
+        ? addSeconds(currentTimestamp, Math.max(precision.value, 3))
         : currentTimestamp
     );
 
