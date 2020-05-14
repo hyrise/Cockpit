@@ -2,6 +2,7 @@ import { PageName } from "@/types/views";
 import { Metric } from "@/types/metrics";
 import { Ref } from "@vue/composition-api";
 import { Database } from "@/types/database";
+import { StaticRange } from "@/controller/selectionController";
 
 export interface SelectionController {
   pageDatabases: Record<PageName, string[]>;
@@ -11,6 +12,7 @@ export interface SelectionController {
   selectedPrecision: Ref<number>;
   selectedMetrics: Ref<readonly Metric[]>;
   selectedDatabases: Ref<readonly string[]>;
+  selectedStaticRange: Ref<StaticRange | null>;
 }
 
 export interface MetricController {
