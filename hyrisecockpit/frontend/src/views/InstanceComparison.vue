@@ -4,12 +4,12 @@
       :conditions="[$databaseController.databasesUpdated]"
       :evaluations="[false]"
     />
-    <div v-if="$databaseController.databasesUpdated.value" class="mx-6">
+    <div v-if="$databaseController.databasesUpdated.value" class="mx-2">
       <status-warning
         :selected-databases="selectedDatabases"
         :selected-metrics="selectedMetrics"
       />
-      <database-details-panel
+      <database-system-details
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"
       />
@@ -40,14 +40,14 @@ import { Database } from "../types/database";
 import { useSelectionHandling } from "@/meta/selection";
 import LinearLoader from "../components/alerts/LinearLoader.vue";
 import StatusWarning from "@/components/alerts/StatusWarning.vue";
-import DatabaseDetailsPanel from "../components/details/DatabaseDetailsPanel.vue";
+import DatabaseSystemDetails from "../components/details/DatabaseSystemDetails.vue";
 
 export default defineComponent({
   components: {
     MetricsComparisonTable,
-    DatabaseDetailsPanel,
     LinearLoader,
     StatusWarning,
+    DatabaseSystemDetails,
   },
   setup(props: {}, context: SetupContext): MetricViewData {
     return {
@@ -57,9 +57,3 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
-.select {
-  margin-top: 0.5%;
-  margin-bottom: 0.5%;
-}
-</style>
