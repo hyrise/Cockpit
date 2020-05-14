@@ -5,7 +5,12 @@ import {
   overviewRequests,
   comparisonRequests,
 } from "../../setup/helpers";
-import { getRoute, getDate } from "./helpers";
+import {
+  getRoute,
+  getDate,
+  assertDataRequest,
+  assertPrecisionRequest,
+} from "./helpers";
 import { clickElement } from "../helpers";
 import {
   getSelector as getSelectionSelector,
@@ -139,6 +144,66 @@ describe("requesting static historic time range", () => {
           basicPrecision[precisionIdx]
         );
       });
+      backend.restart(); // reset aliases
+    });
+
+    it("will restart with continuous range on click", () => {
+      const startTime = `${startHour < 10 ? "0" + startHour : startHour}:00`;
+      const endTime = `${startHour < 10 ? "0" + startHour : startHour}:01`;
+
+      cy.visit(getRoute("overview"));
+      cy.wait("@" + getGetAlias(overviewRequest));
+      clickElement(getSelectionSelector("selectionListButton"));
+      cy.get("div[role=tab]").eq(1).click();
+
+      cy.get(getSelectionSelector("resetTimeRangeButton")).should(
+        "be.disabled"
+      );
+
+      cy.get(getSelectionSelector("changeRangeTypeButton")).click();
+      cy.wait(300); // wait until page window changed
+
+      // set start date
+      cy.get(getSelectionSelector("datePickerText")).eq(0).click();
+      cy.get(getSelectionSelector("datePickerSelect"))
+        .eq(0)
+        .within(() => {
+          cy.get("button").contains(startDay).click();
+        });
+
+      // set start time
+      cy.get(getSelectionSelector("timePickerText")).eq(0).type(startTime);
+
+      // set end time
+      cy.get(getSelectionSelector("timePickerText"))
+        .eq(1)
+        .clear()
+        .type(endTime);
+
+      // set precision
+      cy.get(getSelectionSelector("selectionList")).within(() => {
+        cy.get(getSelectionSelector("precisionSelection")).eq(1).click({
+          force: true,
+        });
+      });
+      cy.get("div[role=option]").eq(0).click({
+        force: true,
+      });
+
+      cy.get(getSelectionSelector("setStaticRangeButton")).click();
+      cy.wait("@" + getGetAlias(overviewRequest));
+
+      cy.get(getSelectionSelector("changeRangeTypeButton")).click();
+      cy.wait(300); // wait until page window changed
+
+      backend.rename(overviewRequest, alias); // set new alias to get specific request
+      cy.get(getSelectionSelector("resetTimeRangeButton")).click();
+
+      cy.wait("@" + alias).then((xhr: any) => {
+        assertDataRequest(xhr.url, 30);
+        assertPrecisionRequest(xhr.url, 1);
+      });
+
       backend.restart(); // reset aliases
     });
   });

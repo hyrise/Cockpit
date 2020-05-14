@@ -55,6 +55,7 @@ const selectors: Record<string, string> = {
   datePickerSelect: getSelectorByConfig("div", "date-picker-select"),
   timePickerSelect: getSelectorByConfig("div", "time-picker-select"),
   setStaticRangeButton: getSelectorByConfig("button", "set-static-time-range"),
+  resetTimeRangeButton: getSelectorByConfig("button", "reset-time-range"),
 };
 
 const metrics: Record<string, string[]> = {
