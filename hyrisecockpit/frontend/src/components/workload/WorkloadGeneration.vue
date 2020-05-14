@@ -209,7 +209,7 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
       loading: false,
     },
   });
-  let weights = ref<Record<string, number>>({});
+  const weights = ref<Record<string, number>>({});
 
   getWorkloads().then((response: any) => {
     if (response.data.length > 0) {

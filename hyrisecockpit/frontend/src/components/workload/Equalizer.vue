@@ -26,7 +26,6 @@
           <div class="top-line"></div>
           <v-slider
             v-model="weight.weight"
-            :value="weight.weight"
             thumb-label
             thumb-size="24"
             min="0"
