@@ -39,8 +39,6 @@ const endHour =
     ? startHour
     : generateRandomInt(startHour + 1, 23 - startHour);
 
-console.log(startDay, endDay, startHour, endHour);
-
 // test static historical ranges
 describe("requesting static historic time range", () => {
   beforeEach(() => {
