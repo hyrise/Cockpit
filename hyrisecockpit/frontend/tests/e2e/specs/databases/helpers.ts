@@ -33,7 +33,6 @@ const selectors: Record<string, string> = {
   passwordInput: getSelectorByConfig("input", "password-input"),
   databaseDetailsPanel: getSelectorByConfig("div", "database-details-panel"),
   databaseSystemDetails: getSelectorByConfig("div", "database-system-details"),
-  idDetails: getSelectorByConfig("div", "database-id"),
   hostDetails: getSelectorByConfig("div", "database-host"),
   memoryCapacityDetails: getSelectorByConfig("div", "database-memory-capacity"),
   memoryFootprintDetails: getSelectorByConfig(
