@@ -32,17 +32,12 @@ class TestUpdateSystemDataJob:
             }
         )
         fake_system_df: DataFrame = DataFrame(
-            {
-                "cpu_count": [10],
-                "cpu_model": [120],
-                "system_memory_total_bytes": [1234],
-            }
+            {"cpu_count": [10], "system_memory_total_bytes": [1234]}
         )
         expected_dict: Dict[str, float] = {
-            "cpu_system_time": 12.0,
-            "cpu_process_time": 30.0,
+            "cpu_system_usage": 12.0,
+            "cpu_process_usage": 30.0,
             "cpu_count": 10,
-            "cpu_model": 120,
             "free_memory": 0,
             "available_memory": 0,
             "total_memory": 1234,
