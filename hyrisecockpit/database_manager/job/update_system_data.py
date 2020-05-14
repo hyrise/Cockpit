@@ -9,12 +9,11 @@ from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_fra
 
 def _create_system_data_dict(utilization_df, system_df) -> Dict[str, Union[int, float]]:
     return {
-        "cpu_system_time": float(utilization_df["cpu_system_time"][0])
+        "cpu_system_usage": float(utilization_df["cpu_system_time"][0])
         / int(system_df["cpu_count"][0]),
-        "cpu_process_time": float(utilization_df["cpu_process_time"][0])
+        "cpu_process_usage": float(utilization_df["cpu_process_time"][0])
         / int(system_df["cpu_count"][0]),
         "cpu_count": int(system_df["cpu_count"][0]),
-        "cpu_model": int(system_df["cpu_model"][0]),
         "free_memory": int(utilization_df["system_memory_free"][0]),
         "available_memory": int(utilization_df["system_memory_available"][0]),
         "total_memory": int(system_df["system_memory_total_bytes"][0]),
