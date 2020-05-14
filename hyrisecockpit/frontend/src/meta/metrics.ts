@@ -187,7 +187,7 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
   throughput: {
     title: "Throughput",
     xaxis: timeLabel,
-    yaxis: queryLabel,
+    yaxis: `${queryLabel} / s`,
   },
 };
 
