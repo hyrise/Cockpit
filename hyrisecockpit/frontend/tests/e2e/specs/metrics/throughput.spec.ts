@@ -42,7 +42,7 @@ describe("visiting the overview page", () => {
   it("will show the correct range and title", () => {
     cy.get(getSelector("throughput")).should((elements: any) => {
       const layout = elements[0].layout;
-      expect(layout.yaxis.title.text).to.eq("Number of queries");
+      expect(layout.yaxis.title.text).to.eq("Number of queries / s");
       expect(layout.yaxis.range[0]).to.eq(0);
     });
   });
@@ -88,7 +88,7 @@ describe("visiting the comparison page", () => {
       cy.get(getSelectorWithID("throughput", database.id)).should(
         (elements: any) => {
           const layout = elements[0].layout;
-          expect(layout.yaxis.title.text).to.eq("Number of queries");
+          expect(layout.yaxis.title.text).to.eq("Number of queries / s");
           expect(layout.yaxis.range[0]).to.eq(0);
 
           if (maxValue) expect(maxValue).to.eq(layout.yaxis.range[1]);

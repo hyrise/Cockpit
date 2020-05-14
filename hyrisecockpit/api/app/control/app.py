@@ -67,6 +67,12 @@ model_plugin_log = api.clone(
                             required=True,
                             example="No optimization possible with given parameters!",
                         ),
+                        "level": fields.String(
+                            title="Level",
+                            description="Level of the log message.",
+                            required=True,
+                            example="Warning",
+                        ),
                     },
                 )
             ),
@@ -233,10 +239,11 @@ class PluginLog(Resource):
                         "timestamp": row["timestamp"],
                         "reporter": row["reporter"],
                         "message": row["message"],
+                        "level": row["level"],
                     }
                     for row in list(
                         storage_connection.query(
-                            "SELECT timestamp, reporter, message from plugin_log;",
+                            "SELECT timestamp, reporter, message, level from plugin_log;",
                             database=database,
                         )["plugin_log", None]
                     )
