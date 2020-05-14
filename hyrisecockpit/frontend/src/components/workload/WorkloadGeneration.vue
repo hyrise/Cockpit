@@ -116,7 +116,6 @@ export default defineComponent({
   },
   setup(props: {}, context: SetupContext): Data {
     const workloadDataHandler = useWorkloadDataHandler(context);
-    //TODO: disable workload actions :disabled="disabled || workload === '' || !workloadData[workload].loaded"
     return {
       databases: computed(
         () => context.root.$databaseController.availableDatabasesById.value
@@ -163,8 +162,11 @@ function useWorkloadAction(
 
   getWorkloads().then((response: any) => {
     if (response.data.length > 0) {
-      //TODO: set workload if running
-      //workload.value = getWorkloadFromTransferred(response.data[0].folder_name);
+      Object.values(response.data).forEach((workload: any) => {
+        workloadData[
+          getWorkloadFromTransferred(workload.folder_name)
+        ].selected = true;
+      });
       frequency.value = response.data[0].frequency;
       frequency.value > 0
         ? (actions.start.active = true)
@@ -182,76 +184,44 @@ function useWorkloadAction(
     actions[action].loading = false;
     actions[action].active = true;
   }
+  function startOrUpdateWorkload(action: string): void {
+    startWorker().then(() => {
+      Object.keys(workloadData).forEach((workload: any) => {
+        if (workloadData[workload].selected) {
+          updateWorkload(workload, frequency.value);
+        }
+      });
+      stopLoading(action);
+    });
+  }
   function startingWorkload(): void {
     startLoading("start");
-    startWorker().then(() => {
-      stopLoading("start");
-    });
+    startOrUpdateWorkload("start");
   }
   function pausingWorkload(): void {
     startLoading("pause");
-    startWorker().then(() => {
-      stopLoading("pause");
-    });
+    frequency.value = 0;
+    startOrUpdateWorkload("pause");
   }
-  /* function pausingWorkload(): void {
-    startLoading("pause");
-    getWorkloads().then((response: any) => {
-      if (response.data.length === 0) {
-        startWorker().then(() => {
-          Object.keys(workloadData).forEach((workload: any) => {
-            if (workloadData[workload].selected) {
-              startWorkload(workload, 0).then(() => {
-                stopLoading("pause");
-              });
-            }
-          });
-        });
-      } else {
-        Object.keys(workloadData).forEach((workload: any) => {
-          if (workloadData[workload].selected) {
-            updateWorkload(workload, 0).then(() => {
-              stopLoading("pause");
-            });
-          }
-        });
-      }
-    });
-  } */
   function stoppingWorkload(): void {
     startLoading("stop");
-    getWorkloads().then((response: any) => {
-      if (response.data.length !== 0) {
-        Object.keys(workloadData).forEach((workload: any) => {
-          if (workloadData[workload].selected) {
-            stopWorkload(workload).then(() => {
-              stopWorker();
-              stopLoading("stop");
-            });
-          }
-        });
-      }
-    });
+    stopWorker().then(() => stopLoading("stop"));
   }
   function handleFrequencyChange(changedFrequency: number): void {
     frequency.value = changedFrequency;
     if (actions.start.active) {
       Object.keys(workloadData).forEach((workload: any) => {
         if (workloadData[workload].selected) {
-          updateWorkload(workload, frequency.value).then(() => {
-            stopLoading("start");
-          });
+          updateWorkload(workload, frequency.value);
         }
       });
     }
   }
   function handleWorkloadChange(workload: Workload): void {
-    //TODO: seperate start and update workload
     workloadData[workload].selected = !workloadData[workload].selected;
     if (workloadData[workload].selected) {
       startWorkload(workload, frequency.value);
-    }
-    else {
+    } else {
       stopWorkload(workload);
     }
   }

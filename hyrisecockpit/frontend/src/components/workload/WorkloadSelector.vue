@@ -1,9 +1,9 @@
 <template>
   <v-container class="mt-0 pt-0">
     <v-checkbox
+      v-for="workload in availableWorkloads"
       v-model="workloads"
       class="mt-0 pt-0"
-      v-for="workload in availableWorkloads"
       :key="workload"
       :label="getDisplayedWorkload(workload)"
       :value="workload"
