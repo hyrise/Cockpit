@@ -275,12 +275,6 @@ model_system_data = api.clone(
                                                     required=True,
                                                     example=16,
                                                 ),
-                                                "cpu_clock_speed": fields.Integer(
-                                                    title="CPU clock speed",
-                                                    description="CPU frequency",
-                                                    required=True,
-                                                    example=2600,
-                                                ),
                                             },
                                         )
                                     ),
@@ -294,9 +288,9 @@ model_system_data = api.clone(
                                                     required=True,
                                                     example=13030227968,
                                                 ),
-                                                "used": fields.Integer(
-                                                    title="Used memory",
-                                                    description="Number of used bytes",
+                                                "available": fields.Integer(
+                                                    title="Available memory",
+                                                    description="Number of available bytes",
                                                     required=True,
                                                     example=579780000,
                                                 ),
@@ -307,8 +301,8 @@ model_system_data = api.clone(
                                                     example=33724911616,
                                                 ),
                                                 "percent": fields.Float(
-                                                    title="Percent of used memory",
-                                                    description="Percent of used memory",
+                                                    title="Percent of available memory",
+                                                    description="Percent of available memory",
                                                     required=True,
                                                     example=10.8125,
                                                 ),
@@ -747,14 +741,13 @@ class System(Resource):
             precision_ns,
             "system_data",
             [
-                "cpu_clock_speed",
                 "cpu_count",
                 "cpu_process_usage",
                 "cpu_system_usage",
                 "database_threads",
                 "free_memory",
                 "total_memory",
-                "used_memory",
+                "available_memory",
             ],
         )
         response: List[Dict] = [
@@ -768,14 +761,13 @@ class System(Resource):
                                 "cpu_system_usage": point["cpu_system_usage"],
                                 "cpu_process_usage": point["cpu_process_usage"],
                                 "cpu_count": point["cpu_count"],
-                                "cpu_clock_speed": point["cpu_clock_speed"],
                             },
                             "memory": {
                                 "free": point["free_memory"],
-                                "used": point["used_memory"],
+                                "available": point["available_memory"],
                                 "total": point["total_memory"],
                                 "percent": (
-                                    point["used_memory"] / point["total_memory"]
+                                    point["available_memory"] / point["total_memory"]
                                 )
                                 if point["total_memory"] != 0.0
                                 else 0.0,
