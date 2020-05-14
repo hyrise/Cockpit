@@ -206,12 +206,12 @@ class StorageCursor:
             for query in query_list
         )
 
-    def log_plugin_log(self, plugin_log: List[Tuple[int, str, str]]) -> None:
+    def log_plugin_log(self, plugin_log: List[Tuple[int, str, str, str]]) -> None:
         """Log a couple of succesfully executed queries."""
         self.__write_points(
             Point(
                 measurement="plugin_log",
-                tags={"timestamp": row[0], "reporter": row[1]},
+                tags={"timestamp": row[0], "reporter": row[1], "level": row[3]},
                 fields={"message": row[2]},
                 time=row[0],
             )

@@ -32,6 +32,7 @@ class TestUpdatePluginLogJob:
                 "timestamp": [0, 42],
                 "reporter": ["KeepHyriseRunning", "HyrisePleaseStayAlive"],
                 "message": ["error", "error"],
+                "log_level": ["Warning", "Warning"],
             }
         )
         mock_sql_to_data_frame.return_value = fake_not_empty_data_frame
@@ -42,9 +43,9 @@ class TestUpdatePluginLogJob:
             mock_storage_connection_factory,
         )
 
-        expected_function_argument: List[Tuple[int, str, str]] = [
-            (0, "KeepHyriseRunning", "error"),
-            (42, "HyrisePleaseStayAlive", "error"),
+        expected_function_argument: List[Tuple[int, str, str, str]] = [
+            (0, "KeepHyriseRunning", "error", "Warning"),
+            (42, "HyrisePleaseStayAlive", "error", "Warning"),
         ]
 
         mock_sql_to_data_frame.assert_called_once_with(
