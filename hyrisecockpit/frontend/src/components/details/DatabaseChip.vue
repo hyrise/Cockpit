@@ -37,7 +37,14 @@
         >
       </div>
       <v-icon v-if="!selectable" left>mdi-database</v-icon>
-      <b>{{ database.id }}</b>
+      <v-tooltip right>
+        <template v-slot:activator="{ on }">
+          <b v-on="on">{{
+            selectable ? truncateItemTitle(database.id) : database.id
+          }}</b>
+        </template>
+        <span>{{ database.id }}</span>
+      </v-tooltip>
     </v-chip>
   </div>
 </template>
@@ -51,12 +58,10 @@ import {
   watch,
 } from "@vue/composition-api";
 import { Database } from "@/types/database";
-import { useSelectableItem } from "@/meta/selection";
+import { useSelectableItem, UseSelectableItem } from "@/meta/selection";
 
-interface Data {
+interface Data extends UseSelectableItem {
   database: Ref<Database>;
-  handleSelect: (id: string) => void;
-  handleUnSelect: (id: string) => void;
 }
 
 interface Props {

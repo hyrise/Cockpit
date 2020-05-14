@@ -14,7 +14,12 @@
       @click="handleSelect(metric)"
       >mdi-eye-off</v-icon
     >
-    <b>{{ getMetricTitle(metric) }}</b>
+    <v-tooltip right>
+      <template v-slot:activator="{ on }">
+        <b v-on="on">{{ truncateItemTitle(getMetricTitle(metric)) }}</b>
+      </template>
+      <span>{{ getMetricTitle(metric) }}</span>
+    </v-tooltip>
   </v-chip>
 </template>
 <script lang="ts">
@@ -29,12 +34,10 @@ import {
 import { Database } from "@/types/database";
 import { Metric } from "@/types/metrics";
 import { getMetricTitle } from "@/meta/metrics";
-import { useSelectableItem } from "@/meta/selection";
+import { useSelectableItem, UseSelectableItem } from "@/meta/selection";
 
-interface Data {
+interface Data extends UseSelectableItem {
   getMetricTitle: (metric: Metric) => string;
-  handleSelect: (metric: Metric) => void;
-  handleUnSelect: (metric: Metric) => void;
 }
 
 interface Props {
