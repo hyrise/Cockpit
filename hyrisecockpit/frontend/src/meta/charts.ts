@@ -39,7 +39,7 @@ export function useResizingOnChange(
 ): { updateLayout: () => void } {
   function updateLayout(): void {
     Plotly.relayout(props.graphId, {
-      width: props.maxChartWidth,
+      width: props.maxChartWidth - 25,
     });
   }
 
