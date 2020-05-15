@@ -131,6 +131,45 @@ def calculate_footprint_for_table(  # noqa
     )
 
 
+def calculate_access_frequency(  # noqa
+    points: List, metric_column_name: str, table_name
+):
+    """Calculate access frequency for a specific table."""
+    formatted_time = [
+        datetime.fromtimestamp(point["time"] / 1_000_000_000) for point in points
+    ]
+
+    loaded_points = [loads(point["chunks_data_meta_information"]) for point in points]
+    available_table_names = set()
+
+    for point in loaded_points:
+        for table_name in point.keys():
+            available_table_names.add(table_name)
+
+    table_accesses: Dict = {table_name: [] for table_name in available_table_names}
+
+    for point in loaded_points:
+        for table_name in table_accesses.keys():
+            if table_name in point.keys():
+                table_accesses[table_name].append(
+                    sum(
+                        (
+                            sum(point[table_name][column_name])
+                            for column_name in point[table_name].keys()
+                        )
+                    )
+                )
+
+            else:
+                table_accesses[table_name].append(0)
+
+    return (
+        formatted_time,
+        _sort_metric_dictionary(table_accesses),
+        "Access frequency",
+    )
+
+
 def calculate_access_frequency_for_table(  # noqa
     points: List, metric_column_name: str, table_name
 ):

@@ -8,7 +8,7 @@ from plugin_evaluation.utils.figlet import intro
 from plugin_evaluation.utils.user_interface import DoneStatus, show_bar
 
 database_id = "momentum"
-workload_execution_time = 10
+workload_execution_time = 100
 plugin = "Compression"
 benchmark = "tpch_0_1"
 
@@ -20,6 +20,7 @@ metrics = [
     "footprint",
     "detailed latency",
     "ram usage",
+    "access frequency",
 ]
 
 #############################################################

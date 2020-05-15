@@ -9,6 +9,7 @@ from plugin_evaluation.export.influx_handling import (
 )
 from plugin_evaluation.export.plot_handling import plot_bar_chart, plot_line_chart
 from plugin_evaluation.export.points_handling import (
+    calculate_access_frequency,
     calculate_access_frequency_for_table,
     calculate_footprint,
     calculate_footprint_for_table,
@@ -108,6 +109,16 @@ config = {
         "points_function": calculate_access_frequency_for_table,
         "plot_function": plot_line_chart,
         "path": "Access frequency/",
+    },
+    "access frequency": {
+        "table_name": "chunks_data",
+        "column_name": "chunks_data_meta_information",
+        "x_label": "Time",
+        "y_label": "Number of accesses",
+        "influx_function": get_metric_data,
+        "points_function": calculate_access_frequency,
+        "plot_function": plot_line_chart,
+        "path": "",
     },
     "query latency": {
         "table_name": "successful_queries",
