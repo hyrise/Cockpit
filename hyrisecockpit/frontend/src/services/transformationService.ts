@@ -99,7 +99,7 @@ function getCPUData(data: any, primaryKey: string = ""): number[] {
 }
 
 function getRAMData(data: any, primaryKey: string = ""): number[] {
-  return data.map((entry: any) => entry[primaryKey].memory.percent);
+  return data.map((entry: any) => 100 - entry[primaryKey].memory.percent);
 }
 
 function getReadOnlyData(data: any, primaryKey: string = ""): number[] {
