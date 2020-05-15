@@ -54,11 +54,10 @@ export default defineComponent({
     watch(
       () => props.workloadData,
       () => {
-        workloads.value = [];
-        Object.entries(props.workloadData).map(
+        workloads.value = Object.entries(props.workloadData).map(
           ([workload, { selected }]: any) => {
             if (selected) {
-              workloads.value.push(workload);
+              return workload;
             }
           }
         );
