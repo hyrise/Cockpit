@@ -3,7 +3,7 @@ import {
   getGetAlias,
   generateRandomInt,
   overviewRequests,
-  comparisonRequests,
+  selectRandomItem,
 } from "../../setup/helpers";
 import {
   getRoute,
@@ -22,22 +22,25 @@ const backend = useBackendMock();
 
 const alias = "alias";
 
-const comparisonRequest =
-  comparisonRequests[generateRandomInt(0, comparisonRequests.length)];
 const overviewRequest =
   overviewRequests[generateRandomInt(0, overviewRequests.length)];
 
-const currentDate = new Date();
-const startDay = generateRandomInt(currentDate.getDate() - 6, 5);
-const endDay =
-  startDay === currentDate.getDate()
-    ? startDay
-    : generateRandomInt(startDay, currentDate.getDate() - startDay - 1);
-const startHour = generateRandomInt(0, 23);
-const endHour =
-  startHour === 23
-    ? startHour
-    : generateRandomInt(startHour + 1, 23 - startHour);
+const datePeak = new Date().getDate();
+const hourPeak = new Date().getHours();
+
+const startDay = selectRandomItem(
+  [...Array(3).keys()].map((key) => Math.max(datePeak - (6 - key), 1))
+);
+const endDay = selectRandomItem(
+  [...Array(4).keys()].map((key) => Math.max(datePeak - (6 - key - 3), 1))
+);
+
+const startHour = selectRandomItem(
+  [...Array(3).keys()].map((key) => Math.max(hourPeak - (6 - key), 0))
+);
+const endHour = selectRandomItem(
+  [...Array(4).keys()].map((key) => Math.max(hourPeak - (6 - key - 3), 0))
+);
 
 // test static historical ranges
 describe("requesting static historic time range", () => {
@@ -59,6 +62,8 @@ describe("requesting static historic time range", () => {
       cy.get(getSelectionSelector("changeRangeTypeButton")).click();
       cy.wait(300); // wait until page window changed
 
+      cy.contains("The selected dates or times are invalid.");
+
       // set start date
       cy.get(getSelectionSelector("datePickerText")).eq(0).click();
       cy.get(getSelectionSelector("datePickerSelect"))
@@ -75,6 +80,42 @@ describe("requesting static historic time range", () => {
         .eq(1)
         .clear()
         .type(startTime);
+
+      cy.contains(
+        "The selected range is too small for the selected precision."
+      );
+
+      cy.get(getSelectionSelector("setStaticRangeButton")).should(
+        "be.disabled"
+      );
+    });
+
+    it("will not request future time range and precision", () => {
+      cy.visit(getRoute("overview"));
+      cy.wait("@" + getGetAlias(overviewRequest));
+      clickElement(getSelectionSelector("selectionListButton"));
+      cy.get("div[role=tab]").eq(1).click();
+      cy.get(getSelectionSelector("changeRangeTypeButton")).click();
+      cy.wait(300); // wait until page window changed
+
+      // set start date
+      cy.get(getSelectionSelector("datePickerText")).eq(0).click();
+      cy.get(getSelectionSelector("datePickerSelect"))
+        .eq(0)
+        .within(() => {
+          cy.get("button").contains(new Date().getDate()).click();
+        });
+
+      // set start time
+      cy.get(getSelectionSelector("timePickerText")).eq(0).type("23:58");
+
+      // set end time
+      cy.get(getSelectionSelector("timePickerText"))
+        .eq(1)
+        .clear()
+        .type("23:59");
+
+      cy.contains("The selected dates and times are in the future.");
 
       cy.get(getSelectionSelector("setStaticRangeButton")).should(
         "be.disabled"
@@ -133,8 +174,8 @@ describe("requesting static historic time range", () => {
       cy.get(getSelectionSelector("setStaticRangeButton")).click();
 
       cy.wait("@" + alias).then((xhr: any) => {
-        const startDate = getDate(currentDate, startDay, startHour);
-        const endDate = getDate(currentDate, endDay, endHour, 1);
+        const startDate = getDate(new Date(), startDay, startHour);
+        const endDate = getDate(new Date(), endDay, endHour, 1);
         assertStaticRangeRequest(
           xhr.url,
           startDate,
