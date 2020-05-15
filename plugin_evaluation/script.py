@@ -9,7 +9,7 @@ from plugin_evaluation.utils.user_interface import DoneStatus, show_bar
 
 database_id = "momentum"
 workload_execution_time = 10
-plugin = "Clustering"
+plugin = "Compression"
 benchmark = "tpch_0_1"
 
 metrics = [
@@ -19,6 +19,7 @@ metrics = [
     "cpu_process_usage",
     "footprint",
     "detailed latency",
+    "ram usage",
 ]
 
 #############################################################

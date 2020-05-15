@@ -101,13 +101,14 @@ def plot_plugin_log_table(plugin_logs: List):
         for plugin_log in plugin_logs
     ]
     collabel = ("id", "timestamp", "reporter", "message")
-    ax.table(
-        cellText=rows,
-        colWidths=[0.1, 0.2, 0.2, 0.5],
-        colLabels=collabel,
-        loc="center",
-        colLoc="center",
-    )
+    if len(plugin_logs) > 0:
+        ax.table(
+            cellText=rows,
+            colWidths=[0.1, 0.2, 0.2, 0.5],
+            colLabels=collabel,
+            loc="center",
+            colLoc="center",
+        )
 
-    plt.savefig(f"{absolute_report_directory_path}/report/plugin_log.png", dpi=300)
+        plt.savefig(f"{absolute_report_directory_path}/report/plugin_log.png", dpi=300)
     plt.close(fig)

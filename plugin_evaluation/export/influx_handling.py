@@ -65,6 +65,32 @@ def get_metric_data(
     return list(result[table_name, None])
 
 
+def get_ram_usage(
+    table_name: str,
+    column_name: str,
+    database: str,
+    startts: int,
+    endts: int,
+    parameter=None,
+):
+    """Get metric data for provided time range."""
+    query: str = """SELECT (total_memory - available_memory) AS used_memory
+        FROM system_data
+        WHERE time >= $startts
+        AND time < $endts"""
+
+    client = InfluxDBClient(STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD)
+    result = client.query(
+        query,
+        database=database,
+        bind_params={"startts": startts, "endts": endts},
+        epoch=True,
+    )
+    client.close()
+
+    return list(result[table_name, None])
+
+
 def get_detailed_latency_information(
     table_name: str,
     column_name: str,

@@ -5,6 +5,7 @@ from plugin_evaluation.export.influx_handling import (
     get_metric_data,
     get_metric_data_with_fill,
     get_query_latency,
+    get_ram_usage,
 )
 from plugin_evaluation.export.plot_handling import plot_bar_chart, plot_line_chart
 from plugin_evaluation.export.points_handling import (
@@ -55,6 +56,16 @@ config = {
         "y_label": "% usage",
         "influx_function": get_metric_data,
         "points_function": default_function,
+        "plot_function": plot_line_chart,
+        "path": "",
+    },
+    "ram usage": {
+        "table_name": "system_data",
+        "column_name": "used_memory",
+        "x_label": "Time",
+        "y_label": "MB",
+        "influx_function": get_ram_usage,
+        "points_function": ns_to_ms,
         "plot_function": plot_line_chart,
         "path": "",
     },
