@@ -1,6 +1,7 @@
 import { Ref, SetupContext, computed } from "@vue/composition-api";
 import { Metric } from "@/types/metrics";
 import { PageName } from "@/types/views";
+import { useFormatting } from "@/meta/formatting";
 
 export function useSelectionHandling(
   context: SetupContext,
@@ -19,12 +20,15 @@ export function useSelectionHandling(
   return { selectedMetrics, selectedDatabases };
 }
 
-export function useSelectableItem(
-  context: SetupContext
-): {
+export interface UseSelectableItem {
   handleSelect: <T>(id: T) => void;
   handleUnSelect: <T>(id: T) => void;
-} {
+  truncateItemTitle: (title: string) => string;
+}
+
+export function useSelectableItem(context: SetupContext): UseSelectableItem {
+  const { trimString } = useFormatting();
+
   function handleUnSelect<T>(id: T): void {
     context.emit("toggleSelected", id, false);
   }
@@ -32,5 +36,9 @@ export function useSelectableItem(
     context.emit("toggleSelected", id, true);
   }
 
-  return { handleSelect, handleUnSelect };
+  function truncateItemTitle(title: string): string {
+    return trimString(title, 20);
+  }
+
+  return { handleSelect, handleUnSelect, truncateItemTitle };
 }

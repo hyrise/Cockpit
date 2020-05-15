@@ -44,7 +44,7 @@ services:
       - "5000:5000"
 
   hyrise:
-    image: hyrise:bensk1_multithreaded
+    image: hyrise:bp1920
     build: 
       context: .
       dockerfile: ./hyrise/Dockerfile
