@@ -234,7 +234,7 @@ def handle_plugin_log(plugin_logs: List):
     """Handle plugin log."""
     return [
         {
-            "id": index,
+            "id": index + 1,
             "timestamp": datetime.fromtimestamp(int(plugin_log["timestamp"]) / 1_000),
             "reporter": plugin_log["reporter"],
             "message": plugin_log["message"],

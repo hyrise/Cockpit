@@ -2,6 +2,7 @@
 from pathlib import Path
 from typing import Dict, List
 
+import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.font_manager import FontProperties
@@ -17,6 +18,7 @@ def plot_line_chart(
     y_label: str,
     title: str,
     path: str,
+    plugin_logs: List,
 ):
     """Plot line chart to file."""
     fig = figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
@@ -39,10 +41,39 @@ def plot_line_chart(
             color=colors[index % len(colors)],
             label=f"{metric_name}",
         )
+
+    ######### Plugin Logs ###### # noqa
+
+    log_color = "lime"
+    text_color = "limegreen"
+
+    logs_timestamps = [plugin_log["timestamp"] for plugin_log in plugin_logs]
+
+    plt.plot_date(
+        logs_timestamps, np.zeros(len(logs_timestamps)), marker=10, color=log_color
+    )
+
+    for plugin_log in plugin_logs:
+        plt.annotate(
+            str(plugin_log["id"]),
+            xy=(mdates.date2num(plugin_log["timestamp"]), 0.3),
+            color=text_color,
+        )
+        plt.axvline(
+            plugin_log["timestamp"],
+            color=log_color,
+            linestyle="--",
+            linewidth=1,
+            alpha=0.7,
+        )
+
+    #######################
+
     plt.ylabel(f"{y_label}")
     plt.xlabel(f"{x_label}")
     plt.legend(loc="upper right")
 
+    ####### Statistics ######## # noqa
     rows = [
         ["%.3f" % func(values) for metric, values in metric_values.items()]
         for func in (np.amax, np.mean, np.amin)
@@ -57,13 +88,20 @@ def plot_line_chart(
         bbox=[0, -0.29, 1, 0.17],
     )
     plt.subplots_adjust(left=0.2, bottom=0.2)
+    ##########################
 
     plt.savefig(f"{absolute_report_directory_path}/report/{path}{title}.png", dpi=300)
     plt.close(fig)
 
 
 def plot_bar_chart(
-    labels: List, metric_values: List, x_label: str, y_label: str, title: str, path: str
+    labels: List,
+    metric_values: List,
+    x_label: str,
+    y_label: str,
+    title: str,
+    path: str,
+    plugin_logs: List,
 ):
     """Plot line chart to file."""
     max_value = np.amax(metric_values)

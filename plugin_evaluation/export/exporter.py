@@ -14,6 +14,19 @@ from plugin_evaluation.export.points_handling import handle_plugin_log
 class Exporter:
     """Exports time series data to PDF."""
 
+    def __init__(self):
+        """Clear folder structure."""
+        self.plugin_logs = []
+        absolute_plugin_evaluation_path: str = str(
+            Path(__file__).parent.parent.absolute()
+        )
+        self._reset_directory(f"{absolute_plugin_evaluation_path}/report")
+        self._reset_directory(f"{absolute_plugin_evaluation_path}/report/Footprint")
+        self._reset_directory(
+            f"{absolute_plugin_evaluation_path}/report/Access frequency"
+        )
+        self._reset_directory(f"{absolute_plugin_evaluation_path}/report/Query latency")
+
     def _clear_directory(self, directory_path: str):
         """Clear directory from files."""
         files_to_be_deleted = [
@@ -30,19 +43,6 @@ class Exporter:
             self._clear_directory(directory_path)
         else:
             mkdir(directory_path)
-
-    def __init__(self):
-        """Clear folder structure."""
-        self.plugin_logs = None
-        absolute_plugin_evaluation_path: str = str(
-            Path(__file__).parent.parent.absolute()
-        )
-        self._reset_directory(f"{absolute_plugin_evaluation_path}/report")
-        self._reset_directory(f"{absolute_plugin_evaluation_path}/report/Footprint")
-        self._reset_directory(
-            f"{absolute_plugin_evaluation_path}/report/Access frequency"
-        )
-        self._reset_directory(f"{absolute_plugin_evaluation_path}/report/Query latency")
 
     def initialize_plugin_log(self, database: str, startts: int, endts: int):
         """Initialize plugin_log_values."""
@@ -75,7 +75,7 @@ class Exporter:
         )
         x_values, y_values, title = points_function(points, column_name, parameter)  # type: ignore
 
-        plot_function(x_values, y_values, x_label, y_label, title, path)  # type: ignore
+        plot_function(x_values, y_values, x_label, y_label, title, path, self.plugin_logs)  # type: ignore
 
     def plot_metric_for_benchmark(
         self, metric: str, benchmark: str, database_id: str, startts: int, endts: int
