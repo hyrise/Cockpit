@@ -238,6 +238,7 @@ def handle_plugin_log(plugin_logs: List):
             "timestamp": datetime.fromtimestamp(int(plugin_log["timestamp"]) / 1_000),
             "reporter": plugin_log["reporter"],
             "message": plugin_log["message"],
+            "level": plugin_log["level"],
         }
         for index, plugin_log in enumerate(plugin_logs)
     ]

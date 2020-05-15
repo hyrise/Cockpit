@@ -92,23 +92,23 @@ def plot_plugin_log_table(plugin_logs: List):
     ax.xaxis.set_visible(False)
     ax.yaxis.set_visible(False)
 
-    # Table from Ed Smith answer
     rows = [
         (
             plugin_log["id"],
             plugin_log["timestamp"],
             plugin_log["reporter"],
+            plugin_log["level"],
             plugin_log["message"],
         )
         for plugin_log in plugin_logs
     ]
     if len(plugin_logs) > 0:
         colcolor = "turquoise"
-        collabel = ("id", "timestamp", "reporter", "message")
+        collabel = ("ID", "Timestamp", "Reporter", "Level", "Message")
         table = ax.table(
             cellText=rows,
-            colWidths=[0.1, 0.2, 0.2, 0.5],
-            colColours=[colcolor, colcolor, colcolor, colcolor],
+            colWidths=[0.05, 0.2, 0.1, 0.1, 0.5],
+            colColours=[colcolor, colcolor, colcolor, colcolor, colcolor],
             colLabels=collabel,
             loc="center",
             colLoc="center",
@@ -116,10 +116,10 @@ def plot_plugin_log_table(plugin_logs: List):
         table.scale(1.0, 1.5)
 
         titel_color = "white"
-        column_alignments = ["center", "center", "center", "left"]
+        column_alignments = ["center", "center", "center", "center", "left"]
         cells = table.properties()["celld"]
 
-        for i in range(4):
+        for i in range(5):
             cells[0, i].get_text().set_color(titel_color)
             cells[0, i].set_text_props(fontproperties=FontProperties(weight="bold"))
 
