@@ -87,11 +87,10 @@ export default defineComponent({
     watch(
       () => props.initialWeights,
       () => {
-        weights.value = [];
-        Object.entries(props.initialWeights)
+        weights.value = Object.entries(props.initialWeights)
           .sort()
           .map(([name, value]) => {
-            weights.value.push({ name: name, value: value });
+            return { name: name, value: value };
           });
       }
     );
