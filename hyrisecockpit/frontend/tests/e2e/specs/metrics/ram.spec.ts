@@ -24,7 +24,7 @@ describe("visiting the overview page", () => {
     cy.setupData("system").then((xhr: any) => {
       data = {};
       xhr.response.body.forEach((entry: any) => {
-        data[entry.id] = entry.system_data[0].system_data.memory.percent;
+        data[entry.id] = 100 - entry.system_data[0].system_data.memory.percent;
       });
     });
     waitForChartRender();
@@ -69,7 +69,7 @@ describe("visiting the comparison page", () => {
     cy.setupData("system").then((xhr: any) => {
       data = {};
       xhr.response.body.forEach((entry: any) => {
-        data[entry.id] = entry.system_data[0].system_data.memory.percent;
+        data[entry.id] = 100 - entry.system_data[0].system_data.memory.percent;
       });
     });
     waitForChartRender();

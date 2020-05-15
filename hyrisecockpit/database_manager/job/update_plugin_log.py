@@ -26,7 +26,7 @@ def update_plugin_log(
         return
 
     plugin_log = [
-        (row["timestamp"], row["reporter"], row["message"])
+        (row["timestamp"], row["reporter"], row["message"], row["log_level"])
         for row in log_df.to_dict("index").values()
     ]
 

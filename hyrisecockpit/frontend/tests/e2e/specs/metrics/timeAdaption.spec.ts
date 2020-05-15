@@ -48,6 +48,8 @@ describe("requesting different time ranges", () => {
       cy.visit(getRoute("comparison"));
       cy.wait("@" + getGetAlias(comparisonRequest));
       clickElement(getSelectionSelector("selectionListButton"));
+      cy.get("div[role=tab]").eq(1).click();
+
       cy.get(getSelectionSelector("selectionList")).within(() => {
         cy.get(getSelectionSelector("historicRangeSelection")).click({
           force: true,
@@ -69,6 +71,7 @@ describe("requesting different time ranges", () => {
       cy.visit(getRoute("comparison"));
       cy.wait("@" + getGetAlias(comparisonRequest));
       clickElement(getSelectionSelector("selectionListButton"));
+      cy.get("div[role=tab]").eq(1).click();
 
       cy.get(getSelectionSelector("selectionList")).within(() => {
         cy.get(getSelectionSelector("precisionSelection")).click({
@@ -94,6 +97,8 @@ describe("requesting different time ranges", () => {
       cy.visit(getRoute("overview"));
       cy.wait("@" + getGetAlias(overviewRequest));
       clickElement(getSelectionSelector("selectionListButton"));
+      cy.get("div[role=tab]").eq(1).click();
+
       cy.get(getSelectionSelector("selectionList")).within(() => {
         cy.get(getSelectionSelector("historicRangeSelection")).click({
           force: true,
@@ -115,6 +120,7 @@ describe("requesting different time ranges", () => {
       cy.visit(getRoute("overview"));
       cy.wait("@" + getGetAlias(overviewRequest));
       clickElement(getSelectionSelector("selectionListButton"));
+      cy.get("div[role=tab]").eq(1).click();
 
       cy.get(getSelectionSelector("selectionList")).within(() => {
         cy.get(getSelectionSelector("precisionSelection")).click({
@@ -140,6 +146,8 @@ describe("requesting different time ranges", () => {
       cy.visit(getRoute("workloadMonitoring"));
       cy.wait("@" + getGetAlias(workloadRequest));
       clickElement(getSelectionSelector("selectionListButton"));
+      cy.get("div[role=tab]").eq(1).click();
+
       cy.get(getSelectionSelector("selectionList")).within(() => {
         cy.get(getSelectionSelector("historicRangeSelection")).click({
           force: true,
@@ -161,6 +169,7 @@ describe("requesting different time ranges", () => {
       cy.visit(getRoute("workloadMonitoring"));
       cy.wait("@" + getGetAlias(workloadRequest));
       clickElement(getSelectionSelector("selectionListButton"));
+      cy.get("div[role=tab]").eq(1).click();
 
       cy.get(getSelectionSelector("selectionList")).within(() => {
         cy.get(getSelectionSelector("precisionSelection")).click({

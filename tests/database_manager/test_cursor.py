@@ -97,23 +97,28 @@ class TestCursor:
     @mark.parametrize(
         "queries",
         [
-            [(123, "CompressionPlugin", "Initialized!")],
+            [(123, "CompressionPlugin", "Initialized!", "Info")],
             [
-                (123, "CompressionPlugin", "Initialized!"),
+                (123, "CompressionPlugin", "Initialized!", "Info"),
                 (
                     456,
                     "CompressionPlugin",
                     "No optimization possible with given parameters!",
+                    "Error",
                 ),
             ],
         ],
     )
-    def test_logs_plugin_log(self, queries: List[Tuple[int, str, str]]):
+    def test_logs_plugin_log(self, queries: List[Tuple[int, str, str, str]]):
         """Test queries logging."""
         expected_points = [
             {
                 "measurement": "plugin_log",
-                "tags": {"timestamp": query[0], "reporter": query[1]},
+                "tags": {
+                    "timestamp": query[0],
+                    "reporter": query[1],
+                    "level": query[3],
+                },
                 "fields": {"message": query[2]},
                 "time": query[0],
             }
