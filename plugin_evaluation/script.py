@@ -50,6 +50,11 @@ sleep(1.0)
 with DoneStatus(f"Activate {plugin} plugin..."):  # noqa
     response = cockpit.backend.activate_plugin(database_id, plugin)  # noqa
 
+with DoneStatus(f"Setting {plugin} plugin..."):  # noqa
+    response = cockpit.backend.set_plugin_settings(
+        database_id, "Plugin::Compression::MemoryBudget", "300000000"
+    )  # noqa
+
 show_bar("Executing a workload...", workload_execution_time)
 
 endts = time_ns()
@@ -78,12 +83,12 @@ with DoneStatus("Export..."):
     exporter.initialize_plugin_log(database_id, startts, endts)
     for metric in metrics:
         exporter.plot_metric(metric, database_id, startts, endts)
-    # exporter.plot_metric_for_benchmark(  # noqa
-    #     "table access frequency", benchmark, database_id, startts, endts  # noqa
-    # )  # noqa
-    # exporter.plot_metric_for_benchmark(  # noqa
-    #     "table footprint", benchmark, database_id, startts, endts  # noqa
-    # )  # noqa
-    # exporter.plot_query_metric_for_benchmark(  # noqa
-    #     "query latency", benchmark, database_id, startts, endts  # noqa
-    # )  # noqa
+    exporter.plot_metric_for_benchmark(  # noqa
+        "table access frequency", benchmark, database_id, startts, endts  # noqa
+    )  # noqa
+    exporter.plot_metric_for_benchmark(  # noqa
+        "table footprint", benchmark, database_id, startts, endts  # noqa
+    )  # noqa
+    exporter.plot_query_metric_for_benchmark(  # noqa
+        "query latency", benchmark, database_id, startts, endts  # noqa
+    )  # noqa

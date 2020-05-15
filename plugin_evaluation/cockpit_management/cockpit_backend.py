@@ -139,6 +139,26 @@ class CockpitBackend:
         url = f"http://{self._backend_host}:{self._backend_port}/control/plugin_log"
         return get(url, timeout=REQUEST_TIMEOUT).json()
 
+    def get_activated_plugins(self):
+        """Get activated plugins."""
+        url = f"http://{self._backend_host}:{self._backend_port}/control/plugin"
+        return get(url, timeout=REQUEST_TIMEOUT)
+
+    def get_plugin_settings(self):
+        """Get plugin settings."""
+        url = (
+            f"http://{self._backend_host}:{self._backend_port}/control/plugin_settings"
+        )
+        return get(url, timeout=REQUEST_TIMEOUT)
+
+    def set_plugin_settings(self, database_id: str, setting_name: str, value: str):
+        """Set plugin settings."""
+        body = {"id": database_id, "name": setting_name, "value": value}
+        url = (
+            f"http://{self._backend_host}:{self._backend_port}/control/plugin_settings"
+        )
+        return post(url, json=body, timeout=REQUEST_TIMEOUT)
+
     def get_status(self):
         """Get status."""
         url = f"http://{self._backend_host}:{self._backend_port}/monitor/status"
