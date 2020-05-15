@@ -10,10 +10,18 @@ import {
   workloadMetrics,
 } from "@/types/metrics";
 import { useSorting } from "@/meta/formatting";
+import { getMetricMetadata } from "@/meta/metrics";
+
+export type StaticRange = {
+  startDate: Date;
+  endDate: Date;
+  precision: number;
+};
 
 export function useSelectionController(): SelectionController {
   const { sortElements } = useSorting();
 
+  /* selected data and times */
   const availableDatabases = computed(
     () =>
       Vue.prototype.$databaseController.availableDatabasesById.value as string[]
@@ -35,12 +43,14 @@ export function useSelectionController(): SelectionController {
   });
   const selectedRange = ref(30);
   const selectedPrecision = ref(1);
+  const selectedStaticRange = ref<StaticRange | null>(null);
 
   const page = ref<PageName>("");
 
   const selectedMetrics = computed(() => pageMetrics[page.value] || []);
   const selectedDatabases = computed(() => pageDatabases[page.value] || []);
 
+  // initialize databases
   watch(
     () => availableDatabases.value,
     () => {
@@ -50,10 +60,40 @@ export function useSelectionController(): SelectionController {
     }
   );
 
+  // reset page and range data
   eventBus.$on("PAGE_CHANGED", (newPage: PageName) => {
     page.value = newPage;
   });
 
+  eventBus.$on("STATIC_RANGE_CHANGED", (newRange: StaticRange | null) => {
+    selectedStaticRange.value = newRange;
+    setMetrics(availableMetrics, !!newRange);
+    setMetrics(pageMetrics, !!newRange);
+  });
+
+  /* filter historic metrics if static range applied, reset if not */
+  function setMetrics(store: Record<PageName, Metric[]>, value: boolean): void {
+    if (value) {
+      Object.keys(store).forEach((key) => {
+        store[key as PageName] = getPageMetrics(key as PageName).filter(
+          (metric) => getMetricMetadata(metric).historic
+        );
+      });
+    } else {
+      Object.keys(store).forEach((key) => {
+        store[key as PageName] = getPageMetrics(key as PageName);
+      });
+    }
+  }
+
+  function getPageMetrics(page: PageName): Metric[] {
+    if (page === "comparison") return comparisonMetrics;
+    if (page === "overview") return overviewMetrics;
+    if (page === "workload") return workloadMetrics;
+    return [];
+  }
+
+  // reset databases and metric data for selected page
   pages.forEach((page) => {
     // database events
     eventBus.$on(
@@ -100,5 +140,6 @@ export function useSelectionController(): SelectionController {
     selectedRange,
     pageDatabases,
     pageMetrics,
+    selectedStaticRange,
   };
 }

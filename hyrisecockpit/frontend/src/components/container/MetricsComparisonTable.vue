@@ -3,20 +3,26 @@
     <div
       class="metrics-column"
       :style="databaseFlex"
-      v-for="database in selectedDatabases"
-      :key="database"
+      v-for="database in databases"
+      :key="database.id"
+      :color="database.color"
     >
       <div v-for="metric in selectedMetrics" :key="metric">
         <metric-tile
           class="metric-card"
           :metric="metric"
-          :tile-database="database"
-          :selected-databases="[database]"
+          :tile-database="database.id"
+          :selected-databases="[database.id]"
           :show-details="showDetails"
-          :graph-id="`${metric}-${database}`"
+          :graph-id="`${metric}-${database.id}`"
           :max-chart-width="maxChartWidth"
         />
       </div>
+      <v-card tile class="column-bottom-border" :color="database.color"
+        ><v-card-text class="white--text">{{
+          database.id
+        }}</v-card-text></v-card
+      >
     </div>
   </div>
 </template>
@@ -34,10 +40,17 @@ import {
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
 import { useDatabaseFlex } from "../../meta/components";
 import MetricTile from "@/components/container/MetricTile.vue";
+import { Database } from "@/types/database";
+import { useUpdatingDatabases } from "@/meta/databases";
+
+interface Props {
+  selectedDatabases: string[];
+}
 
 interface Data {
   databaseFlex: Readonly<Ref<Object>>;
   maxChartWidth: Readonly<Ref<number>>;
+  databases: Ref<readonly Database[]>;
 }
 
 export default defineComponent({
@@ -62,6 +75,7 @@ export default defineComponent({
     return {
       ...useDatabaseFlex(props),
       maxChartWidth,
+      ...useUpdatingDatabases(props, context),
     };
   },
 });
@@ -70,14 +84,13 @@ export default defineComponent({
 .metrics-table {
   display: flex;
   flex-direction: row;
-  margin-top: 6px;
 }
 .metrics-column {
-  margin-right: 4px;
   display: flex;
   flex-direction: column;
 }
-.metric-card {
-  margin-top: 4px;
+.column-bottom-border {
+  margin: 0px 6px 6px 6px;
+  border-radius: 0px 0px 4px 4px;
 }
 </style>

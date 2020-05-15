@@ -75,7 +75,9 @@ export function assertDataRequest(url: string, range: number): void {
   const split = url.split("=");
   const precision = parseInt(split[split.length - 1], 10);
 
-  expect(endTime - startTime).to.eq((range + 3) * Math.pow(10, 9) + precision);
+  expect(endTime - startTime).to.eq(
+    range * Math.pow(10, 9) + Math.max(precision, 3 * Math.pow(10, 9))
+  );
 }
 
 export function assertPrecisionRequest(url: string, range: number): void {
