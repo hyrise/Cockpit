@@ -134,6 +134,7 @@ function useWorkloadAction(
 ): WorkloadAction {
   const frequency = ref<number>(200);
   const {
+    getLoadedWorkloadData,
     startWorker,
     stopWorker,
     getWorkload,
@@ -168,9 +169,16 @@ function useWorkloadAction(
         ].selected = true;
       });
       frequency.value = response.data[0].frequency;
-      frequency.value > 0
-        ? (actions.start.active = true)
-        : (actions.pause.active = true);
+      getLoadedWorkloadData().then((response: any) => {
+        let workersStopped = Object.values(response.data).some(
+          (database: any) => database.worker_pool_status === "closed"
+        );
+        if (!workersStopped) {
+          frequency.value > 0
+            ? (actions.start.active = true)
+            : (actions.pause.active = true);
+        }
+      });
     }
   });
 
