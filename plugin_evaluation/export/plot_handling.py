@@ -56,7 +56,7 @@ def plot_line_chart(
     for plugin_log in plugin_logs:
         plt.annotate(
             str(plugin_log["id"]),
-            xy=(mdates.date2num(plugin_log["timestamp"]), 0.3),
+            xy=(mdates.date2num(plugin_log["timestamp"]), 0.02 * maximum_value),
             color=text_color,
         )
         plt.axvline(
