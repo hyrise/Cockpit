@@ -2,7 +2,7 @@
   <div>
     <metric-detailed-view>
       <template #header>
-        Storage
+        Data Size - Overview
       </template>
       <template #content>
         <Treemap
