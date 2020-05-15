@@ -25,22 +25,22 @@
           </div>
           <div class="top-line"></div>
           <v-slider
-            v-model="weight.weight"
+            v-model="weight.value"
             thumb-label
             thumb-size="24"
             min="0"
             max="200"
             vertical
             class="query-slider"
-            @click="$emit('change', weight.name, weight.weight)"
+            @click="$emit('change', weight.name, weight.value)"
           />
           <div class="bottom-line"></div>
           <v-text-field
-            v-model="weight.weight"
+            v-model="weight.value"
             class="query-text-field"
             dense
             single-line
-            @change="$emit('change', weight.name, weight.weight)"
+            @change="$emit('change', weight.name, weight.value)"
           />
         </div>
       </div>
@@ -65,9 +65,10 @@ interface Props {
 }
 
 interface Data {
-  weights: Ref<{ name: string; weight: number }[]>;
+  weights: Ref<Weight[]>;
   getDisplayedWorkload: (workload: Workload) => void;
 }
+type Weight = { name: string; value: number };
 
 export default defineComponent({
   name: "Equalizer",
@@ -82,15 +83,15 @@ export default defineComponent({
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const weights = ref<{ name: string; weight: number }[]>([]);
+    const weights = ref<Weight[]>([]);
     watch(
       () => props.initialWeights,
       () => {
         weights.value = [];
         Object.entries(props.initialWeights)
           .sort()
-          .forEach(([name, weight]: any) => {
-            weights.value.push({ name: name, weight: weight });
+          .map(([name, value]) => {
+            weights.value.push({ name: name, value: value });
           });
       }
     );

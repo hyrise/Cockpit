@@ -1,4 +1,4 @@
-import { clickElement } from "../helpers";
+/* import { clickElement } from "../helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
 import { useBackendMock } from "../../setup/backendMock";
 import {
@@ -232,3 +232,4 @@ describe("opening workload generation", () => {
     });
   });
 });
+ */
