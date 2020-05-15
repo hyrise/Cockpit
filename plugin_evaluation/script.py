@@ -8,7 +8,7 @@ from plugin_evaluation.utils.figlet import intro
 from plugin_evaluation.utils.user_interface import DoneStatus, show_bar
 
 database_id = "momentum"
-workload_execution_time = 100
+workload_execution_time = 10
 plugin = "Compression"
 benchmark = "tpch_0_1"
 
@@ -44,8 +44,8 @@ with DoneStatus("Starting a workload..."):
     cockpit.backend.start_workload(benchmark, 300)
     cockpit.backend.wait_for_unblocked_status()
 
-sleep(1.0)
 startts = time_ns()
+sleep(1.0)
 
 with DoneStatus(f"Activate {plugin} plugin..."):  # noqa
     response = cockpit.backend.activate_plugin(database_id, plugin)  # noqa
@@ -78,12 +78,12 @@ with DoneStatus("Export..."):
     exporter.initialize_plugin_log(database_id, startts, endts)
     for metric in metrics:
         exporter.plot_metric(metric, database_id, startts, endts)
-    exporter.plot_metric_for_benchmark(  # noqa
-        "table access frequency", benchmark, database_id, startts, endts  # noqa
-    )  # noqa
-    exporter.plot_metric_for_benchmark(  # noqa
-        "table footprint", benchmark, database_id, startts, endts  # noqa
-    )  # noqa
-    exporter.plot_query_metric_for_benchmark(  # noqa
-        "query latency", benchmark, database_id, startts, endts  # noqa
-    )  # noqa
+    # exporter.plot_metric_for_benchmark(  # noqa
+    #     "table access frequency", benchmark, database_id, startts, endts  # noqa
+    # )  # noqa
+    # exporter.plot_metric_for_benchmark(  # noqa
+    #     "table footprint", benchmark, database_id, startts, endts  # noqa
+    # )  # noqa
+    # exporter.plot_query_metric_for_benchmark(  # noqa
+    #     "query latency", benchmark, database_id, startts, endts  # noqa
+    # )  # noqa

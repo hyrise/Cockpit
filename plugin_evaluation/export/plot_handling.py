@@ -4,6 +4,7 @@ from typing import Dict, List
 
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.font_manager import FontProperties
 from matplotlib.pyplot import figure
 
 absolute_report_directory_path = str(Path(__file__).parent.parent.absolute())
@@ -87,6 +88,7 @@ def plot_plugin_log_table(plugin_logs: List):
     """Plot plugin log table."""
     fig, ax = plt.subplots()
 
+    ax.axis("off")
     ax.xaxis.set_visible(False)
     ax.yaxis.set_visible(False)
 
@@ -100,15 +102,30 @@ def plot_plugin_log_table(plugin_logs: List):
         )
         for plugin_log in plugin_logs
     ]
-    collabel = ("id", "timestamp", "reporter", "message")
     if len(plugin_logs) > 0:
-        ax.table(
+        colcolor = "turquoise"
+        collabel = ("id", "timestamp", "reporter", "message")
+        table = ax.table(
             cellText=rows,
             colWidths=[0.1, 0.2, 0.2, 0.5],
+            colColours=[colcolor, colcolor, colcolor, colcolor],
             colLabels=collabel,
             loc="center",
             colLoc="center",
         )
+        table.scale(1.0, 1.5)
+
+        titel_color = "white"
+        column_alignments = ["center", "center", "center", "left"]
+        cells = table.properties()["celld"]
+
+        for i in range(4):
+            cells[0, i].get_text().set_color(titel_color)
+            cells[0, i].set_text_props(fontproperties=FontProperties(weight="bold"))
+
+        for column_index, column_alignment in enumerate(column_alignments):
+            for i in range(1, len(plugin_logs) + 1):
+                cells[i, column_index]._loc = column_alignment
 
         plt.savefig(f"{absolute_report_directory_path}/report/plugin_log.png", dpi=300)
     plt.close(fig)
