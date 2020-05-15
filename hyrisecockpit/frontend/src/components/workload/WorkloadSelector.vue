@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-0 pt-0">
+  <div>
     <v-checkbox
       v-for="workload in availableWorkloads"
       v-model="workloads"
@@ -11,7 +11,7 @@
       @change="$emit('change', workload)"
     >
     </v-checkbox>
-  </v-container>
+  </div>
 </template>
 <script lang="ts">
 import {
@@ -55,11 +55,13 @@ export default defineComponent({
       () => props.workloadData,
       () => {
         workloads.value = [];
-        Object.entries(props.workloadData).forEach((workload: any) => {
-          if (workload[1].selected) {
-            workloads.value.push(workload[0]);
+        Object.entries(props.workloadData).map(
+          ([workload, { selected }]: any) => {
+            if (selected) {
+              workloads.value.push(workload);
+            }
           }
-        });
+        );
       }
     );
     return {

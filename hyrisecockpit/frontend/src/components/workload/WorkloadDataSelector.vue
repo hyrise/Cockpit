@@ -53,11 +53,13 @@ export default defineComponent({
       () => props.workloadData,
       () => {
         loadedWorkloads.value = [];
-        Object.entries(props.workloadData).forEach((workload: any) => {
-          if (workload[1].loaded) {
-            loadedWorkloads.value.push(workload[0]);
+        Object.entries(props.workloadData).map(
+          ([workload, { loaded }]: any) => {
+            if (loaded) {
+              loadedWorkloads.value.push(workload);
+            }
           }
-        });
+        );
       }
     );
     return {
