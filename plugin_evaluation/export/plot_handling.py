@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.font_manager import FontProperties
 from matplotlib.pyplot import figure
+from matplotlib.transforms import Bbox
 
 absolute_report_directory_path = str(Path(__file__).parent.parent.absolute())
 
@@ -124,7 +125,7 @@ def plot_bar_chart(
 
 def plot_plugin_log_table(plugin_logs: List):
     """Plot plugin log table."""
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(12, 6))
 
     ax.axis("off")
     ax.xaxis.set_visible(False)
@@ -141,16 +142,18 @@ def plot_plugin_log_table(plugin_logs: List):
         for plugin_log in plugin_logs
     ]
     if len(plugin_logs) > 0:
-        colcolor = "turquoise"
+        colcolor = "deepskyblue"
         collabel = ("ID", "Timestamp", "Reporter", "Level", "Message")
         table = ax.table(
             cellText=rows,
-            colWidths=[0.05, 0.2, 0.1, 0.1, 0.5],
+            colWidths=[0.03, 0.12, 0.08, 0.06, 0.5],
             colColours=[colcolor, colcolor, colcolor, colcolor, colcolor],
             colLabels=collabel,
             loc="center",
             colLoc="center",
         )
+        table.auto_set_font_size(False)
+        table.set_fontsize(4)
         table.scale(1.0, 1.5)
 
         titel_color = "white"
@@ -159,11 +162,26 @@ def plot_plugin_log_table(plugin_logs: List):
 
         for i in range(5):
             cells[0, i].get_text().set_color(titel_color)
-            cells[0, i].set_text_props(fontproperties=FontProperties(weight="bold"))
+            cells[0, i].set_text_props(
+                fontproperties=FontProperties(weight="bold", size=7)
+            )
 
         for column_index, column_alignment in enumerate(column_alignments):
             for i in range(1, len(plugin_logs) + 1):
                 cells[i, column_index]._loc = column_alignment
+                cells[i, column_index].PAD = 0.01
 
-        plt.savefig(f"{absolute_report_directory_path}/report/plugin_log.png", dpi=300)
+        ##### Bounding Box ######### # noqa
+        plt.gcf().canvas.draw()
+        points = table.get_window_extent(plt.gcf()._cachedRenderer).get_points()
+        points[0, :] -= 10
+        points[1, :] += 10
+        nbbox = Bbox.from_extents(points / plt.gcf().dpi)
+        ############################ # noqa
+
+        plt.savefig(
+            f"{absolute_report_directory_path}/report/plugin_log.png",
+            dpi=300,
+            bbox_inches=nbbox,
+        )
     plt.close(fig)
