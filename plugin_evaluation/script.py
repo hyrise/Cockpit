@@ -8,7 +8,7 @@ from plugin_evaluation.utils.figlet import intro
 from plugin_evaluation.utils.user_interface import DoneStatus, show_bar
 
 database_id = "momentum"
-workload_execution_time = 10
+workload_execution_time = 50
 plugin = "Compression"
 benchmark = "tpch_0_1"
 
@@ -50,9 +50,11 @@ sleep(1.0)
 with DoneStatus(f"Activate {plugin} plugin..."):  # noqa
     response = cockpit.backend.activate_plugin(database_id, plugin)  # noqa
 
+sleep(1.0)
+
 with DoneStatus(f"Setting {plugin} plugin..."):  # noqa
     response = cockpit.backend.set_plugin_settings(
-        database_id, "Plugin::Compression::MemoryBudget", "300000000"
+        database_id, "Plugin::Compression::MemoryBudget", "50000000"
     )  # noqa
 
 show_bar("Executing a workload...", workload_execution_time)
