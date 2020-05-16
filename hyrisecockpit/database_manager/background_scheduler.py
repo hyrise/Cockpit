@@ -115,7 +115,7 @@ class BackgroundJobManager(object):
         self._update_plugin_log_job.remove()
         self._update_queue_length_job.remove()
         self._ping_hyrise_job.remove()
-        self._scheduler.shutdown()
+        self._scheduler.shutdown(wait=False)
 
     def load_tables(self, folder_name: str) -> bool:
         """Load tables."""
