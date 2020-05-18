@@ -9,7 +9,6 @@ from typing import Dict, List, Union
 from flask_restx import Namespace, Resource, fields
 
 from hyrisecockpit.api.app.shared import _get_active_databases, storage_connection
-from hyrisecockpit.plugins import available_plugins
 
 api = Namespace("control", description="Control multiple databases at once.")
 
@@ -23,14 +22,6 @@ model_database = api.model(
             example="hyrise-1",
         )
     },
-)
-
-
-modelhelper_plugin = fields.String(
-    title="Plugin name",
-    description="Used to identify a plugin.",
-    required=True,
-    example="Clustering",
 )
 
 model_plugin_log = api.clone(
@@ -73,20 +64,6 @@ model_plugin_log = api.clone(
         )
     },
 )
-
-model_get_all_plugins = api.model(
-    "Available Plugins", {"plugins": fields.List(modelhelper_plugin, required=True,)},
-)
-
-
-@api.route("/available_plugins")
-class AvailablePlugin(Resource):
-    """Get all available Plugins."""
-
-    @api.doc(model=model_get_all_plugins)
-    def get(self) -> List[str]:
-        """Return available plugins."""
-        return available_plugins
 
 
 @api.route("/plugin_log")

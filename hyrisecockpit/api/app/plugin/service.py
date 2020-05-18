@@ -2,16 +2,12 @@
 from typing import List, Union
 
 from hyrisecockpit.api.app.socket_manager import ManagerSocket
+from hyrisecockpit.plugins import available_plugins
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
-from .interface import (
-    DetailedPluginIDInterface,
-    DetailedPluginInterface,
-    PluginInterface,
-    PluginSettingInterface,
-    UpdatePluginSettingInterface,
-)
+from .interface import PluginInterface, UpdatePluginSettingInterface
+from .model import DetailedPlugin, DetailedPluginID, Plugin, PluginSetting
 
 
 class PluginService:
@@ -24,7 +20,7 @@ class PluginService:
             return socket.send_message(message)
 
     @classmethod
-    def get_all(cls) -> Union[List[DetailedPluginIDInterface], int]:
+    def get_all(cls) -> Union[List[DetailedPluginID], int]:
         """Get all Plugins from all databases."""
         response = cls._send_message_to_dbm(
             Request(header=Header(message="get plugins"), body={})
@@ -32,14 +28,14 @@ class PluginService:
         if response["header"]["status"] != 200:
             return response["header"]["status"]
         return [
-            DetailedPluginIDInterface(
+            DetailedPluginID(
                 id=database["id"],
                 plugins=(
                     [
-                        DetailedPluginInterface(
+                        DetailedPlugin(
                             name=plugin_name,
                             settings=[
-                                PluginSettingInterface(
+                                PluginSetting(
                                     name=plugin_setting["name"],
                                     value=plugin_setting["value"],
                                     description=plugin_setting["description"],
@@ -87,3 +83,8 @@ class PluginService:
                 body={"id": database_id, "update": interface},
             )
         )["header"]["status"]
+
+    @classmethod
+    def get_available_plugins(cls) -> List[Plugin]:
+        """Get all available Plugins."""
+        return [Plugin(name=name) for name in available_plugins]

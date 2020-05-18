@@ -6,11 +6,8 @@ from flask.wrappers import Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 
-from .interface import (
-    DetailedPluginIDInterface,
-    PluginInterface,
-    UpdatePluginSettingInterface,
-)
+from .interface import PluginInterface, UpdatePluginSettingInterface
+from .model import DetailedPluginID, Plugin
 from .schema import DetailedPluginIDSchema, PluginSchema, UpdatePluginSettingSchema
 from .service import PluginService
 
@@ -22,7 +19,7 @@ class PluginController(Resource):
     """Controller of Plugins."""
 
     @responds(schema=DetailedPluginIDSchema(many=True), api=api)
-    def get(self) -> List[DetailedPluginIDInterface]:
+    def get(self) -> List[DetailedPluginID]:
         """Get all Plugins from all databases."""
         response = PluginService.get_all()
         if isinstance(response, int):
@@ -67,3 +64,13 @@ class PluginIdController(Resource):
             return Response(status=status)
         else:
             raise ValueError()
+
+
+@api.route("/available")
+class AvailablePluginController(Resource):
+    """Controller of available Plugins."""
+
+    @responds(schema=PluginSchema(many=True), api=api)
+    def get(self) -> List[Plugin]:
+        """Get all available Plugins."""
+        return PluginService.get_available_plugins()

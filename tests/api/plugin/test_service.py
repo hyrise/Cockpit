@@ -9,6 +9,8 @@ from hyrisecockpit.api.app.plugin.interface import (
     PluginInterface,
     UpdatePluginSettingInterface,
 )
+from hyrisecockpit.api.app.plugin.model import DetailedPluginID
+from hyrisecockpit.api.app.plugin.schema import DetailedPluginIDSchema
 from hyrisecockpit.api.app.plugin.service import PluginService
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import get_response
@@ -83,7 +85,9 @@ class TestPluginService:
         result = service.get_all()
         assert not isinstance(result, int)
         assert isinstance(result, list)
-        assert result == expected
+        for i in result:
+            assert isinstance(i, DetailedPluginID)
+        assert DetailedPluginIDSchema(many=True).dump(result) == expected
 
     def test_doesnt_get_plugins_if_a_database_error_occurs(
         self, service: PluginService
@@ -108,7 +112,9 @@ class TestPluginService:
         result = service.get_all()
         assert not isinstance(result, int)
         assert isinstance(result, list)
-        assert result == expected
+        for i in result:
+            assert isinstance(i, DetailedPluginID)
+        assert DetailedPluginIDSchema(many=True).dump(result) == expected
 
     @mark.parametrize("status", [200, 400, 500])
     def test_doesnt_get_plugins_if_an_unexpected_error_occurs(
