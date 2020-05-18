@@ -8,15 +8,16 @@ from plugin_evaluation.utils.figlet import intro
 from plugin_evaluation.utils.user_interface import DoneStatus, show_bar
 
 database_id = "momentum"
-workload_execution_time = 30
+workload_execution_time = 15
 plugin = "Compression"
 benchmark = "tpch_0_1"
 aggregation_interval = 5
+tag = "Compression"
 
 plugin_settings = {
     "database_id": database_id,
     "setting_name": "Plugin::Compression::MemoryBudget",
-    "value": "50000000",
+    "value": "500000000",
 }
 
 metrics = [
@@ -34,7 +35,7 @@ metrics = [
 
 print(intro)
 
-exporter = Exporter()  # type: ignore
+exporter = Exporter(tag)
 cockpit = Cockpit()  # type: ignore
 cockpit.start()
 

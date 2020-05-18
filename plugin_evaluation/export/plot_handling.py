@@ -125,7 +125,7 @@ def plot_bar_chart(
     plt.close(fig)
 
 
-def plot_plugin_log_table(plugin_logs: List):
+def plot_plugin_log_table(plugin_logs: List, folder_name: str):
     """Plot plugin log table."""
     fig, ax = plt.subplots(figsize=(12, 6))
 
@@ -182,7 +182,7 @@ def plot_plugin_log_table(plugin_logs: List):
         ############################ # noqa
 
         plt.savefig(
-            f"{absolute_report_directory_path}/report/plugin_log.png",
+            f"{absolute_report_directory_path}/report/{folder_name}/plugin_log.png",
             dpi=300,
             bbox_inches=nbbox,
         )

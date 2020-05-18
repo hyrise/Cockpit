@@ -1,4 +1,5 @@
 """Module for export of the Influx data to PDF."""
+from datetime import datetime
 from os import listdir, mkdir, remove
 from os.path import isdir, isfile, join
 from pathlib import Path
@@ -14,18 +15,28 @@ from plugin_evaluation.export.points_handling import handle_plugin_log
 class Exporter:
     """Exports time series data to PDF."""
 
-    def __init__(self):
+    def __init__(self, tag: str):
         """Clear folder structure."""
-        self.plugin_logs = []
+        self._tag: str = tag
+        self._timestamp = datetime.now()
+        self._folder_name = self._timestamp.strftime(f"{tag} %H:%M:%S %d-%m-%Y")
+        self.plugin_logs: List = []
         absolute_plugin_evaluation_path: str = str(
             Path(__file__).parent.parent.absolute()
         )
         self._reset_directory(f"{absolute_plugin_evaluation_path}/report")
-        self._reset_directory(f"{absolute_plugin_evaluation_path}/report/Footprint")
         self._reset_directory(
-            f"{absolute_plugin_evaluation_path}/report/Access frequency"
+            f"{absolute_plugin_evaluation_path}/report/{self._folder_name}"
         )
-        self._reset_directory(f"{absolute_plugin_evaluation_path}/report/Query latency")
+        self._reset_directory(
+            f"{absolute_plugin_evaluation_path}/report/{self._folder_name}/Footprint"
+        )
+        self._reset_directory(
+            f"{absolute_plugin_evaluation_path}/report/{self._folder_name}/Access frequency"
+        )
+        self._reset_directory(
+            f"{absolute_plugin_evaluation_path}/report/{self._folder_name}/Query latency"
+        )
 
     def _clear_directory(self, directory_path: str):
         """Clear directory from files."""
@@ -48,7 +59,7 @@ class Exporter:
         """Initialize plugin_log_values."""
         raw_plugin_logs = get_plugin_log(database, startts, endts)
         self.plugin_logs = handle_plugin_log(raw_plugin_logs)
-        plot_plugin_log_table(self.plugin_logs)
+        plot_plugin_log_table(self.plugin_logs, self._folder_name)
 
     def plot_metric(
         self,
@@ -73,6 +84,8 @@ class Exporter:
         aggregation_function = metric_config["aggregation_function"]
         plot_function = metric_config["plot_function"]
 
+        save_path: str = f"{self._folder_name}/{path}"
+
         points = influx_function(  # type: ignore
             metric_config["table_name"],
             column_name,
@@ -87,7 +100,7 @@ class Exporter:
             x_values, y_values, log_interval, aggregation_interval
         )
 
-        plot_function(aggregated_x_values, aggregated_y_values, x_label, y_label, title, path, self.plugin_logs, max(log_interval, int(aggregation_interval / log_interval)))  # type: ignore
+        plot_function(aggregated_x_values, aggregated_y_values, x_label, y_label, title, save_path, self.plugin_logs, max(log_interval, int(aggregation_interval / log_interval)))  # type: ignore
 
     def plot_metric_for_benchmark(
         self,
