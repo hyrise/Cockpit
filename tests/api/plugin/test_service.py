@@ -86,21 +86,21 @@ class TestPluginService:
         assert result == expected
 
     def test_doesnt_get_plugins_if_a_database_error_occurs(
-        self, service: PluginService, interface: PluginInterface
+        self, service: PluginService
     ):
         """A Plugin service does not get all plugins if a database error occurs."""
         mocked = get_response(200)
         mocked["body"]["plugins"] = [
             {"id": "york", "plugins": None},
-            {"id": "citadelle", "plugins": {"Compression": None, "Clustering": None}},
+            {"id": "citadelle", "plugins": {"Compression": [], "Clustering": []}},
         ]
         expected = [
             {"id": "york", "plugins": None},
             {
                 "id": "citadelle",
                 "plugins": [
-                    {"name": "Compression", "settings": None},
-                    {"name": "Clustering", "settings": None},
+                    {"name": "Compression", "settings": []},
+                    {"name": "Clustering", "settings": []},
                 ],
             },
         ]
@@ -112,7 +112,7 @@ class TestPluginService:
 
     @mark.parametrize("status", [200, 400, 500])
     def test_doesnt_get_plugins_if_an_unexpected_error_occurs(
-        self, service: PluginService, interface: PluginInterface, status: int
+        self, service: PluginService, status: int
     ):
         """A Plugin service does not get all plugins if an unexpected error occurs."""
         service._send_message_to_dbm.return_value = get_response(status)  # type: ignore

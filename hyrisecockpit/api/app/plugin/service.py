@@ -29,13 +29,14 @@ class PluginService:
         response = cls._send_message_to_dbm(
             Request(header=Header(message="get plugins"), body={})
         )
-        if response["header"]["status"] == 200:
-            result = []
-            for database in response["body"]["plugins"]:
-                if database["plugins"] is not None:
-                    plugins: List[DetailedPluginInterface] = []
-                    for plugin_name, plugin_settings in database["plugins"].items():
-                        detailed_plugin = DetailedPluginInterface(
+        if response["header"]["status"] != 200:
+            return response["header"]["status"]
+        return [
+            DetailedPluginIDInterface(
+                id=database["id"],
+                plugins=(
+                    [
+                        DetailedPluginInterface(
                             name=plugin_name,
                             settings=[
                                 PluginSettingInterface(
@@ -44,21 +45,16 @@ class PluginService:
                                     description=plugin_setting["description"],
                                 )
                                 for plugin_setting in plugin_settings
-                            ]
-                            if plugin_settings is not None
-                            else None,
+                            ],
                         )
-                        plugins.append(detailed_plugin)
-                    result.append(
-                        DetailedPluginIDInterface(id=database["id"], plugins=plugins)
-                    )
-                else:
-                    result.append(
-                        DetailedPluginIDInterface(id=database["id"], plugins=None)
-                    )
-            return result
-        else:
-            return response["header"]["status"]
+                        for plugin_name, plugin_settings in database["plugins"].items()
+                    ]
+                    if database["plugins"] is not None
+                    else None
+                ),
+            )
+            for database in response["body"]["plugins"]
+        ]
 
     @classmethod
     def activate_by_id(cls, database_id: str, interface: PluginInterface) -> int:

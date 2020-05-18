@@ -436,22 +436,6 @@ class TestDatabase(object):
         assert type(result) is list
         assert result == []
 
-    def test_gets_plugins_when_database_blocked(self, database: Database) -> None:
-        """Test get plug-ins when database is blocked."""
-        mock_cursor = MagicMock()
-        mock_cursor.fetchall.return_value = []
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        database._connection_factory = mock_connection_factory
-        database._database_blocked.value = True
-
-        result: Optional[List] = database.get_plugins()
-
-        assert result is None
-        mock_cursor.fetchall.assert_not_called()
-
     def test_gets_plugins_when_database_unblocked_and_plugins_exists(
         self, database: Database
     ) -> None:
@@ -592,24 +576,6 @@ class TestDatabase(object):
 
         assert isinstance(result, dict)
         assert result == {}
-
-    def test_gets_plugins_settings_when_database_blocked(
-        self, database: Database
-    ) -> None:
-        """Test get plugins settings when database is blocked."""
-        mock_cursor = MagicMock()
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        database._connection_factory = mock_connection_factory
-        database._database_blocked.value = True
-
-        result = database.get_plugin_setting()
-
-        mock_cursor.execute.assert_not_called()
-
-        assert not result
 
     def test_gets_plugins_settings_when_database_unblocked_and_plugins_exist(
         self, database: Database

@@ -30,7 +30,7 @@ class PluginSettingInterface(PluginSettingBaseInterface):
 class DetailedPluginInterface(PluginInterface):
     """Interface of a detailed Plugin."""
 
-    settings: Optional[List[PluginSettingInterface]]
+    settings: List[PluginSettingInterface]
 
 
 class DetailedPluginIDInterface(TypedDict):

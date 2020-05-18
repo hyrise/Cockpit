@@ -194,10 +194,10 @@ class Database(object):
             with self._connection_factory.create_cursor() as cur:
                 cur.execute(("SELECT name FROM meta_plugins;"), None)
                 rows = cur.fetchall()
-                result = [row[0] for row in rows] if rows else []
-                return result
         except (DatabaseError, InterfaceError):
             return None
+        else:
+            return [row[0] for row in rows]
 
     def set_plugin_setting(self, name: str, value: str) -> bool:
         """Adjust setting for given plugin."""
@@ -222,9 +222,12 @@ class Database(object):
                     None,
                 )
                 rows = cur.fetchall()
+        except (DatabaseError, InterfaceError):
+            return None
+        else:
             plugins: Dict[str, List[Dict[str, str]]] = {}
             for row in rows:
-                _, plugin_name, setting_name = row[0].split("::")
+                plugin_name, setting_name = row[0].split("::")[1:]
                 value, description = row[1], row[2]
                 if plugins.get(plugin_name) is None:
                     plugins[plugin_name] = []
@@ -232,8 +235,6 @@ class Database(object):
                     {"name": setting_name, "value": value, "description": description}
                 )
             return plugins
-        except (DatabaseError, InterfaceError):
-            return None
 
     def execute_sql_query(self, query) -> Optional[SqlResultInterface]:
         """Execute sql query on database."""

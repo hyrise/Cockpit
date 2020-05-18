@@ -203,20 +203,21 @@ class DatabaseManager(object):
             plugins = database.get_plugins()
             settings = database.get_plugin_setting()
             if plugins is None or settings is None:
-                database_activated_plugins = DatabaseActivatedPlugins(
-                    id=id, plugins=None
-                )
+                activated_plugins.append(DatabaseActivatedPlugins(id=id, plugins=None))
             else:
-                plugins_temp = {}
-                for plugin_name in plugins:
-                    if plugin_name in settings.keys():
-                        plugins_temp[plugin_name] = settings[plugin_name]
-                    else:
-                        plugins_temp[plugin_name] = []
-                database_activated_plugins = DatabaseActivatedPlugins(
-                    id=id, plugins=plugins_temp
+                activated_plugins.append(
+                    DatabaseActivatedPlugins(
+                        id=id,
+                        plugins={
+                            plugin_name: (
+                                settings[plugin_name]
+                                if plugin_name in settings.keys()
+                                else []
+                            )
+                            for plugin_name in plugins
+                        },
+                    )
                 )
-            activated_plugins.append(database_activated_plugins)
         response = get_response(200)
         response["body"]["plugins"] = activated_plugins
         return response
