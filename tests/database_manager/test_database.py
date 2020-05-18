@@ -335,7 +335,7 @@ class TestDatabase(object):
 
         results = database.get_loaded_tables()
 
-        mock_cursor.execute.assert_called_once_with("show tables;", None)
+        mock_cursor.execute.assert_called_once_with("select * from meta_tables;", None)
         assert results == ["hallo", "world"]  # type: ignore
 
     @mark.parametrize(
@@ -360,7 +360,7 @@ class TestDatabase(object):
 
         results = database.get_loaded_tables()
 
-        mock_cursor.execute.assert_called_once_with("show tables;", None)
+        mock_cursor.execute.assert_called_once_with("select * from meta_tables;", None)
         assert results == []
 
     def test_gets_hyrise_active(self, database: Database) -> None:

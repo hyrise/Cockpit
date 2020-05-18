@@ -144,7 +144,7 @@ class Database(object):
         """Return already loaded tables."""
         try:
             with self._connection_factory.create_cursor() as cur:
-                cur.execute("show tables;", None)
+                cur.execute("select * from meta_tables;", None)
                 rows = cur.fetchall()
         except (DatabaseError, InterfaceError):
             return []

@@ -101,7 +101,7 @@ class PluginLog(Resource):
                 "id": database,
                 "plugin_log": [
                     {
-                        "timestamp": row["timestamp"],
+                        "timestamp": int(row["timestamp"]),
                         "reporter": row["reporter"],
                         "message": row["message"],
                         "level": row["level"],
