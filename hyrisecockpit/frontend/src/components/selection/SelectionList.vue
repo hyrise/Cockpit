@@ -322,34 +322,28 @@ function useStaticRangeSelection(
   /* error handling of invalid dates and times */
   const errorMessage = ref("");
   const invalidDates = computed(() => {
+    errorMessage.value = "";
     // case: input is invalid
-    if (invalidInput.value) {
+    if (invalidInput.value)
       errorMessage.value = "The selected dates or times are invalid.";
-      return true;
-    }
 
     // case: precision is invalid
     if (
       formatStringsToDate(endDate.value, endTime.value).getTime() -
         formatStringsToDate(startDate.value, startTime.value).getTime() <=
       staticPrecision.value * Math.pow(10, 3)
-    ) {
+    )
       errorMessage.value =
         "The selected range is too small for the selected precision.";
-      return true;
-    }
 
     // case: selected dates are in the future
     if (
       isInFuture(formatStringsToDate(startDate.value, startTime.value), 3) ||
       isInFuture(formatStringsToDate(endDate.value, endTime.value), 3)
-    ) {
+    )
       errorMessage.value = "The selected dates and times are in the future.";
-      return true;
-    }
 
-    errorMessage.value = "";
-    return false;
+    return !!errorMessage.value;
   });
 
   const staticRange = computed(
