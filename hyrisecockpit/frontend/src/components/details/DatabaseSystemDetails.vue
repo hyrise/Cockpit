@@ -6,17 +6,21 @@
       v-for="database in databases"
       :key="database.id"
     >
-      <v-card class="card" :color="database.color" tile>
+      <v-card class="card" :color="database.color">
         <v-row>
-          <v-col id="database-host" class="leftcol" cols="3">
-            <v-card-title class="ml-6 font-weight-regular white--text">
+          <v-col id="database-host" :lg="databases.length > 1 ? 12 : 3" xl="3">
+            <v-card-title class="font-weight-regular white--text">
               {{ database.systemDetails.host }}
             </v-card-title>
-            <v-card-text class="ml-6 font-weight-regular white--text"
+            <v-card-text class="font-weight-regular white--text"
               >Host</v-card-text
             >
           </v-col>
-          <v-col id="database-memory-capacity" cols="2">
+          <v-col
+            id="database-memory-capacity"
+            :lg="databases.length > 1 ? 6 : 2"
+            xl="2"
+          >
             <v-card-title class="font-weight-light white--text"
               >{{ database.systemDetails.memoryCapacity }} GB</v-card-title
             >
@@ -24,7 +28,11 @@
               >Memory Capacity</v-card-text
             >
           </v-col>
-          <v-col id="database-number-cpus" cols="2">
+          <v-col
+            id="database-number-cpus"
+            :lg="databases.length > 1 ? 6 : 2"
+            xl="2"
+          >
             <v-card-title class="font-weight-light white--text">
               {{ database.systemDetails.numberOfCPUs }}
             </v-card-title>
@@ -32,20 +40,28 @@
               >Number of CPUs</v-card-text
             >
           </v-col>
-          <v-col id="database-number-workers" cols="2">
-            <v-card-title class="font-weight-light white--text">
-              {{ database.systemDetails.numberOfWorkers }}
-            </v-card-title>
-            <v-card-text class="font-weight-light white--text"
-              >Number of Workers</v-card-text
-            >
-          </v-col>
-          <v-col id="database-memory-footprint" class="mr-2" cols="2">
+          <v-col
+            id="database-memory-footprint"
+            :lg="databases.length > 1 ? 6 : 2"
+            xl="2"
+          >
             <v-card-title class="mr-6 font-weight-light white--text"
               >{{ database.systemDetails.memoryFootprint }} MB</v-card-title
             >
             <v-card-text class="mr-10 font-weight-light white--text"
               >Data Size</v-card-text
+            >
+          </v-col>
+          <v-col
+            id="database-number-workers"
+            :lg="databases.length > 1 ? 5 : 2"
+            xl="2"
+          >
+            <v-card-title class="font-weight-light white--text">
+              {{ database.systemDetails.numberOfWorkers }}
+            </v-card-title>
+            <v-card-text class="font-weight-light white--text"
+              >Number of Workers</v-card-text
             >
           </v-col>
         </v-row>
@@ -111,15 +127,13 @@ export default defineComponent({
   flex-direction: column;
   margin-right: 6px;
   margin-left: 6px;
+  padding-left: 24px;
 }
 #comparison-page .card {
   border-radius: 4px 4px 0px 0px;
 }
 #overview-page .card {
   border-radius: 4px;
-}
-.leftcol {
-  padding-right: 8px;
 }
 .v-card__title {
   padding-bottom: 6px;
