@@ -1,5 +1,9 @@
 """Module with metric configs."""
 
+from plugin_evaluation.export.aggregation_handling import (
+    idle_aggregation,
+    time_aggregation,
+)
 from plugin_evaluation.export.influx_handling import (
     get_detailed_latency_information,
     get_metric_data,
@@ -27,8 +31,10 @@ config = {
         "y_label": "Queries / second",
         "influx_function": get_metric_data_with_fill,
         "points_function": default_function,
+        "aggregation_function": time_aggregation,
         "plot_function": plot_line_chart,
         "path": "",
+        "log_interval": 1,
     },
     "latency": {
         "table_name": "latency",
@@ -36,9 +42,11 @@ config = {
         "x_label": "Time",
         "y_label": "ms",
         "influx_function": get_metric_data_with_fill,
+        "aggregation_function": time_aggregation,
         "points_function": ns_to_ms,
         "plot_function": plot_line_chart,
         "path": "",
+        "log_interval": 1,
     },
     "queue_length": {
         "table_name": "queue_length",
@@ -47,8 +55,10 @@ config = {
         "y_label": "number of items",
         "influx_function": get_metric_data,
         "points_function": default_function,
+        "aggregation_function": time_aggregation,
         "plot_function": plot_line_chart,
         "path": "",
+        "log_interval": 1,
     },
     "cpu_process_usage": {
         "table_name": "system_data",
@@ -57,8 +67,10 @@ config = {
         "y_label": "% usage",
         "influx_function": get_metric_data,
         "points_function": default_function,
+        "aggregation_function": time_aggregation,
         "plot_function": plot_line_chart,
         "path": "",
+        "log_interval": 1,
     },
     "ram usage": {
         "table_name": "system_data",
@@ -67,8 +79,10 @@ config = {
         "y_label": "MB",
         "influx_function": get_ram_usage,
         "points_function": ns_to_ms,
+        "aggregation_function": time_aggregation,
         "plot_function": plot_line_chart,
         "path": "",
+        "log_interval": 1,
     },
     "footprint": {
         "table_name": "storage",
@@ -77,18 +91,10 @@ config = {
         "y_label": "MB",
         "influx_function": get_metric_data,
         "points_function": calculate_footprint,
+        "aggregation_function": time_aggregation,
         "plot_function": plot_line_chart,
         "path": "",
-    },
-    "detailed latency": {
-        "table_name": "successful_queries",  # ignored
-        "column_name": "latency",  # ignored
-        "x_label": "Time",
-        "y_label": "ms",
-        "influx_function": get_detailed_latency_information,
-        "points_function": sort_detailed_latency_points,
-        "plot_function": plot_bar_chart,
-        "path": "",
+        "log_interval": 5,
     },
     "table footprint": {
         "table_name": "storage",
@@ -97,8 +103,10 @@ config = {
         "y_label": "MB",
         "influx_function": get_metric_data,
         "points_function": calculate_footprint_for_table,
+        "aggregation_function": time_aggregation,
         "plot_function": plot_line_chart,
         "path": "Footprint/",
+        "log_interval": 5,
     },
     "table access frequency": {
         "table_name": "chunks_data",
@@ -107,8 +115,10 @@ config = {
         "y_label": "Number of accesses",
         "influx_function": get_metric_data,
         "points_function": calculate_access_frequency_for_table,
+        "aggregation_function": time_aggregation,
         "plot_function": plot_line_chart,
         "path": "Access frequency/",
+        "log_interval": 5,
     },
     "access frequency": {
         "table_name": "chunks_data",
@@ -117,8 +127,22 @@ config = {
         "y_label": "Number of accesses",
         "influx_function": get_metric_data,
         "points_function": calculate_access_frequency,
+        "aggregation_function": time_aggregation,
         "plot_function": plot_line_chart,
         "path": "",
+        "log_interval": 5,
+    },
+    "detailed latency": {
+        "table_name": "successful_queries",  # ignored
+        "column_name": "latency",  # ignored
+        "x_label": "Time",
+        "y_label": "ms",
+        "influx_function": get_detailed_latency_information,
+        "points_function": sort_detailed_latency_points,
+        "aggregation_function": idle_aggregation,
+        "plot_function": plot_bar_chart,
+        "path": "",
+        "log_interval": 1,
     },
     "query latency": {
         "table_name": "successful_queries",
@@ -127,7 +151,9 @@ config = {
         "y_label": "ms",
         "influx_function": get_query_latency,
         "points_function": handle_query_latency,
+        "aggregation_function": time_aggregation,
         "plot_function": plot_line_chart,
         "path": "Query latency/",
+        "log_interval": 1,
     },
 }

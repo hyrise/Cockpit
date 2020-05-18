@@ -51,7 +51,13 @@ class Exporter:
         plot_plugin_log_table(self.plugin_logs)
 
     def plot_metric(
-        self, metric: str, database: str, startts: int, endts: int, parameter=None
+        self,
+        metric: str,
+        database: str,
+        startts: int,
+        endts: int,
+        parameter=None,
+        aggregation_interval: int = 1,
     ):
         """Plot metric data for a given database."""
         metric_config = config[metric]
@@ -60,9 +66,11 @@ class Exporter:
         x_label = metric_config["x_label"]
         y_label = metric_config["y_label"]
         path = metric_config["path"]
+        log_interval = metric_config["log_interval"]
 
         influx_function = metric_config["influx_function"]
         points_function = metric_config["points_function"]
+        aggregation_function = metric_config["aggregation_function"]
         plot_function = metric_config["plot_function"]
 
         points = influx_function(  # type: ignore
@@ -75,10 +83,20 @@ class Exporter:
         )
         x_values, y_values, title = points_function(points, column_name, parameter)  # type: ignore
 
-        plot_function(x_values, y_values, x_label, y_label, title, path, self.plugin_logs)  # type: ignore
+        aggregated_x_values, aggregated_y_values = aggregation_function(  # type: ignore
+            x_values, y_values, log_interval, aggregation_interval
+        )
+
+        plot_function(aggregated_x_values, aggregated_y_values, x_label, y_label, title, path, self.plugin_logs)  # type: ignore
 
     def plot_metric_for_benchmark(
-        self, metric: str, benchmark: str, database_id: str, startts: int, endts: int
+        self,
+        metric: str,
+        benchmark: str,
+        database_id: str,
+        startts: int,
+        endts: int,
+        aggregation_interval: int = 1,
     ):
         """Create graphs for all tables of the benchmark."""
         benchmark_name: str = benchmark.split("_")[0]
@@ -87,16 +105,29 @@ class Exporter:
         ]
 
         for table_name in table_names_with_sf:
-            self.plot_metric(metric, database_id, startts, endts, table_name)
+            self.plot_metric(
+                metric, database_id, startts, endts, table_name, aggregation_interval
+            )
 
     def plot_query_metric_for_benchmark(
-        self, metric: str, benchmark: str, database_id: str, startts: int, endts: int
+        self,
+        metric: str,
+        benchmark: str,
+        database_id: str,
+        startts: int,
+        endts: int,
+        aggregation_interval: int = 1,
     ):
         """Create graphs for all queries."""
         query_types: List = self.get_query_types_for_benchmark(benchmark)
         for query_type in query_types:
             self.plot_metric(
-                metric, database_id, startts, endts, (benchmark, query_type)
+                metric,
+                database_id,
+                startts,
+                endts,
+                (benchmark, query_type),
+                aggregation_interval,
             )
 
     def get_query_types_for_benchmark(self, benchmark: str):
