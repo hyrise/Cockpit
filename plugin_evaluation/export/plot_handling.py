@@ -1,5 +1,4 @@
 """Module for plotting of the graphs."""
-from pathlib import Path
 from typing import Dict, List
 
 import matplotlib.dates as mdates
@@ -8,8 +7,6 @@ import numpy as np
 from matplotlib.font_manager import FontProperties
 from matplotlib.pyplot import figure
 from matplotlib.transforms import Bbox
-
-absolute_report_directory_path = str(Path(__file__).parent.parent.absolute())
 
 
 def plot_line_chart(
@@ -92,7 +89,7 @@ def plot_line_chart(
     plt.subplots_adjust(left=0.2, bottom=0.2)
     ##########################
 
-    plt.savefig(f"{absolute_report_directory_path}/report/{path}{title}.png", dpi=300)
+    plt.savefig(f"{path}{title}.png", dpi=300)
     plt.close(fig)
 
 
@@ -121,11 +118,11 @@ def plot_bar_chart(
     plt.xlabel(f"{x_label}")
     plt.legend()
 
-    plt.savefig(f"{absolute_report_directory_path}/report/{path}{title}.png", dpi=300)
+    plt.savefig(f"{path}{title}.png", dpi=300)
     plt.close(fig)
 
 
-def plot_plugin_log_table(plugin_logs: List, folder_name: str):
+def plot_plugin_log_table(plugin_logs: List, path: str):
     """Plot plugin log table."""
     fig, ax = plt.subplots(figsize=(12, 6))
 
@@ -182,8 +179,6 @@ def plot_plugin_log_table(plugin_logs: List, folder_name: str):
         ############################ # noqa
 
         plt.savefig(
-            f"{absolute_report_directory_path}/report/{folder_name}/plugin_log.png",
-            dpi=300,
-            bbox_inches=nbbox,
+            f"{path}plugin_log.png", dpi=300, bbox_inches=nbbox,
         )
     plt.close(fig)

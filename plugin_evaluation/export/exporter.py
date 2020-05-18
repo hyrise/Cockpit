@@ -3,7 +3,7 @@ from datetime import datetime
 from os import listdir, mkdir, remove
 from os.path import isdir, isfile, join
 from pathlib import Path
-from typing import List
+from typing import Callable, Dict, List, Union
 
 from hyrisecockpit.database_manager.table_names import table_names
 from plugin_evaluation.export.config import config
@@ -24,18 +24,17 @@ class Exporter:
         absolute_plugin_evaluation_path: str = str(
             Path(__file__).parent.parent.absolute()
         )
-        self._reset_directory(f"{absolute_plugin_evaluation_path}/report")
+        self.absolute_report_path = f"{absolute_plugin_evaluation_path}/report"
+        self._reset_directory(f"{self.absolute_report_path}")
+        self._reset_directory(f"{self.absolute_report_path}/{self._folder_name}")
         self._reset_directory(
-            f"{absolute_plugin_evaluation_path}/report/{self._folder_name}"
+            f"{self.absolute_report_path}/{self._folder_name}/Footprint"
         )
         self._reset_directory(
-            f"{absolute_plugin_evaluation_path}/report/{self._folder_name}/Footprint"
+            f"{self.absolute_report_path}/{self._folder_name}/Access frequency"
         )
         self._reset_directory(
-            f"{absolute_plugin_evaluation_path}/report/{self._folder_name}/Access frequency"
-        )
-        self._reset_directory(
-            f"{absolute_plugin_evaluation_path}/report/{self._folder_name}/Query latency"
+            f"{self.absolute_report_path}/{self._folder_name}/Query latency"
         )
 
     def _clear_directory(self, directory_path: str):
@@ -59,7 +58,9 @@ class Exporter:
         """Initialize plugin_log_values."""
         raw_plugin_logs = get_plugin_log(database, startts, endts)
         self.plugin_logs = handle_plugin_log(raw_plugin_logs)
-        plot_plugin_log_table(self.plugin_logs, self._folder_name)
+        plot_plugin_log_table(
+            self.plugin_logs, f"{self.absolute_report_path}/{self._folder_name}/"
+        )
 
     def plot_metric(
         self,
@@ -71,22 +72,23 @@ class Exporter:
         aggregation_interval: int = 1,
     ):
         """Plot metric data for a given database."""
-        metric_config = config[metric]
+        metric_config: Dict[str, Union[str, int, Callable]] = config[metric]  # type: ignore
 
-        column_name = metric_config["column_name"]
-        x_label = metric_config["x_label"]
-        y_label = metric_config["y_label"]
-        path = metric_config["path"]
-        log_interval = metric_config["log_interval"]
+        column_name: str = metric_config["column_name"]  # type: ignore
+        x_label: str = metric_config["x_label"]  # type: ignore
+        y_label: str = metric_config["y_label"]  # type: ignore
+        path: str = metric_config["path"]  # type: ignore
+        log_interval: int = metric_config["log_interval"]  # type: ignore
 
-        influx_function = metric_config["influx_function"]
-        points_function = metric_config["points_function"]
-        aggregation_function = metric_config["aggregation_function"]
-        plot_function = metric_config["plot_function"]
+        influx_function: Callable = metric_config["influx_function"]  # type: ignore
+        points_function: Callable = metric_config["points_function"]  # type: ignore
+        aggregation_function: Callable = metric_config["aggregation_function"]  # type: ignore
+        plot_function: Callable = metric_config["plot_function"]  # type: ignore
+        csv_function: Callable = metric_config["csv_function"]  # type: ignore
 
-        save_path: str = f"{self._folder_name}/{path}"
+        save_path: str = f"{self.absolute_report_path}/{self._folder_name}/{path}"
 
-        points = influx_function(  # type: ignore
+        points = influx_function(
             metric_config["table_name"],
             column_name,
             database,
@@ -94,13 +96,26 @@ class Exporter:
             endts,
             parameter,
         )
-        x_values, y_values, title = points_function(points, column_name, parameter)  # type: ignore
+        x_values, y_values, title = points_function(points, column_name, parameter)
 
-        aggregated_x_values, aggregated_y_values = aggregation_function(  # type: ignore
+        aggregated_x_values, aggregated_y_values = aggregation_function(
             x_values, y_values, log_interval, aggregation_interval
         )
 
-        plot_function(aggregated_x_values, aggregated_y_values, x_label, y_label, title, save_path, self.plugin_logs, max(log_interval, int(aggregation_interval / log_interval)))  # type: ignore
+        plot_function(
+            aggregated_x_values,
+            aggregated_y_values,
+            x_label,
+            y_label,
+            title,
+            save_path,
+            self.plugin_logs,
+            max(log_interval, int(aggregation_interval / log_interval)),
+        )
+
+        csv_function(
+            aggregated_x_values, aggregated_y_values, save_path, title, x_label
+        )
 
     def plot_metric_for_benchmark(
         self,
