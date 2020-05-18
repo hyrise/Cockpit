@@ -8,11 +8,16 @@ from plugin_evaluation.utils.figlet import intro
 from plugin_evaluation.utils.user_interface import DoneStatus, show_bar
 
 database_id = "momentum"
-workload_execution_time = 120
+workload_execution_time = 30
 plugin = "Compression"
 benchmark = "tpch_0_1"
 aggregation_interval = 5
 
+plugin_settings = {
+    "database_id": database_id,
+    "setting_name": "Plugin::Compression::MemoryBudget",
+    "value": "50000000",
+}
 
 metrics = [
     "throughput",
@@ -55,9 +60,7 @@ with DoneStatus(f"Activate {plugin} plugin..."):  # noqa
 sleep(1.0)
 
 with DoneStatus(f"Setting {plugin} plugin..."):  # noqa
-    response = cockpit.backend.set_plugin_settings(
-        database_id, "Plugin::Compression::MemoryBudget", "500000000"
-    )  # noqa
+    response = cockpit.backend.set_plugin_settings(**plugin_settings)  # noqa
 
 show_bar("Executing a workload...", workload_execution_time)
 
