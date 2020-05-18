@@ -4,7 +4,13 @@
       <div class="header">{{ pageName }}</div>
     </v-card-title>
     <v-card-text>
-      <v-tabs v-if="open" v-model="tab" background-color="white" color="primary" grow>
+      <v-tabs
+        v-if="open"
+        v-model="tab"
+        background-color="white"
+        color="primary"
+        grow
+      >
         <v-tabs-slider color="primary"></v-tabs-slider>
         <v-tab>DATA</v-tab>
         <v-tab>TIME</v-tab>
@@ -35,7 +41,11 @@
             <v-window-item :value="1">
               <v-subheader class="mt-2">
                 CONTINUOUS RANGE
-                <v-badge class="ml-2 mt-1" :color="!staticRange ? 'green' : 'red'" dot />
+                <v-badge
+                  class="ml-2 mt-1"
+                  :color="!staticRange ? 'green' : 'red'"
+                  dot
+                />
               </v-subheader>
               <v-sheet height="400">
                 <v-container class="white container flex">
@@ -57,13 +67,18 @@
                   block
                   :disabled="!staticRange"
                   @click="resetTimeRange"
-                >Set Continuous Time Range</v-btn>
+                  >Set Continuous Time Range</v-btn
+                >
               </v-sheet>
             </v-window-item>
             <v-window-item :value="2">
               <v-subheader class="mt-2">
                 STATIC RANGE
-                <v-badge class="ml-2 mt-1" :color="staticRange ? 'green' : 'red'" dot />
+                <v-badge
+                  class="ml-2 mt-1"
+                  :color="staticRange ? 'green' : 'red'"
+                  dot
+                />
               </v-subheader>
               <v-sheet height="400">
                 <v-container class="white container flex">
@@ -100,14 +115,17 @@
                     </v-col>
                   </v-row>
                 </v-container>
-                <v-alert v-if="!!errorMessage" type="error">{{ errorMessage }}</v-alert>
+                <v-alert v-if="!!errorMessage" type="error">{{
+                  errorMessage
+                }}</v-alert>
                 <v-btn
                   id="set-static-time-range"
                   color="primary"
                   block
                   :disabled="invalidDates"
                   @click="setStaticTimeRange"
-                >Set Static Time Range</v-btn>
+                  >Set Static Time Range</v-btn
+                >
               </v-sheet>
             </v-window-item>
           </v-window>
@@ -130,8 +148,7 @@
                   </v-btn>
                 </template>
                 <span>
-                  Select {{ window == 1 ? "Static" : "Continuous" }} Range
-                  Type
+                  Select {{ window == 1 ? "Static" : "Continuous" }} Range Type
                 </span>
               </v-tooltip>
             </v-card-actions>
