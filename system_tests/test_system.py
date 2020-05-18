@@ -67,19 +67,18 @@ class TestSystem:
             "worker_pool_status": "closed",
             "loaded_benchmarks": ["tpch_0_1", "no-ops_0_1", "no-ops_1"],
             "loaded_tables": [
-                "customer_tpch_0_1",
-                "lineitem_tpch_0_1",
-                "nation_tpch_0_1",
                 "orders_tpch_0_1",
-                "part_tpch_0_1",
                 "partsupp_tpch_0_1",
-                "region_tpch_0_1",
+                "lineitem_tpch_0_1",
+                "part_tpch_0_1",
+                "nation_tpch_0_1",
                 "supplier_tpch_0_1",
+                "customer_tpch_0_1",
+                "region_tpch_0_1",
             ],
         }
 
         response = cls.backend.get_property("monitor/status")  # type: ignore
-
         assert response.status_code == 200  # nosec
         assert expected_status in response.json()  # nosec
 
@@ -238,8 +237,8 @@ class TestSystem:
                     "id": "test_database1",
                     "plugin_settings": [
                         {
-                            "name": "CompressionPlugin_MemoryBudget",
-                            "value": "5000000000",
+                            "name": "Plugin::Compression::MemoryBudget",
+                            "value": "9999999999",
                             "description": "The memory budget to target for the CompressionPlugin.",
                         }
                     ],
@@ -250,7 +249,7 @@ class TestSystem:
     def test_sets_plugin_settings(self):
         """Test set plugin settings."""
         response = self.backend.set_plugin_settings(
-            "test_database1", "CompressionPlugin_MemoryBudget", "50000"
+            "test_database1", "Plugin::Compression::MemoryBudget", "50000"
         )
 
         assert response.status_code == 200  # nosec
@@ -268,7 +267,7 @@ class TestSystem:
                     "id": "test_database1",
                     "plugin_settings": [
                         {
-                            "name": "CompressionPlugin_MemoryBudget",
+                            "name": "Plugin::Compression::MemoryBudget",
                             "value": "50000",
                             "description": "The memory budget to target for the CompressionPlugin.",
                         }
@@ -295,6 +294,13 @@ class TestSystem:
 
         assert response.status_code == 200  # nosec
         assert response.json()["header"]["status"] == 200  # nosec
+
+    def test_gets_operator_data(self):
+        """Test getting of the operator data."""
+        response = self.backend.get_property("monitor/operator")
+        assert response.status_code == 200  # nosec
+        assert len(response.json()) > 0  # nosec
+        assert len(response.json()[0]["operator_data"]) > 0  # nosec
 
     def test_stops_workload_generator(self):
         """Test stopping of the workload generator."""
