@@ -193,6 +193,7 @@ class TestBackgroundJobManager:
         background_job_manager._update_plugin_log_job = MagicMock()
         background_job_manager._ping_hyrise_job = MagicMock()
         background_job_manager._update_queue_length_job = MagicMock()
+        background_job_manager._update_operator_data_job = MagicMock()
 
         background_job_manager.close()
 
@@ -203,6 +204,7 @@ class TestBackgroundJobManager:
         background_job_manager._update_plugin_log_job.remove.assert_called_once()
         background_job_manager._ping_hyrise_job.remove.assert_called_once()
         background_job_manager._update_queue_length_job.remove.assert_called_once()
+        background_job_manager._update_operator_data_job.remove.assert_called_once()
         mock_scheduler.shutdown.assert_called_once()
 
     def test_successfully_start_loading_tables(
