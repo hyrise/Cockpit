@@ -11,7 +11,7 @@ def get_loaded_tables_for_scale_factor(
     loaded_tables: List = []
     try:
         with connection_factory.create_cursor() as cur:
-            cur.execute("show tables;", None)
+            cur.execute("select * from meta_tables;", None)
             results = cur.fetchall()
             all_loaded_tables = [row[0] for row in results] if results else []
             for table in tables:
