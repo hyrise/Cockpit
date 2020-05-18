@@ -87,7 +87,7 @@ class Exporter:
             x_values, y_values, log_interval, aggregation_interval
         )
 
-        plot_function(aggregated_x_values, aggregated_y_values, x_label, y_label, title, path, self.plugin_logs)  # type: ignore
+        plot_function(aggregated_x_values, aggregated_y_values, x_label, y_label, title, path, self.plugin_logs, max(log_interval, int(aggregation_interval / log_interval)))  # type: ignore
 
     def plot_metric_for_benchmark(
         self,

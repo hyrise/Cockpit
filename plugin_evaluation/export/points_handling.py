@@ -89,7 +89,7 @@ def calculate_footprint(points: List, column_name: str, parameter):  # noqa
 
     footprint["total"] = total_footprint
 
-    return formatted_time, _sort_metric_dictionary(footprint), "Footprint of tables"
+    return formatted_time, _sort_metric_dictionary(footprint), "Footprint of the tables"
 
 
 def calculate_footprint_for_table(  # noqa
@@ -127,7 +127,7 @@ def calculate_footprint_for_table(  # noqa
     return (
         formatted_time,
         _sort_metric_dictionary(column_footprints),
-        f"Footprint ({table_name})",
+        f"Footprint - {table_name}",
     )
 
 
@@ -206,7 +206,7 @@ def calculate_access_frequency_for_table(  # noqa
     return (
         formatted_time,
         _sort_metric_dictionary(column_accesses),
-        f"Access frequency ({table_name})",
+        f"Access frequency - {table_name}",
     )
 
 

@@ -20,6 +20,7 @@ def plot_line_chart(
     title: str,
     path: str,
     plugin_logs: List,
+    aggregation_interval: int,
 ):
     """Plot line chart to file."""
     fig = figure(num=None, figsize=(12, 6), dpi=80, facecolor="w", edgecolor="k")
@@ -28,7 +29,7 @@ def plot_line_chart(
 
     maximum_value = np.amax([np.amax(values) for values in metric_values.values()])
 
-    plt.title(f"{title}")
+    plt.title(f"{title} (aggregation over {aggregation_interval}s)")
     plt.ticklabel_format(style="plain")
     plt.ylim(bottom=0.0, top=maximum_value * 1.1)
 
@@ -103,6 +104,7 @@ def plot_bar_chart(
     title: str,
     path: str,
     plugin_logs: List,
+    aggregation_interval: int,
 ):
     """Plot line chart to file."""
     max_value = np.amax(metric_values)
