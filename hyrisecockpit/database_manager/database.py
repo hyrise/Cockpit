@@ -190,16 +190,14 @@ class Database(object):
 
     def get_plugins(self) -> Optional[List[str]]:
         """Return all currently activated plugins."""
-        if not self._database_blocked.value:
-            try:
-                with self._connection_factory.create_cursor() as cur:
-                    cur.execute(("SELECT name FROM meta_plugins;"), None)
-                    rows = cur.fetchall()
-                    result = [row[0] for row in rows] if rows else []
-                    return result
-            except (DatabaseError, InterfaceError):
-                return None
-        return None
+        try:
+            with self._connection_factory.create_cursor() as cur:
+                cur.execute(("SELECT name FROM meta_plugins;"), None)
+                rows = cur.fetchall()
+                result = [row[0] for row in rows] if rows else []
+                return result
+        except (DatabaseError, InterfaceError):
+            return None
 
     def set_plugin_setting(self, name: str, value: str) -> bool:
         """Adjust setting for given plugin."""
@@ -217,31 +215,25 @@ class Database(object):
 
     def get_plugin_setting(self) -> Optional[Dict[str, List[Dict[str, str]]]]:
         """Read currently set plugin settings."""
-        if not self._database_blocked.value:
-            try:
-                with self._connection_factory.create_cursor() as cur:
-                    cur.execute(
-                        "SELECT name, value, description FROM meta_settings WHERE name LIKE 'Plugin::';",
-                        None,
-                    )
-                    rows = cur.fetchall()
-                plugins: Dict[str, List[Dict[str, str]]] = {}
-                for row in rows:
-                    _, plugin_name, setting_name = row[0].split("::")
-                    value, description = row[1], row[2]
-                    if plugins.get(plugin_name) is None:
-                        plugins[plugin_name] = []
-                    plugins[plugin_name].append(
-                        {
-                            "name": setting_name,
-                            "value": value,
-                            "description": description,
-                        }
-                    )
-                return plugins
-            except (DatabaseError, InterfaceError):
-                return None
-        return None
+        try:
+            with self._connection_factory.create_cursor() as cur:
+                cur.execute(
+                    "SELECT name, value, description FROM meta_settings WHERE name LIKE 'Plugin::';",
+                    None,
+                )
+                rows = cur.fetchall()
+            plugins: Dict[str, List[Dict[str, str]]] = {}
+            for row in rows:
+                _, plugin_name, setting_name = row[0].split("::")
+                value, description = row[1], row[2]
+                if plugins.get(plugin_name) is None:
+                    plugins[plugin_name] = []
+                plugins[plugin_name].append(
+                    {"name": setting_name, "value": value, "description": description}
+                )
+            return plugins
+        except (DatabaseError, InterfaceError):
+            return None
 
     def execute_sql_query(self, query) -> Optional[SqlResultInterface]:
         """Execute sql query on database."""

@@ -18,8 +18,7 @@ from .cursor import PoolCursor
 from .database import Database
 
 DatabaseActivatedPlugins = TypedDict(
-    "DatabaseActivatedPlugins",
-    {"id": str, "plugins": Optional[Dict[str, Optional[List]]]},
+    "DatabaseActivatedPlugins", {"id": str, "plugins": Optional[Dict[str, List]]},
 )
 
 
@@ -202,22 +201,21 @@ class DatabaseManager(object):
         activated_plugins = []
         for id, database in self._databases.items():
             plugins = database.get_plugins()
-            database_activated_plugins = DatabaseActivatedPlugins(
-                id=id,
-                plugins={name: [] for name in plugins} if plugins is not None else None,
-            )
             settings = database.get_plugin_setting()
-            if plugins is not None and settings is not None:
-                assert database_activated_plugins["plugins"] is not None  # nosec
+            if plugins is None or settings is None:
+                database_activated_plugins = DatabaseActivatedPlugins(
+                    id=id, plugins=None
+                )
+            else:
+                plugins_temp = {}
                 for plugin_name in plugins:
                     if plugin_name in settings.keys():
-                        database_activated_plugins["plugins"][plugin_name] = settings[
-                            plugin_name
-                        ]
-            elif plugins is not None and settings is None:
-                for plugin_name in plugins:
-                    assert database_activated_plugins["plugins"] is not None  # nosec
-                    database_activated_plugins["plugins"][plugin_name] = None
+                        plugins_temp[plugin_name] = settings[plugin_name]
+                    else:
+                        plugins_temp[plugin_name] = []
+                database_activated_plugins = DatabaseActivatedPlugins(
+                    id=id, plugins=plugins_temp
+                )
             activated_plugins.append(database_activated_plugins)
         response = get_response(200)
         response["body"]["plugins"] = activated_plugins
