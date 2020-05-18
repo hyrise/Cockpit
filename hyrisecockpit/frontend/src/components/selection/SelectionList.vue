@@ -47,7 +47,7 @@
                   dot
                 />
               </v-subheader>
-              <v-sheet height="330">
+              <v-sheet height="400">
                 <v-container class="white container flex">
                   <v-row class="top-row" no gutters>
                     <v-col class="flex-item select">
@@ -80,7 +80,7 @@
                   dot
                 />
               </v-subheader>
-              <v-sheet height="330">
+              <v-sheet height="400">
                 <v-container class="white container flex">
                   <v-row no gutters>
                     <v-col class="flex-item select">
@@ -115,6 +115,9 @@
                     </v-col>
                   </v-row>
                 </v-container>
+                <v-alert v-if="!!errorMessage" type="error">{{
+                  errorMessage
+                }}</v-alert>
                 <v-btn
                   id="set-static-time-range"
                   color="primary"
@@ -144,10 +147,9 @@
                     <v-icon v-if="window === 1" right>mdi-chevron-right</v-icon>
                   </v-btn>
                 </template>
-                <span
-                  >Select {{ window == 1 ? "Static" : "Continuous" }} Range
-                  Type</span
-                >
+                <span>
+                  Select {{ window == 1 ? "Static" : "Continuous" }} Range Type
+                </span>
               </v-tooltip>
             </v-card-actions>
           </v-card>
@@ -183,7 +185,7 @@ import {
 import { PageName } from "@/types/views";
 import { Metric } from "@/types/metrics";
 import { useFormatting } from "@/meta/formatting";
-import { isValidDate } from "@/utils/methods";
+import { isInvalidDateTimeString, isInFuture } from "@/utils/methods";
 
 interface Props {
   open: boolean;
@@ -289,68 +291,87 @@ function useDataChangeHandling(
 }
 
 interface UseStaticRangeSelection {
+  // variables
   availableStaticPrecisions: { text: string; value: number }[];
-  staticPrecision: Ref<number>;
-  maxPrecision: Ref<number>;
-  startDate: Ref<string>;
-  startTime: Ref<string>;
   endDate: Ref<string>;
   endTime: Ref<string>;
+  startDate: Ref<string>;
+  startTime: Ref<string>;
+  staticPrecision: Ref<number>;
+  // error handling
+  errorMessage: Ref<string>;
   invalidDates: Ref<boolean>;
-  setStaticTimeRange: () => void;
+  maxPrecision: Ref<number>;
+  // range handlers
   resetTimeRange: () => void;
+  setStaticTimeRange: () => void;
   staticRange: Ref<boolean>;
 }
 
 function useStaticRangeSelection(
   context: SetupContext
 ): UseStaticRangeSelection {
-  const { formatMinutesToSeconds } = useFormatting();
+  const { formatMinutesToSeconds, formatStringsToDate } = useFormatting();
   const { emitStaticRangeChangedEvent } = useWindowEvents();
 
+  /* variables */
   const startDate = ref("");
   const startTime = ref("");
   const endDate = ref("");
   const endTime = ref("");
-
   const staticPrecision = ref(0);
+
   const invalidInput = computed(() =>
     [startDate.value, startTime.value, endDate.value, endTime.value].some(
-      (value) => ["", null].includes(value) || !isValidDate(value)
+      (value) => ["", null].includes(value) || isInvalidDateTimeString(value)
     )
   );
 
   /* set max selectable precision, depending on start and end date */
   const maxPrecision = computed(() =>
     !invalidInput.value
-      ? (getDate(endDate.value, endTime.value).getTime() -
-          getDate(startDate.value, startTime.value).getTime()) /
+      ? (formatStringsToDate(endDate.value, endTime.value).getTime() -
+          formatStringsToDate(startDate.value, startTime.value).getTime()) /
         Math.pow(10, 3)
       : 60
   );
 
-  /* disable buttons on invalid dates */
-  const invalidDates = computed(
-    () =>
-      invalidInput.value ||
-      getDate(endDate.value, endTime.value).getTime() -
-        getDate(startDate.value, startTime.value).getTime() <=
-        staticPrecision.value * Math.pow(10, 3)
-  );
+  /* error handling of invalid dates and times */
+  const errorMessage = ref("");
+  const invalidDates = computed(() => {
+    errorMessage.value = "";
+    // case: input is invalid
+    if (invalidInput.value)
+      errorMessage.value = "The selected dates or times are invalid.";
+
+    // case: precision is invalid
+    if (
+      formatStringsToDate(endDate.value, endTime.value).getTime() -
+        formatStringsToDate(startDate.value, startTime.value).getTime() <=
+      staticPrecision.value * Math.pow(10, 3)
+    )
+      errorMessage.value =
+        "The selected range is too small for the selected precision.";
+
+    // case: selected dates are in the future
+    if (
+      isInFuture(formatStringsToDate(startDate.value, startTime.value), 3) ||
+      isInFuture(formatStringsToDate(endDate.value, endTime.value), 3)
+    )
+      errorMessage.value = "The selected dates and times are in the future.";
+
+    return !!errorMessage.value;
+  });
 
   const staticRange = computed(
     () => !!context.root.$selectionController.selectedStaticRange.value
   );
 
-  function getDate(dateString: string, timeString: string): Date {
-    return new Date(`${dateString}T${timeString}`);
-  }
-
   /* range handlers */
   function setStaticTimeRange(): void {
     emitStaticRangeChangedEvent(
-      getDate(startDate.value, startTime.value),
-      getDate(endDate.value, endTime.value),
+      formatStringsToDate(startDate.value, startTime.value),
+      formatStringsToDate(endDate.value, endTime.value),
       staticPrecision.value
     );
   }
@@ -381,6 +402,7 @@ function useStaticRangeSelection(
     maxPrecision,
     staticRange,
     resetTimeRange,
+    errorMessage,
   };
 }
 </script>

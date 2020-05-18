@@ -180,13 +180,10 @@ export function assertStaticRangeRequest(
 }
 
 /* FORMAT HELPERS */
-export function getDate(
-  date: Date,
-  day: number,
-  hour: number,
-  minute = 0
-): Date {
-  return new Date(new Date(date.setDate(day)).setHours(hour, minute, 0, 0));
+export function formatTimeString(date: Date): string {
+  return `${date.getHours() < 10 ? "0" + date.getHours() : date.getHours()}:${
+    date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()
+  }`;
 }
 
 /* get metric time reuqest intervalls */
