@@ -9,7 +9,7 @@ from hyrisecockpit.message import response_schema
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
-from .model import FailedQuery, FailedTask, HyriseStatus
+from .model import DatabaseStatus, FailedQuery, FailedTask, HyriseStatus
 
 
 class StatusService:
@@ -31,6 +31,17 @@ class StatusService:
         )
         return [
             HyriseStatus(**interface) for interface in response["body"]["hyrise_status"]
+        ]
+
+    @classmethod
+    def get_database_status(cls) -> List[DatabaseStatus]:
+        """Get get status for all databases."""
+        response = cls._send_message(
+            Request(header=Header(message="database status"), body={})
+        )
+        return [
+            DatabaseStatus(**interface)
+            for interface in response["body"]["database_status"]
         ]
 
     @classmethod

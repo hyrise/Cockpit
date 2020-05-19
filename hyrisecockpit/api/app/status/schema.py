@@ -21,6 +21,29 @@ class HyriseStatusSchema(Schema):
     )
 
 
+class DatabaseStatusSchema(Schema):
+    """Schema of a database object."""
+
+    id = String(
+        title="Database ID",
+        description="Used to identify a database.",
+        required=True,
+        example="hyrise-1",
+    )
+    database_blocked_status = Boolean(
+        title="Database blocked status",
+        description="Database blocked status of databases.",
+        required=True,
+        example=True,
+    )
+    worker_pool_status = String(
+        title="Worker pool status",
+        description="Status of the worker pools of the databases.",
+        required=True,
+        example="running",
+    )
+
+
 class FailedQuerySchema(Schema):
     """Schema of a failed query."""
 

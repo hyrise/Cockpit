@@ -11,6 +11,16 @@ class HyriseStatus:
         self.hyrise_active: bool = hyrise_active
 
 
+class DatabaseStatus:
+    """Model of a database status."""
+
+    def __init__(self, id: str, database_blocked_status: bool, worker_pool_status: str):
+        """Initialize a database status model."""
+        self.id: str = id
+        self.database_blocked_status: bool = database_blocked_status
+        self.worker_pool_status: str = worker_pool_status
+
+
 class FailedQuery:
     """Model of a FailedQuery Entry."""
 
