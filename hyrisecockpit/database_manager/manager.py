@@ -90,6 +90,7 @@ class DatabaseManager(object):
             ),
             "get plugin setting": (self._call_get_plugin_setting, None),
             "execute sql query": (self._call_execute_sql_query, None),
+            "hyrise status": (self._call_hyrise_status, None),
         }
 
     def _call_add_database(self, body: Body) -> Response:
@@ -280,6 +281,15 @@ class DatabaseManager(object):
         results = self._databases[database_id].execute_sql_query(query)
         response = get_response(200)
         response["body"]["results"] = results
+        return response
+
+    def _call_hyrise_status(self, body: Body) -> Response:
+        status = [
+            {"id": database_id, "hyrise_active": database.get_hyrise_active()}
+            for database_id, database in self._databases.items()
+        ]
+        response = get_response(200)
+        response["body"]["hyrise_status"] = status
         return response
 
     def start(self) -> None:
