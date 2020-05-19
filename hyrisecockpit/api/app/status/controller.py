@@ -4,8 +4,13 @@ from typing import List
 from flask_accepts import responds
 from flask_restx import Namespace, Resource
 
-from .model import DatabaseStatus, FailedTask, HyriseStatus
-from .schema import DatabaseStatusSchema, FailedTaskSchema, HyriseStatusSchema
+from .model import BenchmarkStatus, DatabaseStatus, FailedTask, HyriseStatus
+from .schema import (
+    BenchmarkStatusSchema,
+    DatabaseStatusSchema,
+    FailedTaskSchema,
+    HyriseStatusSchema,
+)
 from .service import StatusService
 
 api = Namespace("status", description="Get status information.")
@@ -29,6 +34,16 @@ class DatabaseStatusController(Resource):
     def get(self) -> List[DatabaseStatus]:
         """Get status for all database objects."""
         return StatusService.get_database_status()
+
+
+@api.route("/benchmark")
+class BenchmarkStatusController(Resource):
+    """Controller for returning the loaded benchmark and tables."""
+
+    @responds(schema=BenchmarkStatusSchema(many=True), api=api)
+    def get(self) -> List[BenchmarkStatus]:
+        """Get status of loaded benchmark or tables."""
+        return StatusService.get_benchmark_status()
 
 
 @api.route("/failed_tasks")

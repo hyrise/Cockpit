@@ -44,6 +44,33 @@ class DatabaseStatusSchema(Schema):
     )
 
 
+class BenchmarkStatusSchema(Schema):
+    """Schema of a benchmark status object."""
+
+    id = String(
+        title="Database ID",
+        description="Used to identify a database.",
+        required=True,
+        example="hyrise-1",
+    )
+    loaded_benchmarks = List(
+        String(
+            title="Benchmark",
+            description="Benchmark dataset that is completely loaded.",
+            required=True,
+            example="tpch_1",
+        )
+    )
+    loaded_tables = List(
+        String(
+            title="table_name",
+            description="Name of loaded table.",
+            required=True,
+            example="orders_tpch_0_1",
+        )
+    )
+
+
 class FailedQuerySchema(Schema):
     """Schema of a failed query."""
 
