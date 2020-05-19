@@ -92,6 +92,7 @@ class DatabaseManager(object):
             "execute sql query": (self._call_execute_sql_query, None),
             "hyrise status": (self._call_hyrise_status, None),
             "database status": (self._call_database_status, None),
+            "benchmark status": (self._call_benchmark_status, None),
         }
 
     def _call_add_database(self, body: Body) -> Response:
@@ -304,6 +305,21 @@ class DatabaseManager(object):
         ]
         response = get_response(200)
         response["body"]["database_status"] = status
+        return response
+
+    def _call_benchmark_status(self, body: Body) -> Response:
+        status = []
+        for database_id, database in self._databases.items():
+            loaded_tables, loaded_benchmarks = database.get_loaded_benchmark_data()
+            status.append(
+                {
+                    "id": database_id,
+                    "loaded_benchmarks": loaded_benchmarks,
+                    "loaded_tables": loaded_tables,
+                }
+            )
+        response = get_response(200)
+        response["body"]["benchmark_status"] = status
         return response
 
     def start(self) -> None:

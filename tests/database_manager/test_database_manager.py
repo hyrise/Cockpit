@@ -69,6 +69,7 @@ def get_server_calls() -> List[str]:
         "execute sql query",
         "hyrise status",
         "database status",
+        "benchmark status",
     ]
 
 
@@ -721,6 +722,27 @@ class TestDatabaseManager:
         assert response["body"]["database_status"][0]["id"] == "fake_db_id"
         assert response["body"]["database_status"][0]["database_blocked_status"]
         assert response["body"]["database_status"][0]["worker_pool_status"] == "running"
+        assert response["header"]["status"] == 200
+
+    def test_calls_benchmark_status(self, database_manager: DatabaseManager) -> None:
+        """Test calls benchmark status."""
+        fake_database = MagicMock()
+        fake_database.get_loaded_benchmark_data.return_value = (
+            ["tables", "more_tables"],
+            ["benchmark", "more-benchmarks"],
+        )
+        database_manager._databases = {"fake_db_id": fake_database}
+
+        response = database_manager._call_benchmark_status({})
+        assert response["body"]["benchmark_status"][0]["id"] == "fake_db_id"
+        assert response["body"]["benchmark_status"][0]["loaded_benchmarks"] == [
+            "benchmark",
+            "more-benchmarks",
+        ]
+        assert response["body"]["benchmark_status"][0]["loaded_tables"] == [
+            "tables",
+            "more_tables",
+        ]
         assert response["header"]["status"] == 200
 
     def test_start_server(self, database_manager: DatabaseManager):
