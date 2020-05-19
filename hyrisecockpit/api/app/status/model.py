@@ -21,25 +21,14 @@ class DatabaseStatus:
         self.worker_pool_status: str = worker_pool_status
 
 
-class LoadedTables:
-    """Model of loaded tables."""
-
-    def __init__(self, table_name: str, benchmark: str):
-        """Initialize a loaded tables model."""
-        self.table_name: str = table_name
-        self.benchmark: str = benchmark
-
-
 class BenchmarkStatus:
     """Model of benchmark status."""
 
-    def __init__(
-        self, id: str, loaded_benchmarks: List[str], loaded_tables: List[LoadedTables]
-    ):
+    def __init__(self, id: str, loaded_benchmarks: List[str], loaded_tables: List[str]):
         """Initialize a benchmark status model."""
         self.id: str = id
         self.loaded_benchmarks: List[str] = loaded_benchmarks
-        self.loaded_tables: List[LoadedTables] = loaded_tables
+        self.loaded_tables: List[str] = loaded_tables
 
 
 class FailedQuery:
