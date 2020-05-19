@@ -164,7 +164,7 @@ export default defineComponent({
   text-align: right;
 }
 .max-value {
-  margin-top: 17px;
+  margin-top: 15px;
   text-align: right;
 }
 .query-text-field >>> input {
