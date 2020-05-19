@@ -2,6 +2,15 @@
 from typing import List
 
 
+class HyriseStatus:
+    """Model of a Hyrise status."""
+
+    def __init__(self, id: str, hyrise_active: bool):
+        """Initialize a Hyrise status model."""
+        self.id: str = id
+        self.hyrise_active: bool = hyrise_active
+
+
 class FailedQuery:
     """Model of a FailedQuery Entry."""
 

@@ -1,7 +1,24 @@
 """Schema's for status module."""
 
 from marshmallow import Schema
-from marshmallow.fields import List, Nested, String
+from marshmallow.fields import Boolean, List, Nested, String
+
+
+class HyriseStatusSchema(Schema):
+    """Schema of a Hyrise status."""
+
+    id = String(
+        title="Database ID",
+        description="Used to identify a database.",
+        required=True,
+        example="hyrise-1",
+    )
+    hyrise_active = Boolean(
+        title="hyrise active status",
+        description="Hyrise is reachable.",
+        required=True,
+        example=True,
+    )
 
 
 class FailedQuerySchema(Schema):

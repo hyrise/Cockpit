@@ -1,14 +1,38 @@
 """Services for status information."""
 from typing import List
 
-from hyrisecockpit.api.app.connection_manager import StorageConnection
+from jsonschema import validate
+
+from hyrisecockpit.api.app.connection_manager import ManagerSocket, StorageConnection
 from hyrisecockpit.api.app.shared import _get_active_databases
+from hyrisecockpit.message import response_schema
+from hyrisecockpit.request import Header, Request
+from hyrisecockpit.response import Response
 
-from .model import FailedQuery, FailedTask
+from .model import FailedQuery, FailedTask, HyriseStatus
 
 
-class MetaInformationService:
-    """Services of the Meta information Controller."""
+class StatusService:
+    """Services of the status information Controller."""
+
+    @staticmethod
+    def _send_message(message: Request) -> Response:
+        """Send an IPC message with data to a database interface, return the response."""
+        with ManagerSocket() as socket:
+            response = socket.send_message(message)
+        validate(instance=response, schema=response_schema)
+        return response
+
+    @classmethod
+    def get_hyrise_status(cls) -> List[HyriseStatus]:
+        """Get get hyrise status for all databases."""
+        response = cls._send_message(
+            Request(header=Header(message="hyrise status"), body={})
+        )
+        return [
+            HyriseStatus(**interface)
+            for interface in response["body"]["hyrise_instances"]
+        ]
 
     @classmethod
     def get_failed_tasks(cls) -> List[FailedTask]:
