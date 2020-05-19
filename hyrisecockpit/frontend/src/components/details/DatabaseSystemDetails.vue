@@ -7,12 +7,19 @@
       :key="database.id"
     >
       <v-card class="card" :color="database.color">
-        <v-row>
-          <v-col id="database-host" :lg="databases.length > 1 ? 12 : 3" xl="3">
-            <v-card-title class="font-weight-regular white--text">
+        <v-row class="detailsRow">
+          <v-col
+            id="database-host"
+            :lg="databases.length > 1 ? 12 : 3"
+            xl="3"
+            v-bind:class="{
+              multirowCol: !$vuetify.breakpoint.xl && databases.length > 1,
+            }"
+          >
+            <v-card-title class="font-weight-regular white--text noPadding">
               {{ database.systemDetails.host }}
             </v-card-title>
-            <v-card-text class="font-weight-regular white--text"
+            <v-card-text class="font-weight-regular white--text noPadding"
               >Host</v-card-text
             >
           </v-col>
@@ -20,11 +27,14 @@
             id="database-memory-capacity"
             :lg="databases.length > 1 ? 6 : 2"
             xl="2"
+            v-bind:class="{
+              multirowCol: !$vuetify.breakpoint.xl && databases.length > 1,
+            }"
           >
-            <v-card-title class="font-weight-light white--text"
+            <v-card-title class="font-weight-light white--text noPadding"
               >{{ database.systemDetails.memoryCapacity }} GB</v-card-title
             >
-            <v-card-text class="font-weight-light white--text"
+            <v-card-text class="font-weight-light white--text noPadding"
               >Memory Capacity</v-card-text
             >
           </v-col>
@@ -32,11 +42,14 @@
             id="database-number-cpus"
             :lg="databases.length > 1 ? 6 : 2"
             xl="2"
+            v-bind:class="{
+              multirowCol: !$vuetify.breakpoint.xl && databases.length > 1,
+            }"
           >
-            <v-card-title class="font-weight-light white--text">
+            <v-card-title class="font-weight-light white--text noPadding">
               {{ database.systemDetails.numberOfCPUs }}
             </v-card-title>
-            <v-card-text class="font-weight-light white--text"
+            <v-card-text class="font-weight-light white--text noPadding"
               >Number of CPUs</v-card-text
             >
           </v-col>
@@ -44,11 +57,14 @@
             id="database-memory-footprint"
             :lg="databases.length > 1 ? 6 : 2"
             xl="2"
+            v-bind:class="{
+              multirowCol: !$vuetify.breakpoint.xl && databases.length > 1,
+            }"
           >
-            <v-card-title class="mr-6 font-weight-light white--text"
+            <v-card-title class="mr-6 font-weight-light white--text noPadding"
               >{{ database.systemDetails.memoryFootprint }} MB</v-card-title
             >
-            <v-card-text class="mr-10 font-weight-light white--text"
+            <v-card-text class="mr-10 font-weight-light white--text noPadding"
               >Data Size</v-card-text
             >
           </v-col>
@@ -56,11 +72,14 @@
             id="database-number-workers"
             :lg="databases.length > 1 ? 5 : 2"
             xl="2"
+            v-bind:class="{
+              multirowCol: !$vuetify.breakpoint.xl && databases.length > 1,
+            }"
           >
-            <v-card-title class="font-weight-light white--text">
+            <v-card-title class="font-weight-light white--text noPadding">
               {{ database.systemDetails.numberOfWorkers }}
             </v-card-title>
-            <v-card-text class="font-weight-light white--text"
+            <v-card-text class="font-weight-light white--text noPadding"
               >Number of Workers</v-card-text
             >
           </v-col>
@@ -137,5 +156,14 @@ export default defineComponent({
 }
 .v-card__title {
   padding-bottom: 6px;
+}
+.noPadding {
+  padding: 0px !important;
+}
+.detailsRow {
+  padding: 12px;
+}
+.multirowCol {
+  margin-bottom: 8px;
 }
 </style>
