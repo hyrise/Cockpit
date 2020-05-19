@@ -29,18 +29,30 @@ def update_krueger_data(
         "UPDATE": (0, 0),
         "INSERT": (0, 0),
         "DELETE": (0, 0),
+        "DROP": (0, 0),
         "COPY": (0, 0),
     }
 
+    other_count = (0, 0)
+
     if not meta_segments.empty:
         for _, row in meta_segments.iterrows():
+            type_found = False
             for query_type in counts.keys():
                 if row["sql_string"].startswith(query_type):
                     counts[query_type] = (
                         counts[query_type][0] + row["latency"],
                         counts[query_type][1] + row["frequency"],
                     )
+                    type_found = True
                     break
+            if not type_found:
+                other_count = (
+                    other_count[0] + row["latency"],
+                    other_count[1] + row["frequency"],
+                )
+
+    counts["OTHER"] = other_count
 
     krueger_data: List = [
         {
