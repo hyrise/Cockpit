@@ -1,4 +1,4 @@
-"""Services for meta information."""
+"""Services for status information."""
 from typing import List
 
 from hyrisecockpit.api.app.connection_manager import StorageConnection

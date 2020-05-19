@@ -6,11 +6,11 @@ Namespace for hyrise meta information.
 from flask import Flask
 from flask_restx import Api
 
-BASE_ROUTE: str = "meta_information"
+BASE_ROUTE: str = "status"
 
 
 def register_routes(api: Api, app: Flask, root: str) -> None:
     """Register all sql routes."""
-    from .controller import api as meta_information_api
+    from .controller import api as status_api
 
-    api.add_namespace(meta_information_api, path=f"{root}/{BASE_ROUTE}")
+    api.add_namespace(status_api, path=f"{root}/{BASE_ROUTE}")

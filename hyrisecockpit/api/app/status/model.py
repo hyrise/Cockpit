@@ -1,4 +1,4 @@
-"""Model for meta information namespace."""
+"""Model for status information namespace."""
 from typing import List
 
 

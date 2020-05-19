@@ -1,4 +1,4 @@
-"""Schema's for Meta information module."""
+"""Schema's for status module."""
 
 from marshmallow import Schema
 from marshmallow.fields import List, Nested, String

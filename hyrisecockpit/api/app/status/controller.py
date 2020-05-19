@@ -1,4 +1,4 @@
-"""Controllers for meta information."""
+"""Controllers for status information."""
 from typing import List
 
 from flask_accepts import responds
