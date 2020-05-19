@@ -6,22 +6,23 @@ import {
 } from "../types/metrics";
 import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
-import { colorValueDefinition } from "@/meta/colors";
+import { colorValueDefinition, multiColors } from "@/meta/colors";
 
 const transformationServiceMap: Record<Metric, TransformationService> = {
   access: getAccessData,
   cpu: getCPUData,
-  latency: getLatencyData,
   executedQueryTypeProportion: getExecutedQueryTypeProportionData,
   generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
+  latency: getLatencyData,
   memoryFootprint: getMemoryFootprint,
+  operatorProportion: getOperatorData,
   queueLength: getReadOnlyData,
   ram: getRAMData,
   storage: getStorageData,
   throughput: getReadOnlyData,
 };
 
-const { roundNumber, subSeconds, trimString } = useFormatting();
+const { roundNumber } = useFormatting();
 const {
   getTableMemoryFootprint,
   getDatabaseMemoryFootprint,
@@ -266,6 +267,23 @@ function getAccessData(
     dataByChunks.push(chunk);
   }
   return { chunks, columns, dataByChunks, descriptions };
+}
+
+function getOperatorData(data: any, primaryKey: string = ""): any {
+  const operatorData = data.find((entry: any) => entry.id === primaryKey)!;
+  const totalTime = operatorData.operator_data.reduce(
+    (sum: number, operator: any) => sum + operator.total_time_ns,
+    0
+  );
+  return operatorData.operator_data.map((operator: any, idx: number) => {
+    return {
+      x: [""],
+      y: [(operator.total_time_ns / totalTime) * 100],
+      name: operator.operator,
+      type: "bar",
+      marker: { color: multiColors[idx] },
+    };
+  });
 }
 
 export function useMaxValueHelper(

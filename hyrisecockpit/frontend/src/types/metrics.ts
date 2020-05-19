@@ -13,7 +13,8 @@ export type Metric =
   | "queueLength"
   | "executedQueryTypeProportion"
   | "generatedQueryTypeProportion"
-  | "memoryFootprint";
+  | "memoryFootprint"
+  | "operatorProportion";
 
 export const availableMetrics: Metric[] = [
   "access",
@@ -26,6 +27,7 @@ export const availableMetrics: Metric[] = [
   "executedQueryTypeProportion",
   "generatedQueryTypeProportion",
   "memoryFootprint",
+  "operatorProportion",
 ];
 
 export const comparisonMetrics: Metric[] = [
@@ -37,7 +39,7 @@ export const comparisonMetrics: Metric[] = [
   "memoryFootprint",
   "storage",
   "access",
-  "executedQueryTypeProportion",
+  "operatorProportion",
 ];
 export const overviewMetrics: Metric[] = [
   "throughput",
@@ -48,7 +50,10 @@ export const overviewMetrics: Metric[] = [
   "memoryFootprint",
 ];
 
-export const workloadMetrics: Metric[] = ["generatedQueryTypeProportion"];
+export const workloadMetrics: Metric[] = [
+  "generatedQueryTypeProportion",
+  "operatorProportion",
+];
 
 interface AxesRange {
   x?: {
@@ -66,7 +71,7 @@ export type DataType = "interval" | "snapshot";
 export interface MetricMetadata {
   fetchType: FetchType;
   transformationService: TransformationService;
-  base: Base;
+  base?: Base;
   endpoint: string;
   component: string;
   requestTime: number;

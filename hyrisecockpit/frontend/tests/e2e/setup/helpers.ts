@@ -31,7 +31,8 @@ export type Request =
   | "workload"
   | "status"
   | "sql"
-  | "worker";
+  | "worker"
+  | "operator";
 
 export type BackendState = "up" | "down";
 
@@ -105,6 +106,9 @@ const requestRoutes: Record<
     post: "**/control/database/worker",
     delete: "**/control/database/worker",
   },
+  operator: {
+    get: "**/monitor/operator",
+  },
 };
 
 export function getRequestRoute(
@@ -131,6 +135,7 @@ const getAliases: Partial<Record<Request, string>> = {
   plugin_log: "getPluginLog",
   status: "getDatabaseWorkloadState",
   workload: "getWorkloads",
+  operator: "getOperatorData",
 };
 
 const postAliases: Partial<Record<Request, string>> = {

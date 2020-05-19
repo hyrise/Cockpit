@@ -36,20 +36,9 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
       y: { max: 100 },
     },
   },
-  latency: {
-    fetchType: "modify",
-    transformationService: useDataTransformation("latency"),
-    base: "latency",
-    endpoint: monitorBackend + "latency",
-    component: "Latency",
-    requestTime: 1000,
-    dataType: "interval",
-    historic: true,
-  },
   executedQueryTypeProportion: {
     fetchType: "read",
     transformationService: useDataTransformation("executedQueryTypeProportion"),
-    base: "krueger_data",
     endpoint: monitorBackend + "krueger_data",
     component: "QueryTypeProportion",
     requestTime: 5000,
@@ -61,12 +50,21 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation(
       "generatedQueryTypeProportion"
     ),
-    base: "krueger_data",
     endpoint: monitorBackend + "krueger_data",
     component: "QueryTypeProportion",
     requestTime: 5000,
     dataType: "interval",
     historic: false,
+  },
+  latency: {
+    fetchType: "modify",
+    transformationService: useDataTransformation("latency"),
+    base: "latency",
+    endpoint: monitorBackend + "latency",
+    component: "Latency",
+    requestTime: 1000,
+    dataType: "interval",
+    historic: true,
   },
   memoryFootprint: {
     fetchType: "modify",
@@ -77,6 +75,15 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     requestTime: 1000,
     dataType: "interval",
     historic: true,
+  },
+  operatorProportion: {
+    fetchType: "read",
+    transformationService: useDataTransformation("operatorProportion"),
+    endpoint: monitorBackend + "operator",
+    component: "OperatorProportion",
+    requestTime: 5000,
+    dataType: "interval",
+    historic: false,
   },
   queueLength: {
     fetchType: "modify",
@@ -161,15 +168,20 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
     xaxis: "Workload",
     yaxis: "Proportion of queries in %",
   },
+  latency: {
+    title: "Latency",
+    xaxis: timeLabel,
+    yaxis: "Latency in ms",
+  },
   memoryFootprint: {
     title: "Data Size", //Memory Footprint (Sum of all tables)
     xaxis: timeLabel,
     yaxis: "Memory Footprint in MB",
   },
-  latency: {
-    title: "Latency",
-    xaxis: timeLabel,
-    yaxis: "Latency in ms",
+  operatorProportion: {
+    title: "Operator Proportion",
+    xaxis: "Operator",
+    yaxis: "Proportion of operators in %",
   },
   queueLength: {
     title: "Queue Length",

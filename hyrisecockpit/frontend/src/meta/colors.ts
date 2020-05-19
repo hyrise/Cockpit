@@ -38,3 +38,11 @@ export const colorTreemapDefinition: Record<string, string> = {
   pink2: "#fb87be",
   yellow: "#fec981",
 };
+
+export const multiColors = Object.entries({
+  ...colorValueDefinition,
+  ...colorDatabaseDefinition,
+  ...colorTreemapDefinition,
+})
+  .filter(([id, _]) => ["grey", "white"].every((key) => !id.includes(key)))
+  .map(([_, value]) => value);

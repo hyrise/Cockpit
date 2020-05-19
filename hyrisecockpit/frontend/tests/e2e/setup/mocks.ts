@@ -12,6 +12,7 @@ import {
   fakeDatabaseStatusData,
   fakeIds,
   fakeWorkloadData,
+  fakeDatabaseOperatorData,
 } from "./factories";
 import {
   assignFakeData,
@@ -166,6 +167,9 @@ export function useMocks(
     );
     responseMocks.workload = mockedIds.workloads.map((idx) =>
       fakeWorkloadData(idx)
+    );
+    responseMocks.operator = mockedIds.databases.map((id) =>
+      fakeDatabaseOperatorData(id, 7)
     );
     return responseMocks as Record<Request, any>;
   }
