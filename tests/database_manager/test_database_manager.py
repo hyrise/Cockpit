@@ -67,6 +67,7 @@ def get_server_calls() -> List[str]:
         "set plugin setting",
         "get plugin setting",
         "execute sql query",
+        "hyrise status",
     ]
 
 
@@ -695,6 +696,16 @@ class TestDatabaseManager:
         response = database_manager._call_execute_sql_query(fake_body)
 
         assert expected == response
+
+    def test_calls_hyrise_status(self, database_manager: DatabaseManager) -> None:
+        """Test calls hyrise status."""
+        fake_database = MagicMock()
+        fake_database.get_hyrise_active.return_value = True
+        database_manager._databases = {"fake_db_id": fake_database}
+
+        response = database_manager._call_hyrise_status({})
+        assert response["body"]["hyrise_status"]
+        assert response["header"]["status"] == 200
 
     def test_start_server(self, database_manager: DatabaseManager):
         """Test start server."""
