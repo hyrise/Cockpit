@@ -12,7 +12,7 @@
         <div v-if="idx % 15 === 0">
           <div class="value-col">
             <div class="max-value">
-              200
+              10000
             </div>
             <div class="min-value">
               0
@@ -25,14 +25,13 @@
           </div>
           <div class="top-line"></div>
           <v-slider
-            v-model="weight.value"
-            thumb-label
-            thumb-size="24"
+            v-model="weight.sliderValue"
             min="0"
-            max="200"
+            max="100"
             vertical
             class="query-slider"
-            @click="$emit('change', weight.name, weight.value)"
+            @click="updateSlider(weight.name, weight.sliderValue)"
+            @end="updateSlider(weight.name, weight.sliderValue)"
           />
           <div class="bottom-line"></div>
           <v-text-field
@@ -40,7 +39,7 @@
             class="query-text-field"
             dense
             single-line
-            @change="$emit('change', weight.name, weight.value)"
+            @change="updateTextfield(weight.name, parseInt(weight.value))"
           />
         </div>
       </div>
@@ -67,8 +66,10 @@ interface Props {
 interface Data {
   weights: Ref<Weight[]>;
   getDisplayedWorkload: (workload: Workload) => void;
+  updateSlider: (name: string, sliderValue: number) => void;
+  updateTextfield: (name: string, value: number) => void;
 }
-type Weight = { name: string; value: number };
+type Weight = { name: string; value: number; sliderValue: number };
 
 export default defineComponent({
   name: "Equalizer",
@@ -84,19 +85,48 @@ export default defineComponent({
   },
   setup(props: Props, context: SetupContext): Data {
     const weights = ref<Weight[]>([]);
+    const a = 50 / 49;
+    const b = Math.pow(99, 1 / 50);
+
+    function convertSliderValueToValue(sliderValue: number): number {
+      return Math.round(a * Math.pow(b, sliderValue) - a);
+    }
+    function convertValueToSliderValue(value: number): number {
+      return Math.round(Math.log((value + a) / a) / Math.log(b));
+    }
+    function updateSlider(name: string, sliderValue: number): void {
+      let weight: Weight = Object.values(weights.value).find(
+        (weight) => weight.name === name
+      )!;
+      weight.value = convertSliderValueToValue(sliderValue);
+      context.emit("change", name, weight.value);
+    }
+    function updateTextfield(name: string, value: number): void {
+      const weight: Weight = Object.values(weights.value).find(
+        (weight) => weight.name === name
+      )!;
+      weight.sliderValue = convertValueToSliderValue(value);
+      context.emit("change", name, value);
+    }
     watch(
       () => props.initialWeights,
       () => {
         weights.value = Object.entries(props.initialWeights)
           .sort()
           .map(([name, value]) => {
-            return { name: name, value: value };
+            return {
+              name: name,
+              value: value,
+              sliderValue: convertValueToSliderValue(value),
+            };
           });
       }
     );
     return {
       weights,
       getDisplayedWorkload,
+      updateSlider,
+      updateTextfield,
     };
   },
 });
@@ -116,12 +146,12 @@ export default defineComponent({
   border-top: 2px solid #dfdfdf;
   width: 100%;
   margin-top: 50%;
-  margin-bottom: -20px;
+  margin-bottom: -13px;
 }
 .bottom-line {
   border-top: 2px solid #dfdfdf;
   width: 100%;
-  margin-top: -20px;
+  margin-top: -13px;
   margin-bottom: 50%;
 }
 .value-col {
@@ -130,19 +160,19 @@ export default defineComponent({
   margin-right: 8px;
 }
 .min-value {
-  margin-top: 115px;
+  margin-top: 128px;
   text-align: right;
 }
 .max-value {
-  margin-top: 20px;
+  margin-top: 17px;
   text-align: right;
 }
 .query-text-field >>> input {
   text-align: center;
 }
 .query-text-field {
-  width: 40px;
-  margin-top: -20px;
+  width: 44px;
+  margin: -22px 3px 0px 3px;
   text-align: center !important;
 }
 .equalizer {
@@ -150,7 +180,7 @@ export default defineComponent({
   margin-right: 20px;
 }
 .query-name {
-  margin-bottom: -15px;
+  margin-bottom: -22px;
 }
 .break {
   flex-basis: 100%;

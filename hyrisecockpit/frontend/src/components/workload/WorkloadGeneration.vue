@@ -7,7 +7,9 @@
           <v-tooltip right>
             <template v-slot:activator="{ on }">
               <div v-on="on">
-                <v-tab :disabled="!enableEqualizer"> Equalizer </v-tab>
+                <v-tab :disabled="disabled || !enableEqualizer">
+                  Equalizer
+                </v-tab>
               </div>
             </template>
             <span>{{
