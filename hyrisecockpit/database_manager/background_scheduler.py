@@ -12,6 +12,7 @@ from .job.load_tables import load_tables as load_tables_job
 from .job.ping_hyrise import ping_hyrise
 from .job.update_chunks_data import update_chunks_data
 from .job.update_krueger_data import update_krueger_data
+from .job.update_operator_data import update_operator_data
 from .job.update_plugin_log import update_plugin_log
 from .job.update_queue_length import update_queue_length
 from .job.update_storage_data import update_storage_data
@@ -101,6 +102,16 @@ class BackgroundJobManager(object):
             seconds=5,
             args=(self._storage_connection_factory,),
         )
+        self._update_operator_data_job = self._scheduler.add_job(
+            func=update_operator_data,
+            trigger="interval",
+            seconds=5,
+            args=(
+                self._database_blocked,
+                self._connection_factory,
+                self._storage_connection_factory,
+            ),
+        )
 
     def start(self) -> None:
         """Start background scheduler."""
@@ -114,6 +125,7 @@ class BackgroundJobManager(object):
         self._update_storage_data_job.remove()
         self._update_plugin_log_job.remove()
         self._update_queue_length_job.remove()
+        self._update_operator_data_job.remove()
         self._ping_hyrise_job.remove()
         self._scheduler.shutdown()
 

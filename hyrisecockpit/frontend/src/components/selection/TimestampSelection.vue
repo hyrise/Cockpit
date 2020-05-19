@@ -10,14 +10,17 @@
     >
       <template v-slot:activator="{ on }">
         <v-text-field
+          id="date-picker-text"
           v-model="date"
           label="Date"
           prepend-icon="mdi-calendar"
+          :error="!date"
           readonly
           v-on="on"
         ></v-text-field>
       </template>
       <v-date-picker
+        id="date-picker-select"
         v-model="date"
         color="primary"
         :allowed-dates="allowedDates"
@@ -32,13 +35,17 @@
     >
       <template v-slot:activator="{ on }">
         <v-text-field
+          id="time-picker-text"
           v-model="time"
           label="Time"
           prepend-icon="mdi-clock"
+          :error="!time"
+          hint="hh:mm"
           v-on="on"
         ></v-text-field>
       </template>
       <v-time-picker
+        id="time-picker-select"
         v-model="time"
         format="24hr"
         color="primary"
@@ -59,7 +66,7 @@ import {
   computed,
 } from "@vue/composition-api";
 import { useFormatting } from "@/meta/formatting";
-import { isValidDate } from "@/utils/methods";
+import { isInvalidDateTimeString, isInPast } from "@/utils/methods";
 
 interface Data extends UseDatePicking, UseTimePicking {}
 
@@ -166,25 +173,9 @@ function useTimePicking(
   const maxTime = computed(() =>
     formatDateWithoutTime(new Date(selectedDate.value)).getTime() ===
     formatDateWithoutTime(currentDate.value).getTime()
-      ? getTime(currentDate.value)
+      ? `${new Date().getHours()}:${new Date().getMinutes()}`
       : "23:59"
   );
-
-  function getTime(date: Date): string {
-    return `${new Date().getHours()}:${new Date().getMinutes()}`;
-  }
-
-  /* check if new time string is before base time sting */
-  function isInPast(baseTimeString: string, newTimeString: string): boolean {
-    const baseTimes = baseTimeString.split(":");
-    const newTimes = newTimeString.split(":");
-
-    return (
-      parseInt(baseTimes[0], 10) > parseInt(newTimes[0], 10) ||
-      (parseInt(baseTimes[0], 10) === parseInt(newTimes[0], 10) &&
-        parseInt(baseTimes[1], 10) > parseInt(newTimes[1], 10))
-    );
-  }
 
   // set time on change
   watch(
@@ -197,7 +188,8 @@ function useTimePicking(
             new Date(props.minDate).getTime() ||
             [selectedDate.value, props.minDate].includes("")) &&
           isInPast(props.minTime, time.value)) ||
-        (props.minTime && (time.value === "" || !isValidDate(time.value)))
+        (props.minTime &&
+          (time.value === "" || isInvalidDateTimeString(time.value)))
       ) {
         time.value = props.minTime;
       }
