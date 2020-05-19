@@ -30,8 +30,7 @@ class StatusService:
             Request(header=Header(message="hyrise status"), body={})
         )
         return [
-            HyriseStatus(**interface)
-            for interface in response["body"]["hyrise_instances"]
+            HyriseStatus(**interface) for interface in response["body"]["hyrise_status"]
         ]
 
     @classmethod

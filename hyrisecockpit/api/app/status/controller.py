@@ -8,7 +8,7 @@ from .model import FailedTask, HyriseStatus
 from .schema import FailedTaskSchema, HyriseStatusSchema
 from .service import StatusService
 
-api = Namespace("Meta Information", description="Get hyrise meta information.")
+api = Namespace("status", description="Get status information.")
 
 
 @api.route("/hyrise")
