@@ -842,19 +842,18 @@ class KruegerData(Resource):
         active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
-                'SELECT LAST("executed"), * FROM krueger_data', database=database,
+                'SELECT LAST("krueger_data"), * FROM krueger_data', database=database,
             )
-            krueger_data_value = list(result["krueger_data", None])
-            if len(krueger_data_value) > 0:
+            krueger_data_values = list(result["krueger_data", None])
+            if len(krueger_data_values) > 0:
                 krueger_data.append(
                     {
                         "id": database,
-                        "executed": loads(krueger_data_value[0]["executed"]),
-                        "generated": loads(krueger_data_value[0]["generated"]),
+                        "krueger_data": loads(krueger_data_values[0]["last"]),
                     }
                 )
             else:
-                krueger_data.append({"id": database, "executed": {}, "generated": {}})
+                krueger_data.append({"id": database, "krueger_data": []})
         return krueger_data
 
 
