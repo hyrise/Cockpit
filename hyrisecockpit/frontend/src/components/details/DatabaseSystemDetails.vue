@@ -24,21 +24,20 @@
             >
           </v-col>
           <v-col
-            id="database-number-workers"
+            id="database-memory-capacity"
             :lg="databases.length > 1 ? 4 : 2"
             xl="2"
             v-bind:class="{
               multirowCol: !$vuetify.breakpoint.xl && databases.length > 1,
             }"
           >
-            <v-card-title class="font-weight-light white--text noPadding">
-              {{ database.systemDetails.numberOfWorkers }}
-            </v-card-title>
+            <v-card-title class="font-weight-light white--text noPadding"
+              >{{ database.systemDetails.memoryCapacity }} GB</v-card-title
+            >
             <v-card-text class="font-weight-light white--text noPadding"
-              ># of Workers</v-card-text
+              >Memory Capacity</v-card-text
             >
           </v-col>
-
           <v-col
             id="database-number-cpus"
             :lg="databases.length > 1 ? 4 : 2"
@@ -71,18 +70,18 @@
             >
           </v-col>
           <v-col
-            id="database-memory-capacity"
+            id="database-number-workers"
             :lg="databases.length > 1 ? 4 : 2"
             xl="2"
             v-bind:class="{
               multirowCol: !$vuetify.breakpoint.xl && databases.length > 1,
             }"
           >
-            <v-card-title class="font-weight-light white--text noPadding"
-              >{{ database.systemDetails.memoryCapacity }} GB</v-card-title
-            >
+            <v-card-title class="font-weight-light white--text noPadding">
+              {{ database.systemDetails.numberOfWorkers }}
+            </v-card-title>
             <v-card-text class="font-weight-light white--text noPadding"
-              >Memory Capacity</v-card-text
+              ># of Workers</v-card-text
             >
           </v-col>
         </v-row>
