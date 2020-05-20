@@ -10,6 +10,7 @@ RUN apt-get update \
     && git clone https://github.com/hyrise/hyrise.git hyrise-git \ 
     && cd hyrise-git \
     && git checkout bp1920 \
+    && sed -i 's/-march=native/-march=core2/g' CMakeLists.txt \
     && ./install_dependencies.sh \
     && mkdir /usr/local/hyrise-git/cmake-build-release \
     && cd /usr/local/hyrise-git/cmake-build-release \
