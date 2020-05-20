@@ -1,4 +1,4 @@
-export const colorValueDefinition: Record<string, string> = {
+export const colorValueDefinition = {
   darkgrey: "#424242",
   lightgrey: "#bdbdbd",
   white: "ffffff",
@@ -10,7 +10,7 @@ export const colorValueDefinition: Record<string, string> = {
   darkblue: "#1f688a",
 };
 
-export const colorDatabaseDefinition: Record<string, string> = {
+export const colorDatabaseDefinition = {
   darkblue: "#1c4e80",
   grey: "#7e909a",
   orange: "#ea6a47",
@@ -21,7 +21,7 @@ export const colorDatabaseDefinition: Record<string, string> = {
   turquoise: "#488a99",
 };
 
-export const colorTreemapDefinition: Record<string, string> = {
+export const colorTreemapDefinition = {
   green: "#a6cf91",
   orange: "#ffcc5c",
   red: "#ff6f69",

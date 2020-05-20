@@ -22,7 +22,7 @@ const transformationServiceMap: Record<Metric, TransformationService> = {
   throughput: getReadOnlyData,
 };
 
-const { roundNumber } = useFormatting();
+const { roundNumber, formatPercentage } = useFormatting();
 const {
   getTableMemoryFootprint,
   getDatabaseMemoryFootprint,
@@ -138,10 +138,6 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
     return roundNumber(value, 1000, 1 / Math.pow(10, 3), false);
   }
 
-  function getPercentage(part: number, total: number): number {
-    return roundNumber(part / total, 100, Math.pow(10, 4), false);
-  }
-
   function getEncodingData(rawData: any): string {
     const totalAmount = rawData.reduce(
       (accumulator: number, currentEncoding: any) =>
@@ -170,7 +166,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
         return (
           encodingText +
           "<br> " +
-          getPercentage(currentEncoding.amount, totalAmount) +
+          formatPercentage(currentEncoding.amount, totalAmount) +
           "%: " +
           currentEncoding.name +
           "<br> (" +
@@ -191,7 +187,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
         size: `${getTableMemoryFootprint(tableData.data)} MB`,
         encoding: "",
         dataType: "",
-        percentOfDatabase: `${getPercentage(
+        percentOfDatabase: `${formatPercentage(
           getTableMemoryFootprint(tableData.data),
           totalDatabaseMemory
         )} % of total footprint`,
@@ -207,11 +203,11 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
             size: `${getRoundedData(attributeData.size)} MB`,
             encoding: `encoding: ${getEncodingData(attributeData.encoding)}`,
             dataType: `data type: ${attributeData.data_type}`,
-            percentOfDatabase: `${getPercentage(
+            percentOfDatabase: `${formatPercentage(
               getRoundedData(attributeData.size),
               totalDatabaseMemory
             )} % of total footprint`,
-            percentOfTable: `${getPercentage(
+            percentOfTable: `${formatPercentage(
               getRoundedData(attributeData.size),
               getTableMemoryFootprint(tableData.data)
             )} % of ${table}`,
@@ -275,15 +271,56 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
     (sum: number, operator: any) => sum + operator.total_time_ns,
     0
   );
-  return operatorData.operator_data.map((operator: any, idx: number) => {
-    return {
-      x: [""],
-      y: [(operator.total_time_ns / totalTime) * 100],
-      name: operator.operator,
-      type: "bar",
-      marker: { color: multiColors[idx] },
-    };
-  });
+  /* combine all entries smaller than 5% */
+  const rest: any[] = [];
+  const restLabel = {
+    x: [""],
+    y: [0],
+    name: "rest",
+    type: "bar",
+    text: "",
+    hoverinfo: "text",
+    marker: { color: colorValueDefinition.lightgrey },
+  };
+
+  return operatorData.operator_data
+    .reduce((chartData: any[], operator: any, idx: number) => {
+      const operatorProportion = (operator.total_time_ns / totalTime) * 100;
+      if (operatorProportion < 5) {
+        rest.push({ name: operator.operator, size: operatorProportion });
+      } else {
+        chartData.push({
+          x: [""],
+          y: [operatorProportion],
+          name: operator.operator,
+          type: "bar",
+          text: `${formatPercentage(operatorProportion, 100)} % - ${
+            operator.operator
+          } `,
+          hoverinfo: "text",
+          marker: { color: multiColors[idx] },
+        });
+      }
+      return chartData;
+    }, [])
+    .sort((operator1: any, operator2: any) => operator2.y[0] - operator1.y[0])
+    .concat([
+      rest
+        .sort(
+          (operator1: any, operator2: any) => operator1.size - operator2.size
+        )
+        .reduce((chartData, operator: any) => {
+          return {
+            ...chartData,
+            y: [chartData.y[0] + operator.size],
+            text:
+              chartData.text +
+              `${formatPercentage(operator.size, 100)} % - ${
+                operator.name
+              } <br>`,
+          };
+        }, restLabel),
+    ]);
 }
 
 export function useMaxValueHelper(

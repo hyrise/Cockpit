@@ -42,13 +42,21 @@ describe("visiting the workload monitoring page", () => {
   // test data
   it("will show the correct metric data", () => {
     cy.get(getSelector("operatorProportion")).should((elements: any) => {
-      assertBarChartData(
-        elements[0].data,
-        data[database.id].reduce((obj: any, opData: any) => {
-          obj[opData.operator] = opData.relativeTime;
+      const transformedData = data[database.id].reduce(
+        (obj: any, opData: any) => {
+          if (opData.relativeTime < 5) {
+            obj.combined.rest = obj.combined.rest + opData.relativeTime;
+          } else {
+            obj.parts[opData.operator] = opData.relativeTime;
+          }
           return obj;
-        }, {})
+        },
+        { parts: {}, combined: { rest: 0 } }
       );
+      // assert distinct parts
+      assertBarChartData(elements[0].data, transformedData.parts);
+      // assert combined parts
+      assertBarChartData(elements[0].data, transformedData.combined);
     });
   });
 

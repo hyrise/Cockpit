@@ -19,6 +19,7 @@ export function useFormatting(): {
   trimString: (string: string, length: number) => string;
   formatMinutesToSeconds: (minutes: number) => number;
   getNanoSeconds: (seconds: number) => number;
+  formatPercentage: (part: number, total: number) => number;
 } {
   /* STRINGS */
 
@@ -98,6 +99,10 @@ export function useFormatting(): {
     return even ? Math.floor(rounded) : rounded;
   }
 
+  function formatPercentage(part: number, total: number): number {
+    return roundNumber(part / total, 100, Math.pow(10, 4), false);
+  }
+
   return {
     formatNumberWithCommas,
     formatDateWithoutMilliSec,
@@ -112,6 +117,7 @@ export function useFormatting(): {
     formatMinutesToSeconds,
     formatStringsToDate,
     getNanoSeconds,
+    formatPercentage,
   };
 }
 
