@@ -12,7 +12,7 @@
             id="database-host"
             :lg="databases.length > 1 ? 4 : 3"
             xl="3"
-            v-bind:class="{
+            :class="{
               multirowCol: !$vuetify.breakpoint.xl && databases.length > 1,
             }"
           >
@@ -27,7 +27,7 @@
             id="database-memory-capacity"
             :lg="databases.length > 1 ? 4 : 2"
             xl="2"
-            v-bind:class="{
+            :class="{
               multirowCol: !$vuetify.breakpoint.xl && databases.length > 1,
             }"
           >
@@ -42,7 +42,7 @@
             id="database-number-cpus"
             :lg="databases.length > 1 ? 4 : 2"
             xl="2"
-            v-bind:class="{
+            :class="{
               multirowCol: !$vuetify.breakpoint.xl && databases.length > 1,
             }"
           >
@@ -58,7 +58,7 @@
             id="database-memory-footprint"
             :lg="databases.length > 1 ? 4 : 2"
             xl="2"
-            v-bind:class="{
+            :class="{
               multirowCol: !$vuetify.breakpoint.xl && databases.length > 1,
             }"
           >
@@ -73,7 +73,7 @@
             id="database-number-workers"
             :lg="databases.length > 1 ? 4 : 2"
             xl="2"
-            v-bind:class="{
+            :class="{
               multirowCol: !$vuetify.breakpoint.xl && databases.length > 1,
             }"
           >
