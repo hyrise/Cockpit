@@ -15,9 +15,10 @@ from plugin_evaluation.export.points_handling import handle_plugin_log
 class Exporter:
     """Exports time series data to PDF."""
 
-    def __init__(self, tag: str):
+    def __init__(self, tag: str, csv_export: bool = False):
         """Clear folder structure."""
         self._tag: str = tag
+        self._csv_export_flag: bool = csv_export
         self._timestamp = datetime.now()
         self._folder_name = self._timestamp.strftime(f"{tag} %H:%M:%S %d-%m-%Y")
         self.plugin_logs: List = []
@@ -112,10 +113,10 @@ class Exporter:
             self.plugin_logs,
             max(log_interval, int(aggregation_interval / log_interval)),
         )
-
-        csv_function(
-            aggregated_x_values, aggregated_y_values, save_path, title, x_label
-        )
+        if self._csv_export_flag:
+            csv_function(
+                aggregated_x_values, aggregated_y_values, save_path, title, x_label
+            )
 
     def plot_metric_for_benchmark(
         self,
