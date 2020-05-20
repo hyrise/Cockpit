@@ -40,6 +40,8 @@ flask-accepts = "*"
 marshmallow = "*"
 matplotlib = "*"
 numpy = "*"
+scipy = "*"
+poetry = "*"
 
 [requires]
 python_version = "3.8.2"

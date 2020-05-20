@@ -7,6 +7,7 @@ import numpy as np
 from matplotlib.font_manager import FontProperties
 from matplotlib.pyplot import figure
 from matplotlib.transforms import Bbox
+from scipy.ndimage.filters import gaussian_filter1d
 
 
 def plot_line_chart(
@@ -33,14 +34,26 @@ def plot_line_chart(
     for (metric_name, values), index in zip(
         metric_values.items(), range(len(metric_values.keys()))
     ):
+        values_smoothed = gaussian_filter1d(values, sigma=1.5)
+
         plt.plot_date(
             time_values,
             values,
-            "-b",
+            "-",
             color=colors[index % len(colors)],
             label=f"{metric_name}",
+            linewidth=1,
+            alpha=0.5,
         )
 
+        plt.plot_date(
+            time_values,
+            values_smoothed,
+            linestyle="--",
+            color=colors[index % len(colors)],
+            label="_nolegend_",
+            marker=None,
+        )
     ######### Plugin Logs ###### # noqa
 
     log_color = "lime"
