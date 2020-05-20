@@ -16,8 +16,8 @@ RUN cd /usr/local/ \
     && CXXFLAGS=-fdiagnostics-color=always cmake -DENABLE_NUMA_SUPPORT=Off -DCMAKE_BUILD_TYPE=Release .. \
     && make hyriseConsole hyriseServer \
     && mkdir -p /usr/local/hyrise/lib \
-    && cd /usr/local/hyrise-git/cmake-build-release/ \ 
-    && cp hyriseServer hyriseConsole /usr/local/hyrise/ \
-    && cp lib/libC* lib/libI* /usr/local/hyrise/lib/ \
-    && apt-get autoremove 
+    && cp hyriseServer hyriseConsole /usr/local/hyrise/
+RUN && cd /usr/local/hyrise-git/cmake-build-release \
+    && make CompressionPlugin ClusteringPlugin IndexSelectionPlugin \
+    && cp lib/libClusteringPlugin.so lib/libCompressionPlugin.so lib/libIndexSelectionPlugin.so /usr/local/hyrise/lib/ 
 ENTRYPOINT ["/usr/local/hyrise/hyriseServer"]
