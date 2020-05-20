@@ -88,9 +88,9 @@ def plot_line_chart(
     ####### Statistics ######## # noqa
     rows = [
         ["%.3f" % func(values) for metric, values in metric_values.items()]
-        for func in (np.amax, np.mean, np.amin)
+        for func in (np.amax, np.mean, np.amin, np.var)
     ]
-    row_labels = ["MAX", "AVG", "MIN"]
+    row_labels = ["MAX", "AVG", "MIN", "VAR"]
     plt.table(
         cellText=rows,
         rowLabels=row_labels,
