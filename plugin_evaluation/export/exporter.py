@@ -20,7 +20,7 @@ class Exporter:
         self._tag: str = tag
         self._csv_export_flag: bool = csv_export
         self._timestamp = datetime.now()
-        self._folder_name = self._timestamp.strftime(f"{tag} %H:%M:%S %d-%m-%Y")
+        self._folder_name = self._timestamp.strftime(f"{tag} %d-%m-%Y %H:%M:%S")
         self.plugin_logs: List = []
         absolute_plugin_evaluation_path: str = str(
             Path(__file__).parent.parent.absolute()
