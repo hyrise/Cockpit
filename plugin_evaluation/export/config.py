@@ -173,7 +173,7 @@ config = {
         "column_name": "latency",  # ignored
         "x_label": "Query name",
         "y_label": "ms",
-        "title": "Detailed latency of the queries",
+        "title": "Average latency of the queries",
         "influx_function": get_detailed_latency_information,
         "points_function": sort_detailed_latency_points,
         "aggregation_function": idle_aggregation,

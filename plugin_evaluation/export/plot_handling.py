@@ -179,6 +179,6 @@ def plot_plugin_log_table(plugin_logs: List, path: str):
         ############################ # noqa
 
         plt.savefig(
-            f"{path}plugin_log.png", dpi=300, bbox_inches=nbbox,
+            f"{path}Plugin log.png", dpi=300, bbox_inches=nbbox,
         )
     plt.close(fig)
