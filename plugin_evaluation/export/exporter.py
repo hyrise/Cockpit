@@ -80,10 +80,12 @@ class Exporter:
         y_label: str = metric_config["y_label"]  # type: ignore
         path: str = metric_config["path"]  # type: ignore
         log_interval: int = metric_config["log_interval"]  # type: ignore
+        title: int = metric_config["title"]  # type: ignore
 
         influx_function: Callable = metric_config["influx_function"]  # type: ignore
         points_function: Callable = metric_config["points_function"]  # type: ignore
         aggregation_function: Callable = metric_config["aggregation_function"]  # type: ignore
+        title_function: Callable = metric_config["title_function"]  # type: ignore
         plot_function: Callable = metric_config["plot_function"]  # type: ignore
         csv_function: Callable = metric_config["csv_function"]  # type: ignore
 
@@ -97,18 +99,20 @@ class Exporter:
             endts,
             parameter,
         )
-        x_values, y_values, title = points_function(points, column_name, parameter)
+        x_values, y_values = points_function(points, column_name, parameter)
 
         aggregated_x_values, aggregated_y_values = aggregation_function(
             x_values, y_values, log_interval, aggregation_interval
         )
+
+        formatted_title = title_function(title, parameter)
 
         plot_function(
             aggregated_x_values,
             aggregated_y_values,
             x_label,
             y_label,
-            title,
+            formatted_title,
             save_path,
             self.plugin_logs,
             max(log_interval, int(aggregation_interval / log_interval)),

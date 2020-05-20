@@ -30,7 +30,7 @@ def default_function(points: List, column_name: str, parameter):
     ]
     metric_values = {column_name: [point[column_name] for point in points]}
 
-    return formatted_time, metric_values, column_name
+    return formatted_time, metric_values
 
 
 def ns_to_ms(points: List, column_name: str, parameter):
@@ -40,7 +40,7 @@ def ns_to_ms(points: List, column_name: str, parameter):
     ]
     metric_values = {column_name: [point[column_name] / 1_000_000 for point in points]}
 
-    return formatted_time, metric_values, column_name
+    return formatted_time, metric_values
 
 
 def handle_query_latency(points: List, column_name: str, parameter):
@@ -54,7 +54,7 @@ def handle_query_latency(points: List, column_name: str, parameter):
     ]
     metric_values = {label: [point[column_name] / 1_000_000 for point in points]}
 
-    return formatted_time, metric_values, f"Query latency {label}"
+    return formatted_time, metric_values
 
 
 def calculate_footprint(points: List, column_name: str, parameter):  # noqa
@@ -89,7 +89,7 @@ def calculate_footprint(points: List, column_name: str, parameter):  # noqa
 
     footprint["total"] = total_footprint
 
-    return formatted_time, _sort_metric_dictionary(footprint), "Footprint of the tables"
+    return formatted_time, _sort_metric_dictionary(footprint)
 
 
 def calculate_footprint_for_table(  # noqa
@@ -124,11 +124,7 @@ def calculate_footprint_for_table(  # noqa
             for column_name in column_footprints.keys():
                 column_footprints[column_name].append(0.0)
 
-    return (
-        formatted_time,
-        _sort_metric_dictionary(column_footprints),
-        f"Footprint - {table_name}",
-    )
+    return (formatted_time, _sort_metric_dictionary(column_footprints))
 
 
 def calculate_access_frequency(  # noqa
@@ -163,11 +159,7 @@ def calculate_access_frequency(  # noqa
             else:
                 table_accesses[table_name].append(0)
 
-    return (
-        formatted_time,
-        _sort_metric_dictionary(table_accesses),
-        "Access frequency",
-    )
+    return (formatted_time, _sort_metric_dictionary(table_accesses))
 
 
 def calculate_access_frequency_for_table(  # noqa
@@ -203,11 +195,7 @@ def calculate_access_frequency_for_table(  # noqa
             for column_name in column_accesses.keys():
                 column_accesses[column_name].append(0)
 
-    return (
-        formatted_time,
-        _sort_metric_dictionary(column_accesses),
-        f"Access frequency - {table_name}",
-    )
+    return (formatted_time, _sort_metric_dictionary(column_accesses))
 
 
 def sort_detailed_latency_points(points: List, column_name: str, parameter):
@@ -227,7 +215,7 @@ def sort_detailed_latency_points(points: List, column_name: str, parameter):
 
     latency = [point["latency"] / 1_000_000 for point in points]
 
-    return labels, latency, "Average latency of the queries"
+    return labels, latency
 
 
 def handle_plugin_log(plugin_logs: List):
