@@ -16,6 +16,10 @@ const selectors: Record<string, { element: string; title: string }> = {
     element: "div",
     title: "generatedQueryTypeProportion",
   },
+  operatorProportion: {
+    element: "div",
+    title: "operatorProportion",
+  },
   memoryFootprint: { element: "div", title: "memoryFootprint" },
   firstStorage: { element: "div", title: "1storage" },
   secondStorage: { element: "div", title: "2storage" },
@@ -84,7 +88,7 @@ export function assertLineChartData(
 export function assertBarChartData(
   chartDatasets: any[],
   requestData: any,
-  xaxis: string
+  xaxis = ""
 ): void {
   Object.keys(requestData).forEach((label: string) => {
     const chartData: any = chartDatasets.find(
@@ -94,7 +98,7 @@ export function assertBarChartData(
     expect(chartData.x).to.exist;
     expect(chartData.y).to.exist;
     expect(chartData.y).to.eql([requestData[label]]);
-    expect(chartData.x).to.eql([xaxis]);
+    if (!!xaxis) expect(chartData.x).to.eql([xaxis]);
   });
 }
 

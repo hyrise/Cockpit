@@ -49,6 +49,7 @@ function useBarChartConfiguration(
           text: chartConfiguration.yaxis,
         },
         rangemode: "tozero",
+        range: [0, 100],
       },
       barmode: "stack",
       autosize: true,

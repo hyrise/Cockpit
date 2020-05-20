@@ -46,7 +46,7 @@ export const comparisonRequests: Request[] = [
   "queue_length",
   "system",
   "storage",
-  "krueger_data",
+  "operator",
 ];
 export const overviewRequests: Request[] = [
   "throughput",
@@ -55,7 +55,10 @@ export const overviewRequests: Request[] = [
   "system",
   "storage",
 ];
-export const workloadMonitoringRequests: Request[] = ["krueger_data"];
+export const workloadMonitoringRequests: Request[] = [
+  "krueger_data",
+  "operator",
+];
 
 const requestRoutes: Record<
   Request,
@@ -107,7 +110,7 @@ const requestRoutes: Record<
     delete: "**/control/database/worker",
   },
   operator: {
-    get: "**/monitor/operator",
+    get: "**/monitor/operator**",
   },
 };
 
