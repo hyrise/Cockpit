@@ -80,12 +80,17 @@ export interface MetricMetadata {
   historic: boolean;
 }
 
-export interface ComparisonMetricData {
+export interface LineChartComponentData {
   data: Ref<any>;
   chartConfiguration: ChartConfiguration;
   maxValue: Ref<number>;
   timestamps: Ref<Date[]>;
   pluginEventData: any;
+}
+
+export interface BasicChartComponentData<T> {
+  data: Ref<T>;
+  chartConfiguration: ChartConfiguration;
 }
 
 export interface MetricProps {

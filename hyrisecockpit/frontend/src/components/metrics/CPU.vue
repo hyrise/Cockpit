@@ -32,7 +32,7 @@ import Linechart from "../charts/Linechart.vue";
 import {
   MetricProps,
   MetricPropsValidation,
-  ComparisonMetricData,
+  LineChartComponentData,
 } from "../../types/metrics";
 import MetricDetails from "../details/MetricDetails.vue";
 import { useLineChartComponent } from "../../meta/components";
@@ -41,7 +41,7 @@ export default defineComponent({
   name: "CPU",
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
-  setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
+  setup(props: MetricProps, context: SetupContext): LineChartComponentData {
     return {
       ...useLineChartComponent(props, context),
     };
