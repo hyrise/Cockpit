@@ -17,7 +17,7 @@ RUN cd /usr/local/ \
     && make hyriseConsole hyriseServer \
     && mkdir -p /usr/local/hyrise/lib \
     && cp hyriseServer hyriseConsole /usr/local/hyrise/
-RUN && cd /usr/local/hyrise-git/cmake-build-release \
+RUN cd /usr/local/hyrise-git/cmake-build-release \
     && make CompressionPlugin ClusteringPlugin IndexSelectionPlugin \
     && cp lib/libClusteringPlugin.so lib/libCompressionPlugin.so lib/libIndexSelectionPlugin.so /usr/local/hyrise/lib/ 
 ENTRYPOINT ["/usr/local/hyrise/hyriseServer"]
