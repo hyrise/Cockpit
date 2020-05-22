@@ -88,7 +88,7 @@ export function assertLineChartData(
 export function assertBarChartData(
   chartDatasets: any[],
   requestData: any,
-  xaxis = ""
+  xaxis?: string
 ): void {
   Object.keys(requestData).forEach((label: string) => {
     const chartData: any = chartDatasets.find(

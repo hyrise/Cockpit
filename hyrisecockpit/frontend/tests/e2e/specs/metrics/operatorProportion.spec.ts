@@ -73,13 +73,13 @@ describe("visiting the comparison page", () => {
           const transformedData = data[database.id].reduce(
             (obj: any, opData: any) => {
               if (opData.relativeTime < 5) {
-                obj.combined.rest = obj.combined.rest + opData.relativeTime;
+                obj.combined.Other = obj.combined.Other + opData.relativeTime;
               } else {
                 obj.parts[opData.operator] = opData.relativeTime;
               }
               return obj;
             },
-            { parts: {}, combined: { rest: 0 } }
+            { parts: {}, combined: { Other: 0 } }
           );
           // assert distinct parts
           assertBarChartData(elements[0].data, transformedData.parts);
@@ -97,7 +97,9 @@ describe("visiting the comparison page", () => {
         (elements: any) => {
           const layout = elements[0].layout;
           expect(layout.xaxis.title.text).to.eq("Operator");
-          expect(layout.yaxis.title.text).to.eq("Proportion of operators in %");
+          expect(layout.yaxis.title.text).to.eq(
+            "Distribution of operator runtimes in %"
+          );
           expect(layout.yaxis.range[0]).to.eq(0);
           expect(layout.yaxis.range[1]).to.eq(100);
         }
