@@ -62,6 +62,8 @@ function useBarChartConfiguration(
       },
       paper_bgcolor: "rgba(0,0,0,0)",
       plot_bgcolor: "rgba(0,0,0,0)",
+      hovermode: "closest",
+      legend: { orientation: "h", y: -0.3, traceorder: "normal" },
     };
   }
 

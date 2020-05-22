@@ -12,6 +12,7 @@ import { useDataTransformation } from "@/services/transformationService";
 import { colorValueDefinition } from "./colors";
 import { FetchType } from "@/types/services";
 
+/** store metric specific static data */
 const metricsMetadata: Record<Metric, MetricMetadata> = {
   access: {
     fetchType: "read",
@@ -179,9 +180,9 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
     yaxis: "Memory Footprint in MB",
   },
   operatorProportion: {
-    title: "Operator Proportion",
+    title: "Operator Runtime Overview",
     xaxis: "Operator",
-    yaxis: "Proportion of operators in %",
+    yaxis: "Distribution of operator runtimes in %",
   },
   queueLength: {
     title: "Queue Length",

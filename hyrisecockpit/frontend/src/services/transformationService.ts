@@ -8,6 +8,16 @@ import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
 import { colorValueDefinition, multiColors } from "@/meta/colors";
 
+const {
+  roundNumber,
+  formatPercentage,
+  formatNumberWithCommas,
+} = useFormatting();
+const {
+  getTableMemoryFootprint,
+  getDatabaseMemoryFootprint,
+} = useDataTransformationHelpers();
+
 const transformationServiceMap: Record<Metric, TransformationService> = {
   access: getAccessData,
   cpu: getCPUData,
@@ -22,16 +32,14 @@ const transformationServiceMap: Record<Metric, TransformationService> = {
   throughput: getReadOnlyData,
 };
 
-const { roundNumber, formatPercentage } = useFormatting();
-const {
-  getTableMemoryFootprint,
-  getDatabaseMemoryFootprint,
-} = useDataTransformationHelpers();
-
+/** export appropriate transformation function of given metric */
 export function useDataTransformation(metric: Metric): TransformationService {
   return transformationServiceMap[metric];
 }
 
+// TRANSFORM FUNCTION POOL
+
+/** transform executed query type data */
 function getExecutedQueryTypeProportionData(
   data: any,
   primaryKey: string = ""
@@ -43,6 +51,7 @@ function getExecutedQueryTypeProportionData(
   return getQueryTypeProportionData(executedQueryTypeProportion, "executed");
 }
 
+/** transform generated query type data */
 function getGeneratedQueryTypeProportionData(
   data: any,
   primaryKey: string = ""
@@ -54,6 +63,7 @@ function getGeneratedQueryTypeProportionData(
   return getQueryTypeProportionData(generatedQueryTypeProportion, "generated");
 }
 
+/** transform generic query type data to heatmap structure */
 function getQueryTypeProportionData(data: any, type: string): any {
   return [
     {
@@ -95,28 +105,34 @@ function getQueryTypeProportionData(data: any, type: string): any {
   ];
 }
 
+/** transform to cpu process usage data */
 function getCPUData(data: any, primaryKey: string = ""): number[] {
   return data.map((entry: any) => entry[primaryKey].cpu.cpu_process_usage);
 }
 
+/** transform available ram data to used ram data */
 function getRAMData(data: any, primaryKey: string = ""): number[] {
   return data.map((entry: any) => 100 - entry[primaryKey].memory.percent);
 }
 
+/** read data only by primary key */
 function getReadOnlyData(data: any, primaryKey: string = ""): number[] {
   return data.map((entry: any) => entry[primaryKey]);
 }
 
+/** transform latency data from ns to ms */
 function getLatencyData(data: any, primaryKey: string = ""): number[] {
   return getReadOnlyData(data, primaryKey).map((data: number) =>
     roundNumber(data, Math.pow(10, 6))
   );
 }
 
+/** calculate memory footprint data */
 function getMemoryFootprint(data: any): number[] {
   return [getDatabaseMemoryFootprint(data)];
 }
 
+/** transform storage data for treemap structure consisting of parents, labels, sizes and tooltips */
 function getStorageData(data: any, primaryKey: string = ""): StorageData {
   //TODO: this can be replaced when the size entry of the returned data of every table is fixed from the backend
   const totalDatabaseMemory = getDatabaseMemoryFootprint(data[primaryKey]);
@@ -225,6 +241,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
   };
 }
 
+/** transform access data displayed by chunks */
 function getAccessData(
   data: any,
   primaryKey: string = "",
@@ -265,6 +282,7 @@ function getAccessData(
   return { chunks, columns, dataByChunks, descriptions };
 }
 
+/** tranform operator data with appropriate tooltip information */
 function getOperatorData(data: any, primaryKey: string = ""): any {
   const operatorData = data.find((entry: any) => entry.id === primaryKey)!;
   const totalTime = operatorData.operator_data.reduce(
@@ -276,7 +294,7 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
   const restLabel = {
     x: [""],
     y: [0],
-    name: "rest",
+    name: "Other",
     type: "bar",
     text: "",
     hoverinfo: "text",
@@ -287,7 +305,11 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
     .reduce((chartData: any[], operator: any, idx: number) => {
       const operatorProportion = (operator.total_time_ns / totalTime) * 100;
       if (operatorProportion < 5) {
-        rest.push({ name: operator.operator, size: operatorProportion });
+        rest.push({
+          name: operator.operator,
+          time: operator.total_time_ns,
+          proportion: operatorProportion,
+        });
       } else {
         chartData.push({
           x: [""],
@@ -296,7 +318,9 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
           type: "bar",
           text: `${formatPercentage(operatorProportion, 100)} % - ${
             operator.operator
-          } `,
+          } -  ${formatNumberWithCommas(
+            roundNumber(operator.total_time_ns, Math.pow(10, 9), 1000, true)
+          )} ms  `,
           hoverinfo: "text",
           marker: { color: multiColors[idx] },
         });
@@ -307,22 +331,28 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
     .concat([
       rest
         .sort(
-          (operator1: any, operator2: any) => operator1.size - operator2.size
+          (operator1: any, operator2: any) =>
+            operator1.proportion - operator2.proportion
         )
         .reduce((chartData, operator: any) => {
           return {
             ...chartData,
-            y: [chartData.y[0] + operator.size],
+            y: [chartData.y[0] + operator.proportion],
             text:
               chartData.text +
-              `${formatPercentage(operator.size, 100)} % - ${
+              `${formatPercentage(operator.proportion, 100)} % - ${
                 operator.name
-              } <br>`,
+              } - ${formatNumberWithCommas(
+                roundNumber(operator.time, Math.pow(10, 9), 1000, true)
+              )} ms <br>`,
           };
         }, restLabel),
     ]);
 }
 
+/**
+ * use helpers for detecting max values of read only metric data
+ */
 export function useMaxValueHelper(
   metric: Metric
 ): ((data: any) => number) | undefined {
@@ -330,6 +360,7 @@ export function useMaxValueHelper(
     access: getAccessMaxValue,
   };
 
+  /* detect max value of access data */
   function getAccessMaxValue(data: any): number {
     return Object.values(data).reduce((maxValue: number, dbData: any) => {
       const tableMaxValue = Object.values(dbData).reduce(
@@ -350,11 +381,15 @@ export function useMaxValueHelper(
   return maxValueHelper[metric];
 }
 
+/**
+ * use helpers to transform database specific information
+ */
 export function useDataTransformationHelpers(): {
   getDatabaseMemoryFootprint: (data: any) => number;
   getTableMemoryFootprint: (data: any) => number;
   getDatabaseMainMemoryCapacity: (data: any) => number;
 } {
+  /* get memory footprint of all loaded tables */
   function getTableMemoryFootprint(data: any): number {
     return roundNumber(
       Object.values(data).reduce(
@@ -366,6 +401,8 @@ export function useDataTransformationHelpers(): {
       false
     );
   }
+
+  /* get memory footprint of database */
   function getDatabaseMemoryFootprint(data: any): number {
     const memory: number[] = [];
     Object.entries(data).forEach(([table, tableData]: [string, any]) => {
@@ -379,6 +416,8 @@ export function useDataTransformationHelpers(): {
       false
     );
   }
+
+  /* get memory capacity of database */
   function getDatabaseMainMemoryCapacity(data: any): number {
     return roundNumber(
       data?.memory?.total ?? 0,
