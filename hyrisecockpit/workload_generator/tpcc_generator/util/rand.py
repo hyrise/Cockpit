@@ -144,7 +144,7 @@ def makeLastName(number):  # noqa
     """A last name as defined by TPC-C 4.3.2.3. Not actually random."""
     global SYLLABLES
     assert 0 <= number and number <= 999  # nosec
-    indicies = [number / 100, (number / 10) % 10, number % 10]
+    indicies = [int(number / 100), int(number / 10) % 10, number % 10]
     return "".join(map(lambda x: SYLLABLES[x], indicies))
 
 

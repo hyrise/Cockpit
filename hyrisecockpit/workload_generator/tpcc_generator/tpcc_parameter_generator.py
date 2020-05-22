@@ -6,8 +6,8 @@
 import random
 from datetime import datetime
 
-import hyrisecockpit.workload_generator.tpcc_generator.constants
-from hyrisecockpit.workload_generator.tpcc_generator.utils import *
+import hyrisecockpit.workload_generator.tpcc_generator.constants as constants
+from hyrisecockpit.workload_generator.tpcc_generator.util import *
 
 
 class TPCCParameterGenerator:  # noqa
