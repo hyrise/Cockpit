@@ -197,16 +197,21 @@ class Database(object):
         except (DatabaseError, InterfaceError):
             return None
         else:
-            return [row[0] for row in rows]
+            return [row[0].split("Plugin")[0] for row in rows]
 
-    def set_plugin_setting(self, name: str, value: str) -> bool:
+    def set_plugin_setting(
+        self, plugin_name: str, setting_name: str, setting_value: str
+    ) -> bool:
         """Adjust setting for given plugin."""
         if not self._database_blocked.value:
             try:
                 with self._connection_factory.create_cursor() as cur:
                     cur.execute(
                         "UPDATE meta_settings SET value=%s WHERE name=%s;",
-                        (value, name,),
+                        (
+                            setting_value,
+                            "::".join(["Plugin", plugin_name, setting_name]),
+                        ),
                     )
                 return True
             except (DatabaseError, InterfaceError):

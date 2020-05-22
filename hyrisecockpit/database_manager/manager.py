@@ -247,13 +247,13 @@ class DatabaseManager(object):
     def _call_plugin_setting(self, body: Body) -> Response:
         id: str = body["id"]
         update: UpdatePluginSettingInterface = body["update"]
-        setting_name: str = "::".join(
-            ["Plugin", update["name"], update["setting"]["name"]]
-        )
+        plugin_name = update["name"]
+        setting_name = update["setting"]["name"]
+        setting_value = update["setting"]["value"]
         if id not in self._databases.keys():
             return get_response(404)
         elif self._databases[id].set_plugin_setting(
-            setting_name, update["setting"]["value"]
+            plugin_name, setting_name, setting_value
         ):
             return get_response(200)
         else:
