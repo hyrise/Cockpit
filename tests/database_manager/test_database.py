@@ -499,11 +499,13 @@ class TestDatabase(object):
         database._connection_factory = mock_connection_factory
         database._database_blocked.value = False
 
-        result: bool = database.set_plugin_setting("M. böslich", "Eiskaltius")
+        result: bool = database.set_plugin_setting(
+            "Compression", "MemoryBudget", "55555"
+        )
 
         mock_cursor.execute.assert_called_once_with(
             "UPDATE meta_settings SET value=%s WHERE name=%s;",
-            ("Eiskaltius", "M. böslich",),
+            ("55555", "Plugin::Compression::MemoryBudget",),
         )
 
         assert type(result) is bool
@@ -521,7 +523,9 @@ class TestDatabase(object):
         database._connection_factory = mock_connection_factory
         database._database_blocked.value = True
 
-        result: bool = database.set_plugin_setting("Eiskaltius", "M. böslich")
+        result: bool = database.set_plugin_setting(
+            "Compression", "MemoryBudget", "55555"
+        )
 
         mock_cursor.execute.assert_not_called()
 
@@ -551,7 +555,9 @@ class TestDatabase(object):
 
         mock_cursor.execute.side_effect = raise_exception
         database._database_blocked.value = False
-        result: bool = database.set_plugin_setting("Eiskaltius", "M. böslich")
+        result: bool = database.set_plugin_setting(
+            "Compression", "MemoryBudget", "55555"
+        )
 
         assert not result
 
