@@ -58,6 +58,9 @@ def plot_line_chart(
 
     log_color = "lime"
     text_color = "limegreen"
+    factor = (min(len(plugin_logs), 100)) / 100  # [0.0, 1.1]
+    plugin_font_size = 12 - 9 * factor
+    plugin_line_width = 1.0 - 0.7 * factor
 
     logs_timestamps = [plugin_log["timestamp"] for plugin_log in plugin_logs]
 
@@ -70,12 +73,13 @@ def plot_line_chart(
             str(plugin_log["id"]),
             xy=(mdates.date2num(plugin_log["timestamp"]), 0.02 * maximum_value),
             color=text_color,
+            fontsize=plugin_font_size,
         )
         plt.axvline(
             plugin_log["timestamp"],
             color=log_color,
             linestyle="--",
-            linewidth=1,
+            linewidth=plugin_line_width,
             alpha=0.7,
         )
 
