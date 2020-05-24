@@ -100,7 +100,11 @@ class BackgroundJobManager(object):
             func=update_krueger_data,
             trigger="interval",
             seconds=5,
-            args=(self._storage_connection_factory,),
+            args=(
+                self._database_blocked,
+                self._connection_factory,
+                self._storage_connection_factory,
+            ),
         )
         self._update_operator_data_job = self._scheduler.add_job(
             func=update_operator_data,

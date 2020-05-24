@@ -44,7 +44,7 @@ scipy = "*"
 poetry = "*"
 
 [requires]
-python_version = "3.8.2"
+python_version = "3.8.3"
 
 [pipenv]
 allow_prereleases = true
