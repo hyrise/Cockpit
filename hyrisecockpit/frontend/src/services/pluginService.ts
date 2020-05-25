@@ -111,24 +111,7 @@ export function usePluginService(): PluginService {
   }
 
   function getPluginSettingsData(data: any): any {
-    const test = [
-      {
-        plugins: [
-          {
-            settings: [
-              {
-                value: "5000",
-                name: "MemoryBudget",
-                description: "This text describes a setting.",
-              },
-            ],
-            name: "Compression",
-          },
-        ],
-        id: "vm-aurora",
-      },
-    ];
-    return test.reduce((result: any, currentDatabase: any) => {
+    return data.reduce((result: any, currentDatabase: any) => {
       const currentDatabaseSettings =
         currentDatabase.plugins &&
         currentDatabase.plugins.reduce(
