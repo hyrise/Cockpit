@@ -76,18 +76,9 @@
       <workload-generation
         :open="showWorkloadDialog"
         @close="showWorkloadDialog = false"
-        @start="
-          workloadIndicator.icon = 'mdi-play';
-          workloadIndicator.color = 'green';
-        "
-        @pause="
-          workloadIndicator.icon = 'mdi-pause';
-          workloadIndicator.color = 'blue';
-        "
-        @stop="
-          workloadIndicator.icon = 'mdi-stop';
-          workloadIndicator.color = 'red';
-        "
+        @start="changeWorkloadIndicator('start')"
+        @pause="changeWorkloadIndicator('pause')"
+        @stop="changeWorkloadIndicator('stop')"
       />
 
       <v-list-item
@@ -204,6 +195,7 @@ interface Data {
   showRemoveDatabaseDialog: Ref<boolean>;
   databaseCount: Ref<string>;
   handleDatabaseDeletion: (database: Database) => void;
+  changeWorkloadIndicator: (action: string) => void;
   removedDatabaseId: Ref<string>;
   colorValueDefinition: Record<string, string>;
   workloadIndicator: Record<string, string>;
@@ -227,6 +219,18 @@ export default defineComponent({
       removedDatabaseId.value = database.id;
       showRemoveDatabaseDialog.value = true;
     }
+    function changeWorkloadIndicator(action: string): void {
+      if (action === "start") {
+        workloadIndicator.icon = "mdi-play";
+        workloadIndicator.color = "green";
+      } else if (action === "pause") {
+        workloadIndicator.icon = "mdi-pause";
+        workloadIndicator.color = "blue";
+      } else {
+        workloadIndicator.icon = "mdi-stop";
+        workloadIndicator.color = "red";
+      }
+    }
     return {
       showPluginEditor: ref(false),
       showWorkloadDialog: ref(false),
@@ -236,6 +240,7 @@ export default defineComponent({
         context.root.$databaseController.availableDatabasesById.value.length.toString()
       ),
       handleDatabaseDeletion,
+      changeWorkloadIndicator,
       removedDatabaseId,
       colorValueDefinition,
       workloadIndicator,
