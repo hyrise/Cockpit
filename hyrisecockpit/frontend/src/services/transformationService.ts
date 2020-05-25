@@ -22,8 +22,7 @@ const {
 const transformationServiceMap: Record<Metric, TransformationService> = {
   access: getAccessData,
   cpu: getCPUData,
-  executedQueryTypeProportion: getExecutedQueryTypeProportionData,
-  generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
+  queryTypeProportion: getQueryTypeProportionData,
   latency: getLatencyData,
   memoryFootprint: getMemoryFootprint,
   operatorProportion: getOperatorData,
@@ -40,70 +39,41 @@ export function useDataTransformation(metric: Metric): TransformationService {
 
 // TRANSFORM FUNCTION POOL
 
-/** transform executed query type data */
-function getExecutedQueryTypeProportionData(
-  data: any,
-  primaryKey: string = ""
-): any {
-  const executedQueryTypeProportion = data.find(
-    (database: any) => database.id === primaryKey
-  ).executed;
+/** transform query type data to barchart structure */
+function getQueryTypeProportionData(data: any, primaryKey: string = ""): any {
+  console.log(data);
+  const typeData = data.find((entry: any) => entry.id === primaryKey)!;
+  const totalLatency = typeData.krueger_data.reduce(
+    (sum: number, type: any) => sum + type.total_latency,
+    0
+  );
+  const totalFrequency = typeData.krueger_data.reduce(
+    (sum: number, type: any) => sum + type.total_frequency,
+    0
+  );
+  return typeData.krueger_data.reduce(
+    (chartData: any[], type: any, idx: number) => {
+      const typeLatencyProportion = (type.total_latency / totalLatency) * 100;
+      const typeFrequencyProportion =
+        (type.total_frequency / totalFrequency) * 100;
 
-  return getQueryTypeProportionData(executedQueryTypeProportion, "executed");
-}
+      chartData.push({
+        x: ["Latency", "Frequency"],
+        y: [typeLatencyProportion, typeFrequencyProportion],
+        name: type.query_type,
+        type: "bar",
+        text: `${type.query_type}- L: ${formatPercentage(
+          typeLatencyProportion,
+          100
+        )} % - F: ${formatPercentage(typeFrequencyProportion, 100)} %`,
+        hoverinfo: "text",
+        marker: { color: multiColors[idx] },
+      });
 
-/** transform generated query type data */
-function getGeneratedQueryTypeProportionData(
-  data: any,
-  primaryKey: string = ""
-): any {
-  const generatedQueryTypeProportion = data.find(
-    (database: any) => database.id === primaryKey
-  ).generated;
-
-  return getQueryTypeProportionData(generatedQueryTypeProportion, "generated");
-}
-
-/** transform generic query type data to heatmap structure */
-function getQueryTypeProportionData(data: any, type: string): any {
-  return [
-    {
-      x: [type],
-      y: [data.UPDATE] as number[],
-      name: "UPDATE",
-      type: "bar",
-      marker: {
-        color: colorValueDefinition.green,
-      },
+      return chartData;
     },
-    {
-      x: [type],
-      y: [data.SELECT] as number[],
-      name: "SELECT",
-      type: "bar",
-      marker: {
-        color: colorValueDefinition.blue,
-      },
-    },
-    {
-      x: [type],
-      y: [data.INSERT] as number[],
-      name: "INSERT",
-      type: "bar",
-      marker: {
-        color: colorValueDefinition.orange,
-      },
-    },
-    {
-      x: [type],
-      y: [data.DELETE] as number[],
-      name: "DELETE",
-      type: "bar",
-      marker: {
-        color: colorValueDefinition.red,
-      },
-    },
-  ];
+    []
+  );
 }
 
 /** transform to cpu process usage data */

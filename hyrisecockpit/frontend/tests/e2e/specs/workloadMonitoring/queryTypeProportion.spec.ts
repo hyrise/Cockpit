@@ -32,30 +32,26 @@ describe("visiting the workload monitoring page", () => {
 
   // test data
   it("will show the correct metric data", () => {
-    cy.get(getSelector("generatedQueryTypeProportion")).should(
-      (elements: any) => {
-        assertBarChartData(elements[0].data, data[database.id], "generated");
-      }
-    );
+    cy.get(getSelector("queryTypeProportion")).should((elements: any) => {
+      assertBarChartData(elements[0].data, data[database.id], "generated");
+    });
   });
 
   // test layout
   it("will show the correct range and title", () => {
-    cy.get(getSelector("generatedQueryTypeProportion")).should(
-      (elements: any) => {
-        const layout = elements[0].layout;
-        expect(layout.xaxis.title.text).to.eq("Workload");
-        expect(layout.yaxis.title.text).to.eq("Proportion of queries in %");
-        expect(layout.yaxis.range[0]).to.eq(0);
-        expect(layout.yaxis.range[1]).to.eq(100);
-      }
-    );
+    cy.get(getSelector("queryTypeProportion")).should((elements: any) => {
+      const layout = elements[0].layout;
+      expect(layout.xaxis.title.text).to.eq("Workload");
+      expect(layout.yaxis.title.text).to.eq("Proportion of queries in %");
+      expect(layout.yaxis.range[0]).to.eq(0);
+      expect(layout.yaxis.range[1]).to.eq(100);
+    });
   });
 
   // test details
   it("will not show metric details", () => {
-    cy.get(
-      getDetailsSelectorWithID("generatedQueryTypeProportion", database.id)
-    ).should("not.exist");
+    cy.get(getDetailsSelectorWithID("queryTypeProportion", database.id)).should(
+      "not.exist"
+    );
   });
 });

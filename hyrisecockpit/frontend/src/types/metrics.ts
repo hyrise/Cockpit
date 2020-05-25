@@ -11,8 +11,7 @@ export type Metric =
   | "latency"
   | "ram"
   | "queueLength"
-  | "executedQueryTypeProportion"
-  | "generatedQueryTypeProportion"
+  | "queryTypeProportion"
   | "memoryFootprint"
   | "operatorProportion";
 
@@ -24,8 +23,7 @@ export const availableMetrics: Metric[] = [
   "latency",
   "ram",
   "queueLength",
-  "executedQueryTypeProportion",
-  "generatedQueryTypeProportion",
+  "queryTypeProportion",
   "memoryFootprint",
   "operatorProportion",
 ];
@@ -51,7 +49,7 @@ export const overviewMetrics: Metric[] = [
 ];
 
 export const workloadMetrics: Metric[] = [
-  "generatedQueryTypeProportion",
+  "queryTypeProportion",
   "operatorProportion",
 ];
 

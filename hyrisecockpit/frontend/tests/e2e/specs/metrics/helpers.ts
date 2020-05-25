@@ -8,13 +8,9 @@ const selectors: Record<string, { element: string; title: string }> = {
   queueLength: { element: "div", title: "queueLength" },
   cpu: { element: "div", title: "cpu" },
   ram: { element: "div", title: "ram" },
-  executedQueryTypeProportion: {
+  queryTypeProportion: {
     element: "div",
-    title: "executedQueryTypeProportion",
-  },
-  generatedQueryTypeProportion: {
-    element: "div",
-    title: "generatedQueryTypeProportion",
+    title: "queryTypeProportion",
   },
   operatorProportion: {
     element: "div",

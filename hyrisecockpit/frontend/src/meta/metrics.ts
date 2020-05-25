@@ -37,20 +37,9 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
       y: { max: 100 },
     },
   },
-  executedQueryTypeProportion: {
+  queryTypeProportion: {
     fetchType: "read",
-    transformationService: useDataTransformation("executedQueryTypeProportion"),
-    endpoint: monitorBackend + "krueger_data",
-    component: "QueryTypeProportion",
-    requestTime: 5000,
-    dataType: "interval",
-    historic: false,
-  },
-  generatedQueryTypeProportion: {
-    fetchType: "read",
-    transformationService: useDataTransformation(
-      "generatedQueryTypeProportion"
-    ),
+    transformationService: useDataTransformation("queryTypeProportion"),
     endpoint: monitorBackend + "krueger_data",
     component: "QueryTypeProportion",
     requestTime: 5000,
@@ -159,12 +148,7 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
     xaxis: timeLabel,
     yaxis: "Workload in %",
   },
-  executedQueryTypeProportion: {
-    title: "Query Type Proportion",
-    xaxis: "Workload",
-    yaxis: "Proportion of queries in %",
-  },
-  generatedQueryTypeProportion: {
+  queryTypeProportion: {
     title: "Query Type Proportion",
     xaxis: "Workload",
     yaxis: "Proportion of queries in %",
