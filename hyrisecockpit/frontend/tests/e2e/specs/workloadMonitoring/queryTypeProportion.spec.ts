@@ -41,19 +41,13 @@ describe("visiting the workload monitoring page", () => {
 
   // test layout
   it("will show the correct range and title", () => {
-    cy.wait(1000);
     cy.get(getSelector("generatedQueryTypeProportion")).should(
       (elements: any) => {
         const layout = elements[0].layout;
         expect(layout.xaxis.title.text).to.eq("Workload");
         expect(layout.yaxis.title.text).to.eq("Proportion of queries in %");
         expect(layout.yaxis.range[0]).to.eq(0);
-        expect(layout.yaxis.range[1]).to.be.at.least(
-          Object.values(data[database.id]).reduce(
-            (sum: number, entry: any) => sum + entry,
-            0
-          )
-        );
+        expect(layout.yaxis.range[1]).to.eq(100);
       }
     );
   });
@@ -61,7 +55,7 @@ describe("visiting the workload monitoring page", () => {
   // test details
   it("will not show metric details", () => {
     cy.get(
-      getDetailsSelectorWithID("executedQueryTypeProportion", database.id)
+      getDetailsSelectorWithID("generatedQueryTypeProportion", database.id)
     ).should("not.exist");
   });
 });

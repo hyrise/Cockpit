@@ -120,13 +120,14 @@ export default defineComponent({
       databases: computed(
         () => context.root.$databaseController.availableDatabasesById.value
       ),
-      ...useWorkloadAction(workloadDataHandler.workloadData),
+      ...useWorkloadAction(context, workloadDataHandler.workloadData),
       ...workloadDataHandler,
     };
   },
 });
 
 function useWorkloadAction(
+  context: SetupContext,
   workloadData: Record<
     string,
     { loaded: boolean; loading: boolean; selected: boolean }
@@ -174,9 +175,13 @@ function useWorkloadAction(
           (database: any) => database.worker_pool_status === "closed"
         );
         if (!workersStopped) {
-          frequency.value > 0
-            ? (actions.start.active = true)
-            : (actions.pause.active = true);
+          if (frequency.value > 0) {
+            actions.start.active = true;
+            context.emit("start");
+          } else {
+            actions.pause.active = true;
+            context.emit("pause");
+          }
         }
       });
     }
@@ -193,6 +198,7 @@ function useWorkloadAction(
     actions[action].active = true;
   }
   function startOrUpdateWorkload(action: string): void {
+    startLoading(action);
     startWorker().then(() => {
       Object.keys(workloadData).forEach((workload: any) => {
         if (workloadData[workload].selected) {
@@ -203,15 +209,16 @@ function useWorkloadAction(
     });
   }
   function startingWorkload(): void {
-    startLoading("start");
+    context.emit("start");
     startOrUpdateWorkload("start");
   }
   function pausingWorkload(): void {
-    startLoading("pause");
+    context.emit("pause");
     frequency.value = 0;
     startOrUpdateWorkload("pause");
   }
   function stoppingWorkload(): void {
+    context.emit("stop");
     startLoading("stop");
     stopWorker().then(() => stopLoading("stop"));
   }
