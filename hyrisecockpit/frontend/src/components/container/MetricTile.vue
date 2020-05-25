@@ -143,5 +143,9 @@ export default defineComponent({
 }
 #comparison-page .card {
   border-radius: 0px;
+  box-shadow: 0px 0px;
+}
+#overview-page .card {
+  border-radius: 4px;
 }
 </style>

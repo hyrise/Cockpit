@@ -19,7 +19,7 @@
         />
       </div>
       <v-card tile class="column-bottom-border" :color="database.color"
-        ><v-card-text class="white--text">{{
+        ><v-card-text class="white--text text-center">{{
           database.id
         }}</v-card-text></v-card
       >
