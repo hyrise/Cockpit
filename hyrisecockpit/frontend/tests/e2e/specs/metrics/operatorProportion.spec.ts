@@ -82,9 +82,19 @@ describe("visiting the comparison page", () => {
             { parts: {}, combined: { Other: 0 } }
           );
           // assert distinct parts
-          assertBarChartData(elements[0].data, transformedData.parts);
+          assertBarChartData(
+            elements[0].data,
+            transformedData.parts,
+            undefined,
+            2
+          );
           // assert combined parts
-          assertBarChartData(elements[0].data, transformedData.combined);
+          assertBarChartData(
+            elements[0].data,
+            transformedData.combined,
+            undefined,
+            2
+          );
         }
       );
     });
