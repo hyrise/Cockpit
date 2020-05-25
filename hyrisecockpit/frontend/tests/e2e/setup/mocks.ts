@@ -7,7 +7,7 @@ import {
   fakeDatabaseChunksData,
   fakeDatabaseQueryInformationData,
   fakeDatabasePluginsData,
-  fakeDatabasePluginSettings,
+  fakeAvailablePlugin,
   fakeDatabasePluginLogs,
   fakeDatabaseStatusData,
   fakeIds,
@@ -150,16 +150,14 @@ export function useMocks(
         mockedState.workloadRunning
       )
     );
-    responseMocks.available_plugins = mockedIds.plugins;
+
+    responseMocks.available_plugins = mockedIds.plugins.map((plugin) =>
+      fakeAvailablePlugin(plugin)
+    );
     // NOTE: currently all databases have the same plugins activated
     responseMocks.plugin = mockedIds.databases.map((id) =>
       fakeDatabasePluginsData(id, mockedIds.activated_plugins)
     );
-    responseMocks.plugin_settings = {
-      plugin_settings: mockedIds.databases.map((id) =>
-        fakeDatabasePluginSettings(id, mockedIds.activated_plugins)
-      ),
-    };
     // NOTE: currently all databases have exactly one log entry
     responseMocks.plugin_log = mockedIds.databases.map((id) =>
       fakeDatabasePluginLogs(id, mockedIds.plugins)

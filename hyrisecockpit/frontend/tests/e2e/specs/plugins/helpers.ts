@@ -38,7 +38,9 @@ export function assertActivePlugins(
   availablePlugins.forEach((plugin: any) => {
     cy.get(getPluginSelector(plugin, "switchButton")).then((checkbox: any) => {
       expect(checkbox[0].checked).to.eq(
-        databaseActivePluginData.plugins.includes(plugin)
+        !!databaseActivePluginData.plugins.find(
+          (pluginActive: any) => pluginActive.name === plugin
+        )
       );
     });
   });
@@ -77,25 +79,23 @@ export function assertPluginSettings(
   const databasePluginSetings = pluginSettings.find(
     (data: any) => data.id === database
   );
-  databasePluginSetings.plugin_settings.forEach((plugin: any) => {
-    cy.get(getSelector("settingName")).within(() => {
-      cy.contains(getPluginName(plugin.name));
-    });
-    cy.get(getSelector("settingValue"))
-      .eq(idx)
-      .then((value: any) => {
-        expect(plugin.value.toString()).to.eq(value[0].value);
+  databasePluginSetings.plugins.forEach((plugin: any) => {
+    plugin.settings.forEach((setting: any) => {
+      cy.get(getSelector("settingName")).within(() => {
+        cy.contains(setting.name);
       });
-    cy.get(getSelector("settingHelpIcon")).eq(idx).click({ force: true });
-    cy.get(getSelector("settingDescription"))
-      .eq(idx)
-      .parents()
-      .contains(plugin.description);
+      cy.get(getSelector("settingValue"))
+        .eq(idx)
+        .then((value: any) => {
+          expect(setting.value.toString()).to.eq(value[0].value);
+        });
+      cy.get(getSelector("settingHelpIcon")).eq(idx).click({ force: true });
+      cy.get(getSelector("settingDescription"))
+        .eq(idx)
+        .parents()
+        .contains(setting.description);
+    });
   });
-}
-
-function getPluginName(pluginName: string): string {
-  return pluginName.substr(pluginName.indexOf("_") + 1);
 }
 
 export function assertRequestValues(
@@ -103,8 +103,7 @@ export function assertRequestValues(
   plugin: string,
   requestData: any
 ): void {
-  expect(requestData.id).to.eq(database);
-  expect(requestData.plugin).to.eq(plugin);
+  expect(requestData.name).to.eq(plugin);
 }
 
 export function assertSettingsRequestValues(

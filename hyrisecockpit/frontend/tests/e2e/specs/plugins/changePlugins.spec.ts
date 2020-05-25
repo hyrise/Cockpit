@@ -20,9 +20,7 @@ let backend = useBackendMock({ plugins: 3 });
 
 let databases: any = [];
 let availablePlugins: any = [];
-let databasesActivePlugins: any = [];
-let databasesPluginLogs: any = [];
-let databasesPluginSettings: any = [];
+let databasesActivePluginData: any = [];
 
 // test plugins overview
 describe("When opening the plugins overview", () => {
@@ -30,15 +28,9 @@ describe("When opening the plugins overview", () => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
       cy.setupData("available_plugins").then((xhr: any) => {
-        availablePlugins = xhr.response.body;
+        availablePlugins = xhr.response.body.map((plugin: any) => plugin.name);
         cy.setupData("plugin").then((xhr: any) => {
-          databasesActivePlugins = xhr.response.body;
-          cy.setupData("plugin_log").then((xhr: any) => {
-            databasesPluginLogs = xhr.response.body;
-            cy.setupData("plugin_settings").then((xhr: any) => {
-              databasesPluginSettings = xhr.response.body.body.plugin_settings;
-            });
-          });
+          databasesActivePluginData = xhr.response.body;
         });
       });
     });
@@ -49,16 +41,19 @@ describe("When opening the plugins overview", () => {
     it("will show this plugin as activated", () => {
       const deactivePlugin = availablePlugins.reduce(
         (deactivePlugins: Object[], plugin: any, idx: number) => {
-          const pluginData = databasesActivePlugins.find(
+          const pluginData = databasesActivePluginData.find(
             (db: any) => db.id === databases[0].id
           );
-          if (!pluginData.plugins.includes(plugin)) {
+          if (
+            !pluginData.plugins.find((active: any) => active.name === plugin)
+          ) {
             deactivePlugins.push(plugin);
           }
           return deactivePlugins;
         },
         []
       )[0];
+      console.log(deactivePlugin);
       databases.forEach((database: any, idx: number) => {
         clickElement(getViewSelector("pluginOverviewButton"));
         cy.get(getSelector("pluginOverview")).within(() => {
@@ -83,6 +78,7 @@ describe("When opening the plugins overview", () => {
           cy.numberOfRequests(getPostAlias("plugin")).should("eq", idx + 1);
           cy.wait("@" + getGetAlias("plugin"));
           cy.get("@" + getGetAlias("plugin")).should((xhr: any) => {
+            console.log(database.id, availablePlugins, xhr.response.body);
             assertActivePlugins(
               database.id,
               availablePlugins,
@@ -111,10 +107,12 @@ describe("When opening the plugins overview", () => {
     it("will show this plugin as deactivated", () => {
       const activePlugin = availablePlugins.reduce(
         (activePlugins: Object[], plugin: any, idx: number) => {
-          const pluginData = databasesActivePlugins.find(
+          const pluginData = databasesActivePluginData.find(
             (db: any) => db.id === databases[0].id
           );
-          if (pluginData.plugins.includes(plugin)) {
+          if (
+            !!pluginData.plugins.find((active: any) => active.name === plugin)
+          ) {
             activePlugins.push(plugin);
           }
           return activePlugins;

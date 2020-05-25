@@ -19,13 +19,14 @@ export function usePluginService(): PluginService {
     return availablePlugins;
   }
 
-  async function fetchActivePlugins(): Promise<string[]> {
-    let activePlugins: any = [];
-    await axios.get(controlBackend + "plugin").then((activePluginsResponse) => {
-      activePlugins = getActivePluginData(activePluginsResponse.data);
+  async function fetchActivePlugins(): Promise<Object> {
+    let plugins: any = { data: [], settings: [] };
+    await axios.get(controlBackend + "plugin").then((response) => {
+      plugins.data = getActivePluginData(response.data);
+      plugins.settings = getPluginSettingsData(response.data);
     });
 
-    return activePlugins;
+    return plugins;
   }
 
   async function fetchPluginLogs(): Promise<Object> {
@@ -35,14 +36,6 @@ export function usePluginService(): PluginService {
       pluginMeta.events = getPluginEventData(response.data);
     });
     return pluginMeta;
-  }
-
-  async function fetchPluginSettings(): Promise<Object> {
-    let pluginSettings: any = {};
-    await axios.get(controlBackend + "plugin").then((response) => {
-      pluginSettings = getPluginSettingsData(response.data);
-    });
-    return pluginSettings;
   }
 
   /* update plugin data */
@@ -166,7 +159,6 @@ export function usePluginService(): PluginService {
     fetchActivePlugins,
     fetchAvailablePlugins,
     fetchPluginLogs,
-    fetchPluginSettings,
     setPluginSetting,
     togglePlugin,
   };
