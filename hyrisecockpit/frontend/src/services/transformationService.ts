@@ -301,8 +301,10 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
     marker: { color: colorValueDefinition.lightgrey },
   };
 
+  let colorIdx = 0;
+
   return operatorData.operator_data
-    .reduce((chartData: any[], operator: any, idx: number) => {
+    .reduce((chartData: any[], operator: any) => {
       const operatorProportion = (operator.total_time_ns / totalTime) * 100;
       if (operatorProportion < 5) {
         rest.push({
@@ -322,8 +324,9 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
             roundNumber(operator.total_time_ns, Math.pow(10, 9), 1000, true)
           )} ms  `,
           hoverinfo: "text",
-          marker: { color: multiColors[idx] },
+          marker: { color: multiColors[colorIdx] },
         });
+        colorIdx++;
       }
       return chartData;
     }, [])
