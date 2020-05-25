@@ -1,18 +1,49 @@
-import { SetupContext, Ref, computed } from "@vue/composition-api";
-import { MetricProps, ComparisonMetricData, Metric } from "@/types/metrics";
+import { SetupContext, Ref, ref, computed, watch } from "@vue/composition-api";
+import {
+  MetricProps,
+  LineChartComponentData,
+  BasicChartComponentData,
+  Metric,
+} from "@/types/metrics";
 import { useDataEvents } from "@/meta/events";
-import { getMetricChartConfiguration } from "@/meta/metrics";
+import { getMetricChartConfiguration, getMetricMetadata } from "@/meta/metrics";
 
+/* use line chart specific shared data */
 export function useLineChartComponent(
   props: MetricProps,
   context: SetupContext
-): ComparisonMetricData {
+): LineChartComponentData {
   return {
     data: context.root.$metricController.data[props.metric],
     chartConfiguration: getMetricChartConfiguration(props.metric),
     maxValue: context.root.$metricController.maxValueData[props.metric],
     timestamps: context.root.$metricController.timestamps[props.metric],
     pluginEventData: context.root.$pluginController.pluginEventData,
+  };
+}
+
+/* modify updating data accordingly before passing to the child chart component */
+export function useModifiedChartData<T>(
+  props: MetricProps,
+  context: SetupContext
+): BasicChartComponentData<T> {
+  const data = context.root.$metricController.data[props.metric];
+  const modifiedData = ref([]) as Ref<T>;
+  const metricMeta = getMetricMetadata(props.metric);
+
+  // modify data on base data change
+  watch(data, () => {
+    if (Object.keys(data.value).length) {
+      modifiedData.value = metricMeta.transformationService(
+        data.value,
+        props.selectedDatabases[0]
+      );
+    }
+  });
+
+  return {
+    data: modifiedData,
+    chartConfiguration: getMetricChartConfiguration(props.metric),
   };
 }
 
@@ -26,6 +57,7 @@ const metricEventMap: Partial<Record<Metric, (data: any) => void>> = {
   storage: emitStorageDataChangedEvent,
 };
 
+/* emit updated metric data on change, if callback is present */
 export function useUpdatingData(data: any, metrics: Metric[]): void {
   if (Object.values(data).length) {
     metrics.forEach((metric) => {
@@ -34,6 +66,7 @@ export function useUpdatingData(data: any, metrics: Metric[]): void {
   }
 }
 
+/* use flex depending on number of selected databases */
 export function useDatabaseFlex(
   props: any
 ): { databaseFlex: Readonly<Ref<Object>> } {
