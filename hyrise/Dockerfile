@@ -9,7 +9,7 @@ RUN cd /usr/local/ \
     && git clone https://github.com/hyrise/hyrise.git hyrise-git \ 
     && cd hyrise-git \
     && git checkout ${BRANCH:-bp1920} \
-    && sed -i 's/-march=native/-march=${ARCHITECTURE:-native}/g' CMakeLists.txt \
+    && sed -i "s/-march=native/-march=${ARCHITECTURE:-native}/g" CMakeLists.txt \
     && ./install_dependencies.sh \
     && mkdir /usr/local/hyrise-git/cmake-build-release \
     && cd /usr/local/hyrise-git/cmake-build-release \
