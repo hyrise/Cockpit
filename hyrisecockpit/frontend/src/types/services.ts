@@ -61,4 +61,5 @@ export type Base =
   | "chunks_data"
   | "latency"
   | "queue_length"
-  | "krueger_data";
+  | "krueger_data"
+  | "operator_data";

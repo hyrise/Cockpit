@@ -165,7 +165,7 @@ export default defineComponent({
       ),
       tab,
       ...workloadHandler,
-      ...useWorkloadAction(workloadHandler.workload),
+      ...useWorkloadAction(context, workloadHandler.workload),
       ...useWorkloadDataHandler(context),
     };
   },
@@ -183,7 +183,10 @@ function useWorkloadHandler(): WorkloadHandler {
   };
 }
 
-function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
+function useWorkloadAction(
+  context: SetupContext,
+  workload: Ref<Workload>
+): WorkloadAction {
   const frequency = ref<number>(200);
   const {
     startWorker,
@@ -222,8 +225,10 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
       });
       if (frequency.value > 0) {
         actions.start.active = true;
+        context.emit("start");
       } else {
         actions.pause.active = true;
+        context.emit("pause");
       }
     }
   });
@@ -242,6 +247,7 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     return updateWorkload(workload.value, frequency.value, weights.value);
   }
   function startOrUpdateWorkload(action: string): void {
+    startLoading(action);
     getWorkloads().then((response: any) => {
       if (response.data.length === 0) {
         startWorker().then(() => {
@@ -258,15 +264,16 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     });
   }
   function startingWorkload(): void {
-    startLoading("start");
+    context.emit("start");
     startOrUpdateWorkload("start");
   }
   function pausingWorkload(): void {
-    startLoading("pause");
+    context.emit("pause");
     frequency.value = 0;
     startOrUpdateWorkload("pause");
   }
   function stoppingWorkload(): void {
+    context.emit("stop");
     startLoading("stop");
     getWorkloads().then((response: any) => {
       if (response.data.length !== 0) {

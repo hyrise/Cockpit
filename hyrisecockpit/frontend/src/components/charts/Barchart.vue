@@ -49,6 +49,7 @@ function useBarChartConfiguration(
           text: chartConfiguration.yaxis,
         },
         rangemode: "tozero",
+        range: [0, 100],
       },
       barmode: "stack",
       autosize: true,
@@ -61,6 +62,8 @@ function useBarChartConfiguration(
       },
       paper_bgcolor: "rgba(0,0,0,0)",
       plot_bgcolor: "rgba(0,0,0,0)",
+      hovermode: "closest",
+      legend: { orientation: "h", y: -0.3, traceorder: "normal" },
     };
   }
 
