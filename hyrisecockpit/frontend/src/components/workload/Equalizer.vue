@@ -84,6 +84,9 @@ export default defineComponent({
   },
   setup(props: Props, context: SetupContext): Data {
     const weights = ref<Weight[]>([]);
+
+    /* convert the linear sliderValues with exponential function: f(sliderValue) = value = a * b^sliderValue - a
+    f(0) = 0, f(50) = 100, f(100) =  10000 --> b = 99^(1/50), a = 50/49 */
     const a = 50 / 49;
     const b = Math.pow(99, 1 / 50);
 
