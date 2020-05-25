@@ -30,16 +30,16 @@
             max="100"
             vertical
             class="query-slider"
-            @click="updateSlider(weight.name, weight.sliderValue)"
-            @end="updateSlider(weight.name, weight.sliderValue)"
+            @click="updateWeight(weight.name, true)"
+            @end="updateWeight(weight.name, true)"
           />
           <div class="bottom-line"></div>
           <v-text-field
-            v-model="weight.value"
+            v-model.number="weight.value"
             class="query-text-field"
             dense
             single-line
-            @change="updateTextfield(weight.name, parseInt(weight.value))"
+            @change="updateWeight(weight.name, false)"
           />
         </div>
       </div>
@@ -66,8 +66,7 @@ interface Props {
 interface Data {
   weights: Ref<Weight[]>;
   getDisplayedWorkload: (workload: Workload) => void;
-  updateSlider: (name: string, sliderValue: number) => void;
-  updateTextfield: (name: string, value: number) => void;
+  updateWeight: (name: string, sliderValueToValue: boolean) => void;
 }
 type Weight = { name: string; value: number; sliderValue: number };
 
@@ -94,19 +93,14 @@ export default defineComponent({
     function convertValueToSliderValue(value: number): number {
       return Math.round(Math.log((value + a) / a) / Math.log(b));
     }
-    function updateSlider(name: string, sliderValue: number): void {
-      let weight: Weight = Object.values(weights.value).find(
-        (weight) => weight.name === name
-      )!;
-      weight.value = convertSliderValueToValue(sliderValue);
-      context.emit("change", name, weight.value);
-    }
-    function updateTextfield(name: string, value: number): void {
+    function updateWeight(name: string, sliderValueToValue: boolean): void {
       const weight: Weight = Object.values(weights.value).find(
         (weight) => weight.name === name
       )!;
-      weight.sliderValue = convertValueToSliderValue(value);
-      context.emit("change", name, value);
+      sliderValueToValue
+        ? (weight.value = convertSliderValueToValue(weight.sliderValue))
+        : (weight.sliderValue = convertValueToSliderValue(weight.value));
+      context.emit("change", name, weight.value);
     }
     watch(
       () => props.initialWeights,
@@ -125,8 +119,7 @@ export default defineComponent({
     return {
       weights,
       getDisplayedWorkload,
-      updateSlider,
-      updateTextfield,
+      updateWeight,
     };
   },
 });
