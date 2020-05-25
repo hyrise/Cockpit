@@ -842,19 +842,18 @@ class KruegerData(Resource):
         active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
-                'SELECT LAST("executed"), * FROM krueger_data', database=database,
+                'SELECT LAST("krueger_data"), * FROM krueger_data', database=database,
             )
-            krueger_data_value = list(result["krueger_data", None])
-            if len(krueger_data_value) > 0:
+            krueger_data_values = list(result["krueger_data", None])
+            if len(krueger_data_values) > 0:
                 krueger_data.append(
                     {
                         "id": database,
-                        "executed": loads(krueger_data_value[0]["executed"]),
-                        "generated": loads(krueger_data_value[0]["generated"]),
+                        "krueger_data": loads(krueger_data_values[0]["last"]),
                     }
                 )
             else:
-                krueger_data.append({"id": database, "executed": {}, "generated": {}})
+                krueger_data.append({"id": database, "krueger_data": []})
         return krueger_data
 
 
@@ -868,3 +867,23 @@ class ProcessTableStatus(Resource):
         return _send_message(
             db_manager_socket, Request(header=Header(message="status"), body={}),
         )["body"]["status"]
+
+
+@api.route("/operator")
+class OperatorData(Resource):
+    """Operator information of all databases."""
+
+    def get(self) -> List[Dict]:
+        """Return operator metadata."""
+        operator_data: List[Dict] = []
+        active_databases = _get_active_databases()
+        for database in active_databases:
+            database_data: Dict = {"id": database, "operator_data": []}
+            result = storage_connection.query(
+                'SELECT LAST("operator_data") FROM operator_data', database=database,
+            )
+            operator_rows = list(result["operator_data", None])
+            if len(operator_rows) > 0:
+                database_data["operator_data"] = loads(operator_rows[0]["last"])
+            operator_data.append(database_data)
+        return operator_data

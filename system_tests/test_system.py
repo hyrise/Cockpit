@@ -295,6 +295,13 @@ class TestSystem:
         assert response.status_code == 200  # nosec
         assert response.json()["header"]["status"] == 200  # nosec
 
+    def test_gets_operator_data(self):
+        """Test getting of the operator data."""
+        response = self.backend.get_property("monitor/operator")
+        assert response.status_code == 200  # nosec
+        assert len(response.json()) > 0  # nosec
+        assert len(response.json()[0]["operator_data"]) > 0  # nosec
+
     def test_stops_workload_generator(self):
         """Test stopping of the workload generator."""
         response = self.backend.stop_workload("tpch_0_1")
