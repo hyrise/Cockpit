@@ -1,7 +1,7 @@
 <template>
   <Barchart
     :data="data"
-    :graph-id="graphId || 'queryTypeProportion'"
+    :graph-id="graphId || 'operatorProportion'"
     :chart-configuration="chartConfiguration"
     :selected-databases="selectedDatabases"
     :max-chart-width="maxChartWidth"
@@ -19,7 +19,7 @@ import {
 import { useModifiedChartData } from "@/meta/components";
 
 export default defineComponent({
-  name: "QueryTypeProportion",
+  name: "OperatorProportion",
   components: { Barchart },
   props: MetricPropsValidation,
   setup(
