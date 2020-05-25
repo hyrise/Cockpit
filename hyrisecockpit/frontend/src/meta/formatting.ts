@@ -20,6 +20,7 @@ export function useFormatting(): {
   formatMinutesToSeconds: (minutes: number) => number;
   getNanoSeconds: (seconds: number) => number;
   formatPercentage: (part: number, total: number) => number;
+  formatTimeUnit: (data: number) => string;
 } {
   /* STRINGS */
 
@@ -99,6 +100,26 @@ export function useFormatting(): {
     return even ? Math.floor(rounded) : rounded;
   }
 
+  /* format numbers in ms to appropriate time unit */
+  function formatTimeUnit(data: number): string {
+    let newValue = "";
+
+    const hours = Math.floor(data / 3600000);
+    const minutes = Math.floor((data - 3600000 * hours) / 60000);
+    const seconds = Math.floor(
+      (data - 3600000 * hours - 60000 * minutes) / 1000
+    );
+    const milliseconds =
+      data - 3600000 * hours - 60000 * minutes - 1000 * seconds;
+
+    const units = ["h", "min", "s", "ms"];
+    [hours, minutes, seconds, milliseconds].forEach((value, idx) => {
+      if (value > 0) newValue = `${newValue} ${value} ${units[idx]}`;
+    });
+
+    return newValue;
+  }
+
   function formatPercentage(part: number, total: number): number {
     return roundNumber(part / total, 100, Math.pow(10, 4), false);
   }
@@ -118,6 +139,7 @@ export function useFormatting(): {
     formatStringsToDate,
     getNanoSeconds,
     formatPercentage,
+    formatTimeUnit,
   };
 }
 

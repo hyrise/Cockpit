@@ -12,6 +12,7 @@ const {
   roundNumber,
   formatPercentage,
   formatNumberWithCommas,
+  formatTimeUnit,
 } = useFormatting();
 const {
   getTableMemoryFootprint,
@@ -320,9 +321,9 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
           type: "bar",
           text: `${formatPercentage(operatorProportion, 100)} % - ${
             operator.operator
-          } -  ${formatNumberWithCommas(
+          } -  ${formatTimeUnit(
             roundNumber(operator.total_time_ns, Math.pow(10, 9), 1000, true)
-          )} ms  `,
+          )}`,
           hoverinfo: "text",
           marker: { color: multiColors[colorIdx] },
         });
@@ -345,9 +346,9 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
               chartData.text +
               `${formatPercentage(operator.proportion, 100)} % - ${
                 operator.name
-              } - ${formatNumberWithCommas(
+              } - ${formatTimeUnit(
                 roundNumber(operator.time, Math.pow(10, 9), 1000, true)
-              )} ms <br>`,
+              )} <br>`,
           };
         }, restLabel),
     ]);
