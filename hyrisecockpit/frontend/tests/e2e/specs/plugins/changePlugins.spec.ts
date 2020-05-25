@@ -5,6 +5,7 @@ import {
   getPostAlias,
   getDeleteAlias,
   generateRandomInt,
+  getPutAlias,
 } from "../../setup/helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
 import {
@@ -53,7 +54,7 @@ describe("When opening the plugins overview", () => {
         },
         []
       )[0];
-      console.log(deactivePlugin);
+
       databases.forEach((database: any, idx: number) => {
         clickElement(getViewSelector("pluginOverviewButton"));
         cy.get(getSelector("pluginOverview")).within(() => {
@@ -78,7 +79,6 @@ describe("When opening the plugins overview", () => {
           cy.numberOfRequests(getPostAlias("plugin")).should("eq", idx + 1);
           cy.wait("@" + getGetAlias("plugin"));
           cy.get("@" + getGetAlias("plugin")).should((xhr: any) => {
-            console.log(database.id, availablePlugins, xhr.response.body);
             assertActivePlugins(
               database.id,
               availablePlugins,
@@ -175,19 +175,16 @@ describe("When opening the plugins overview", () => {
       databases.forEach((database: any, idx: number) => {
         const activePlugin = availablePlugins.reduce(
           (activePlugins: Object[], plugin: any, idx: number) => {
-            const pluginData = databasesActivePlugins.find(
+            const pluginData = databasesActivePluginData.find(
               (db: any) => db.id === database.id
             );
-            const settingsData = databasesPluginSettings.find(
-              (db: any) => db.id === database.id
+            const pluginSettings = pluginData.plugins.find(
+              (active: any) => active.name === plugin
             );
-            const pluginSetting = settingsData.plugin_settings.find(
-              (setting: any) => setting.name.includes(plugin)
-            );
-            if (pluginData.plugins.includes(plugin)) {
+            if (!!pluginSettings) {
               activePlugins.push({
                 plugin: plugin,
-                name: pluginSetting.name,
+                name: pluginSettings.settings[0].name, // plugin only has one available setting
               });
             }
             return activePlugins;
@@ -206,19 +203,16 @@ describe("When opening the plugins overview", () => {
           cy.wait(300);
           cy.get(getSelector("settingValue")).clear().type(newValue.toString());
           cy.get(getSelector("saveSettingsButton")).click();
-          cy.wait("@" + getPostAlias("plugin_settings"));
-          cy.get("@" + getPostAlias("plugin_settings")).should((xhr: any) => {
+          cy.wait("@" + getPutAlias("plugin"));
+          cy.get("@" + getPutAlias("plugin")).should((xhr: any) => {
             assertSettingsRequestValues(
-              database.id,
+              activePlugin.plugin,
               activePlugin.name,
               newValue.toString(),
               xhr.request.body
             );
           });
-          cy.numberOfRequests(getPostAlias("plugin_settings")).should(
-            "eq",
-            idx + 1
-          );
+          cy.numberOfRequests(getPutAlias("plugin")).should("eq", idx + 1);
           cy.get(getDatabaseSelector("databaseChip"))
             .eq(idx)
             .click({ force: true });

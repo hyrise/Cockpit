@@ -107,12 +107,12 @@ export function assertRequestValues(
 }
 
 export function assertSettingsRequestValues(
-  database: string,
   plugin: string,
+  pluginSettingName: string,
   value: string,
   requestData: any
 ): void {
-  expect(requestData.id).to.eq(database);
   expect(requestData.name).to.eq(plugin);
-  expect(requestData.value).to.eq(value);
+  expect(requestData.setting.name).to.eq(pluginSettingName);
+  expect(requestData.setting.value).to.eq(value);
 }
