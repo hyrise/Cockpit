@@ -142,6 +142,7 @@ function usePluginSwitching(context: SetupContext): UsePluginSwitching {
   } = context.root.$pluginController;
 
   function canSettingsBeChanged(databseId: string, pluginId: string): boolean {
+    console.log(pluginSettings.value);
     return (
       isActivated(databseId, pluginId) &&
       pluginSettings.value[databseId] &&

@@ -10,9 +10,11 @@ export function usePluginService(): PluginService {
   async function fetchAvailablePlugins(): Promise<string[]> {
     let availablePlugins: any = [];
     await axios
-      .get(controlBackend + "available_plugins")
+      .get(controlBackend + "plugin/available")
       .then((allPluginsResponse) => {
-        availablePlugins = allPluginsResponse.data;
+        availablePlugins = allPluginsResponse.data.map(
+          (plugin: any) => plugin.name
+        );
       });
     return availablePlugins;
   }
@@ -109,13 +111,30 @@ export function usePluginService(): PluginService {
   }
 
   function getPluginSettingsData(data: any): any {
-    console.log(data);
-    return data.reduce((result: any, currentDatabase: any) => {
+    const test = [
+      {
+        plugins: [
+          {
+            settings: [
+              {
+                value: "5000",
+                name: "MemoryBudget",
+                description: "This text describes a setting.",
+              },
+            ],
+            name: "Compression",
+          },
+        ],
+        id: "vm-aurora",
+      },
+    ];
+    return test.reduce((result: any, currentDatabase: any) => {
       const currentDatabaseSettings =
         currentDatabase.plugins &&
         currentDatabase.plugins.reduce(
           (databaseSettings: any, currentPlugin: any) => {
             databaseSettings[currentPlugin.name] = currentPlugin.settings;
+            return databaseSettings;
           },
           {}
         );
