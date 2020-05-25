@@ -150,8 +150,8 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
   },
   queryTypeProportion: {
     title: "Query Type Proportion",
-    xaxis: "Workload",
-    yaxis: "Proportion of queries in %",
+    xaxis: "Query Type",
+    yaxis: "Proportion of query types in %",
   },
   latency: {
     title: "Latency",

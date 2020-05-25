@@ -41,7 +41,6 @@ export function useDataTransformation(metric: Metric): TransformationService {
 
 /** transform query type data to barchart structure */
 function getQueryTypeProportionData(data: any, primaryKey: string = ""): any {
-  console.log(data);
   const typeData = data.find((entry: any) => entry.id === primaryKey)!;
   const totalLatency = typeData.krueger_data.reduce(
     (sum: number, type: any) => sum + type.total_latency,
@@ -51,8 +50,9 @@ function getQueryTypeProportionData(data: any, primaryKey: string = ""): any {
     (sum: number, type: any) => sum + type.total_frequency,
     0
   );
-  return typeData.krueger_data.reduce(
-    (chartData: any[], type: any, idx: number) => {
+
+  return typeData.krueger_data
+    .reduce((chartData: any[], type: any, idx: number) => {
       const typeLatencyProportion = (type.total_latency / totalLatency) * 100;
       const typeFrequencyProportion =
         (type.total_frequency / totalFrequency) * 100;
@@ -62,18 +62,32 @@ function getQueryTypeProportionData(data: any, primaryKey: string = ""): any {
         y: [typeLatencyProportion, typeFrequencyProportion],
         name: type.query_type,
         type: "bar",
-        text: `${type.query_type}- L: ${formatPercentage(
-          typeLatencyProportion,
-          100
-        )} % - F: ${formatPercentage(typeFrequencyProportion, 100)} %`,
+        text: [
+          `${type.query_type} - ${formatPercentage(
+            typeLatencyProportion,
+            100
+          )} %`,
+          `${type.query_type} - ${formatPercentage(
+            typeFrequencyProportion,
+            100
+          )} %`,
+        ],
         hoverinfo: "text",
-        marker: { color: multiColors[idx] },
       });
 
       return chartData;
-    },
-    []
-  );
+    }, [])
+    .map((type: any, idx: number) => {
+      return {
+        ...type,
+        marker: {
+          color:
+            type.name === "OTHER"
+              ? colorValueDefinition.lightgrey
+              : multiColors[idx],
+        },
+      };
+    });
 }
 
 /** transform to cpu process usage data */
@@ -272,8 +286,6 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
     marker: { color: colorValueDefinition.lightgrey },
   };
 
-  let colorIdx = 0;
-
   return operatorData.operator_data
     .reduce((chartData: any[], operator: any) => {
       const operatorProportion = (operator.total_time_ns / totalTime) * 100;
@@ -295,12 +307,13 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
             roundNumber(operator.total_time_ns, Math.pow(10, 9), 1000, true)
           )}`,
           hoverinfo: "text",
-          marker: { color: multiColors[colorIdx] },
         });
-        colorIdx++;
       }
       return chartData;
     }, [])
+    .map((operator: any, idx: number) => {
+      return { ...operator, marker: { color: multiColors[idx] } };
+    })
     .sort((operator1: any, operator2: any) => operator2.y[0] - operator1.y[0])
     .concat([
       rest

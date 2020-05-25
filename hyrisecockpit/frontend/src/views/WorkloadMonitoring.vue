@@ -1,14 +1,21 @@
 <template>
   <div id="workload-monitoring-page">
-    <linear-loader :conditions="[$databaseController.databasesUpdated]" :evaluations="[false]" />
+    <linear-loader
+      :conditions="[$databaseController.databasesUpdated]"
+      :evaluations="[false]"
+    />
     <div class="mx-6">
-      <status-warning :selected-databases="selectedDatabases" :selected-metrics="selectedMetrics" />
+      <status-warning
+        :selected-databases="selectedDatabases"
+        :selected-metrics="selectedMetrics"
+      />
       <database-query-tables :selected-databases="selectedDatabases" />
       <metrics-comparison-table
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"
         :selected-metrics="selectedMetrics"
         :show-details="false"
+        :show-header="true"
       />
     </div>
   </div>
@@ -30,11 +37,9 @@ import DatabaseQueryTables from "@/components/queries/DatabaseQueryTables.vue";
 import { MetricViewData } from "../types/views";
 import { useSelectionHandling } from "@/meta/selection";
 import StatusWarning from "@/components/alerts/StatusWarning.vue";
-import MetricTile from "@/components/container/MetricTile.vue";
 import SelectionList from "@/components/selection/SelectionList.vue";
 import MetricsComparisonTable from "@/components/container/MetricsComparisonTable.vue";
 
-interface Props {}
 
 export default defineComponent({
   name: "WorkloadMonitoring",
@@ -45,7 +50,7 @@ export default defineComponent({
     SelectionList,
     MetricsComparisonTable,
   },
-  setup(props: Props, context: SetupContext): MetricViewData {
+  setup(props: {}, context: SetupContext): MetricViewData {
     return {
       watchedMetrics: workloadMetrics,
       ...useSelectionHandling(context, "workload"),
