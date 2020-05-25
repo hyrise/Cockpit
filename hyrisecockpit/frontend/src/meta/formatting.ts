@@ -12,6 +12,7 @@ export function useFormatting(): {
   ) => number;
   formatDateToHHMMSS: (date: Date) => string;
   formatDateToNanoSec: (date: Date) => number;
+  formatStringsToDate: (dateString: string, timeString: string) => Date;
   addSeconds: (date: Date, seconds: number) => Date;
   subSeconds: (date: Date, seconds: number) => Date;
   subDays: (date: Date, days: number) => Date;
@@ -27,7 +28,7 @@ export function useFormatting(): {
     let index = parts[0].length - 1;
     for (let i = 0; i < parts[0].length; i++) {
       if (i !== 0 && i % 3 == 0) {
-        formatted = "´" + formatted;
+        formatted = " " + formatted;
       }
       formatted = parts[0][index] + formatted;
       index--;
@@ -77,6 +78,10 @@ export function useFormatting(): {
     return minutes * 60;
   }
 
+  function formatStringsToDate(dateString: string, timeString: string): Date {
+    return new Date(`${dateString}T${timeString}`);
+  }
+
   function getNanoSeconds(seconds: number): number {
     return seconds * Math.pow(10, 9);
   }
@@ -105,6 +110,7 @@ export function useFormatting(): {
     subDays,
     trimString,
     formatMinutesToSeconds,
+    formatStringsToDate,
     getNanoSeconds,
   };
 }

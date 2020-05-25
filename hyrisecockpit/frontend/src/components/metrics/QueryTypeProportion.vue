@@ -63,8 +63,3 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
-.query-type-chart {
-  margin-top: -40px;
-}
-</style>

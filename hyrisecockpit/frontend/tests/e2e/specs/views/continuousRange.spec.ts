@@ -6,15 +6,15 @@ import {
   comparisonRequests,
   workloadMonitoringRequests,
 } from "../../setup/helpers";
-import { getRoute } from "../views/helpers";
+import { getRoute } from "./helpers";
+import { clickElement } from "../helpers";
 import {
-  assertDataRequest,
+  getSelector as getSelectionSelector,
+  assertTimeIntervalRequest,
   historicRanges,
   basicPrecision,
   assertPrecisionRequest,
 } from "./helpers";
-import { clickElement } from "../helpers";
-import { getSelector as getSelectionSelector } from "../views/helpers";
 
 const backend = useBackendMock();
 
@@ -60,7 +60,7 @@ describe("requesting different time ranges", () => {
         force: true,
       });
       cy.wait("@" + rangeAlias).then((xhr: any) => {
-        assertDataRequest(xhr.url, range.value);
+        assertTimeIntervalRequest(xhr.url, range.value);
       });
       backend.restart(); // reset aliases
     });
@@ -109,7 +109,7 @@ describe("requesting different time ranges", () => {
         force: true,
       });
       cy.wait("@" + rangeAlias).then((xhr: any) => {
-        assertDataRequest(xhr.url, range.value);
+        assertTimeIntervalRequest(xhr.url, range.value);
       });
       backend.restart(); // reset aliases
     });
@@ -158,7 +158,7 @@ describe("requesting different time ranges", () => {
         force: true,
       });
       cy.wait("@" + rangeAlias).then((xhr: any) => {
-        assertDataRequest(xhr.url, range.value);
+        assertTimeIntervalRequest(xhr.url, range.value);
       });
       backend.restart(); // reset aliases
     });
