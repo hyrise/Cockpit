@@ -173,6 +173,26 @@ export function fakeKruegerData(datebaseId: string): Object {
   };
 }
 
+// OPERATOR DATA
+function fakeOperatorData(suffix: number): Object {
+  return {
+    operator: faker.random.word() + suffix,
+    total_time_ns: generateRandomInt(1, Math.pow(10, 3)) * Math.pow(10, 6),
+  };
+}
+
+export function fakeDatabaseOperatorData(
+  databaseId: string,
+  numberOfOperators: number
+): Object {
+  return {
+    id: databaseId,
+    operator_data: [...Array(numberOfOperators).keys()].map((key) =>
+      fakeOperatorData(key)
+    ),
+  };
+}
+
 // CHUNKS DATA
 
 function fakeColumnChunksData(
