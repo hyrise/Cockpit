@@ -29,7 +29,7 @@
               {{ database.systemDetails.numberOfCPUs }}
             </v-card-title>
             <v-card-text class="font-weight-light white--text noPadding"
-              ># of CPUs</v-card-text
+              >CPUs</v-card-text
             >
           </v-col>
           <v-col id="database-memory-footprint" col="2" class="mr-1">
@@ -47,7 +47,7 @@
               {{ database.systemDetails.numberOfWorkers }}
             </v-card-title>
             <v-card-text class="font-weight-light white--text noPadding"
-              ># of Workers</v-card-text
+              >Workers</v-card-text
             >
           </v-col>
         </v-row>
