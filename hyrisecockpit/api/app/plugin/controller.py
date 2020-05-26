@@ -1,5 +1,5 @@
 """Controllers for activating and deactivating Plugins."""
-from typing import List
+from typing import List, Union
 
 from flask import request
 from flask.wrappers import Response
@@ -19,13 +19,13 @@ class PluginController(Resource):
     """Controller of Plugins."""
 
     @responds(schema=DetailedPluginIDSchema(many=True), api=api)
-    def get(self) -> List[DetailedPluginID]:
+    def get(self) -> Union[Response, List[DetailedPluginID]]:
         """Get all Plugins from all databases."""
         response = PluginService.get_all()
-        if isinstance(response, int):
-            raise ValueError()
-        else:
+        if not isinstance(response, int):
             return response
+        api.logger.error(f"Response status code: {response}.")
+        return Response(status=500)
 
 
 @api.response(404, "A database with the given ID does not exist.")
@@ -42,8 +42,8 @@ class PluginIdController(Resource):
         status = PluginService.activate_by_id(database_id, interface)
         if status in {200, 404, 423}:
             return Response(status=status)
-        else:
-            raise ValueError()
+        api.logger.error(f"Response status code: {status}.")
+        return Response(status=500)
 
     @accepts(schema=PluginSchema, api=api)
     def delete(self, database_id: str) -> Response:
@@ -52,8 +52,8 @@ class PluginIdController(Resource):
         status = PluginService.deactivate_by_id(database_id, interface)
         if status in {200, 404, 423}:
             return Response(status=status)
-        else:
-            raise ValueError()
+        api.logger.error(f"Response status code: {status}.")
+        return Response(status=500)
 
     @accepts(schema=UpdatePluginSettingSchema, api=api)
     def put(self, database_id: str) -> Response:
@@ -62,8 +62,8 @@ class PluginIdController(Resource):
         status = PluginService.update_plugin_setting(database_id, interface)
         if status in {200, 404, 423}:
             return Response(status=status)
-        else:
-            raise ValueError()
+        api.logger.error(f"Response status code: {status}.")
+        return Response(status=500)
 
 
 @api.route("/available")
