@@ -14,7 +14,7 @@ class Workload:
 class DetailedWorkload(Workload):
     """Detailed model of a Workload."""
 
-    def __init__(self, folder_name: str, frequency: int, weights: Dict[str, int]):
+    def __init__(self, folder_name: str, frequency: int, weights: Dict[str, float]):
         """Initialize a Workload model."""
-        self.weights: Dict[str, int] = weights
+        self.weights: Dict[str, float] = weights
         super().__init__(folder_name, frequency)

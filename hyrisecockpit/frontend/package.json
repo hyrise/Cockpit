@@ -14,7 +14,8 @@
         "lint": "vue-cli-service lint",
         "start:dev": "cd devServer/ ; npm run start",
         "start:dev:quiet": "cd devServer/ ; npm run start:quiet",
-        "start:dev:ci": "cd devServer/ ; npm run start:ci"
+        "start:dev:ci": "cd devServer/ ; npm run start:ci",
+        "reset:config": "cd scripts/ ; ./read-url.sh"
     },
     "dependencies": {
         "@types/faker": "^4.1.11",
