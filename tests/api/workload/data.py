@@ -11,7 +11,7 @@ from hyrisecockpit.api.app.workload.model import DetailedWorkload, Workload
 
 __folder_names = ["tpch_0.1", "job"]
 __frequencies = [0, 420]
-__weights: Tuple[Dict[str, int], ...] = ({}, {"01": 0, "23c": 101})
+__weights: Tuple[Dict[str, float], ...] = ({}, {"01": 0.0, "23c": 100.1})
 
 
 def interfaces() -> List[WorkloadInterface]:
