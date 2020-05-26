@@ -1,5 +1,7 @@
 //const backendUrl = "http://127.0.0.1:3000/";
-const backendUrl = `http://${process.env.VUE_APP_BACKEND_HOST}:${process.env.VUE_APP_BACKEND_PORT}/`;
+const backendUrl = (window as any).Cypress?.env("stubless")
+  ? "http://127.0.0.1:3000/"
+  : `http://${process.env.VUE_APP_BACKEND_HOST}:${process.env.VUE_APP_BACKEND_PORT}/`;
 
 export const monitorBackend = backendUrl + "monitor/";
 export const controlBackend = backendUrl + "control/";
