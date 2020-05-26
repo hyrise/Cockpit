@@ -295,6 +295,15 @@ class TestSystem:
         assert response.status_code == 200  # nosec
         assert response.json()["header"]["status"] == 200  # nosec
 
+    def test_gets_workload_query_runtime_data(self):
+        """Test getting of workload query runtime data."""
+        response = self.backend.get_property("monitor/krueger_data")
+        assert response.status_code == 200  # nosec
+        assert len(response.json()) > 0  # nosec
+        assert len(response.json()[0]["krueger_data"]) > 0  # nosec
+        assert response.json()[0]["krueger_data"][0]["total_frequency"] > 0  # nosec
+        assert response.json()[0]["krueger_data"][0]["total_latency"] > 0  # nosec
+
     def test_gets_operator_data(self):
         """Test getting of the operator data."""
         response = self.backend.get_property("monitor/operator")
