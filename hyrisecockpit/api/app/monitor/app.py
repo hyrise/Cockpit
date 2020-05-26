@@ -284,14 +284,14 @@ class System(Resource):
                 endts,
                 precision_ns,
                 "system_data",
-               [
-                  "cpu_count",
-                  "cpu_process_usage",
-                  "cpu_system_usage",
-                  "database_threads",
-                  "free_memory",
-                  "total_memory",
-                  "available_memory",
+                [
+                    "cpu_count",
+                    "cpu_process_usage",
+                    "cpu_system_usage",
+                    "database_threads",
+                    "free_memory",
+                    "total_memory",
+                    "available_memory",
                 ],
                 client,
             )
