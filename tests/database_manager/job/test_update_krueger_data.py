@@ -38,11 +38,11 @@ class TestUpdateKruegerData:
         mock_database_blocked = False
         mock_connection_factory = MagicMock()
 
-        expected_sql = """WITH query_latency AS (SELECT SUM(walltime_ns) AS latency, query_hash
+        expected_sql = """WITH query_latency AS (SELECT SUM(walltime_ns) AS latency, statement_hash as query_hash
         FROM meta_cached_operators
-        GROUP BY query_hash)
-        SELECT hash_value, latency, frequency, sql_string FROM query_latency JOIN meta_cached_queries
-        ON query_latency.query_hash = meta_cached_queries.hash_value;"""
+        GROUP BY statement_hash)
+        SELECT statement_hash, latency, frequency, sql_string FROM query_latency JOIN meta_cached_queries
+        ON query_latency.query_hash = meta_cached_queries.statement_hash;"""
 
         expected_krueger_data = [
             {"query_type": "SELECT", "total_latency": 10, "total_frequency": 10},
