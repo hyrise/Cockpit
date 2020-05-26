@@ -1,7 +1,7 @@
 """Module for managing databases."""
 
 from types import TracebackType
-from typing import Callable, Dict, List, Optional, Tuple, Type, TypedDict
+from typing import Callable, Dict, Optional, Tuple, Type, TypedDict
 
 from hyrisecockpit.api.app.plugin.interface import UpdatePluginSettingInterface
 from hyrisecockpit.message import (
@@ -15,10 +15,10 @@ from hyrisecockpit.response import Response, get_error_response, get_response
 from hyrisecockpit.server import Server
 
 from .cursor import PoolCursor
-from .database import Database
+from .database import Database, Plugins
 
 DatabaseActivatedPlugins = TypedDict(
-    "DatabaseActivatedPlugins", {"id": str, "plugins": Optional[Dict[str, List]]},
+    "DatabaseActivatedPlugins", {"id": str, "plugins": Plugins},
 )
 
 
@@ -198,28 +198,11 @@ class DatabaseManager(object):
         return response
 
     def _call_get_plugins(self, body: Body) -> Response:
-        activated_plugins = []
-        for id, database in self._databases.items():
-            plugins = database.get_plugins()
-            settings = database.get_plugin_setting()
-            if plugins is None or settings is None:
-                activated_plugins.append(DatabaseActivatedPlugins(id=id, plugins=None))
-            else:
-                activated_plugins.append(
-                    DatabaseActivatedPlugins(
-                        id=id,
-                        plugins={
-                            plugin_name: (
-                                settings[plugin_name]
-                                if plugin_name in settings.keys()
-                                else []
-                            )
-                            for plugin_name in plugins
-                        },
-                    )
-                )
         response = get_response(200)
-        response["body"]["plugins"] = activated_plugins
+        response["body"]["plugins"] = [
+            DatabaseActivatedPlugins(id=id, plugins=database.get_detailed_plugins())
+            for id, database in self._databases.items()
+        ]
         return response
 
     def _call_activate_plugin(self, body: Body) -> Response:

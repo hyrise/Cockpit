@@ -428,7 +428,7 @@ class TestDatabase(object):
         database._connection_factory = mock_connection_factory
         database._database_blocked.value = False
 
-        result: Optional[List] = database.get_plugins()
+        result: Optional[List] = database._get_plugins()
 
         mock_cursor.execute.assert_called_once_with(
             ("SELECT name FROM meta_plugins;"), None
@@ -457,7 +457,7 @@ class TestDatabase(object):
         database._database_blocked.value = False
 
         expected: List[str] = ["Hildegunst von Mythenmetz", "Rumo von Zamonien"]
-        result: Optional[List] = database.get_plugins()
+        result: Optional[List] = database._get_plugins()
 
         assert type(result) is list
         assert Counter(result) == Counter(expected)
@@ -483,7 +483,7 @@ class TestDatabase(object):
         database._connection_factory = mock_connection_factory
         database._database_blocked.value = False
 
-        result: Optional[List] = database.get_plugins()
+        result: Optional[List] = database._get_plugins()
 
         assert result is None
 
@@ -573,7 +573,7 @@ class TestDatabase(object):
         database._connection_factory = mock_connection_factory
         database._database_blocked.value = False
 
-        result = database.get_plugin_setting()
+        result = database._get_plugin_setting()
 
         mock_cursor.execute.assert_called_once_with(
             "SELECT name, value, description FROM meta_settings WHERE name LIKE 'Plugin::';",
@@ -612,7 +612,7 @@ class TestDatabase(object):
             ],
         }
 
-        result = database.get_plugin_setting()
+        result = database._get_plugin_setting()
 
         assert isinstance(result, dict)
         assert result == expected
@@ -638,7 +638,7 @@ class TestDatabase(object):
         database._connection_factory = mock_connection_factory
         database._database_blocked.value = False
 
-        result = database.get_plugin_setting()
+        result = database._get_plugin_setting()
 
         assert result is None
 

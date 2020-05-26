@@ -1,7 +1,7 @@
 """The database object represents the instance of a database."""
 
 from multiprocessing import Value
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, TypedDict
 
 from psycopg2 import DatabaseError, Error, InterfaceError
 
@@ -10,6 +10,11 @@ from .cursor import ConnectionFactory, StorageConnectionFactory
 from .interfaces import SqlResultInterface
 from .table_names import table_names as _table_names
 from .worker_pool import WorkerPool
+
+PluginSetting = TypedDict(
+    "PluginSetting", {"name": str, "value": str, "description": str}
+)
+Plugins = Optional[Dict[str, List[PluginSetting]]]
 
 
 class Database(object):
@@ -188,7 +193,7 @@ class Database(object):
         """Close worker."""
         return self._worker_pool.close()
 
-    def get_plugins(self) -> Optional[List[str]]:
+    def _get_plugins(self) -> Optional[List[str]]:
         """Return all currently activated plugins."""
         try:
             with self._connection_factory.create_cursor() as cur:
@@ -198,6 +203,44 @@ class Database(object):
             return None
         else:
             return [row[0].split("Plugin")[0] for row in rows]
+
+    def _get_plugin_setting(self) -> Plugins:
+        """Return currently set plugin settings."""
+        try:
+            with self._connection_factory.create_cursor() as cur:
+                cur.execute(
+                    "SELECT name, value, description FROM meta_settings WHERE name LIKE 'Plugin::';",
+                    None,
+                )
+                rows = cur.fetchall()
+        except (DatabaseError, InterfaceError):
+            return None
+        else:
+            plugins: Dict[str, List[PluginSetting]] = {}
+            for row in rows:
+                plugin_name, setting_name = row[0].split("::")[1:]
+                value, description = row[1], row[2]
+                if plugins.get(plugin_name) is None:
+                    plugins[plugin_name] = []
+                plugins[plugin_name].append(
+                    PluginSetting(
+                        name=setting_name, value=value, description=description
+                    )
+                )
+            return plugins
+
+    def get_detailed_plugins(self) -> Plugins:
+        """Get all activated plugins with their settings."""
+        if (plugins := self._get_plugins()) is None:
+            return None
+        if (settings := self._get_plugin_setting()) is None:
+            return None
+        return {
+            plugin_name: (
+                settings[plugin_name] if plugin_name in settings.keys() else []
+            )
+            for plugin_name in plugins
+        }
 
     def set_plugin_setting(
         self, plugin_name: str, setting_name: str, setting_value: str
@@ -217,29 +260,6 @@ class Database(object):
             except (DatabaseError, InterfaceError):
                 return False
         return False
-
-    def get_plugin_setting(self) -> Optional[Dict[str, List[Dict[str, str]]]]:
-        """Read currently set plugin settings."""
-        try:
-            with self._connection_factory.create_cursor() as cur:
-                cur.execute(
-                    "SELECT name, value, description FROM meta_settings WHERE name LIKE 'Plugin::';",
-                    None,
-                )
-                rows = cur.fetchall()
-        except (DatabaseError, InterfaceError):
-            return None
-        else:
-            plugins: Dict[str, List[Dict[str, str]]] = {}
-            for row in rows:
-                plugin_name, setting_name = row[0].split("::")[1:]
-                value, description = row[1], row[2]
-                if plugins.get(plugin_name) is None:
-                    plugins[plugin_name] = []
-                plugins[plugin_name].append(
-                    {"name": setting_name, "value": value, "description": description}
-                )
-            return plugins
 
     def execute_sql_query(self, query) -> Optional[SqlResultInterface]:
         """Execute sql query on database."""

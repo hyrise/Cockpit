@@ -490,14 +490,14 @@ class TestDatabaseManager:
 
         assert expected_response == response
 
-    def test_call_get_plugins(self, database_manager: DatabaseManager) -> None:
+    def test_call_get_detailed_plugins(self, database_manager: DatabaseManager) -> None:
         """Call get plugins."""
         database = fake_database()
-        database.get_plugins.return_value = ["Compression", "Clustering"]
-        database.get_plugin_setting.return_value = {
+        database.get_detailed_plugins.return_value = {
             "Compression": [
                 {"name": "MemoryBudget", "value": "55555", "description": "..."}
-            ]
+            ],
+            "Clustering": [],
         }
         database_manager._databases["db1"] = database
 
