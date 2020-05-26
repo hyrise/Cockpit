@@ -12,7 +12,10 @@
         <div v-if="idx % 15 === 0">
           <div class="value-col">
             <div class="max-value">
-              10000
+              100
+            </div>
+            <div class="medium-value">
+              1
             </div>
             <div class="min-value">
               0
@@ -33,6 +36,7 @@
             @click="updateWeight(weight.name, true)"
             @end="updateWeight(weight.name, true)"
           />
+          <div class="middle-line"></div>
           <div class="bottom-line"></div>
           <v-text-field
             v-model.number="weight.value"
@@ -86,23 +90,25 @@ export default defineComponent({
     const weights = ref<Weight[]>([]);
 
     /* convert the linear sliderValues with exponential function: f(sliderValue) = value = a * b^sliderValue - a
-    f(0) = 0, f(50) = 100, f(100) =  10000 --> b = 99^(1/50), a = 50/49 */
-    const a = 50 / 49;
+    f(0) = 0, f(50) = 1.0, f(100) = 100 --> b = 99^(1/50), a = 1/98 */
+    const a = 1 / 98;
     const b = Math.pow(99, 1 / 50);
 
     function convertSliderValueToValue(sliderValue: number): number {
-      return Math.round(a * Math.pow(b, sliderValue) - a);
+      return Math.round((a * Math.pow(b, sliderValue) - a) * 100) / 100;
     }
     function convertValueToSliderValue(value: number): number {
-      return Math.round(Math.log((value + a) / a) / Math.log(b));
+      return Math.round((Math.log((value + a) / a) / Math.log(b)) * 100) / 100;
     }
     function updateWeight(name: string, sliderValueToValue: boolean): void {
       const weight: Weight = Object.values(weights.value).find(
         (weight) => weight.name === name
       )!;
-      sliderValueToValue
-        ? (weight.value = convertSliderValueToValue(weight.sliderValue))
-        : (weight.sliderValue = convertValueToSliderValue(weight.value));
+      if (sliderValueToValue) {
+        weight.value = convertSliderValueToValue(weight.sliderValue);
+      } else {
+        weight.sliderValue = convertValueToSliderValue(weight.value);
+      }
       context.emit("change", name, weight.value);
     }
     watch(
@@ -144,10 +150,15 @@ export default defineComponent({
   margin-top: 50%;
   margin-bottom: -13px;
 }
+.middle-line {
+  border-top: 2px solid #dfdfdf;
+  width: 100%;
+  margin-top: -88px;
+}
 .bottom-line {
   border-top: 2px solid #dfdfdf;
   width: 100%;
-  margin-top: -13px;
+  margin-top: 73px;
   margin-bottom: 50%;
 }
 .value-col {
@@ -156,7 +167,11 @@ export default defineComponent({
   margin-right: 8px;
 }
 .min-value {
-  margin-top: 128px;
+  margin-top: 53px;
+  text-align: right;
+}
+.medium-value {
+  margin-top: 53px;
   text-align: right;
 }
 .max-value {
