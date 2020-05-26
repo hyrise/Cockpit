@@ -23,8 +23,8 @@ class Workload:
         """Initialize a Workload."""
         self.frequency: int = frequency
         self._queries: OrderedDict[str, List[str]] = OrderedDict(queries)
-        self._weights: OrderedDict[str, int] = OrderedDict(
-            (key, 100) for key in self._queries.keys()
+        self._weights: OrderedDict[str, float] = OrderedDict(
+            (key, 1.0) for key in self._queries.keys()
         )
 
     @property
@@ -39,12 +39,12 @@ class Workload:
         return self._frequency
 
     @property
-    def weights(self) -> Dict[str, int]:
+    def weights(self) -> Dict[str, float]:
         """Get the weight of each query."""
         return dict(self._weights)
 
     @weights.setter
-    def weights(self, values: Dict[str, int]) -> Dict[str, int]:
+    def weights(self, values: Dict[str, float]) -> Dict[str, float]:
         """Set the weight of each query, must be done with all queries."""
         if values.keys() == self._weights.keys():
             for key, value in values.items():
@@ -54,7 +54,7 @@ class Workload:
     @weights.deleter
     def weights(self):
         """Reset the weight of each query."""
-        self._weights = OrderedDict((key, 100) for key in self._queries.keys())
+        self._weights = OrderedDict((key, 1.0) for key in self._queries.keys())
 
     def update(self, new_workload: DetailedWorkloadInterface) -> None:
         """Update a Workload with new attributes."""

@@ -12,4 +12,4 @@ class WorkloadInterface(TypedDict):
 class DetailedWorkloadInterface(WorkloadInterface):
     """Detailed interface of a Workload."""
 
-    weights: Dict[str, int]
+    weights: Dict[str, float]
