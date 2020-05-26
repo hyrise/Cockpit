@@ -1,6 +1,6 @@
 """Tests for the workload_generator module's workload."""
 
-from random import choice, choices, getstate, randint, setstate
+from random import choice, choices, getstate, setstate, uniform
 from typing import Dict, List
 
 from pytest import fixture
@@ -25,13 +25,13 @@ def queries(request) -> Dict[str, List[str]]:
     return request.param
 
 
-@fixture(params=[0, 1, (0, 100)])
-def weights(request, queries: Dict[str, List[str]]) -> Dict[str, int]:
+@fixture(params=[0.0, 1.0, (0.0, 100.0)])
+def weights(request, queries: Dict[str, List[str]]) -> Dict[str, float]:
     """Get a weights distribution."""
-    if isinstance(request.param, int):
+    if isinstance(request.param, float):
         return {key: request.param for key in queries.keys()}
     else:
-        return {key: randint(*request.param) for key in queries.keys()}
+        return {key: uniform(*request.param) for key in queries.keys()}
 
 
 @fixture
@@ -53,9 +53,9 @@ class TestWorkload:
         """Test whether initial attributes are set correctly."""
         assert workload.frequency == frequency
         assert workload._queries == queries
-        assert workload.weights == {key: 100 for key in queries.keys()}
+        assert workload.weights == {key: 1.0 for key in queries.keys()}
 
-    def test_sets_weights(self, workload: Workload, weights: Dict[str, int]):
+    def test_sets_weights(self, workload: Workload, weights: Dict[str, float]):
         """Test whether weights can be set."""
         workload.weights = weights
         assert workload.weights == weights
@@ -69,13 +69,13 @@ class TestWorkload:
 
     def test_sets_negative_weights_to_0(self, workload: Workload):
         """Test whether negative weights are set to 0."""
-        previous_weights = workload.weights
-        new_weights = {key: -(i + 1) for i, key in enumerate(previous_weights.keys())}
-        workload.weights = new_weights
+        workload.weights = {
+            key: -(i + 1) for i, key in enumerate(workload.weights.keys())
+        }
         for value in workload.weights.values():
             assert value >= 0
 
-    def test_deletes_weights(self, workload: Workload, weights: Dict[str, int]):
+    def test_deletes_weights(self, workload: Workload, weights: Dict[str, float]):
         """Test whether weights a reset with delete."""
         previous_weights = workload.weights
         workload.weights = weights
@@ -100,7 +100,7 @@ class TestWorkload:
         workload: Workload,
         frequency: int,
         queries: Dict[str, List[str]],
-        weights: Dict[str, int],
+        weights: Dict[str, float],
     ):
         """Test whether a workload can be generated with weights."""
         workload.weights = weights
