@@ -62,9 +62,6 @@ class TestSystem:
         """Check if database has successfully load default tables."""
         expected_status = {
             "id": database_id,
-            "hyrise_active": True,
-            "database_blocked_status": False,
-            "worker_pool_status": "closed",
             "loaded_benchmarks": ["tpch_0_1", "no-ops_0_1", "no-ops_1"],
             "loaded_tables": [
                 "orders_tpch_0_1",
@@ -78,7 +75,7 @@ class TestSystem:
             ],
         }
 
-        response = cls.backend.get_property("monitor/status")  # type: ignore
+        response = cls.backend.get_property("status/benchmark")  # type: ignore
         assert response.status_code == 200  # nosec
         assert expected_status in response.json()  # nosec
 
