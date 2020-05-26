@@ -5,21 +5,19 @@ from hyrisecockpit.api.app.status.model import (
     DatabaseStatus,
     FailedQuery,
     FailedTask,
-    HyriseStatus,
 )
 
 
 class TestStatusModel:
     """Tests for status models."""
 
-    def test_creates_hyris_status(self) -> None:
-        """A HyriseStatus model can be created."""
-        assert HyriseStatus(id="db", hyrise_active=True)
-
     def test_creates_database_status(self) -> None:
         """A DatabaseStatus model can be created."""
         assert DatabaseStatus(
-            id="db", database_blocked_status=True, worker_pool_status="running"
+            id="db",
+            database_blocked_status=True,
+            worker_pool_status="running",
+            hyrise_active=True,
         )
 
     def test_creates_benchmark_status(self) -> None:

@@ -5,23 +5,17 @@ from hyrisecockpit.api.app.status.model import (
     DatabaseStatus,
     FailedQuery,
     FailedTask,
-    HyriseStatus,
 )
 from hyrisecockpit.api.app.status.schema import (
     BenchmarkStatusSchema,
     DatabaseStatusSchema,
     FailedQuerySchema,
     FailedTaskSchema,
-    HyriseStatusSchema,
 )
 
 
 class TestStatusSchema:
     """Tests for the status schema's."""
-
-    def test_creates_hyrise_status_schema(self) -> None:
-        """A HyriseStatusSchema schema can be created."""
-        assert HyriseStatusSchema()
 
     def test_creates_database_status_schema(self) -> None:
         """A DatabaseStatusSchema schema can be created."""
@@ -39,19 +33,13 @@ class TestStatusSchema:
         """A FailedTaskSchema schema can be created."""
         assert FailedTaskSchema()
 
-    def test_serializes_hyrise_status_schema(self) -> None:
-        """A HyriseStatusSchema schema can be serialized."""
-        interface = {"id": "SomeID", "hyrise_active": False}
-        hyrise_status = HyriseStatus(**interface)  # type: ignore
-        serialized = HyriseStatusSchema().dump(hyrise_status)
-        assert serialized == interface == vars(hyrise_status)
-
     def test_serializes_database_status_schema(self) -> None:
         """A DatabaseStatusSchema schema can be serialized."""
         interface = {
             "id": "SomeID",
             "database_blocked_status": False,
             "worker_pool_status": "running",
+            "hyrise_active": False,
         }
         database_status = DatabaseStatus(**interface)  # type: ignore
         serialized = DatabaseStatusSchema().dump(database_status)

@@ -11,7 +11,6 @@ from hyrisecockpit.api.app.status.model import (
     BenchmarkStatus,
     DatabaseStatus,
     FailedTask,
-    HyriseStatus,
 )
 from hyrisecockpit.cross_platform_support.testing_support import MagicMock
 
@@ -37,22 +36,6 @@ class TestStatusController:
     """Tests for the metric controller."""
 
     @patch("hyrisecockpit.api.app.status.controller.StatusService")
-    def test_get_hyrise_status(
-        self, mock_status_service: MagicMock, client: FlaskClient
-    ) -> None:
-        """A controller routes get_hyrise correctly."""
-        interface = {"id": "SomeID", "hyrise_active": False}
-        fake_hyrise_status = HyriseStatus(**interface)  # type: ignore
-        mock_status_service.get_hyrise_status.return_value = [fake_hyrise_status]
-
-        expected = [interface]
-
-        response = client.get(f"{url}/hyrise", follow_redirects=True)
-
-        assert 200 == response.status_code
-        assert expected == response.get_json()
-
-    @patch("hyrisecockpit.api.app.status.controller.StatusService")
     def test_get_database_status(
         self, mock_status_service: MagicMock, client: FlaskClient
     ) -> None:
@@ -61,6 +44,7 @@ class TestStatusController:
             "id": "SomeID",
             "database_blocked_status": False,
             "worker_pool_status": "running",
+            "hyrise_active": False,
         }
         fake_database_status = DatabaseStatus(**interface)  # type: ignore
         mock_status_service.get_database_status.return_value = [fake_database_status]
