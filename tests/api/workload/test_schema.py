@@ -24,7 +24,7 @@ def frequency(request) -> int:
     return request.param
 
 
-@fixture(params=[{}, {"01": 0, "23c": 101}])
+@fixture(params=[{}, {"01": 0.0, "23c": 100.1}])
 def weights(request) -> Dict[str, int]:
     """Get examples of weights."""
     return request.param
@@ -86,7 +86,7 @@ class TestDetailedWorkloadSchema:
         detailed_schema: DetailedWorkloadSchema,
         folder_name: str,
         frequency: int,
-        weights: Dict[str, int],
+        weights: Dict[str, float],
     ):
         """A DetailedWorkload schema can create a DetailedWorkload model."""
         interface: DetailedWorkloadInterface = {
@@ -105,7 +105,7 @@ class TestDetailedWorkloadSchema:
         detailed_schema: DetailedWorkloadSchema,
         folder_name: str,
         frequency: int,
-        weights: Dict[str, int],
+        weights: Dict[str, float],
     ):
         """A DetailedWorkload model can be serialized with a DetailedWorkload schema."""
         interface: DetailedWorkloadInterface = {
