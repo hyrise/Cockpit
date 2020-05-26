@@ -15,11 +15,11 @@ def update_krueger_data(
 ) -> None:
     """Update krueger data."""
     time_stamp = time_ns()
-    sql = """WITH query_latency AS (SELECT SUM(walltime_ns) AS latency, query_hash
+    sql = """WITH query_latency AS (SELECT SUM(walltime_ns) AS latency, statement_hash as query_hash
         FROM meta_cached_operators
-        GROUP BY query_hash)
-        SELECT hash_value, latency, frequency, sql_string FROM query_latency JOIN meta_cached_queries
-        ON query_latency.query_hash = meta_cached_queries.hash_value;"""
+        GROUP BY statement_hash)
+        SELECT statement_hash, latency, frequency, sql_string FROM query_latency JOIN meta_cached_queries
+        ON query_latency.query_hash = meta_cached_queries.statement_hash;"""
 
     meta_segments = sql_to_data_frame(database_blocked, connection_factory, sql, None)
 

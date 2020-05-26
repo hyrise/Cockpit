@@ -17,7 +17,7 @@ def update_operator_data(
 
     sql = """SELECT operator, SUM(frequency*walltime_ns) AS total_time_ns
         FROM meta_cached_operators JOIN meta_cached_queries
-        ON meta_cached_operators.query_hash=meta_cached_queries.hash_value
+        ON meta_cached_operators.statement_hash=meta_cached_queries.statement_hash
         GROUP BY operator;"""
     meta_segments = sql_to_data_frame(database_blocked, connection_factory, sql, None)
 
