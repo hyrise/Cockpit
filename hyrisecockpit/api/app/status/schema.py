@@ -4,23 +4,6 @@ from marshmallow import Schema
 from marshmallow.fields import Boolean, List, Nested, String
 
 
-class HyriseStatusSchema(Schema):
-    """Schema of a Hyrise status."""
-
-    id = String(
-        title="Database ID",
-        description="Used to identify a database.",
-        required=True,
-        example="hyrise-1",
-    )
-    hyrise_active = Boolean(
-        title="hyrise active status",
-        description="Hyrise is reachable.",
-        required=True,
-        example=True,
-    )
-
-
 class DatabaseStatusSchema(Schema):
     """Schema of a database object."""
 
@@ -41,6 +24,12 @@ class DatabaseStatusSchema(Schema):
         description="Status of the worker pools of the databases.",
         required=True,
         example="running",
+    )
+    hyrise_active = Boolean(
+        title="hyrise active status",
+        description="Hyrise is reachable.",
+        required=True,
+        example=True,
     )
 
 

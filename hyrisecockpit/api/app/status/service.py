@@ -9,13 +9,7 @@ from hyrisecockpit.message import response_schema
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
-from .model import (
-    BenchmarkStatus,
-    DatabaseStatus,
-    FailedQuery,
-    FailedTask,
-    HyriseStatus,
-)
+from .model import BenchmarkStatus, DatabaseStatus, FailedQuery, FailedTask
 
 
 class StatusService:
@@ -28,16 +22,6 @@ class StatusService:
             response = socket.send_message(message)
         validate(instance=response, schema=response_schema)
         return response
-
-    @classmethod
-    def get_hyrise_status(cls) -> List[HyriseStatus]:
-        """Get get hyrise status for all databases."""
-        response = cls._send_message(
-            Request(header=Header(message="hyrise status"), body={})
-        )
-        return [
-            HyriseStatus(**interface) for interface in response["body"]["hyrise_status"]
-        ]
 
     @classmethod
     def get_database_status(cls) -> List[DatabaseStatus]:

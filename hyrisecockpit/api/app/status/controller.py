@@ -4,26 +4,11 @@ from typing import List
 from flask_accepts import responds
 from flask_restx import Namespace, Resource
 
-from .model import BenchmarkStatus, DatabaseStatus, FailedTask, HyriseStatus
-from .schema import (
-    BenchmarkStatusSchema,
-    DatabaseStatusSchema,
-    FailedTaskSchema,
-    HyriseStatusSchema,
-)
+from .model import BenchmarkStatus, DatabaseStatus, FailedTask
+from .schema import BenchmarkStatusSchema, DatabaseStatusSchema, FailedTaskSchema
 from .service import StatusService
 
 api = Namespace("status", description="Get status information.")
-
-
-@api.route("/hyrise")
-class HyriseStatusController(Resource):
-    """Controller for returning the hyrise status."""
-
-    @responds(schema=HyriseStatusSchema(many=True), api=api)
-    def get(self) -> List[HyriseStatus]:
-        """Get status for all hyrise instances."""
-        return StatusService.get_hyrise_status()
 
 
 @api.route("/database")

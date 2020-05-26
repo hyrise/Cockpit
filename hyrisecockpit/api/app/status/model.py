@@ -2,23 +2,21 @@
 from typing import List
 
 
-class HyriseStatus:
-    """Model of a Hyrise status."""
-
-    def __init__(self, id: str, hyrise_active: bool):
-        """Initialize a Hyrise status model."""
-        self.id: str = id
-        self.hyrise_active: bool = hyrise_active
-
-
 class DatabaseStatus:
     """Model of a database status."""
 
-    def __init__(self, id: str, database_blocked_status: bool, worker_pool_status: str):
+    def __init__(
+        self,
+        id: str,
+        database_blocked_status: bool,
+        worker_pool_status: str,
+        hyrise_active: bool,
+    ):
         """Initialize a database status model."""
         self.id: str = id
         self.database_blocked_status: bool = database_blocked_status
         self.worker_pool_status: str = worker_pool_status
+        self.hyrise_active: bool = hyrise_active
 
 
 class BenchmarkStatus:
