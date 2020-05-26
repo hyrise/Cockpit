@@ -1,6 +1,6 @@
 """Schema of a Plugin."""
 from marshmallow import Schema
-from marshmallow.fields import Nested, String
+from marshmallow.fields import List, Nested, String
 
 
 class PluginSchema(Schema):
@@ -47,11 +47,8 @@ class PluginSettingSchema(PluginSettingBaseSchema):
 class DetailedPluginSchema(PluginSchema):
     """Schema of a detailed Plugin."""
 
-    settings = Nested(
-        PluginSettingSchema,
-        description="Settings of the Plugin",
-        many=True,
-        required=True,
+    settings = List(
+        Nested(PluginSettingSchema), description="Settings of the Plugin", required=True
     )
 
 
@@ -61,10 +58,9 @@ class DetailedPluginIDSchema(Schema):
     id = String(
         description="Identifier of the database.", required=True, default="citdalle"
     )
-    plugins = Nested(
-        DetailedPluginSchema,
-        description="Detailed Plugins per database, none if the database is blocked.",
-        many=True,
-        required=True,
+    plugins = List(
+        Nested(DetailedPluginSchema),
         allow_none=True,
+        description="Detailed Plugins per database, none if the database is blocked.",
+        required=True,
     )
