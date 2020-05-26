@@ -213,13 +213,12 @@ function useWorkloadAction(
   getWorkloads().then((response: any) => {
     if (response.data.length > 0) {
       Object.values(response.data).forEach((workload: any) => {
-        workload = getWorkloadFromTransferred(workload.folder_name);
-        workloadData[workload].selected = true;
-        updateWorkload(workload, frequency.value, {}).then((response: any) => {
-          handleWeightsChange(workload, response.data.weights);
-        });
+        workloadData[
+          getWorkloadFromTransferred(workload.folder_name)
+        ].selected = true;
       });
       frequency.value = response.data[0].frequency;
+      updatingWorkloads();
       getLoadedWorkloadData().then((response: any) => {
         let workersStopped = Object.values(response.data).some(
           (database: any) => database.worker_pool_status === "closed"
@@ -247,13 +246,6 @@ function useWorkloadAction(
   function stopLoading(action: string): void {
     actions[action].loading = false;
   }
-  function startOrUpdateWorkload(action: string): void {
-    startLoading(action);
-    startWorker().then(() => {
-      updatingWorkloads();
-      stopLoading(action);
-    });
-  }
   function updatingWorkloads(): void {
     Object.keys(workloadData).forEach((workload: any) => {
       if (workloadData[workload].selected) {
@@ -261,18 +253,26 @@ function useWorkloadAction(
           workload,
           frequency.value,
           workloadData[workload].weights
-        );
+        ).then((response: any) => {
+          handleWeightsChange(workload, response.data.weights);
+        });
       }
+    });
+  }
+  function startingWorker(action: string): void {
+    startLoading(action);
+    startWorker().then(() => {
+      stopLoading(action);
     });
   }
   function startingWorkload(): void {
     context.emit("start");
-    startOrUpdateWorkload("start");
+    startingWorker("start");
   }
   function pausingWorkload(): void {
     context.emit("pause");
     frequency.value = 0;
-    startOrUpdateWorkload("pause");
+    startingWorker("pause");
   }
   function stoppingWorkload(): void {
     context.emit("stop");
@@ -289,6 +289,7 @@ function useWorkloadAction(
     workloadData[workload].selected = !workloadData[workload].selected;
     if (workloadData[workload].selected) {
       startWorkload(workload, frequency.value);
+      updatingWorkloads();
     } else {
       stopWorkload(workload);
     }
@@ -306,7 +307,6 @@ function useWorkloadAction(
     changedWeights: Record<string, number>
   ): void {
     workloadData[workload].weights = changedWeights;
-    updatingWorkloads();
   }
   return {
     enableEqualizer: computed(
