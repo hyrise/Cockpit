@@ -16,7 +16,11 @@ RUN cd /usr/local/ \
     && CXXFLAGS=-fdiagnostics-color=always cmake -DENABLE_NUMA_SUPPORT=Off -DCMAKE_BUILD_TYPE=Release .. \
     && make hyriseConsole hyriseServer \
     && mkdir -p /usr/local/hyrise/lib \
-    && cp hyriseServer hyriseConsole /usr/local/hyrise/
+    && cp hyriseServer hyriseConsole /usr/local/hyrise
+RUN cd /usr/local/hyrise-git/cmake-build-release \
+    && make hyriseBenchmarkTPCH \
+    && ./hyriseBenchmarkTPCH --scale 0.1 --runs 1 \
+    && cp -Rf tpch_cached_tables/sf-0.100000 /usr/local/hyrise/cached_tables/tpch_0_1
 RUN cd /usr/local/hyrise-git/cmake-build-release \
     && make CompressionPlugin ClusteringPlugin IndexSelectionPlugin \
     && cp lib/libClusteringPlugin.so lib/libCompressionPlugin.so lib/libIndexSelectionPlugin.so /usr/local/hyrise/lib/ 
