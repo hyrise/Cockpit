@@ -9,10 +9,10 @@
       <v-card class="card" :color="database.color">
         <v-row class="detailsRow">
           <v-col id="database-host" col="2" class="mr-1">
-            <v-card-title class="font-weight-regular white--text noPadding">
+            <v-card-title class="font-weight-bold white--text noPadding">
               {{ database.systemDetails.host }}
             </v-card-title>
-            <v-card-text class="font-weight-regular white--text noPadding"
+            <v-card-text class="font-weight-bold white--text noPadding"
               >Host</v-card-text
             >
           </v-col>
@@ -122,7 +122,7 @@ export default defineComponent({
   border-radius: 4px;
 }
 .v-card__title {
-  padding-bottom: 6px;
+  margin-bottom: 6px;
   white-space: nowrap;
 }
 
@@ -139,6 +139,7 @@ export default defineComponent({
 .noPadding {
   padding: 0px !important;
   word-break: normal !important;
+  line-height: 1rem !important;
 }
 
 .detailsRow {
