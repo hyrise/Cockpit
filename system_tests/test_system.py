@@ -77,7 +77,7 @@ class TestSystem:
                 "region_tpch_0_1",
             ],
         }
-        
+
         response = cls.backend.get_property("monitor/status")  # type: ignore
         assert response.status_code == 200  # nosec
         assert expected_status in response.json()  # nosec
@@ -105,9 +105,9 @@ class TestSystem:
     def test_returns_historical_metric_values_with_no_database_registered(self):
         """Test historical metric endpoints return correct values."""
         historical_metrics = [
-            "monitor/throughput",
-            "monitor/latency",
-            "monitor/queue_length",
+            "metric/throughput",
+            "metric/latency",
+            "metric/queue_length",
             "monitor/system",
         ]
         for metric in historical_metrics:
@@ -123,14 +123,14 @@ class TestSystem:
 
     def test_returns_available_databases(self):
         """Ensure a new backend has no databases."""
-        response = self.backend.get_control_property("database")
+        response = self.backend.get_property("control/database")
 
         assert response.status_code == 200  # nosec
         assert response.json() == []  # nosec
 
     def test_returns_available_datasets(self):
         """Test available datasets."""
-        response = self.backend.get_control_property("database/benchmark_tables")
+        response = self.backend.get_property("control/database/benchmark_tables")
 
         assert response.status_code == 200  # nosec
         assert response.json() == {  # nosec
@@ -150,7 +150,7 @@ class TestSystem:
 
     def test_added_database_is_in_available_databases(self):
         """Test added database is in available databases."""
-        response = self.backend.get_control_property("database")
+        response = self.backend.get_property("control/database")
 
         assert response.status_code == 200  # nosec
         assert response.json() == [  # nosec
@@ -192,7 +192,7 @@ class TestSystem:
         """Test responses of the historical metrics."""
         sleep(4.0)  # wait for query executions
 
-        metrics = ["monitor/throughput", "monitor/latency", "monitor/queue_length"]
+        metrics = ["metric/throughput", "metric/latency", "metric/queue_length"]
         attributes = ["throughput", "latency", "queue_length"]
         for metric, attribute in zip(metrics, attributes):
             timestamp: int = time_ns()
