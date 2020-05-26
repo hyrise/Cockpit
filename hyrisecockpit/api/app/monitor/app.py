@@ -82,12 +82,6 @@ model_system_data = api.clone(
                                                     required=True,
                                                     example=16,
                                                 ),
-                                                "cpu_clock_speed": fields.Integer(
-                                                    title="CPU clock speed",
-                                                    description="CPU frequency",
-                                                    required=True,
-                                                    example=2600,
-                                                ),
                                             },
                                         )
                                     ),
@@ -101,9 +95,9 @@ model_system_data = api.clone(
                                                     required=True,
                                                     example=13030227968,
                                                 ),
-                                                "used": fields.Integer(
-                                                    title="Used memory",
-                                                    description="Number of used bytes",
+                                                "available": fields.Integer(
+                                                    title="Available memory",
+                                                    description="Number of available bytes",
                                                     required=True,
                                                     example=579780000,
                                                 ),
@@ -114,8 +108,8 @@ model_system_data = api.clone(
                                                     example=33724911616,
                                                 ),
                                                 "percent": fields.Float(
-                                                    title="Percent of used memory",
-                                                    description="Percent of used memory",
+                                                    title="Percent of available memory",
+                                                    description="Percent of available memory",
                                                     required=True,
                                                     example=10.8125,
                                                 ),
@@ -290,18 +284,18 @@ class System(Resource):
                 endts,
                 precision_ns,
                 "system_data",
-                [
-                    "cpu_clock_speed",
-                    "cpu_count",
-                    "cpu_process_usage",
-                    "cpu_system_usage",
-                    "database_threads",
-                    "free_memory",
-                    "total_memory",
-                    "used_memory",
+               [
+                  "cpu_count",
+                  "cpu_process_usage",
+                  "cpu_system_usage",
+                  "database_threads",
+                  "free_memory",
+                  "total_memory",
+                  "available_memory",
                 ],
                 client,
             )
+
         response: List[Dict] = [
             {
                 "id": database_data["id"],
@@ -313,14 +307,13 @@ class System(Resource):
                                 "cpu_system_usage": point["cpu_system_usage"],
                                 "cpu_process_usage": point["cpu_process_usage"],
                                 "cpu_count": point["cpu_count"],
-                                "cpu_clock_speed": point["cpu_clock_speed"],
                             },
                             "memory": {
                                 "free": point["free_memory"],
-                                "used": point["used_memory"],
+                                "available": point["available_memory"],
                                 "total": point["total_memory"],
                                 "percent": (
-                                    point["used_memory"] / point["total_memory"]
+                                    point["available_memory"] / point["total_memory"]
                                 )
                                 if point["total_memory"] != 0.0
                                 else 0.0,
@@ -395,19 +388,18 @@ class KruegerData(Resource):
         active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
-                'SELECT LAST("executed"), * FROM krueger_data', database=database,
+                'SELECT LAST("krueger_data"), * FROM krueger_data', database=database,
             )
-            krueger_data_value = list(result["krueger_data", None])
-            if len(krueger_data_value) > 0:
+            krueger_data_values = list(result["krueger_data", None])
+            if len(krueger_data_values) > 0:
                 krueger_data.append(
                     {
                         "id": database,
-                        "executed": loads(krueger_data_value[0]["executed"]),
-                        "generated": loads(krueger_data_value[0]["generated"]),
+                        "krueger_data": loads(krueger_data_values[0]["last"]),
                     }
                 )
             else:
-                krueger_data.append({"id": database, "executed": {}, "generated": {}})
+                krueger_data.append({"id": database, "krueger_data": []})
         return krueger_data
 
 
@@ -421,3 +413,23 @@ class ProcessTableStatus(Resource):
         return _send_message(
             db_manager_socket, Request(header=Header(message="status"), body={}),
         )["body"]["status"]
+
+
+@api.route("/operator")
+class OperatorData(Resource):
+    """Operator information of all databases."""
+
+    def get(self) -> List[Dict]:
+        """Return operator metadata."""
+        operator_data: List[Dict] = []
+        active_databases = _get_active_databases()
+        for database in active_databases:
+            database_data: Dict = {"id": database, "operator_data": []}
+            result = storage_connection.query(
+                'SELECT LAST("operator_data") FROM operator_data', database=database,
+            )
+            operator_rows = list(result["operator_data", None])
+            if len(operator_rows) > 0:
+                database_data["operator_data"] = loads(operator_rows[0]["last"])
+            operator_data.append(database_data)
+        return operator_data

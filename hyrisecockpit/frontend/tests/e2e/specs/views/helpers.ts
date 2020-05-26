@@ -1,11 +1,15 @@
 import { getSelectorByConfig, clickElement } from "../helpers";
 
+/* ROUTES */
+
 const routes: Record<string, string> = {
   home: "/#/",
   overview: "/#/databases/overview",
   comparison: "/#/databases/compare",
   workloadMonitoring: "/#/workload",
 };
+
+/* SELECTORS */
 
 const selectors: Record<string, string> = {
   overviewButton: getSelectorByConfig("a", "overview-button"),
@@ -45,10 +49,17 @@ const selectors: Record<string, string> = {
     "historic-range-selection"
   ),
   precisionSelection: getSelectorByConfig("input", "precision-selection"),
+  changeRangeTypeButton: getSelectorByConfig("button", "change-range-type"),
+  datePickerText: getSelectorByConfig("input", "date-picker-text"),
+  timePickerText: getSelectorByConfig("input", "time-picker-text"),
+  datePickerSelect: getSelectorByConfig("div", "date-picker-select"),
+  timePickerSelect: getSelectorByConfig("div", "time-picker-select"),
+  setStaticRangeButton: getSelectorByConfig("button", "set-static-time-range"),
+  resetTimeRangeButton: getSelectorByConfig("button", "reset-time-range"),
 };
 
 const metrics: Record<string, string[]> = {
-  workloadMonitoring: ["generatedQueryTypeProportion"],
+  workloadMonitoring: ["generatedQueryTypeProportion", "operatorProportion"],
   comparison: [
     "throughput",
     "latency",
@@ -58,7 +69,7 @@ const metrics: Record<string, string[]> = {
     "memoryFootprint",
     "storage",
     "access",
-    "executedQueryTypeProportion",
+    "operatorProportion",
   ],
   overview: [
     "throughput",
@@ -69,6 +80,20 @@ const metrics: Record<string, string[]> = {
     "memoryFootprint",
   ],
 };
+
+export const historicRanges: Record<
+  string,
+  { title: string; value: number }
+> = {
+  0.5: { title: "last 30 seconds", value: 30 },
+  1: { title: "last minute", value: 60 },
+  5: { title: "last 5 minutes", value: 5 * 60 },
+  10: { title: "last 10 minutes", value: 10 * 60 },
+  30: { title: "last 30 minutes", value: 30 * 60 },
+  60: { title: "last 60 minutes", value: 60 * 60 },
+};
+
+export const basicPrecision = [1, 5, 15];
 
 export function getSelector(component: string): string {
   return selectors[component];
@@ -81,6 +106,8 @@ export function getRoute(component: string): string {
 export function getMetrics(component: string): string[] {
   return metrics[component];
 }
+
+/* ASSERTIONS */
 
 export function testRedirection(selector: string, newRoute: string): void {
   clickElement(selector);
@@ -128,4 +155,50 @@ export function assertItemSelect(
       force: true,
     });
   }
+}
+
+export function assertTimeIntervalRequest(url: string, range: number): void {
+  expect(getEndTimeOfRequest(url) - getStartTimeOfRequest(url)).to.eq(
+    range * Math.pow(10, 9) +
+      Math.max(getPrecisionOfRequest(url), 3 * Math.pow(10, 9))
+  );
+}
+
+export function assertPrecisionRequest(url: string, range: number): void {
+  expect(getPrecisionOfRequest(url)).to.eq(range * Math.pow(10, 9));
+}
+
+export function assertStaticRangeRequest(
+  url: string,
+  start: Date,
+  end: Date,
+  precision: number
+): void {
+  expect(start.getTime() * Math.pow(10, 6)).to.eq(getStartTimeOfRequest(url));
+  expect(end.getTime() * Math.pow(10, 6)).to.eq(getEndTimeOfRequest(url));
+  expect(precision * Math.pow(10, 9)).to.eq(getPrecisionOfRequest(url));
+}
+
+/* FORMAT HELPERS */
+export function formatTimeString(date: Date): string {
+  return `${date.getHours() < 10 ? "0" + date.getHours() : date.getHours()}:${
+    date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()
+  }`;
+}
+
+/* get metric time reuqest intervalls */
+function getStartTimeOfRequest(url: string): number {
+  const startIndex = url.indexOf("=") + 1;
+  return parseInt(url.substring(startIndex, url.indexOf("&")), 10);
+}
+
+function getEndTimeOfRequest(url: string): number {
+  const startIndex = url.indexOf("=") + 1;
+  const endIndex = url.indexOf("=", startIndex) + 1;
+  return parseInt(url.substring(endIndex), 10);
+}
+
+function getPrecisionOfRequest(url: string): number {
+  const split = url.split("=");
+  return parseInt(split[split.length - 1], 10);
 }

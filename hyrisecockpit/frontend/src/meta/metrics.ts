@@ -12,6 +12,7 @@ import { useDataTransformation } from "@/services/transformationService";
 import { colorValueDefinition } from "./colors";
 import { FetchType } from "@/types/services";
 
+/** store metric specific static data */
 const metricsMetadata: Record<Metric, MetricMetadata> = {
   access: {
     fetchType: "read",
@@ -36,20 +37,9 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
       y: { max: 100 },
     },
   },
-  latency: {
-    fetchType: "modify",
-    transformationService: useDataTransformation("latency"),
-    base: "latency",
-    endpoint: monitorBackend + "latency",
-    component: "Latency",
-    requestTime: 1000,
-    dataType: "interval",
-    historic: true,
-  },
   executedQueryTypeProportion: {
     fetchType: "read",
     transformationService: useDataTransformation("executedQueryTypeProportion"),
-    base: "krueger_data",
     endpoint: monitorBackend + "krueger_data",
     component: "QueryTypeProportion",
     requestTime: 5000,
@@ -61,12 +51,21 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation(
       "generatedQueryTypeProportion"
     ),
-    base: "krueger_data",
     endpoint: monitorBackend + "krueger_data",
     component: "QueryTypeProportion",
     requestTime: 5000,
     dataType: "interval",
     historic: false,
+  },
+  latency: {
+    fetchType: "modify",
+    transformationService: useDataTransformation("latency"),
+    base: "latency",
+    endpoint: monitorBackend + "latency",
+    component: "Latency",
+    requestTime: 1000,
+    dataType: "interval",
+    historic: true,
   },
   memoryFootprint: {
     fetchType: "modify",
@@ -77,6 +76,15 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     requestTime: 1000,
     dataType: "interval",
     historic: true,
+  },
+  operatorProportion: {
+    fetchType: "read",
+    transformationService: useDataTransformation("operatorProportion"),
+    endpoint: monitorBackend + "operator",
+    component: "OperatorProportion",
+    requestTime: 5000,
+    dataType: "interval",
+    historic: false,
   },
   queueLength: {
     fetchType: "modify",
@@ -142,12 +150,12 @@ const queryLabel = "Number of queries";
 
 const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
   access: {
-    title: "Access Frequency",
+    title: "Segment Access Frequencies", //Access Frequency
     xaxis: "Columns",
     yaxis: "Chunks",
   },
   cpu: {
-    title: "CPU",
+    title: "CPU Utilization", //CPU (from hyrise utilization table)
     xaxis: timeLabel,
     yaxis: "Workload in %",
   },
@@ -161,15 +169,20 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
     xaxis: "Workload",
     yaxis: "Proportion of queries in %",
   },
-  memoryFootprint: {
-    title: "Memory Footprint",
-    xaxis: timeLabel,
-    yaxis: "Memory Footprint in MB",
-  },
   latency: {
     title: "Latency",
     xaxis: timeLabel,
     yaxis: "Latency in ms",
+  },
+  memoryFootprint: {
+    title: "Data Size", //Memory Footprint (Sum of all tables)
+    xaxis: timeLabel,
+    yaxis: "Memory Footprint in MB",
+  },
+  operatorProportion: {
+    title: "Operator Runtime Overview",
+    xaxis: "Operator",
+    yaxis: "Distribution of operator runtimes in %",
   },
   queueLength: {
     title: "Queue Length",
@@ -177,17 +190,17 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
     yaxis: queryLabel,
   },
   ram: {
-    title: "RAM",
+    title: "Process Memory (RSS)", //RAM
     xaxis: timeLabel,
     yaxis: "Memory usage in %",
   },
   storage: {
-    title: "Storage",
+    title: "Data Size - Overview", //Storage
   },
   throughput: {
     title: "Throughput",
     xaxis: timeLabel,
-    yaxis: queryLabel,
+    yaxis: `${queryLabel} / s`,
   },
 };
 

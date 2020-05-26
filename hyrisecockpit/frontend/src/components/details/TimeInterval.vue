@@ -1,5 +1,5 @@
 <template>
-  <b class="interval secondary--text">{{ interval }}</b>
+  <div class="body-2 interval secondary--text">{{ interval }}</div>
 </template>
 
 <script lang="ts">
@@ -51,7 +51,9 @@ export function useUpdatingInterval(
     let type = "";
     const intervalTime = Math.max(
       Math.floor(getMetricRequestTime(metric) / Math.pow(10, 3)),
-      context.root.$selectionController.selectedPrecision.value
+      context.root.$selectionController.selectedPrecision.value,
+      context.root.$selectionController.selectedStaticRange.value?.precision ??
+        0
     );
     if (timestamps.value.length > 0) {
       currentTimeStamp = timestamps.value[timestamps.value.length - 1];
@@ -70,7 +72,6 @@ export function useUpdatingInterval(
 </script>
 <style scoped>
 .interval {
-  font-size: 14px;
   word-break: normal;
   line-height: normal;
 }

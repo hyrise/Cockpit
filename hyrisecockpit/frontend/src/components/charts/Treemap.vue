@@ -115,6 +115,6 @@ function useTreemapConfiguration(
 </script>
 <style>
 .treemap {
-  margin: 1% 1% 3% 10%;
+  margin: 1% 1% 0% 10%;
 }
 </style>

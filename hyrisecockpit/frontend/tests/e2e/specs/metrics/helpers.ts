@@ -1,8 +1,7 @@
-import { getSelectorByConfig, roundNumber } from "../helpers";
-import { testDateFormatting, testMaxDecimalDigits } from "../abstractTests";
-import { getDatabaseMemoryFootprint } from "../databases/helpers";
-import { Request } from "../../setup/helpers";
+import { getSelectorByConfig, cutNumber, roundNumber } from "../helpers";
+import { testMaxDecimalDigits } from "../abstractTests";
 
+/* SELECTORS */
 const selectors: Record<string, { element: string; title: string }> = {
   throughput: { element: "div", title: "throughput" },
   latency: { element: "div", title: "latency" },
@@ -17,6 +16,10 @@ const selectors: Record<string, { element: string; title: string }> = {
     element: "div",
     title: "generatedQueryTypeProportion",
   },
+  operatorProportion: {
+    element: "div",
+    title: "operatorProportion",
+  },
   memoryFootprint: { element: "div", title: "memoryFootprint" },
   firstStorage: { element: "div", title: "1storage" },
   secondStorage: { element: "div", title: "2storage" },
@@ -27,20 +30,6 @@ const selectors: Record<string, { element: string; title: string }> = {
   openDetailed: { element: "button", title: "open-metric-detailed-view" },
   closeDetailed: { element: "button", title: "close-metric-detailed-view" },
 };
-
-export const historicRanges: Record<
-  string,
-  { title: string; value: number }
-> = {
-  0.5: { title: "last 30 seconds", value: 30 },
-  1: { title: "last minute", value: 60 },
-  5: { title: "last 5 minutes", value: 5 * 60 },
-  10: { title: "last 10 minutes", value: 10 * 60 },
-  30: { title: "last 30 minutes", value: 30 * 60 },
-  60: { title: "last 60 minutes", value: 60 * 60 },
-};
-
-export const basicPrecision = [1, 5, 15];
 
 export function getSelector(component: string): string {
   return getSelectorByConfig(
@@ -67,23 +56,7 @@ export function getDetailsSelectorWithID(
   );
 }
 
-export function assertDataRequest(url: string, range: number): void {
-  const startIndex = url.indexOf("=") + 1;
-  const endIndex = url.indexOf("=", startIndex) + 1;
-  const startTime = parseInt(url.substring(startIndex, url.indexOf("&")), 10);
-  const endTime = parseInt(url.substring(endIndex), 10);
-  const split = url.split("=");
-  const precision = parseInt(split[split.length - 1], 10);
-
-  expect(endTime - startTime).to.eq((range + 3) * Math.pow(10, 9) + precision);
-}
-
-export function assertPrecisionRequest(url: string, range: number): void {
-  const split = url.split("=");
-  const time = parseInt(split[split.length - 1], 10);
-  expect(time).to.eq(range * Math.pow(10, 9));
-}
-
+/* ASSERTIONS */
 export function assertLineChartData(
   chartDatasets: any[],
   requestData: any,
@@ -115,7 +88,8 @@ export function assertLineChartData(
 export function assertBarChartData(
   chartDatasets: any[],
   requestData: any,
-  xaxis: string
+  xaxis?: string,
+  digits?: number
 ): void {
   Object.keys(requestData).forEach((label: string) => {
     const chartData: any = chartDatasets.find(
@@ -124,8 +98,17 @@ export function assertBarChartData(
     expect(chartData).to.exist;
     expect(chartData.x).to.exist;
     expect(chartData.y).to.exist;
-    expect(chartData.y).to.eql([requestData[label]]);
-    expect(chartData.x).to.eql([xaxis]);
+
+    if (xaxis) expect(chartData.x).to.eql([xaxis]);
+    if (digits) {
+      [requestData[label]].forEach((entry, idx) => {
+        expect(cutNumber(entry, digits)).to.eq(
+          cutNumber(chartData.y[idx], digits)
+        );
+      });
+    } else {
+      expect(chartData.y).to.eql([requestData[label]]);
+    }
   });
 }
 
@@ -136,7 +119,7 @@ export function assertHeatMapData(chartDatasets: any, requestData?: any): void {
     expect(chartDatasets.z).to.eql([]);
   } else {
     Object.entries(requestData).forEach(
-      ([column, data]: [any, any], idx: number) => {
+      ([_, data]: [any, any], idx: number) => {
         data.forEach((chunks: any, secondIdx: number) => {
           expect(chartDatasets.z[secondIdx][idx]).to.eq(chunks);
         });
@@ -195,21 +178,16 @@ export function assertMetricDetails(
   value: number,
   digits: number = 2
 ): void {
-  const expected = roundNumber(
-    value,
-    Math.pow(10, digits),
-    Math.pow(10, digits),
-    false
-  ).toString();
+  const expected = cutNumber(value, digits).toString();
   let j = 0;
   for (let i = 0; i < expected.length; i++) {
-    if (text[j] === "´" || text[j] === " ") j++;
+    if (text[j] === " ") j++;
     expect(text[j]).to.eq(expected[i]);
     j++;
   }
 }
 
-// DATA
+// HELPERS
 function getRoundedData(value: number): number {
   return roundNumber(value, 1000, 1 / Math.pow(10, 3), false);
 }

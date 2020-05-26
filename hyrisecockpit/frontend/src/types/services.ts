@@ -4,7 +4,10 @@ import { Metric } from "./metrics";
 
 export interface MetricService {
   data: any;
-  getDataIfReady: (refetch?: boolean) => void;
+  getDataIfReady: (
+    historicRangeFetch?: boolean,
+    staticRangeFetch?: boolean
+  ) => void;
   maxValues: Record<Metric, number>;
   timestamps: Ref<any>;
 }
@@ -41,7 +44,11 @@ export interface WorkloadService {
   getWorkload: (workload: Workload) => Promise<void>;
   getWorkloads: () => Promise<void>;
   startWorkload: (workload: Workload, frequency: number) => Promise<void>;
-  updateWorkload: (workload: Workload, frequency: number) => Promise<void>;
+  updateWorkload: (
+    workload: Workload,
+    frequency: number,
+    weights: Object
+  ) => Promise<void>;
   stopWorkload: (workload: Workload) => Promise<void>;
 }
 
@@ -54,4 +61,5 @@ export type Base =
   | "chunks_data"
   | "latency"
   | "queue_length"
-  | "krueger_data";
+  | "krueger_data"
+  | "operator_data";

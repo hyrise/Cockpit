@@ -65,6 +65,7 @@ mockGetRoute("plugin", "control");
 mockGetRoute("plugin_settings", "control", true);
 mockGetRoute("plugin_log", "control");
 mockGetRoute("workload/");
+mockGetRoute("operator", "monitor");
 
 mockPostRoute("database/", "control");
 mockPostRoute("database/benchmark_tables", "control");
