@@ -28,6 +28,7 @@
                 :selected-databases="databases"
                 :selected-metrics="['']"
               />
+              <span> {{ workloadData }} </span>
               <v-row>
                 <v-col class="pt-2">
                   <p class="subtitle-1 font-weight-medium mb-2">
@@ -209,7 +210,7 @@ function useWorkloadAction(
   });
   //const weights = ref<Record<string, number>>({});
 
-  //TODO: refactor
+  //TODO: set loaded tables
   getWorkloads().then((response: any) => {
     if (response.data.length > 0) {
       Object.values(response.data).forEach((workload: any) => {
@@ -246,8 +247,17 @@ function useWorkloadAction(
   function stopLoading(action: string): void {
     actions[action].loading = false;
   }
+  function updatingWorkload(workload: Workload) {
+    updateWorkload(
+      workload,
+      frequency.value,
+      workloadData[workload].weights
+    ).then((response: any) => {
+      handleWeightsChange(workload, response.data.weights);
+    });
+  }
   function updatingWorkloads(): void {
-    Object.keys(workloadData).forEach((workload: any) => {
+    Object.keys(workloadData).forEach((workload: Workload) => {
       if (workloadData[workload].selected) {
         updateWorkload(
           workload,
@@ -261,9 +271,7 @@ function useWorkloadAction(
   }
   function startingWorker(action: string): void {
     startLoading(action);
-    startWorker().then(() => {
-      stopLoading(action);
-    });
+    startWorker().then(() => stopLoading(action));
   }
   function startingWorkload(): void {
     context.emit("start");
@@ -288,19 +296,20 @@ function useWorkloadAction(
   function handleWorkloadChange(workload: Workload): void {
     workloadData[workload].selected = !workloadData[workload].selected;
     if (workloadData[workload].selected) {
-      startWorkload(workload, frequency.value);
-      updatingWorkloads();
+      startWorkload(workload, frequency.value).then(() =>
+        updatingWorkload(workload)
+      );
     } else {
       stopWorkload(workload);
     }
   }
   function handleWeightChange(
-    workload: string,
+    workload: Workload,
     key: string,
     weight: number
   ): void {
     workloadData[workload].weights[key] = weight;
-    updatingWorkloads();
+    updatingWorkload(workload);
   }
   function handleWeightsChange(
     workload: string,
@@ -309,6 +318,7 @@ function useWorkloadAction(
     workloadData[workload].weights = changedWeights;
   }
   return {
+    //TODO: startWorkload instead of startWorker
     enableEqualizer: computed(
       () => actions.start.active || actions.pause.active
     ),
