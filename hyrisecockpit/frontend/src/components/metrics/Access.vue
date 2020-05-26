@@ -17,7 +17,7 @@
           />
           <Heatmap
             :graph-id="'1' + graphId || 'access'"
-            :data="accessData"
+            :data="data"
             :chart-configuration="chartConfiguration"
             :autosize="false"
             :max-value="maxValue"
@@ -36,7 +36,7 @@
       />
       <Heatmap
         :graph-id="'2' + graphId || 'access'"
-        :data="accessData"
+        :data="data"
         :chart-configuration="chartConfiguration"
         :selected-databases="selectedDatabases"
         :max-chart-width="maxChartWidth"
@@ -55,24 +55,20 @@ import {
   ref,
   watch,
 } from "@vue/composition-api";
-import Heatmap from "../charts/Heatmap.vue";
+import Heatmap from "@/components/charts/Heatmap.vue";
 import MetricDetailedView from "@/components/details/MetricDetailedView.vue";
 import {
   MetricProps,
   MetricPropsValidation,
   ChartConfiguration,
   AccessData,
-} from "../../types/metrics";
-import { useUpdatingDatabases } from "../../meta/databases";
-import {
-  getMetricChartConfiguration,
-  getMetricMetadata,
-} from "../../meta/metrics";
+  BasicChartComponentData,
+} from "@/types/metrics";
+import { useUpdatingDatabases } from "@/meta/databases";
+import { getMetricChartConfiguration, getMetricMetadata } from "@/meta/metrics";
 
-interface Data {
+interface Data extends BasicChartComponentData<AccessData> {
   tables: Ref<readonly string[]>;
-  accessData: Ref<AccessData>;
-  chartConfiguration: ChartConfiguration;
   selectedTable: Ref<string>;
   maxValue: Ref<number>;
 }
@@ -106,7 +102,7 @@ export default defineComponent({
     return {
       chartConfiguration: getMetricChartConfiguration(props.metric),
       tables: computed(() => watchedDatabase.tables),
-      accessData,
+      data: accessData,
       selectedTable,
       maxValue: context.root.$metricController.maxValueData[props.metric],
     };

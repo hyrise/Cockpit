@@ -126,7 +126,7 @@ export default defineComponent({
         () => context.root.$databaseController.availableDatabasesById.value
       ),
       ...workloadHandler,
-      ...useWorkloadAction(workloadHandler.workload),
+      ...useWorkloadAction(context, workloadHandler.workload),
       ...useWorkloadDataHandler(context),
     };
   },
@@ -144,7 +144,10 @@ function useWorkloadHandler(): WorkloadHandler {
   };
 }
 
-function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
+function useWorkloadAction(
+  context: SetupContext,
+  workload: Ref<Workload>
+): WorkloadAction {
   const frequency = ref<number>(200);
   const {
     startWorker,
@@ -177,9 +180,13 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     if (response.data.length > 0) {
       workload.value = getWorkloadFromTransferred(response.data[0].folder_name);
       frequency.value = response.data[0].frequency;
-      frequency.value > 0
-        ? (actions.start.active = true)
-        : (actions.pause.active = true);
+      if (frequency.value > 0) {
+        actions.start.active = true;
+        context.emit("start");
+      } else {
+        actions.pause.active = true;
+        context.emit("pause");
+      }
     }
   });
 
@@ -194,6 +201,7 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     actions[action].active = true;
   }
   function startingWorkload(): void {
+    context.emit("start");
     startLoading("start");
     getWorkloads().then((response: any) => {
       if (response.data.length === 0) {
@@ -210,6 +218,7 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     });
   }
   function pausingWorkload(): void {
+    context.emit("pause");
     startLoading("pause");
     getWorkloads().then((response: any) => {
       if (response.data.length === 0) {
@@ -226,6 +235,7 @@ function useWorkloadAction(workload: Ref<Workload>): WorkloadAction {
     });
   }
   function stoppingWorkload(): void {
+    context.emit("stop");
     startLoading("stop");
     getWorkloads().then((response: any) => {
       if (response.data.length !== 0) {

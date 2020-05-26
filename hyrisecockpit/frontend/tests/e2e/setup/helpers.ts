@@ -31,7 +31,8 @@ export type Request =
   | "workload"
   | "status"
   | "sql"
-  | "worker";
+  | "worker"
+  | "operator";
 
 export type BackendState = "up" | "down";
 
@@ -45,7 +46,7 @@ export const comparisonRequests: Request[] = [
   "queue_length",
   "system",
   "storage",
-  "krueger_data",
+  "operator",
 ];
 export const overviewRequests: Request[] = [
   "throughput",
@@ -54,7 +55,10 @@ export const overviewRequests: Request[] = [
   "system",
   "storage",
 ];
-export const workloadMonitoringRequests: Request[] = ["krueger_data"];
+export const workloadMonitoringRequests: Request[] = [
+  "krueger_data",
+  "operator",
+];
 
 const requestRoutes: Record<
   Request,
@@ -105,6 +109,9 @@ const requestRoutes: Record<
     post: "**/control/database/worker",
     delete: "**/control/database/worker",
   },
+  operator: {
+    get: "**/monitor/operator**",
+  },
 };
 
 export function getRequestRoute(
@@ -131,6 +138,7 @@ const getAliases: Partial<Record<Request, string>> = {
   plugin_log: "getPluginLog",
   status: "getDatabaseWorkloadState",
   workload: "getWorkloads",
+  operator: "getOperatorData",
 };
 
 const postAliases: Partial<Record<Request, string>> = {

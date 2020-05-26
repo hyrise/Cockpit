@@ -42,6 +42,10 @@ export function formatDateToHHMMSS(date: Date): string {
   return date.toLocaleTimeString("de-DE");
 }
 
+export function cutNumber(data: number, digits: number): number {
+  return roundNumber(data, Math.pow(10, digits), Math.pow(10, digits), false);
+}
+
 export function assignToObject(data: any[], type: string): Object {
   const newData: any = {};
   data.forEach((entry: any) => {
