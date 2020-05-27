@@ -1,13 +1,21 @@
 """Services used by the Plugin controller."""
 from typing import List, Union
 
+from hyrisecockpit.api.app.shared import _get_active_databases, storage_connection
 from hyrisecockpit.api.app.socket_manager import ManagerSocket
 from hyrisecockpit.plugins import available_plugins
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
 from .interface import PluginInterface, UpdatePluginSettingInterface
-from .model import DetailedPlugin, DetailedPluginID, Plugin, PluginSetting
+from .model import (
+    DetailedPlugin,
+    DetailedPluginID,
+    LogEntry,
+    LogID,
+    Plugin,
+    PluginSetting,
+)
 
 
 class PluginService:
@@ -88,3 +96,27 @@ class PluginService:
     def get_available_plugins(cls) -> List[Plugin]:
         """Get all available Plugins."""
         return [Plugin(name=name) for name in available_plugins]
+
+    @classmethod
+    def get_all_plugin_logs(cls) -> List[LogID]:
+        """Get the Plugin Log of all databases."""
+        return [
+            LogID(
+                id=database,
+                log=[
+                    LogEntry(
+                        timestamp=int(row["timestamp"]),
+                        reporter=row["reporter"],
+                        message=row["message"],
+                        level=row["level"],
+                    )
+                    for row in list(
+                        storage_connection.query(
+                            "SELECT timestamp, reporter, message, level from plugin_log;",
+                            database=database,
+                        )["plugin_log", None]
+                    )
+                ],
+            )
+            for database in _get_active_databases()
+        ]
