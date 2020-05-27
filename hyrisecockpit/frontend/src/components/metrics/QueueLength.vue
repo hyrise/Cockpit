@@ -4,6 +4,7 @@
       v-if="showDetails"
       :metric="metric"
       :databases="selectedDatabases"
+      :total-number-of-databases="totalNumberOfDatabases"
     />
     <Linechart
       :selected-databases="selectedDatabases"
