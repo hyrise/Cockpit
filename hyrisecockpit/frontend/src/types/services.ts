@@ -44,7 +44,11 @@ export interface WorkloadService {
   getWorkload: (workload: Workload) => Promise<void>;
   getWorkloads: () => Promise<void>;
   startWorkload: (workload: Workload, frequency: number) => Promise<void>;
-  updateWorkload: (workload: Workload, frequency: number) => Promise<void>;
+  updateWorkload: (
+    workload: Workload,
+    frequency: number,
+    weights: Object
+  ) => Promise<void>;
   stopWorkload: (workload: Workload) => Promise<void>;
 }
 

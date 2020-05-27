@@ -32,13 +32,13 @@ def weights(request) -> Dict[str, int]:
 
 @fixture
 def schema() -> WorkloadSchema:
-    """Return a real Workload schema."""
+    """Return a Workload schema."""
     return WorkloadSchema()
 
 
 @fixture
 def detailed_schema() -> DetailedWorkloadSchema:
-    """Return a real Workload schema."""
+    """Return a Workload schema."""
     return DetailedWorkloadSchema()
 
 
