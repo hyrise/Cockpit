@@ -19,12 +19,12 @@ export type TransformationService = (
 ) => any;
 
 export interface PluginService {
-  fetchActivePlugins: () => Promise<string[]>;
+  fetchActivePlugins: () => Promise<Object>;
   fetchAvailablePlugins: () => Promise<string[]>;
   fetchPluginLogs: () => Promise<Object>;
-  fetchPluginSettings: () => Promise<Object>;
   setPluginSetting: (
     databaseId: string,
+    pluginId: string,
     settingId: string,
     settingValue: string
   ) => Promise<void>;
