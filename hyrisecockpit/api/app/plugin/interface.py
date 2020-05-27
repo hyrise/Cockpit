@@ -38,3 +38,19 @@ class DetailedPluginIDInterface(TypedDict):
 
     id: str
     plugins: Optional[List[DetailedPluginInterface]]
+
+
+class LogEntryInterface(TypedDict):
+    """Interface of a Plugin Log Entry."""
+
+    timestamp: int
+    reporter: str
+    message: str
+    level: str
+
+
+class LogIDInterface(TypedDict):
+    """Interface of a Plugin Log per database."""
+
+    id: str
+    log: List[LogEntryInterface]

@@ -3,6 +3,8 @@
 from hyrisecockpit.api.app.plugin.interface import (
     DetailedPluginIDInterface,
     DetailedPluginInterface,
+    LogEntryInterface,
+    LogIDInterface,
     PluginInterface,
     PluginSettingBaseInterface,
     PluginSettingInterface,
@@ -11,6 +13,8 @@ from hyrisecockpit.api.app.plugin.interface import (
 from hyrisecockpit.api.app.plugin.model import (
     DetailedPlugin,
     DetailedPluginID,
+    LogEntry,
+    LogID,
     Plugin,
     PluginSetting,
     PluginSettingBase,
@@ -90,3 +94,27 @@ class TestDetailedPluginIDInterface:
     def test_works(self, interface_detailed_plugin_id: DetailedPluginIDInterface):
         """A detailed PluginID model can be created from an interface."""
         assert DetailedPluginID(**interface_detailed_plugin_id)  # type: ignore
+
+
+class TestLogEntryInterface:
+    """Tests for the Plugin Log Entry interface."""
+
+    def tests_creates(self, interface_log_entry: LogEntryInterface):
+        """A Plugin Log Entry interface can be created."""
+        assert interface_log_entry
+
+    def test_works(self, interface_log_entry: LogEntryInterface):
+        """A Plugin Log Entry model can be created from an interface."""
+        assert LogEntry(**interface_log_entry)
+
+
+class TestLogIDInterface:
+    """Tests for the Plugin Log per database interface."""
+
+    def tests_creates(self, interface_log_id: LogIDInterface):
+        """A Plugin Log per database interface can be created."""
+        assert interface_log_id
+
+    def test_works(self, interface_log_id: LogIDInterface):
+        """A Plugin Log per database model can be created from an interface."""
+        assert LogID(**interface_log_id)  # type: ignore
