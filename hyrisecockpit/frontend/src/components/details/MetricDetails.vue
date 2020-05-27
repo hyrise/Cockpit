@@ -3,14 +3,14 @@
     <div
       :id="`${idPrefix}${metric}-${database}-details`"
       class="details"
-      v-for="(database, idx) in databases"
+      v-for="database in databases"
       :key="database"
       :style="{
         color: valueColor[database],
         fontSize: '20px',
         fontWeight: 'bold',
-        top: idx * 22 + 14 + 'px',
       }"
+      :class="{ 'small-details': totalNumberOfDatabases > 2 }"
     >
       {{ formatNumberWithCommas(currentValue[database]) }} {{ unit }}
     </div>
@@ -43,6 +43,7 @@ interface Props {
   databases: string[];
   decimalDigits: number;
   idPrefix: string;
+  totalNumberOfDatabases: number;
 }
 interface Data {
   currentValue: Ref<Record<string, number>>;
@@ -70,10 +71,16 @@ export default defineComponent({
       type: String,
       default: "",
     },
+    totalNumberOfDatabases: {
+      type: Number,
+      default: null,
+    },
   },
   setup(props: Props, context: SetupContext): Data {
     const metricDetailsConfig = getMetricDetailsConfiguration(props.metric)!;
     const { currentValue } = useMetricValues(props, context);
+
+    console.log(props.totalNumberOfDatabases);
 
     return {
       currentValue,
@@ -145,9 +152,16 @@ function useMetricColors(
 </script>
 <style>
 .details {
-  z-index: 1;
   position: absolute;
+  z-index: 1;
   width: 100%;
   text-align: center;
+  top: 14px;
+}
+@media only screen and (max-width: 1600px) {
+  .small-details {
+    position: absolute;
+    top: 60px;
+  }
 }
 </style>

@@ -33,6 +33,7 @@
       :graph-id="graphId"
       :show-details="showDetails"
       :max-chart-width="maxChartWidth"
+      :total-number-of-databases="totalNumberOfDatabases"
     />
   </v-card>
 </template>
