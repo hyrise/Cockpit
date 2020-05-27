@@ -21,6 +21,7 @@
               class="database-chip"
               v-if="!!tileDatabase"
               :database-id="tileDatabase"
+              :onlyIcon="maxChartWidth <= 450"
             />
           </v-col>
         </v-row>

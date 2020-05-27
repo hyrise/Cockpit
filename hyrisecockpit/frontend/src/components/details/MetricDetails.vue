@@ -80,8 +80,6 @@ export default defineComponent({
     const metricDetailsConfig = getMetricDetailsConfiguration(props.metric)!;
     const { currentValue } = useMetricValues(props, context);
 
-    console.log(props.totalNumberOfDatabases);
-
     return {
       currentValue,
       ...useMetricColors(currentValue, metricDetailsConfig),
