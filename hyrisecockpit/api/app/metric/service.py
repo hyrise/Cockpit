@@ -9,21 +9,18 @@ from hyrisecockpit.api.app.historical_data_handling import (
 )
 from hyrisecockpit.api.app.shared import _get_active_databases
 
-from .interface import TimeIntervalInterface
-from .model import DetailedQueryEntry, DetailedQueryInformation
+from .model import DetailedQueryEntry, DetailedQueryInformation, TimeInterval
 
 
 class MetricService:
     """Services of the Control Controller."""
 
     @staticmethod
-    def get_data(
-        time_interval: TimeIntervalInterface, table_name: str, column_names: List[str]
-    ):
+    def get_data(time_interval: TimeInterval, table_name: str, column_names: List[str]):
         """Return metric information in a given time range."""
-        precise_startts: int = time_interval["startts"]
-        precise_endts: int = time_interval["endts"]
-        precision_ns: int = time_interval["precision"]
+        precise_startts: int = time_interval.startts
+        precise_endts: int = time_interval.endts
+        precision_ns: int = time_interval.precision
 
         (startts, endts) = get_interval_limits(
             precise_startts, precise_endts, precision_ns
@@ -37,17 +34,17 @@ class MetricService:
         return response
 
     @classmethod
-    def get_throughput(cls, time_interval: TimeIntervalInterface):
+    def get_throughput(cls, time_interval: TimeInterval):
         """Get throughput data."""
         return cls.get_data(time_interval, "throughput", ["throughput"])
 
     @classmethod
-    def get_latency(cls, time_interval: TimeIntervalInterface):
+    def get_latency(cls, time_interval: TimeInterval):
         """Get latency data."""
         return cls.get_data(time_interval, "latency", ["latency"])
 
     @classmethod
-    def get_queue_length(cls, time_interval: TimeIntervalInterface):
+    def get_queue_length(cls, time_interval: TimeInterval):
         """Get queue length data."""
         return cls.get_data(time_interval, "queue_length", ["queue_length"])
 

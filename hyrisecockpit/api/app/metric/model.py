@@ -24,3 +24,13 @@ class DetailedQueryInformation:
         self.detailed_query_information: List[
             DetailedQueryEntry
         ] = detailed_query_information
+
+
+class TimeInterval:
+    """Model of a time interval."""
+
+    def __init__(self, startts: int, endts: int, precision: int):
+        """Initialize a Time Interval model."""
+        self.startts: int = startts
+        self.endts: int = endts
+        self.precision: int = precision
