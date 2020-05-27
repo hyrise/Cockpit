@@ -53,3 +53,23 @@ class DetailedPluginID:
         """Initialize a detailed Plugins per database model."""
         self.id: str = id
         self.plugins: Optional[List[DetailedPlugin]] = plugins
+
+
+class LogEntry:
+    """Model of a Plugin Log Entry."""
+
+    def __init__(self, timestamp: int, reporter: str, message: str, level: str) -> None:
+        """Initialize a Plugin Log Entry model."""
+        self.timestamp: int = timestamp
+        self.reporter: str = reporter
+        self.message: str = message
+        self.level: str = level
+
+
+class LogID:
+    """Model of Plugin Logs per database."""
+
+    def __init__(self, id: str, log: List[LogEntry]) -> None:
+        """Initialize a Plugin Log per database model."""
+        self.id: str = id
+        self.log: List[LogEntry] = log
