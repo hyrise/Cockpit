@@ -8,12 +8,7 @@ import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
 import { colorValueDefinition, multiColors } from "@/meta/colors";
 
-const {
-  roundNumber,
-  formatPercentage,
-  formatNumberWithCommas,
-  formatTimeUnit,
-} = useFormatting();
+const { roundNumber, formatPercentage, formatTimeUnit } = useFormatting();
 const {
   getTableMemoryFootprint,
   getDatabaseMemoryFootprint,
@@ -66,11 +61,13 @@ function getQueryTypeProportionData(data: any, primaryKey: string = ""): any {
           `${type.query_type} - ${formatPercentage(
             typeLatencyProportion,
             100
-          )} %`,
+          )} % - ${formatTimeUnit(
+            roundNumber(type.total_latency, Math.pow(10, 6))
+          )}`,
           `${type.query_type} - ${formatPercentage(
             typeFrequencyProportion,
             100
-          )} %`,
+          )} % - # ${type.total_frequency}`,
         ],
         hoverinfo: "text",
       });
@@ -304,7 +301,7 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
           text: `${formatPercentage(operatorProportion, 100)} % - ${
             operator.operator
           } -  ${formatTimeUnit(
-            roundNumber(operator.total_time_ns, Math.pow(10, 9), 1000, true)
+            roundNumber(operator.total_time_ns, Math.pow(10, 6))
           )}`,
           hoverinfo: "text",
         });
@@ -330,7 +327,7 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
               `${formatPercentage(operator.proportion, 100)} % - ${
                 operator.name
               } - ${formatTimeUnit(
-                roundNumber(operator.time, Math.pow(10, 9), 1000, true)
+                roundNumber(operator.time, Math.pow(10, 6))
               )} <br>`,
           };
         }, restLabel),

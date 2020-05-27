@@ -40,7 +40,6 @@ import StatusWarning from "@/components/alerts/StatusWarning.vue";
 import SelectionList from "@/components/selection/SelectionList.vue";
 import MetricsComparisonTable from "@/components/container/MetricsComparisonTable.vue";
 
-
 export default defineComponent({
   name: "WorkloadMonitoring",
   components: {
