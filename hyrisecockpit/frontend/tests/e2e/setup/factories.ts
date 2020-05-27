@@ -259,11 +259,20 @@ export function fakeDatabaseQueryInformationData(
 
 // PLUGIN DATA
 
+export function fakeAvailablePlugin(plugin: string): Object {
+  return { name: plugin };
+}
+
 export function fakeDatabasePluginsData(
   databaseId: string,
   plugins: string[]
 ): Object {
-  return { id: databaseId, plugins: plugins };
+  return {
+    id: databaseId,
+    plugins: plugins.map((plugin) => {
+      return { name: plugin, settings: [fakePluginSetting(plugin)] };
+    }),
+  };
 }
 
 type PluginSetting = {
@@ -274,7 +283,7 @@ type PluginSetting = {
 
 function fakePluginSetting(plugin: string): PluginSetting {
   return {
-    name: plugin + "Plugin_" + faker.random.word(),
+    name: plugin + "_" + faker.random.word(),
     value: faker.random.number(),
     description: faker.random.words(),
   };

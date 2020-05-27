@@ -26,7 +26,6 @@ export type Request =
   | "benchmark_tables"
   | "available_plugins"
   | "plugin"
-  | "plugin_settings"
   | "plugin_log"
   | "workload"
   | "status"
@@ -87,15 +86,12 @@ const requestRoutes: Record<
     post: "**/control/database/benchmark_tables",
     delete: "**/control/database/benchmark_tables",
   },
-  available_plugins: { get: "**/control/available_plugins" },
+  available_plugins: { get: "**/control/plugin/available" },
   plugin: {
     get: "**/control/plugin",
-    post: "**/control/plugin",
-    delete: "**/control/plugin",
-  },
-  plugin_settings: {
-    get: "**/control/plugin_settings",
-    post: "**/control/plugin_settings",
+    post: "**/control/plugin/**",
+    delete: "**/control/plugin/**",
+    put: "**/control/plugin/**",
   },
   plugin_log: { get: "**/control/plugin_log" },
   workload: {
@@ -134,7 +130,6 @@ const getAliases: Partial<Record<Request, string>> = {
   benchmark_tables: "getBenchmarks",
   available_plugins: "getAvailablePLugins",
   plugin: "getPlugin",
-  plugin_settings: "getPluginSettings",
   plugin_log: "getPluginLog",
   status: "getDatabaseWorkloadState",
   workload: "getWorkloads",
@@ -145,7 +140,6 @@ const postAliases: Partial<Record<Request, string>> = {
   database: "addDatabase",
   benchmark_tables: "loadTables",
   plugin: "activatePlugin",
-  plugin_settings: "setPluginSettings",
   workload: "startWorkload",
   sql: "sendSQL",
   worker: "startWorker",
@@ -160,6 +154,7 @@ const deleteAliases: Partial<Record<Request, string>> = {
 };
 
 const putAliases: Partial<Record<Request, string>> = {
+  plugin: "updatePlugin",
   workload: "updateWorkload",
 };
 

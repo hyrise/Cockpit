@@ -27,12 +27,10 @@ export function usePluginController(): PluginController {
   function updatePluginData(): void {
     pluginService.fetchAvailablePlugins().then((availablePluginsData) => {
       availablePlugins.value = availablePluginsData;
-      pluginService.fetchActivePlugins().then((activePluginsData) => {
-        activePlugins.value = activePluginsData;
+      pluginService.fetchActivePlugins().then((activePluginsData: any) => {
+        activePlugins.value = activePluginsData.data;
+        pluginSettings.value = activePluginsData.settings;
       });
-    });
-    pluginService.fetchPluginSettings().then((settingsData) => {
-      pluginSettings.value = settingsData;
     });
   }
 
@@ -55,11 +53,12 @@ export function usePluginController(): PluginController {
 
   async function changePluginSetting(
     database: string,
+    pluginId: string,
     settingId: string,
     settingValue: string
   ): Promise<void> {
     return pluginService
-      .setPluginSetting(database, settingId, settingValue)
+      .setPluginSetting(database, pluginId, settingId, settingValue)
       .then(() => {
         updatePluginData();
       });
