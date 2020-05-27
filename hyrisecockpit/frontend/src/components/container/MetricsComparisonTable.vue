@@ -26,6 +26,7 @@
           :metric="metric"
           :tile-database="database.id"
           :selected-databases="[database.id]"
+          :total-number-of-databases="databases.length"
           :show-details="showDetails"
           :graph-id="`${metric}-${database.id}`"
           :max-chart-width="maxChartWidth"
