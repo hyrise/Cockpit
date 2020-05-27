@@ -209,7 +209,7 @@ class Database(object):
         try:
             with self._connection_factory.create_cursor() as cur:
                 cur.execute(
-                    "SELECT name, value, description FROM meta_settings WHERE name LIKE 'Plugin::';",
+                    "SELECT name, value, description FROM meta_settings WHERE name LIKE 'Plugin::%';",
                     None,
                 )
                 rows = cur.fetchall()
