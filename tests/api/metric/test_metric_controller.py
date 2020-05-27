@@ -51,18 +51,12 @@ class TestMetricController:
         fake_startts = 1
         fake_endts = 5
         fake_precision = 1
-        expected_time_entry = {
-            "startts": fake_startts,
-            "endts": fake_endts,
-            "precision": fake_precision,
-        }
 
         parameterized_url = f"{url}/throughput?startts={fake_startts}&endts={fake_endts}&precision={fake_precision}"
         response = client.get(parameterized_url, follow_redirects=True)
 
         assert 200 == response.status_code
         assert expected == response.get_json()
-        mock_metric_service.get_throughput.assert_called_once_with(expected_time_entry)
 
     @patch("hyrisecockpit.api.app.metric.controller.MetricService")
     def test_get_latency(
@@ -76,18 +70,12 @@ class TestMetricController:
         fake_startts = 1
         fake_endts = 5
         fake_precision = 1
-        expected_time_entry = {
-            "startts": fake_startts,
-            "endts": fake_endts,
-            "precision": fake_precision,
-        }
 
         parameterized_url = f"{url}/latency?startts={fake_startts}&endts={fake_endts}&precision={fake_precision}"
         response = client.get(parameterized_url, follow_redirects=True)
 
         assert 200 == response.status_code
         assert expected == response.get_json()
-        mock_metric_service.get_latency.assert_called_once_with(expected_time_entry)
 
     @patch("hyrisecockpit.api.app.metric.controller.MetricService")
     def test_get_queue_length(
@@ -104,20 +92,12 @@ class TestMetricController:
         fake_startts = 1
         fake_endts = 5
         fake_precision = 1
-        expected_time_entry = {
-            "startts": fake_startts,
-            "endts": fake_endts,
-            "precision": fake_precision,
-        }
 
         parameterized_url = f"{url}/queue_length?startts={fake_startts}&endts={fake_endts}&precision={fake_precision}"
         response = client.get(parameterized_url, follow_redirects=True)
 
         assert 200 == response.status_code
         assert expected == response.get_json()
-        mock_metric_service.get_queue_length.assert_called_once_with(
-            expected_time_entry
-        )
 
     @patch("hyrisecockpit.api.app.metric.controller.MetricService")
     def test_get_detailed_query_information(

@@ -4,6 +4,7 @@ from unittest.mock import patch
 
 from pytest import fixture
 
+from hyrisecockpit.api.app.metric.model import TimeInterval
 from hyrisecockpit.api.app.metric.service import MetricService
 from hyrisecockpit.cross_platform_support.testing_support import MagicMock
 
@@ -28,7 +29,7 @@ class TestMetricService:
         metric_service: MetricService,
     ) -> None:
         """Test get data."""
-        fake_time_interval = {"startts": 42, "endts": 100, "precision": 1}
+        fake_time_interval = TimeInterval(startts=42, endts=100, precision=1)
         fake_table_name = "table_name"
         fake_column_names = ["column_one", "column_two"]
         mock_get_interval_limits.return_value = (
@@ -41,7 +42,7 @@ class TestMetricService:
         mock_storage_connection.return_value.__enter__.return_value = mock_client
 
         response = metric_service.get_data(
-            fake_time_interval, fake_table_name, fake_column_names  # type: ignore
+            fake_time_interval, fake_table_name, fake_column_names
         )
 
         mock_get_interval_limits.assert_called_once_with(42, 100, 1)
