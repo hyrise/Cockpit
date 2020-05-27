@@ -29,12 +29,6 @@ response_schema = {
     },
 }
 
-get_databases_response_schema = {
-    "type": "object",
-    "required": ["databases"],
-    "properties": {"databases": {"type": "array", "items": {"type": "object"}}},
-}
-
 add_database_request_schema = {
     "type": "object",
     "required": ["user", "password", "host", "port", "dbname", "number_workers"],
@@ -64,23 +58,4 @@ delete_data_request_schema = {
     "type": "object",
     "required": ["folder_name"],
     "properties": {"folder_name": {"type": "string"}},
-}
-
-start_workload_request_schema = {
-    "type": "object",
-    "required": ["folder_name", "frequency"],
-    "properties": {
-        "folder_name": {"type": "string"},
-        "frequency": {"type": "integer"},
-    },
-}
-
-set_plugin_request_schema = {
-    "type": "object",
-    "required": ["id", "name", "value"],
-    "properties": {
-        "id": {"type": "string"},
-        "name": {"type": "string"},
-        "value": {"type": "string"},
-    },
 }
