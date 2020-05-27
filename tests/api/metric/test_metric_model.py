@@ -3,6 +3,7 @@
 from hyrisecockpit.api.app.metric.model import (
     DetailedQueryEntry,
     DetailedQueryInformation,
+    TimeInterval,
 )
 
 
@@ -29,3 +30,7 @@ class TestMetricModel:
         assert DetailedQueryInformation(
             id="What", detailed_query_information=[detailed_query_entry]
         )
+
+    def test_creates_time_interval(self) -> None:
+        """A TimeInterval model can be created."""
+        assert TimeInterval(startts=1, endts=2, precision=1,)
