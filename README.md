@@ -4,7 +4,12 @@
 ![Frontend Lint](https://github.com/hyrise/Cockpit/workflows/Frontend%20Lint/badge.svg)
 ![Docker Image CI](https://github.com/hyrise/Cockpit/workflows/Docker%20Image%20CI/badge.svg)
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
-## Setup
+
+## Quick Setup (Docker)
+
+https://github.com/hyrise/Cockpit/wiki/Quick-Setup
+
+## Full Setup (pipenv)
 
 You may need to install a different python version (`3.8.3`, e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
 Installing pyenv can be done with the following commands:
