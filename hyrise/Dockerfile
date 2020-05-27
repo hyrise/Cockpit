@@ -20,6 +20,7 @@ RUN cd /usr/local/ \
 RUN cd /usr/local/hyrise-git/cmake-build-release \
     && make hyriseBenchmarkTPCH \
     && ./hyriseBenchmarkTPCH --scale 0.1 --runs 1 \
+    && mkdir -p /usr/local/hyrise/cached_tables/ \
     && cp -Rf tpch_cached_tables/sf-0.100000 /usr/local/hyrise/cached_tables/tpch_0_1
 RUN cd /usr/local/hyrise-git/cmake-build-release \
     && make CompressionPlugin ClusteringPlugin IndexSelectionPlugin \
