@@ -1,4 +1,4 @@
-"""Job for updating the operator data."""
+"""Job for updating the workload operator information."""
 
 from json import dumps
 from time import time_ns
@@ -7,12 +7,12 @@ from hyrisecockpit.database_manager.cursor import StorageConnectionFactory
 from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_frame
 
 
-def update_operator_data(
+def update_workload_operator_information(
     database_blocked,
     connection_factory,
     storage_connection_factory: StorageConnectionFactory,
 ) -> None:
-    """Update operator data."""
+    """Update workload operator information."""
     time_stamp = time_ns()
 
     sql = """SELECT operator, SUM(frequency*walltime_ns) AS total_time_ns
@@ -22,9 +22,13 @@ def update_operator_data(
     meta_segments = sql_to_data_frame(database_blocked, connection_factory, sql, None)
 
     with storage_connection_factory.create_cursor() as log:
-        output = []
+        workload_operator_information = []
         if not meta_segments.empty:
-            output = list(meta_segments.to_dict("index").values())
+            workload_operator_information = list(
+                meta_segments.to_dict("index").values()
+            )
         log.log_meta_information(
-            "operator_data", {"operator_data": dumps(output)}, time_stamp
+            "workload_operator_information",
+            {"workload_operator_information": dumps(workload_operator_information)},
+            time_stamp,
         )
