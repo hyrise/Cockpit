@@ -159,7 +159,7 @@ export function fakeNumberData(): Object {
 function fakeQueryTypeProportionData(suffix: number): Object {
   return {
     query_type: faker.random.word() + suffix,
-    total_latency: faker.random.number(Math.pow(10, 6)),
+    total_latency: generateRandomInt(1, Math.pow(10, 3)) * Math.pow(10, 6),
     total_frequency: faker.random.number(Math.pow(10, 3)),
   };
 }
