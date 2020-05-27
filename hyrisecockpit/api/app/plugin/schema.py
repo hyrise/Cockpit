@@ -1,6 +1,10 @@
 """Schema of a Plugin."""
 from marshmallow import Schema
-from marshmallow.fields import List, Nested, String
+from marshmallow.fields import Integer, List, Nested, String
+
+field_id = String(
+    description="Identifier of the database.", required=True, default="citdalle"
+)
 
 
 class PluginSchema(Schema):
@@ -55,12 +59,42 @@ class DetailedPluginSchema(PluginSchema):
 class DetailedPluginIDSchema(Schema):
     """Schema of detailed Plugins per database."""
 
-    id = String(
-        description="Identifier of the database.", required=True, default="citdalle"
-    )
+    id = field_id
     plugins = List(
         Nested(DetailedPluginSchema),
         allow_none=True,
         description="Detailed Plugins per database, none if the database is blocked.",
+        required=True,
+    )
+
+
+class LogEntrySchema(Schema):
+    """Schema of a Plugin Log Entry."""
+
+    timestamp = Integer(
+        description="Timestamp in nanoseconds.", required=True, default=1583847966784,
+    )
+    reporter = String(
+        description="Plugin reporting to the log.",
+        required=True,
+        default="CompressionPlugin",
+    )
+    message = String(
+        description="Message logged.",
+        required=True,
+        default="No optimization possible with given parameters!",
+    )
+    level = String(
+        description="Level of the log message.", required=True, default="Warning"
+    )
+
+
+class LogIDSchema(Schema):
+    """Schema of a Plugin Log per database."""
+
+    id = field_id
+    log = List(
+        Nested(LogEntrySchema),
+        description="Plugin Log of the database.",
         required=True,
     )
