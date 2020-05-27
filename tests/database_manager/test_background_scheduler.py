@@ -25,6 +25,9 @@ from hyrisecockpit.database_manager.job.update_plugin_log import update_plugin_l
 from hyrisecockpit.database_manager.job.update_queue_length import update_queue_length
 from hyrisecockpit.database_manager.job.update_storage_data import update_storage_data
 from hyrisecockpit.database_manager.job.update_system_data import update_system_data
+from hyrisecockpit.database_manager.job.update_workload_operator_information import (
+    update_workload_operator_information,
+)
 from hyrisecockpit.database_manager.job.update_workload_statement_information import (
     update_workload_statement_information,
 )
@@ -149,6 +152,26 @@ class TestBackgroundJobManager:
             ),
             (
                 update_plugin_log,
+                "interval",
+                1,
+                (
+                    background_job_manager._database_blocked,
+                    background_job_manager._connection_factory,
+                    background_job_manager._storage_connection_factory,
+                ),
+            ),
+            (
+                update_workload_statement_information,
+                "interval",
+                1,
+                (
+                    background_job_manager._database_blocked,
+                    background_job_manager._connection_factory,
+                    background_job_manager._storage_connection_factory,
+                ),
+            ),
+            (
+                update_workload_operator_information,
                 "interval",
                 1,
                 (
