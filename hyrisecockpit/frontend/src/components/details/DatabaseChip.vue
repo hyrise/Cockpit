@@ -36,12 +36,15 @@
           >mdi-eye-off</v-icon
         >
       </div>
-      <v-icon v-if="!selectable" left>mdi-database</v-icon>
+
       <v-tooltip right>
         <template v-slot:activator="{ on }">
-          <b v-on="on">{{
-            selectable ? truncateItemTitle(database.id) : database.id
-          }}</b>
+          <div v-on="on">
+            <v-icon v-if="!selectable" :left="!onlyIcon">mdi-database</v-icon>
+            <b v-if="!onlyIcon">{{
+              selectable ? truncateItemTitle(database.id) : database.id
+            }}</b>
+          </div>
         </template>
         <span>{{ database.id }}</span>
       </v-tooltip>
@@ -69,6 +72,7 @@ interface Props {
   closable: boolean;
   selectable: boolean;
   selected: boolean;
+  onlyIcon: boolean;
 }
 
 export default defineComponent({
@@ -87,6 +91,10 @@ export default defineComponent({
       default: false,
     },
     selected: {
+      type: Boolean,
+      default: undefined,
+    },
+    onlyIcon: {
       type: Boolean,
       default: undefined,
     },
