@@ -156,20 +156,23 @@ export function fakeNumberData(): Object {
 
 // QUERY TYPE PROPORTION DATA
 
-function fakeQueryTypeProportion(): Object {
+function fakeQueryTypeProportionData(suffix: number): Object {
   return {
-    SELECT: generateRandomInt(0, 100),
-    INSERT: generateRandomInt(0, 100),
-    UPDATE: generateRandomInt(0, 100),
-    DELETE: generateRandomInt(0, 100),
+    query_type: faker.random.word() + suffix,
+    total_latency: generateRandomInt(1, Math.pow(10, 3)) * Math.pow(10, 6),
+    total_frequency: faker.random.number(Math.pow(10, 3)),
   };
 }
 
-export function fakeKruegerData(datebaseId: string): Object {
+export function fakeDatabaseQueryTypeData(
+  datebaseId: string,
+  numberOfTypes: number
+): Object {
   return {
     id: datebaseId,
-    executed: fakeQueryTypeProportion(),
-    generated: fakeQueryTypeProportion(),
+    krueger_data: [...Array(numberOfTypes).keys()].map((key) =>
+      fakeQueryTypeProportionData(key)
+    ),
   };
 }
 

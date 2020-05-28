@@ -1,9 +1,7 @@
 <template>
   <div class="my-2">
-    <v-card color="primary">
-      <v-card-title class="white--text">
-        Detailed Query Information
-      </v-card-title>
+    <v-card color="primary" flat>
+      <v-card-title class="white--text">Query Information</v-card-title>
     </v-card>
     <v-container
       class="grey lighten-5 flex"

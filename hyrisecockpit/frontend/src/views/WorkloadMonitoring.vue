@@ -10,26 +10,13 @@
         :selected-metrics="selectedMetrics"
       />
       <database-query-tables :selected-databases="selectedDatabases" />
-      <v-card color="primary">
-        <v-card-title class="white--text">Workload Metrics</v-card-title>
-      </v-card>
-      <v-container
-        v-if="$databaseController.databasesUpdated.value"
-        class="grey lighten-5 flex"
-        fluid
-        justify="center"
-        align="center"
-      >
-        <metric-tile
-          v-for="metric in selectedMetrics"
-          :key="metric"
-          class="flex-item"
-          :metric="metric"
-          :selected-databases="watchedInstances"
-          :show-details="false"
-          :graph-id="metric"
-        />
-      </v-container>
+      <metrics-comparison-table
+        v-if="selectedDatabases.length"
+        :selected-databases="selectedDatabases"
+        :selected-metrics="selectedMetrics"
+        :show-details="false"
+        :show-header="true"
+      />
     </div>
   </div>
 </template>
@@ -50,37 +37,20 @@ import DatabaseQueryTables from "@/components/queries/DatabaseQueryTables.vue";
 import { MetricViewData } from "../types/views";
 import { useSelectionHandling } from "@/meta/selection";
 import StatusWarning from "@/components/alerts/StatusWarning.vue";
-import MetricTile from "@/components/container/MetricTile.vue";
 import SelectionList from "@/components/selection/SelectionList.vue";
-
-interface Props {}
-interface Data extends MetricViewData {
-  watchedInstances: Ref<string[]>;
-}
+import MetricsComparisonTable from "@/components/container/MetricsComparisonTable.vue";
 
 export default defineComponent({
   name: "WorkloadMonitoring",
   components: {
-    MetricTile,
     LinearLoader,
     DatabaseQueryTables,
     StatusWarning,
     SelectionList,
+    MetricsComparisonTable,
   },
-  setup(props: Props, context: SetupContext): Data {
-    const watchedInstances = ref<string[]>([]);
-    const { databasesUpdated } = context.root.$databaseController;
-
-    watch(databasesUpdated, () => {
-      if (databasesUpdated.value) {
-        watchedInstances.value = [
-          context.root.$databaseController.availableDatabasesById.value[0],
-        ];
-      }
-    });
-
+  setup(props: {}, context: SetupContext): MetricViewData {
     return {
-      watchedInstances,
       watchedMetrics: workloadMetrics,
       ...useSelectionHandling(context, "workload"),
     };
