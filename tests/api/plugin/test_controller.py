@@ -14,7 +14,8 @@ from hyrisecockpit.api.app.plugin.interface import (
     PluginSettingInterface,
     UpdatePluginSettingInterface,
 )
-from hyrisecockpit.api.app.plugin.schema import DetailedPluginIDSchema
+from hyrisecockpit.api.app.plugin.model import LogID
+from hyrisecockpit.api.app.plugin.schema import DetailedPluginIDSchema, LogIDSchema
 
 url = f"/{BASE_ROUTE}"
 
@@ -116,3 +117,31 @@ class TestDetailedPluginIDController:
             )
         assert response.status_code == status
         assert not response.is_json
+
+    def test_gets_all_plugin_logs(
+        self, client: FlaskClient, log_id: LogID,
+    ):
+        """A PluginLog controller routes get correctly."""
+        with patch(
+            "hyrisecockpit.api.app.plugin.service.PluginService.get_all_plugin_logs"
+        ) as update:
+            update.return_value = [log_id]
+            response = client.get(url + "/log", follow_redirects=True,)
+            update.assert_called_once_with()
+        assert response.status_code == 200
+        assert response.is_json
+        assert LogIDSchema(many=True).dump([log_id]) == response.get_json()
+
+    def test_gets_all_plugin_logs_with_level(
+        self, client: FlaskClient, log_id: LogID, level: str
+    ):
+        """A PluginLogLevel controller routes get correctly."""
+        with patch(
+            "hyrisecockpit.api.app.plugin.service.PluginService.get_all_plugin_logs"
+        ) as update:
+            update.return_value = [log_id]
+            response = client.get(url + f"/log/{level}", follow_redirects=True,)
+            update.assert_called_once_with(level=level)
+        assert response.status_code == 200
+        assert response.is_json
+        assert LogIDSchema(many=True).dump([log_id]) == response.get_json()
