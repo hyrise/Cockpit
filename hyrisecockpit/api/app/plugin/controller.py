@@ -89,3 +89,14 @@ class PluginLogController(Resource):
     def get(self) -> List[LogID]:
         """Get the Plugin Log of all databases."""
         return PluginService.get_all_plugin_logs()
+
+
+@api.route("/log/<string:level>")
+@api.param("level", "Log Level")
+class PluginLogLevelController(Resource):
+    """Controller of Plugin Logs by Level."""
+
+    @responds(schema=LogIDSchema(many=True), api=api)
+    def get(self, level: str) -> List[LogID]:
+        """Get the Plugin Log with a given log level of all databases."""
+        return PluginService.get_all_plugin_logs(level=level)
