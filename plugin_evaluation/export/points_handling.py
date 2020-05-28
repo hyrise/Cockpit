@@ -25,6 +25,11 @@ def _sort_metric_dictionary(metrics: Dict):
     return dict(metric_items)
 
 
+def _divide_by_thousend(metrics: Dict):
+    """Divide all metric valyes by 1000."""
+    return {key: [entry / 1000 for entry in metrics[key]] for key in metrics.keys()}
+
+
 def default_function(points: List, column_name: str, parameter):
     """Doesn't change the input value."""
     formatted_time = [
@@ -161,6 +166,8 @@ def calculate_access_frequency(  # noqa
             else:
                 table_accesses[table_name].append(0)
 
+    table_accesses = _divide_by_thousend(table_accesses)
+
     return (formatted_time, _sort_metric_dictionary(table_accesses))
 
 
@@ -196,6 +203,8 @@ def calculate_access_frequency_for_table(  # noqa
         else:
             for column_name in column_accesses.keys():
                 column_accesses[column_name].append(0)
+
+    column_accesses = _divide_by_thousend(column_accesses)
 
     return (formatted_time, _sort_metric_dictionary(column_accesses))
 
