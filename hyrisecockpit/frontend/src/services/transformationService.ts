@@ -53,7 +53,7 @@ function getQueryTypeProportionData(data: any, primaryKey: string = ""): any {
         (type.total_frequency / totalFrequency) * 100;
 
       chartData.push({
-        x: ["Latency", "Frequency"],
+        x: ["Aggregated Runtime", "Frequency"],
         y: [typeLatencyProportion, typeFrequencyProportion],
         name: type.query_type,
         type: "bar",

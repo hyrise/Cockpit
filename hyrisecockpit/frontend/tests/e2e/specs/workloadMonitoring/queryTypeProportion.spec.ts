@@ -65,7 +65,7 @@ describe("visiting the workload monitoring page", () => {
           assertBarChartData(
             elements[0].data,
             transformedData,
-            ["Latency", "Frequency"],
+            ["Aggregated Runtime", "Frequency"],
             2
           );
         }
@@ -79,9 +79,9 @@ describe("visiting the workload monitoring page", () => {
       cy.get(getSelectorWithID("queryTypeProportion", database.id)).should(
         (elements: any) => {
           const layout = elements[0].layout;
-          expect(layout.xaxis.title.text).to.eq("Query Type");
+          expect(layout.xaxis.title.text).to.eq("Statements");
           expect(layout.yaxis.title.text).to.eq(
-            "Proportion of query types in %"
+            "Proportion of statements in %"
           );
           expect(layout.yaxis.range[0]).to.eq(0);
           expect(layout.yaxis.range[1]).to.eq(100);
