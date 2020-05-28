@@ -33,7 +33,6 @@ describe("visiting the overview page", () => {
   // test data
   it("will show the correct metric data", () => {
     cy.get(getSelector("memoryFootprint")).should((elements: any) => {
-      console.log(elements[0].data, data);
       assertLineChartData(
         elements[0].data,
         data,
@@ -82,7 +81,6 @@ describe("visiting the comparison page", () => {
     databases.forEach((database: any, idx: any) => {
       cy.get(getSelectorWithID("memoryFootprint", database.id)).should(
         (elements: any) => {
-          console.log(elements[0].data, data);
           assertLineChartData(
             elements[0].data,
             [data[idx]],
