@@ -60,9 +60,8 @@ mockGetRoute("chunks", "monitor", true);
 mockGetRoute("detailed_query_information", "monitor");
 mockGetRoute("status", "monitor");
 mockGetRoute("database/benchmark_tables", "control");
-mockGetRoute("available_plugins", "control");
+mockGetRoute("plugin/available", "control");
 mockGetRoute("plugin", "control");
-mockGetRoute("plugin_settings", "control", true);
 mockGetRoute("plugin_log", "control");
 mockGetRoute("workload/");
 mockGetRoute("operator", "monitor");
@@ -70,7 +69,7 @@ mockGetRoute("operator", "monitor");
 mockPostRoute("database/", "control");
 mockPostRoute("database/benchmark_tables", "control");
 mockPostRoute("workload/");
-mockPostRoute("plugin", "control");
+mockPostRoute("plugin/*", "control");
 mockPostRoute("plugin_settings", "control", true);
 mockPostRoute("sql/", "control");
 mockPostRoute("database/worker", "control", true);
@@ -78,10 +77,11 @@ mockPostRoute("database/worker", "control", true);
 mockDeleteRoute("database/", "control");
 mockDeleteRoute("database/benchmark_tables", "control");
 mockDeleteRoute("workload/*");
-mockDeleteRoute("plugin", "control");
+mockDeleteRoute("plugin/*", "control");
 mockDeleteRoute("database/worker", "control", true);
 
 mockPutRoute("workload/*");
+mockPutRoute("plugin/*", "control");
 
 /* route for manual state cleaning */
 server.post("/clean/", (req, res) => {
@@ -167,7 +167,7 @@ function handleRequestBody(
   } else if (request === "benchmark_tables") {
     id = req.body.folder_name;
   } else if (request === "plugin") {
-    id = req.body.plugin;
+    id = req.body.name;
   } else if (request === "workload") {
     if (del) {
       const split = req.url.split("/");
@@ -180,6 +180,7 @@ function handleRequestBody(
 }
 
 function getRequestOfRoute(route: string): Request {
+  if (route === "plugin/available") return "available_plugins";
   const split = route.split("/");
   if (split.length === 1) {
     return split[0] as Request;
