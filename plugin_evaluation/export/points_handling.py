@@ -3,6 +3,8 @@ from datetime import datetime
 from json import loads
 from typing import Dict, List
 
+from numpy import mean
+
 
 def _format_query_name(benchmark: str, query_number: str):
     """Pretty print number name."""
@@ -15,7 +17,7 @@ def _sort_metric_dictionary(metrics: Dict):
     """Sort metrics in the dictionary."""
 
     def sort_function(tuple):
-        return tuple[1][0] if len(tuple[1]) > 0 else 0.0
+        return mean(tuple[1]) if len(tuple[1]) > 0 else 0.0
 
     metric_items = list(metrics.items())
     metric_items.sort(key=sort_function, reverse=True)
