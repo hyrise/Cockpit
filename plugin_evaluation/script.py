@@ -154,7 +154,12 @@ try:
             aggregation_interval,  # noqa
         )  # noqa
 
+except KeyboardInterrupt:
+    print("\n\U00002757[KEYBOARD INTERRUPT]\U00002757")
+    with DoneStatus("Cockpit shutdown..."):
+        cockpit.shutdown()
+
 except AssertionError as error:
-    print(f"\U0000274C[ERROR] \n{error}")
+    print(f"\U0000274C[ERROR]\U0000274C\n{error}")
     with DoneStatus("Cockpit shutdown..."):
         cockpit.shutdown()
