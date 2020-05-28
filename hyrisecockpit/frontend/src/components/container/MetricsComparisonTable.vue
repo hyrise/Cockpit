@@ -7,6 +7,19 @@
       :key="database.id"
       :color="database.color"
     >
+      <v-card
+        v-if="showHeader"
+        tile
+        class="column-top-border"
+        :color="database.color"
+        flat
+      >
+        <v-card-text class="white--text text-center">
+          <strong>
+            {{ database.id }}
+          </strong>
+        </v-card-text>
+      </v-card>
       <div v-for="metric in selectedMetrics" :key="metric">
         <metric-tile
           class="metric-card"
@@ -19,11 +32,11 @@
           :max-chart-width="maxChartWidth"
         />
       </div>
-      <v-card tile class="column-bottom-border" :color="database.color"
-        ><v-card-text class="white--text text-center">{{
-          database.id
-        }}</v-card-text></v-card
-      >
+      <v-card tile class="column-bottom-border" :color="database.color">
+        <v-card-text class="white--text text-center">
+          {{ database.id }}
+        </v-card-text>
+      </v-card>
     </div>
   </div>
 </template>
@@ -43,10 +56,6 @@ import { useDatabaseFlex } from "../../meta/components";
 import MetricTile from "@/components/container/MetricTile.vue";
 import { Database } from "@/types/database";
 import { useUpdatingDatabases } from "@/meta/databases";
-
-interface Props {
-  selectedDatabases: string[];
-}
 
 interface Data {
   databaseFlex: Readonly<Ref<Object>>;
@@ -92,6 +101,10 @@ export default defineComponent({
 }
 .column-bottom-border {
   margin: 0px 6px 6px 6px;
+  border-radius: 0px 0px 4px 4px;
+}
+.column-top-border {
+  margin: 0px 6px -2px 6px;
   border-radius: 0px 0px 4px 4px;
 }
 </style>

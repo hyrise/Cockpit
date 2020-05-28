@@ -1,22 +1,22 @@
 import { useBackendMock } from "../../setup/backendMock";
 import { getRoute } from "../views/helpers";
-import { getSelector } from "./helpers";
 import {
   assertBarChartData,
   getDetailsSelectorWithID,
+  getSelectorWithID,
 } from "../metrics/helpers";
 import { waitForChartRender } from "../helpers";
 
 const backend = useBackendMock();
 
-let database: any = {};
+let databases: any = {};
 let data: any = {};
 
 // test on workload monitoring
 describe("visiting the workload monitoring page", () => {
   before(() => {
     cy.setupAppState(backend).then((xhr: any) => {
-      database = xhr.response.body[0];
+      databases = xhr.response.body;
     });
     cy.visit(getRoute("workloadMonitoring"));
     cy.setupData("operator").then((xhr: any) => {
@@ -41,47 +41,64 @@ describe("visiting the workload monitoring page", () => {
 
   // test data
   it("will show the correct metric data", () => {
-    cy.get(getSelector("operatorProportion")).should((elements: any) => {
-      const transformedData = data[database.id].reduce(
-        (obj: any, opData: any) => {
-          if (opData.relativeTime < 5) {
-            obj.combined.Other = obj.combined.Other + opData.relativeTime;
-          } else {
-            obj.parts[opData.operator] = opData.relativeTime;
-          }
-          return obj;
-        },
-        { parts: {}, combined: { Other: 0 } }
-      );
-      // assert distinct parts
-      assertBarChartData(elements[0].data, transformedData.parts, undefined, 2);
-      // assert combined parts
-      assertBarChartData(
-        elements[0].data,
-        transformedData.combined,
-        undefined,
-        2
+    databases.forEach((database: any) => {
+      cy.get(getSelectorWithID("operatorProportion", database.id)).should(
+        (elements: any) => {
+          const transformedData = data[database.id].reduce(
+            (obj: any, opData: any) => {
+              if (opData.relativeTime < 5) {
+                obj.combined.Other = [
+                  obj.combined.Other[0] + opData.relativeTime,
+                ];
+              } else {
+                obj.parts[opData.operator] = [opData.relativeTime];
+              }
+              return obj;
+            },
+            { parts: {}, combined: { Other: [0] } }
+          );
+          // assert distinct parts
+          assertBarChartData(
+            elements[0].data,
+            transformedData.parts,
+            undefined,
+            2
+          );
+          // assert combined parts
+          assertBarChartData(
+            elements[0].data,
+            transformedData.combined,
+            undefined,
+            2
+          );
+        }
       );
     });
   });
 
   // test layout
   it("will show the correct range and title", () => {
-    cy.get(getSelector("operatorProportion")).should((elements: any) => {
-      const layout = elements[0].layout;
-      expect(layout.xaxis.title.text).to.eq("Operator");
-      expect(layout.yaxis.title.text).to.eq(
-        "Distribution of operator runtimes in %"
+    databases.forEach((database: any) => {
+      cy.get(getSelectorWithID("operatorProportion", database.id)).should(
+        (elements: any) => {
+          const layout = elements[0].layout;
+          expect(layout.xaxis.title.text).to.eq("Operator");
+          expect(layout.yaxis.title.text).to.eq(
+            "Distribution of operator runtimes in %"
+          );
+          expect(layout.yaxis.range[0]).to.eq(0);
+          expect(layout.yaxis.range[1]).to.eq(100);
+        }
       );
-      expect(layout.yaxis.range[0]).to.eq(0);
-      expect(layout.yaxis.range[1]).to.eq(100);
     });
   });
 
   // test details
   it("will not show metric details", () => {
-    cy.get(getDetailsSelectorWithID("operatorProportion", database.id)).should(
-      "not.exist"
-    );
+    databases.forEach((database: any) => {
+      cy.get(
+        getDetailsSelectorWithID("operatorProportion", database.id)
+      ).should("not.exist");
+    });
   });
 });

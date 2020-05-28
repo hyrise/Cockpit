@@ -73,13 +73,15 @@ describe("visiting the comparison page", () => {
           const transformedData = data[database.id].reduce(
             (obj: any, opData: any) => {
               if (opData.relativeTime < 5) {
-                obj.combined.Other = obj.combined.Other + opData.relativeTime;
+                obj.combined.Other = [
+                  obj.combined.Other[0] + opData.relativeTime,
+                ];
               } else {
-                obj.parts[opData.operator] = opData.relativeTime;
+                obj.parts[opData.operator] = [opData.relativeTime];
               }
               return obj;
             },
-            { parts: {}, combined: { Other: 0 } }
+            { parts: {}, combined: { Other: [0] } }
           );
           // assert distinct parts
           assertBarChartData(

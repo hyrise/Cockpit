@@ -3,7 +3,7 @@ import {
   fakeDatabaseSystemData,
   fakeDatabaseStorageData,
   fakeNumberData,
-  fakeKruegerData,
+  fakeDatabaseQueryTypeData,
   fakeDatabaseChunksData,
   fakeDatabaseQueryInformationData,
   fakeDatabasePluginsData,
@@ -123,9 +123,8 @@ export function useMocks(
       "queue_length",
       fakeNumberData
     );
-    responseMocks.krueger_data = fakeDataByIds(
-      mockedIds.databases,
-      fakeKruegerData
+    responseMocks.krueger_data = mockedIds.databases.map((id) =>
+      fakeDatabaseQueryTypeData(id, 7)
     );
     responseMocks.chunks = {
       chunks_data: assignFakeData(
