@@ -90,14 +90,15 @@ export function useBackendMock(
       getGetAlias("available_plugins")
     );
     cy.route("GET", getRequestRoute("plugin", "get")).as(getGetAlias("plugin"));
-    cy.route("GET", getRequestRoute("plugin_settings", "get")).as(
-      getGetAlias("plugin_settings")
-    );
+
     cy.route("GET", getRequestRoute("plugin_log", "get")).as(
       getGetAlias("plugin_log")
     );
     cy.route("GET", getRequestRoute("workload", "get")).as(
       getGetAlias("workload")
+    );
+    cy.route("GET", getRequestRoute("operator", "get")).as(
+      getGetAlias("operator")
     );
 
     /* POST */
@@ -109,9 +110,6 @@ export function useBackendMock(
     );
     cy.route("POST", getRequestRoute("plugin", "post")).as(
       getPostAlias("plugin")
-    );
-    cy.route("POST", getRequestRoute("plugin_settings", "post")).as(
-      getPostAlias("plugin_settings")
     );
     cy.route("POST", getRequestRoute("workload", "post")).as(
       getPostAlias("workload")
@@ -142,6 +140,7 @@ export function useBackendMock(
     cy.route("PUT", getRequestRoute("workload", "put")).as(
       getPutAlias("workload")
     );
+    cy.route("PUT", getRequestRoute("plugin", "put")).as(getPutAlias("plugin"));
   }
 
   if (Cypress.env("stubless")) return { start, reload, restart, rename };
@@ -200,6 +199,7 @@ export function mockBackend(
 
   function mockPutRoutes(mock: RouteMockFunction): void {
     mock(getRequestRoute("workload", "put"), getPutAlias("workload"));
+    mock(getRequestRoute("plugin", "put"), getPutAlias("plugin"));
   }
 
   function mockGetRoutes(mock: RouteMockFunction): void {
@@ -271,12 +271,6 @@ export function mockBackend(
       getMockedResponse("plugin")
     );
     mock(
-      getRequestRoute("plugin_settings", "get"),
-      getGetAlias("plugin_settings"),
-      getMockedResponse("plugin_settings"),
-      true
-    );
-    mock(
       getRequestRoute("plugin_log", "get"),
       getGetAlias("plugin_log"),
       getMockedResponse("plugin_log")
@@ -285,6 +279,11 @@ export function mockBackend(
       getRequestRoute("workload", "get"),
       getGetAlias("workload"),
       getMockedResponse("workload")
+    );
+    mock(
+      getRequestRoute("operator", "get"),
+      getGetAlias("operator"),
+      getMockedResponse("operator")
     );
   }
 
@@ -295,10 +294,6 @@ export function mockBackend(
       getPostAlias("benchmark_tables")
     );
     mock(getRequestRoute("plugin", "post"), getPostAlias("plugin"));
-    mock(
-      getRequestRoute("plugin_settings", "post"),
-      getPostAlias("plugin_settings")
-    );
     mock(getRequestRoute("workload", "post"), getPostAlias("workload"));
     mock(getRequestRoute("sql", "post"), getPostAlias("sql"));
     mock(getRequestRoute("worker", "post"), getPostAlias("worker"));

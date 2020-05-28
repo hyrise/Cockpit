@@ -44,25 +44,25 @@ database_two_parms = {
 
 @fixture
 def database_schema() -> DatabaseSchema:
-    """Return a real database schema."""
+    """Return a database schema."""
     return DatabaseSchema()
 
 
 @fixture
 def detailed_database_schema() -> DetailedDatabaseSchema:
-    """Return a real detailed database schema."""
+    """Return a detailed database schema."""
     return DetailedDatabaseSchema()
 
 
 @fixture
 def available_benchmark_tables_schema() -> AvailableBenchmarkTablesSchema:
-    """Return a real available benchmark tables schema."""
+    """Return a available benchmark tables schema."""
     return AvailableBenchmarkTablesSchema()
 
 
 @fixture
 def benchmark_tables_schema() -> BenchmarkTablesSchema:
-    """Return a real benchmark tables schema."""
+    """Return a benchmark tables schema."""
     return BenchmarkTablesSchema()
 
 

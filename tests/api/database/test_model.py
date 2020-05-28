@@ -39,13 +39,13 @@ database_two_parms = {
 
 @fixture(params=["Tina", "Bibi"])
 def database(request) -> Database:
-    """Return a real Database model."""
+    """Return a Database model."""
     return Database(id=request.param)
 
 
 @fixture(params=[database_one_parms, database_two_parms])
 def detailed_database(request) -> DetailedDatabase:
-    """Return a real detailed Database model."""
+    """Return a detailed Database model."""
     return DetailedDatabase(**request.param)
 
 
@@ -56,13 +56,13 @@ def detailed_database(request) -> DetailedDatabase:
     ]
 )
 def available_benchmark_tables(request) -> AvailableBenchmarkTables:
-    """Return a real available benchmark tables model."""
+    """Return a available benchmark tables model."""
     return AvailableBenchmarkTables(folder_names=request.param)
 
 
 @fixture(params=[["where are the tables"], ["Are you there?"]])
 def benchmark_tables(request) -> BenchmarkTables:
-    """Return a real benchmark tables model."""
+    """Return a benchmark tables model."""
     return BenchmarkTables(folder_name=request.param)
 
 
