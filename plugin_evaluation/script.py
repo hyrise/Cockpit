@@ -44,22 +44,30 @@ try:
     show_bar("Starting cockpit...", 3)
 
     with DoneStatus("Check startup errors..."):
-        assert not cockpit.has_errors()  # nosec
+        assert (  # nosec
+            not cockpit.has_errors()
+        ), f"Error during startup of the cockpit\n {cockpit.get_stderr()}"
 
     with DoneStatus("Adding database..."):
         response = cockpit.backend.add_database(
             database_id, DATABASE_HOST, DATABASE_PORT
         )
-        assert response.status_code == 200  # nosec
+        assert (  # nosec
+            response.status_code == 200
+        ), f"Couldn't add a database ({response.status_code})"
 
     with DoneStatus("Waiting default tables to load..."):
         cockpit.backend.wait_for_unblocked_status()
 
     with DoneStatus("Starting a workload..."):
         response = cockpit.backend.start_workers()
-        assert response.status_code == 200  # nosec
+        assert (  # nosec
+            response.status_code == 200
+        ), f"Couldn't start workers ({response.status_code})"
         response = cockpit.backend.start_workload(benchmark, 300)
-        assert response.status_code == 200  # nosec
+        assert (  # nosec
+            response.status_code == 200
+        ), f"Couldn't start workload ({response.status_code})"
         cockpit.backend.wait_for_unblocked_status()
 
     startts = time_ns()
@@ -67,13 +75,17 @@ try:
 
     with DoneStatus(f"Activate {plugin} plugin..."):  # noqa
         response = cockpit.backend.activate_plugin(database_id, plugin)  # noqa
-        assert response.status_code == 200  # nosec
+        assert (  # nosec
+            response.status_code == 200
+        ), f"Couldn't activate plugin ({response.status_code})"
 
     sleep(1.0)
 
     with DoneStatus(f"Setting {plugin} plugin..."):  # noqa
         response = cockpit.backend.set_plugin_settings(**plugin_settings)  # noqa
-        assert response.status_code == 200  # nosec
+        assert (  # nosec
+            response.status_code == 200
+        ), f"Couldn't set plugin ({response.status_code})"
 
     show_bar("Executing a workload...", workload_execution_time)
 
@@ -82,18 +94,26 @@ try:
 
     with DoneStatus(f"Deactivate {plugin} plugin..."):  # noqa
         response = cockpit.backend.deactivate_plugin(database_id, plugin)  # noqa
-        assert response.status_code == 200  # nosec
+        assert (  # nosec
+            response.status_code == 200
+        ), f"Couldn't deactivate plugin ({response.status_code})"
 
     with DoneStatus("Stopping a workload..."):
         response = cockpit.backend.stop_workload(benchmark)
-        assert response.status_code == 200  # nosec
+        assert (  # nosec
+            response.status_code == 200
+        ), f"Couldn't stop workload ({response.status_code})"
         response = cockpit.backend.stop_workers()
-        assert response.status_code == 200  # nosec
+        assert (  # nosec
+            response.status_code == 200
+        ), f"Couldn't stop workers ({response.status_code})"
         cockpit.backend.wait_for_unblocked_status()
 
     with DoneStatus("Removing the database..."):
         response = cockpit.backend.remove_database(database_id)
-        assert response.status_code == 200  # nosec
+        assert (  # nosec
+            response.status_code == 200
+        ), f"Couldn't remove database ({response.status_code})"
 
     with DoneStatus("Cockpit shutdown..."):
         cockpit.shutdown()
@@ -135,6 +155,6 @@ try:
         )  # noqa
 
 except AssertionError as error:
-    print(f"Error: {error}")
+    print(f"\U0000274C[ERROR] \n{error}")
     with DoneStatus("Cockpit shutdown..."):
         cockpit.shutdown()
