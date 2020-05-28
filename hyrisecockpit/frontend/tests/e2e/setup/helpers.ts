@@ -20,7 +20,6 @@ export type Request =
   | "throughput"
   | "latency"
   | "queue_length"
-  | "krueger_data"
   | "chunks"
   | "detailed_query_information"
   | "benchmark_tables"
@@ -31,7 +30,8 @@ export type Request =
   | "status"
   | "sql"
   | "worker"
-  | "operator";
+  | "workload_statement_information"
+  | "workload_operator_information";
 
 export type BackendState = "up" | "down";
 
@@ -45,7 +45,7 @@ export const comparisonRequests: Request[] = [
   "queue_length",
   "system",
   "storage",
-  "operator",
+  "workload_operator_information",
 ];
 export const overviewRequests: Request[] = [
   "throughput",
@@ -55,8 +55,8 @@ export const overviewRequests: Request[] = [
   "storage",
 ];
 export const workloadMonitoringRequests: Request[] = [
-  "krueger_data",
-  "operator",
+  "workload_statement_information",
+  "workload_operator_information",
 ];
 
 const requestRoutes: Record<
@@ -77,7 +77,9 @@ const requestRoutes: Record<
   throughput: { get: "**/monitor/throughput**" },
   latency: { get: "**/monitor/latency**" },
   queue_length: { get: "**/monitor/queue_length**" },
-  krueger_data: { get: "**/monitor/krueger_data**" },
+  workload_statement_information: {
+    get: "**/monitor/workload_statement_information**",
+  },
   chunks: { get: "**/monitor/chunks**" },
   detailed_query_information: { get: "**/monitor/detailed_query_information" },
   status: { get: "**/monitor/status" },
@@ -105,8 +107,8 @@ const requestRoutes: Record<
     post: "**/control/database/worker",
     delete: "**/control/database/worker",
   },
-  operator: {
-    get: "**/monitor/operator**",
+  workload_operator_information: {
+    get: "**/monitor/workload_operator_information**",
   },
 };
 
@@ -124,7 +126,7 @@ const getAliases: Partial<Record<Request, string>> = {
   throughput: "getThroughput",
   latency: "getLatency",
   queue_length: "getQueueLength",
-  krueger_data: "getKruegerData",
+  workload_statement_information: "getStatementData",
   chunks: "getChunksData",
   detailed_query_information: "getQueryInformation",
   benchmark_tables: "getBenchmarks",
@@ -133,7 +135,7 @@ const getAliases: Partial<Record<Request, string>> = {
   plugin_log: "getPluginLog",
   status: "getDatabaseWorkloadState",
   workload: "getWorkloads",
-  operator: "getOperatorData",
+  workload_operator_information: "getOperatorData",
 };
 
 const postAliases: Partial<Record<Request, string>> = {

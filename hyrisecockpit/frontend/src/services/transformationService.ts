@@ -37,16 +37,16 @@ export function useDataTransformation(metric: Metric): TransformationService {
 /** transform query type data to barchart structure */
 function getQueryTypeProportionData(data: any, primaryKey: string = ""): any {
   const typeData = data.find((entry: any) => entry.id === primaryKey)!;
-  const totalLatency = typeData.krueger_data.reduce(
+  const totalLatency = typeData.workload_statement_information.reduce(
     (sum: number, type: any) => sum + type.total_latency,
     0
   );
-  const totalFrequency = typeData.krueger_data.reduce(
+  const totalFrequency = typeData.workload_statement_information.reduce(
     (sum: number, type: any) => sum + type.total_frequency,
     0
   );
 
-  return typeData.krueger_data
+  return typeData.workload_statement_information
     .reduce((chartData: any[], type: any, idx: number) => {
       const typeLatencyProportion = (type.total_latency / totalLatency) * 100;
       const typeFrequencyProportion =
@@ -267,7 +267,7 @@ function getAccessData(
 /** tranform operator data with appropriate tooltip information */
 function getOperatorData(data: any, primaryKey: string = ""): any {
   const operatorData = data.find((entry: any) => entry.id === primaryKey)!;
-  const totalTime = operatorData.operator_data.reduce(
+  const totalTime = operatorData.workload_operator_information.reduce(
     (sum: number, operator: any) => sum + operator.total_time_ns,
     0
   );
@@ -283,7 +283,7 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
     marker: { color: colorValueDefinition.lightgrey },
   };
 
-  return operatorData.operator_data
+  return operatorData.workload_operator_information
     .reduce((chartData: any[], operator: any) => {
       const operatorProportion = (operator.total_time_ns / totalTime) * 100;
       if (operatorProportion < 5) {

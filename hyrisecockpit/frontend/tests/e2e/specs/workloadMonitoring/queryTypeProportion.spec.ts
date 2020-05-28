@@ -19,26 +19,28 @@ describe("visiting the workload monitoring page", () => {
       databases = xhr.response.body;
     });
     cy.visit(getRoute("workloadMonitoring"));
-    cy.setupData("krueger_data").then((xhr: any) => {
+    cy.setupData("workload_statement_information").then((xhr: any) => {
       data = {};
       xhr.response.body.forEach((database: any) => {
         const entry: any = {};
 
-        const totalLat = database.krueger_data.reduce(
+        const totalLat = database.workload_statement_information.reduce(
           (sum: number, type: any) => sum + type.total_latency,
           0
         );
-        const totalFreq = database.krueger_data.reduce(
+        const totalFreq = database.workload_statement_information.reduce(
           (sum: number, type: any) => sum + type.total_frequency,
           0
         );
-        entry[database.id] = database.krueger_data.map((type: any) => {
-          return {
-            ...type,
-            relativeLat: (type.total_latency / totalLat) * 100,
-            relativeFreq: (type.total_frequency / totalFreq) * 100,
-          };
-        });
+        entry[database.id] = database.workload_statement_information.map(
+          (type: any) => {
+            return {
+              ...type,
+              relativeLat: (type.total_latency / totalLat) * 100,
+              relativeFreq: (type.total_frequency / totalFreq) * 100,
+            };
+          }
+        );
 
         data = { ...data, ...entry };
       });
