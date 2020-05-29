@@ -1,5 +1,6 @@
 <template>
   <span>
+    <v-row class="warningRow ml-1" >
     <warning v-if="!availableDatabases.length">
       <template #message>
         No database added
@@ -29,8 +30,10 @@
           <span> {{ database.id }} is blocked </span>
         </v-chip>
       </div>
-    </v-row>
+    </v-row> 
+   </v-row>
   </span>
+
 </template>
 <script lang="ts">
 import {
@@ -78,3 +81,10 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.warningRow {
+  position: sticky;
+  top: 2px;
+  z-index: 5;
+}
+</style>
