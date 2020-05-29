@@ -2,14 +2,14 @@
   <span>
     <v-switch
       v-for="workload in availableWorkloads"
-      v-model="loadedWorkloads"
+      v-model="workloads"
       class="mt-0 pt-0"
       :key="workload"
       :value="workload"
       :label="getDisplayedWorkload(workload)"
       @change="$emit('change', workload)"
-      :loading="workloadData[workload].loading"
-      :disabled="workloadData[workload].loading || disabled"
+      :loading="loadingWorkloads.includes(workload)"
+      :disabled="loadingWorkloads.includes(workload) || disabled"
     >
     </v-switch>
   </span>
@@ -26,11 +26,12 @@ import { Workload, availableWorkloads } from "../../types/workloads";
 import { getDisplayedWorkload } from "../../meta/workloads";
 
 interface Props {
-  workloadData: Record<string, { loaded: boolean; loading: boolean }>;
+  loadedWorkloads: Workload[];
+  loadingWorkloads: Workload[];
   disabled: boolean;
 }
 interface Data {
-  loadedWorkloads: Ref<Workload[]>;
+  workloads: Ref<Workload[]>;
   availableWorkloads: string[];
   getDisplayedWorkload: (workload: Workload) => string;
 }
@@ -38,9 +39,13 @@ interface Data {
 export default defineComponent({
   name: "WorkloadDataSelector",
   props: {
-    workloadData: {
-      type: Object,
-      default: {},
+    loadedWorkloads: {
+      type: Array,
+      default: [],
+    },
+    loadingWorkloads: {
+      type: Array,
+      default: [],
     },
     disabled: {
       type: Boolean,
@@ -48,21 +53,15 @@ export default defineComponent({
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const loadedWorkloads = ref<Workload[]>([]);
+    const workloads = ref<Workload[]>([]);
     watch(
-      () => props.workloadData,
+      () => props.loadedWorkloads,
       () => {
-        loadedWorkloads.value = Object.entries(props.workloadData).map(
-          ([workload, { loaded }]: any) => {
-            if (loaded) {
-              return workload;
-            }
-          }
-        );
+        workloads.value = props.loadedWorkloads;
       }
     );
     return {
-      loadedWorkloads,
+      workloads,
       availableWorkloads,
       getDisplayedWorkload,
     };

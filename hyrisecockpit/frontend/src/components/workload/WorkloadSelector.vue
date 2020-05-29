@@ -7,7 +7,7 @@
       :key="workload"
       :label="getDisplayedWorkload(workload)"
       :value="workload"
-      :disabled="!workloadData[workload].loaded || disabled"
+      :disabled="!loadedWorkloads.includes(workload) || disabled"
       @change="$emit('change', workload)"
     >
     </v-checkbox>
@@ -25,10 +25,8 @@ import { Workload, availableWorkloads } from "../../types/workloads";
 import { getDisplayedWorkload } from "../../meta/workloads";
 
 interface Props {
-  workloadData: Record<
-    string,
-    { loaded: boolean; loading: boolean; selected: boolean }
-  >;
+  selectedWorkloads: Workload[];
+  loadedWorkloads: Workload[];
   disabled: boolean;
 }
 interface Data {
@@ -40,9 +38,13 @@ interface Data {
 export default defineComponent({
   name: "WorkloadSelector",
   props: {
-    workloadData: {
-      type: Object,
-      default: {},
+    selectedWorkloads: {
+      type: Array,
+      default: [],
+    },
+    loadedWorkloads: {
+      type: Array,
+      default: [],
     },
     disabled: {
       type: Boolean,
@@ -52,15 +54,9 @@ export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
     const workloads = ref<Workload[]>([]);
     watch(
-      () => props.workloadData,
+      () => props.selectedWorkloads,
       () => {
-        workloads.value = Object.entries(props.workloadData).map(
-          ([workload, { selected }]: any) => {
-            if (selected) {
-              return workload;
-            }
-          }
-        );
+        workloads.value = props.selectedWorkloads;
       }
     );
     return {

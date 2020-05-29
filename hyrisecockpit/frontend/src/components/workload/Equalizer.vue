@@ -1,12 +1,12 @@
 <template>
   <span>
-    <div v-for="(value, workload) in workloadData" :key="workload">
-      <p v-if="value.selected" class="subtitle-1 font-weight-medium">
+    <div v-for="workload in selectedWorkloads" :key="workload">
+      <p class="subtitle-1 font-weight-medium">
         {{ getDisplayedWorkload(workload) }}
       </p>
       <v-row class="equalizer">
         <div
-          v-for="(weight, idx) in weights[workload]"
+          v-for="(weight, idx) in changedWeights[workload]"
           :key="weight.name"
           class="equalizer-row"
         >
@@ -65,19 +65,12 @@ import { Workload } from "../../types/workloads";
 import { getDisplayedWorkload } from "../../meta/workloads";
 
 interface Props {
-  workloadData: Record<
-    string,
-    {
-      loaded: boolean;
-      loading: boolean;
-      selected: boolean;
-      weights: Record<string, number>;
-    }
-  >;
+  selectedWorkloads: Workload[];
+  weights: Record<string, number>[];
 }
 
 interface Data {
-  weights: Record<string, Weight[]>;
+  changedWeights: Ref<Record<Workload, Weight[]>>;
   getDisplayedWorkload: (workload: Workload) => void;
   updateWeight: (
     workload: string,
@@ -90,13 +83,18 @@ type Weight = { name: string; value: number; sliderValue: number };
 export default defineComponent({
   name: "Equalizer",
   props: {
-    workloadData: {
-      type: Object,
-      default: {},
+    selectedWorkloads: {
+      type: Array,
+      default: [],
+    },
+    weights: {
+      type: Array,
+      default: [],
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const weights: Record<string, Weight[]> = reactive({});
+    //TODO: add toggle to equalizer
+    const changedWeights = ref<Record<string, Weight[]>>({});
 
     /* convert the linear sliderValues with exponential function: f(sliderValue) = value = a * b^sliderValue - a
     f(0) = 0, f(50) = 1.0, f(100) = 100 --> b = 99^(1/50), a = 1/98 */
@@ -114,8 +112,7 @@ export default defineComponent({
       name: string,
       sliderValueToValue: boolean
     ): void {
-      //TODO: update value and sliderValue
-      const weight: Weight = Object.values(weights[workload]).find(
+      const weight: Weight = Object.values(changedWeights.value[workload]).find(
         (weight) => weight.name === name
       )!;
       if (sliderValueToValue) {
@@ -126,23 +123,29 @@ export default defineComponent({
       context.emit("change", workload, name, weight.value);
     }
     watch(
-      () => props.workloadData,
+      () => props.weights,
       () => {
-        Object.entries(props.workloadData).forEach((workload) => {
-          weights[workload[0]] = Object.entries(workload[1].weights)
-            .sort()
-            .map(([name, value]) => {
-              return {
-                name: name,
-                value: value,
-                sliderValue: convertValueToSliderValue(value),
-              };
-            });
-        });
+        changedWeights.value = {};
+        //TODO: change forEach
+        Object.entries(props.weights).forEach(
+          (workload: [string, Record<string, number>]) => {
+            changedWeights.value[
+              props.selectedWorkloads[workload[0]]
+            ] = Object.entries(workload[1])
+              .sort()
+              .map(([name, value]) => {
+                return {
+                  name: name,
+                  value: value,
+                  sliderValue: convertValueToSliderValue(value),
+                };
+              });
+          }
+        );
       }
     );
     return {
-      weights,
+      changedWeights,
       getDisplayedWorkload,
       updateWeight,
     };
