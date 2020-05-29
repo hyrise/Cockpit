@@ -31,19 +31,9 @@ export function useDatabaseService(): DatabaseService {
     return databases;
   }
 
-  function getDatabaseColor(databaseID: string): string {
-    let hashedDatabaseID = 0;
-    Object.values(databaseID).forEach((symbol: any) => {
-      hashedDatabaseID =
-        (hashedDatabaseID << 5) -
-        hashedDatabaseID +
-        databaseID.charCodeAt(symbol);
-      hashedDatabaseID = hashedDatabaseID & hashedDatabaseID;
-    });
-    const index =
-      Math.abs(hashedDatabaseID) % Object.keys(colorDatabaseDefinition).length;
-    let color = Object.values(colorDatabaseDefinition)[index];
-    return color;
+  function getDatabaseColor(databaseID: string, idx: number): string {
+    // TODO: think about using cookies to ensure persistent database colors per client
+    return Object.values(colorDatabaseDefinition)[idx];
   }
 
   async function fetchDatabasesCPUInformation(): Promise<
