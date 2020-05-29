@@ -6,116 +6,115 @@ import {
 } from "../types/metrics";
 import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
-import { colorValueDefinition } from "@/meta/colors";
+import { colorValueDefinition, multiColors } from "@/meta/colors";
+
+const { roundNumber, formatPercentage, formatTimeUnit } = useFormatting();
+const {
+  getTableMemoryFootprint,
+  getDatabaseMemoryFootprint,
+} = useDataTransformationHelpers();
 
 const transformationServiceMap: Record<Metric, TransformationService> = {
   access: getAccessData,
   cpu: getCPUData,
+  queryTypeProportion: getQueryTypeProportionData,
   latency: getLatencyData,
-  executedQueryTypeProportion: getExecutedQueryTypeProportionData,
-  generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
   memoryFootprint: getMemoryFootprint,
+  operatorProportion: getOperatorData,
   queueLength: getReadOnlyData,
   ram: getRAMData,
   storage: getStorageData,
   throughput: getReadOnlyData,
 };
 
-const { roundNumber, subSeconds, trimString } = useFormatting();
-const {
-  getTableMemoryFootprint,
-  getDatabaseMemoryFootprint,
-} = useDataTransformationHelpers();
-
+/** export appropriate transformation function of given metric */
 export function useDataTransformation(metric: Metric): TransformationService {
   return transformationServiceMap[metric];
 }
 
-function getExecutedQueryTypeProportionData(
-  data: any,
-  primaryKey: string = ""
-): any {
-  const executedQueryTypeProportion = data.find(
-    (database: any) => database.id === primaryKey
-  ).executed;
+// TRANSFORM FUNCTION POOL
 
-  return getQueryTypeProportionData(executedQueryTypeProportion, "executed");
+/** transform query type data to barchart structure */
+function getQueryTypeProportionData(data: any, primaryKey: string = ""): any {
+  const typeData = data.find((entry: any) => entry.id === primaryKey)!;
+  const totalLatency = typeData.krueger_data.reduce(
+    (sum: number, type: any) => sum + type.total_latency,
+    0
+  );
+  const totalFrequency = typeData.krueger_data.reduce(
+    (sum: number, type: any) => sum + type.total_frequency,
+    0
+  );
+
+  return typeData.krueger_data
+    .reduce((chartData: any[], type: any, idx: number) => {
+      const typeLatencyProportion = (type.total_latency / totalLatency) * 100;
+      const typeFrequencyProportion =
+        (type.total_frequency / totalFrequency) * 100;
+
+      chartData.push({
+        x: ["Aggregated Runtime", "Frequency"],
+        y: [typeLatencyProportion, typeFrequencyProportion],
+        name: type.query_type,
+        type: "bar",
+        text: [
+          `${type.query_type} - ${formatPercentage(
+            typeLatencyProportion,
+            100
+          )} % - ${formatTimeUnit(
+            roundNumber(type.total_latency, Math.pow(10, 6))
+          )}`,
+          `${type.query_type} - ${formatPercentage(
+            typeFrequencyProportion,
+            100
+          )} % - # ${type.total_frequency}`,
+        ],
+        hoverinfo: "text",
+      });
+
+      return chartData;
+    }, [])
+    .map((type: any, idx: number) => {
+      return {
+        ...type,
+        marker: {
+          color:
+            type.name === "OTHER"
+              ? colorValueDefinition.lightgrey
+              : multiColors[idx],
+        },
+      };
+    });
 }
 
-function getGeneratedQueryTypeProportionData(
-  data: any,
-  primaryKey: string = ""
-): any {
-  const generatedQueryTypeProportion = data.find(
-    (database: any) => database.id === primaryKey
-  ).generated;
-
-  return getQueryTypeProportionData(generatedQueryTypeProportion, "generated");
-}
-
-function getQueryTypeProportionData(data: any, type: string): any {
-  return [
-    {
-      x: [type],
-      y: [data.UPDATE] as number[],
-      name: "UPDATE",
-      type: "bar",
-      marker: {
-        color: colorValueDefinition.green,
-      },
-    },
-    {
-      x: [type],
-      y: [data.SELECT] as number[],
-      name: "SELECT",
-      type: "bar",
-      marker: {
-        color: colorValueDefinition.blue,
-      },
-    },
-    {
-      x: [type],
-      y: [data.INSERT] as number[],
-      name: "INSERT",
-      type: "bar",
-      marker: {
-        color: colorValueDefinition.orange,
-      },
-    },
-    {
-      x: [type],
-      y: [data.DELETE] as number[],
-      name: "DELETE",
-      type: "bar",
-      marker: {
-        color: colorValueDefinition.red,
-      },
-    },
-  ];
-}
-
+/** transform to cpu process usage data */
 function getCPUData(data: any, primaryKey: string = ""): number[] {
   return data.map((entry: any) => entry[primaryKey].cpu.cpu_process_usage);
 }
 
+/** transform available ram data to used ram data */
 function getRAMData(data: any, primaryKey: string = ""): number[] {
   return data.map((entry: any) => 100 - entry[primaryKey].memory.percent);
 }
 
+/** read data only by primary key */
 function getReadOnlyData(data: any, primaryKey: string = ""): number[] {
   return data.map((entry: any) => entry[primaryKey]);
 }
 
+/** transform latency data from ns to ms */
 function getLatencyData(data: any, primaryKey: string = ""): number[] {
   return getReadOnlyData(data, primaryKey).map((data: number) =>
     roundNumber(data, Math.pow(10, 6))
   );
 }
 
+/** calculate memory footprint data */
 function getMemoryFootprint(data: any): number[] {
   return [getDatabaseMemoryFootprint(data)];
 }
 
+/** transform storage data for treemap structure consisting of parents, labels, sizes and tooltips */
 function getStorageData(data: any, primaryKey: string = ""): StorageData {
   //TODO: this can be replaced when the size entry of the returned data of every table is fixed from the backend
   const totalDatabaseMemory = getDatabaseMemoryFootprint(data[primaryKey]);
@@ -135,10 +134,6 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
 
   function getRoundedData(value: number): number {
     return roundNumber(value, 1000, 1 / Math.pow(10, 3), false);
-  }
-
-  function getPercentage(part: number, total: number): number {
-    return roundNumber(part / total, 100, Math.pow(10, 4), false);
   }
 
   function getEncodingData(rawData: any): string {
@@ -169,7 +164,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
         return (
           encodingText +
           "<br> " +
-          getPercentage(currentEncoding.amount, totalAmount) +
+          formatPercentage(currentEncoding.amount, totalAmount) +
           "%: " +
           currentEncoding.name +
           "<br> (" +
@@ -190,7 +185,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
         size: `${getTableMemoryFootprint(tableData.data)} MB`,
         encoding: "",
         dataType: "",
-        percentOfDatabase: `${getPercentage(
+        percentOfDatabase: `${formatPercentage(
           getTableMemoryFootprint(tableData.data),
           totalDatabaseMemory
         )} % of total footprint`,
@@ -206,11 +201,11 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
             size: `${getRoundedData(attributeData.size)} MB`,
             encoding: `encoding: ${getEncodingData(attributeData.encoding)}`,
             dataType: `data type: ${attributeData.data_type}`,
-            percentOfDatabase: `${getPercentage(
+            percentOfDatabase: `${formatPercentage(
               getRoundedData(attributeData.size),
               totalDatabaseMemory
             )} % of total footprint`,
-            percentOfTable: `${getPercentage(
+            percentOfTable: `${formatPercentage(
               getRoundedData(attributeData.size),
               getTableMemoryFootprint(tableData.data)
             )} % of ${table}`,
@@ -228,6 +223,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
   };
 }
 
+/** transform access data displayed by chunks */
 function getAccessData(
   data: any,
   primaryKey: string = "",
@@ -268,6 +264,79 @@ function getAccessData(
   return { chunks, columns, dataByChunks, descriptions };
 }
 
+/** tranform operator data with appropriate tooltip information */
+function getOperatorData(data: any, primaryKey: string = ""): any {
+  const operatorData = data.find((entry: any) => entry.id === primaryKey)!;
+  const totalTime = operatorData.operator_data.reduce(
+    (sum: number, operator: any) => sum + operator.total_time_ns,
+    0
+  );
+  /* combine all entries smaller than 5% */
+  const rest: any[] = [];
+  const restLabel = {
+    x: [""],
+    y: [0],
+    name: "Other",
+    type: "bar",
+    text: "",
+    hoverinfo: "text",
+    marker: { color: colorValueDefinition.lightgrey },
+  };
+
+  return operatorData.operator_data
+    .reduce((chartData: any[], operator: any) => {
+      const operatorProportion = (operator.total_time_ns / totalTime) * 100;
+      if (operatorProportion < 5) {
+        rest.push({
+          name: operator.operator,
+          time: operator.total_time_ns,
+          proportion: operatorProportion,
+        });
+      } else {
+        chartData.push({
+          x: [""],
+          y: [operatorProportion],
+          name: operator.operator,
+          type: "bar",
+          text: `${formatPercentage(operatorProportion, 100)} % - ${
+            operator.operator
+          } -  ${formatTimeUnit(
+            roundNumber(operator.total_time_ns, Math.pow(10, 6))
+          )}`,
+          hoverinfo: "text",
+        });
+      }
+      return chartData;
+    }, [])
+    .map((operator: any, idx: number) => {
+      return { ...operator, marker: { color: multiColors[idx] } };
+    })
+    .sort((operator1: any, operator2: any) => operator2.y[0] - operator1.y[0])
+    .concat([
+      rest
+        .sort(
+          (operator1: any, operator2: any) =>
+            operator1.proportion - operator2.proportion
+        )
+        .reduce((chartData, operator: any) => {
+          return {
+            ...chartData,
+            y: [chartData.y[0] + operator.proportion],
+            text:
+              chartData.text +
+              `${formatPercentage(operator.proportion, 100)} % - ${
+                operator.name
+              } - ${formatTimeUnit(
+                roundNumber(operator.time, Math.pow(10, 6))
+              )} <br>`,
+          };
+        }, restLabel),
+    ]);
+}
+
+/**
+ * use helpers for detecting max values of read only metric data
+ */
 export function useMaxValueHelper(
   metric: Metric
 ): ((data: any) => number) | undefined {
@@ -275,6 +344,7 @@ export function useMaxValueHelper(
     access: getAccessMaxValue,
   };
 
+  /* detect max value of access data */
   function getAccessMaxValue(data: any): number {
     return Object.values(data).reduce((maxValue: number, dbData: any) => {
       const tableMaxValue = Object.values(dbData).reduce(
@@ -295,11 +365,15 @@ export function useMaxValueHelper(
   return maxValueHelper[metric];
 }
 
+/**
+ * use helpers to transform database specific information
+ */
 export function useDataTransformationHelpers(): {
   getDatabaseMemoryFootprint: (data: any) => number;
   getTableMemoryFootprint: (data: any) => number;
   getDatabaseMainMemoryCapacity: (data: any) => number;
 } {
+  /* get memory footprint of all loaded tables */
   function getTableMemoryFootprint(data: any): number {
     return roundNumber(
       Object.values(data).reduce(
@@ -311,6 +385,8 @@ export function useDataTransformationHelpers(): {
       false
     );
   }
+
+  /* get memory footprint of database */
   function getDatabaseMemoryFootprint(data: any): number {
     const memory: number[] = [];
     Object.entries(data).forEach(([table, tableData]: [string, any]) => {
@@ -324,6 +400,8 @@ export function useDataTransformationHelpers(): {
       false
     );
   }
+
+  /* get memory capacity of database */
   function getDatabaseMainMemoryCapacity(data: any): number {
     return roundNumber(
       data?.memory?.total ?? 0,

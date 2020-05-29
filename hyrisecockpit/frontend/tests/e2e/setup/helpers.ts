@@ -26,12 +26,12 @@ export type Request =
   | "benchmark_tables"
   | "available_plugins"
   | "plugin"
-  | "plugin_settings"
   | "plugin_log"
   | "workload"
   | "status"
   | "sql"
-  | "worker";
+  | "worker"
+  | "operator";
 
 export type BackendState = "up" | "down";
 
@@ -45,7 +45,7 @@ export const comparisonRequests: Request[] = [
   "queue_length",
   "system",
   "storage",
-  "krueger_data",
+  "operator",
 ];
 export const overviewRequests: Request[] = [
   "throughput",
@@ -54,7 +54,10 @@ export const overviewRequests: Request[] = [
   "system",
   "storage",
 ];
-export const workloadMonitoringRequests: Request[] = ["krueger_data"];
+export const workloadMonitoringRequests: Request[] = [
+  "krueger_data",
+  "operator",
+];
 
 const requestRoutes: Record<
   Request,
@@ -83,15 +86,12 @@ const requestRoutes: Record<
     post: "**/control/database/benchmark_tables",
     delete: "**/control/database/benchmark_tables",
   },
-  available_plugins: { get: "**/control/available_plugins" },
+  available_plugins: { get: "**/control/plugin/available" },
   plugin: {
     get: "**/control/plugin",
-    post: "**/control/plugin",
-    delete: "**/control/plugin",
-  },
-  plugin_settings: {
-    get: "**/control/plugin_settings",
-    post: "**/control/plugin_settings",
+    post: "**/control/plugin/**",
+    delete: "**/control/plugin/**",
+    put: "**/control/plugin/**",
   },
   plugin_log: { get: "**/control/plugin_log" },
   workload: {
@@ -104,6 +104,9 @@ const requestRoutes: Record<
   worker: {
     post: "**/control/database/worker",
     delete: "**/control/database/worker",
+  },
+  operator: {
+    get: "**/monitor/operator**",
   },
 };
 
@@ -127,17 +130,16 @@ const getAliases: Partial<Record<Request, string>> = {
   benchmark_tables: "getBenchmarks",
   available_plugins: "getAvailablePLugins",
   plugin: "getPlugin",
-  plugin_settings: "getPluginSettings",
   plugin_log: "getPluginLog",
   status: "getDatabaseWorkloadState",
   workload: "getWorkloads",
+  operator: "getOperatorData",
 };
 
 const postAliases: Partial<Record<Request, string>> = {
   database: "addDatabase",
   benchmark_tables: "loadTables",
   plugin: "activatePlugin",
-  plugin_settings: "setPluginSettings",
   workload: "startWorkload",
   sql: "sendSQL",
   worker: "startWorker",
@@ -152,6 +154,7 @@ const deleteAliases: Partial<Record<Request, string>> = {
 };
 
 const putAliases: Partial<Record<Request, string>> = {
+  plugin: "updatePlugin",
   workload: "updateWorkload",
 };
 

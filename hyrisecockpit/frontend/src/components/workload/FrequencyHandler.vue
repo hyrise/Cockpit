@@ -8,6 +8,7 @@
       min="0"
       max="1000"
       @click="$emit('change', frequency)"
+      @end="$emit('change', frequency)"
     ></v-slider>
     <v-text-field
       id="frequency-field"

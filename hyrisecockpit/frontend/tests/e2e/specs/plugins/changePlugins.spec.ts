@@ -5,6 +5,7 @@ import {
   getPostAlias,
   getDeleteAlias,
   generateRandomInt,
+  getPutAlias,
 } from "../../setup/helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
 import {
@@ -20,9 +21,7 @@ let backend = useBackendMock({ plugins: 3 });
 
 let databases: any = [];
 let availablePlugins: any = [];
-let databasesActivePlugins: any = [];
-let databasesPluginLogs: any = [];
-let databasesPluginSettings: any = [];
+let databasesActivePluginData: any = [];
 
 // test plugins overview
 describe("When opening the plugins overview", () => {
@@ -30,15 +29,9 @@ describe("When opening the plugins overview", () => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
       cy.setupData("available_plugins").then((xhr: any) => {
-        availablePlugins = xhr.response.body;
+        availablePlugins = xhr.response.body.map((plugin: any) => plugin.name);
         cy.setupData("plugin").then((xhr: any) => {
-          databasesActivePlugins = xhr.response.body;
-          cy.setupData("plugin_log").then((xhr: any) => {
-            databasesPluginLogs = xhr.response.body;
-            cy.setupData("plugin_settings").then((xhr: any) => {
-              databasesPluginSettings = xhr.response.body.body.plugin_settings;
-            });
-          });
+          databasesActivePluginData = xhr.response.body;
         });
       });
     });
@@ -49,16 +42,19 @@ describe("When opening the plugins overview", () => {
     it("will show this plugin as activated", () => {
       const deactivePlugin = availablePlugins.reduce(
         (deactivePlugins: Object[], plugin: any, idx: number) => {
-          const pluginData = databasesActivePlugins.find(
+          const pluginData = databasesActivePluginData.find(
             (db: any) => db.id === databases[0].id
           );
-          if (!pluginData.plugins.includes(plugin)) {
+          if (
+            !pluginData.plugins.find((active: any) => active.name === plugin)
+          ) {
             deactivePlugins.push(plugin);
           }
           return deactivePlugins;
         },
         []
       )[0];
+
       databases.forEach((database: any, idx: number) => {
         clickElement(getViewSelector("pluginOverviewButton"));
         cy.get(getSelector("pluginOverview")).within(() => {
@@ -111,10 +107,12 @@ describe("When opening the plugins overview", () => {
     it("will show this plugin as deactivated", () => {
       const activePlugin = availablePlugins.reduce(
         (activePlugins: Object[], plugin: any, idx: number) => {
-          const pluginData = databasesActivePlugins.find(
+          const pluginData = databasesActivePluginData.find(
             (db: any) => db.id === databases[0].id
           );
-          if (pluginData.plugins.includes(plugin)) {
+          if (
+            !!pluginData.plugins.find((active: any) => active.name === plugin)
+          ) {
             activePlugins.push(plugin);
           }
           return activePlugins;
@@ -177,19 +175,16 @@ describe("When opening the plugins overview", () => {
       databases.forEach((database: any, idx: number) => {
         const activePlugin = availablePlugins.reduce(
           (activePlugins: Object[], plugin: any, idx: number) => {
-            const pluginData = databasesActivePlugins.find(
+            const pluginData = databasesActivePluginData.find(
               (db: any) => db.id === database.id
             );
-            const settingsData = databasesPluginSettings.find(
-              (db: any) => db.id === database.id
+            const pluginSettings = pluginData.plugins.find(
+              (active: any) => active.name === plugin
             );
-            const pluginSetting = settingsData.plugin_settings.find(
-              (setting: any) => setting.name.includes(plugin)
-            );
-            if (pluginData.plugins.includes(plugin)) {
+            if (!!pluginSettings) {
               activePlugins.push({
                 plugin: plugin,
-                name: pluginSetting.name,
+                name: pluginSettings.settings[0].name, // plugin only has one available setting
               });
             }
             return activePlugins;
@@ -208,19 +203,16 @@ describe("When opening the plugins overview", () => {
           cy.wait(300);
           cy.get(getSelector("settingValue")).clear().type(newValue.toString());
           cy.get(getSelector("saveSettingsButton")).click();
-          cy.wait("@" + getPostAlias("plugin_settings"));
-          cy.get("@" + getPostAlias("plugin_settings")).should((xhr: any) => {
+          cy.wait("@" + getPutAlias("plugin"));
+          cy.get("@" + getPutAlias("plugin")).should((xhr: any) => {
             assertSettingsRequestValues(
-              database.id,
+              activePlugin.plugin,
               activePlugin.name,
               newValue.toString(),
               xhr.request.body
             );
           });
-          cy.numberOfRequests(getPostAlias("plugin_settings")).should(
-            "eq",
-            idx + 1
-          );
+          cy.numberOfRequests(getPutAlias("plugin")).should("eq", idx + 1);
           cy.get(getDatabaseSelector("databaseChip"))
             .eq(idx)
             .click({ force: true });

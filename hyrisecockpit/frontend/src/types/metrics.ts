@@ -11,9 +11,9 @@ export type Metric =
   | "latency"
   | "ram"
   | "queueLength"
-  | "executedQueryTypeProportion"
-  | "generatedQueryTypeProportion"
-  | "memoryFootprint";
+  | "queryTypeProportion"
+  | "memoryFootprint"
+  | "operatorProportion";
 
 export const availableMetrics: Metric[] = [
   "access",
@@ -23,9 +23,9 @@ export const availableMetrics: Metric[] = [
   "latency",
   "ram",
   "queueLength",
-  "executedQueryTypeProportion",
-  "generatedQueryTypeProportion",
+  "queryTypeProportion",
   "memoryFootprint",
+  "operatorProportion",
 ];
 
 export const comparisonMetrics: Metric[] = [
@@ -37,7 +37,7 @@ export const comparisonMetrics: Metric[] = [
   "memoryFootprint",
   "storage",
   "access",
-  "executedQueryTypeProportion",
+  "operatorProportion",
 ];
 export const overviewMetrics: Metric[] = [
   "throughput",
@@ -48,7 +48,10 @@ export const overviewMetrics: Metric[] = [
   "memoryFootprint",
 ];
 
-export const workloadMetrics: Metric[] = ["generatedQueryTypeProportion"];
+export const workloadMetrics: Metric[] = [
+  "queryTypeProportion",
+  "operatorProportion",
+];
 
 interface AxesRange {
   x?: {
@@ -66,7 +69,7 @@ export type DataType = "interval" | "snapshot";
 export interface MetricMetadata {
   fetchType: FetchType;
   transformationService: TransformationService;
-  base: Base;
+  base?: Base;
   endpoint: string;
   component: string;
   requestTime: number;
@@ -75,12 +78,17 @@ export interface MetricMetadata {
   historic: boolean;
 }
 
-export interface ComparisonMetricData {
+export interface LineChartComponentData {
   data: Ref<any>;
   chartConfiguration: ChartConfiguration;
   maxValue: Ref<number>;
   timestamps: Ref<Date[]>;
   pluginEventData: any;
+}
+
+export interface BasicChartComponentData<T> {
+  data: Ref<T>;
+  chartConfiguration: ChartConfiguration;
 }
 
 export interface MetricProps {
@@ -89,6 +97,7 @@ export interface MetricProps {
   graphId: string;
   showDetails: boolean;
   maxChartWidth: number;
+  totalNumberOfDatabases: number;
 }
 
 export const MetricPropsValidation = {
@@ -111,6 +120,10 @@ export const MetricPropsValidation = {
   maxChartWidth: {
     type: Number,
     default: 0,
+  },
+  totalNumberOfDatabases: {
+    type: Number,
+    default: null,
   },
 };
 

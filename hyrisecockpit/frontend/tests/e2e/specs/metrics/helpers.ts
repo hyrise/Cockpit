@@ -1,4 +1,4 @@
-import { getSelectorByConfig, roundNumber } from "../helpers";
+import { getSelectorByConfig, cutNumber, roundNumber } from "../helpers";
 import { testMaxDecimalDigits } from "../abstractTests";
 
 /* SELECTORS */
@@ -8,13 +8,13 @@ const selectors: Record<string, { element: string; title: string }> = {
   queueLength: { element: "div", title: "queueLength" },
   cpu: { element: "div", title: "cpu" },
   ram: { element: "div", title: "ram" },
-  executedQueryTypeProportion: {
+  queryTypeProportion: {
     element: "div",
-    title: "executedQueryTypeProportion",
+    title: "queryTypeProportion",
   },
-  generatedQueryTypeProportion: {
+  operatorProportion: {
     element: "div",
-    title: "generatedQueryTypeProportion",
+    title: "operatorProportion",
   },
   memoryFootprint: { element: "div", title: "memoryFootprint" },
   firstStorage: { element: "div", title: "1storage" },
@@ -84,7 +84,8 @@ export function assertLineChartData(
 export function assertBarChartData(
   chartDatasets: any[],
   requestData: any,
-  xaxis: string
+  xaxis?: string[],
+  digits?: number
 ): void {
   Object.keys(requestData).forEach((label: string) => {
     const chartData: any = chartDatasets.find(
@@ -93,8 +94,17 @@ export function assertBarChartData(
     expect(chartData).to.exist;
     expect(chartData.x).to.exist;
     expect(chartData.y).to.exist;
-    expect(chartData.y).to.eql([requestData[label]]);
-    expect(chartData.x).to.eql([xaxis]);
+
+    if (xaxis) expect(chartData.x).to.eql(xaxis);
+    if (digits) {
+      (requestData[label] as any[]).forEach((entry, idx) => {
+        expect(cutNumber(entry, digits)).to.eq(
+          cutNumber(chartData.y[idx], digits)
+        );
+      });
+    } else {
+      expect(chartData.y).to.eql(requestData[label]);
+    }
   });
 }
 
@@ -105,7 +115,7 @@ export function assertHeatMapData(chartDatasets: any, requestData?: any): void {
     expect(chartDatasets.z).to.eql([]);
   } else {
     Object.entries(requestData).forEach(
-      ([column, data]: [any, any], idx: number) => {
+      ([_, data]: [any, any], idx: number) => {
         data.forEach((chunks: any, secondIdx: number) => {
           expect(chartDatasets.z[secondIdx][idx]).to.eq(chunks);
         });
@@ -164,15 +174,10 @@ export function assertMetricDetails(
   value: number,
   digits: number = 2
 ): void {
-  const expected = roundNumber(
-    value,
-    Math.pow(10, digits),
-    Math.pow(10, digits),
-    false
-  ).toString();
+  const expected = cutNumber(value, digits).toString();
   let j = 0;
   for (let i = 0; i < expected.length; i++) {
-    if (text[j] === "´" || text[j] === " ") j++;
+    if (text[j] === " ") j++;
     expect(text[j]).to.eq(expected[i]);
     j++;
   }

@@ -1,6 +1,6 @@
 """Schema of a Workload."""
 from marshmallow import Schema
-from marshmallow.fields import Dict, Integer, String
+from marshmallow.fields import Dict, Float, Integer, String
 
 
 class WorkloadSchema(Schema):
@@ -20,6 +20,6 @@ class DetailedWorkloadSchema(WorkloadSchema):
 
     weights = Dict(
         keys=String(description="Name of the query."),
-        values=Integer(description="Weight of the query."),
+        values=Float(description="Weight of the query."),
         description="Weights of queries used for generation.",
     )
