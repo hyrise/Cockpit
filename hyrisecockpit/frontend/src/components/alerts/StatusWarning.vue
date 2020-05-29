@@ -1,6 +1,6 @@
 <template>
   <span>
-    <v-row class="warningRow ml-1">
+    <v-row class="warningRow ml-2">
       <warning v-if="!availableDatabases.length">
         <template #message>
           No database added

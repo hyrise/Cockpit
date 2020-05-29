@@ -5,7 +5,7 @@
     v-if="show"
     single-line
     :color="colorValueDefinition.orange"
-    elevation="7"
+    elevation="5"
   >
     <v-icon :color="colorValueDefinition.darkgrey" size="27" class="mr-3">
       mdi-alert-outline

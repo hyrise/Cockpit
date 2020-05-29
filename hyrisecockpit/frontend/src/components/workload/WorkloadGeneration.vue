@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="open" persistent max-width="900px">
     <v-card id="workload-generation">
-      <v-system-bar :height="50">
+      <v-system-bar :height="50" class="mb-2">
         <v-card-title>
           Workload Settings
         </v-card-title>
@@ -13,6 +13,7 @@
           :selected-databases="databases"
           :selected-metrics="['']"
         />
+
         <v-row>
           <v-col class="pt-2">
             <p class="subtitle-1 font-weight-medium">
