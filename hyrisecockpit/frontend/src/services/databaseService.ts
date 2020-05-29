@@ -23,6 +23,8 @@ export function useDatabaseService(): DatabaseService {
     getDatabaseMainMemoryCapacity,
   } = useDataTransformationHelpers();
 
+  /* fetch database data */
+
   async function fetchDatabases(): Promise<DatabaseResponse[]> {
     let databases: DatabaseResponse[] = [];
     await axios.get(controlBackend + "database/").then((response) => {
@@ -67,6 +69,8 @@ export function useDatabaseService(): DatabaseService {
     return databasesWithStorageInformation;
   }
 
+  /* data transformation helpers */
+
   function getDatabasesInformation(response: any): DatabaseResponse[] {
     const databases: DatabaseResponse[] = [];
     response.forEach((data: any) => {
@@ -104,6 +108,8 @@ export function useDatabaseService(): DatabaseService {
     });
     return databasesWithStorageInformation;
   }
+
+  /* update database data */
 
   function addDatabase(databaseConnection: any): void {
     axios.post(controlBackend + "database/", databaseConnection).then(() => {
