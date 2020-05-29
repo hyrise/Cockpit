@@ -1,32 +1,23 @@
 <template>
   <v-banner
-        class="banner mr-2"
-        v-model="banner"
-        v-if="show"
-        single-line
-        :color="colorValueDefinition.orange"
-        elevation="7"
-      >
-        <v-icon
-          :color="colorValueDefinition.darkgrey"
-          size="27"
-          class="mr-3"
-        >
-          mdi-alert-outline
-        </v-icon>
+    class="banner mr-2"
+    v-model="banner"
+    v-if="show"
+    single-line
+    :color="colorValueDefinition.orange"
+    elevation="7"
+  >
+    <v-icon :color="colorValueDefinition.darkgrey" size="27" class="mr-3">
+      mdi-alert-outline
+    </v-icon>
 
-          <slot class="mt-6" name="message" />
+    <slot class="mt-6" name="message" />
 
-              <v-btn
-                :color="colorValueDefinition.darkgrey"
-                icon
-                @click="banner = false"
-              >
-                <v-icon size="20">mdi-close</v-icon>
-              </v-btn>
-       
-      </v-banner>
-</template>y
+    <v-btn :color="colorValueDefinition.darkgrey" icon @click="banner = false">
+      <v-icon size="20">mdi-close</v-icon>
+    </v-btn>
+  </v-banner> </template
+>y
 <script lang="ts">
 import {
   defineComponent,
@@ -35,7 +26,6 @@ import {
   Ref,
 } from "@vue/composition-api";
 import { colorValueDefinition } from "../../meta/colors";
-
 
 interface Data {
   banner: boolean;
