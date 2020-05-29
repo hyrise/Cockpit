@@ -114,7 +114,8 @@ export function useFormatting(): {
 
     const units = ["h", "min", "s", "ms"];
     [hours, minutes, seconds, milliseconds].forEach((value, idx) => {
-      if (value > 0) newValue = `${newValue} ${value} ${units[idx]}`;
+      if (value > 0 || units[idx] === "ms")
+        newValue = `${newValue} ${value} ${units[idx]}`;
     });
 
     return newValue;
