@@ -49,7 +49,7 @@ class TestMetricService:
         mock_get_historical_metric.assert_called_once_with(
             50, 100, 1, fake_table_name, fake_column_names, mock_client
         )
-        assert response == "response"
+        assert response == "response"  # type: ignore
 
     def test_get_throughput(self, metric_service: MetricService) -> None:
         """Test get throughput."""
@@ -104,7 +104,7 @@ class TestMetricService:
         # TODO use better fake data
         mock_client.query.return_value = MagicMock()
 
-        metric_service.get_detailed_query_information()  # type: ignore
+        metric_service.get_detailed_query_information()
 
         mock_client.query.assert_called_once_with(
             'SELECT COUNT("latency") as "throughput", MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
