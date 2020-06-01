@@ -48,9 +48,9 @@ class ThroughputEntry:
 class Throughput:
     """Model of a throughput."""
 
-    def __init__(self, id: int, throughput: List[ThroughputEntry]):
+    def __init__(self, id: str, throughput: List[ThroughputEntry]):
         """Initialize a throughput model."""
-        self.id: int = id
+        self.id: str = id
         self.throughput: List[ThroughputEntry] = throughput
 
 
@@ -66,9 +66,9 @@ class LatencyEntry:
 class Latency:
     """Model of a latency."""
 
-    def __init__(self, id: int, latency: List[LatencyEntry]):
+    def __init__(self, id: str, latency: List[LatencyEntry]):
         """Initialize a latency model."""
-        self.id: int = id
+        self.id: str = id
         self.latency: List[LatencyEntry] = latency
 
 
@@ -84,7 +84,7 @@ class QueueLengthEntry:
 class QueueLength:
     """Model of a queue length."""
 
-    def __init__(self, id: int, queue_length: List[QueueLengthEntry]):
+    def __init__(self, id: str, queue_length: List[QueueLengthEntry]):
         """Initialize a queue length model."""
-        self.id: int = id
+        self.id: str = id
         self.queue_length: List[QueueLengthEntry] = queue_length

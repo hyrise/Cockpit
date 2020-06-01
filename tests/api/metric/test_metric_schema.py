@@ -2,6 +2,12 @@
 from hyrisecockpit.api.app.metric.model import (
     DetailedQueryEntry,
     DetailedQueryInformation,
+    Latency,
+    LatencyEntry,
+    QueueLength,
+    QueueLengthEntry,
+    Throughput,
+    ThroughputEntry,
 )
 from hyrisecockpit.api.app.metric.schema import (
     DetailedQueryInformationEntrySchema,
@@ -54,49 +60,52 @@ class TestMetricSchema:
         """A throughput entry schema can be deserialized."""
         interface = {"timestamp": 1, "throughput": 100}
         deserialized = ThroughputEntrySchema().load(interface)
-        assert deserialized["timestamp"] == 1
-        assert deserialized["throughput"] == 100
+        assert isinstance(deserialized, ThroughputEntry)
+        assert vars(deserialized) == interface
 
     def test_deserializes_throughput_schema(self) -> None:
         """A throughput schema can be deserialized."""
         throughput_entry_interface = {"timestamp": 1, "throughput": 100}
         interface = {"id": "ha!", "throughput": [throughput_entry_interface]}
         deserialized = ThroughputSchema().load(interface)
-        assert deserialized["throughput"][0]["timestamp"] == 1
-        assert deserialized["throughput"][0]["throughput"] == 100
-        assert deserialized["id"] == "ha!"
+        assert isinstance(deserialized, Throughput)
+        assert isinstance(deserialized.throughput[0], ThroughputEntry)
+        assert vars(deserialized.throughput[0]) == throughput_entry_interface
+        assert deserialized.id == "ha!"
 
     def test_deserializes_latency_entry_schema(self) -> None:
         """A latency entry schema can be deserialized."""
         interface = {"timestamp": 1, "latency": 100}
         deserialized = LatencyEntrySchema().load(interface)
-        assert deserialized["timestamp"] == 1
-        assert deserialized["latency"] == 100
+        assert isinstance(deserialized, LatencyEntry)
+        assert vars(deserialized) == interface
 
     def test_deserializes_latency_schema(self) -> None:
         """A latency schema can be deserialized."""
         latency_entry_interface = {"timestamp": 1, "latency": 100}
         interface = {"id": "ha!", "latency": [latency_entry_interface]}
         deserialized = LatencySchema().load(interface)
-        assert deserialized["latency"][0]["timestamp"] == 1
-        assert deserialized["latency"][0]["latency"] == 100
-        assert deserialized["id"] == "ha!"
+        assert isinstance(deserialized, Latency)
+        assert isinstance(deserialized.latency[0], LatencyEntry)
+        assert vars(deserialized.latency[0]) == latency_entry_interface
+        assert deserialized.id == "ha!"
 
     def test_deserializes_queue_length_entry_schema(self) -> None:
         """A queue length entry schema can be deserialized."""
         interface = {"timestamp": 1, "queue_length": 100}
         deserialized = QueueLengthEntrySchema().load(interface)
-        assert deserialized["timestamp"] == 1
-        assert deserialized["queue_length"] == 100
+        assert isinstance(deserialized, QueueLengthEntry)
+        assert vars(deserialized) == interface
 
     def test_deserializes_queue_length_schema(self) -> None:
         """A queue length schema can be deserialized."""
         queue_length_entry_interface = {"timestamp": 1, "queue_length": 100}
         interface = {"id": "ha!", "queue_length": [queue_length_entry_interface]}
         deserialized = QueueLengthSchema().load(interface)
-        assert deserialized["queue_length"][0]["timestamp"] == 1
-        assert deserialized["queue_length"][0]["queue_length"] == 100
-        assert deserialized["id"] == "ha!"
+        assert isinstance(deserialized, QueueLength)
+        assert isinstance(deserialized.queue_length[0], QueueLengthEntry)
+        assert vars(deserialized.queue_length[0]) == queue_length_entry_interface
+        assert deserialized.id == "ha!"
 
     def test_deserializes_detailed_query_information_entry_schema(self) -> None:
         """A detailed query information entry schema can be deserialized."""
