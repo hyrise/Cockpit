@@ -37,11 +37,9 @@ class MetricService:
         )
 
         with StorageConnection() as client:
-            response: List[Dict[str, Union[str, List]]] = get_historical_metric(
+            return get_historical_metric(
                 startts, endts, precision_ns, table_name, column_names, client
             )
-
-        return response
 
     @classmethod
     def get_throughput(cls, time_interval: TimeInterval) -> List[Throughput]:
