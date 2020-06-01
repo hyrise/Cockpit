@@ -1,5 +1,4 @@
 """Method to register all routes of this app."""
-
 from flask import Flask
 from flask_restx import Api
 
@@ -13,7 +12,6 @@ def register_routes(api: Api, app: Flask, root: str = "/api") -> None:
     from .sql import register_routes as attach_sql
     from .metric import register_routes as attach_metric
     from .workload import register_routes as attach_workload
-
 
     attach_control(api, app, root)
     attach_database(api, app, root)
