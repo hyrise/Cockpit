@@ -1,6 +1,15 @@
 """Schema for metric namespace."""
-from marshmallow import Schema
+from marshmallow import Schema, post_load
 from marshmallow.fields import Float, Integer, List, Nested, String
+
+from .model import (
+    Latency,
+    LatencyEntry,
+    QueueLength,
+    QueueLengthEntry,
+    Throughput,
+    ThroughputEntry,
+)
 
 
 class ThroughputEntrySchema(Schema):
@@ -19,6 +28,11 @@ class ThroughputEntrySchema(Schema):
         example=273.9,
     )
 
+    @post_load
+    def make_throughput_entry(self, data, **kwargs):
+        """Return a throughput entry object."""
+        return ThroughputEntry(**data)
+
 
 class ThroughputSchema(Schema):
     """Schema of a Throughput metric."""
@@ -30,6 +44,11 @@ class ThroughputSchema(Schema):
         example="hyrise-1",
     )
     throughput = List(Nested(ThroughputEntrySchema))
+
+    @post_load
+    def make_throughput(self, data, **kwargs):
+        """Return a throughput object."""
+        return Throughput(**data)
 
 
 class LatencyEntrySchema(Schema):
@@ -45,6 +64,11 @@ class LatencyEntrySchema(Schema):
         title="Latency", description="Latency value", required=True, example=273.9,
     )
 
+    @post_load
+    def make_latency_entry(self, data, **kwargs):
+        """Return a latency entry object."""
+        return LatencyEntry(**data)
+
 
 class LatencySchema(Schema):
     """Schema of a Latency metric."""
@@ -56,6 +80,11 @@ class LatencySchema(Schema):
         example="hyrise-1",
     )
     latency = List(Nested(LatencyEntrySchema))
+
+    @post_load
+    def make_latency(self, data, **kwargs):
+        """Return a latency object."""
+        return Latency(**data)
 
 
 class QueueLengthEntrySchema(Schema):
@@ -74,6 +103,11 @@ class QueueLengthEntrySchema(Schema):
         example=273.9,
     )
 
+    @post_load
+    def make_queue_length_entry(self, data, **kwargs):
+        """Return a queue length entry object."""
+        return QueueLengthEntry(**data)
+
 
 class QueueLengthSchema(Schema):
     """Schema of a Latency metric."""
@@ -85,6 +119,11 @@ class QueueLengthSchema(Schema):
         example="hyrise-1",
     )
     queue_length = List(Nested(QueueLengthEntrySchema))
+
+    @post_load
+    def make_queue_length(self, data, **kwargs):
+        """Return a queue length object."""
+        return QueueLength(**data)
 
 
 class DetailedQueryInformationEntrySchema(Schema):

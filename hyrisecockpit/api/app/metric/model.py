@@ -34,3 +34,57 @@ class TimeInterval:
         self.startts: int = startts
         self.endts: int = endts
         self.precision: int = precision
+
+
+class ThroughputEntry:
+    """Model of a throughput entry."""
+
+    def __init__(self, timestamp: int, throughput: float):
+        """Initialize a throughput entry model."""
+        self.timestamp: int = timestamp
+        self.throughput: float = throughput
+
+
+class Throughput:
+    """Model of a throughput."""
+
+    def __init__(self, id: int, throughput: List[ThroughputEntry]):
+        """Initialize a throughput model."""
+        self.id: int = id
+        self.throughput: List[ThroughputEntry] = throughput
+
+
+class LatencyEntry:
+    """Model of a latency entry."""
+
+    def __init__(self, timestamp: int, latency: float):
+        """Initialize a latency entry model."""
+        self.timestamp: int = timestamp
+        self.latency: float = latency
+
+
+class Latency:
+    """Model of a latency."""
+
+    def __init__(self, id: int, latency: List[LatencyEntry]):
+        """Initialize a latency model."""
+        self.id: int = id
+        self.latency: List[LatencyEntry] = latency
+
+
+class QueueLengthEntry:
+    """Model of a queue length entry."""
+
+    def __init__(self, timestamp: int, queue_length: float):
+        """Initialize a queue length entry model."""
+        self.timestamp: int = timestamp
+        self.queue_length: float = queue_length
+
+
+class QueueLength:
+    """Model of a queue length."""
+
+    def __init__(self, id: int, queue_length: List[QueueLengthEntry]):
+        """Initialize a queue length model."""
+        self.id: int = id
+        self.queue_length: List[QueueLengthEntry] = queue_length

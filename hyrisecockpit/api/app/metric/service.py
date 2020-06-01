@@ -9,14 +9,24 @@ from hyrisecockpit.api.app.historical_data_handling import (
 )
 from hyrisecockpit.api.app.shared import _get_active_databases
 
-from .model import DetailedQueryEntry, DetailedQueryInformation, TimeInterval
+from .model import (
+    DetailedQueryEntry,
+    DetailedQueryInformation,
+    Latency,
+    QueueLength,
+    Throughput,
+    TimeInterval,
+)
+from .schema import LatencySchema, QueueLengthSchema, ThroughputSchema
 
 
 class MetricService:
     """Services of the Control Controller."""
 
     @staticmethod
-    def get_data(time_interval: TimeInterval, table_name: str, column_names: List[str]):
+    def get_data(
+        time_interval: TimeInterval, table_name: str, column_names: List[str]
+    ) -> List[Dict[str, Union[str, List]]]:
         """Return metric information in a given time range."""
         precise_startts: int = time_interval.startts
         precise_endts: int = time_interval.endts
@@ -34,19 +44,27 @@ class MetricService:
         return response
 
     @classmethod
-    def get_throughput(cls, time_interval: TimeInterval):
+    def get_throughput(cls, time_interval: TimeInterval) -> List[Throughput]:
         """Get throughput data."""
-        return cls.get_data(time_interval, "throughput", ["throughput"])
+        throughput_shema = ThroughputSchema()
+        results = cls.get_data(time_interval, "throughput", ["throughput"])
+        return [throughput_shema.load(database_results) for database_results in results]
 
     @classmethod
-    def get_latency(cls, time_interval: TimeInterval):
+    def get_latency(cls, time_interval: TimeInterval) -> List[Latency]:
         """Get latency data."""
-        return cls.get_data(time_interval, "latency", ["latency"])
+        latency_schema = LatencySchema()
+        results = cls.get_data(time_interval, "latency", ["latency"])
+        return [latency_schema.load(database_results) for database_results in results]
 
     @classmethod
-    def get_queue_length(cls, time_interval: TimeInterval):
+    def get_queue_length(cls, time_interval: TimeInterval) -> List[QueueLength]:
         """Get queue length data."""
-        return cls.get_data(time_interval, "queue_length", ["queue_length"])
+        queue_length_schema = QueueLengthSchema()
+        results = cls.get_data(time_interval, "queue_length", ["queue_length"])
+        return [
+            queue_length_schema.load(database_results) for database_results in results
+        ]
 
     @classmethod
     def get_detailed_query_information(cls):
