@@ -4,7 +4,7 @@ from os import remove
 from signal import SIGINT
 from subprocess import Popen  # nosec
 
-from requests import delete, get, post
+from requests import delete, get, post, put
 
 from system_tests.settings import BACKEND_HOST, BACKEND_PORT
 
@@ -110,35 +110,28 @@ class CockpitBackend:
 
     def activate_plugin(self, database_id: str, plugin: int):
         """Activate plugin."""
-        body = {"id": database_id, "plugin": plugin}
-        url = f"http://{self._backend_host}:{self._backend_port}/control/plugin"
+        body = {"name": plugin}
+        url = f"http://{self._backend_host}:{self._backend_port}/control/plugin/{database_id}"
         return post(url, json=body, timeout=REQUEST_TIMEOUT)
 
     def deactivate_plugin(self, database_id: str, plugin: int):
         """Deactivate plugin."""
-        body = {"id": database_id, "plugin": plugin}
-        url = f"http://{self._backend_host}:{self._backend_port}/control/plugin"
+        body = {"name": plugin}
+        url = f"http://{self._backend_host}:{self._backend_port}/control/plugin/{database_id}"
         return delete(url, json=body, timeout=REQUEST_TIMEOUT)
 
     def get_activated_plugins(self):
         """Get activated plugins."""
-        url = f"http://{self._backend_host}:{self._backend_port}/control/plugin"
+        url = f"http://{self._backend_host}:{self._backend_port}/control/plugin/"
         return get(url, timeout=REQUEST_TIMEOUT)
 
-    def get_plugin_settings(self):
-        """Get plugin settings."""
-        url = (
-            f"http://{self._backend_host}:{self._backend_port}/control/plugin_settings"
-        )
-        return get(url, timeout=REQUEST_TIMEOUT)
-
-    def set_plugin_settings(self, database_id: str, setting_name: str, value: str):
+    def set_plugin_settings(
+        self, database_id: str, plugin_name: str, setting_name: str, value: str
+    ):
         """Set plugin settings."""
-        body = {"id": database_id, "name": setting_name, "value": value}
-        url = (
-            f"http://{self._backend_host}:{self._backend_port}/control/plugin_settings"
-        )
-        return post(url, json=body, timeout=REQUEST_TIMEOUT)
+        body = {"name": plugin_name, "setting": {"name": setting_name, "value": value}}
+        url = f"http://{self._backend_host}:{self._backend_port}/control/plugin/{database_id}"
+        return put(url, json=body, timeout=REQUEST_TIMEOUT)
 
     def get_plugin_log(self):
         """Get plugin log."""
