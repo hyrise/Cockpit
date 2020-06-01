@@ -1,9 +1,17 @@
 """Controllers for metrics."""
+from typing import List
+
 from flask import request
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 
-from .model import TimeInterval
+from .model import (
+    DetailedQueryInformation,
+    Latency,
+    QueueLength,
+    Throughput,
+    TimeInterval,
+)
 from .schema import (
     DetailedQueryInformationSchema,
     LatencySchema,
@@ -26,7 +34,7 @@ class ThroughputController(Resource):
         api=api,
     )
     @responds(schema=ThroughputSchema(many=True), api=api)
-    def get(self):
+    def get(self) -> List[Throughput]:
         """Get throughput data for the requested time interval."""
         time_interval: TimeInterval = TimeInterval(
             startts=request.parsed_args["startts"],
@@ -47,7 +55,7 @@ class LatencyController(Resource):
         api=api,
     )
     @responds(schema=LatencySchema(many=True), api=api)
-    def get(self):
+    def get(self) -> List[Latency]:
         """Get latency data for the requested time interval."""
         time_interval: TimeInterval = TimeInterval(
             startts=request.parsed_args["startts"],
@@ -68,7 +76,7 @@ class QueueLengthController(Resource):
         api=api,
     )
     @responds(schema=QueueLengthSchema(many=True), api=api)
-    def get(self):
+    def get(self) -> List[QueueLength]:
         """Get queue length data for the requested time interval."""
         time_interval: TimeInterval = TimeInterval(
             startts=request.parsed_args["startts"],
@@ -83,6 +91,6 @@ class DetailedQueryInformationController(Resource):
     """Controller for detailed query information."""
 
     @responds(schema=DetailedQueryInformationSchema(many=True), api=api)
-    def get(self):
+    def get(self) -> List[DetailedQueryInformation]:
         """Get detailed query information."""
         return MetricService.get_detailed_query_information()

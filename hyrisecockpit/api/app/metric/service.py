@@ -67,7 +67,7 @@ class MetricService:
         ]
 
     @classmethod
-    def get_detailed_query_information(cls):
+    def get_detailed_query_information(cls) -> List[DetailedQueryInformation]:
         """Return detailed throughput and latency information from the stored queries."""
         currentts = time_ns()
         offset = 3_000_000_000
