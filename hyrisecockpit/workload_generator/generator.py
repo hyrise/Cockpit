@@ -16,6 +16,7 @@ from hyrisecockpit.response import Response, get_response
 from hyrisecockpit.server import Server
 
 from .reader import WorkloadReader
+from .tpcc_workload import TPCCWorkload
 from .workload import Workload
 
 
@@ -85,16 +86,26 @@ class WorkloadGenerator(object):
         folder_name: str = body["folder_name"]
         frequency: int = body["frequency"]
         if folder_name not in self._workloads:
-            queries = WorkloadReader.get(folder_name)
-            if queries is not None:
-                self._workloads[folder_name] = Workload(folder_name, frequency, queries)
+            if folder_name.startswith("tpcc"):
+                self._workloads[folder_name] = TPCCWorkload(folder_name, frequency)  # type: ignore
                 response = get_response(200)
                 response["body"]["workload"] = {
                     "folder_name": folder_name,
                     "frequency": self._workloads[folder_name].frequency,
                 }
             else:
-                return get_response(404)
+                queries = WorkloadReader.get(folder_name)
+                if queries is not None:
+                    self._workloads[folder_name] = Workload(
+                        folder_name, frequency, queries
+                    )
+                    response = get_response(200)
+                    response["body"]["workload"] = {
+                        "folder_name": folder_name,
+                        "frequency": self._workloads[folder_name].frequency,
+                    }
+                else:
+                    return get_response(404)
         else:
             response = get_response(409)
         return response
