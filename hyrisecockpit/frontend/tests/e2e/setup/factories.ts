@@ -170,9 +170,9 @@ export function fakeDatabaseQueryTypeData(
 ): Object {
   return {
     id: datebaseId,
-    krueger_data: [...Array(numberOfTypes).keys()].map((key) =>
-      fakeQueryTypeProportionData(key)
-    ),
+    workload_statement_information: [
+      ...Array(numberOfTypes).keys(),
+    ].map((key) => fakeQueryTypeProportionData(key)),
   };
 }
 
@@ -190,9 +190,9 @@ export function fakeDatabaseOperatorData(
 ): Object {
   return {
     id: databaseId,
-    operator_data: [...Array(numberOfOperators).keys()].map((key) =>
-      fakeOperatorData(key)
-    ),
+    workload_operator_information: [
+      ...Array(numberOfOperators).keys(),
+    ].map((key) => fakeOperatorData(key)),
   };
 }
 

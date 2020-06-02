@@ -40,7 +40,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
   queryTypeProportion: {
     fetchType: "read",
     transformationService: useDataTransformation("queryTypeProportion"),
-    endpoint: monitorBackend + "krueger_data",
+    endpoint: monitorBackend + "workload_statement_information",
     component: "QueryTypeProportion",
     requestTime: 5000,
     dataType: "interval",
@@ -69,7 +69,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
   operatorProportion: {
     fetchType: "read",
     transformationService: useDataTransformation("operatorProportion"),
-    endpoint: monitorBackend + "operator",
+    endpoint: monitorBackend + "workload_operator_information",
     component: "OperatorProportion",
     requestTime: 5000,
     dataType: "interval",
