@@ -18,7 +18,7 @@ class QueryHandler:
         query = task["query"]
         query = query.replace("[STREAM_ID]", str(self._worker_id))
 
-        not_formatted_parameters = task["parameters"]
+        not_formatted_parameters = task["args"]
         formatted_parameters = self.get_formatted_parameters(not_formatted_parameters)
 
         endts, latency = self.execute_query(query, formatted_parameters)

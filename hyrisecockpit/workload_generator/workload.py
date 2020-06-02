@@ -3,24 +3,32 @@ from __future__ import annotations
 
 from collections import OrderedDict
 from random import choice, choices
-from typing import Dict, List, NamedTuple, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, TypedDict
 
 from hyrisecockpit.api.app.workload.interface import DetailedWorkloadInterface
 
 
-class Query(NamedTuple):
+class AbstractTask(TypedDict):
+    """Abstract task."""
+
+    type: str
+    query_type: str
+    benchmark: str
+
+
+class QueryTask(AbstractTask):
     """Type of a generated Query."""
 
     query: str
     args: Optional[Tuple]
-    query_type: str
 
 
 class Workload:
     """Generates workloads from queries."""
 
-    def __init__(self, frequency: int, queries: Dict[str, List[str]]):
+    def __init__(self, benchmark: str, frequency: int, queries: Dict[str, List[str]]):
         """Initialize a Workload."""
+        self._benchmark = benchmark
         self.frequency: int = frequency
         self._queries: OrderedDict[str, List[str]] = OrderedDict(queries)
         self._weights: OrderedDict[str, float] = OrderedDict(
@@ -61,13 +69,15 @@ class Workload:
         self.frequency = new_workload["frequency"]
         self.weights = new_workload["weights"]
 
-    def get(self) -> List[Query]:
+    def get(self) -> List[QueryTask]:
         """Get a list of queries with the frequency and weights."""
         return [
-            Query(
+            QueryTask(
+                type="query",
                 query=choice(self._queries[query_type]),  # nosec
                 args=None,
                 query_type=query_type,
+                benchmark=self._benchmark,
             )
             for query_type in choices(
                 population=list(self._queries.keys()),

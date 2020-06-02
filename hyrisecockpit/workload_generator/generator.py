@@ -87,7 +87,7 @@ class WorkloadGenerator(object):
         if folder_name not in self._workloads:
             queries = WorkloadReader.get(folder_name)
             if queries is not None:
-                self._workloads[folder_name] = Workload(frequency, queries)
+                self._workloads[folder_name] = Workload(folder_name, frequency, queries)
                 response = get_response(200)
                 response["body"]["workload"] = {
                     "folder_name": folder_name,
@@ -144,9 +144,7 @@ class WorkloadGenerator(object):
 
     def _generate_workload(self) -> None:
         queries = [
-            (query.query, query.args, folder_name, query.query_type)
-            for folder_name, workload in self._workloads.items()
-            for query in workload.get()
+            query for workload in self._workloads.values() for query in workload.get()
         ]
         shuffle(queries)
         response = get_response(200)
