@@ -6,9 +6,10 @@ from typing import List, Optional
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from hyrisecockpit.cross_platform_support.multiprocessing_support import Queue
+from hyrisecockpit.database_manager.worker.queue_worker import fill_queue
+from hyrisecockpit.database_manager.worker.task_worker import execute_queries
 
 from .cursor import ConnectionFactory
-from .worker import execute_queries, fill_queue
 
 
 class WorkerPool:

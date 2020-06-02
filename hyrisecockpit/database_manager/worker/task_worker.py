@@ -58,9 +58,9 @@ def execute_queries(  # noqa
 
                 try:
                     task = task_queue.get(block=False)
-                    if task["type"] == "Query":
+                    if task["type"] == "query":
                         endts, latency = query_handler.execute_task(task)
-                    elif task["type"] == "Transaction":
+                    elif task["type"] == "transaction":
                         endts, latency = transaction_handler.execute_task(task)
                     else:
                         continue  # Error: unsupported task type
