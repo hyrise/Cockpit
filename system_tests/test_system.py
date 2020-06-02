@@ -79,8 +79,18 @@ class TestSystem:
         }
 
         response = cls.backend.get_property("monitor/status")  # type: ignore
+        status = response.json()[0]
+
         assert response.status_code == 200  # nosec
-        assert expected_status in response.json()  # nosec
+        for prop in [
+            "id",
+            "hyrise_active",
+            "database_blocked_status",
+            "worker_pool_status",
+        ]:
+            assert expected_status[prop] == status[prop]  # nosec
+        for prop in ["loaded_benchmarks", "loaded_tables"]:
+            assert set(expected_status[prop]) == set(status[prop])  # type: ignore # nosec
 
     def test_initializes_backend(self):
         """Test backend initializes without errors."""
@@ -292,12 +302,26 @@ class TestSystem:
         assert response.status_code == 200  # nosec
         assert response.json() == [{"id": "test_database1", "plugins": []}]  # nosec
 
-    def test_gets_operator_data(self):
-        """Test getting of the operator data."""
-        response = self.backend.get_property("monitor/operator")
+    def test_gets_workload_statement_information(self):
+        """Test getting of the workload statement information."""
+        response = self.backend.get_property("monitor/workload_statement_information")
         assert response.status_code == 200  # nosec
         assert len(response.json()) > 0  # nosec
-        assert len(response.json()[0]["operator_data"]) > 0  # nosec
+        assert len(response.json()[0]["workload_statement_information"]) > 0  # nosec
+        assert (  # nosec
+            response.json()[0]["workload_statement_information"][0]["total_frequency"]
+            > 0
+        )
+        assert (  # nosec
+            response.json()[0]["workload_statement_information"][0]["total_latency"] > 0
+        )
+
+    def test_gets_workload_operator_information(self):
+        """Test getting of the workload operator information."""
+        response = self.backend.get_property("monitor/workload_operator_information")
+        assert response.status_code == 200  # nosec
+        assert len(response.json()) > 0  # nosec
+        assert len(response.json()[0]["workload_operator_information"]) > 0  # nosec
 
     def test_stops_workload_generator(self):
         """Test stopping of the workload generator."""

@@ -37,21 +37,10 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
       y: { max: 100 },
     },
   },
-  executedQueryTypeProportion: {
+  queryTypeProportion: {
     fetchType: "read",
-    transformationService: useDataTransformation("executedQueryTypeProportion"),
-    endpoint: monitorBackend + "krueger_data",
-    component: "QueryTypeProportion",
-    requestTime: 5000,
-    dataType: "interval",
-    historic: false,
-  },
-  generatedQueryTypeProportion: {
-    fetchType: "read",
-    transformationService: useDataTransformation(
-      "generatedQueryTypeProportion"
-    ),
-    endpoint: monitorBackend + "krueger_data",
+    transformationService: useDataTransformation("queryTypeProportion"),
+    endpoint: monitorBackend + "workload_statement_information",
     component: "QueryTypeProportion",
     requestTime: 5000,
     dataType: "interval",
@@ -80,7 +69,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
   operatorProportion: {
     fetchType: "read",
     transformationService: useDataTransformation("operatorProportion"),
-    endpoint: monitorBackend + "operator",
+    endpoint: monitorBackend + "workload_operator_information",
     component: "OperatorProportion",
     requestTime: 5000,
     dataType: "interval",
@@ -159,15 +148,10 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
     xaxis: timeLabel,
     yaxis: "Workload in %",
   },
-  executedQueryTypeProportion: {
-    title: "Query Type Proportion",
-    xaxis: "Workload",
-    yaxis: "Proportion of queries in %",
-  },
-  generatedQueryTypeProportion: {
-    title: "Query Type Proportion",
-    xaxis: "Workload",
-    yaxis: "Proportion of queries in %",
+  queryTypeProportion: {
+    title: "Statement Proportion",
+    xaxis: "Statements",
+    yaxis: "Proportion of statements in %",
   },
   latency: {
     title: "Latency",

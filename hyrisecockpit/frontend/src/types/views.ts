@@ -15,6 +15,7 @@ export interface ContainerProps {
   selectedDatabases: string[];
   selectedMetrics: Metric[];
   showDetails: boolean;
+  showHeader: boolean;
 }
 
 export const ContainerPropsValidation = {
@@ -27,6 +28,10 @@ export const ContainerPropsValidation = {
     default: null,
   },
   showDetails: {
+    type: Boolean,
+    default: false,
+  },
+  showHeader: {
     type: Boolean,
     default: false,
   },

@@ -54,12 +54,13 @@ export function useDatabaseController(): DatabaseController {
           databaseService
             .fetchDatabasesStorageInformation()
             .then((databasesWithStorageInformation) => {
-              currentDatabases.forEach((database) => {
+              currentDatabases.forEach((database, idx) => {
                 updatedDatabases.push(
                   getDatabaseInformation(
                     database,
                     databasesWithCPUInformation,
-                    databasesWithStorageInformation
+                    databasesWithStorageInformation,
+                    idx
                   )
                 );
               });
@@ -73,7 +74,8 @@ export function useDatabaseController(): DatabaseController {
   function getDatabaseInformation(
     database: DatabaseResponse,
     databasesCPUInformation: DatabaseCPUResponse[],
-    databasesStorageInformation: DatabaseStorageResponse[]
+    databasesStorageInformation: DatabaseStorageResponse[],
+    databaseIdx: number
   ): Database {
     const cpuInformation = databasesCPUInformation.find(
       (object) => object.id === database.id
@@ -83,7 +85,7 @@ export function useDatabaseController(): DatabaseController {
     );
     return reactive({
       id: database.id,
-      color: databaseService.getDatabaseColor(database.id),
+      color: databaseService.getDatabaseColor(database.id, databaseIdx),
       systemDetails: {
         host: database.host,
         memoryCapacity: cpuInformation!.memoryCapacity,

@@ -45,20 +45,22 @@ describe("visiting the comparison page", () => {
       databases = xhr.response.body;
     });
     cy.visit(getRoute("comparison"));
-    cy.setupData("operator").then((xhr: any) => {
+    cy.setupData("workload_operator_information").then((xhr: any) => {
       data = {};
       xhr.response.body.forEach((database: any) => {
         const entry: any = {};
-        const total = database.operator_data.reduce(
+        const total = database.workload_operator_information.reduce(
           (sum: number, operator: any) => sum + operator.total_time_ns,
           0
         );
-        entry[database.id] = database.operator_data.map((operator: any) => {
-          return {
-            ...operator,
-            relativeTime: (operator.total_time_ns / total) * 100,
-          };
-        });
+        entry[database.id] = database.workload_operator_information.map(
+          (operator: any) => {
+            return {
+              ...operator,
+              relativeTime: (operator.total_time_ns / total) * 100,
+            };
+          }
+        );
         data = { ...data, ...entry };
       });
     });
@@ -73,13 +75,15 @@ describe("visiting the comparison page", () => {
           const transformedData = data[database.id].reduce(
             (obj: any, opData: any) => {
               if (opData.relativeTime < 5) {
-                obj.combined.Other = obj.combined.Other + opData.relativeTime;
+                obj.combined.Other = [
+                  obj.combined.Other[0] + opData.relativeTime,
+                ];
               } else {
-                obj.parts[opData.operator] = opData.relativeTime;
+                obj.parts[opData.operator] = [opData.relativeTime];
               }
               return obj;
             },
-            { parts: {}, combined: { Other: 0 } }
+            { parts: {}, combined: { Other: [0] } }
           );
           // assert distinct parts
           assertBarChartData(

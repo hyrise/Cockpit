@@ -23,6 +23,8 @@ export function useDatabaseService(): DatabaseService {
     getDatabaseMainMemoryCapacity,
   } = useDataTransformationHelpers();
 
+  /* fetch database data */
+
   async function fetchDatabases(): Promise<DatabaseResponse[]> {
     let databases: DatabaseResponse[] = [];
     await axios.get(controlBackend + "database/").then((response) => {
@@ -31,19 +33,9 @@ export function useDatabaseService(): DatabaseService {
     return databases;
   }
 
-  function getDatabaseColor(databaseID: string): string {
-    let hashedDatabaseID = 0;
-    Object.values(databaseID).forEach((symbol: any) => {
-      hashedDatabaseID =
-        (hashedDatabaseID << 5) -
-        hashedDatabaseID +
-        databaseID.charCodeAt(symbol);
-      hashedDatabaseID = hashedDatabaseID & hashedDatabaseID;
-    });
-    const index =
-      Math.abs(hashedDatabaseID) % Object.keys(colorDatabaseDefinition).length;
-    let color = Object.values(colorDatabaseDefinition)[index];
-    return color;
+  function getDatabaseColor(databaseID: string, idx: number): string {
+    // TODO: think about using cookies to ensure persistent database colors per client
+    return Object.values(colorDatabaseDefinition)[idx];
   }
 
   async function fetchDatabasesCPUInformation(): Promise<
@@ -76,6 +68,8 @@ export function useDatabaseService(): DatabaseService {
     });
     return databasesWithStorageInformation;
   }
+
+  /* data transformation helpers */
 
   function getDatabasesInformation(response: any): DatabaseResponse[] {
     const databases: DatabaseResponse[] = [];
@@ -114,6 +108,8 @@ export function useDatabaseService(): DatabaseService {
     });
     return databasesWithStorageInformation;
   }
+
+  /* update database data */
 
   function addDatabase(databaseConnection: any): void {
     axios.post(controlBackend + "database/", databaseConnection).then(() => {
