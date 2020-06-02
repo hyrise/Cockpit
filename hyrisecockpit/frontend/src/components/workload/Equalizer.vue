@@ -126,12 +126,11 @@ export default defineComponent({
       () => props.weights,
       () => {
         changedWeights.value = {};
-        //TODO: change forEach
         Object.entries(props.weights).forEach(
-          (workload: [string, Record<string, number>]) => {
+          ([workloadIndex, weights]: [string, Record<string, number>]) => {
             changedWeights.value[
-              props.selectedWorkloads[workload[0]]
-            ] = Object.entries(workload[1])
+              props.selectedWorkloads[parseInt(workloadIndex)]
+            ] = Object.entries(weights)
               .sort()
               .map(([name, value]) => {
                 return {
