@@ -79,8 +79,18 @@ class TestSystem:
         }
 
         response = cls.backend.get_property("monitor/status")  # type: ignore
+        status = response.json()[0]
+
         assert response.status_code == 200  # nosec
-        assert expected_status in response.json()  # nosec
+        for prop in [
+            "id",
+            "hyrise_active",
+            "database_blocked_status",
+            "worker_pool_status",
+        ]:
+            assert expected_status[prop] == status[prop]  # nosec
+        for prop in ["loaded_benchmarks", "loaded_tables"]:
+            assert set(expected_status[prop]) == set(status[prop])  # type: ignore # nosec
 
     def test_initializes_backend(self):
         """Test backend initializes without errors."""
