@@ -55,7 +55,7 @@ mockGetRoute("storage", "monitor", true);
 mockGetRoute("throughput", "monitor");
 mockGetRoute("latency", "monitor");
 mockGetRoute("queue_length", "monitor");
-mockGetRoute("krueger_data", "monitor");
+mockGetRoute("workload_statement_information", "monitor");
 mockGetRoute("chunks", "monitor", true);
 mockGetRoute("detailed_query_information", "monitor");
 mockGetRoute("status", "monitor");
@@ -64,7 +64,7 @@ mockGetRoute("plugin/available", "control");
 mockGetRoute("plugin", "control");
 mockGetRoute("plugin_log", "control");
 mockGetRoute("workload/");
-mockGetRoute("operator", "monitor");
+mockGetRoute("workload_operator_information", "monitor");
 
 mockPostRoute("database/", "control");
 mockPostRoute("database/benchmark_tables", "control");

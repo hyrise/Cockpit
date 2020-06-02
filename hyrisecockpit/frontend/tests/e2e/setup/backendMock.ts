@@ -75,9 +75,10 @@ export function useBackendMock(
     cy.route("GET", getRequestRoute("queue_length", "get")).as(
       getGetAlias("queue_length")
     );
-    cy.route("GET", getRequestRoute("krueger_data", "get")).as(
-      getGetAlias("krueger_data")
-    );
+    cy.route(
+      "GET",
+      getRequestRoute("workload_statement_information", "get")
+    ).as(getGetAlias("workload_statement_information"));
     cy.route("GET", getRequestRoute("chunks", "get")).as(getGetAlias("chunks"));
     cy.route("GET", getRequestRoute("detailed_query_information", "get")).as(
       getGetAlias("detailed_query_information")
@@ -97,8 +98,8 @@ export function useBackendMock(
     cy.route("GET", getRequestRoute("workload", "get")).as(
       getGetAlias("workload")
     );
-    cy.route("GET", getRequestRoute("operator", "get")).as(
-      getGetAlias("operator")
+    cy.route("GET", getRequestRoute("workload_operator_information", "get")).as(
+      getGetAlias("workload_operator_information")
     );
 
     /* POST */
@@ -235,9 +236,9 @@ export function mockBackend(
       getMockedResponse("queue_length")
     );
     mock(
-      getRequestRoute("krueger_data", "get"),
-      getGetAlias("krueger_data"),
-      getMockedResponse("krueger_data")
+      getRequestRoute("workload_statement_information", "get"),
+      getGetAlias("workload_statement_information"),
+      getMockedResponse("workload_statement_information")
     );
     mock(
       getRequestRoute("chunks", "get"),
@@ -281,9 +282,9 @@ export function mockBackend(
       getMockedResponse("workload")
     );
     mock(
-      getRequestRoute("operator", "get"),
-      getGetAlias("operator"),
-      getMockedResponse("operator")
+      getRequestRoute("workload_operator_information", "get"),
+      getGetAlias("workload_operator_information"),
+      getMockedResponse("workload_operator_information")
     );
   }
 
