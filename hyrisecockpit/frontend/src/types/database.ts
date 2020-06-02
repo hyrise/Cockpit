@@ -21,7 +21,7 @@ export interface DatabaseService {
   fetchDatabases: () => Promise<any[]>;
   fetchDatabasesCPUInformation: () => Promise<any[]>;
   fetchDatabasesStorageInformation: () => Promise<any[]>;
-  getDatabaseColor: (databaseID: string) => string;
+  getDatabaseColor: (databaseID: string, idx: number) => string;
   getStorageInformation: (response: any) => DatabaseStorageResponse[];
   getCPUInformation: (response: any) => DatabaseCPUResponse[];
   postSQLQuery: (databseId: string, sqlQuery: string) => Promise<any>;

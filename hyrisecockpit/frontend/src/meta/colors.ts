@@ -12,13 +12,13 @@ export const colorValueDefinition = {
 
 export const colorDatabaseDefinition = {
   darkblue: "#1c4e80",
-  grey: "#7e909a",
   orange: "#ea6a47",
-  blue: "#32a7dd",
   green: "#6ab187",
   red: "#ac3e31",
   yellow: "#dbae58",
   turquoise: "#488a99",
+  blue: "#32a7dd",
+  grey: "#7e909a",
 };
 
 export const colorTreemapDefinition = {

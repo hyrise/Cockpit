@@ -356,25 +356,6 @@ model_workload_composition = api.model(
     },
 )
 
-model_krueger_data = api.clone(
-    "Krüger data",
-    model_database,
-    {
-        "executed": fields.Nested(
-            model_workload_composition,
-            title="Executed queries",
-            description="The composition of queries successfully exectued of a given time interval.",
-            required=True,
-        ),
-        "generated": fields.Nested(
-            model_workload_composition,
-            title="Generated queries",
-            description="The composition of queries generated of a given time interval.",
-            required=True,
-        ),
-    },
-)
-
 model_database_status = api.clone(
     "Database status",
     model_database,
@@ -831,30 +812,36 @@ class Storage(Resource):
         return response
 
 
-@api.route("/krueger_data", methods=["GET"])
-class KruegerData(Resource):
+@api.route("/workload_statement_information", methods=["GET"])
+class WorkloadStatementInformation(Resource):
     """Krügergraph data for all workloads."""
 
-    @api.doc(model=[model_krueger_data])
     def get(self) -> Union[int, List[Dict[str, Dict[str, Dict]]]]:
         """Provide mock data for a Krügergraph."""
-        krueger_data: List[Dict] = []
+        workload_statement_information: List[Dict] = []
         active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
-                'SELECT LAST("krueger_data"), * FROM krueger_data', database=database,
+                'SELECT LAST("workload_statement_information"), * FROM workload_statement_information',
+                database=database,
             )
-            krueger_data_values = list(result["krueger_data", None])
-            if len(krueger_data_values) > 0:
-                krueger_data.append(
+            workload_statement_information_values = list(
+                result["workload_statement_information", None]
+            )
+            if len(workload_statement_information_values) > 0:
+                workload_statement_information.append(
                     {
                         "id": database,
-                        "krueger_data": loads(krueger_data_values[0]["last"]),
+                        "workload_statement_information": loads(
+                            workload_statement_information_values[0]["last"]
+                        ),
                     }
                 )
             else:
-                krueger_data.append({"id": database, "krueger_data": []})
-        return krueger_data
+                workload_statement_information.append(
+                    {"id": database, "workload_statement_information": []}
+                )
+        return workload_statement_information
 
 
 @api.route("/status", methods=["GET"])
@@ -869,21 +856,24 @@ class ProcessTableStatus(Resource):
         )["body"]["status"]
 
 
-@api.route("/operator")
-class OperatorData(Resource):
-    """Operator information of all databases."""
+@api.route("/workload_operator_information")
+class WorkloadOperatorInformation(Resource):
+    """Workload operator information of all databases."""
 
     def get(self) -> List[Dict]:
-        """Return operator metadata."""
-        operator_data: List[Dict] = []
+        """Return workload operator information."""
+        workload_operator_information: List[Dict] = []
         active_databases = _get_active_databases()
         for database in active_databases:
-            database_data: Dict = {"id": database, "operator_data": []}
+            database_data: Dict = {"id": database, "workload_operator_information": []}
             result = storage_connection.query(
-                'SELECT LAST("operator_data") FROM operator_data', database=database,
+                'SELECT LAST("workload_operator_information") FROM workload_operator_information',
+                database=database,
             )
-            operator_rows = list(result["operator_data", None])
+            operator_rows = list(result["workload_operator_information", None])
             if len(operator_rows) > 0:
-                database_data["operator_data"] = loads(operator_rows[0]["last"])
-            operator_data.append(database_data)
-        return operator_data
+                database_data["workload_operator_information"] = loads(
+                    operator_rows[0]["last"]
+                )
+            workload_operator_information.append(database_data)
+        return workload_operator_information
