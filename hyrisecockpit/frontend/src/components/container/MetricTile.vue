@@ -21,6 +21,7 @@
               class="database-chip"
               v-if="!!tileDatabase"
               :database-id="tileDatabase"
+              :onlyIcon="maxChartWidth <= 450"
             />
           </v-col>
         </v-row>
@@ -33,6 +34,7 @@
       :graph-id="graphId"
       :show-details="showDetails"
       :max-chart-width="maxChartWidth"
+      :total-number-of-databases="totalNumberOfDatabases"
     />
   </v-card>
 </template>
@@ -48,6 +50,7 @@ import QueryTypeProportion from "@/components/metrics/QueryTypeProportion.vue";
 import Storage from "@/components/metrics/Storage.vue";
 import Access from "@/components/metrics/Access.vue";
 import MemoryFootprint from "@/components/metrics/MemoryFootprint.vue";
+import OperatorProportion from "@/components/metrics/OperatorProportion.vue";
 import { getMetricTitle, getMetricComponent } from "../../meta/metrics";
 import {
   Metric,
@@ -80,6 +83,7 @@ export default defineComponent({
     Access,
     Storage,
     MemoryFootprint,
+    OperatorProportion,
     TimeInterval,
   },
   props: {
@@ -141,5 +145,9 @@ export default defineComponent({
 }
 #comparison-page .card {
   border-radius: 0px;
+  box-shadow: 0px 0px;
+}
+#overview-page .card {
+  border-radius: 4px;
 }
 </style>

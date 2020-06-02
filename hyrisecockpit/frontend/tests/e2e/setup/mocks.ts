@@ -3,15 +3,16 @@ import {
   fakeDatabaseSystemData,
   fakeDatabaseStorageData,
   fakeNumberData,
-  fakeKruegerData,
+  fakeDatabaseQueryTypeData,
   fakeDatabaseChunksData,
   fakeDatabaseQueryInformationData,
   fakeDatabasePluginsData,
-  fakeDatabasePluginSettings,
+  fakeAvailablePlugin,
   fakeDatabasePluginLogs,
   fakeDatabaseStatusData,
   fakeIds,
   fakeWorkloadData,
+  fakeDatabaseOperatorData,
 } from "./factories";
 import {
   assignFakeData,
@@ -122,9 +123,8 @@ export function useMocks(
       "queue_length",
       fakeNumberData
     );
-    responseMocks.krueger_data = fakeDataByIds(
-      mockedIds.databases,
-      fakeKruegerData
+    responseMocks.workload_statement_information = mockedIds.databases.map(
+      (id) => fakeDatabaseQueryTypeData(id, 7)
     );
     responseMocks.chunks = {
       chunks_data: assignFakeData(
@@ -150,22 +150,23 @@ export function useMocks(
         mockedState.workloadRunning
       )
     );
-    responseMocks.available_plugins = mockedIds.plugins;
+
+    responseMocks.available_plugins = mockedIds.plugins.map((plugin) =>
+      fakeAvailablePlugin(plugin)
+    );
     // NOTE: currently all databases have the same plugins activated
     responseMocks.plugin = mockedIds.databases.map((id) =>
       fakeDatabasePluginsData(id, mockedIds.activated_plugins)
     );
-    responseMocks.plugin_settings = {
-      plugin_settings: mockedIds.databases.map((id) =>
-        fakeDatabasePluginSettings(id, mockedIds.activated_plugins)
-      ),
-    };
     // NOTE: currently all databases have exactly one log entry
     responseMocks.plugin_log = mockedIds.databases.map((id) =>
       fakeDatabasePluginLogs(id, mockedIds.plugins)
     );
     responseMocks.workload = mockedIds.workloads.map((idx) =>
       fakeWorkloadData(idx)
+    );
+    responseMocks.workload_operator_information = mockedIds.databases.map(
+      (id) => fakeDatabaseOperatorData(id, 7)
     );
     return responseMocks as Record<Request, any>;
   }

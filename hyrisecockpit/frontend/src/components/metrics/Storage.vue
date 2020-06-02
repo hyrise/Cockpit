@@ -1,13 +1,11 @@
 <template>
   <div>
     <metric-detailed-view>
-      <template #header>
-        Data Size - Overview
-      </template>
+      <template #header>Data Size - Overview</template>
       <template #content>
         <Treemap
           :graph-id="'1' + graphId || 'storage'"
-          :data="storageData"
+          :data="data"
           :chart-configuration="chartConfiguration"
           :selected-databases="selectedDatabases"
           :max-chart-width="1600"
@@ -20,10 +18,11 @@
       :databases="selectedDatabases"
       :decimal-digits="3"
       id-prefix="storage"
+      :total-number-of-databases="totalNumberOfDatabases"
     />
     <Treemap
       :graph-id="'2' + graphId || 'storage'"
-      :data="storageData"
+      :data="data"
       :chart-configuration="chartConfiguration"
       :autosize="false"
       :max-chart-width="maxChartWidth"
@@ -32,31 +31,17 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  SetupContext,
-  watch,
-  Ref,
-  ref,
-} from "@vue/composition-api";
-import Treemap from "../charts/Treemap.vue";
+import { defineComponent, SetupContext } from "@vue/composition-api";
+import Treemap from "@/components/charts/Treemap.vue";
 import MetricDetailedView from "@/components/details/MetricDetailedView.vue";
 import MetricDetails from "@/components/details/MetricDetails.vue";
 import {
   MetricProps,
   MetricPropsValidation,
-  ChartConfiguration,
   StorageData,
-} from "../../types/metrics";
-import {
-  getMetricChartConfiguration,
-  getMetricMetadata,
-} from "../../meta/metrics";
-
-interface Data {
-  storageData: Ref<StorageData>;
-  chartConfiguration: ChartConfiguration;
-}
+  BasicChartComponentData,
+} from "@/types/metrics";
+import { useModifiedChartData } from "@/meta/components";
 
 export default defineComponent({
   name: "Storage",
@@ -66,23 +51,12 @@ export default defineComponent({
     MetricDetails,
   },
   props: MetricPropsValidation,
-  setup(props: MetricProps, context: SetupContext): Data {
-    const data = context.root.$metricController.data[props.metric];
-    const storageData = ref<StorageData>({});
-    const metricMeta = getMetricMetadata(props.metric);
-
-    watch(data, () => {
-      if (Object.keys(data.value).length) {
-        storageData.value = metricMeta.transformationService(
-          data.value,
-          props.selectedDatabases[0]
-        );
-      }
-    });
-
+  setup(
+    props: MetricProps,
+    context: SetupContext
+  ): BasicChartComponentData<StorageData> {
     return {
-      storageData,
-      chartConfiguration: getMetricChartConfiguration(props.metric),
+      ...useModifiedChartData(props, context),
     };
   },
 });

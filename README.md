@@ -4,9 +4,14 @@
 ![Frontend Lint](https://github.com/hyrise/Cockpit/workflows/Frontend%20Lint/badge.svg)
 ![Docker Image CI](https://github.com/hyrise/Cockpit/workflows/Docker%20Image%20CI/badge.svg)
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
-## Setup
 
-You may need to install a different python version (`3.8.2`, e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
+## Quick Setup (Docker)
+
+https://github.com/hyrise/Cockpit/wiki/Quick-Setup
+
+## Full Setup (pipenv)
+
+You may need to install a different python version (`3.8.3`, e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
 Installing pyenv can be done with the following commands:
 
 
@@ -52,12 +57,12 @@ exec "$SHELL"
 Subsequently, the required version of Python can be installed and set with:
 
 ```bash
-# Install Python 3.8.2
-pyenv install 3.8.2
+# Install Python 3.8.3
+pyenv install 3.8.3
 
-# Set the local (directory) Python version to 3.8.2
+# Set the local (directory) Python version to 3.8.3
 cd Cockpit
-pyenv local 3.8.2
+pyenv local 3.8.3
 ```
 Since there is a dependency for [`psycopg2`](http://initd.org/psycopg/docs/install.html), you may need to run the following commands:
 

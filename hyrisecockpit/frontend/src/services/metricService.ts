@@ -100,7 +100,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
               handleDataChange(
                 data.id,
                 metricsMetaData[idx].transformationService(
-                  data[metricInfo.base],
+                  data[metricInfo.base!],
                   metricInfo.base
                 ),
                 metric
@@ -119,7 +119,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
         }
       });
 
-      const newTimestamps = result[0]?.[metricInfo.base]?.map(
+      const newTimestamps = result[0]?.[metricInfo.base!]?.map(
         (entry: any) => entry.timestamp
       ) ?? [formatDateToNanoSec(currentTimestamp)];
       handleTimestamps(
@@ -147,11 +147,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
           },
         })
         .then((response) => {
-          if (
-            metricInfo.component === "QueryTypeProportion" ||
-            metricInfo.historic
-          ) {
-            //TODO: just for debug: adapt response in backend to pass data in body and divided for db instances
+          if (!metricInfo.base || metricInfo.historic) {
             resolve(response.data);
           } else {
             resolve(response.data.body[metricInfo.base]);

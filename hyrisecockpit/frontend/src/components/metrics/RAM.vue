@@ -4,6 +4,7 @@
       v-if="showDetails"
       :metric="metric"
       :databases="selectedDatabases"
+      :total-number-of-databases="totalNumberOfDatabases"
     />
     <Linechart
       :selected-databases="selectedDatabases"
@@ -19,29 +20,21 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  SetupContext,
-  onMounted,
-  computed,
-  Ref,
-  ref,
-  watch,
-} from "@vue/composition-api";
-import Linechart from "../charts/Linechart.vue";
+import { defineComponent, SetupContext } from "@vue/composition-api";
+import Linechart from "@/components/charts/Linechart.vue";
 import {
   MetricProps,
   MetricPropsValidation,
-  ComparisonMetricData,
-} from "../../types/metrics";
-import MetricDetails from "../details/MetricDetails.vue";
-import { useLineChartComponent } from "../../meta/components";
+  LineChartComponentData,
+} from "@/types/metrics";
+import MetricDetails from "@/components/details/MetricDetails.vue";
+import { useLineChartComponent } from "@/meta/components";
 
 export default defineComponent({
   name: "RAM",
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
-  setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
+  setup(props: MetricProps, context: SetupContext): LineChartComponentData {
     return {
       ...useLineChartComponent(props, context),
     };

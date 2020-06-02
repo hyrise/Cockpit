@@ -92,7 +92,11 @@ describe("visiting the workload monitoring page", () => {
       });
     clickElement(getSelector("selectionListButton"));
     cy.get(getSelector("workloadMonitoringPage")).within(() => {
-      cy.get(getMetricSelector(metrics[metricIndex])).should("not.be.visible");
+      databases.forEach((database: any) => {
+        cy.get(getMetricSelector(metrics[metricIndex], database.id)).should(
+          "not.be.visible"
+        );
+      });
     });
 
     // select
@@ -105,7 +109,11 @@ describe("visiting the workload monitoring page", () => {
       });
     clickElement(getSelector("selectionListButton"));
     cy.get(getSelector("workloadMonitoringPage")).within(() => {
-      cy.get(getMetricSelector(metrics[metricIndex])).should("be.visible");
+      databases.forEach((database: any) => {
+        cy.get(getMetricSelector(metrics[metricIndex], database.id)).should(
+          "be.visible"
+        );
+      });
     });
   });
 });

@@ -195,7 +195,7 @@ function useLineChartConfiguration(
       },
       autosize: true,
       showlegend: multipleDatabasesAllowed,
-      legend: { x: 0, y: 1.1, orientation: "h" },
+      legend: { x: 0, y: 1.2, orientation: "h" },
       margin: {
         l: 70,
         r: 40,

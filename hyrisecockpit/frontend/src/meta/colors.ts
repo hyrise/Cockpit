@@ -1,4 +1,4 @@
-export const colorValueDefinition: Record<string, string> = {
+export const colorValueDefinition = {
   darkgrey: "#424242",
   lightgrey: "#bdbdbd",
   white: "ffffff",
@@ -10,18 +10,18 @@ export const colorValueDefinition: Record<string, string> = {
   darkblue: "#1f688a",
 };
 
-export const colorDatabaseDefinition: Record<string, string> = {
+export const colorDatabaseDefinition = {
   darkblue: "#1c4e80",
-  grey: "#7e909a",
   orange: "#ea6a47",
-  blue: "#32a7dd",
   green: "#6ab187",
   red: "#ac3e31",
   yellow: "#dbae58",
   turquoise: "#488a99",
+  blue: "#32a7dd",
+  grey: "#7e909a",
 };
 
-export const colorTreemapDefinition: Record<string, string> = {
+export const colorTreemapDefinition = {
   green: "#a6cf91",
   orange: "#ffcc5c",
   red: "#ff6f69",
@@ -38,3 +38,11 @@ export const colorTreemapDefinition: Record<string, string> = {
   pink2: "#fb87be",
   yellow: "#fec981",
 };
+
+export const multiColors = Object.entries({
+  ...colorValueDefinition,
+  ...colorDatabaseDefinition,
+  ...colorTreemapDefinition,
+})
+  .filter(([id, _]) => ["grey", "white"].every((key) => !id.includes(key)))
+  .map(([_, value]) => value);
