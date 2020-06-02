@@ -213,12 +213,10 @@ function useWorkloadAction(context: SetupContext): WorkloadAction {
   });
 
   function initialiseWorkloadSelector(database: any): void {
-    //TODO: set right order of tables
     Object.values(database).forEach((workload: any) => {
-      selectedWorkloads.value.push(
-        getWorkloadFromTransferred(workload.folder_name)
-      );
-      updatingWorkload(getWorkloadFromTransferred(workload.folder_name));
+      workload = getWorkloadFromTransferred(workload.folder_name);
+      updatingWorkload(workload);
+      selectedWorkloads.value.push(workload);
     });
   }
   function initialiseWorkloadActions(database: any): void {
