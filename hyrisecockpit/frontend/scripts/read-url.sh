@@ -1,5 +1,5 @@
 #!/bin/bash
-globalEnv="../../.env"
+globalEnv="../../../.env"
 localEnv="../.env"
 
 : > "$localEnv"
