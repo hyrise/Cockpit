@@ -16,7 +16,7 @@ from hyrisecockpit.settings import (
 )
 
 from .query_handler import QueryHandler
-from .transaction_handler import TransactionHandler
+from .tpcc_transaction_handler import TPCCTransactionHandler
 
 
 def log_results(
@@ -46,7 +46,7 @@ def execute_queries(  # noqa
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
         ) as log:
             query_handler = QueryHandler(cur, worker_id)
-            transaction_handler = TransactionHandler(cur, worker_id)
+            tpcc_transaction_handler = TPCCTransactionHandler(cur, worker_id)
             succesful_queries: List[Tuple[int, int, str, str, str]] = []
             failed_queries: List[Tuple[int, str, str, str]] = []
             last_batched = time_ns()
@@ -60,8 +60,8 @@ def execute_queries(  # noqa
                     task = task_queue.get(block=False)
                     if task["type"] == "query":
                         endts, latency = query_handler.execute_task(task)
-                    elif task["type"] == "transaction":
-                        endts, latency = transaction_handler.execute_task(task)
+                    elif task["type"] == "tpcc_transaction":
+                        endts, latency = tpcc_transaction_handler.execute_task(task)
                     else:
                         continue  # Error: unsupported task type
                     benchmark = task["benchmark"]
