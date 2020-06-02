@@ -11,8 +11,7 @@ export type Metric =
   | "latency"
   | "ram"
   | "queueLength"
-  | "executedQueryTypeProportion"
-  | "generatedQueryTypeProportion"
+  | "queryTypeProportion"
   | "memoryFootprint"
   | "operatorProportion";
 
@@ -24,8 +23,7 @@ export const availableMetrics: Metric[] = [
   "latency",
   "ram",
   "queueLength",
-  "executedQueryTypeProportion",
-  "generatedQueryTypeProportion",
+  "queryTypeProportion",
   "memoryFootprint",
   "operatorProportion",
 ];
@@ -51,7 +49,7 @@ export const overviewMetrics: Metric[] = [
 ];
 
 export const workloadMetrics: Metric[] = [
-  "generatedQueryTypeProportion",
+  "queryTypeProportion",
   "operatorProportion",
 ];
 
@@ -99,6 +97,7 @@ export interface MetricProps {
   graphId: string;
   showDetails: boolean;
   maxChartWidth: number;
+  totalNumberOfDatabases: number;
 }
 
 export const MetricPropsValidation = {
@@ -121,6 +120,10 @@ export const MetricPropsValidation = {
   maxChartWidth: {
     type: Number,
     default: 0,
+  },
+  totalNumberOfDatabases: {
+    type: Number,
+    default: null,
   },
 };
 

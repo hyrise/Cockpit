@@ -11,12 +11,16 @@ from .job.delete_tables import delete_tables as delete_tables_job
 from .job.load_tables import load_tables as load_tables_job
 from .job.ping_hyrise import ping_hyrise
 from .job.update_chunks_data import update_chunks_data
-from .job.update_krueger_data import update_krueger_data
-from .job.update_operator_data import update_operator_data
 from .job.update_plugin_log import update_plugin_log
 from .job.update_queue_length import update_queue_length
 from .job.update_storage_data import update_storage_data
 from .job.update_system_data import update_system_data
+from .job.update_workload_operator_information import (
+    update_workload_operator_information,
+)
+from .job.update_workload_statement_information import (
+    update_workload_statement_information,
+)
 from .worker_pool import WorkerPool
 
 
@@ -96,8 +100,8 @@ class BackgroundJobManager(object):
                 self._storage_connection_factory,
             ),
         )
-        self._update_krueger_data_job = self._scheduler.add_job(
-            func=update_krueger_data,
+        self._update_workload_statement_information_job = self._scheduler.add_job(
+            func=update_workload_statement_information,
             trigger="interval",
             seconds=5,
             args=(
@@ -106,8 +110,8 @@ class BackgroundJobManager(object):
                 self._storage_connection_factory,
             ),
         )
-        self._update_operator_data_job = self._scheduler.add_job(
-            func=update_operator_data,
+        self._update_workload_operator_information_job = self._scheduler.add_job(
+            func=update_workload_operator_information,
             trigger="interval",
             seconds=5,
             args=(
@@ -123,13 +127,13 @@ class BackgroundJobManager(object):
 
     def close(self) -> None:
         """Close background scheduler."""
-        self._update_krueger_data_job.remove()
+        self._update_workload_statement_information_job.remove()
         self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()
         self._update_storage_data_job.remove()
         self._update_plugin_log_job.remove()
         self._update_queue_length_job.remove()
-        self._update_operator_data_job.remove()
+        self._update_workload_operator_information_job.remove()
         self._ping_hyrise_job.remove()
         self._scheduler.shutdown()
 

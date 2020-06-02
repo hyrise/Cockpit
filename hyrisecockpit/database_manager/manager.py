@@ -1,21 +1,25 @@
 """Module for managing databases."""
 
 from types import TracebackType
-from typing import Callable, Dict, Optional, Tuple, Type
+from typing import Callable, Dict, Optional, Tuple, Type, TypedDict
 
+from hyrisecockpit.api.app.plugin.interface import UpdatePluginSettingInterface
 from hyrisecockpit.message import (
     add_database_request_schema,
     delete_data_request_schema,
     delete_database_request_schema,
     load_data_request_schema,
-    set_plugin_request_schema,
 )
 from hyrisecockpit.request import Body
 from hyrisecockpit.response import Response, get_error_response, get_response
 from hyrisecockpit.server import Server
 
 from .cursor import PoolCursor
-from .database import Database
+from .database import Database, Plugins
+
+DatabaseActivatedPlugins = TypedDict(
+    "DatabaseActivatedPlugins", {"id": str, "plugins": Plugins},
+)
 
 
 class DatabaseManager(object):
@@ -79,16 +83,9 @@ class DatabaseManager(object):
             "delete data": (self._call_delete_data, delete_data_request_schema),
             "status": (self._call_status, None),
             "get plugins": (self._call_get_plugins, None),
-            "activate plugin": (
-                self._call_activate_plugin,
-                None,
-            ),  # TODO add validation schema
-            "deactivate plugin": (self._call_deactivate_plugin, None,),
-            "set plugin setting": (
-                self._call_plugin_setting,
-                set_plugin_request_schema,
-            ),
-            "get plugin setting": (self._call_get_plugin_setting, None),
+            "activate plugin": (self._call_activate_plugin, None),
+            "deactivate plugin": (self._call_deactivate_plugin, None),
+            "set plugin setting": (self._call_plugin_setting, None),
             "execute sql query": (self._call_execute_sql_query, None),
             "database status": (self._call_database_status, None),
             "benchmark status": (self._call_benchmark_status, None),
@@ -203,12 +200,11 @@ class DatabaseManager(object):
         return response
 
     def _call_get_plugins(self, body: Body) -> Response:
-        activated_plugins = [
-            {"id": id, "plugins": database.get_plugins()}
+        response = get_response(200)
+        response["body"]["plugins"] = [
+            DatabaseActivatedPlugins(id=id, plugins=database.get_detailed_plugins())
             for id, database in self._databases.items()
         ]
-        response = get_response(200)
-        response["body"]["plugins"] = activated_plugins
         return response
 
     def _call_activate_plugin(self, body: Body) -> Response:
@@ -235,24 +231,18 @@ class DatabaseManager(object):
 
     def _call_plugin_setting(self, body: Body) -> Response:
         id: str = body["id"]
-        name: str = body["name"]
-        value: str = body["value"]
+        update: UpdatePluginSettingInterface = body["update"]
+        plugin_name = update["name"]
+        setting_name = update["setting"]["name"]
+        setting_value = update["setting"]["value"]
         if id not in self._databases.keys():
-            response = get_response(400)
-        elif self._databases[id].set_plugin_setting(name, value):
-            response = get_response(200)
+            return get_response(404)
+        elif self._databases[id].set_plugin_setting(
+            plugin_name, setting_name, setting_value
+        ):
+            return get_response(200)
         else:
-            response = get_response(423)
-        return response
-
-    def _call_get_plugin_setting(self, body: Body) -> Response:
-        plugin_settings = [
-            {"id": id, "plugin_settings": database.get_plugin_setting()}
-            for id, database in self._databases.items()
-        ]
-        response = get_response(200)
-        response["body"]["plugin_settings"] = plugin_settings
-        return response
+            return get_response(423)
 
     def _check_if_database_blocked(self) -> bool:
         database_blocked_status = False

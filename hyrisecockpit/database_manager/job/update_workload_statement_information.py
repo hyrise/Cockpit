@@ -1,4 +1,4 @@
-"""This job updates the krueger data."""
+"""This job updates the workload statement information."""
 
 from json import dumps
 from time import time_ns
@@ -8,18 +8,18 @@ from hyrisecockpit.database_manager.cursor import StorageConnectionFactory
 from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_frame
 
 
-def update_krueger_data(
+def update_workload_statement_information(
     database_blocked,
     connection_factory,
     storage_connection_factory: StorageConnectionFactory,
 ) -> None:
-    """Update krueger data."""
+    """Update workload statement information data."""
     time_stamp = time_ns()
-    sql = """WITH query_latency AS (SELECT SUM(walltime_ns) AS latency, query_hash
+    sql = """WITH query_latency AS (SELECT SUM(walltime_ns) AS latency, statement_hash as query_hash
         FROM meta_cached_operators
-        GROUP BY query_hash)
-        SELECT hash_value, latency, frequency, sql_string FROM query_latency JOIN meta_cached_queries
-        ON query_latency.query_hash = meta_cached_queries.hash_value;"""
+        GROUP BY statement_hash)
+        SELECT statement_hash, latency, frequency, sql_string FROM query_latency JOIN meta_cached_queries
+        ON query_latency.query_hash = meta_cached_queries.statement_hash;"""
 
     meta_segments = sql_to_data_frame(database_blocked, connection_factory, sql, None)
 
@@ -54,7 +54,7 @@ def update_krueger_data(
 
     counts["OTHER"] = other_count
 
-    krueger_data: List = [
+    workload_statement_information: List = [
         {
             "query_type": query_type,
             "total_latency": total_latency,
@@ -65,5 +65,7 @@ def update_krueger_data(
 
     with storage_connection_factory.create_cursor() as log:
         log.log_meta_information(
-            "krueger_data", {"krueger_data": dumps(krueger_data)}, time_stamp,
+            "workload_statement_information",
+            {"workload_statement_information": dumps(workload_statement_information)},
+            time_stamp,
         )

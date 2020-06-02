@@ -8,12 +8,7 @@ import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
 import { colorValueDefinition, multiColors } from "@/meta/colors";
 
-const {
-  roundNumber,
-  formatPercentage,
-  formatNumberWithCommas,
-  formatTimeUnit,
-} = useFormatting();
+const { roundNumber, formatPercentage, formatTimeUnit } = useFormatting();
 const {
   getTableMemoryFootprint,
   getDatabaseMemoryFootprint,
@@ -22,8 +17,7 @@ const {
 const transformationServiceMap: Record<Metric, TransformationService> = {
   access: getAccessData,
   cpu: getCPUData,
-  executedQueryTypeProportion: getExecutedQueryTypeProportionData,
-  generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
+  queryTypeProportion: getQueryTypeProportionData,
   latency: getLatencyData,
   memoryFootprint: getMemoryFootprint,
   operatorProportion: getOperatorData,
@@ -40,70 +34,57 @@ export function useDataTransformation(metric: Metric): TransformationService {
 
 // TRANSFORM FUNCTION POOL
 
-/** transform executed query type data */
-function getExecutedQueryTypeProportionData(
-  data: any,
-  primaryKey: string = ""
-): any {
-  const executedQueryTypeProportion = data.find(
-    (database: any) => database.id === primaryKey
-  ).executed;
+/** transform query type data to barchart structure */
+function getQueryTypeProportionData(data: any, primaryKey: string = ""): any {
+  const typeData = data.find((entry: any) => entry.id === primaryKey)!;
+  const totalLatency = typeData.workload_statement_information.reduce(
+    (sum: number, type: any) => sum + type.total_latency,
+    0
+  );
+  const totalFrequency = typeData.workload_statement_information.reduce(
+    (sum: number, type: any) => sum + type.total_frequency,
+    0
+  );
 
-  return getQueryTypeProportionData(executedQueryTypeProportion, "executed");
-}
+  return typeData.workload_statement_information
+    .reduce((chartData: any[], type: any, idx: number) => {
+      const typeLatencyProportion = (type.total_latency / totalLatency) * 100;
+      const typeFrequencyProportion =
+        (type.total_frequency / totalFrequency) * 100;
 
-/** transform generated query type data */
-function getGeneratedQueryTypeProportionData(
-  data: any,
-  primaryKey: string = ""
-): any {
-  const generatedQueryTypeProportion = data.find(
-    (database: any) => database.id === primaryKey
-  ).generated;
+      chartData.push({
+        x: ["Aggregated Runtime", "Frequency"],
+        y: [typeLatencyProportion, typeFrequencyProportion],
+        name: type.query_type,
+        type: "bar",
+        text: [
+          `${type.query_type} - ${formatPercentage(
+            typeLatencyProportion,
+            100
+          )} % - ${formatTimeUnit(
+            roundNumber(type.total_latency, Math.pow(10, 6))
+          )}`,
+          `${type.query_type} - ${formatPercentage(
+            typeFrequencyProportion,
+            100
+          )} % - # ${type.total_frequency}`,
+        ],
+        hoverinfo: "text",
+      });
 
-  return getQueryTypeProportionData(generatedQueryTypeProportion, "generated");
-}
-
-/** transform generic query type data to heatmap structure */
-function getQueryTypeProportionData(data: any, type: string): any {
-  return [
-    {
-      x: [type],
-      y: [data.UPDATE] as number[],
-      name: "UPDATE",
-      type: "bar",
-      marker: {
-        color: colorValueDefinition.green,
-      },
-    },
-    {
-      x: [type],
-      y: [data.SELECT] as number[],
-      name: "SELECT",
-      type: "bar",
-      marker: {
-        color: colorValueDefinition.blue,
-      },
-    },
-    {
-      x: [type],
-      y: [data.INSERT] as number[],
-      name: "INSERT",
-      type: "bar",
-      marker: {
-        color: colorValueDefinition.orange,
-      },
-    },
-    {
-      x: [type],
-      y: [data.DELETE] as number[],
-      name: "DELETE",
-      type: "bar",
-      marker: {
-        color: colorValueDefinition.red,
-      },
-    },
-  ];
+      return chartData;
+    }, [])
+    .map((type: any, idx: number) => {
+      return {
+        ...type,
+        marker: {
+          color:
+            type.name === "OTHER"
+              ? colorValueDefinition.lightgrey
+              : multiColors[idx],
+        },
+      };
+    });
 }
 
 /** transform to cpu process usage data */
@@ -286,7 +267,7 @@ function getAccessData(
 /** tranform operator data with appropriate tooltip information */
 function getOperatorData(data: any, primaryKey: string = ""): any {
   const operatorData = data.find((entry: any) => entry.id === primaryKey)!;
-  const totalTime = operatorData.operator_data.reduce(
+  const totalTime = operatorData.workload_operator_information.reduce(
     (sum: number, operator: any) => sum + operator.total_time_ns,
     0
   );
@@ -302,9 +283,7 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
     marker: { color: colorValueDefinition.lightgrey },
   };
 
-  let colorIdx = 0;
-
-  return operatorData.operator_data
+  return operatorData.workload_operator_information
     .reduce((chartData: any[], operator: any) => {
       const operatorProportion = (operator.total_time_ns / totalTime) * 100;
       if (operatorProportion < 5) {
@@ -322,15 +301,16 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
           text: `${formatPercentage(operatorProportion, 100)} % - ${
             operator.operator
           } -  ${formatTimeUnit(
-            roundNumber(operator.total_time_ns, Math.pow(10, 9), 1000, true)
+            roundNumber(operator.total_time_ns, Math.pow(10, 6))
           )}`,
           hoverinfo: "text",
-          marker: { color: multiColors[colorIdx] },
         });
-        colorIdx++;
       }
       return chartData;
     }, [])
+    .map((operator: any, idx: number) => {
+      return { ...operator, marker: { color: multiColors[idx] } };
+    })
     .sort((operator1: any, operator2: any) => operator2.y[0] - operator1.y[0])
     .concat([
       rest
@@ -347,7 +327,7 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
               `${formatPercentage(operator.proportion, 100)} % - ${
                 operator.name
               } - ${formatTimeUnit(
-                roundNumber(operator.time, Math.pow(10, 9), 1000, true)
+                roundNumber(operator.time, Math.pow(10, 6))
               )} <br>`,
           };
         }, restLabel),

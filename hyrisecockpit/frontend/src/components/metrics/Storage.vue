@@ -18,6 +18,7 @@
       :databases="selectedDatabases"
       :decimal-digits="3"
       id-prefix="storage"
+      :total-number-of-databases="totalNumberOfDatabases"
     />
     <Treemap
       :graph-id="'2' + graphId || 'storage'"

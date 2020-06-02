@@ -10,20 +10,23 @@ export function usePluginService(): PluginService {
   async function fetchAvailablePlugins(): Promise<string[]> {
     let availablePlugins: any = [];
     await axios
-      .get(controlBackend + "available_plugins")
+      .get(controlBackend + "plugin/available")
       .then((allPluginsResponse) => {
-        availablePlugins = allPluginsResponse.data;
+        availablePlugins = allPluginsResponse.data.map(
+          (plugin: any) => plugin.name
+        );
       });
     return availablePlugins;
   }
 
-  async function fetchActivePlugins(): Promise<string[]> {
-    let activePlugins: any = [];
-    await axios.get(controlBackend + "plugin").then((activePluginsResponse) => {
-      activePlugins = getActivePluginData(activePluginsResponse.data);
+  async function fetchActivePlugins(): Promise<Object> {
+    let plugins: any = { data: [], settings: [] };
+    await axios.get(controlBackend + "plugin").then((response) => {
+      plugins.data = getActivePluginData(response.data);
+      plugins.settings = getPluginSettingsData(response.data);
     });
 
-    return activePlugins;
+    return plugins;
   }
 
   async function fetchPluginLogs(): Promise<Object> {
@@ -35,16 +38,6 @@ export function usePluginService(): PluginService {
     return pluginMeta;
   }
 
-  async function fetchPluginSettings(): Promise<Object> {
-    let pluginSettings: any = {};
-    await axios.get(controlBackend + "plugin_settings").then((response) => {
-      pluginSettings = getPluginSettingsData(
-        response.data.body.plugin_settings
-      );
-    });
-    return pluginSettings;
-  }
-
   /* update plugin data */
 
   function togglePlugin(
@@ -53,22 +46,27 @@ export function usePluginService(): PluginService {
     isActivated: boolean
   ): Promise<void> {
     if (isActivated)
-      return axios.post(controlBackend + "plugin", { id: databaseId, plugin });
+      return axios.post(controlBackend + `plugin/${databaseId}`, {
+        name: plugin,
+      });
 
-    return axios.delete(controlBackend + "plugin", {
-      data: { id: databaseId, plugin },
+    return axios.delete(controlBackend + `plugin/${databaseId}`, {
+      data: { name: plugin },
     });
   }
 
   function setPluginSetting(
     databaseId: string,
+    pluginId: string,
     settingId: string,
     settingValue: string
   ): Promise<void> {
-    return axios.post(controlBackend + "plugin_settings", {
-      id: databaseId,
-      name: settingId,
-      value: settingValue,
+    return axios.put(controlBackend + `plugin/${databaseId}`, {
+      name: pluginId,
+      setting: {
+        name: settingId,
+        value: settingValue,
+      },
     });
   }
 
@@ -81,8 +79,7 @@ export function usePluginService(): PluginService {
         ? [
             ...result,
             ...currentDatabase.plugins.map(
-              (plugin: string) =>
-                currentDatabase.id + "_" + plugin.replace("Plugin", "")
+              (plugin: any) => currentDatabase.id + "_" + plugin.name
             ),
           ]
         : result;
@@ -108,25 +105,16 @@ export function usePluginService(): PluginService {
 
   function getPluginSettingsData(data: any): any {
     return data.reduce((result: any, currentDatabase: any) => {
-      const allDatabaseSettings =
-        currentDatabase.plugin_settings &&
-        currentDatabase.plugin_settings.reduce(
-          (allSettings: any, currentSetting: any) => {
-            const pluginName = currentSetting.name.substring(
-              0,
-              currentSetting.name.indexOf("Plugin")
-            );
-            allSettings[pluginName]
-              ? (allSettings[pluginName] = [
-                  ...allSettings[pluginName],
-                  currentSetting,
-                ])
-              : (allSettings[pluginName] = [currentSetting]);
-            return allSettings;
+      const currentDatabaseSettings =
+        currentDatabase.plugins &&
+        currentDatabase.plugins.reduce(
+          (databaseSettings: any, currentPlugin: any) => {
+            databaseSettings[currentPlugin.name] = currentPlugin.settings;
+            return databaseSettings;
           },
           {}
         );
-      result[currentDatabase.id] = allDatabaseSettings;
+      result[currentDatabase.id] = currentDatabaseSettings;
       return result;
     }, {});
   }
@@ -171,7 +159,6 @@ export function usePluginService(): PluginService {
     fetchActivePlugins,
     fetchAvailablePlugins,
     fetchPluginLogs,
-    fetchPluginSettings,
     setPluginSetting,
     togglePlugin,
   };

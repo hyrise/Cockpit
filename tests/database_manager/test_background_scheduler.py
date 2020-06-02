@@ -21,11 +21,16 @@ from hyrisecockpit.database_manager.job.load_tables import (
 )
 from hyrisecockpit.database_manager.job.ping_hyrise import ping_hyrise
 from hyrisecockpit.database_manager.job.update_chunks_data import update_chunks_data
-from hyrisecockpit.database_manager.job.update_krueger_data import update_krueger_data
 from hyrisecockpit.database_manager.job.update_plugin_log import update_plugin_log
 from hyrisecockpit.database_manager.job.update_queue_length import update_queue_length
 from hyrisecockpit.database_manager.job.update_storage_data import update_storage_data
 from hyrisecockpit.database_manager.job.update_system_data import update_system_data
+from hyrisecockpit.database_manager.job.update_workload_operator_information import (
+    update_workload_operator_information,
+)
+from hyrisecockpit.database_manager.job.update_workload_statement_information import (
+    update_workload_statement_information,
+)
 
 database_id: str = "MongoDB"
 database_blocked: Value = Value("b", False)
@@ -110,7 +115,7 @@ class TestBackgroundJobManager:
                 ),
             ),
             (
-                update_krueger_data,
+                update_workload_statement_information,
                 "interval",
                 5,
                 (background_job_manager._storage_connection_factory,),
@@ -155,6 +160,26 @@ class TestBackgroundJobManager:
                     background_job_manager._storage_connection_factory,
                 ),
             ),
+            (
+                update_workload_statement_information,
+                "interval",
+                1,
+                (
+                    background_job_manager._database_blocked,
+                    background_job_manager._connection_factory,
+                    background_job_manager._storage_connection_factory,
+                ),
+            ),
+            (
+                update_workload_operator_information,
+                "interval",
+                1,
+                (
+                    background_job_manager._database_blocked,
+                    background_job_manager._connection_factory,
+                    background_job_manager._storage_connection_factory,
+                ),
+            ),
             (ping_hyrise, "interval", 0.5, (background_job_manager._connection_factory, background_job_manager._hyrise_active)),  # type: ignore
         ]
 
@@ -186,25 +211,25 @@ class TestBackgroundJobManager:
         mock_scheduler: MagicMock = MagicMock()
         mock_scheduler.shutdown.return_value = None
         background_job_manager._scheduler = mock_scheduler
-        background_job_manager._update_krueger_data_job = MagicMock()
+        background_job_manager._update_workload_statement_information_job = MagicMock()
         background_job_manager._update_system_data_job = MagicMock()
         background_job_manager._update_chunks_data_job = MagicMock()
         background_job_manager._update_storage_data_job = MagicMock()
         background_job_manager._update_plugin_log_job = MagicMock()
         background_job_manager._ping_hyrise_job = MagicMock()
         background_job_manager._update_queue_length_job = MagicMock()
-        background_job_manager._update_operator_data_job = MagicMock()
+        background_job_manager._update_workload_operator_information_job = MagicMock()
 
         background_job_manager.close()
 
-        background_job_manager._update_krueger_data_job.remove.assert_called_once()
+        background_job_manager._update_workload_statement_information_job.remove.assert_called_once()
         background_job_manager._update_system_data_job.remove.assert_called_once()
         background_job_manager._update_chunks_data_job.remove.assert_called_once()
         background_job_manager._update_storage_data_job.remove.assert_called_once()
         background_job_manager._update_plugin_log_job.remove.assert_called_once()
         background_job_manager._ping_hyrise_job.remove.assert_called_once()
         background_job_manager._update_queue_length_job.remove.assert_called_once()
-        background_job_manager._update_operator_data_job.remove.assert_called_once()
+        background_job_manager._update_workload_operator_information_job.remove.assert_called_once()
         mock_scheduler.shutdown.assert_called_once()
 
     def test_successfully_start_loading_tables(

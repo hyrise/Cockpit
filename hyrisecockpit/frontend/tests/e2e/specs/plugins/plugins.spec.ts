@@ -16,24 +16,19 @@ let backend = useBackendMock();
 
 let databases: any = [];
 let availablePlugins: any = [];
-let databasesActivePlugins: any = [];
+let databasesActivePluginData: any = [];
 let databasesPluginLogs: any = [];
-let databasesPluginSettings: any = [];
-
 // test plugins overview
 describe("When opening the plugins overview", () => {
   before(() => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
       cy.setupData("available_plugins").then((xhr: any) => {
-        availablePlugins = xhr.response.body;
+        availablePlugins = xhr.response.body.map((plugin: any) => plugin.name);
         cy.setupData("plugin").then((xhr: any) => {
-          databasesActivePlugins = xhr.response.body;
+          databasesActivePluginData = xhr.response.body;
           cy.setupData("plugin_log").then((xhr: any) => {
             databasesPluginLogs = xhr.response.body;
-            cy.setupData("plugin_settings").then((xhr: any) => {
-              databasesPluginSettings = xhr.response.body.body.plugin_settings;
-            });
           });
         });
       });
@@ -66,7 +61,7 @@ describe("When opening the plugins overview", () => {
         assertActivePlugins(
           database.id,
           availablePlugins,
-          databasesActivePlugins
+          databasesActivePluginData
         );
       });
     });
@@ -106,10 +101,12 @@ describe("When opening the plugins overview", () => {
       databases.forEach((database: any, idx: number) => {
         const activePlugins = availablePlugins.reduce(
           (activePlugins: Object[], plugin: any, idx: number) => {
-            const pluginData = databasesActivePlugins.find(
+            const pluginData = databasesActivePluginData.find(
               (db: any) => db.id === database.id
             );
-            if (pluginData.plugins.includes(plugin)) {
+            if (
+              !!pluginData.plugins.find((active: any) => active.name === plugin)
+            ) {
               activePlugins.push({
                 plugin: plugin,
                 idx: idx,
@@ -125,7 +122,7 @@ describe("When opening the plugins overview", () => {
           .click();
         cy.wait(1000);
 
-        assertPluginSettings(database.id, databasesPluginSettings, idx);
+        assertPluginSettings(database.id, databasesActivePluginData, idx);
 
         cy.get("button").contains(database.id).click();
       });

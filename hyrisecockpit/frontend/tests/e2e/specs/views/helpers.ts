@@ -59,7 +59,7 @@ const selectors: Record<string, string> = {
 };
 
 const metrics: Record<string, string[]> = {
-  workloadMonitoring: ["generatedQueryTypeProportion", "operatorProportion"],
+  workloadMonitoring: ["queryTypeProportion", "operatorProportion"],
   comparison: [
     "throughput",
     "latency",
