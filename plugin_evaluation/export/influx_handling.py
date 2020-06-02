@@ -24,7 +24,7 @@ def get_metric_data_with_fill(
         FROM {table_name}
         WHERE time >= $startts
         AND time < $endts
-        GROUP BY TIME(1s)
+        GROUP BY TIME(5s)
         FILL(0.0)"""
 
     client = InfluxDBClient(STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD)
@@ -74,10 +74,11 @@ def get_ram_usage(
     parameter=None,
 ):
     """Get metric data for provided time range."""
-    query: str = """SELECT (total_memory - available_memory) AS used_memory
+    query: str = """SELECT MEAN(total_memory) - MEAN(available_memory) AS used_memory
         FROM system_data
         WHERE time >= $startts
-        AND time < $endts"""
+        AND time < $endts
+        GROUP BY TIME(5s)"""
 
     client = InfluxDBClient(STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD)
     result = client.query(
@@ -144,7 +145,7 @@ def get_query_latency(
         AND time <= $endts
         AND benchmark = '{benchmark}'
         AND query_no = '{query_number}'
-        GROUP BY time(1s);"""
+        GROUP BY time(5s);"""
 
     client = InfluxDBClient(STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD)
     result = client.query(
