@@ -5,6 +5,7 @@
       :metric="metric"
       :databases="selectedDatabases"
       :decimal-digits="3"
+      :total-number-of-databases="totalNumberOfDatabases"
     />
     <Linechart
       :selected-databases="selectedDatabases"

@@ -18,23 +18,23 @@ def frequency(request) -> int:
     return request.param
 
 
-@fixture(params=[{}, {"01": 0, "23c": 101}])
-def weights(request) -> Dict[str, int]:
+@fixture(params=[{}, {"01": 0.0, "23c": 100.1}])
+def weights(request) -> Dict[str, float]:
     """Get examples of weights."""
     return request.param
 
 
 @fixture
 def workload(folder_name: str, frequency: int) -> Workload:
-    """Return a real Workload model."""
+    """Return a Workload model."""
     return Workload(folder_name=folder_name, frequency=frequency)
 
 
 @fixture
 def detailed_workload(
-    folder_name: str, frequency: int, weights: Dict[str, int]
+    folder_name: str, frequency: int, weights: Dict[str, float]
 ) -> Workload:
-    """Return a real DetailedWorkload model."""
+    """Return a DetailedWorkload model."""
     return DetailedWorkload(
         folder_name=folder_name, frequency=frequency, weights=weights
     )
