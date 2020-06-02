@@ -49,15 +49,6 @@ def update_system_data(
     time_stamp = time_ns()
 
     with storage_connection_factory.create_cursor() as log:
-        result = list(
-            log._connection.query(
-                "SELECT * FROM system_data ORDER BY time DESC LIMIT 1;",
-                database=log._database_id,
-            )["system_data", None]
-        )
-        if result:
-            system_data["cpu_system_usage"] -= result[0]["cpu_system_usage"]
-            system_data["cpu_process_usage"] -= result[0]["cpu_process_usage"]
         log.log_meta_information(
             "system_data", system_data, time_stamp,
         )
