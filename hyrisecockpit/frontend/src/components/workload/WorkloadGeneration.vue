@@ -156,14 +156,13 @@ export default defineComponent({
   },
   setup(props: {}, context: SetupContext): Data {
     const tab = ref<number>(0);
-    const workloadDataHandler = useWorkloadDataHandler(context);
     return {
       databases: computed(
         () => context.root.$databaseController.availableDatabasesById.value
       ),
       tab,
-      ...workloadDataHandler,
       ...useWorkloadAction(context),
+      ...useWorkloadDataHandler(context),
     };
   },
 });
@@ -202,6 +201,7 @@ function useWorkloadAction(context: SetupContext): WorkloadAction {
   const weights = ref<Record<string, number>[]>([]);
 
   // running workload indicator
+  //TODO: handle exceptions
   getWorkloads().then((response: any) => {
     if (response.data.length > 0) {
       initialiseWorkloadSelector(response.data);
@@ -215,8 +215,8 @@ function useWorkloadAction(context: SetupContext): WorkloadAction {
   function initialiseWorkloadSelector(database: any): void {
     Object.values(database).forEach((workload: any) => {
       workload = getWorkloadFromTransferred(workload.folder_name);
-      updatingWorkload(workload);
       selectedWorkloads.value.push(workload);
+      updatingWorkload(workload);
     });
   }
   function initialiseWorkloadActions(database: any): void {
@@ -244,17 +244,12 @@ function useWorkloadAction(context: SetupContext): WorkloadAction {
     actions[action].loading = false;
   }
   function updatingWorkload(workload: Workload) {
-    if (
-      weights.value[selectedWorkloads.value.indexOf(workload)] !== undefined
-    ) {
-      updateWorkload(
-        workload,
-        frequency.value,
-        weights.value[selectedWorkloads.value.indexOf(workload)]
-      );
+    const index = selectedWorkloads.value.indexOf(workload);
+    if (weights.value[index] !== undefined) {
+      updateWorkload(workload, frequency.value, weights.value[index]);
     } else {
       updateWorkload(workload, frequency.value, {}).then((response: any) =>
-        handleWeightsChange(response.data.weights)
+        handleWeightsChange(index, response.data.weights)
       );
     }
   }
@@ -274,6 +269,7 @@ function useWorkloadAction(context: SetupContext): WorkloadAction {
   function pausingWorkload(): void {
     context.emit("pause");
     frequency.value = 0;
+    updatingWorkloads();
     startingWorker("pause");
   }
   function stoppingWorkload(): void {
@@ -283,22 +279,28 @@ function useWorkloadAction(context: SetupContext): WorkloadAction {
   }
   function handleFrequencyChange(changedFrequency: number): void {
     frequency.value = changedFrequency;
-    if (actions.start.active) {
-      updatingWorkloads();
+    if (actions.pause.active && frequency.value > 0) {
+      context.emit("start");
+      startLoading("start");
+      stopLoading("start");
     }
+    if (actions.start.active && frequency.value === 0) {
+      context.emit("pause");
+      startLoading("pause");
+      stopLoading("pause");
+    }
+    updatingWorkloads();
   }
   function handleWorkloadChange(workload: Workload): void {
+    const index = selectedWorkloads.value.indexOf(workload);
     if (!selectedWorkloads.value.includes(workload)) {
       selectedWorkloads.value.push(workload);
       startWorkload(workload, frequency.value).then(() =>
         updatingWorkload(workload)
       );
     } else {
-      weights.value.splice(selectedWorkloads.value.indexOf(workload), 1);
-      selectedWorkloads.value.splice(
-        selectedWorkloads.value.indexOf(workload),
-        1
-      );
+      selectedWorkloads.value.splice(index, 1);
+      weights.value.splice(index, 1);
       stopWorkload(workload);
     }
   }
@@ -307,19 +309,18 @@ function useWorkloadAction(context: SetupContext): WorkloadAction {
     key: string,
     weight: number
   ): void {
-    const changedWeight =
-      weights.value[selectedWorkloads.value.indexOf(workload)];
+    const index = selectedWorkloads.value.indexOf(workload);
+    const changedWeight = weights.value[index];
     changedWeight[key] = weight;
-    weights.value.splice(selectedWorkloads.value.indexOf(workload), 1);
-    weights.value.splice(
-      selectedWorkloads.value.indexOf(workload),
-      0,
-      changedWeight
-    );
+    weights.value.splice(index, 1);
+    weights.value.splice(index, 0, changedWeight);
     updatingWorkload(workload);
   }
-  function handleWeightsChange(changedWeights: Record<string, number>): void {
-    weights.value.push(changedWeights);
+  function handleWeightsChange(
+    index: number,
+    changedWeights: Record<string, number>
+  ): void {
+    weights.value.splice(index, 0, changedWeights);
   }
   return {
     enableEqualizer: computed(() => selectedWorkloads.value.length !== 0),
@@ -357,6 +358,7 @@ function useWorkloadDataHandler(context: SetupContext): WorkloadDataHandler {
         changeWorkloadData = true;
       });
     } else {
+      //TODO: stopWorkload
       deleteWorkloadData(workload).then(() => {
         changeWorkloadData = true;
       });
