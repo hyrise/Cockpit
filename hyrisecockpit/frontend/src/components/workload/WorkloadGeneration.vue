@@ -46,9 +46,9 @@
                   <workload-actions
                     :actions="actions"
                     :disabled="disabled"
-                    @start="startingWorkload()"
-                    @pause="pausingWorkload()"
-                    @stop="stoppingWorkload()"
+                    @start="start()"
+                    @pause="pause()"
+                    @stop="stop()"
                   />
                 </v-col>
                 <v-divider vertical class="ml-4 mr-4" />
@@ -118,9 +118,9 @@ interface WorkloadAction {
   actions: Record<string, { active: boolean; loading: boolean }>;
   selectedWorkloads: Ref<Workload[]>;
   weights: Ref<Record<string, number>[]>;
-  startingWorkload: () => void;
-  pausingWorkload: () => void;
-  stoppingWorkload: () => void;
+  start: () => void;
+  pause: () => void;
+  stop: () => void;
   handleFrequencyChange: (frequency: number) => void;
   handleWorkloadChange: (workload: Workload) => void;
   handleWeightChange: (
@@ -156,13 +156,18 @@ export default defineComponent({
   },
   setup(props: {}, context: SetupContext): Data {
     const tab = ref<number>(0);
+    const workloadAction = useWorkloadAction(context);
     return {
       databases: computed(
         () => context.root.$databaseController.availableDatabasesById.value
       ),
       tab,
-      ...useWorkloadAction(context),
-      ...useWorkloadDataHandler(context),
+      ...workloadAction,
+      ...useWorkloadDataHandler(
+        context,
+        workloadAction.selectedWorkloads,
+        workloadAction.weights
+      ),
     };
   },
 });
@@ -263,17 +268,17 @@ function useWorkloadAction(context: SetupContext): WorkloadAction {
     startLoading(action);
     startWorker().then(() => stopLoading(action));
   }
-  function startingWorkload(): void {
+  function start(): void {
     context.emit("start");
     startingWorker("start");
   }
-  function pausingWorkload(): void {
+  function pause(): void {
     context.emit("pause");
     frequency.value = 0;
     updatingWorkloads();
     startingWorker("pause");
   }
-  function stoppingWorkload(): void {
+  function stop(): void {
     context.emit("stop");
     startLoading("stop");
     stopWorker().then(() => stopLoading("stop"));
@@ -329,19 +334,24 @@ function useWorkloadAction(context: SetupContext): WorkloadAction {
     actions,
     selectedWorkloads,
     weights,
-    startingWorkload,
-    pausingWorkload,
-    stoppingWorkload,
+    start,
+    pause,
+    stop,
     handleFrequencyChange,
     handleWorkloadChange,
     handleWeightChange,
   };
 }
 
-function useWorkloadDataHandler(context: SetupContext): WorkloadDataHandler {
+function useWorkloadDataHandler(
+  context: SetupContext,
+  selectedWorkloads: Ref<Workload[]>,
+  weights: Ref<Record<string, number>[]>
+): WorkloadDataHandler {
   const loadedWorkloads = ref<Workload[]>([]);
   const loadingWorkloads = ref<Workload[]>([]);
   const {
+    stopWorkload,
     getLoadedWorkloadData,
     loadWorkloadData,
     deleteWorkloadData,
@@ -355,11 +365,16 @@ function useWorkloadDataHandler(context: SetupContext): WorkloadDataHandler {
     loadingWorkloads.value.push(workload);
     changeWorkloadData = false;
     if (!loadedWorkloads.value.includes(workload)) {
+      //load workload data
       loadWorkloadData(workload).then(() => {
         changeWorkloadData = true;
       });
     } else {
-      //TODO: stopWorkload
+      //stop workload and delete workload data
+      const index = selectedWorkloads.value.indexOf(workload);
+      selectedWorkloads.value.splice(index, 1);
+      weights.value.splice(index, 1);
+      stopWorkload(workload);
       deleteWorkloadData(workload).then(() => {
         changeWorkloadData = true;
       });
