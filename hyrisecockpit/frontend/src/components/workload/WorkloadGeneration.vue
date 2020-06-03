@@ -201,26 +201,27 @@ function useWorkloadAction(context: SetupContext): WorkloadAction {
   const weights = ref<Record<string, number>[]>([]);
 
   // running workload indicator
-  //TODO: handle exceptions
   getWorkloads().then((response: any) => {
     if (response.data.length > 0) {
-      initialiseWorkloadSelector(response.data);
       frequency.value = response.data[0].frequency;
+      initialiseWorkloadSelector(response.data);
     }
     getLoadedWorkloadData().then((response: any) => {
-      initialiseWorkloadActions(response.data);
+      if (response.data.length > 0) {
+        initialiseWorkloadActions(response.data);
+      }
     });
   });
 
-  function initialiseWorkloadSelector(database: any): void {
-    Object.values(database).forEach((workload: any) => {
+  function initialiseWorkloadSelector(databases: any): void {
+    Object.values(databases).forEach((workload: any) => {
       workload = getWorkloadFromTransferred(workload.folder_name);
       selectedWorkloads.value.push(workload);
       updatingWorkload(workload);
     });
   }
-  function initialiseWorkloadActions(database: any): void {
-    let workersStopped = Object.values(database).some(
+  function initialiseWorkloadActions(databases: any): void {
+    let workersStopped = Object.values(databases).some(
       (database: any) => database.worker_pool_status === "closed"
     );
     if (!workersStopped) {
