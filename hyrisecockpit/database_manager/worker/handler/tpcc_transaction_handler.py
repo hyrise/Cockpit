@@ -11,10 +11,10 @@ class TPCCTransactionHandler:
         self._cursor = cursor
         self._worker_id = worker_id
 
-    def execute_task(self, task) -> Tuple[int, int]:
+    def execute_task(self, task) -> Tuple[int, int, str, str]:
         """Execute task of the transaction type."""
         endts, latency = self._execute_random_transaction()
-        return endts, latency
+        return endts, latency, task["benchmark"], "tpcc_transaction_type"
 
     def _execute_random_transaction(self) -> Tuple[int, int]:
         """Execute random transaction."""

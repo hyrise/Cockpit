@@ -5,7 +5,7 @@ from typing import Optional, Tuple, Union
 from psycopg2.extensions import AsIs
 
 
-class QueryHandler:
+class DefaultHandler:
     """Handler for processing of the query tasks."""
 
     def __init__(self, cursor, worker_id: str):
@@ -13,7 +13,7 @@ class QueryHandler:
         self._cursor = cursor
         self._worker_id = worker_id
 
-    def execute_task(self, task) -> Tuple[int, int]:
+    def execute_task(self, task) -> Tuple[int, int, str, str]:
         """Execute task of the query type."""
         query = task["query"]
         query = query.replace("[STREAM_ID]", str(self._worker_id))
@@ -22,7 +22,7 @@ class QueryHandler:
         formatted_parameters = self.get_formatted_parameters(not_formatted_parameters)
 
         endts, latency = self.execute_query(query, formatted_parameters)
-        return endts, latency
+        return endts, latency, task["benchmark"], task["query_type"]
 
     def execute_query(
         self, query: str, formatted_parameters: Optional[Tuple[str, ...]]

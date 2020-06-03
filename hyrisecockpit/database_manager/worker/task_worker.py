@@ -3,7 +3,7 @@ from multiprocessing import Queue, Value
 from multiprocessing.synchronize import Event as EventType
 from queue import Empty
 from time import time_ns
-from typing import List, Tuple
+from typing import Dict, List, Tuple, Union
 
 from psycopg2 import DatabaseError, InterfaceError, ProgrammingError
 
@@ -15,8 +15,8 @@ from hyrisecockpit.settings import (
     STORAGE_USER,
 )
 
-from .query_handler import QueryHandler
-from .tpcc_transaction_handler import TPCCTransactionHandler
+from .handler.default_handler import DefaultHandler
+from .handler.tpcc_transaction_handler import TPCCTransactionHandler
 
 
 def log_results(
@@ -45,11 +45,14 @@ def execute_queries(  # noqa
         with StorageCursor(
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
         ) as log:
-            query_handler = QueryHandler(cur, worker_id)
-            tpcc_transaction_handler = TPCCTransactionHandler(cur, worker_id)
             succesful_queries: List[Tuple[int, int, str, str, str]] = []
             failed_queries: List[Tuple[int, str, str, str]] = []
             last_batched = time_ns()
+
+            handlers: Dict[str, Union[DefaultHandler, TPCCTransactionHandler]] = {
+                "query": DefaultHandler(cur, worker_id),
+                "tpcc_transaction": TPCCTransactionHandler(cur, worker_id),
+            }
 
             while True:
                 if not continue_execution_flag.value:
@@ -58,14 +61,8 @@ def execute_queries(  # noqa
 
                 try:
                     task = task_queue.get(block=False)
-                    if task["type"] == "query":
-                        endts, latency = query_handler.execute_task(task)
-                    elif task["type"] == "tpcc_transaction":
-                        endts, latency = tpcc_transaction_handler.execute_task(task)
-                    else:
-                        continue  # Error: unsupported task type
-                    benchmark = task["benchmark"]
-                    query_type = task["query_type"]
+                    handler = handlers[task["type"]]
+                    endts, latency, benchmark, query_type = handler.execute_task(task)
 
                     succesful_queries.append(
                         (endts, latency, benchmark, query_type, worker_id)
