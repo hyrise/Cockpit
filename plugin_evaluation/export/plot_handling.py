@@ -88,6 +88,7 @@ def plot_line_chart(
     plt.ylabel(f"{y_label}")
     plt.xlabel(f"{x_label}")
     plt.legend(loc="upper right")
+    plt.grid(alpha=0.5)
 
     ####### Statistics ######## # noqa
     rows = [
