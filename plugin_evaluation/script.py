@@ -123,12 +123,16 @@ try:
     startts = int(startts / 1_000_000_000) * 1_000_000_000
     endts = int(endts / 1_000_000_000) * 1_000_000_000
 
-    with DoneStatus("Export..."):
+    with DoneStatus("Exporting plugin log..."):
         exporter.initialize_plugin_log(database_id, startts, endts)
+
+    with DoneStatus("Exporting main metrics..."):
         for metric in metrics:
             exporter.plot_metric(
                 metric, database_id, startts, endts, None, aggregation_interval
             )
+
+    with DoneStatus("Exporting access frequency..."):
         exporter.plot_metric_for_benchmark(  # noqa
             "table access frequency",
             benchmark,
@@ -137,6 +141,8 @@ try:
             endts,
             aggregation_interval,  # noqa
         )  # noqa
+
+    with DoneStatus("Exporting footprint..."):
         exporter.plot_metric_for_benchmark(  # noqa
             "table footprint",
             benchmark,
@@ -145,6 +151,8 @@ try:
             endts,
             aggregation_interval,  # noqa
         )  # noqa
+
+    with DoneStatus("Exporting query latency..."):
         exporter.plot_query_metric_for_benchmark(  # noqa
             "query latency",
             benchmark,
