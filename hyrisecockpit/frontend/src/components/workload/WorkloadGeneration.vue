@@ -173,13 +173,11 @@ export default defineComponent({
 });
 
 function useWorkloadAction(context: SetupContext): WorkloadAction {
-  //TODO: frequency for every workload
   const frequency = ref<number>(200);
   const {
     getLoadedWorkloadData,
     startWorker,
     stopWorker,
-    getWorkload,
     getWorkloads,
     startWorkload,
     updateWorkload,
