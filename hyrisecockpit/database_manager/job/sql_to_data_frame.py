@@ -9,11 +9,8 @@ def sql_to_data_frame(
     database_blocked, connection_factory, sql: str, params: Optional[Tuple]
 ) -> DataFrame:
     """Execute sql query and convert result to data-frame."""
-    if not database_blocked.value:
-        try:
-            with connection_factory.create_cursor() as cur:
-                return cur.read_sql_query(sql, params)
-        except (DatabaseError, InterfaceError):
-            return DataFrame()
-    else:
+    try:
+        with connection_factory.create_cursor() as cur:
+            return cur.read_sql_query(sql, params)
+    except (DatabaseError, InterfaceError):
         return DataFrame()
