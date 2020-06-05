@@ -14,22 +14,6 @@ from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_fra
 class TestSqlToDataframeJob:
     """Tests for the sql to data frame job."""
 
-    def test_converts_sql_to_data_frame_if_database_is_blocked(self) -> None:
-        """Test read sql query and return empty dataframe."""
-        mock_cursor = MagicMock()
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        fake_database_blocked_value = Value("b", True)
-
-        result: DataFrame = sql_to_data_frame(
-            fake_database_blocked_value, mock_connection_factory, "select ...", None
-        )
-        mock_cursor.read_sql_query.assert_not_called()
-        assert isinstance(result, DataframeType)
-        assert result.empty
-
     def test_converts_sql_to_data_frame_if_database_is_not_blocked(self) -> None:
         """Test read sql query and return dataframe."""
         mock_cursor = MagicMock()
