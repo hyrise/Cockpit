@@ -6,8 +6,8 @@
 import random
 from datetime import datetime
 
-import hyrisecockpit.workload_generator.tpcc_generator.constants as constants
-from hyrisecockpit.workload_generator.tpcc_generator.util import *
+import hyrisecockpit.database_manager.worker.handler.tpcc.constants as constants
+from hyrisecockpit.database_manager.worker.handler.tpcc.util import *
 
 
 class TPCCParameterGenerator:  # noqa
@@ -200,6 +200,40 @@ class TPCCParameterGenerator:  # noqa
         return rand.NURand(8191, 1, self.scaleParameters.items)
 
     ## DEF
+
+    def generate_random_transaction(self) -> Tuple[int, int]:
+        """Generate random transaction."""
+        x = rand.number(1, 100)
+        params = None
+        txn = None
+        if x <= 4:  ## 4%
+            txn, params = (
+                constants.TransactionTypes.STOCK_LEVEL,
+                self.generateStockLevelParams(),
+            )
+        elif x <= 4 + 4:  ## 4%
+            txn, params = (
+                constants.TransactionTypes.DELIVERY,
+                self.generateDeliveryParams(),
+            )
+        elif x <= 4 + 4 + 4:  ## 4%
+            txn, params = (
+                constants.TransactionTypes.ORDER_STATUS,
+                self.generateOrderStatusParams(),
+            )
+        elif x <= 43 + 4 + 4 + 4:  ## 43%
+            txn, params = (
+                constants.TransactionTypes.PAYMENT,
+                self.generatePaymentParams(),
+            )
+        else:  ## 45%
+            assert x > 100 - 45  # nosec
+            txn, params = (
+                constants.TransactionTypes.NEW_ORDER,
+                self.generateNewOrderParams(),
+            )
+
+        return (txn, params)
 
 
 ## CLASS

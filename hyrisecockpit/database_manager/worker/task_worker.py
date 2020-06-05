@@ -15,8 +15,8 @@ from hyrisecockpit.settings import (
     STORAGE_USER,
 )
 
-from .handler.default_handler import DefaultHandler
-from .handler.tpcc_transaction_handler import TPCCTransactionHandler
+from .handler.default.default_handler import DefaultHandler
+from .handler.tpcc.tpcc_transaction_handler import TPCCTransactionHandler
 
 
 def log_results(
