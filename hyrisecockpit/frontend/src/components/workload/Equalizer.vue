@@ -147,7 +147,11 @@ export default defineComponent({
               });
           }
         );
-        //TODO: no panel change when weights change
+      }
+    );
+    watch(
+      () => props.selectedWorkloads,
+      () => {
         panels.value = Object.keys(props.selectedWorkloads).map((index) =>
           parseInt(index)
         );
