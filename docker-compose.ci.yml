@@ -1,37 +1,35 @@
 version: "3.5"
 
 services:
-  backend:
-    image: cockpit-backend:ci
-    build: 
-      context: .
-      dockerfile: ./hyrisecockpit/api/Dockerfile
-    ports:
-      - "8000:8000"
+  # backend:
+  #   image: cockpit-backend:ci
+  #   build: 
+  #     context: .
+  #     dockerfile: ./hyrisecockpit/api/Dockerfile
+  #   ports:
+  #     - "8000:8000"
 
-  manager:
-    image: cockpit-manager:ci
-    build: 
-      context: .
-      dockerfile: ./hyrisecockpit/database_manager/Dockerfile
-    ports:
-      - "8001:8001"
+  # manager:
+  #   image: cockpit-manager:ci
+  #   build: 
+  #     context: .
+  #     dockerfile: ./hyrisecockpit/database_manager/Dockerfile
+  #   ports:
+  #     - "8001:8001"
     
-  generator:
-    image: cockpit-generator:ci
-    build: 
-      context: .
-      dockerfile: ./hyrisecockpit/workload_generator/Dockerfile
-    volumes:
-        - ./hyrisecockpit/workload_generator/workloads:/usr/local/lib/python3.8/site-packages/hyrisecockpit/workload_generator/workloads
-    ports:
-      - "8002:8002"
-      - "8003:8003"
+  # generator:
+  #   image: cockpit-generator:ci
+  #   build: 
+  #     context: .
+  #     dockerfile: ./hyrisecockpit/workload_generator/Dockerfile
+  #   volumes:
+  #       - ./hyrisecockpit/workload_generator/workloads:/usr/local/lib/python3.8/site-packages/hyrisecockpit/workload_generator/workloads
+  #   ports:
+  #     - "8002:8002"
+  #     - "8003:8003"
     
   influxdb:
     image: influxdb:alpine
-    volumes:
-      - ./influxdb:/var/lib/influxdb
     ports:
       - "8086:8086"
 
@@ -46,4 +44,9 @@ services:
       context: .
       dockerfile: ./system_tests/Dockerfile
     ports:
-      - "5432:5432"
+      - "8000:8000"
+      - "8001:8001"
+      - "8002:8002"
+      - "8003:8003"
+    volumes:
+        - ./hyrisecockpit/workload_generator/workloads:/usr/local/lib/python3.8/site-packages/hyrisecockpit/workload_generator/workloads
