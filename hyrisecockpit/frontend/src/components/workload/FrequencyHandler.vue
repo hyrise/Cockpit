@@ -7,12 +7,18 @@
           v-model="frequencies[index]"
           min="0"
           max="1000"
+          :disabled="
+            !loadedWorkloads.includes(availableWorkloads[index]) || disabled
+          "
           @click="$emit('change', index, frequency)"
           @end="$emit('change', index, frequency)"
         ></v-slider>
         <v-text-field
           class="frequency-text-field"
           v-model="frequencies[index]"
+          :disabled="
+            !loadedWorkloads.includes(availableWorkloads[index]) || disabled
+          "
           dense
           @change="$emit('change', index, frequency)"
         ></v-text-field>
@@ -28,13 +34,17 @@ import {
   ref,
   watch,
 } from "@vue/composition-api";
+import { Workload, availableWorkloads } from "../../types/workloads";
 
 interface Props {
   initialFrequencies: number[];
+  loadedWorkloads: Workload[];
+  disabled: boolean;
 }
 
 interface Data {
   frequencies: Ref<number[]>;
+  availableWorkloads: string[];
 }
 
 export default defineComponent({
@@ -43,6 +53,14 @@ export default defineComponent({
     initialFrequencies: {
       type: Array,
       default: [],
+    },
+    loadedWorkloads: {
+      type: Array,
+      default: [],
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props: Props, context: SetupContext): Data {
@@ -55,6 +73,7 @@ export default defineComponent({
     );
     return {
       frequencies,
+      availableWorkloads,
     };
   },
 });

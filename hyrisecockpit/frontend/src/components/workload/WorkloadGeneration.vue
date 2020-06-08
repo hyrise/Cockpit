@@ -48,6 +48,8 @@
                       </p>
                       <frequency-handler
                         :initial-frequencies="frequencies"
+                        :loaded-workloads="loadedWorkloads"
+                        :disabled="disabled"
                         @change="handleFrequencyChange"
                       />
                     </v-col>
