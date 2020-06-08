@@ -7,7 +7,7 @@
       <v-expansion-panel-content class="mt-8">
         <v-row class="equalizer mx-3">
           <div
-            v-for="(weight, idx) in changedWeights[workload]"
+            v-for="(weight, idx) in weights[workload]"
             :key="weight.name"
             class="equalizer-row"
           >
@@ -68,11 +68,11 @@ import { getDisplayedWorkload } from "../../meta/workloads";
 
 interface Props {
   selectedWorkloads: Workload[];
-  weights: Record<string, number>[];
+  initialWeights: Record<string, number>[];
 }
 
 interface Data {
-  changedWeights: Ref<Record<Workload, Weight[]>>;
+  weights: Ref<Record<Workload, Weight[]>>;
   panels: Ref<number[]>;
   getDisplayedWorkload: (workload: Workload) => void;
   updateWeight: (
@@ -90,13 +90,13 @@ export default defineComponent({
       type: Array,
       default: [],
     },
-    weights: {
+    initialWeights: {
       type: Array,
       default: [],
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const changedWeights = ref<Record<string, Weight[]>>({});
+    const weights = ref<Record<string, Weight[]>>({});
     const panels = ref<number[]>([]);
 
     /* convert the linear sliderValues with exponential function: f(sliderValue) = value = a * b^sliderValue - a
@@ -115,7 +115,7 @@ export default defineComponent({
       name: string,
       sliderValueToValue: boolean
     ): void {
-      const weight: Weight = Object.values(changedWeights.value[workload]).find(
+      const weight: Weight = Object.values(weights.value[workload]).find(
         (weight) => weight.name === name
       )!;
       if (sliderValueToValue) {
@@ -126,14 +126,17 @@ export default defineComponent({
       context.emit("change", workload, name, weight.value);
     }
     watch(
-      () => props.weights,
+      () => props.initialWeights,
       () => {
-        changedWeights.value = {};
-        Object.entries(props.weights).forEach(
-          ([workloadIndex, weights]: [string, Record<string, number>]) => {
-            changedWeights.value[
+        weights.value = {};
+        Object.entries(props.initialWeights).forEach(
+          ([workloadIndex, changedWeights]: [
+            string,
+            Record<string, number>
+          ]) => {
+            weights.value[
               props.selectedWorkloads[parseInt(workloadIndex)]
-            ] = Object.entries(weights)
+            ] = Object.entries(changedWeights)
               .sort()
               .map(([name, value]) => {
                 return {
@@ -150,7 +153,7 @@ export default defineComponent({
       }
     );
     return {
-      changedWeights,
+      weights,
       panels,
       getDisplayedWorkload,
       updateWeight,
@@ -213,7 +216,6 @@ export default defineComponent({
 .query-text-field {
   width: 44px;
   margin: -22px 3px 0px 3px;
-  text-align: center !important;
 }
 .equalizer {
   margin-left: 20px;
