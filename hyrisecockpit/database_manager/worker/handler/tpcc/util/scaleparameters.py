@@ -2,7 +2,7 @@
 # type: ignore
 # flake8: noqa
 
-import constants
+import hyrisecockpit.database_manager.worker.handler.tpcc.constants as constants
 
 
 def makeDefault(warehouses):  # noqa

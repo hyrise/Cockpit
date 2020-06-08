@@ -4,10 +4,20 @@
 
 """Module for TPC-C parameters generation."""
 import random
-from datetime import datetime
+from datetime import datetime as d_datetime
+from typing import Tuple
 
 import hyrisecockpit.database_manager.worker.handler.tpcc.constants as constants
 from hyrisecockpit.database_manager.worker.handler.tpcc.util import *
+
+
+class datetime:
+    """Datetime object."""
+
+    @classmethod
+    def now(cls):
+        """Generate current timestamp."""
+        return int(d_datetime.now().timestamp() * 1000)
 
 
 class TPCCParameterGenerator:  # noqa

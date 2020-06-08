@@ -7,9 +7,11 @@
 from time import time_ns
 from typing import Tuple
 
+from psycopg2.extensions import AsIs
+
 import hyrisecockpit.database_manager.worker.handler.tpcc.constants as constants
 
-from .qyery_template import TXN_QUERIES
+from .query_template import TXN_QUERIES
 from .tpcc_parameter_generator import TPCCParameterGenerator
 
 
@@ -19,6 +21,7 @@ class TPCCTransactionHandler:
     def __init__(self, cursor, worker_id: str):
         """Initialize TransactionHandler."""
         self.cursor = cursor
+        self.conn = cursor._connection
         self._worker_id = worker_id
 
     def execute_task(self, task) -> Tuple[int, int, str, str]:
@@ -98,6 +101,12 @@ class TPCCTransactionHandler:
             # We remove the queued time, completed time, w_id, and o_carrier_id: the client can figure
             # them out
             # If there are no order lines, SUM returns null. There should always be order lines.
+
+            if ol_total is None:
+                print(f"  ol_total is none, params: {no_o_id}, {d_id}, {w_id}")
+                return
+            print(f"ol_total is OK, params: {no_o_id}, {d_id}, {w_id}")
+
             assert (  # nosec
                 ol_total != None
             ), "ol_total is NULL: there are no order lines. This should not happen"
@@ -190,7 +199,10 @@ class TPCCTransactionHandler:
             i_data = itemInfo[2]
             i_price = itemInfo[0]
 
-            self.cursor.execute(q["getStockInfo"] % (d_id), [ol_i_id, ol_supply_w_id])
+            self.cursor.execute(
+                q["getStockInfo"],
+                [AsIs("{:02d}".format(d_id)), ol_i_id, ol_supply_w_id],
+            )
             stockInfo = self.cursor.fetchone()
             if len(stockInfo) == 0:
                 logging.warn(
@@ -290,7 +302,7 @@ class TPCCTransactionHandler:
             all_customers = self.cursor.fetchall()
             assert len(all_customers) > 0  # nosec
             namecnt = len(all_customers)
-            index = (namecnt - 1) / 2
+            index = int((namecnt - 1) / 2)
             customer = all_customers[index]
             c_id = customer[0]
         assert len(customer) > 0  # nosec
@@ -331,7 +343,7 @@ class TPCCTransactionHandler:
             all_customers = self.cursor.fetchall()
             assert len(all_customers) > 0  # nosec
             namecnt = len(all_customers)
-            index = (namecnt - 1) / 2
+            index = int((namecnt - 1) / 2)
             customer = all_customers[index]
             c_id = customer[0]
         assert len(customer) > 0  # nosec
