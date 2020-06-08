@@ -52,11 +52,11 @@ export default defineComponent({
   props: {
     initialFrequencies: {
       type: Array,
-      default: [],
+      default: () => [],
     },
     loadedWorkloads: {
       type: Array,
-      default: [],
+      default: () => [],
     },
     disabled: {
       type: Boolean,

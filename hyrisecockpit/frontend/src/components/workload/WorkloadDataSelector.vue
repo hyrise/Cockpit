@@ -41,11 +41,11 @@ export default defineComponent({
   props: {
     loadedWorkloads: {
       type: Array,
-      default: [],
+      default: () => [],
     },
     loadingWorkloads: {
       type: Array,
-      default: [],
+      default: () => [],
     },
     disabled: {
       type: Boolean,

@@ -88,11 +88,11 @@ export default defineComponent({
   props: {
     selectedWorkloads: {
       type: Array,
-      default: [],
+      default: () => [],
     },
     initialWeights: {
       type: Array,
-      default: [],
+      default: () => [],
     },
   },
   setup(props: Props, context: SetupContext): Data {
@@ -147,6 +147,7 @@ export default defineComponent({
               });
           }
         );
+        //TODO: no panel change when weights change
         panels.value = Object.keys(props.selectedWorkloads).map((index) =>
           parseInt(index)
         );
