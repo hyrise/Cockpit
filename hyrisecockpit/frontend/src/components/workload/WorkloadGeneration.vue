@@ -29,9 +29,9 @@
                 :selected-metrics="['']"
               />
               <v-row>
-                <v-col class="pt-0" cols="7">
+                <v-col class="pb-5" cols="7">
                   <v-row>
-                    <v-col class="pr-0" cols="5">
+                    <v-col class="pl-5 pr-0 pb-0" cols="5">
                       <p class="subtitle-1 font-weight-medium mb-2">
                         Start and stop workloads
                       </p>
@@ -42,7 +42,7 @@
                         @change="handleWorkloadChange"
                       />
                     </v-col>
-                    <v-col>
+                    <v-col class="pb-0">
                       <p class="subtitle-1 font-weight-medium mb-1">
                         Change number of queries per second
                       </p>
@@ -54,19 +54,21 @@
                       />
                     </v-col>
                   </v-row>
-                  <p class="subtitle-1 font-weight-medium mb-2">
-                    Start and stop worker
-                  </p>
-                  <workload-actions
-                    :actions="actions"
-                    :disabled="disabled"
-                    @start="start()"
-                    @pause="pause()"
-                    @stop="stop()"
-                  />
+                  <v-col class="text-center">
+                    <p class="subtitle-1 font-weight-medium mb-2">
+                      Start and stop worker
+                    </p>
+                    <workload-actions
+                      :actions="actions"
+                      :disabled="disabled"
+                      @start="start()"
+                      @pause="pause()"
+                      @stop="stop()"
+                    />
+                  </v-col>
                 </v-col>
-                <v-divider vertical class="ml-4 mr-4" />
-                <v-col>
+                <v-divider vertical class="ml-5 mr-3" />
+                <v-col class="pt-6">
                   <p class="subtitle-1 font-weight-medium mb-2">
                     Load and remove data into/from instances
                   </p>
