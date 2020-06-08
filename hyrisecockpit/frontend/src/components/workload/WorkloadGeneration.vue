@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="open" persistent max-width="900px">
     <v-card id="workload-generation">
-      <v-system-bar :height="50" color="secondary" class="mb-2">
+      <v-system-bar :height="50" color="secondary">
         <v-tabs v-model="tab" background-color="grey lighten-1">
           <v-tab> Workload Settings </v-tab>
           <v-tooltip right>
