@@ -32,7 +32,7 @@
                 <v-col class="pb-5" cols="7">
                   <v-row>
                     <v-col class="pl-5 pr-0 pb-0" cols="5">
-                      <p class="subtitle-1 font-weight-medium mb-2">
+                      <p class="subtitle-1 font-weight-medium mb-3">
                         Start and stop workloads
                       </p>
                       <workload-selector
@@ -43,7 +43,7 @@
                       />
                     </v-col>
                     <v-col class="pb-0">
-                      <p class="subtitle-1 font-weight-medium mb-1">
+                      <p class="subtitle-1 font-weight-medium mb-2">
                         Change number of queries per second
                       </p>
                       <frequency-handler
@@ -54,7 +54,7 @@
                       />
                     </v-col>
                   </v-row>
-                  <v-col class="text-center">
+                  <v-col class="text-center pt-0">
                     <p class="subtitle-1 font-weight-medium mb-2">
                       Start and stop worker
                     </p>
@@ -69,7 +69,7 @@
                 </v-col>
                 <v-divider vertical class="ml-5 mr-3" />
                 <v-col class="pt-6">
-                  <p class="subtitle-1 font-weight-medium mb-2">
+                  <p class="subtitle-1 font-weight-medium mb-3">
                     Load and remove data into/from instances
                   </p>
                   <workload-data-selector
