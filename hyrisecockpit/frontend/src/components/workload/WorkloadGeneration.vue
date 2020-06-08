@@ -123,12 +123,12 @@ interface Props {
   open: boolean;
 }
 
-interface Data extends WorkloadAction, WorkloadDataHandler {
+interface Data extends WorkloadActions, WorkloadDataHandler {
   databases: Ref<readonly string[]>;
   tab: Ref<number>;
 }
 
-interface WorkloadAction {
+interface WorkloadActions {
   enableEqualizer: Ref<boolean>;
   frequencies: Ref<number[]>;
   actions: Record<string, { active: boolean; loading: boolean }>;
@@ -172,23 +172,23 @@ export default defineComponent({
   },
   setup(props: {}, context: SetupContext): Data {
     const tab = ref<number>(0);
-    const workloadAction = useWorkloadAction(context);
+    const workloadActions = useWorkloadActions(context);
     return {
       databases: computed(
         () => context.root.$databaseController.availableDatabasesById.value
       ),
       tab,
-      ...workloadAction,
+      ...workloadActions,
       ...useWorkloadDataHandler(
         context,
-        workloadAction.selectedWorkloads,
-        workloadAction.weights
+        workloadActions.selectedWorkloads,
+        workloadActions.weights
       ),
     };
   },
 });
 
-function useWorkloadAction(context: SetupContext): WorkloadAction {
+function useWorkloadActions(context: SetupContext): WorkloadActions {
   const frequencies = ref<number[]>([]);
   const {
     getLoadedWorkloadData,
@@ -219,22 +219,22 @@ function useWorkloadAction(context: SetupContext): WorkloadAction {
   const selectedWorkloads = ref<Workload[]>([]);
   const weights = ref<Record<string, number>[]>([]);
 
-  // initialise frequency for every workload
+  // initialize frequency for every workload
   frequencies.value = Object.values(availableWorkloads).map(() => 200);
 
   // running workload indicator
   getWorkloads().then((response: any) => {
     if (response.data.length > 0) {
-      initialiseWorkloadSelector(response.data);
+      initializeWorkloadSelector(response.data);
     }
     getLoadedWorkloadData().then((response: any) => {
       if (response.data.length > 0) {
-        initialiseWorkloadActions(response.data);
+        initializeWorkloadActions(response.data);
       }
     });
   });
 
-  function initialiseWorkloadSelector(workloads: any): void {
+  function initializeWorkloadSelector(workloads: any): void {
     Object.values(workloads).forEach((workloadData: any) => {
       const workload = getWorkloadFromTransferred(workloadData.folder_name);
       selectedWorkloads.value.push(workload);
@@ -243,7 +243,7 @@ function useWorkloadAction(context: SetupContext): WorkloadAction {
       updatingWorkload(workload);
     });
   }
-  function initialiseWorkloadActions(databases: any): void {
+  function initializeWorkloadActions(databases: any): void {
     const workersStopped = Object.values(databases).some(
       (database: any) => database.worker_pool_status === "closed"
     );
@@ -400,12 +400,12 @@ function useWorkloadDataHandler(
     loadingWorkloads.value.push(workload);
     changeWorkloadData = false;
     if (!loadedWorkloads.value.includes(workload)) {
-      //load workload data
+      // load workload data
       loadWorkloadData(workload).then(() => {
         changeWorkloadData = true;
       });
     } else {
-      //stop workload and delete workload data
+      // stop workload and delete workload data
       const index = selectedWorkloads.value.indexOf(workload);
       selectedWorkloads.value.splice(index, 1);
       weights.value.splice(index, 1);

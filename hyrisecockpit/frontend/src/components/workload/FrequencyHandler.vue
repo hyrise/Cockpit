@@ -3,8 +3,8 @@
     <div v-for="(frequency, index) in frequencies" :key="index">
       <v-row>
         <v-slider
-          class="frequency-slider"
           v-model="frequencies[index]"
+          class="frequency-slider"
           min="0"
           max="1000"
           :disabled="
@@ -14,8 +14,8 @@
           @end="$emit('change', index, frequency)"
         ></v-slider>
         <v-text-field
-          class="frequency-text-field"
           v-model="frequencies[index]"
+          class="frequency-text-field"
           :disabled="
             !loadedWorkloads.includes(availableWorkloads[index]) || disabled
           "
