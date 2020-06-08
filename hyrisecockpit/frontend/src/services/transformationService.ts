@@ -58,6 +58,20 @@ function getQueryTypeProportionData(data: any, primaryKey: string = ""): any {
         name: type.query_type,
         type: "bar",
         text: [
+          typeLatencyProportion > 7
+            ? `${type.query_type} - ${formatPercentage(
+                typeLatencyProportion,
+                100
+              )} %`
+            : "",
+          typeFrequencyProportion > 7
+            ? `${type.query_type} - ${formatPercentage(
+                typeFrequencyProportion,
+                100
+              )} %`
+            : "",
+        ],
+        hovertext: [
           `${type.query_type} - ${formatPercentage(
             typeLatencyProportion,
             100
@@ -70,6 +84,7 @@ function getQueryTypeProportionData(data: any, primaryKey: string = ""): any {
           )} % - # ${type.total_frequency}`,
         ],
         hoverinfo: "text",
+        textposition: "auto",
       });
 
       return chartData;
@@ -280,11 +295,17 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
     type: "bar",
     text: "",
     hoverinfo: "text",
+    textposition: "auto",
     marker: { color: colorValueDefinition.lightgrey },
   };
 
   return operatorData.workload_operator_information
-    .reduce((chartData: any[], operator: any) => {
+    .sort((a: any, b: any) => {
+      if (a.operator.toLowerCase() > b.operator.toLowerCase()) return 1;
+      if (a.operator.toLowerCase() < b.operator.toLowerCase()) return -1;
+      return 0;
+    })
+    .reduce((chartData: any[], operator: any, idx: number) => {
       const operatorProportion = (operator.total_time_ns / totalTime) * 100;
       if (operatorProportion < 5) {
         rest.push({
@@ -298,20 +319,24 @@ function getOperatorData(data: any, primaryKey: string = ""): any {
           y: [operatorProportion],
           name: operator.operator,
           type: "bar",
-          text: `${formatPercentage(operatorProportion, 100)} % - ${
+          marker: { color: multiColors[idx] },
+          text:
+            operatorProportion > 7
+              ? `${formatPercentage(operatorProportion, 100)} % - ${
+                  operator.operator
+                }`
+              : "",
+          hovertext: `${formatPercentage(operatorProportion, 100)} % - ${
             operator.operator
           } -  ${formatTimeUnit(
             roundNumber(operator.total_time_ns, Math.pow(10, 6))
           )}`,
           hoverinfo: "text",
+          textposition: "auto",
         });
       }
       return chartData;
     }, [])
-    .map((operator: any, idx: number) => {
-      return { ...operator, marker: { color: multiColors[idx] } };
-    })
-    .sort((operator1: any, operator2: any) => operator2.y[0] - operator1.y[0])
     .concat([
       rest
         .sort(
