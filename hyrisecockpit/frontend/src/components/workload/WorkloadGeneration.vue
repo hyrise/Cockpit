@@ -185,7 +185,7 @@ export default defineComponent({
 });
 
 function useWorkloadAction(context: SetupContext): WorkloadAction {
-  const frequencies = ref<number[]>([200, 200, 200, 200]);
+  const frequencies = ref<number[]>([]);
   const {
     getLoadedWorkloadData,
     startWorker,
@@ -214,6 +214,9 @@ function useWorkloadAction(context: SetupContext): WorkloadAction {
   });
   const selectedWorkloads = ref<Workload[]>([]);
   const weights = ref<Record<string, number>[]>([]);
+
+  // initialise frequency for every workload
+  frequencies.value = Object.values(availableWorkloads).map(() => 200);
 
   // running workload indicator
   getWorkloads().then((response: any) => {
