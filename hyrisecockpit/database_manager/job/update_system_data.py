@@ -6,6 +6,9 @@ from typing import Dict, Union
 from hyrisecockpit.database_manager.cursor import StorageConnectionFactory
 from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_frame
 
+previous_system_usage = None
+previous_process_usage = None
+
 
 def _create_system_data_dict(utilization_df, system_df) -> Dict[str, Union[int, float]]:
     return {
@@ -27,6 +30,9 @@ def update_system_data(
     storage_connection_factory: StorageConnectionFactory,
 ) -> None:
     """Update system data for database instance."""
+    global previous_system_usage
+    global previous_process_usage
+
     utilization_df = sql_to_data_frame(
         database_blocked,
         connection_factory,
@@ -40,24 +46,25 @@ def update_system_data(
         None,
     )
 
-    if utilization_df.empty or system_df.empty:
-        return
-
     system_data: Dict[str, Union[int, float]] = _create_system_data_dict(
         utilization_df, system_df
     )
+
+    if previous_system_usage is None:
+        previous_system_usage = system_data["cpu_system_usage"]
+        previous_process_usage = system_data["cpu_process_usage"]
+        return
+
+    current_system_usage = system_data["cpu_system_usage"]  # type: ignore
+    current_process_usage = system_data["cpu_process_usage"]
+    system_data["cpu_system_usage"] = current_system_usage - previous_system_usage
+    system_data["cpu_process_usage"] = current_process_usage - previous_process_usage
+    previous_system_usage = current_system_usage
+    previous_process_usage = current_process_usage
+
     time_stamp = time_ns()
 
     with storage_connection_factory.create_cursor() as log:
-        result = list(
-            log._connection.query(
-                "SELECT * FROM system_data ORDER BY time DESC LIMIT 1;",
-                database=log._database_id,
-            )["system_data", None]
-        )
-        if result:
-            system_data["cpu_system_usage"] -= result[0]["cpu_system_usage"]
-            system_data["cpu_process_usage"] -= result[0]["cpu_process_usage"]
         log.log_meta_information(
             "system_data", system_data, time_stamp,
         )
