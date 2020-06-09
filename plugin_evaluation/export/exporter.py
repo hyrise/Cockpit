@@ -84,7 +84,7 @@ class Exporter:
 
         influx_function: Callable = metric_config["influx_function"]  # type: ignore
         points_function: Callable = metric_config["points_function"]  # type: ignore
-        aggregation_function: Callable = metric_config["aggregation_function"]  # type: ignore
+        aggregation_function: Callable = metric_config["aggregation_function"]  # type: ignore # noqa
         title_function: Callable = metric_config["title_function"]  # type: ignore
         plot_function: Callable = metric_config["plot_function"]  # type: ignore
         csv_function: Callable = metric_config["csv_function"]  # type: ignore
@@ -101,9 +101,12 @@ class Exporter:
         )
         x_values, y_values = points_function(points, column_name, parameter)
 
-        aggregated_x_values, aggregated_y_values = aggregation_function(
-            x_values, y_values, log_interval, aggregation_interval
-        )
+        # aggregated_x_values, aggregated_y_values = aggregation_function( # noqa
+        #     x_values, y_values, log_interval, aggregation_interval # noqa
+        # ) # noqa
+
+        aggregated_x_values = x_values
+        aggregated_y_values = y_values
 
         formatted_title = title_function(title, parameter)
 
