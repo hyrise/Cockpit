@@ -36,7 +36,13 @@ def get_metric_data_with_fill(
     )
     client.close()
 
-    return list(result[table_name, None])
+    output = [
+        point
+        for point in list(result[table_name, None])
+        if point[column_name] is not None
+    ]
+
+    return output
 
 
 def get_metric_data(
@@ -89,7 +95,13 @@ def get_ram_usage(
     )
     client.close()
 
-    return list(result[table_name, None])
+    output = [
+        point
+        for point in list(result[table_name, None])
+        if point["used_memory"] is not None
+    ]
+
+    return output
 
 
 def get_detailed_latency_information(

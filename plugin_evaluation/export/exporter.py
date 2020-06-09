@@ -119,7 +119,11 @@ class Exporter:
         )
         if self._csv_export_flag:
             csv_function(
-                aggregated_x_values, aggregated_y_values, save_path, title, x_label
+                aggregated_x_values,
+                aggregated_y_values,
+                save_path,
+                formatted_title,
+                x_label,
             )
 
     def plot_metric_for_benchmark(
