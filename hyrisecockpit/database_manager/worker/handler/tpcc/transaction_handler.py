@@ -11,8 +11,8 @@ from psycopg2.extensions import AsIs
 
 import hyrisecockpit.database_manager.worker.handler.tpcc.constants as constants
 
+from .parameter_generator import TPCCParameterGenerator
 from .query_template import TXN_QUERIES
-from .tpcc_parameter_generator import TPCCParameterGenerator
 
 
 class TPCCTransactionHandler:
