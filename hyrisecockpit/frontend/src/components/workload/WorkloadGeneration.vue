@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="open" persistent max-width="900px">
     <v-card id="workload-generation">
-      <v-system-bar :height="50" color="secondary" class="mb-2">
+      <v-system-bar :height="50" color="secondary">
         <v-tabs v-model="tab" background-color="grey lighten-1">
           <v-tab> Workload Settings </v-tab>
           <v-tooltip right>
@@ -13,14 +13,13 @@
               </div>
             </template>
             <span>{{
-              enableEqualizer ? "Customize workload" : "Start a workload first"
+              enableEqualizer ? "Customize workload" : "Select a workload first"
             }}</span>
           </v-tooltip>
         </v-tabs>
         <v-spacer></v-spacer>
         <v-icon @click="$emit('close')">mdi-close</v-icon>
       </v-system-bar>
-
       <v-tabs-items v-model="tab">
         <v-tab-item>
           <v-card>
@@ -30,39 +29,52 @@
                 :selected-metrics="['']"
               />
               <v-row>
-                <v-col class="pt-2">
-                  <p class="subtitle-1 font-weight-medium mb-2">
-                    Start, pause and stop a workload
-                  </p>
-                  <frequency-handler
-                    :initial-frequency="frequency"
-                    @change="handleFrequencyChange"
-                  />
-                  <workload-selector
-                    :initial-workload="workload"
-                    :workload-data="workloadData"
-                    :disabled="disabled"
-                    @change="handleWorkloadChange"
-                  />
-                  <workload-actions
-                    :actions="actions"
-                    :disabled="
-                      disabled ||
-                      workload === '' ||
-                      !workloadData[workload].loaded
-                    "
-                    @start="startingWorkload()"
-                    @pause="pausingWorkload()"
-                    @stop="stoppingWorkload()"
-                  />
+                <v-col class="pb-5" cols="7">
+                  <v-row>
+                    <v-col class="pl-5 pr-0 pb-0" cols="5">
+                      <p class="subtitle-1 font-weight-medium mb-3">
+                        Start and stop workloads
+                      </p>
+                      <workload-selector
+                        :selected-workloads="selectedWorkloads"
+                        :loaded-workloads="loadedWorkloads"
+                        :disabled="disabled"
+                        @change="handleWorkloadChange"
+                      />
+                    </v-col>
+                    <v-col class="pb-0">
+                      <p class="subtitle-1 font-weight-medium mb-2">
+                        Change number of queries per second
+                      </p>
+                      <frequency-handler
+                        :initial-frequencies="frequencies"
+                        :loaded-workloads="loadedWorkloads"
+                        :disabled="disabled"
+                        @change="handleFrequencyChange"
+                      />
+                    </v-col>
+                  </v-row>
+                  <v-col class="text-center pt-0">
+                    <p class="subtitle-1 font-weight-medium mb-2">
+                      Start and stop worker
+                    </p>
+                    <workload-actions
+                      :actions="actions"
+                      :disabled="disabled"
+                      @start="start()"
+                      @pause="pause()"
+                      @stop="stop()"
+                    />
+                  </v-col>
                 </v-col>
-                <v-divider vertical class="ml-4 mr-4" />
-                <v-col class="pt-2">
-                  <p class="subtitle-1 font-weight-medium">
-                    Load and remove generated data into/from instances
+                <v-divider vertical class="ml-5 mr-3" />
+                <v-col class="pt-6">
+                  <p class="subtitle-1 font-weight-medium mb-3">
+                    Load and remove data into/from instances
                   </p>
                   <workload-data-selector
-                    :workload-data="workloadData"
+                    :loaded-workloads="loadedWorkloads"
+                    :loading-workloads="loadingWorkloads"
                     :disabled="runningWorkload || disabled"
                     @change="handleWorkloadDataChange"
                   />
@@ -75,8 +87,8 @@
           <v-card>
             <v-card-text>
               <equalizer
+                :selected-workloads="selectedWorkloads"
                 :initial-weights="weights"
-                :workload="workload"
                 @change="handleWeightChange"
               ></equalizer>
             </v-card-text>
@@ -111,30 +123,32 @@ interface Props {
   open: boolean;
 }
 
-interface Data extends WorkloadHandler, WorkloadAction, WorkloadDataHandler {
+interface Data extends WorkloadActions, WorkloadDataHandler {
   databases: Ref<readonly string[]>;
   tab: Ref<number>;
 }
 
-interface WorkloadHandler {
-  workload: Ref<Workload>;
-  handleWorkloadChange: (workload: Workload) => void;
-}
-
-interface WorkloadAction {
+interface WorkloadActions {
   enableEqualizer: Ref<boolean>;
-  frequency: Ref<number>;
+  frequencies: Ref<number[]>;
   actions: Record<string, { active: boolean; loading: boolean }>;
-  weights: Ref<Record<string, number>>;
-  startingWorkload: () => void;
-  pausingWorkload: () => void;
-  stoppingWorkload: () => void;
-  handleFrequencyChange: (frequency: number) => void;
-  handleWeightChange: (name: string, weight: number) => void;
+  selectedWorkloads: Ref<Workload[]>;
+  weights: Ref<Record<string, number>[]>;
+  start: () => void;
+  pause: () => void;
+  stop: () => void;
+  handleFrequencyChange: (index: number, frequency: number) => void;
+  handleWorkloadChange: (workload: Workload) => void;
+  handleWeightChange: (
+    workload: Workload,
+    name: string,
+    weight: number
+  ) => void;
 }
 
 interface WorkloadDataHandler {
-  workloadData: Record<string, { loaded: boolean; loading: boolean }>;
+  loadedWorkloads: Ref<Workload[]>;
+  loadingWorkloads: Ref<Workload[]>;
   runningWorkload: Ref<boolean>;
   disabled: Ref<boolean>;
   handleWorkloadDataChange: (workload: Workload) => void;
@@ -158,40 +172,28 @@ export default defineComponent({
   },
   setup(props: {}, context: SetupContext): Data {
     const tab = ref<number>(0);
-    const workloadHandler = useWorkloadHandler();
+    const workloadActions = useWorkloadActions(context);
     return {
       databases: computed(
         () => context.root.$databaseController.availableDatabasesById.value
       ),
       tab,
-      ...workloadHandler,
-      ...useWorkloadAction(context, workloadHandler.workload),
-      ...useWorkloadDataHandler(context),
+      ...workloadActions,
+      ...useWorkloadDataHandler(
+        context,
+        workloadActions.selectedWorkloads,
+        workloadActions.weights
+      ),
     };
   },
 });
 
-function useWorkloadHandler(): WorkloadHandler {
-  const workload = ref<Workload>("");
-
-  function handleWorkloadChange(changedWorkload: Workload): void {
-    workload.value = changedWorkload;
-  }
-  return {
-    workload,
-    handleWorkloadChange,
-  };
-}
-
-function useWorkloadAction(
-  context: SetupContext,
-  workload: Ref<Workload>
-): WorkloadAction {
-  const frequency = ref<number>(200);
+function useWorkloadActions(context: SetupContext): WorkloadActions {
+  const frequencies = ref<number[]>([]);
   const {
+    getLoadedWorkloadData,
     startWorker,
     stopWorker,
-    getWorkload,
     getWorkloads,
     startWorkload,
     updateWorkload,
@@ -214,16 +216,42 @@ function useWorkloadAction(
       loading: false,
     },
   });
-  const weights = ref<Record<string, number>>({});
+  const selectedWorkloads = ref<Workload[]>([]);
+  const weights = ref<Record<string, number>[]>([]);
 
+  // initialize frequency for every workload
+  frequencies.value = Object.values(availableWorkloads).map(() => 200);
+
+  // running workload indicator
   getWorkloads().then((response: any) => {
     if (response.data.length > 0) {
-      workload.value = getWorkloadFromTransferred(response.data[0].folder_name);
-      frequency.value = response.data[0].frequency;
-      updatingWorkload().then((response: any) => {
-        handleWeightsChange(response.data.weights);
-      });
-      if (frequency.value > 0) {
+      initializeWorkloadSelector(response.data);
+    }
+    getLoadedWorkloadData().then((response: any) => {
+      if (response.data.length > 0) {
+        initializeWorkloadActions(response.data);
+      }
+    });
+  });
+
+  function initializeWorkloadSelector(workloads: any): void {
+    Object.values(workloads).forEach((workloadData: any) => {
+      const workload = getWorkloadFromTransferred(workloadData.folder_name);
+      selectedWorkloads.value.push(workload);
+      frequencies.value[availableWorkloads.indexOf(workload)] =
+        workloadData.frequency;
+      updatingWorkload(workload);
+    });
+  }
+  function initializeWorkloadActions(databases: any): void {
+    const workersStopped = Object.values(databases).some(
+      (database: any) => database.worker_pool_status === "closed"
+    );
+    const frequenciesAreNull = Object.values(frequencies.value).every(
+      (frequency) => frequency === 0
+    );
+    if (!workersStopped) {
+      if (!frequenciesAreNull) {
         actions.start.active = true;
         context.emit("start");
       } else {
@@ -231,8 +259,7 @@ function useWorkloadAction(
         context.emit("pause");
       }
     }
-  });
-
+  }
   function startLoading(action: string): void {
     actions[action].loading = true;
     Object.values(actions).forEach((action: any) => {
@@ -243,99 +270,123 @@ function useWorkloadAction(
   function stopLoading(action: string): void {
     actions[action].loading = false;
   }
-  function updatingWorkload(): Promise<void> {
-    return updateWorkload(workload.value, frequency.value, weights.value);
-  }
-  function startOrUpdateWorkload(action: string): void {
-    startLoading(action);
-    getWorkloads().then((response: any) => {
-      if (response.data.length === 0) {
-        startWorker().then(() => {
-          startWorkload(workload.value, frequency.value).then(() => {
-            updatingWorkload().then((response: any) => {
-              handleWeightsChange(response.data.weights);
-              stopLoading(action);
-            });
-          });
-        });
-      } else {
-        updatingWorkload().then(() => stopLoading(action));
-      }
-    });
-  }
-  function startingWorkload(): void {
-    context.emit("start");
-    startOrUpdateWorkload("start");
-  }
-  function pausingWorkload(): void {
-    context.emit("pause");
-    frequency.value = 0;
-    startOrUpdateWorkload("pause");
-  }
-  function stoppingWorkload(): void {
-    context.emit("stop");
-    startLoading("stop");
-    getWorkloads().then((response: any) => {
-      if (response.data.length !== 0) {
-        stopWorkload(workload.value).then(() => {
-          stopWorker();
-          stopLoading("stop");
-        });
-      }
-    });
-  }
-  function handleFrequencyChange(changedFrequency: number): void {
-    frequency.value = changedFrequency;
-    if (actions.start.active) {
-      updatingWorkload();
+  function updatingWorkload(workload: Workload) {
+    const index = selectedWorkloads.value.indexOf(workload);
+    if (weights.value[index] !== undefined) {
+      updateWorkload(
+        workload,
+        frequencies.value[availableWorkloads.indexOf(workload)],
+        weights.value[index]
+      );
+    } else {
+      updateWorkload(
+        workload,
+        frequencies.value[availableWorkloads.indexOf(workload)],
+        {}
+      ).then((response: any) =>
+        handleWeightsChange(index, response.data.weights)
+      );
     }
   }
-  function handleWeightChange(key: string, weight: number): void {
-    weights.value[key] = weight;
-    updatingWorkload();
+  function updatingWorkloads(): void {
+    Object.values(selectedWorkloads.value).forEach((workload: Workload) => {
+      updatingWorkload(workload);
+    });
   }
-  function handleWeightsChange(changedWeights: Record<string, number>): void {
-    weights.value = changedWeights;
-    updatingWorkload();
+  function startingWorker(action: string): void {
+    startLoading(action);
+    startWorker().then(() => stopLoading(action));
+  }
+  function start(): void {
+    context.emit("start");
+    startingWorker("start");
+  }
+  function pause(): void {
+    context.emit("pause");
+    frequencies.value = Object.values(frequencies.value).map(() => 0);
+    updatingWorkloads();
+    startingWorker("pause");
+  }
+  function stop(): void {
+    context.emit("stop");
+    startLoading("stop");
+    stopWorker().then(() => stopLoading("stop"));
+  }
+  function handleFrequencyChange(index: number, frequency: number): void {
+    frequencies.value[index] = frequency;
+    const frequenciesAreNull = Object.values(frequencies.value).every(
+      (frequency) => frequency === 0
+    );
+    if (actions.pause.active && !frequenciesAreNull) {
+      context.emit("start");
+      startLoading("start");
+      stopLoading("start");
+    }
+    if (actions.start.active && frequenciesAreNull) {
+      context.emit("pause");
+      startLoading("pause");
+      stopLoading("pause");
+    }
+    if (selectedWorkloads.value.includes(availableWorkloads[index])) {
+      updatingWorkload(availableWorkloads[index]);
+    }
+  }
+  function handleWorkloadChange(workload: Workload): void {
+    const index = selectedWorkloads.value.indexOf(workload);
+    if (!selectedWorkloads.value.includes(workload)) {
+      selectedWorkloads.value.push(workload);
+      startWorkload(
+        workload,
+        frequencies.value[availableWorkloads.indexOf(workload)]
+      ).then(() => updatingWorkload(workload));
+    } else {
+      selectedWorkloads.value.splice(index, 1);
+      weights.value.splice(index, 1);
+      stopWorkload(workload);
+    }
+  }
+  function handleWeightChange(
+    workload: Workload,
+    key: string,
+    weight: number
+  ): void {
+    const index = selectedWorkloads.value.indexOf(workload);
+    const changedWeight = weights.value[index];
+    changedWeight[key] = weight;
+    weights.value.splice(index, 1);
+    weights.value.splice(index, 0, changedWeight);
+    updatingWorkload(workload);
+  }
+  function handleWeightsChange(
+    index: number,
+    changedWeights: Record<string, number>
+  ): void {
+    weights.value.splice(index, 0, changedWeights);
   }
   return {
-    enableEqualizer: computed(
-      () => actions.start.active || actions.pause.active
-    ),
-    frequency,
+    enableEqualizer: computed(() => selectedWorkloads.value.length !== 0),
+    frequencies,
     actions,
+    selectedWorkloads,
     weights,
-    startingWorkload,
-    pausingWorkload,
-    stoppingWorkload,
+    start,
+    pause,
+    stop,
     handleFrequencyChange,
+    handleWorkloadChange,
     handleWeightChange,
   };
 }
 
-function useWorkloadDataHandler(context: SetupContext): WorkloadDataHandler {
-  const workloadData: Record<
-    string,
-    { loaded: boolean; loading: boolean }
-  > = reactive({
-    tpch01: {
-      loaded: false,
-      loading: false,
-    },
-    tpch1: {
-      loaded: false,
-      loading: false,
-    },
-    tpcds: {
-      loaded: false,
-      loading: false,
-    },
-    job: {
-      loaded: false,
-      loading: false,
-    },
-  });
+function useWorkloadDataHandler(
+  context: SetupContext,
+  selectedWorkloads: Ref<Workload[]>,
+  weights: Ref<Record<string, number>[]>
+): WorkloadDataHandler {
+  const loadedWorkloads = ref<Workload[]>([]);
+  const loadingWorkloads = ref<Workload[]>([]);
   const {
+    stopWorkload,
     getLoadedWorkloadData,
     loadWorkloadData,
     deleteWorkloadData,
@@ -346,13 +397,19 @@ function useWorkloadDataHandler(context: SetupContext): WorkloadDataHandler {
   const { emitDatabaseStatusChangedEvent } = useDatabaseEvents();
 
   function handleWorkloadDataChange(workload: Workload): void {
-    workloadData[workload].loading = true;
+    loadingWorkloads.value.push(workload);
     changeWorkloadData = false;
-    if (!workloadData[workload].loaded) {
+    if (!loadedWorkloads.value.includes(workload)) {
+      // load workload data
       loadWorkloadData(workload).then(() => {
         changeWorkloadData = true;
       });
     } else {
+      // stop workload and delete workload data
+      const index = selectedWorkloads.value.indexOf(workload);
+      selectedWorkloads.value.splice(index, 1);
+      weights.value.splice(index, 1);
+      stopWorkload(workload);
       deleteWorkloadData(workload).then(() => {
         changeWorkloadData = true;
       });
@@ -383,14 +440,10 @@ function useWorkloadDataHandler(context: SetupContext): WorkloadDataHandler {
             database.hyrise_active === false
         );
         if (!blocked && changeWorkloadData) {
-          Object.values(availableWorkloads).forEach((workload: Workload) => {
-            workloadData[workload].loading = false;
-          });
-          Object.keys(workloadData).forEach((workload: string) => {
-            workloadData[workload].loaded = false;
-          });
+          loadedWorkloads.value = [];
+          loadingWorkloads.value = [];
           Object.values(loadedWorkloadData).forEach((transferred: string) => {
-            workloadData[getWorkloadFromTransferred(transferred)].loaded = true;
+            loadedWorkloads.value.push(getWorkloadFromTransferred(transferred));
           });
         }
       }
@@ -398,16 +451,14 @@ function useWorkloadDataHandler(context: SetupContext): WorkloadDataHandler {
   }
   setInterval(updateWorkloadInformation, 1000);
   return {
-    workloadData,
+    loadedWorkloads,
+    loadingWorkloads,
     runningWorkload,
     disabled: computed(
       () =>
         blocked ||
         !context.root.$databaseController.availableDatabasesById.value.length ||
-        workloadData.tpch01.loading ||
-        workloadData.tpch1.loading ||
-        workloadData.tpcds.loading ||
-        workloadData.job.loading
+        loadingWorkloads.value.length !== 0
     ),
     handleWorkloadDataChange,
   };
