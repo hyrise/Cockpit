@@ -5,6 +5,7 @@ from os import remove
 from signal import SIGINT
 from subprocess import Popen  # nosec
 from time import sleep
+from typing import Dict
 
 from requests import delete, get, post, put
 
@@ -168,3 +169,24 @@ class CockpitBackend:
                 break
             else:
                 sleep(0.5)
+
+    def update_tpch_workload(self, folder_name: str, frequency: int, weights: Dict):
+        """Update weights of the TPC-H workload."""
+        formatted_weights: Dict = {}
+
+        for query_number in list(range(1, 23)):
+            formatted_query_number = "{:02d}".format(query_number)
+            if formatted_query_number in weights.keys():
+                formatted_weights[formatted_query_number] = weights[
+                    formatted_query_number
+                ]
+            else:
+                formatted_weights[formatted_query_number] = 0.0
+
+        body = {
+            "folder_name": folder_name,
+            "frequency": frequency,
+            "weights": formatted_weights,
+        }
+        url = f"http://{self._backend_host}:{self._backend_port}/workload/{folder_name}"
+        return put(url, json=body, timeout=REQUEST_TIMEOUT)

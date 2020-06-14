@@ -7,18 +7,22 @@ from plugin_evaluation.settings import DATABASE_HOST, DATABASE_PORT
 from plugin_evaluation.utils.figlet import intro
 from plugin_evaluation.utils.user_interface import DoneStatus, show_bar
 
-database_id = "momentum"
-workload_execution_time = 10
+database_id = "aptera"
+pre_workload_execution_time = 1  # at least 1
+workload_execution_time = 15
 plugin = "Compression"
-benchmark = "tpch_0_1"
+benchmark = "tpch_1"
+
+basic_frequency = 300
+frequency = 300
 aggregation_interval = 1
-tag = "Compression"
+tag = "Compression (10 + 15 min, 400 MB)"
 
 plugin_settings = {
     "database_id": database_id,
     "plugin_name": "Compression",
     "setting_name": "MemoryBudget",
-    "value": "50000000",
+    "value": "500000000",
 }
 
 metrics = [
@@ -37,7 +41,7 @@ metrics = [
 print(intro)
 
 try:
-    exporter = Exporter(tag)
+    exporter = Exporter(tag, csv_export=True)
     cockpit = Cockpit()  # type: ignore
     cockpit.start()
 
@@ -64,14 +68,22 @@ try:
         assert (  # nosec
             response.status_code == 200
         ), f"Couldn't start workers ({response.status_code})"
-        response = cockpit.backend.start_workload(benchmark, 300)
+        response = cockpit.backend.start_workload(benchmark, basic_frequency)
         assert (  # nosec
             response.status_code == 200
         ), f"Couldn't start workload ({response.status_code})"
         cockpit.backend.wait_for_unblocked_status()
 
+        # weights = {    # noqa
+        #     "06": 1.0
+        # }    # noqa
+        # response = cockpit.backend.update_tpch_workload(benchmark, frequency, weights) # noqa
+        # assert (  # nosec
+        #     response.status_code == 200    # noqa
+        # ), f"Couldn't update workload ({response.status_code})"
+
     startts = time_ns()
-    sleep(1.0)
+    show_bar("Executing pre workload...", pre_workload_execution_time)
 
     with DoneStatus(f"Activate {plugin} plugin..."):  # noqa
         response = cockpit.backend.activate_plugin(database_id, plugin)  # noqa
