@@ -8,6 +8,7 @@
       :label="getDisplayedWorkload(workload)"
       :value="workload"
       :disabled="!loadedWorkloads.includes(workload) || disabled"
+      data-id="select-workload"
       @change="$emit('change', workload)"
     >
     </v-checkbox>

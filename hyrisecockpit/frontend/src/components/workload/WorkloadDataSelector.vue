@@ -10,6 +10,7 @@
       @change="$emit('change', workload)"
       :loading="loadingWorkloads.includes(workload)"
       :disabled="loadingWorkloads.includes(workload) || disabled"
+      data-id="select-workload-data"
     >
     </v-switch>
   </span>

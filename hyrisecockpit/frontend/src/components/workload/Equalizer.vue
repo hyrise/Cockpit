@@ -1,6 +1,10 @@
 <template>
   <v-expansion-panels v-model="panels" multiple>
-    <v-expansion-panel v-for="workload in selectedWorkloads" :key="workload">
+    <v-expansion-panel
+      v-for="workload in selectedWorkloads"
+      :key="workload"
+      data-id="workload-equalizer"
+    >
       <v-expansion-panel-header color="grey lighten-1">
         {{ getDisplayedWorkload(workload) }}
       </v-expansion-panel-header>
