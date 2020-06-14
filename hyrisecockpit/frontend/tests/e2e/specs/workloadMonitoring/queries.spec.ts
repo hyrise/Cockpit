@@ -1,7 +1,7 @@
 import { useBackendMock } from "../../setup/backendMock";
 import { generateRandomInt } from "../../setup/helpers";
 import { getRoute } from "../views/helpers";
-import { getSelector, assertQueryData } from "./helpers";
+import { assertQueryData, selectors } from "./helpers";
 
 const backend = useBackendMock();
 
@@ -29,7 +29,7 @@ describe("visiting workload monitoring page", () => {
   // test data
   it("will show correct query information for every database sorted by latency", () => {
     databases.forEach((database: any, idx: number) => {
-      cy.get(getSelector("queryTable"))
+      cy.get(selectors.queryTable)
         .eq(idx)
         .within(() => {
           cy.get("table").should((table: any) => {
@@ -55,7 +55,7 @@ describe("visiting workload monitoring page", () => {
             cy.get("tr").contains("latency (in ms)").click({ force: true });
           });
 
-        cy.get(getSelector("queryTable"))
+        cy.get(selectors.queryTable)
           .eq(idx)
           .within(() => {
             cy.get("table").should((table: any) => {
@@ -84,13 +84,13 @@ describe("visiting workload monitoring page", () => {
     it("will show only the matching queries", () => {
       const index = generateRandomInt(0, data[0].query_information.length);
       databases.forEach((database: any, idx: number) => {
-        cy.get(getSelector("querySearch"))
+        cy.get(selectors.querySearch)
           .eq(idx)
           .click({ force: true })
           .type(data[idx].query_information[index].query_number);
         cy.wait(500);
 
-        cy.get(getSelector("queryTable"))
+        cy.get(selectors.queryTable)
           .eq(idx)
           .within(() => {
             cy.get("table").should((table: any) => {

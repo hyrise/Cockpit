@@ -1,24 +1,24 @@
 <template>
-  <v-card id="query-table">
+  <v-card data-id="query-table">
     <v-card-title>
       <database-chip :database-id="databaseId" />
       <v-spacer />
       <v-text-field
-        id="query-search-input"
         v-model="searchQueries"
         append-icon="mdi-magnify"
         label="Search queries"
         single-line
         hide-details
+        data-id="query-search-input"
       />
     </v-card-title>
     <v-data-table
-      id="query-data-table"
       :loading="loading"
       :headers="headers"
       :items="displayedQueries"
       :search="searchQueries"
       item-key="queryNumber"
+      data-id="query-data-table"
     />
   </v-card>
 </template>
@@ -117,4 +117,3 @@ function useQueryFormatting(): {
   return { formatDisplayedQueries };
 }
 </script>
-<style scoped></style>
