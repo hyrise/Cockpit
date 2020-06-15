@@ -17,25 +17,31 @@ class Exporter:
 
     def __init__(self, tag: str, csv_export: bool = False):
         """Clear folder structure."""
-        self._tag: str = tag
         self._csv_export_flag: bool = csv_export
+        self.plugin_logs: List = []
+        self.set_tag(tag)
+
+    def set_tag(self, tag: str):
+        """Set a new tag."""
+        self._tag: str = tag
         self._timestamp = datetime.now()
         self._folder_name = self._timestamp.strftime(f"{tag} %d-%m-%Y %H:%M:%S")
-        self.plugin_logs: List = []
+        self._reset_folder_structure(self._folder_name)
+
+    def _reset_folder_structure(self, folder_name) -> None:
+        """Reset folder structure."""
         absolute_plugin_evaluation_path: str = str(
             Path(__file__).parent.parent.absolute()
         )
         self.absolute_report_path = f"{absolute_plugin_evaluation_path}/report"
         self._reset_directory(f"{self.absolute_report_path}")
-        self._reset_directory(f"{self.absolute_report_path}/{self._folder_name}")
+        self._reset_directory(f"{self.absolute_report_path}/{folder_name}")
+        self._reset_directory(f"{self.absolute_report_path}/{folder_name}/Footprint")
         self._reset_directory(
-            f"{self.absolute_report_path}/{self._folder_name}/Footprint"
+            f"{self.absolute_report_path}/{folder_name}/Access frequency"
         )
         self._reset_directory(
-            f"{self.absolute_report_path}/{self._folder_name}/Access frequency"
-        )
-        self._reset_directory(
-            f"{self.absolute_report_path}/{self._folder_name}/Query latency"
+            f"{self.absolute_report_path}/{folder_name}/Query latency"
         )
 
     def _clear_directory(self, directory_path: str):
