@@ -165,17 +165,16 @@ describe("opening workload generation", () => {
   // test equalizer
   describe("when opening the equalizer", () => {
     it("will show equalizers for every selected workload", () => {
-      cy.restartAppState(backend, {
-        workloads: 1,
-      });
-      cy.reload();
-      cy.wait("@" + getGetAlias("workload"));
-      cy.get("@" + getGetAlias("workload")).then((xhr: any) => {
-        clickElement(getViewSelector("workloadGenerationButton"));
-        cy.get(selectors.openEqualizer).click({ force: true });
+      const activeBenchmark = statusData[0].loaded_benchmarks[0];
+      clickElement(getViewSelector("workloadGenerationButton"));
+      cy.wait(1000);
 
-        assertWorkloadEqualizer(xhr.response.body[0].folder_name);
-      });
+      cy.get(selectors.selectWorkload)
+        .eq(getBenchmarkIndex(activeBenchmark))
+        .check({ force: true });
+      cy.get(selectors.openEqualizer).click({ force: true });
+
+      assertWorkloadEqualizer(activeBenchmark);
 
       cy.restartAppState(backend, {});
     });
