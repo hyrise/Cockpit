@@ -286,9 +286,10 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
         workload,
         frequencies.value[availableWorkloads.indexOf(workload)],
         {}
-      ).then((response: any) =>
-        handleWeightsChange(index, response.data.weights)
-      );
+      ).then((response: any) => {
+        if (response.data.weights)
+          handleWeightsChange(index, response.data.weights);
+      });
     }
   }
   function updatingWorkloads(): void {
