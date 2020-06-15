@@ -7,7 +7,10 @@
           <v-tooltip right>
             <template v-slot:activator="{ on }">
               <div v-on="on">
-                <v-tab :disabled="disabled || !enableEqualizer">
+                <v-tab
+                  :disabled="disabled || !enableEqualizer"
+                  data-id="open-equalizer"
+                >
                   Equalizer
                 </v-tab>
               </div>
@@ -283,9 +286,10 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
         workload,
         frequencies.value[availableWorkloads.indexOf(workload)],
         {}
-      ).then((response: any) =>
-        handleWeightsChange(index, response.data.weights)
-      );
+      ).then((response: any) => {
+        if (response.data.weights)
+          handleWeightsChange(index, response.data.weights);
+      });
     }
   }
   function updatingWorkloads(): void {

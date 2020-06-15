@@ -122,7 +122,7 @@ function mockPutRoute(
   const request = getRequestOfRoute(route);
   server.put(getBackendRoute(route, backendRoute), (req, res) => {
     logRequest(req, res);
-    res.send({});
+    res.send(request === "workload" ? mocks.getMockedResponse("workload") : {});
   });
 }
 
