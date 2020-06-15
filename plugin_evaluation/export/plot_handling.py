@@ -29,7 +29,8 @@ def plot_line_chart(
 
     plt.title(f"{title} (aggregation over {aggregation_interval}s)")
     plt.ticklabel_format(style="plain")
-    plt.ylim(bottom=0.0, top=maximum_value * 1.1)
+    if maximum_value > 0:
+        plt.ylim(bottom=0.0, top=maximum_value * 1.1)
 
     for (metric_name, values), index in zip(
         metric_values.items(), range(len(metric_values.keys()))
