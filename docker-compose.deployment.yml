@@ -22,7 +22,7 @@ services:
   frontend:
     image: udopigorsch/cockpit-frontend:latest
     ports:
-      - "5000:5000"
+      - "80:5000"
 
   influxdb:
     image: influxdb:alpine
@@ -39,8 +39,12 @@ services:
       - "5432:5432"
       
   watchtower:
+    environmanet:
+      - WATCHTOWER_CLEANUP=1
+      - WATCHTOWER_INCLUDE_STOPPED=1
+      - WATCHTOWER_REVIVE_STOPPED=1
+      - WATCHTOWER_POLL_INTERVAL=30
     image: containrrr/watchtower
-    volumes:
+    volumes: 
       - /var/run/docker.sock:/var/run/docker.sock
       - /root/.docker/config.json:/config.json
-    command: --interval 30
