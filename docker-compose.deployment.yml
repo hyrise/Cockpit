@@ -5,11 +5,14 @@ services:
     image: udopigorsch/cockpit-backend:latest
     ports:
       - "8000:8000"
+    restart: unless-stopped
 
   manager:
     image: udopigorsch/cockpit-manager:latest
     ports:
       - "8001:8001"
+    restart: unless-stopped
+
     
   generator:
     image: udopigorsch/cockpit-generator:latest
@@ -18,11 +21,15 @@ services:
     ports:
       - "8002:8002"
       - "8003:8003"
+    restart: unless-stopped
+
 
   frontend:
     image: udopigorsch/cockpit-frontend:latest
     ports:
       - "80:5000"
+    restart: unless-stopped
+
 
   influxdb:
     image: influxdb:alpine
@@ -30,6 +37,8 @@ services:
       - ./influxdb:/var/lib/influxdb
     ports:
       - "8086:8086"
+    restart: unless-stopped
+
 
   hyrise:
     image: udopigorsch/hyrise:bp1920
@@ -37,9 +46,11 @@ services:
       - ./cached_tables:/usr/local/hyrise/cached_tables
     ports:
       - "5432:5432"
+    restart: unless-stopped
+
       
   watchtower:
-    environmanet:
+    environment:
       - WATCHTOWER_CLEANUP=1
       - WATCHTOWER_INCLUDE_STOPPED=1
       - WATCHTOWER_REVIVE_STOPPED=1
@@ -48,3 +59,4 @@ services:
     volumes: 
       - /var/run/docker.sock:/var/run/docker.sock
       - /root/.docker/config.json:/config.json
+    restart: unless-stopped
