@@ -89,7 +89,7 @@ Now, initialize and sync your virtual environment:
 ```bash
 python -m pip install pipenv
 exec "$SHELL"
-pipenv --three --python=`which python`
+pipenv --three --python=`python --version`
 pipenv sync
 ```
 
