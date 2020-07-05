@@ -1,3 +1,5 @@
 #!/bin/bash
 
-docker build --build-arg ARCHITECTURE=$ARCHITECTURE --build-arg BRANCH=$BRANCH -t $IMAGE_NAME $DOCKERFILE_PATH
+DOCKERFILE_FOLDER_PATH=$(echo $DOCKERFILE_PATH | cut -d '/' -f 1)
+
+docker build --build-arg ARCHITECTURE=$ARCHITECTURE --build-arg BRANCH=$BRANCH -t $IMAGE_NAME $DOCKERFILE_FOLDER_PATH
