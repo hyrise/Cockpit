@@ -2,4 +2,4 @@
 
 ls -la
 
-docker build --build-arg ARCHITECTURE=$ARCHITECTURE --build-arg BRANCH=$BRANCH -f $DOCKERFILE_PATH -t $BRANCH:$ARCHITECTURE .
+docker build --build-arg ARCHITECTURE=$ARCHITECTURE --build-arg BRANCH=$BRANCH -f $BRANCH:$ARCHITECTURE .
