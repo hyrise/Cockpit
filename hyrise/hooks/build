@@ -1,5 +1,6 @@
 #!/bin/bash
 
-ls -la
+echo BRANCH=$BRANCH
+echo ARCHITECTURE=$ARCHITECTURE
 
 docker build --build-arg ARCHITECTURE=$ARCHITECTURE --build-arg BRANCH=$BRANCH -t $BRANCH:$ARCHITECTURE .
