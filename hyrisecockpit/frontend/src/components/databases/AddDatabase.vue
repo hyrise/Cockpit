@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="open" persistent max-width="600px">
-    <v-card id="add-database">
+    <v-card data-id="add-database">
       <v-card-title>
         <span class="headline">Add new database</span>
       </v-card-title>
@@ -8,82 +8,59 @@
         <v-container>
           <v-row>
             <v-col cols="6">
-              <v-text-field
-                id="host-input"
-                v-model="host"
-                label="Host*"
-                required
-              ></v-text-field>
+              <v-text-field v-model="host" label="Host*" required data-id="host-input"></v-text-field>
             </v-col>
             <v-col cols="6">
               <v-text-field
-                id="id-input"
                 v-model="id"
                 label="Id*"
                 required
                 :error-messages="idError"
+                data-id="id-input"
               ></v-text-field>
             </v-col>
           </v-row>
           <v-row align="center">
             <v-col cols="12" sm="6">
               <v-text-field
-                id="worker-input"
                 v-model="number_workers"
                 label="Number of Workers*"
                 type="number"
                 required
+                data-id="worker-input"
               ></v-text-field>
             </v-col>
             <v-spacer />
-            <v-btn
-              id="advanced-input-button"
-              text
-              @click="showAdvanced = !showAdvanced"
-            >
-              <div v-if="!showAdvanced">
-                show advanced
-              </div>
-              <div v-else>
-                hide advanced
-              </div>
+            <v-btn text @click="showAdvanced = !showAdvanced" data-id="advanced-input-button">
+              <div v-if="!showAdvanced">show advanced</div>
+              <div v-else>hide advanced</div>
             </v-btn>
           </v-row>
           <v-expand-transition>
             <div v-if="showAdvanced">
               <v-row>
                 <v-col cols="6" sm="6">
-                  <v-text-field
-                    id="port-input"
-                    v-model="port"
-                    label="Port*"
-                    required
-                  ></v-text-field>
+                  <v-text-field v-model="port" label="Port*" required data-id="port-input"></v-text-field>
                 </v-col>
                 <v-col cols="6" sm="6">
                   <v-text-field
-                    id="dbname-input"
                     v-model="dbname"
                     label="Databasename*"
                     required
+                    data-id="dbname-input"
                   ></v-text-field>
                 </v-col>
               </v-row>
               <v-row>
                 <v-col cols="6">
-                  <v-text-field
-                    id="user-input"
-                    v-model="user"
-                    label="User*"
-                    required
-                  ></v-text-field>
+                  <v-text-field v-model="user" label="User*" required data-id="user-input"></v-text-field>
                 </v-col>
                 <v-col cols="6">
                   <v-text-field
-                    id="password-input"
                     v-model="password"
                     label="Password"
                     type="password"
+                    data-id="password-input"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -95,17 +72,15 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn
-          id="cancel-add-database-button"
           color="primary"
           text
           @click="
             closeDialog();
             showAdvanced = false;
           "
-          >Cancel</v-btn
-        >
+          data-id="cancel-add-database-button"
+        >Cancel</v-btn>
         <v-btn
-          id="save-database-button"
           color="primary"
           text
           @click="
@@ -114,8 +89,8 @@
             closeDialog();
           "
           :disabled="!!idError.length"
-          >Save</v-btn
-        >
+          data-id="save-database-button"
+        >Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -238,4 +213,3 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
   };
 }
 </script>
-<style scoped></style>

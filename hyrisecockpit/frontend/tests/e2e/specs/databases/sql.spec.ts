@@ -1,7 +1,7 @@
 import { useBackendMock } from "../../setup/backendMock";
 import { clickElement } from "../helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
-import { getSelector, assertSQLRequest } from "./helpers";
+import { assertSQLRequest, selectors } from "./helpers";
 import { getPostAlias } from "../../setup/helpers";
 import * as faker from "faker";
 
@@ -20,9 +20,9 @@ describe("when opening the sql input", () => {
     databases.forEach((database: any, idx: number) => {
       clickElement(getViewSelector("databaseListButton"));
       cy.get(getViewSelector("databaseList")).within(() => {
-        cy.get(getSelector("openSQLDialog")).eq(idx).click();
+        cy.get(selectors.openSQLDialog).eq(idx).click();
       });
-      cy.get(getSelector("sqlInput")).should("exist");
+      cy.get(selectors.sqlInput).should("exist");
       cy.reload();
     });
   });
@@ -32,11 +32,11 @@ describe("when opening the sql input", () => {
       databases.forEach((database: any, idx: number) => {
         clickElement(getViewSelector("databaseListButton"));
         cy.get(getViewSelector("databaseList")).within(() => {
-          cy.get(getSelector("openSQLDialog")).eq(idx).click();
+          cy.get(selectors.openSQLDialog).eq(idx).click();
         });
-        cy.get(getSelector("sqlInput")).should("exist");
-        cy.get(getSelector("closeSQLInput")).click();
-        cy.get(getSelector("sqlInput")).should("not.be.visible");
+        cy.get(selectors.sqlInput).should("exist");
+        cy.get(selectors.closeSQLInput).click();
+        cy.get(selectors.sqlInput).should("not.be.visible");
         cy.numberOfRequests(getPostAlias("sql")).should("eq", 0);
         cy.reload();
       });
@@ -49,15 +49,15 @@ describe("when opening the sql input", () => {
       databases.forEach((database: any, idx: number) => {
         clickElement(getViewSelector("databaseListButton"));
         cy.get(getViewSelector("databaseList")).within(() => {
-          cy.get(getSelector("openSQLDialog")).eq(idx).click();
+          cy.get(selectors.openSQLDialog).eq(idx).click();
         });
-        cy.get(getSelector("sqlInput")).clear().type(query);
-        cy.get(getSelector("sendSQLInput")).click();
+        cy.get(selectors.sqlInput).clear().type(query);
+        cy.get(selectors.sendSQLInput).click();
         cy.wait("@" + getPostAlias("sql"));
         cy.get("@" + getPostAlias("sql")).should((xhr: any) => {
           assertSQLRequest(database.id, query, xhr.request.body);
         });
-        cy.get(getSelector("sqlInput")).should("be.visible");
+        cy.get(selectors.sqlInput).should("be.visible");
         cy.numberOfRequests(getPostAlias("sql")).should("eq", idx + 1);
         cy.reload();
       });

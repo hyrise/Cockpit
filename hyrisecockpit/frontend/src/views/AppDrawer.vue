@@ -5,17 +5,12 @@
         <v-list-item-avatar tile size="70" class="mt-0 mb-2 mr-2">
           <img src="../../src/assets/images/hyrise_logo.png" />
         </v-list-item-avatar>
-        <v-list-item-title
-          class="title font-weight-regular text--secondary mt-2"
-          >Cockpit</v-list-item-title
-        >
+        <v-list-item-title class="title font-weight-regular text--secondary mt-2">Cockpit</v-list-item-title>
       </v-list-item>
       <v-divider />
       <v-list-item color="#02789D" input-value="true" dense>
         <v-list-item-content>
-          <v-list-item-title class="body-2 ml-1"
-            >Analysis Views</v-list-item-title
-          >
+          <v-list-item-title class="body-2 ml-1">Analysis Views</v-list-item-title>
         </v-list-item-content>
         <v-list-item-icon>
           <v-icon
@@ -23,8 +18,7 @@
             dense
             color="secondary"
             @click="$emit('toggleSelection')"
-            >mdi-cog-outline</v-icon
-          >
+          >mdi-cog-outline</v-icon>
         </v-list-item-icon>
       </v-list-item>
       <v-divider />
@@ -35,9 +29,7 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light"
-            >Overview</v-list-item-title
-          >
+          <v-list-item-title class="body-2 font-weight-light">Overview</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -47,9 +39,7 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light"
-            >Comparison</v-list-item-title
-          >
+          <v-list-item-title class="body-2 font-weight-light">Comparison</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -59,9 +49,7 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light"
-            >Workload Analysis</v-list-item-title
-          >
+          <v-list-item-title class="body-2 font-weight-light">Workload Analysis</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -81,10 +69,7 @@
         @stop="changeWorkloadIndicator('stop')"
       />
 
-      <v-list-item
-        id="workload-generation-button"
-        @click="showWorkloadDialog = true"
-      >
+      <v-list-item id="workload-generation-button" @click="showWorkloadDialog = true">
         <v-list-item-icon class="mr-4 ml-1">
           <v-icon>mdi-account-cog</v-icon>
         </v-list-item-icon>
@@ -95,13 +80,10 @@
           offset-y="1"
           offset-x="50"
           class="primary--text"
-        >
-        </v-badge>
+        ></v-badge>
 
         <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light"
-            >Workload</v-list-item-title
-          >
+          <v-list-item-title class="body-2 font-weight-light">Workload</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -111,16 +93,11 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light"
-            >Plugins</v-list-item-title
-          >
+          <v-list-item-title class="body-2 font-weight-light">Plugins</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
-      <add-database
-        :open="showAddDatabaseDialog"
-        @close="showAddDatabaseDialog = false"
-      />
+      <add-database :open="showAddDatabaseDialog" @close="showAddDatabaseDialog = false" />
       <remove-database
         :open="showRemoveDatabaseDialog"
         :database-id="removedDatabaseId"
@@ -143,13 +120,11 @@
               :content="databaseCount"
               offset-y="1"
               offset-x="50"
-            >
-            </v-badge>
+              data-id="number-of-databases"
+            ></v-badge>
 
             <v-list-item-content>
-              <v-list-item-title class="body-2 font-weight-light"
-                >Databases</v-list-item-title
-              >
+              <v-list-item-title class="body-2 font-weight-light">Databases</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </template>
@@ -162,12 +137,7 @@
     </v-list>
 
     <v-footer absolute class="font-weight-medium mb-1" color="grey lighten-3">
-      <v-img
-        src="../../src/assets/images/hpi_logo_bw.png"
-        max-width="80"
-        max-height="80"
-      >
-      </v-img>
+      <v-img src="../../src/assets/images/hpi_logo_bw.png" max-width="80" max-height="80"></v-img>
     </v-footer>
   </v-navigation-drawer>
 </template>
