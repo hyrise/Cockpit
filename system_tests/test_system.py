@@ -129,7 +129,6 @@ class TestSystem:
             response = self.backend.get_historical_property(
                 metric, startts, endts, 1_000_000_000
             )
-
             assert response.status_code == 200  # nosec
             assert response.json() == []  # nosec
 
@@ -224,9 +223,15 @@ class TestSystem:
 
         assert response.status_code == 200  # nosec
 
+    def test_do_not_activates_already_activated_plugin(self):
+        """Test activation of the already activated plugin."""
+        sleep(1.0)
+        response = self.backend.activate_plugin("test_database1", "Compression")
+
+        assert response.status_code == 423  # nosec
+
     def test_returns_activated_plugins(self):
         """Test activation of the plugin."""
-        sleep(1.0)
         response = self.backend.get_activated_plugins()
         assert response.status_code == 200  # nosec
         assert response.json() == [  # nosec
