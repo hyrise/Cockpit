@@ -1,15 +1,18 @@
 <template>
-  <v-radio-group class="mt-0" v-model="workload">
-    <v-radio
+  <div>
+    <v-checkbox
       v-for="workload in availableWorkloads"
+      v-model="workloads"
+      class="mt-0 pt-0"
       :key="workload"
       :label="getDisplayedWorkload(workload)"
       :value="workload"
-      :disabled="!workloadData[workload].loaded || disabled"
+      :disabled="!loadedWorkloads.includes(workload) || disabled"
+      data-id="select-workload"
       @change="$emit('change', workload)"
     >
-    </v-radio>
-  </v-radio-group>
+    </v-checkbox>
+  </div>
 </template>
 <script lang="ts">
 import {
@@ -23,12 +26,12 @@ import { Workload, availableWorkloads } from "../../types/workloads";
 import { getDisplayedWorkload } from "../../meta/workloads";
 
 interface Props {
-  initialWorkload: Workload;
-  workloadData: Record<string, { loaded: boolean; loading: boolean }>;
+  selectedWorkloads: Workload[];
+  loadedWorkloads: Workload[];
   disabled: boolean;
 }
 interface Data {
-  workload: Ref<Workload>;
+  workloads: Ref<Workload[]>;
   availableWorkloads: string[];
   getDisplayedWorkload: (workload: Workload) => string;
 }
@@ -36,13 +39,13 @@ interface Data {
 export default defineComponent({
   name: "WorkloadSelector",
   props: {
-    initialWorkload: {
-      type: String,
-      default: "",
+    selectedWorkloads: {
+      type: Array,
+      default: () => [],
     },
-    workloadData: {
-      type: Object,
-      default: {},
+    loadedWorkloads: {
+      type: Array,
+      default: () => [],
     },
     disabled: {
       type: Boolean,
@@ -50,15 +53,15 @@ export default defineComponent({
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const workload = ref<Workload>("");
+    const workloads = ref<Workload[]>([]);
     watch(
-      () => props.initialWorkload,
+      () => props.selectedWorkloads,
       () => {
-        workload.value = props.initialWorkload;
+        workloads.value = props.selectedWorkloads;
       }
     );
     return {
-      workload,
+      workloads,
       availableWorkloads,
       getDisplayedWorkload,
     };

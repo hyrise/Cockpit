@@ -1,68 +1,62 @@
-import { benchmarks } from "../../setup/helpers";
-import { getSelectorByConfig } from "../helpers";
+import { benchmarks, displayedBenchmark } from "../../setup/helpers";
+import { getSelectorByCustomConfig } from "../helpers";
 
-const selectors: Record<string, string> = {
-  frequencySlider: getSelectorByConfig("input", "frequency-slider"),
-  frequencyField: getSelectorByConfig("input", "frequency-field"),
-  startButton: getSelectorByConfig("button", "start-workload"),
-  pauseButton: getSelectorByConfig("button", "pause-workload"),
-  stopButton: getSelectorByConfig("button", "stop-workload"),
+export const selectors = {
+  openEqualizer: getSelectorByCustomConfig("open-equalizer"),
+  pauseWorkload: getSelectorByCustomConfig("pause-workload"),
+  selectWorkload: getSelectorByCustomConfig("select-workload"),
+  selectWorkloadData: getSelectorByCustomConfig("select-workload-data"),
+  startWorkload: getSelectorByCustomConfig("start-workload"),
+  stopWorkload: getSelectorByCustomConfig("stop-workload"),
+  workloadEqualizer: getSelectorByCustomConfig("workload-equalizer"),
 };
-
-export function getSelector(component: string): string {
-  return selectors[component];
-}
 
 export function getBenchmarkIndex(benchmark: string): number {
   return benchmarks.findIndex((type: any) => type === benchmark)!;
 }
 
-export function assertLoadedBenchmarks(statusData: any[]): void {
+/* ASSERTIONS */
+export function assertBenchmarks(statusData: any[]): void {
   benchmarks.forEach((benchmark: string, idx: number) => {
-    cy.get("input[type=checkbox]")
+    // assert loaded workload data
+    cy.get(selectors.selectWorkloadData)
       .eq(idx)
-      .then((checkbox: any) => {
-        expect(checkbox[0].checked).to.eq(
-          statusData[0].loaded_benchmarks.includes(benchmark)
-        );
-      });
+      .should(
+        statusData[0].loaded_benchmarks.includes(benchmark)
+          ? "be.checked"
+          : "not.be.checked"
+      );
+    // assert startable workload
+    cy.get(selectors.selectWorkload)
+      .eq(idx)
+      .should(
+        statusData[0].loaded_benchmarks.includes(benchmark)
+          ? "not.be.disabled"
+          : "be.disabled"
+      );
   });
 }
 
-export function assertStartableBenchmarks(statusData: any[]): void {
-  benchmarks.forEach((benchmark: string, idx: number) => {
-    cy.get("input[type=radio]")
-      .eq(idx)
-      .then((radioButton: any) => {
-        expect(radioButton[0].disabled).to.eq(
-          !statusData[0].loaded_benchmarks.includes(benchmark)
-        );
-      });
-  });
-}
-
-export function assertStartedWorkload(
+export function assertWorkloadChange(
   requestData: any,
   benchmark: string,
-  frequency: number = 200
+  frequency: number = 200,
+  weights?: Object
 ): void {
   expect(requestData.folder_name).to.eq(benchmark);
   expect(requestData.frequency).to.eq(frequency);
+  if (weights) expect(requestData.weights).to.eq(weights);
 }
 
-export function assertChangedTable(requestData: any, benchmark: string): void {
+export function assertWorkloadDataChange(
+  requestData: any,
+  benchmark: string
+): void {
   expect(requestData.folder_name).to.eq(benchmark);
 }
 
-export function assertButtonState(
-  type: "checkbox" | "radio",
-  disabled: boolean
-): void {
-  benchmarks.forEach((benchmark: string, idx: number) => {
-    if (disabled) {
-      cy.get(`input[type=${type}]`).eq(idx).should("be.disabled");
-    } else {
-      cy.get(`input[type=${type}]`).eq(idx).should("not.be.disabled");
-    }
-  });
+export function assertWorkloadEqualizer(benchmark: string): void {
+  cy.get(selectors.workloadEqualizer).contains(
+    (displayedBenchmark as any)[benchmark]
+  );
 }
