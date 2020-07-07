@@ -9,13 +9,14 @@ import {
 } from "../../setup/helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
 import {
-  getSelector,
   assertActivePlugins,
-  getPluginSelector,
   assertRequestValues,
   assertSettingsRequestValues,
+  getPluginsByState,
+  pluginButton,
+  selectors,
 } from "./helpers";
-import { getSelector as getDatabaseSelector } from "../databases/helpers";
+import { selectors as databaseSelectors } from "../databases/helpers";
 
 let backend = useBackendMock({ plugins: 3 });
 
@@ -40,24 +41,14 @@ describe("When opening the plugins overview", () => {
   // test activate plugin
   describe("and activate a new plugin", () => {
     it("will show this plugin as activated", () => {
-      const deactivePlugin = availablePlugins.reduce(
-        (deactivePlugins: Object[], plugin: any, idx: number) => {
-          const pluginData = databasesActivePluginData.find(
-            (db: any) => db.id === databases[0].id
-          );
-          if (
-            !pluginData.plugins.find((active: any) => active.name === plugin)
-          ) {
-            deactivePlugins.push(plugin);
-          }
-          return deactivePlugins;
-        },
-        []
+      const deactivePlugin = getPluginsByState(
+        { availablePlugins, databases, databasesActivePluginData },
+        "deactive"
       )[0];
 
       databases.forEach((database: any, idx: number) => {
         clickElement(getViewSelector("pluginOverviewButton"));
-        cy.get(getSelector("pluginOverview")).within(() => {
+        cy.get(selectors.pluginOverview).within(() => {
           // update tmp state
           cy.updateAppState(backend, {
             request: "plugin",
@@ -65,16 +56,14 @@ describe("When opening the plugins overview", () => {
             method: "POST",
           });
 
-          cy.get(getDatabaseSelector("databaseChip"))
-            .eq(idx)
-            .click({ force: true });
-          cy.get(getPluginSelector(deactivePlugin, "switchButton")).check({
+          cy.get(databaseSelectors.databaseChip).eq(idx).click({ force: true });
+          cy.get(pluginButton(deactivePlugin, "switchButton")).check({
             force: true,
           });
 
           cy.wait("@" + getPostAlias("plugin"));
           cy.get("@" + getPostAlias("plugin")).should((xhr: any) => {
-            assertRequestValues(database.id, deactivePlugin, xhr.request.body);
+            assertRequestValues(deactivePlugin, xhr.request.body);
           });
           cy.numberOfRequests(getPostAlias("plugin")).should("eq", idx + 1);
           cy.wait("@" + getGetAlias("plugin"));
@@ -85,9 +74,7 @@ describe("When opening the plugins overview", () => {
               xhr.response.body
             );
           });
-          cy.get(getDatabaseSelector("databaseChip"))
-            .eq(idx)
-            .click({ force: true });
+          cy.get(databaseSelectors.databaseChip).eq(idx).click({ force: true });
 
           // clean tmp state
           cy.cleanAppState(backend, {
@@ -105,23 +92,14 @@ describe("When opening the plugins overview", () => {
   // test deactivate plugin
   describe("and deactivate a new plugin", () => {
     it("will show this plugin as deactivated", () => {
-      const activePlugin = availablePlugins.reduce(
-        (activePlugins: Object[], plugin: any, idx: number) => {
-          const pluginData = databasesActivePluginData.find(
-            (db: any) => db.id === databases[0].id
-          );
-          if (
-            !!pluginData.plugins.find((active: any) => active.name === plugin)
-          ) {
-            activePlugins.push(plugin);
-          }
-          return activePlugins;
-        },
-        []
+      const activePlugin = getPluginsByState(
+        { availablePlugins, databases, databasesActivePluginData },
+        "active"
       )[0];
+
       databases.forEach((database: any, idx: number) => {
         clickElement(getViewSelector("pluginOverviewButton"));
-        cy.get(getSelector("pluginOverview")).within(() => {
+        cy.get(selectors.pluginOverview).within(() => {
           // update tmp state
           cy.updateAppState(backend, {
             request: "plugin",
@@ -129,17 +107,14 @@ describe("When opening the plugins overview", () => {
             method: "DELETE",
           });
 
-          cy.get(getDatabaseSelector("databaseChip"))
-            .eq(idx)
-            .click({ force: true });
-
-          cy.get(getPluginSelector(activePlugin, "switchButton")).uncheck({
+          cy.get(databaseSelectors.databaseChip).eq(idx).click({ force: true });
+          cy.get(pluginButton(activePlugin, "switchButton")).uncheck({
             force: true,
           });
 
           cy.wait("@" + getDeleteAlias("plugin"));
           cy.get("@" + getDeleteAlias("plugin")).should((xhr: any) => {
-            assertRequestValues(database.id, activePlugin, xhr.request.body);
+            assertRequestValues(activePlugin, xhr.request.body);
           });
           cy.numberOfRequests(getDeleteAlias("plugin")).should("eq", idx + 1);
           cy.wait("@" + getGetAlias("plugin"));
@@ -150,9 +125,7 @@ describe("When opening the plugins overview", () => {
               xhr.response.body
             );
           });
-          cy.get(getDatabaseSelector("databaseChip"))
-            .eq(idx)
-            .click({ force: true });
+          cy.get(databaseSelectors.databaseChip).eq(idx).click({ force: true });
 
           // clean tmp state
           cy.cleanAppState(backend, {
@@ -168,7 +141,7 @@ describe("When opening the plugins overview", () => {
   });
 
   // test change plugin setting
-  describe("and change settings of a active plugin", () => {
+  describe("and change settings of an active plugin", () => {
     it("will change the settings value", () => {
       const newValue = generateRandomInt(0, 1000);
 
@@ -192,17 +165,13 @@ describe("When opening the plugins overview", () => {
           []
         )[0];
         clickElement(getViewSelector("pluginOverviewButton"));
-        cy.get(getSelector("pluginOverview")).within(() => {
-          cy.get(getDatabaseSelector("databaseChip"))
-            .eq(idx)
-            .click({ force: true });
+        cy.get(selectors.pluginOverview).within(() => {
+          cy.get(databaseSelectors.databaseChip).eq(idx).click({ force: true });
 
-          cy.get(
-            getPluginSelector(activePlugin.plugin, "changeButton")
-          ).click();
+          cy.get(pluginButton(activePlugin.plugin, "changeButton")).click();
           cy.wait(300);
-          cy.get(getSelector("settingValue")).clear().type(newValue.toString());
-          cy.get(getSelector("saveSettingsButton")).click();
+          cy.get(selectors.settingValue).clear().type(newValue.toString());
+          cy.get(selectors.saveSettingsButton).click();
           cy.wait("@" + getPutAlias("plugin"));
           cy.get("@" + getPutAlias("plugin")).should((xhr: any) => {
             assertSettingsRequestValues(
@@ -213,9 +182,7 @@ describe("When opening the plugins overview", () => {
             );
           });
           cy.numberOfRequests(getPutAlias("plugin")).should("eq", idx + 1);
-          cy.get(getDatabaseSelector("databaseChip"))
-            .eq(idx)
-            .click({ force: true });
+          cy.get(databaseSelectors.databaseChip).eq(idx).click({ force: true });
         });
         cy.reload();
       });
