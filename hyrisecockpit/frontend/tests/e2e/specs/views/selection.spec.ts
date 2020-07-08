@@ -1,13 +1,12 @@
 import {
-  getRoute,
-  getSelector,
-  getMetrics,
   assertItemSelect,
   checkMultipleMetrics,
+  metrics,
+  routes,
+  selectors,
 } from "./helpers";
 import { useBackendMock } from "../../setup/backendMock";
-import { clickElement } from "../helpers";
-import { getSelector as getDatabaseSelector } from "../databases/helpers";
+import { selectors as databaseSelectors } from "../databases/helpers";
 import { getSelectorWithID as getMetricSelector } from "../metrics/helpers";
 import { generateRandomInt } from "../../setup/helpers";
 
@@ -16,306 +15,147 @@ let databases: any = [];
 let databaseIndex: number = 0;
 let metricIndex: number = 0;
 
-// test on workload monitoring
-describe("visiting the workload monitoring page", () => {
-  before(() => {
-    cy.setupAppState(backend).then((xhr: any) => {
-      databases = xhr.response.body;
-    });
-    cy.visit(getRoute("workloadMonitoring"));
-    clickElement(getSelector("selectionListButton"));
-  });
+type PageConfig = {
+  page: "overview" | "workloadMonitoring" | "comparison";
+  title: string;
+  multipleDatabases?: boolean;
+  multipleMetrics?: boolean;
+};
 
-  // test list header
-  it("will show the correct selection list header", () => {
-    cy.get(getSelector("selectionList")).within(() => {
-      cy.contains("Workload").should("be.visible");
-    });
-  });
+const pageConfig: PageConfig[] = [
+  {
+    page: "workloadMonitoring",
+    title: "Workload",
+    multipleDatabases: true,
+  },
+  {
+    page: "overview",
+    title: "Overview",
+  },
+  {
+    page: "comparison",
+    title: "Comparison",
+    multipleDatabases: true,
+    multipleMetrics: true,
+  },
+];
 
-  // test correct number of databases
-  it("will show the correct number of selectable databases", () => {
-    cy.get(getSelector("selectionList")).within(() => {
-      databases.forEach((database: any, idx: number) => {
-        cy.get(getDatabaseSelector("databaseChip"))
-          .eq(idx)
-          .contains(database.id);
-      });
-    });
-  });
-
-  // test unselect and select database
-  it("will unselect and select the specific database", () => {
-    databaseIndex = generateRandomInt(0, databases.length);
-    // unselect
-    cy.get(getDatabaseSelector("databaseChip"))
-      .eq(databaseIndex)
-      .within(() => {
-        cy.get(getSelector("unselectDatabase")).click({ force: true });
-        assertItemSelect("database", false);
-      });
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getSelector("workloadMonitoringPage")).within(() => {
-      cy.get("div")
-        .filter(`:contains(${databases[databaseIndex].id})`)
-        .should("not.be.visible");
-    });
-
-    // select
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getDatabaseSelector("databaseChip"))
-      .eq(databaseIndex)
-      .within(() => {
-        cy.get(getSelector("selectDatabase")).click({ force: true });
-        assertItemSelect("database", true);
-      });
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getSelector("workloadMonitoringPage")).within(() => {
-      cy.get("div")
-        .filter(`:contains(${databases[databaseIndex].id})`)
-        .should("be.visible");
-    });
-
-    clickElement(getSelector("selectionListButton"));
-  });
-
-  // test unselect and select metric
-  it("will unselect and select the specific metric", () => {
-    const metrics = getMetrics("workloadMonitoring");
-    metricIndex = generateRandomInt(0, metrics.length);
-    // unselect
-    cy.get(getSelector("metricChip"))
-      .eq(metricIndex)
-      .within(() => {
-        cy.get(getSelector("unselectMetric")).click({ force: true });
-        assertItemSelect("metric", false);
-      });
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getSelector("workloadMonitoringPage")).within(() => {
-      databases.forEach((database: any) => {
-        cy.get(getMetricSelector(metrics[metricIndex], database.id)).should(
-          "not.be.visible"
-        );
-      });
-    });
-
-    // select
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getSelector("metricChip"))
-      .eq(metricIndex)
-      .within(() => {
-        cy.get(getSelector("selectMetric")).click({ force: true });
-        assertItemSelect("metric", true);
-      });
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getSelector("workloadMonitoringPage")).within(() => {
-      databases.forEach((database: any) => {
-        cy.get(getMetricSelector(metrics[metricIndex], database.id)).should(
-          "be.visible"
-        );
-      });
-    });
-  });
+/* test selection on every page by config */
+pageConfig.forEach((page: any) => {
+  testSelectionOnPage(page);
 });
 
-// test on overview
-describe("visiting the overview page", () => {
-  before(() => {
-    cy.setupAppState(backend).then((xhr: any) => {
-      databases = xhr.response.body;
+/** generic selection tests for a single page by config */
+function testSelectionOnPage({
+  page,
+  title,
+  multipleDatabases,
+  multipleMetrics,
+}: PageConfig): void {
+  describe(`visiting the ${title} page`, () => {
+    before(() => {
+      cy.setupAppState(backend).then((xhr: any) => {
+        databases = xhr.response.body;
+      });
+      cy.visit(routes[page]);
+      cy.get(selectors.selectionListButton).click();
     });
-    cy.visit(getRoute("overview"));
-    clickElement(getSelector("selectionListButton"));
-  });
 
-  // test list header
-  it("will show the correct selection list header", () => {
-    cy.get(getSelector("selectionList")).within(() => {
-      cy.contains("Overview").should("be.visible");
+    // test list header
+    it("will show the correct selection list header", () => {
+      cy.get(selectors.selectionList).within(() => {
+        cy.contains(title).should("be.visible");
+      });
     });
-  });
 
-  // test correct number of databases
-  it("will show the correct number of selectable databases", () => {
-    cy.get(getSelector("selectionList")).within(() => {
-      databases.forEach((database: any, idx: number) => {
-        cy.get(getDatabaseSelector("databaseChip"))
-          .eq(idx)
-          .contains(database.id);
+    // test unselect and select database
+    it("will unselect and select the specific database", () => {
+      databaseIndex = generateRandomInt(0, databases.length);
+      // unselect
+      cy.get(databaseSelectors.databaseChip)
+        .eq(databaseIndex)
+        .within(() => {
+          cy.get(selectors.unselectDatabase).click({ force: true });
+          assertItemSelect("database", false);
+        });
+      cy.get(selectors.selectionListButton).click();
+      cy.get((selectors as any)[`${page}Page`]).within(() => {
+        cy.contains(databases[databaseIndex].id).should("not.be.visible");
+      });
+
+      // select
+      cy.get(selectors.selectionListButton).click();
+      cy.get(databaseSelectors.databaseChip)
+        .eq(databaseIndex)
+        .within(() => {
+          cy.get(selectors.selectDatabase).click({ force: true });
+          assertItemSelect("database", true);
+        });
+      cy.get(selectors.selectionListButton).click();
+      cy.get((selectors as any)[`${page}Page`]).within(() => {
+        cy.contains(databases[databaseIndex].id).should("be.visible");
+      });
+      cy.get(selectors.selectionListButton).click();
+    });
+
+    // test unselect and select metric
+    it("will unselect and select the specific metric", () => {
+      const pageMetrics = metrics[page];
+      metricIndex = generateRandomInt(0, pageMetrics.length);
+      // unselect
+      cy.get(selectors.metricChip)
+        .eq(metricIndex)
+        .within(() => {
+          cy.get(selectors.unselectMetric).click({ force: true });
+          assertItemSelect("metric", false);
+        });
+      cy.get(selectors.selectionListButton).click();
+      cy.get((selectors as any)[`${page}Page`]).within(() => {
+        if (multipleDatabases) {
+          databases.forEach((database: any) => {
+            cy.get(
+              getMetricSelector(
+                multipleMetrics
+                  ? checkMultipleMetrics(pageMetrics[metricIndex])
+                  : pageMetrics[metricIndex],
+                database.id
+              )
+            ).should("not.be.visible");
+          });
+        } else {
+          cy.get(getMetricSelector(pageMetrics[metricIndex])).should(
+            "not.be.visible"
+          );
+        }
+      });
+
+      // select
+      cy.get(selectors.selectionListButton).click();
+      cy.get(selectors.metricChip)
+        .eq(metricIndex)
+        .within(() => {
+          cy.get(selectors.selectMetric).click({ force: true });
+          assertItemSelect("metric", true);
+        });
+      cy.get(selectors.selectionListButton).click();
+      cy.get((selectors as any)[`${page}Page`]).within(() => {
+        if (multipleDatabases) {
+          databases.forEach((database: any) => {
+            cy.get(
+              getMetricSelector(
+                multipleMetrics
+                  ? checkMultipleMetrics(pageMetrics[metricIndex])
+                  : pageMetrics[metricIndex],
+                database.id
+              )
+            ).should("be.visible");
+          });
+        } else {
+          cy.get(getMetricSelector(pageMetrics[metricIndex])).should(
+            "be.visible"
+          );
+        }
       });
     });
   });
-
-  // test unselect and select database
-  it("will unselect and select the specific database", () => {
-    databaseIndex = generateRandomInt(0, databases.length);
-    // unselect
-    cy.get(getDatabaseSelector("databaseChip"))
-      .eq(databaseIndex)
-      .within(() => {
-        cy.get(getSelector("unselectDatabase")).click({ force: true });
-        assertItemSelect("database", false);
-      });
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getSelector("overviewPage")).within(() => {
-      cy.get("div")
-        .filter(`:contains(${databases[databaseIndex].id})`)
-        .should("not.be.visible");
-    });
-
-    // select
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getDatabaseSelector("databaseChip"))
-      .eq(databaseIndex)
-      .within(() => {
-        cy.get(getSelector("selectDatabase")).click({ force: true });
-        assertItemSelect("database", true);
-      });
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getSelector("overviewPage")).within(() => {
-      cy.get("div")
-        .filter(`:contains(${databases[databaseIndex].id})`)
-        .should("be.visible");
-    });
-
-    clickElement(getSelector("selectionListButton"));
-  });
-
-  // test unselect and select metric
-  it("will unselect and select the specific metric", () => {
-    const metrics = getMetrics("overview");
-    metricIndex = generateRandomInt(0, metrics.length);
-    // unselect
-    cy.get(getSelector("metricChip"))
-      .eq(metricIndex)
-      .within(() => {
-        cy.get(getSelector("unselectMetric")).click({ force: true });
-        assertItemSelect("metric", false);
-      });
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getSelector("overviewPage")).within(() => {
-      cy.get(getMetricSelector(metrics[metricIndex])).should("not.be.visible");
-    });
-
-    // select
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getSelector("metricChip"))
-      .eq(metricIndex)
-      .within(() => {
-        cy.get(getSelector("selectMetric")).click({ force: true });
-        assertItemSelect("metric", true);
-      });
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getSelector("overviewPage")).within(() => {
-      cy.get(getMetricSelector(metrics[metricIndex])).should("be.visible");
-    });
-  });
-});
-
-// test on comparison
-describe("visiting the comparison page", () => {
-  before(() => {
-    cy.setupAppState(backend).then((xhr: any) => {
-      databases = xhr.response.body;
-    });
-    cy.visit(getRoute("comparison"));
-    clickElement(getSelector("selectionListButton"));
-  });
-
-  // test list header
-  it("will show the correct selection list header", () => {
-    cy.get(getSelector("selectionList")).within(() => {
-      cy.contains("Comparison").should("be.visible");
-    });
-  });
-
-  // test correct number of databases
-  it("will show the correct number of selectable databases", () => {
-    cy.get(getSelector("selectionList")).within(() => {
-      databases.forEach((database: any, idx: number) => {
-        cy.get(getDatabaseSelector("databaseChip"))
-          .eq(idx)
-          .contains(database.id);
-      });
-    });
-  });
-
-  // test unselect and select database
-  it("will unselect and select the specific database", () => {
-    databaseIndex = generateRandomInt(0, databases.length);
-    // unselect
-    cy.get(getDatabaseSelector("databaseChip"))
-      .eq(databaseIndex)
-      .within(() => {
-        cy.get(getSelector("unselectDatabase")).click({ force: true });
-        assertItemSelect("database", false);
-      });
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getSelector("comparisonPage")).within(() => {
-      cy.get("div")
-        .filter(`:contains(${databases[databaseIndex].id})`)
-        .should("not.be.visible");
-    });
-
-    // select
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getDatabaseSelector("databaseChip"))
-      .eq(databaseIndex)
-      .within(() => {
-        cy.get(getSelector("selectDatabase")).click({ force: true });
-        assertItemSelect("database", true);
-      });
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getSelector("comparisonPage")).within(() => {
-      cy.get("div")
-        .filter(`:contains(${databases[databaseIndex].id})`)
-        .should("be.visible");
-    });
-
-    clickElement(getSelector("selectionListButton"));
-  });
-
-  // test unselect and select metric
-  it("will unselect and select the specific metric", () => {
-    const metrics = getMetrics("comparison");
-    metricIndex = generateRandomInt(0, metrics.length);
-    // unselect
-    cy.get(getSelector("metricChip"))
-      .eq(metricIndex)
-      .within(() => {
-        cy.get(getSelector("unselectMetric")).click({ force: true });
-        assertItemSelect("metric", false);
-      });
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getSelector("comparisonPage")).within(() => {
-      databases.forEach((database: any) => {
-        cy.get(
-          getMetricSelector(
-            checkMultipleMetrics(metrics[metricIndex]),
-            database.id
-          )
-        ).should("not.be.visible");
-      });
-    });
-
-    // select
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getSelector("metricChip"))
-      .eq(metricIndex)
-      .within(() => {
-        cy.get(getSelector("selectMetric")).click({ force: true });
-        assertItemSelect("metric", true);
-      });
-    clickElement(getSelector("selectionListButton"));
-    cy.get(getSelector("comparisonPage")).within(() => {
-      databases.forEach((database: any) => {
-        cy.get(
-          getMetricSelector(
-            checkMultipleMetrics(metrics[metricIndex]),
-            database.id
-          )
-        ).should("be.visible");
-      });
-    });
-  });
-});
+}

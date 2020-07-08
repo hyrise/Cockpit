@@ -1,23 +1,20 @@
 <template>
   <v-dialog v-model="open" persistent max-width="900px">
-    <v-card id="workload-generation">
+    <v-card data-id="workload-generation">
       <v-system-bar :height="50" color="secondary">
         <v-tabs v-model="tab" background-color="grey lighten-1">
-          <v-tab> Workload Settings </v-tab>
+          <v-tab>Workload Settings</v-tab>
           <v-tooltip right>
             <template v-slot:activator="{ on }">
               <div v-on="on">
-                <v-tab
-                  :disabled="disabled || !enableEqualizer"
-                  data-id="open-equalizer"
-                >
-                  Equalizer
-                </v-tab>
+                <v-tab :disabled="disabled || !enableEqualizer" data-id="open-equalizer">Equalizer</v-tab>
               </div>
             </template>
-            <span>{{
+            <span>
+              {{
               enableEqualizer ? "Customize workload" : "Select a workload first"
-            }}</span>
+              }}
+            </span>
           </v-tooltip>
         </v-tabs>
         <v-spacer></v-spacer>
@@ -27,17 +24,12 @@
         <v-tab-item>
           <v-card>
             <v-card-text class="py-0">
-              <status-warning
-                :selected-databases="databases"
-                :selected-metrics="['']"
-              />
+              <status-warning :selected-databases="databases" :selected-metrics="['']" />
               <v-row>
                 <v-col class="pb-5" cols="7">
                   <v-row>
                     <v-col class="pl-5 pr-0 pb-0" cols="5">
-                      <p class="subtitle-1 font-weight-medium mb-3">
-                        Start and stop workloads
-                      </p>
+                      <p class="subtitle-1 font-weight-medium mb-3">Start and stop workloads</p>
                       <workload-selector
                         :selected-workloads="selectedWorkloads"
                         :loaded-workloads="loadedWorkloads"
@@ -46,9 +38,9 @@
                       />
                     </v-col>
                     <v-col class="pb-0">
-                      <p class="subtitle-1 font-weight-medium mb-2">
-                        Change number of queries per second
-                      </p>
+                      <p
+                        class="subtitle-1 font-weight-medium mb-2"
+                      >Change number of queries per second</p>
                       <frequency-handler
                         :initial-frequencies="frequencies"
                         :loaded-workloads="loadedWorkloads"
@@ -58,9 +50,7 @@
                     </v-col>
                   </v-row>
                   <v-col class="text-center pt-0">
-                    <p class="subtitle-1 font-weight-medium mb-2">
-                      Start and stop worker
-                    </p>
+                    <p class="subtitle-1 font-weight-medium mb-2">Start and stop worker</p>
                     <workload-actions
                       :actions="actions"
                       :disabled="disabled"
@@ -72,9 +62,9 @@
                 </v-col>
                 <v-divider vertical class="ml-5 mr-3" />
                 <v-col class="pt-6">
-                  <p class="subtitle-1 font-weight-medium mb-3">
-                    Load and remove data into/from instances
-                  </p>
+                  <p
+                    class="subtitle-1 font-weight-medium mb-3"
+                  >Load and remove data into/from instances</p>
                   <workload-data-selector
                     :loaded-workloads="loadedWorkloads"
                     :loading-workloads="loadingWorkloads"

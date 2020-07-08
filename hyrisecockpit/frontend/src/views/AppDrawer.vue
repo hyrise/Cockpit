@@ -17,13 +17,14 @@
             id="selection-list-button"
             dense
             color="secondary"
+            data-id="selection-list-button"
             @click="$emit('toggleSelection')"
           >mdi-cog-outline</v-icon>
         </v-list-item-icon>
       </v-list-item>
       <v-divider />
 
-      <v-list-item id="overview-button" :to="{ name: 'overview' }">
+      <v-list-item id="overview-button" :to="{ name: 'overview' }" data-id="overview-button">
         <v-list-item-icon class="mr-4 ml-1">
           <v-icon>mdi-database-search</v-icon>
         </v-list-item-icon>
@@ -33,7 +34,7 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item id="comparison-button" :to="{ name: 'comparison' }">
+      <v-list-item id="comparison-button" :to="{ name: 'comparison' }" data-id="comparison-button">
         <v-list-item-icon class="mr-4 ml-1">
           <v-icon>mdi-chart-line</v-icon>
         </v-list-item-icon>
@@ -43,7 +44,11 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item id="workload-monitoring-button" :to="{ name: 'workload' }">
+      <v-list-item
+        id="workload-monitoring-button"
+        :to="{ name: 'workload' }"
+        data-id="workload-monitoring-button"
+      >
         <v-list-item-icon class="mr-4 ml-1">
           <v-icon>mdi-chart-bar</v-icon>
         </v-list-item-icon>
@@ -69,7 +74,11 @@
         @stop="changeWorkloadIndicator('stop')"
       />
 
-      <v-list-item id="workload-generation-button" @click="showWorkloadDialog = true">
+      <v-list-item
+        id="workload-generation-button"
+        @click="showWorkloadDialog = true"
+        data-id="workload-generation-button"
+      >
         <v-list-item-icon class="mr-4 ml-1">
           <v-icon>mdi-account-cog</v-icon>
         </v-list-item-icon>
@@ -87,7 +96,11 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item id="plugin-overview-button" @click="$emit('openPlugins')">
+      <v-list-item
+        id="plugin-overview-button"
+        @click="$emit('openPlugins')"
+        data-id="plugin-overview-button"
+      >
         <v-list-item-icon class="mr-4 ml-1">
           <v-icon>mdi-tune</v-icon>
         </v-list-item-icon>
@@ -109,6 +122,7 @@
           <v-list-item
             id="database-list-button"
             v-on="{ ...menu }"
+            data-id="database-list-button"
             @click="$emit('closeSelection')"
           >
             <v-list-item-icon class="mr-4 ml-1">

@@ -1,5 +1,4 @@
 import { useBackendMock } from "../../setup/backendMock";
-import { clickElement } from "../helpers";
 import {
   getGetAlias,
   getPostAlias,
@@ -7,7 +6,7 @@ import {
   generateRandomInt,
   getPutAlias,
 } from "../../setup/helpers";
-import { getSelector as getViewSelector } from "../views/helpers";
+import { selectors as viewSelectors } from "../views/helpers";
 import {
   assertActivePlugins,
   assertRequestValues,
@@ -47,7 +46,7 @@ describe("When opening the plugins overview", () => {
       )[0];
 
       databases.forEach((database: any, idx: number) => {
-        clickElement(getViewSelector("pluginOverviewButton"));
+        cy.get(viewSelectors.pluginOverviewButton).click();
         cy.get(selectors.pluginOverview).within(() => {
           // update tmp state
           cy.updateAppState(backend, {
@@ -98,7 +97,7 @@ describe("When opening the plugins overview", () => {
       )[0];
 
       databases.forEach((database: any, idx: number) => {
-        clickElement(getViewSelector("pluginOverviewButton"));
+        cy.get(viewSelectors.pluginOverviewButton).click();
         cy.get(selectors.pluginOverview).within(() => {
           // update tmp state
           cy.updateAppState(backend, {
@@ -164,7 +163,7 @@ describe("When opening the plugins overview", () => {
           },
           []
         )[0];
-        clickElement(getViewSelector("pluginOverviewButton"));
+        cy.get(viewSelectors.pluginOverviewButton).click();
         cy.get(selectors.pluginOverview).within(() => {
           cy.get(databaseSelectors.databaseChip).eq(idx).click({ force: true });
 

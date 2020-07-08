@@ -1,10 +1,10 @@
 <template>
   <v-select
-    id="historic-range-selection"
     v-model="selectedHistoricRange"
     :items="availableHistoricRanges"
     label="Observed Time Range"
     :disabled="disabled"
+    data-id="historic-range-selection"
   />
 </template>
 

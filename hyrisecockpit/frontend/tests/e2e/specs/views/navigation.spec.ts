@@ -1,5 +1,5 @@
 import { testElementTrigger } from "../abstractTests";
-import { getRoute, getSelector, testRedirection } from "./helpers";
+import { routes, selectors, testRedirection } from "./helpers";
 
 describe("Change page routes", () => {
   beforeEach(() => {
@@ -9,14 +9,14 @@ describe("Change page routes", () => {
   // test overview
   describe("when clicking the overview button", () => {
     it("will redirect to the overview page", () => {
-      testRedirection(getSelector("overviewButton"), getRoute("overview"));
+      testRedirection(selectors.overviewButton, routes.overview);
     });
   });
 
   // test comparison
   describe("when clicking the comparison button", () => {
     it("will redirect to the comparison page", () => {
-      testRedirection(getSelector("comparisonButton"), getRoute("comparison"));
+      testRedirection(selectors.comparisonButton, routes.comparison);
     });
   });
 
@@ -24,8 +24,8 @@ describe("Change page routes", () => {
   describe("when clicking the workload monitoring button", () => {
     it("will redirect to the workload monitoring page", () => {
       testRedirection(
-        getSelector("workloadMonitoringButton"),
-        getRoute("workloadMonitoring")
+        selectors.workloadMonitoringButton,
+        routes.workloadMonitoring
       );
     });
   });
@@ -33,10 +33,7 @@ describe("Change page routes", () => {
   // test database list
   describe("when clicking the database list button", () => {
     it("will open the database list", () => {
-      testElementTrigger(
-        getSelector("databaseListButton"),
-        getSelector("databaseList")
-      );
+      testElementTrigger(selectors.databaseListButton, selectors.databaseList);
     });
   });
 
@@ -44,8 +41,8 @@ describe("Change page routes", () => {
   describe("when clicking the workload generation button", () => {
     it("will open the workload generation dialog", () => {
       testElementTrigger(
-        getSelector("workloadGenerationButton"),
-        getSelector("workloadGeneration")
+        selectors.workloadGenerationButton,
+        selectors.workloadGeneration
       );
     });
   });
@@ -54,8 +51,8 @@ describe("Change page routes", () => {
   describe("when clicking the plugin overview button", () => {
     it("will open the plugin overview panel", () => {
       testElementTrigger(
-        getSelector("pluginOverviewButton"),
-        getSelector("pluginOverview")
+        selectors.pluginOverviewButton,
+        selectors.pluginOverview
       );
     });
   });
@@ -63,13 +60,10 @@ describe("Change page routes", () => {
   // test selection list
   describe("when clicking the views settings button", () => {
     it("will open the selection list", () => {
-      testRedirection(
-        getSelector("workloadMonitoringButton"),
-        getRoute("workloadMonitoring")
-      );
+      cy.visit(routes.workloadMonitoring);
       testElementTrigger(
-        getSelector("selectionListButton"),
-        getSelector("selectionList")
+        selectors.selectionListButton,
+        selectors.selectionList
       );
     });
   });

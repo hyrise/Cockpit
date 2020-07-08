@@ -3,7 +3,6 @@
     <v-tooltip v-if="closable" left>
       <template v-slot:activator="{ on, value }">
         <v-icon
-          id="remove-database-button"
           class="mr-3"
           v-on="on"
           color="error"
@@ -14,24 +13,16 @@
       </template>
       <span>Remove Database</span>
     </v-tooltip>
-    <v-chip
-      v-if="database"
-      id="database-chip"
-      class="white--text"
-      data-id="database-chip"
-      :color="database.color"
-    >
+    <v-chip v-if="database" class="white--text" data-id="database-chip" :color="database.color">
       <div v-if="selectable">
         <v-icon
           v-if="selected"
-          id="add-select-database-button"
           left
           data-id="add-select-database-button"
           @click="handleUnSelect(database.id)"
         >mdi-eye</v-icon>
         <v-icon
           v-if="!selected"
-          id="remove-select-database-button"
           left
           data-id="remove-select-database-button"
           @click="handleSelect(database.id)"

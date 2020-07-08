@@ -1,19 +1,17 @@
 <template>
-  <v-chip id="metric-chip" class="white--text" color="secondary">
+  <v-chip class="white--text" color="secondary" data-id="metric-chip">
     <v-icon
       v-if="selected"
-      id="add-select-metric-button"
       left
+      data-id="add-select-metric-button"
       @click="handleUnSelect(metric)"
-      >mdi-eye</v-icon
-    >
+    >mdi-eye</v-icon>
     <v-icon
       v-if="!selected"
-      id="remove-select-metric-button"
       left
+      data-id="remove-select-metric-button"
       @click="handleSelect(metric)"
-      >mdi-eye-off</v-icon
-    >
+    >mdi-eye-off</v-icon>
     <v-tooltip right>
       <template v-slot:activator="{ on }">
         <b v-on="on">{{ truncateItemTitle(getMetricTitle(metric)) }}</b>

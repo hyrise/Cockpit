@@ -379,7 +379,7 @@ function useRouteMocking(
     response: any = {},
     withBody: boolean = false
   ): void {
-    cy.route(getRouteMock("POST", url, response, withBody, delay || 100)).as(
+    cy.route(getRouteMock("POST", url, response, withBody, delay || 0)).as(
       alias
     );
   }
@@ -390,7 +390,7 @@ function useRouteMocking(
     response: any = {},
     withBody: boolean = false
   ): void {
-    cy.route(getRouteMock("DELETE", url, response, withBody, delay || 100)).as(
+    cy.route(getRouteMock("DELETE", url, response, withBody, delay || 0)).as(
       alias
     );
   }

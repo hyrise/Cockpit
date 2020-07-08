@@ -1,6 +1,5 @@
 import { useBackendMock } from "../../setup/backendMock";
-import { clickElement } from "../helpers";
-import { getSelector as getViewSelector } from "../views/helpers";
+import { selectors as viewSelectors } from "../views/helpers";
 import { assertSQLRequest, selectors } from "./helpers";
 import { getPostAlias } from "../../setup/helpers";
 import * as faker from "faker";
@@ -16,22 +15,11 @@ describe("when opening the sql input", () => {
     });
   });
 
-  it("opens the sql dialog", () => {
-    databases.forEach((database: any, idx: number) => {
-      clickElement(getViewSelector("databaseListButton"));
-      cy.get(getViewSelector("databaseList")).within(() => {
-        cy.get(selectors.openSQLDialog).eq(idx).click();
-      });
-      cy.get(selectors.sqlInput).should("exist");
-      cy.reload();
-    });
-  });
-
   describe("when clicking the cancel button", () => {
     it("closes the sql dialog", () => {
       databases.forEach((database: any, idx: number) => {
-        clickElement(getViewSelector("databaseListButton"));
-        cy.get(getViewSelector("databaseList")).within(() => {
+        cy.get(viewSelectors.databaseListButton).click();
+        cy.get(viewSelectors.databaseList).within(() => {
           cy.get(selectors.openSQLDialog).eq(idx).click();
         });
         cy.get(selectors.sqlInput).should("exist");
@@ -47,8 +35,8 @@ describe("when opening the sql input", () => {
     it("sends a query with the correct data", () => {
       const query = faker.random.words();
       databases.forEach((database: any, idx: number) => {
-        clickElement(getViewSelector("databaseListButton"));
-        cy.get(getViewSelector("databaseList")).within(() => {
+        cy.get(viewSelectors.databaseListButton).click();
+        cy.get(viewSelectors.databaseList).within(() => {
           cy.get(selectors.openSQLDialog).eq(idx).click();
         });
         cy.get(selectors.sqlInput).clear().type(query);

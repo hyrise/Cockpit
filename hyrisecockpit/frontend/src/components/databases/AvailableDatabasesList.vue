@@ -1,5 +1,5 @@
 <template>
-  <v-list id="database-list" class="list" data-id="database-list">
+  <v-list class="list" data-id="database-list">
     <v-card flat>
       <v-card-title class="header subtitle-1">
         DATABASES

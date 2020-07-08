@@ -1,5 +1,4 @@
-import { clickElement } from "../helpers";
-import { getSelector as getViewSelector } from "../views/helpers";
+import { selectors as viewSelectors } from "../views/helpers";
 import { useBackendMock } from "../../setup/backendMock";
 import {
   generateRandomInt,
@@ -34,7 +33,7 @@ describe("opening workload generation", () => {
 
   // test loaded benchmarks
   it("will initially show the correct loaded and startable benchmarks", () => {
-    clickElement(getViewSelector("workloadGenerationButton"));
+    cy.get(viewSelectors.workloadGenerationButton).click();
     assertBenchmarks(statusData);
   });
 
@@ -43,7 +42,7 @@ describe("opening workload generation", () => {
     it("will start, pause and stop workload", () => {
       const activeBenchmark = statusData[0].loaded_benchmarks[0];
 
-      clickElement(getViewSelector("workloadGenerationButton"));
+      cy.get(viewSelectors.workloadGenerationButton).click();
       cy.wait(1000);
 
       // test start workload
@@ -113,7 +112,7 @@ describe("opening workload generation", () => {
       );
       const index = generateRandomInt(0, deactiveBenchmarks.length);
 
-      clickElement(getViewSelector("workloadGenerationButton"));
+      cy.get(viewSelectors.workloadGenerationButton).click();
 
       // test load table
       cy.get(selectors.selectWorkloadData)
@@ -166,7 +165,7 @@ describe("opening workload generation", () => {
   describe("when opening the equalizer", () => {
     it("will show equalizers for every selected workload", () => {
       const activeBenchmark = statusData[0].loaded_benchmarks[0];
-      clickElement(getViewSelector("workloadGenerationButton"));
+      cy.get(viewSelectors.workloadGenerationButton).click();
       cy.wait(1000);
 
       cy.get(selectors.selectWorkload)

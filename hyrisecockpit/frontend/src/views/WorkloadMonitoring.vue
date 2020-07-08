@@ -1,14 +1,8 @@
 <template>
-  <div id="workload-monitoring-page">
-    <linear-loader
-      :conditions="[$databaseController.databasesUpdated]"
-      :evaluations="[false]"
-    />
+  <div id="workload-monitoring-page" data-id="workload-monitoring-page">
+    <linear-loader :conditions="[$databaseController.databasesUpdated]" :evaluations="[false]" />
     <div class="mx-6">
-      <status-warning
-        :selected-databases="selectedDatabases"
-        :selected-metrics="selectedMetrics"
-      />
+      <status-warning :selected-databases="selectedDatabases" :selected-metrics="selectedMetrics" />
       <database-query-tables :selected-databases="selectedDatabases" />
       <metrics-comparison-table
         v-if="selectedDatabases.length"

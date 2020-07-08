@@ -1,6 +1,6 @@
 import { useBackendMock } from "../../setup/backendMock";
 import { generateRandomInt } from "../../setup/helpers";
-import { getRoute } from "../views/helpers";
+import { routes } from "../views/helpers";
 import { assertQueryData, selectors } from "./helpers";
 
 const backend = useBackendMock();
@@ -14,7 +14,7 @@ describe("visiting workload monitoring page", () => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
     });
-    cy.visit(getRoute("workloadMonitoring"));
+    cy.visit(routes.workloadMonitoring);
     cy.setupData("detailed_query_information").then((xhr: any) => {
       data = [];
       xhr.response.body.forEach((database: any) => {

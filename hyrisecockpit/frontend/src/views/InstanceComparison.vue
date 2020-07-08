@@ -1,14 +1,8 @@
 <template>
-  <div id="comparison-page">
-    <linear-loader
-      :conditions="[$databaseController.databasesUpdated]"
-      :evaluations="[false]"
-    />
+  <div id="comparison-page" data-id="comparison-page">
+    <linear-loader :conditions="[$databaseController.databasesUpdated]" :evaluations="[false]" />
     <div v-if="$databaseController.databasesUpdated.value" class="mx-2">
-      <status-warning
-        :selected-databases="selectedDatabases"
-        :selected-metrics="selectedMetrics"
-      />
+      <status-warning :selected-databases="selectedDatabases" :selected-metrics="selectedMetrics" />
       <database-system-details
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"

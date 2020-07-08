@@ -1,6 +1,5 @@
 import { useBackendMock } from "../../setup/backendMock";
-import { clickElement } from "../helpers";
-import { getSelector as getViewSelector, getRoute } from "../views/helpers";
+import { routes, selectors as viewSelectors } from "../views/helpers";
 import {
   getDatabaseMainMemoryCapacity,
   getDatabaseMemoryFootprint,
@@ -9,7 +8,6 @@ import {
 import {
   testElementExistence,
   testElementVisibility,
-  testElementNoVisibility,
   testMaxDecimalDigits,
 } from "../abstractTests";
 
@@ -38,7 +36,7 @@ describe("when observing the database data and details", () => {
         });
       });
     });
-    cy.visit(getRoute("overview"));
+    cy.visit(routes.overview);
   });
 
   // clear state
@@ -56,8 +54,8 @@ describe("when observing the database data and details", () => {
   describe("when clicking the database list button", () => {
     it("will show the correct number of databases", () => {
       cy.get(selectors.numberOfDatabases).contains(databases.length.toString());
-      clickElement(getViewSelector("databaseListButton"));
-      cy.get(getViewSelector("databaseList")).within(() => {
+      cy.get(viewSelectors.databaseListButton).click();
+      cy.get(viewSelectors.databaseList).within(() => {
         databases.forEach((database: any, idx: number) => {
           cy.get(selectors.databaseChip).eq(idx).contains(database.id);
         });
@@ -107,8 +105,8 @@ describe("when observing the database data and details", () => {
   describe("when changing routes", () => {
     it("will show the same database colors", () => {
       const colors: string[] = [];
-      clickElement(getViewSelector("databaseListButton"));
-      cy.get(getViewSelector("databaseList")).within(() => {
+      cy.get(viewSelectors.databaseListButton).click();
+      cy.get(viewSelectors.databaseList).within(() => {
         databases.forEach((database: any, idx: number) => {
           cy.get(selectors.databaseChip)
             .eq(idx)
@@ -117,9 +115,9 @@ describe("when observing the database data and details", () => {
             });
         });
       });
-      cy.visit(getRoute("overview"));
-      clickElement(getViewSelector("databaseListButton"));
-      cy.get(getViewSelector("databaseList")).within(() => {
+      cy.visit(routes.overview);
+      cy.get(viewSelectors.databaseListButton).click();
+      cy.get(viewSelectors.databaseList).within(() => {
         databases.forEach((database: any, idx: number) => {
           cy.get(selectors.databaseChip)
             .eq(idx)
@@ -141,12 +139,12 @@ describe("when observing the database data and details", () => {
 
       cy.get(selectors.numberOfDatabases).contains("0");
 
-      clickElement(getViewSelector("databaseListButton"));
-      cy.get(getViewSelector("databaseList")).within(() => {
+      cy.get(viewSelectors.databaseListButton).click();
+      cy.get(viewSelectors.databaseList).within(() => {
         cy.get(selectors.databaseChip).should("not.exist");
       });
 
-      cy.visit(getRoute("overview"));
+      cy.visit(routes.overview);
       cy.get(selectors.databaseSystemDetails).should("not.exist");
 
       cy.restartAppState(backend, {});

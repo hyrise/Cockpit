@@ -1,6 +1,5 @@
 import { useBackendMock } from "../../setup/backendMock";
-import { clickElement } from "../helpers";
-import { getSelector as getViewSelector } from "../views/helpers";
+import { selectors as viewSelectors } from "../views/helpers";
 import {
   assertActivePlugins,
   assertPluginExistence,
@@ -38,7 +37,7 @@ describe("When opening the plugins overview", () => {
 
   // test correct plugins
   it("will show the correct plugins for every database", () => {
-    clickElement(getViewSelector("pluginOverviewButton"));
+    cy.get(viewSelectors.pluginOverviewButton).click();
     cy.get(selectors.pluginOverview).within(() => {
       databases.forEach((database: any, idx: number) => {
         cy.get(selectors.databaseHeader).eq(idx).click();
@@ -50,13 +49,13 @@ describe("When opening the plugins overview", () => {
         );
       });
     });
-    clickElement(getViewSelector("pluginOverviewButton"));
+    cy.get(viewSelectors.pluginOverviewButton).click();
     testElementNoExistence(selectors.pluginOverview);
   });
 
   // test correct plugin log messages
   it("will show the correct plugin logs for every database", () => {
-    clickElement(getViewSelector("pluginOverviewButton"));
+    cy.get(viewSelectors.pluginOverviewButton).click();
     cy.get(selectors.pluginOverview).within(() => {
       databases.forEach((database: any, idx: number) => {
         cy.get(selectors.databaseHeader).eq(idx).click();
@@ -73,7 +72,7 @@ describe("When opening the plugins overview", () => {
         cy.get(selectors.databaseHeader).eq(idx).click();
       });
     });
-    clickElement(getViewSelector("pluginOverviewButton"));
+    cy.get(viewSelectors.pluginOverviewButton).click();
     testElementNoExistence(selectors.pluginOverview);
   });
 
@@ -81,7 +80,7 @@ describe("When opening the plugins overview", () => {
   it("will show the correct plugin settings for every active plugin and database", () => {
     cy.setupAppState(backend); // need this for properly open change settings button
     cy.wait(500);
-    clickElement(getViewSelector("pluginOverviewButton"));
+    cy.get(viewSelectors.pluginOverviewButton).click();
     cy.get(selectors.pluginOverview).within(() => {
       databases.forEach((database: any, idx: number) => {
         const activePlugins = getPluginsByState(

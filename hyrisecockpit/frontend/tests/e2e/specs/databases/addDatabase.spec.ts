@@ -1,7 +1,5 @@
 import { useBackendMock } from "../../setup/backendMock";
-import { clickElement } from "../helpers";
-import { getPostAlias } from "../../setup/helpers";
-import { getSelector as getViewSelector } from "../views/helpers";
+import { selectors as viewSelectors } from "../views/helpers";
 import {
   assertDefaultPostValues,
   assertAdvancedPostValues,
@@ -14,6 +12,7 @@ import {
   testButtonIsDisabled,
   testContentNoExistence,
 } from "../abstractTests";
+import { getPostAlias } from "../../setup/helpers";
 
 const backend = useBackendMock();
 
@@ -32,17 +31,17 @@ describe("When adding a new database", () => {
   // test cancel
   describe("and clicking the cancel button", () => {
     it("will not add a new database", () => {
-      clickElement(getViewSelector("databaseListButton"));
-      clickElement(selectors.addDatabaseButton);
+      cy.get(viewSelectors.databaseListButton).click();
+      cy.get(selectors.addDatabaseButton).click();
 
-      clickElement(selectors.cancelAddDatabaseButton);
+      cy.get(selectors.cancelAddDatabaseButton).click();
       cy.numberOfRequests(getPostAlias("database")).should("eq", 0);
 
       testElementNoVisibility(selectors.addDatabase);
 
-      clickElement(getViewSelector("databaseListButton"));
+      cy.get(viewSelectors.databaseListButton).click();
 
-      cy.get(getViewSelector("databaseList")).within(() => {
+      cy.get(viewSelectors.databaseList).within(() => {
         cy.get(selectors.databaseChip)
           .contains(newDatabase.id)
           .should("not.exist");
@@ -53,8 +52,8 @@ describe("When adding a new database", () => {
   // test default save
   describe("and clicking the save button with default data", () => {
     it("will add a new database with the correct data", () => {
-      clickElement(getViewSelector("databaseListButton"));
-      clickElement(selectors.addDatabaseButton);
+      cy.get(viewSelectors.databaseListButton).click();
+      cy.get(selectors.addDatabaseButton).click();
       testContentNoExistence(newDatabase.host);
 
       // update tmp state
@@ -69,7 +68,7 @@ describe("When adding a new database", () => {
         .clear()
         .type(newDatabase.number_workers.toString());
 
-      clickElement(selectors.saveDatabaseButton);
+      cy.get(selectors.saveDatabaseButton).click();
 
       cy.wait("@" + getPostAlias("database"));
       cy.get("@" + getPostAlias("database")).should((xhr: any) => {
@@ -78,8 +77,8 @@ describe("When adding a new database", () => {
       cy.numberOfRequests(getPostAlias("database")).should("eq", 1);
 
       cy.wait(500);
-      clickElement(getViewSelector("databaseListButton"));
-      cy.get(getViewSelector("databaseList")).within(() => {
+      cy.get(viewSelectors.databaseListButton).click();
+      cy.get(viewSelectors.databaseList).within(() => {
         cy.get(selectors.databaseChip)
           .eq(databases.length)
           .contains(newDatabase.host);
@@ -97,8 +96,8 @@ describe("When adding a new database", () => {
   // test advanced save
   describe("and clicking the save button with advanced data", () => {
     it("will add a new database with the correct data", () => {
-      clickElement(getViewSelector("databaseListButton"));
-      clickElement(selectors.addDatabaseButton);
+      cy.get(viewSelectors.databaseListButton).click();
+      cy.get(selectors.addDatabaseButton).click();
       testContentNoExistence(newDatabase.id);
 
       // update tmp state
@@ -114,14 +113,14 @@ describe("When adding a new database", () => {
         .clear()
         .type(newDatabase.number_workers.toString());
 
-      clickElement(selectors.advancedInputButton);
+      cy.get(selectors.advancedInputButton).click();
 
       cy.get(selectors.portInput).clear().type(newDatabase.port);
       cy.get(selectors.dbNameInput).clear().type(newDatabase.dbname);
       cy.get(selectors.userInput).clear().type(newDatabase.port);
       cy.get(selectors.passwordInput).clear().type(newDatabase.dbname);
 
-      clickElement(selectors.saveDatabaseButton);
+      cy.get(selectors.saveDatabaseButton).click();
 
       cy.wait("@" + getPostAlias("database"));
       cy.get("@" + getPostAlias("database")).should((xhr: any) => {
@@ -130,8 +129,8 @@ describe("When adding a new database", () => {
       cy.numberOfRequests(getPostAlias("database")).should("eq", 1);
 
       cy.wait(500);
-      clickElement(getViewSelector("databaseListButton"));
-      cy.get(getViewSelector("databaseList")).within(() => {
+      cy.get(viewSelectors.databaseListButton).click();
+      cy.get(viewSelectors.databaseList).within(() => {
         cy.get(selectors.databaseChip)
           .eq(databases.length)
           .contains(newDatabase.id);
@@ -149,8 +148,8 @@ describe("When adding a new database", () => {
   // test non-unique ID
   describe("and trying to add a database with already used ID", () => {
     it("will show an error message", () => {
-      clickElement(getViewSelector("databaseListButton"));
-      clickElement(selectors.addDatabaseButton);
+      cy.get(viewSelectors.databaseListButton).click();
+      cy.get(selectors.addDatabaseButton).click();
 
       cy.get(selectors.hostInput).clear().type(newDatabase.host);
       cy.get(selectors.idInput).clear().type(databases[0].id);
