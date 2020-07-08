@@ -3,10 +3,8 @@
 from multiprocessing import Value
 from threading import Thread
 
-from hyrisecockpit.database_manager.worker_pool import WorkerPool
-
 from .background import BackgroundJobManager
-from .cursor import ConnectionFactory, StorageConnectionFactory
+from .cursor import ConnectionFactory
 from .job.delete_tables import delete_tables as delete_tables_job
 from .job.load_tables import load_tables as load_tables_job
 from .job.plugin import activate_plugin as activate_plugin_job
@@ -21,9 +19,6 @@ class AsynchronousJobManager(object):
         background_job_manager: BackgroundJobManager,
         database_blocked: Value,
         connection_factory: ConnectionFactory,
-        hyrise_active: Value,
-        worker_pool: WorkerPool,
-        storage_connection_factory: StorageConnectionFactory,
     ):
         """Initialize AsynchronousJobManager object."""
         self._background_job_manager: BackgroundJobManager = background_job_manager
