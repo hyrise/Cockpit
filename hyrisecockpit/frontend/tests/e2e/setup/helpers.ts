@@ -39,6 +39,13 @@ export type DatabaseState = "workloadRunning";
 
 export const benchmarks = ["tpch_0_1", "tpch_1", "tpcds_1", "job_1"];
 
+export const displayedBenchmark = {
+  tpch_0_1: "TPC-H SF 0.1",
+  tpch_1: "TPC-H SF 1",
+  tpcds_1: "TPC-DS",
+  job_1: "Join Order Benchmark",
+};
+
 export const comparisonRequests: Request[] = [
   "throughput",
   "latency",

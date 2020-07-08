@@ -22,6 +22,10 @@ export function getSelectorByConfig(elementType: string, id: string): string {
   return `${elementType}[id=${id}]`;
 }
 
+export function getSelectorByCustomConfig(id: string): string {
+  return `[data-id=${id}]`;
+}
+
 export function waitForChartRender(): void {
   cy.wait(1000);
 }
