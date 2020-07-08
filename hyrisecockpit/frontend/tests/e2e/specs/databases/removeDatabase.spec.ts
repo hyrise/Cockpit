@@ -2,7 +2,6 @@ import { useBackendMock } from "../../setup/backendMock";
 import { getDeleteAlias } from "../../setup/helpers";
 import { selectors as viewSelectors } from "../views/helpers";
 import { assertDeleteValues, selectors } from "./helpers";
-import { testContentExistence } from "../abstractTests";
 
 const backend = useBackendMock({ databases: 2 });
 let databases: any = [];
@@ -73,7 +72,7 @@ describe("When removing a database", () => {
     it("will remove the selected database", () => {
       cy.get(viewSelectors.databaseListButton).click();
       cy.get(selectors.removeDatabaseButton).first().click();
-      testContentExistence(removeDatabase);
+      cy.contains(removeDatabase);
 
       // update tmp state
       cy.updateAppState(backend, {

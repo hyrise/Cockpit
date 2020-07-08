@@ -1,60 +1,32 @@
-import { useBackendMock } from "../../setup/backendMock";
-import { getRoute } from "../views/helpers";
 import {
+  assertTreeMapData,
+  assertMetricDetails,
   getSelector,
   getSelectorWithID,
   getDetailsSelectorWithID,
-  assertTreeMapData,
-  assertMetricDetails,
 } from "./helpers";
-import { waitForChartRender } from "../helpers";
 import { getDatabaseMemoryFootprint } from "../databases/helpers";
+import {
+  testNoVisibilityOnOverview,
+  testGenericChartsOnPage,
+} from "./abstractTests";
 
-const backend = useBackendMock();
+const metric = "secondStorage";
+const request = "storage";
+const layout = {};
+const transform = (xhr: any): any => {
+  return xhr.response.body.body.storage;
+};
 
-let databases: any[] = [];
-let data: any = {};
+/* test no existence on overview */
+testNoVisibilityOnOverview(metric);
 
-// test on overview
-describe("visiting the overview page", () => {
-  before(() => {
-    cy.setupAppState(backend).then((xhr: any) => {
-      databases = xhr.response.body;
-    });
-    cy.visit(getRoute("overview"));
-    waitForChartRender();
-  });
-
-  // test chart
-  it("will not show a chart", () => {
-    cy.get(getSelector("secondStorage")).should("not.exist");
-  });
-
-  // test details
-  it("will not show metric details", () => {
-    databases.forEach((database: any) => {
-      cy.get(
-        getDetailsSelectorWithID("memoryFootprint", database.id, "storage")
-      ).should("not.exist");
-    });
-  });
-});
-
-// test on comparison
-describe("visiting the comparison page", () => {
-  before(() => {
-    cy.setupAppState(backend).then((xhr: any) => {
-      databases = xhr.response.body;
-    });
-    cy.visit(getRoute("comparison"));
-    cy.setupData("storage").then((xhr: any) => {
-      data = xhr.response.body.body.storage;
-    });
-    waitForChartRender();
-  });
-
+/* test generic and custom on comparison */
+testGenericChartsOnPage({ metric, request }, layout, transform, (getData) => {
   // test data
   it("will show the correct metric data", () => {
+    const { data, databases } = getData();
+
     databases.forEach((database: any) => {
       cy.get(getSelectorWithID("secondStorage", database.id)).should(
         (elements: any) => {
@@ -70,6 +42,8 @@ describe("visiting the comparison page", () => {
 
   // test details
   it("will show the correct metric details", () => {
+    const { data, databases } = getData();
+
     databases.forEach((database: any) => {
       cy.get(
         getDetailsSelectorWithID("memoryFootprint", database.id, "storage")
@@ -88,6 +62,8 @@ describe("visiting the comparison page", () => {
   // test detailed view
   describe("when clicking the detailed view button", () => {
     it("will open a detailed treemap view", () => {
+      const { data, databases } = getData();
+
       databases.forEach((database: any) => {
         cy.get(getSelectorWithID("firstStorage", database.id)).should(
           "not.exist"

@@ -1,4 +1,4 @@
-import { clickElement, getSelectorByCustomConfig } from "../helpers";
+import { getSelectorByCustomConfig } from "../helpers";
 
 /* ROUTES */
 
@@ -84,8 +84,16 @@ export const basicPrecision = [1, 5, 15];
 /* ASSERTIONS */
 
 export function testRedirection(selector: string, newRoute: string): void {
-  clickElement(selector);
+  cy.get(selector).click();
   cy.url().should("contain", newRoute);
+}
+
+export function testElementTrigger(
+  rootSelector: string,
+  triggeredSelector: string
+): void {
+  cy.get(rootSelector).click();
+  cy.get(triggeredSelector);
 }
 
 export function checkMultipleMetrics(metric: string): string {

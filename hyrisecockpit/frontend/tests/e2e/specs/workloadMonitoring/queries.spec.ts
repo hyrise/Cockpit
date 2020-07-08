@@ -52,7 +52,7 @@ describe("visiting workload monitoring page", () => {
         cy.get("table")
           .eq(idx)
           .within(() => {
-            cy.get("tr").contains("latency (in ms)").click({ force: true });
+            cy.get("tr").contains("latency (in ms)").click();
           });
 
         cy.get(selectors.queryTable)
@@ -73,7 +73,7 @@ describe("visiting workload monitoring page", () => {
         cy.get("table")
           .eq(idx)
           .within(() => {
-            cy.get("tr").contains("latency (in ms)").click({ force: true });
+            cy.get("tr").contains("latency (in ms)").click();
           });
       });
     });
@@ -86,7 +86,7 @@ describe("visiting workload monitoring page", () => {
       databases.forEach((database: any, idx: number) => {
         cy.get(selectors.querySearch)
           .eq(idx)
-          .click({ force: true })
+          .click()
           .type(data[idx].query_information[index].query_number);
         cy.wait(500);
 

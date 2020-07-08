@@ -35,7 +35,9 @@ export interface Backend {
   rename(request: Request, alias: string, status?: number): void;
 }
 
-/* return mocked backend, only if requests should be mocked inside cypress */
+/** Use mocked backend depending on stubless param, which enables mocking on a designated node server.
+ * Otherwise a local cypress mock will be returned.
+ */
 export function useBackendMock(
   numbers: Partial<Record<Entity, number>> = {}
 ): Backend {
@@ -148,7 +150,7 @@ export function useBackendMock(
   return mockBackend(numbers);
 }
 
-/* backend with mocked routes */
+/** Use Backend with mocked routes and answers */
 export function mockBackend(
   numbers: Partial<Record<Entity, number>> = {}
 ): Backend {

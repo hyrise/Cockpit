@@ -1,11 +1,14 @@
-import { testLinechartOnComparison, testLinechartOnOverview } from "./helpers";
+import {
+  testLinechartOnComparison,
+  testLinechartOnOverview,
+} from "./abstractTests";
 import { roundNumber } from "../helpers";
 
 const metric = "latency";
 const request = "latency";
 const layout = { title: "Latency in ms", min: 0 };
-const transform = (data: any, xhr: any): any => {
-  data = {};
+const transform = (xhr: any): any => {
+  const data: any = {};
   xhr.response.body.forEach((entry: any) => {
     data[entry.id] = roundNumber(entry.latency[0].latency, Math.pow(10, 6));
   });

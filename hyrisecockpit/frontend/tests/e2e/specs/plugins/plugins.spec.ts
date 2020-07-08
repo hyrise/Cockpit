@@ -9,7 +9,6 @@ import {
   pluginButton,
   getPluginsByState,
 } from "./helpers";
-import { testElementNoExistence } from "../abstractTests";
 
 let backend = useBackendMock();
 
@@ -50,7 +49,6 @@ describe("When opening the plugins overview", () => {
       });
     });
     cy.get(viewSelectors.pluginOverviewButton).click();
-    testElementNoExistence(selectors.pluginOverview);
   });
 
   // test correct plugin log messages
@@ -73,7 +71,6 @@ describe("When opening the plugins overview", () => {
       });
     });
     cy.get(viewSelectors.pluginOverviewButton).click();
-    testElementNoExistence(selectors.pluginOverview);
   });
 
   // test correct plugin settings

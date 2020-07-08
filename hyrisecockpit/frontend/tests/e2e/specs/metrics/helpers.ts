@@ -1,9 +1,9 @@
-import { getSelectorByConfig, cutNumber, roundNumber } from "../helpers";
-import { testMaxDecimalDigits } from "../abstractTests";
-import { routes } from "../views/helpers";
-import { useBackendMock } from "../../setup/backendMock";
-import { waitForChartRender } from "../helpers";
-import { Request } from "../../setup/helpers";
+import {
+  getSelectorByConfig,
+  cutNumber,
+  roundNumber,
+  testMaxDecimalDigits,
+} from "../helpers";
 
 /* SELECTORS */
 const selectors: Record<string, { element: string; title: string }> = {
@@ -178,135 +178,7 @@ export function assertMetricDetails(
   }
 }
 
-// HELPERS
+// DATA HELPERS
 function getRoundedData(value: number): number {
   return roundNumber(value, 1000, 1 / Math.pow(10, 3), false);
-}
-
-/* abstract tests */
-
-/** Test data, layout and details panel for a specific linechart metric by config on overview page */
-export function testLinechartOnOverview(
-  metric: string,
-  request: Request,
-  layoutData: {
-    title: string;
-    min?: number;
-    max?: number;
-  },
-  transformData: (data: any, xhr: any) => any
-): void {
-  const backend = useBackendMock();
-  let databases: any[] = [];
-  let data: any = {};
-
-  describe("visiting the overview page", () => {
-    before(() => {
-      cy.setupAppState(backend).then((xhr: any) => {
-        databases = xhr.response.body;
-      });
-      cy.visit(routes.overview);
-      cy.setupData(request).then((xhr: any) => {
-        data = transformData(data, xhr);
-      });
-      waitForChartRender();
-    });
-
-    // test data
-    it("will show the correct metric data", () => {
-      cy.get(getSelector(metric)).should((elements: any) => {
-        assertLineChartData(
-          elements[0].data,
-          data,
-          databases.map((db) => db.id)
-        );
-      });
-    });
-
-    // test layout
-    it("will show the correct range and title", () => {
-      cy.get(getSelector(metric)).should((elements: any) => {
-        const layout = elements[0].layout;
-        expect(layout.yaxis.title.text).to.eq(layoutData.title);
-        if (layoutData.min) expect(layout.yaxis.range[0]).to.eq(layoutData.min);
-        if (layoutData.max) expect(layout.yaxis.range[1]).to.eq(layoutData.max);
-      });
-    });
-
-    // test details
-    it("will not show metric details", () => {
-      databases.forEach((database: any) => {
-        cy.get(getDetailsSelectorWithID(metric, database.id)).should(
-          "not.exist"
-        );
-      });
-    });
-  });
-}
-
-/** Test data, layout and details panel for a specific linechart metric by config on comparison page */
-export function testLinechartOnComparison(
-  metric: string,
-  request: Request,
-  layoutData: {
-    title: string;
-    min?: number;
-    max?: number;
-  },
-  transformData: (data: any, xhr: any) => any
-): void {
-  const backend = useBackendMock();
-  let databases: any[] = [];
-  let data: any = {};
-
-  describe("visiting the comparison page", () => {
-    before(() => {
-      cy.setupAppState(backend).then((xhr: any) => {
-        databases = xhr.response.body;
-      });
-      cy.visit(routes.comparison);
-      cy.setupData(request).then((xhr: any) => {
-        data = transformData(data, xhr);
-      });
-      waitForChartRender();
-    });
-
-    // test data
-    it("will show the correct metric data", () => {
-      databases.forEach((database: any) => {
-        cy.get(getSelectorWithID(metric, database.id)).should(
-          (elements: any) => {
-            assertLineChartData(elements[0].data, data, [database.id]);
-          }
-        );
-      });
-    });
-
-    // test layout
-    it("will show the correct range and title", () => {
-      databases.forEach((database: any) => {
-        cy.get(getSelectorWithID(metric, database.id)).should(
-          (elements: any) => {
-            const layout = elements[0].layout;
-            expect(layout.yaxis.title.text).to.eq(layoutData.title);
-            if (layoutData.min)
-              expect(layout.yaxis.range[0]).to.eq(layoutData.min);
-            if (layoutData.max)
-              expect(layout.yaxis.range[1]).to.eq(layoutData.max);
-          }
-        );
-      });
-    });
-
-    // test details
-    it("will not show metric details", () => {
-      databases.forEach((database: any) => {
-        cy.get(getDetailsSelectorWithID(metric, database.id))
-          .invoke("text")
-          .then((text: any) => {
-            assertMetricDetails(text, data[database.id]);
-          });
-      });
-    });
-  });
 }

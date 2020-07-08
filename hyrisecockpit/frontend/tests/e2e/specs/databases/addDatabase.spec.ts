@@ -7,11 +7,6 @@ import {
   selectors,
 } from "./helpers";
 import { fakeId, fakeDatabaseData } from "../../setup/factories";
-import {
-  testElementNoVisibility,
-  testButtonIsDisabled,
-  testContentNoExistence,
-} from "../abstractTests";
 import { getPostAlias } from "../../setup/helpers";
 
 const backend = useBackendMock();
@@ -37,7 +32,7 @@ describe("When adding a new database", () => {
       cy.get(selectors.cancelAddDatabaseButton).click();
       cy.numberOfRequests(getPostAlias("database")).should("eq", 0);
 
-      testElementNoVisibility(selectors.addDatabase);
+      cy.get(selectors.addDatabase).should("not.be.visible");
 
       cy.get(viewSelectors.databaseListButton).click();
 
@@ -54,7 +49,7 @@ describe("When adding a new database", () => {
     it("will add a new database with the correct data", () => {
       cy.get(viewSelectors.databaseListButton).click();
       cy.get(selectors.addDatabaseButton).click();
-      testContentNoExistence(newDatabase.host);
+      cy.contains(newDatabase.host).should("not.exist");
 
       // update tmp state
       cy.updateAppState(backend, {
@@ -98,7 +93,7 @@ describe("When adding a new database", () => {
     it("will add a new database with the correct data", () => {
       cy.get(viewSelectors.databaseListButton).click();
       cy.get(selectors.addDatabaseButton).click();
-      testContentNoExistence(newDatabase.id);
+      cy.contains(newDatabase.id).should("not.exist");
 
       // update tmp state
       cy.updateAppState(backend, {
@@ -158,7 +153,7 @@ describe("When adding a new database", () => {
         .type(newDatabase.number_workers.toString());
 
       cy.contains("ID is already taken.");
-      testButtonIsDisabled(selectors.saveDatabaseButton);
+      cy.get(selectors.saveDatabaseButton).should("be.disabled");
     });
   });
 });

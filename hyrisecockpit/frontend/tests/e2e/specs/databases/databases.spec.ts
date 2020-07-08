@@ -5,11 +5,7 @@ import {
   getDatabaseMemoryFootprint,
   selectors,
 } from "./helpers";
-import {
-  testElementExistence,
-  testElementVisibility,
-  testMaxDecimalDigits,
-} from "../abstractTests";
+import { testMaxDecimalDigits } from "../helpers";
 
 let backend = useBackendMock({
   databases: 2,
@@ -46,8 +42,7 @@ describe("when observing the database data and details", () => {
 
   // test showing details on visit
   it("will directly show the details panel", () => {
-    testElementExistence(selectors.databaseSystemDetails);
-    testElementVisibility(selectors.databaseSystemDetails);
+    cy.get(selectors.databaseSystemDetails).should("be.visible");
   });
 
   // test correct number of databases
