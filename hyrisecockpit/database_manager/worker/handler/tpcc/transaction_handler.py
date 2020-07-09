@@ -28,20 +28,13 @@ class TPCCTransactionHandler:
         """Execute task of the transaction type."""
         benchmark = task["benchmark"]
         warehouses = 5
-        scalefactor = 1.0
 
-        endts, latency, transaction_type = self._execute_random_transaction(
-            warehouses, scalefactor
-        )
+        endts, latency, transaction_type = self._execute_random_transaction(warehouses)
         return endts, latency, benchmark, transaction_type
 
-    def _execute_random_transaction(
-        self, warehouses: int, scalefactor: float
-    ) -> Tuple[int, int, str]:
+    def _execute_random_transaction(self, warehouses: int) -> Tuple[int, int, str]:
         """Execute random transaction."""
-        txn, params = TPCCParameterGenerator(
-            warehouses, scalefactor
-        ).generate_random_transaction()
+        txn, params = TPCCParameterGenerator(warehouses).generate_random_transaction()
         transaction_type: str = ""
 
         startts = time_ns()

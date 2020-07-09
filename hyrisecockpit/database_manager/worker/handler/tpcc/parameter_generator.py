@@ -17,7 +17,7 @@ class datetime:
     @classmethod
     def now(cls):
         """Generate current timestamp."""
-        return int(d_datetime.now().timestamp() * 1000)
+        return int(d_datetime.now().timestamp())
 
 
 class TPCCParameterGenerator:  # noqa
@@ -25,9 +25,7 @@ class TPCCParameterGenerator:  # noqa
 
     def __init__(self, warehouses, scalefactor):  # noqa
         """Initialize a parameter generator."""
-        self.scaleParameters = scaleparameters.makeWithScaleFactor(
-            warehouses, scalefactor
-        )
+        self.scaleParameters = scaleparameters.makeDefault(warehouses)
 
     ## DEF
 
