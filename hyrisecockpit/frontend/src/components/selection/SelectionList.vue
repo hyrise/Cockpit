@@ -1,5 +1,5 @@
 <template>
-  <v-card id="selection-list" class="selection-list">
+  <v-card class="selection-list" data-id="selection-list">
     <v-card-title>
       <div class="header">{{ pageName }}</div>
     </v-card-title>
@@ -62,10 +62,10 @@
                   </v-row>
                 </v-container>
                 <v-btn
-                  id="reset-time-range"
                   color="primary"
                   block
                   :disabled="!staticRange"
+                  data-id="reset-time-range"
                   @click="resetTimeRange"
                   >Set Continuous Time Range</v-btn
                 >
@@ -115,14 +115,14 @@
                     </v-col>
                   </v-row>
                 </v-container>
-                <v-alert v-if="!!errorMessage" type="error">{{
-                  errorMessage
-                }}</v-alert>
+                <v-alert v-if="!!errorMessage" type="error">
+                  {{ errorMessage }}
+                </v-alert>
                 <v-btn
-                  id="set-static-time-range"
                   color="primary"
                   block
                   :disabled="invalidDates"
+                  data-id="set-static-time-range"
                   @click="setStaticTimeRange"
                   >Set Static Time Range</v-btn
                 >
@@ -136,10 +136,10 @@
               <v-tooltip top>
                 <template v-slot:activator="{ on }">
                   <v-btn
-                    id="change-range-type"
                     v-on="on"
                     color="white"
                     depressed
+                    data-id="change-range-type"
                     @click="window = window == 1 ? 2 : 1"
                   >
                     <v-icon v-if="window === 2" left>mdi-chevron-left</v-icon>
@@ -147,9 +147,10 @@
                     <v-icon v-if="window === 1" right>mdi-chevron-right</v-icon>
                   </v-btn>
                 </template>
-                <span>
-                  Select {{ window == 1 ? "Static" : "Continuous" }} Range Type
-                </span>
+                <span
+                  >Select {{ window == 1 ? "Static" : "Continuous" }} Range
+                  Type</span
+                >
               </v-tooltip>
             </v-card-actions>
           </v-card>

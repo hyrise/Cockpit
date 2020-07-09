@@ -1,5 +1,5 @@
 <template>
-  <div id="workload-monitoring-page">
+  <div id="workload-monitoring-page" data-id="workload-monitoring-page">
     <linear-loader
       :conditions="[$databaseController.databasesUpdated]"
       :evaluations="[false]"
