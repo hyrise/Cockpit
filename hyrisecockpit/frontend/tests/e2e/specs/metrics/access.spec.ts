@@ -46,7 +46,6 @@ testGenericChartsOnPage({ metric, request }, layout, transform, (getData) => {
 
       databases.forEach((database: any, idx: number) => {
         cy.get(getSelector("accessSelect")).eq(idx).click({ force: true });
-
         clickContentOfSelect(idx, items[index].toString());
 
         cy.get(getSelectorWithID("access", database.id)).should(
@@ -70,6 +69,11 @@ testGenericChartsOnPage({ metric, request }, layout, transform, (getData) => {
 
       databases.forEach((database: any, idx: number) => {
         cy.get(getDetailedViewButton(metric, "open")).eq(idx).click();
+
+        cy.get(getSelector("detailedAccessSelect"))
+          .eq(idx)
+          .click({ force: true });
+        clickContentOfSelect(idx, items[index].toString());
 
         cy.get(getSelectorWithID("detailedAccess", database.id)).should(
           (elements: any) => {
