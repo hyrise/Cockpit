@@ -160,7 +160,7 @@ export function formatTimeString(date: Date): string {
   }`;
 }
 
-/* get metric time reuqest intervalls */
+/* get metric time request intervalls */
 function getStartTimeOfRequest(url: string): number {
   const startIndex = url.indexOf("=") + 1;
   return parseInt(url.substring(startIndex, url.indexOf("&")), 10);
