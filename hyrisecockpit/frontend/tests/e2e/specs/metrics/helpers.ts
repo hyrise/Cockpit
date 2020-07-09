@@ -3,6 +3,7 @@ import {
   cutNumber,
   roundNumber,
   testMaxDecimalDigits,
+  getSelectorByCustomConfig,
 } from "../helpers";
 
 /* SELECTORS */
@@ -21,14 +22,12 @@ const selectors: Record<string, { element: string; title: string }> = {
     title: "operatorProportion",
   },
   memoryFootprint: { element: "div", title: "memoryFootprint" },
-  firstStorage: { element: "div", title: "1storage" },
-  secondStorage: { element: "div", title: "2storage" },
-  firstAccess: { element: "div", title: "1access" },
-  secondAccess: { element: "div", title: "2access" },
-  firstAccessSelect: { element: "input", title: "1access-select" },
-  secondAccessSelect: { element: "input", title: "2access-select" },
-  openDetailed: { element: "button", title: "open-metric-detailed-view" },
-  closeDetailed: { element: "button", title: "close-metric-detailed-view" },
+  storage: { element: "div", title: "storage" },
+  detailedStorage: { element: "div", title: "detailed-storage" },
+  access: { element: "div", title: "access" },
+  detailedAccess: { element: "div", title: "detailed-access" },
+  accessSelect: { element: "input", title: "access-select" },
+  detailedAccessSelect: { element: "input", title: "detailed-access-select" },
 };
 
 export function getSelector(component: string): string {
@@ -53,6 +52,15 @@ export function getDetailsSelectorWithID(
   return getSelectorByConfig(
     selectors[component].element,
     `${prefix}${selectors[component].title}-${id}-details`
+  );
+}
+
+export function getDetailedViewButton(
+  metric: string,
+  buttonType: "open" | "close"
+): string {
+  return getSelectorByCustomConfig(
+    `${buttonType}-metric-detailed-view-${metric}`
   );
 }
 

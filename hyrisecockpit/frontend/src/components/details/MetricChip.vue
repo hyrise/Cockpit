@@ -5,13 +5,15 @@
       left
       data-id="add-select-metric-button"
       @click="handleUnSelect(metric)"
-    >mdi-eye</v-icon>
+      >mdi-eye</v-icon
+    >
     <v-icon
       v-if="!selected"
       left
       data-id="remove-select-metric-button"
       @click="handleSelect(metric)"
-    >mdi-eye-off</v-icon>
+      >mdi-eye-off</v-icon
+    >
     <v-tooltip right>
       <template v-slot:activator="{ on }">
         <b v-on="on">{{ truncateItemTitle(getMetricTitle(metric)) }}</b>

@@ -5,47 +5,55 @@
         <v-list-item-avatar tile size="70" class="mt-0 mb-2 mr-2">
           <img src="../../src/assets/images/hyrise_logo.png" />
         </v-list-item-avatar>
-        <v-list-item-title class="title font-weight-regular text--secondary mt-2">Cockpit</v-list-item-title>
+        <v-list-item-title
+          class="title font-weight-regular text--secondary mt-2"
+          >Cockpit</v-list-item-title
+        >
       </v-list-item>
       <v-divider />
       <v-list-item color="#02789D" input-value="true" dense>
         <v-list-item-content>
-          <v-list-item-title class="body-2 ml-1">Analysis Views</v-list-item-title>
+          <v-list-item-title class="body-2 ml-1"
+            >Analysis Views</v-list-item-title
+          >
         </v-list-item-content>
         <v-list-item-icon>
           <v-icon
-            id="selection-list-button"
             dense
             color="secondary"
             data-id="selection-list-button"
             @click="$emit('toggleSelection')"
-          >mdi-cog-outline</v-icon>
+            >mdi-cog-outline</v-icon
+          >
         </v-list-item-icon>
       </v-list-item>
       <v-divider />
 
-      <v-list-item id="overview-button" :to="{ name: 'overview' }" data-id="overview-button">
+      <v-list-item :to="{ name: 'overview' }" data-id="overview-button">
         <v-list-item-icon class="mr-4 ml-1">
           <v-icon>mdi-database-search</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light">Overview</v-list-item-title>
+          <v-list-item-title class="body-2 font-weight-light"
+            >Overview</v-list-item-title
+          >
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item id="comparison-button" :to="{ name: 'comparison' }" data-id="comparison-button">
+      <v-list-item :to="{ name: 'comparison' }" data-id="comparison-button">
         <v-list-item-icon class="mr-4 ml-1">
           <v-icon>mdi-chart-line</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light">Comparison</v-list-item-title>
+          <v-list-item-title class="body-2 font-weight-light"
+            >Comparison</v-list-item-title
+          >
         </v-list-item-content>
       </v-list-item>
 
       <v-list-item
-        id="workload-monitoring-button"
         :to="{ name: 'workload' }"
         data-id="workload-monitoring-button"
       >
@@ -54,7 +62,9 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light">Workload Analysis</v-list-item-title>
+          <v-list-item-title class="body-2 font-weight-light"
+            >Workload Analysis</v-list-item-title
+          >
         </v-list-item-content>
       </v-list-item>
 
@@ -75,7 +85,6 @@
       />
 
       <v-list-item
-        id="workload-generation-button"
         @click="showWorkloadDialog = true"
         data-id="workload-generation-button"
       >
@@ -92,12 +101,13 @@
         ></v-badge>
 
         <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light">Workload</v-list-item-title>
+          <v-list-item-title class="body-2 font-weight-light"
+            >Workload</v-list-item-title
+          >
         </v-list-item-content>
       </v-list-item>
 
       <v-list-item
-        id="plugin-overview-button"
         @click="$emit('openPlugins')"
         data-id="plugin-overview-button"
       >
@@ -106,11 +116,16 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light">Plugins</v-list-item-title>
+          <v-list-item-title class="body-2 font-weight-light"
+            >Plugins</v-list-item-title
+          >
         </v-list-item-content>
       </v-list-item>
 
-      <add-database :open="showAddDatabaseDialog" @close="showAddDatabaseDialog = false" />
+      <add-database
+        :open="showAddDatabaseDialog"
+        @close="showAddDatabaseDialog = false"
+      />
       <remove-database
         :open="showRemoveDatabaseDialog"
         :database-id="removedDatabaseId"
@@ -120,7 +135,6 @@
       <v-menu bottom offset-x>
         <template v-slot:activator="{ on: menu }">
           <v-list-item
-            id="database-list-button"
             v-on="{ ...menu }"
             data-id="database-list-button"
             @click="$emit('closeSelection')"
@@ -129,7 +143,6 @@
               <v-icon>mdi-database-sync</v-icon>
             </v-list-item-icon>
             <v-badge
-              id="number-of-databases"
               color="secondary"
               :content="databaseCount"
               offset-y="1"
@@ -138,7 +151,9 @@
             ></v-badge>
 
             <v-list-item-content>
-              <v-list-item-title class="body-2 font-weight-light">Databases</v-list-item-title>
+              <v-list-item-title class="body-2 font-weight-light"
+                >Databases</v-list-item-title
+              >
             </v-list-item-content>
           </v-list-item>
         </template>
@@ -151,7 +166,11 @@
     </v-list>
 
     <v-footer absolute class="font-weight-medium mb-1" color="grey lighten-3">
-      <v-img src="../../src/assets/images/hpi_logo_bw.png" max-width="80" max-height="80"></v-img>
+      <v-img
+        src="../../src/assets/images/hpi_logo_bw.png"
+        max-width="80"
+        max-height="80"
+      ></v-img>
     </v-footer>
   </v-navigation-drawer>
 </template>

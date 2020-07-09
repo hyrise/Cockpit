@@ -8,7 +8,12 @@
         <v-container>
           <v-row>
             <v-col cols="6">
-              <v-text-field v-model="host" label="Host*" required data-id="host-input"></v-text-field>
+              <v-text-field
+                v-model="host"
+                label="Host*"
+                required
+                data-id="host-input"
+              ></v-text-field>
             </v-col>
             <v-col cols="6">
               <v-text-field
@@ -31,7 +36,11 @@
               ></v-text-field>
             </v-col>
             <v-spacer />
-            <v-btn text @click="showAdvanced = !showAdvanced" data-id="advanced-input-button">
+            <v-btn
+              text
+              @click="showAdvanced = !showAdvanced"
+              data-id="advanced-input-button"
+            >
               <div v-if="!showAdvanced">show advanced</div>
               <div v-else>hide advanced</div>
             </v-btn>
@@ -40,7 +49,12 @@
             <div v-if="showAdvanced">
               <v-row>
                 <v-col cols="6" sm="6">
-                  <v-text-field v-model="port" label="Port*" required data-id="port-input"></v-text-field>
+                  <v-text-field
+                    v-model="port"
+                    label="Port*"
+                    required
+                    data-id="port-input"
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="6" sm="6">
                   <v-text-field
@@ -53,7 +67,12 @@
               </v-row>
               <v-row>
                 <v-col cols="6">
-                  <v-text-field v-model="user" label="User*" required data-id="user-input"></v-text-field>
+                  <v-text-field
+                    v-model="user"
+                    label="User*"
+                    required
+                    data-id="user-input"
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="6">
                   <v-text-field
@@ -79,7 +98,8 @@
             showAdvanced = false;
           "
           data-id="cancel-add-database-button"
-        >Cancel</v-btn>
+          >Cancel</v-btn
+        >
         <v-btn
           color="primary"
           text
@@ -90,7 +110,8 @@
           "
           :disabled="!!idError.length"
           data-id="save-database-button"
-        >Save</v-btn>
+          >Save</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-dialog>

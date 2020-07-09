@@ -1,20 +1,36 @@
 <template>
-  <div :id="pluginDraggableId" class="plugin-overview" :data-id="pluginDraggableId">
+  <div
+    :id="pluginDraggableId"
+    class="plugin-overview"
+    :data-id="pluginDraggableId"
+  >
     <v-card :id="pluginDraggerId" class="card" color="primary" dark>
       <v-card-title>
         Plugins
         <v-icon class="close-icon" @click="onClose()">mdi-close</v-icon>
       </v-card-title>
     </v-card>
-    <v-expansion-panels class="panels" v-if="showDatabasePanels" multiple accordion>
+    <v-expansion-panels
+      class="panels"
+      v-if="showDatabasePanels"
+      multiple
+      accordion
+    >
       <v-expansion-panel v-for="database in databases" :key="database">
-        <v-expansion-panel-header class="title" data-id="plugin-database-header">
+        <v-expansion-panel-header
+          class="title"
+          data-id="plugin-database-header"
+        >
           <v-list-item class="item">
             <database-chip :database-id="database" />
           </v-list-item>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <div v-for="plugin in availablePlugins" :key="plugin" data-id="plugin-entry">
+          <div
+            v-for="plugin in availablePlugins"
+            :key="plugin"
+            data-id="plugin-entry"
+          >
             <div class="plugin">
               <div class="plugin-name">{{ plugin }}</div>
               <v-switch
@@ -36,8 +52,15 @@
             </div>
             <v-expand-transition>
               <div v-if="showSettings[database + '_' + plugin]">
-                <div v-for="setting in pluginSettings[database][plugin]" :key="setting.name">
-                  <PluginSetting :setting="setting" :databaseId="database" :pluginId="plugin" />
+                <div
+                  v-for="setting in pluginSettings[database][plugin]"
+                  :key="setting.name"
+                >
+                  <PluginSetting
+                    :setting="setting"
+                    :databaseId="database"
+                    :pluginId="plugin"
+                  />
                 </div>
               </div>
             </v-expand-transition>

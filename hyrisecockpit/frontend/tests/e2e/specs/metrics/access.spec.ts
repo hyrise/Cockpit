@@ -1,12 +1,17 @@
 import { generateRandomInt } from "../../setup/helpers";
-import { assertHeatMapData, getSelector, getSelectorWithID } from "./helpers";
+import {
+  assertHeatMapData,
+  getSelector,
+  getSelectorWithID,
+  getDetailedViewButton,
+} from "./helpers";
 import { clickContentOfSelect } from "../helpers";
 import {
   testNoVisibilityOnOverview,
   testGenericChartsOnPage,
 } from "./abstractTests";
 
-const metric = "secondAccess";
+const metric = "access";
 const request = "chunks";
 const layout = { xtitle: "Columns", ytitle: "Chunks" };
 const transform = (xhr: any): any => {
@@ -23,7 +28,7 @@ testGenericChartsOnPage({ metric, request }, layout, transform, (getData) => {
     it("will show the correct empty metric data", () => {
       const { databases } = getData();
       databases.forEach((database: any) => {
-        cy.get(getSelectorWithID("secondAccess", database.id)).should(
+        cy.get(getSelectorWithID("access", database.id)).should(
           (elements: any) => {
             assertHeatMapData(elements[0].data[0]);
           }
@@ -40,13 +45,11 @@ testGenericChartsOnPage({ metric, request }, layout, transform, (getData) => {
       const index = generateRandomInt(0, items.length);
 
       databases.forEach((database: any, idx: number) => {
-        cy.get(getSelector("secondAccessSelect"))
-          .eq(idx)
-          .click({ force: true });
+        cy.get(getSelector("accessSelect")).eq(idx).click({ force: true });
 
         clickContentOfSelect(idx, items[index].toString());
 
-        cy.get(getSelectorWithID("secondAccess", database.id)).should(
+        cy.get(getSelectorWithID("access", database.id)).should(
           (elements: any) => {
             assertHeatMapData(
               elements[0].data[0],
@@ -65,18 +68,10 @@ testGenericChartsOnPage({ metric, request }, layout, transform, (getData) => {
       const items = Object.keys(data[databases[0].id]);
       const index = generateRandomInt(0, items.length);
 
-      databases.forEach((database: any) => {
-        cy.get(getSelectorWithID("firstAccess", database.id)).should(
-          "not.exist"
-        );
-      });
       databases.forEach((database: any, idx: number) => {
-        cy.get(getSelector("openDetailed"))
-          .eq(idx * 2 + 1)
-          .click();
-        cy.get(getSelectorWithID("firstAccess", database.id)).should("exist");
+        cy.get(getDetailedViewButton(metric, "open")).eq(idx).click();
 
-        cy.get(getSelectorWithID("firstAccess", database.id)).should(
+        cy.get(getSelectorWithID("detailedAccess", database.id)).should(
           (elements: any) => {
             assertHeatMapData(
               elements[0].data[0],
@@ -84,9 +79,8 @@ testGenericChartsOnPage({ metric, request }, layout, transform, (getData) => {
             );
           }
         );
-
-        cy.get(getSelector("closeDetailed")).eq(idx).click();
-        cy.get(getSelectorWithID("firstAccess", database.id)).should(
+        cy.get(getDetailedViewButton(metric, "close")).eq(idx).click();
+        cy.get(getSelectorWithID("detailedAccess", database.id)).should(
           "not.be.visible"
         );
       });

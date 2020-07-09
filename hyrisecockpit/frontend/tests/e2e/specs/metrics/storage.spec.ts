@@ -1,9 +1,9 @@
 import {
   assertTreeMapData,
   assertMetricDetails,
-  getSelector,
   getSelectorWithID,
   getDetailsSelectorWithID,
+  getDetailedViewButton,
 } from "./helpers";
 import { getDatabaseMemoryFootprint } from "../databases/helpers";
 import {
@@ -11,7 +11,7 @@ import {
   testGenericChartsOnPage,
 } from "./abstractTests";
 
-const metric = "secondStorage";
+const metric = "storage";
 const request = "storage";
 const layout = {};
 const transform = (xhr: any): any => {
@@ -28,7 +28,7 @@ testGenericChartsOnPage({ metric, request }, layout, transform, (getData) => {
     const { data, databases } = getData();
 
     databases.forEach((database: any) => {
-      cy.get(getSelectorWithID("secondStorage", database.id)).should(
+      cy.get(getSelectorWithID("storage", database.id)).should(
         (elements: any) => {
           assertTreeMapData(
             elements[0].data[0],
@@ -64,17 +64,9 @@ testGenericChartsOnPage({ metric, request }, layout, transform, (getData) => {
     it("will open a detailed treemap view", () => {
       const { data, databases } = getData();
 
-      databases.forEach((database: any) => {
-        cy.get(getSelectorWithID("firstStorage", database.id)).should(
-          "not.exist"
-        );
-      });
       databases.forEach((database: any, idx: number) => {
-        cy.get(getSelector("openDetailed"))
-          .eq(idx * 2)
-          .click();
-        cy.get(getSelectorWithID("firstStorage", database.id)).should("exist");
-        cy.get(getSelectorWithID("firstStorage", database.id)).should(
+        cy.get(getDetailedViewButton("storage", "open")).eq(idx).click();
+        cy.get(getSelectorWithID("detailedStorage", database.id)).should(
           (elements: any) => {
             assertTreeMapData(
               elements[0].data[0],
@@ -83,8 +75,8 @@ testGenericChartsOnPage({ metric, request }, layout, transform, (getData) => {
             );
           }
         );
-        cy.get(getSelector("closeDetailed")).eq(idx).click({ force: true });
-        cy.get(getSelectorWithID("firstStorage", database.id)).should(
+        cy.get(getDetailedViewButton("storage", "close")).eq(idx).click();
+        cy.get(getSelectorWithID("detailedStorage", database.id)).should(
           "not.be.visible"
         );
       });

@@ -7,17 +7,23 @@
           v-on="on"
           data-id="setting-help-icon"
           @click="togglePluginEditor()"
-        >mdi-help-circle</v-icon>
+          >mdi-help-circle</v-icon
+        >
       </template>
       <span data-id="setting-description">{{ setting.description }}</span>
     </v-tooltip>
     <div class="setting-name" data-id="setting-name">{{ setting.name }}:</div>
-    <v-text-field class="setting-text" v-model="value" data-id="setting-value" />
+    <v-text-field
+      class="setting-text"
+      v-model="value"
+      data-id="setting-value"
+    />
     <v-btn
       text
       data-id="setting-save"
       @click="updatePluginSettings(databaseId, pluginId, setting.name, value)"
-    >save</v-btn>
+      >save</v-btn
+    >
   </div>
 </template>
 

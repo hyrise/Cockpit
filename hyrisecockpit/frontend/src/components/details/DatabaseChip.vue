@@ -9,24 +9,32 @@
           :size="value ? 36 : 28"
           data-id="remove-database-button"
           @click="$emit('closed')"
-        >mdi-delete-forever</v-icon>
+          >mdi-delete-forever</v-icon
+        >
       </template>
       <span>Remove Database</span>
     </v-tooltip>
-    <v-chip v-if="database" class="white--text" data-id="database-chip" :color="database.color">
+    <v-chip
+      v-if="database"
+      class="white--text"
+      data-id="database-chip"
+      :color="database.color"
+    >
       <div v-if="selectable">
         <v-icon
           v-if="selected"
           left
           data-id="add-select-database-button"
           @click="handleUnSelect(database.id)"
-        >mdi-eye</v-icon>
+          >mdi-eye</v-icon
+        >
         <v-icon
           v-if="!selected"
           left
           data-id="remove-select-database-button"
           @click="handleSelect(database.id)"
-        >mdi-eye-off</v-icon>
+          >mdi-eye-off</v-icon
+        >
       </div>
 
       <v-tooltip right>
@@ -34,9 +42,7 @@
           <div v-on="on">
             <v-icon v-if="!selectable" :left="!onlyIcon">mdi-database</v-icon>
             <b v-if="!onlyIcon">
-              {{
-              selectable ? truncateItemTitle(database.id) : database.id
-              }}
+              {{ selectable ? truncateItemTitle(database.id) : database.id }}
             </b>
           </div>
         </template>

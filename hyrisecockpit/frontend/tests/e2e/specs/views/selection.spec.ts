@@ -1,10 +1,4 @@
-import {
-  assertItemSelect,
-  checkMultipleMetrics,
-  metrics,
-  routes,
-  selectors,
-} from "./helpers";
+import { assertItemSelect, metrics, routes, selectors } from "./helpers";
 import { useBackendMock } from "../../setup/backendMock";
 import { selectors as databaseSelectors } from "../databases/helpers";
 import { getSelectorWithID as getMetricSelector } from "../metrics/helpers";
@@ -12,14 +6,11 @@ import { generateRandomInt } from "../../setup/helpers";
 
 const backend = useBackendMock({ databases: 2 });
 let databases: any = [];
-let databaseIndex: number = 0;
-let metricIndex: number = 0;
 
 type PageConfig = {
   page: "overview" | "workloadMonitoring" | "comparison";
   title: string;
   multipleDatabases?: boolean;
-  multipleMetrics?: boolean;
 };
 
 const pageConfig: PageConfig[] = [
@@ -36,7 +27,6 @@ const pageConfig: PageConfig[] = [
     page: "comparison",
     title: "Comparison",
     multipleDatabases: true,
-    multipleMetrics: true,
   },
 ];
 
@@ -50,7 +40,6 @@ function testSelectionOnPage({
   page,
   title,
   multipleDatabases,
-  multipleMetrics,
 }: PageConfig): void {
   describe(`visiting the ${title} page`, () => {
     before(() => {
@@ -70,7 +59,7 @@ function testSelectionOnPage({
 
     // test unselect and select database
     it("will unselect and select the specific database", () => {
-      databaseIndex = generateRandomInt(0, databases.length);
+      const databaseIndex = generateRandomInt(0, databases.length);
       // unselect
       cy.get(databaseSelectors.databaseChip)
         .eq(databaseIndex)
@@ -101,7 +90,7 @@ function testSelectionOnPage({
     // test unselect and select metric
     it("will unselect and select the specific metric", () => {
       const pageMetrics = metrics[page];
-      metricIndex = generateRandomInt(0, pageMetrics.length);
+      const metricIndex = generateRandomInt(0, pageMetrics.length);
       // unselect
       cy.get(selectors.metricChip)
         .eq(metricIndex)
@@ -114,12 +103,7 @@ function testSelectionOnPage({
         if (multipleDatabases) {
           databases.forEach((database: any) => {
             cy.get(
-              getMetricSelector(
-                multipleMetrics
-                  ? checkMultipleMetrics(pageMetrics[metricIndex])
-                  : pageMetrics[metricIndex],
-                database.id
-              )
+              getMetricSelector(pageMetrics[metricIndex], database.id)
             ).should("not.be.visible");
           });
         } else {
@@ -142,12 +126,7 @@ function testSelectionOnPage({
         if (multipleDatabases) {
           databases.forEach((database: any) => {
             cy.get(
-              getMetricSelector(
-                multipleMetrics
-                  ? checkMultipleMetrics(pageMetrics[metricIndex])
-                  : pageMetrics[metricIndex],
-                database.id
-              )
+              getMetricSelector(pageMetrics[metricIndex], database.id)
             ).should("be.visible");
           });
         } else {

@@ -1,7 +1,6 @@
 <template>
   <div class="flex">
     <div
-      id="database-system-details"
       v-for="database in databases"
       :key="database.id"
       :style="databaseFlex"
@@ -9,47 +8,45 @@
     >
       <v-card class="card" :color="database.color">
         <v-row class="detailsRow">
-          <v-col id="database-host" col="2" class="mr-1" data-id="database-host">
-            <v-card-title
-              class="font-weight-bold white--text noPadding"
-            >{{ database.systemDetails.host }}</v-card-title>
-            <v-card-text class="font-weight-bold white--text noPadding">Host</v-card-text>
+          <v-col col="2" class="mr-1" data-id="database-host">
+            <v-card-title class="font-weight-bold white--text noPadding">{{
+              database.systemDetails.host
+            }}</v-card-title>
+            <v-card-text class="font-weight-bold white--text noPadding"
+              >Host</v-card-text
+            >
           </v-col>
-          <v-col
-            id="database-memory-capacity"
-            col="2"
-            class="mr-1"
-            data-id="database-memory-capacity"
-          >
-            <v-card-title
-              class="font-weight-light white--text noPadding"
-            >{{ database.systemDetails.memoryCapacity }}&nbsp;GB</v-card-title>
-            <v-card-text class="font-weight-light white--text noPadding">Memory Capacity</v-card-text>
+          <v-col col="2" class="mr-1" data-id="database-memory-capacity">
+            <v-card-title class="font-weight-light white--text noPadding"
+              >{{ database.systemDetails.memoryCapacity }}&nbsp;GB</v-card-title
+            >
+            <v-card-text class="font-weight-light white--text noPadding"
+              >Memory Capacity</v-card-text
+            >
           </v-col>
-          <v-col id="database-number-cpus" col="2" class="mr-1" data-id="database-number-cpus">
-            <v-card-title
-              class="font-weight-light white--text noPadding"
-            >{{ database.systemDetails.numberOfCPUs }}</v-card-title>
-            <v-card-text class="font-weight-light white--text noPadding">CPUs</v-card-text>
+          <v-col col="2" class="mr-1" data-id="database-number-cpus">
+            <v-card-title class="font-weight-light white--text noPadding">{{
+              database.systemDetails.numberOfCPUs
+            }}</v-card-title>
+            <v-card-text class="font-weight-light white--text noPadding"
+              >CPUs</v-card-text
+            >
           </v-col>
-          <v-col
-            id="database-memory-footprint"
-            col="2"
-            class="mr-1"
-            data-id="database-memory-footprint"
-          >
+          <v-col col="2" class="mr-1" data-id="database-memory-footprint">
             <v-card-title class="mr-6 font-weight-light white--text noPadding">
-              {{
-              database.systemDetails.memoryFootprint
-              }}&nbsp;MB
+              {{ database.systemDetails.memoryFootprint }}&nbsp;MB
             </v-card-title>
-            <v-card-text class="mr-10 font-weight-light white--text noPadding">Data Size</v-card-text>
+            <v-card-text class="mr-10 font-weight-light white--text noPadding"
+              >Data Size</v-card-text
+            >
           </v-col>
-          <v-col id="database-number-workers" col="2" data-id="database-number-workers">
-            <v-card-title
-              class="font-weight-light white--text noPadding"
-            >{{ database.systemDetails.numberOfWorkers }}</v-card-title>
-            <v-card-text class="font-weight-light white--text noPadding">Workers</v-card-text>
+          <v-col col="2" data-id="database-number-workers">
+            <v-card-title class="font-weight-light white--text noPadding">{{
+              database.systemDetails.numberOfWorkers
+            }}</v-card-title>
+            <v-card-text class="font-weight-light white--text noPadding"
+              >Workers</v-card-text
+            >
           </v-col>
         </v-row>
       </v-card>

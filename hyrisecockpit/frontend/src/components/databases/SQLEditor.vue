@@ -9,7 +9,12 @@
       <v-system-bar :height="50" class="sql-header">
         <v-card-title>SQL-interface</v-card-title>
         <v-spacer />
-        <v-btn @click="showDialog = false" color="primary" text data-id="close-sql-dialog">
+        <v-btn
+          @click="showDialog = false"
+          color="primary"
+          text
+          data-id="close-sql-dialog"
+        >
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-system-bar>
@@ -27,13 +32,20 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer />
-        <v-btn @click="showDialog = false" color="primary" text data-id="close-sql-input">Close</v-btn>
+        <v-btn
+          @click="showDialog = false"
+          color="primary"
+          text
+          data-id="close-sql-input"
+          >Close</v-btn
+        >
         <v-btn
           @click="sendSQLQuery()"
           color="primary"
           text
           data-id="send-sql-input"
-        >send query to DB</v-btn>
+          >send query to DB</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-dialog>

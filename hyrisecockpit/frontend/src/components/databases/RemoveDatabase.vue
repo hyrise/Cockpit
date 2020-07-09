@@ -15,13 +15,15 @@
           text
           data-id="cancel-remove-database-button"
           @click="$emit('close')"
-        >Cancel</v-btn>
+          >Cancel</v-btn
+        >
         <v-btn
           color="primary"
           text
           data-id="delete-database-button"
           @click="onRemoveDatabase()"
-        >Remove</v-btn>
+          >Remove</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-dialog>
