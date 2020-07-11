@@ -7,7 +7,7 @@ import {
 } from "./helpers";
 import { testMaxDecimalDigits } from "../helpers";
 
-let backend = useBackendMock({
+const backend = useBackendMock({
   databases: 2,
 });
 
