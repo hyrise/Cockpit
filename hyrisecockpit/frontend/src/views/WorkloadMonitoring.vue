@@ -22,14 +22,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  SetupContext,
-  onMounted,
-  Ref,
-  ref,
-  watch,
-} from "@vue/composition-api";
+import { defineComponent, SetupContext } from "@vue/composition-api";
 import { Metric, workloadMetrics } from "../types/metrics";
 import { Database } from "../types/database";
 import LinearLoader from "../components/alerts/LinearLoader.vue";

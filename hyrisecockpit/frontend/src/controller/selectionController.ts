@@ -45,10 +45,14 @@ export function useSelectionController(): SelectionController {
   const selectedPrecision = ref(1);
   const selectedStaticRange = ref<StaticRange | null>(null);
 
-  const page = ref<PageName>("");
+  const page = ref<PageName | null>(null);
 
-  const selectedMetrics = computed(() => pageMetrics[page.value] || []);
-  const selectedDatabases = computed(() => pageDatabases[page.value] || []);
+  const selectedMetrics = computed(() =>
+    page.value ? pageMetrics[page.value] : []
+  );
+  const selectedDatabases = computed(() =>
+    page.value ? pageDatabases[page.value] : []
+  );
 
   // initialize databases
   watch(
@@ -57,7 +61,8 @@ export function useSelectionController(): SelectionController {
       pageDatabases.comparison = availableDatabases.value as string[];
       pageDatabases.overview = availableDatabases.value as string[];
       pageDatabases.workload = availableDatabases.value as string[];
-    }
+    },
+    { immediate: true }
   );
 
   // reset page and range data

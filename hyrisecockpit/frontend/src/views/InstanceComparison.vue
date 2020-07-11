@@ -24,15 +24,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  SetupContext,
-  watch,
-  computed,
-  Ref,
-  ref,
-  onMounted,
-} from "@vue/composition-api";
+import { defineComponent, SetupContext } from "@vue/composition-api";
 import MetricsComparisonTable from "../components/container/MetricsComparisonTable.vue";
 import { Metric, comparisonMetrics } from "../types/metrics";
 import { MetricViewData } from "../types/views";
