@@ -2,9 +2,7 @@
   <v-expansion-panels flat>
     <v-expansion-panel>
       <v-expansion-panel-header flat>
-        <div class="log" id="plugin-log">
-          Plugin log messages
-        </div>
+        <div class="log" data-id="plugin-log">Plugin log messages</div>
       </v-expansion-panel-header>
       <v-expansion-panel-content class="content">
         <v-textarea
@@ -13,6 +11,7 @@
           solo
           label="Plugin log messages"
           :value="logMessages"
+          data-id="plugin-log-area"
         ></v-textarea>
       </v-expansion-panel-content>
     </v-expansion-panel>

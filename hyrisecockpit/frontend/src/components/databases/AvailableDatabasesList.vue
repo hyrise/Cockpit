@@ -1,5 +1,5 @@
 <template>
-  <v-list id="database-list" class="list">
+  <v-list class="list" data-id="database-list">
     <v-card flat>
       <v-card-title class="header subtitle-1">
         DATABASES
@@ -7,10 +7,10 @@
         <v-tooltip right>
           <template v-slot:activator="{ on }">
             <v-chip
-              id="add-database-button"
               class="button"
               color="white primary--text"
               v-on="on"
+              data-id="add-database-button"
               @click="$emit('addDatabase')"
             >
               <v-icon color="primary" size="26">mdi-plus</v-icon>

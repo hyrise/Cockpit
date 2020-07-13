@@ -1,10 +1,10 @@
 <template>
   <v-select
-    id="precision-selection"
     v-model="selectedPrecision"
     :items="selectablePrecisions"
     label="Aggregation Interval"
     :disabled="disabled"
+    data-id="precision-selection"
   />
 </template>
 
