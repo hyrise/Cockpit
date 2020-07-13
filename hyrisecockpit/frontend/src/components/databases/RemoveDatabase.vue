@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="open" persistent max-width="400px">
-    <v-card id="remove-database">
+    <v-card data-id="remove-database">
       <v-card-title>
         <span class="headline">Remove database</span>
       </v-card-title>
@@ -11,20 +11,19 @@
       <v-card-actions>
         <v-spacer />
         <v-btn
-          id="cancel-remove-database-button"
           color="primary"
           text
+          data-id="cancel-remove-database-button"
           @click="$emit('close')"
           >Cancel</v-btn
         >
         <v-btn
-          id="delete-database-button"
           color="primary"
           text
+          data-id="delete-database-button"
           @click="onRemoveDatabase()"
+          >Remove</v-btn
         >
-          Remove
-        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

@@ -1,10 +1,10 @@
 <template>
   <v-progress-linear
     v-if="loading || databasesLoading || metricsLoading"
-    id="loading-animation"
     indeterminate
     :color="color"
     height="7"
+    data-id="loading-animation"
   />
 </template>
 <script lang="ts">

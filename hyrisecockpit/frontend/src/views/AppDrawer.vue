@@ -19,9 +19,9 @@
         </v-list-item-content>
         <v-list-item-icon>
           <v-icon
-            id="selection-list-button"
             dense
             color="secondary"
+            data-id="selection-list-button"
             @click="$emit('toggleSelection')"
             >mdi-cog-outline</v-icon
           >
@@ -29,7 +29,7 @@
       </v-list-item>
       <v-divider />
 
-      <v-list-item id="overview-button" :to="{ name: 'overview' }">
+      <v-list-item :to="{ name: 'overview' }" data-id="overview-button">
         <v-list-item-icon class="mr-4 ml-1">
           <v-icon>mdi-database-search</v-icon>
         </v-list-item-icon>
@@ -41,7 +41,7 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item id="comparison-button" :to="{ name: 'comparison' }">
+      <v-list-item :to="{ name: 'comparison' }" data-id="comparison-button">
         <v-list-item-icon class="mr-4 ml-1">
           <v-icon>mdi-chart-line</v-icon>
         </v-list-item-icon>
@@ -53,7 +53,10 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item id="workload-monitoring-button" :to="{ name: 'workload' }">
+      <v-list-item
+        :to="{ name: 'workload' }"
+        data-id="workload-monitoring-button"
+      >
         <v-list-item-icon class="mr-4 ml-1">
           <v-icon>mdi-chart-bar</v-icon>
         </v-list-item-icon>
@@ -82,8 +85,8 @@
       />
 
       <v-list-item
-        id="workload-generation-button"
         @click="showWorkloadDialog = true"
+        data-id="workload-generation-button"
       >
         <v-list-item-icon class="mr-4 ml-1">
           <v-icon>mdi-account-cog</v-icon>
@@ -95,8 +98,7 @@
           offset-y="1"
           offset-x="50"
           class="primary--text"
-        >
-        </v-badge>
+        ></v-badge>
 
         <v-list-item-content>
           <v-list-item-title class="body-2 font-weight-light"
@@ -105,7 +107,10 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item id="plugin-overview-button" @click="$emit('openPlugins')">
+      <v-list-item
+        @click="$emit('openPlugins')"
+        data-id="plugin-overview-button"
+      >
         <v-list-item-icon class="mr-4 ml-1">
           <v-icon>mdi-tune</v-icon>
         </v-list-item-icon>
@@ -130,21 +135,20 @@
       <v-menu bottom offset-x>
         <template v-slot:activator="{ on: menu }">
           <v-list-item
-            id="database-list-button"
             v-on="{ ...menu }"
+            data-id="database-list-button"
             @click="$emit('closeSelection')"
           >
             <v-list-item-icon class="mr-4 ml-1">
               <v-icon>mdi-database-sync</v-icon>
             </v-list-item-icon>
             <v-badge
-              id="number-of-databases"
               color="secondary"
               :content="databaseCount"
               offset-y="1"
               offset-x="50"
-            >
-            </v-badge>
+              data-id="number-of-databases"
+            ></v-badge>
 
             <v-list-item-content>
               <v-list-item-title class="body-2 font-weight-light"
@@ -166,8 +170,7 @@
         src="../../src/assets/images/hpi_logo_bw.png"
         max-width="80"
         max-height="80"
-      >
-      </v-img>
+      ></v-img>
     </v-footer>
   </v-navigation-drawer>
 </template>
