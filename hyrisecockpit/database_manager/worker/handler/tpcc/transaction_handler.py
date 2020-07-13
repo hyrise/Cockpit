@@ -22,15 +22,17 @@ class TPCCTransactionHandler:
         """Initialize TransactionHandler."""
         self.cursor = cursor
         self.conn = cursor._connection
-        self.conn.set_session(autocommit=False)
         self._worker_id = worker_id
 
     def execute_task(self, task) -> Tuple[int, int, str, str]:
         """Execute task of the transaction type."""
+        self.conn.set_session(autocommit=False)
         benchmark = task["benchmark"]
         warehouses = 5
 
         endts, latency, transaction_type = self._execute_random_transaction(warehouses)
+        self.conn.set_session(autocommit=True)
+
         return endts, latency, benchmark, transaction_type
 
     def _execute_random_transaction(self, warehouses: int) -> Tuple[int, int, str]:
