@@ -56,10 +56,10 @@ class StatusService:
                         "SELECT * FROM failed_queries LIMIT 100;", database=database,
                     )["failed_queries", None]
                 )
-                serilized_failed_queries = [
+                serialized_failed_queries = [
                     FailedQuery(**query) for query in failed_queries
                 ]
                 results.append(
-                    FailedTask(id=database, failed_queries=serilized_failed_queries)
+                    FailedTask(id=database, failed_queries=serialized_failed_queries)
                 )
         return results
