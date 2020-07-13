@@ -1,27 +1,29 @@
 <template>
   <div class="setting-row">
-    <v-tooltip id="setting-description" class="setting-tooltip" bottom>
+    <v-tooltip class="setting-tooltip" bottom data-id="setting-description">
       <template v-slot:activator="{ on }">
         <v-icon
-          id="setting-help-icon"
           class="setting-icon"
           v-on="on"
+          data-id="setting-help-icon"
           @click="togglePluginEditor()"
+          >mdi-help-circle</v-icon
         >
-          mdi-help-circle
-        </v-icon>
       </template>
-      <span id="setting-description">{{ setting.description }}</span>
+      <span data-id="setting-description">{{ setting.description }}</span>
     </v-tooltip>
-    <div id="setting-name" class="setting-name">{{ setting.name }}:</div>
-    <v-text-field id="setting-value" class="setting-text" v-model="value" />
+    <div class="setting-name" data-id="setting-name">{{ setting.name }}:</div>
+    <v-text-field
+      class="setting-text"
+      v-model="value"
+      data-id="setting-value"
+    />
     <v-btn
-      id="setting-save"
       text
+      data-id="setting-save"
       @click="updatePluginSettings(databaseId, pluginId, setting.name, value)"
+      >save</v-btn
     >
-      save
-    </v-btn>
   </div>
 </template>
 

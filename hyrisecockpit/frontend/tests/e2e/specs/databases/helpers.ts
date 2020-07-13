@@ -1,4 +1,4 @@
-import { getSelectorByConfig, roundNumber } from "../helpers";
+import { getSelectorByCustomConfig, roundNumber } from "../helpers";
 
 export type DatabaseData = {
   id: string;
@@ -8,51 +8,44 @@ export type DatabaseData = {
   dbname: string;
 };
 
-const selectors: Record<string, string> = {
-  addDatabaseButton: getSelectorByConfig("span", "add-database-button"),
-  addDatabase: getSelectorByConfig("div", "add-database"),
-  saveDatabaseButton: getSelectorByConfig("button", "save-database-button"),
-  cancelAddDatabaseButton: getSelectorByConfig(
-    "button",
+export const selectors = {
+  addDatabaseButton: getSelectorByCustomConfig("add-database-button"),
+  addDatabase: getSelectorByCustomConfig("add-database"),
+  saveDatabaseButton: getSelectorByCustomConfig("save-database-button"),
+  cancelAddDatabaseButton: getSelectorByCustomConfig(
     "cancel-add-database-button"
   ),
-  removeDatabaseButton: getSelectorByConfig("button", "remove-database-button"),
-  removeDatabase: getSelectorByConfig("div", "remove-database"),
-  deleteDatabaseButton: getSelectorByConfig("button", "delete-database-button"),
-  cancelRemoveDatabaseButton: getSelectorByConfig(
-    "button",
+  removeDatabaseButton: getSelectorByCustomConfig("remove-database-button"),
+  removeDatabase: getSelectorByCustomConfig("remove-database"),
+  deleteDatabaseButton: getSelectorByCustomConfig("delete-database-button"),
+  cancelRemoveDatabaseButton: getSelectorByCustomConfig(
     "cancel-remove-database-button"
   ),
-  advancedInputButton: getSelectorByConfig("button", "advanced-input-button"),
-  idInput: getSelectorByConfig("input", "id-input"),
-  hostInput: getSelectorByConfig("input", "host-input"),
-  portInput: getSelectorByConfig("input", "port-input"),
-  dbNameInput: getSelectorByConfig("input", "dbname-input"),
-  workerInput: getSelectorByConfig("input", "worker-input"),
-  userInput: getSelectorByConfig("input", "user-input"),
-  passwordInput: getSelectorByConfig("input", "password-input"),
-  databaseDetailsPanel: getSelectorByConfig("div", "database-details-panel"),
-  databaseSystemDetails: getSelectorByConfig("div", "database-system-details"),
-  hostDetails: getSelectorByConfig("div", "database-host"),
-  memoryCapacityDetails: getSelectorByConfig("div", "database-memory-capacity"),
-  memoryFootprintDetails: getSelectorByConfig(
-    "div",
+  advancedInputButton: getSelectorByCustomConfig("advanced-input-button"),
+  idInput: getSelectorByCustomConfig("id-input"),
+  hostInput: getSelectorByCustomConfig("host-input"),
+  portInput: getSelectorByCustomConfig("port-input"),
+  dbNameInput: getSelectorByCustomConfig("dbname-input"),
+  workerInput: getSelectorByCustomConfig("worker-input"),
+  userInput: getSelectorByCustomConfig("user-input"),
+  passwordInput: getSelectorByCustomConfig("password-input"),
+  databaseDetailsPanel: getSelectorByCustomConfig("database-details-panel"),
+  databaseSystemDetails: getSelectorByCustomConfig("database-system-details"),
+  hostDetails: getSelectorByCustomConfig("database-host"),
+  memoryCapacityDetails: getSelectorByCustomConfig("database-memory-capacity"),
+  memoryFootprintDetails: getSelectorByCustomConfig(
     "database-memory-footprint"
   ),
-  cpuDetails: getSelectorByConfig("div", "database-number-cpus"),
-  workerDetails: getSelectorByConfig("div", "database-number-workers"),
-  numberOfDatabases: getSelectorByConfig("span", "number-of-databases"),
-  databaseChip: getSelectorByConfig("span", "database-chip"),
-  sqlInput: getSelectorByConfig("textarea", "sql-input"),
-  openSQLDialog: getSelectorByConfig("button", "open-sql-dialog"),
-  closeSQLDialog: getSelectorByConfig("button", "close-sql-dialog"),
-  closeSQLInput: getSelectorByConfig("button", "close-sql-input"),
-  sendSQLInput: getSelectorByConfig("button", "send-sql-input"),
+  cpuDetails: getSelectorByCustomConfig("database-number-cpus"),
+  workerDetails: getSelectorByCustomConfig("database-number-workers"),
+  numberOfDatabases: getSelectorByCustomConfig("number-of-databases"),
+  databaseChip: getSelectorByCustomConfig("database-chip"),
+  sqlInput: getSelectorByCustomConfig("sql-input"),
+  openSQLDialog: getSelectorByCustomConfig("open-sql-dialog"),
+  closeSQLDialog: getSelectorByCustomConfig("close-sql-dialog"),
+  closeSQLInput: getSelectorByCustomConfig("close-sql-input"),
+  sendSQLInput: getSelectorByCustomConfig("send-sql-input"),
 };
-
-export function getSelector(component: string): string {
-  return selectors[component];
-}
 
 export function assertAdvancedPostValues(
   input: DatabaseData,

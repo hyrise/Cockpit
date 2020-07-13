@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="showDialog" width="60%">
     <template v-slot:activator="{ on }">
-      <v-btn id="open-sql-dialog" icon v-on="on">
+      <v-btn icon v-on="on" data-id="open-sql-dialog">
         <v-icon>mdi-file-edit</v-icon>
       </v-btn>
     </template>
@@ -10,36 +10,40 @@
         <v-card-title>SQL-interface</v-card-title>
         <v-spacer />
         <v-btn
-          id="close-sql-dialog"
           @click="showDialog = false"
           color="primary"
           text
+          data-id="close-sql-dialog"
         >
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-system-bar>
       <v-card-text>
         <v-textarea
-          id="sql-input"
           v-model="sqlQuery"
           filled
           auto-grow
           :error-messages="error"
           :loading="isLoading"
           placeholder="insert SQL here"
+          data-id="sql-input"
         ></v-textarea>
         <s-q-l-result-table :rows="rows" :columnNames="columnNames" />
       </v-card-text>
       <v-card-actions>
         <v-spacer />
         <v-btn
-          id="close-sql-input"
           @click="showDialog = false"
           color="primary"
           text
+          data-id="close-sql-input"
           >Close</v-btn
         >
-        <v-btn id="send-sql-input" @click="sendSQLQuery()" color="primary" text
+        <v-btn
+          @click="sendSQLQuery()"
+          color="primary"
+          text
+          data-id="send-sql-input"
           >send query to DB</v-btn
         >
       </v-card-actions>

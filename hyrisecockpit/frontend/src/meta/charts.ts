@@ -24,13 +24,15 @@ export function useChartReactivity(
     () => props.data,
     () => {
       if (isValidData(props.data)) updateDataFunction();
-    }
+    },
+    { immediate: true }
   );
   watch(
     () => props.maxChartWidth,
     () => {
       if (isValidLayout(props.maxChartWidth)) updateLayoutFunction();
-    }
+    },
+    { immediate: true }
   );
 }
 

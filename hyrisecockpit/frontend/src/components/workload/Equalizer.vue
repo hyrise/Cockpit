@@ -1,54 +1,62 @@
 <template>
-  <span>
-    <p class="subtitle-1 font-weight-medium">
-      {{ getDisplayedWorkload(workload) }}
-    </p>
-    <v-row class="equalizer">
-      <div
-        v-for="(weight, idx) in weights"
-        :key="weight.name"
-        class="equalizer-row"
-      >
-        <div v-if="idx % 15 === 0">
-          <div class="value-col">
-            <div class="max-value">
-              100
+  <v-expansion-panels v-model="panels" multiple>
+    <v-expansion-panel
+      v-for="workload in selectedWorkloads"
+      :key="workload"
+      data-id="workload-equalizer"
+    >
+      <v-expansion-panel-header color="grey lighten-1">
+        {{ getDisplayedWorkload(workload) }}
+      </v-expansion-panel-header>
+      <v-expansion-panel-content class="mt-8">
+        <v-row class="equalizer mx-3">
+          <div
+            v-for="(weight, idx) in weights[workload]"
+            :key="weight.name"
+            class="equalizer-row"
+          >
+            <div v-if="idx % 15 === 0">
+              <div class="value-col">
+                <div class="max-value">
+                  100
+                </div>
+                <div class="medium-value">
+                  1
+                </div>
+                <div class="min-value">
+                  0
+                </div>
+              </div>
             </div>
-            <div class="medium-value">
-              1
-            </div>
-            <div class="min-value">
-              0
+            <div class="query-div">
+              <div class="query-name">
+                {{ weight.name }}
+              </div>
+              <div class="top-line"></div>
+              <v-slider
+                v-model="weight.sliderValue"
+                min="0"
+                max="100"
+                vertical
+                class="query-slider"
+                @click="updateWeight(workload, weight.name, true)"
+                @end="updateWeight(workload, weight.name, true)"
+              />
+              <div class="middle-line"></div>
+              <div class="bottom-line"></div>
+              <v-text-field
+                v-model.number="weight.value"
+                class="query-text-field"
+                dense
+                single-line
+                @change="updateWeight(workload, weight.name, false)"
+              />
             </div>
           </div>
-        </div>
-        <div class="query-div">
-          <div class="query-name">
-            {{ weight.name }}
-          </div>
-          <div class="top-line"></div>
-          <v-slider
-            v-model="weight.sliderValue"
-            min="0"
-            max="100"
-            vertical
-            class="query-slider"
-            @click="updateWeight(weight.name, true)"
-            @end="updateWeight(weight.name, true)"
-          />
-          <div class="middle-line"></div>
-          <div class="bottom-line"></div>
-          <v-text-field
-            v-model.number="weight.value"
-            class="query-text-field"
-            dense
-            single-line
-            @change="updateWeight(weight.name, false)"
-          />
-        </div>
-      </div>
-    </v-row>
-  </span>
+        </v-row>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+  </v-expansion-panels>
 </template>
 <script lang="ts">
 import {
@@ -63,31 +71,37 @@ import { Workload } from "../../types/workloads";
 import { getDisplayedWorkload } from "../../meta/workloads";
 
 interface Props {
-  initialWeights: Object;
-  workload: Workload;
+  selectedWorkloads: Workload[];
+  initialWeights: Record<string, number>[];
 }
 
 interface Data {
-  weights: Ref<Weight[]>;
+  weights: Ref<Record<string, Weight[]>>;
+  panels: Ref<number[]>;
   getDisplayedWorkload: (workload: Workload) => void;
-  updateWeight: (name: string, sliderValueToValue: boolean) => void;
+  updateWeight: (
+    workload: string,
+    name: string,
+    sliderValueToValue: boolean
+  ) => void;
 }
 type Weight = { name: string; value: number; sliderValue: number };
 
 export default defineComponent({
   name: "Equalizer",
   props: {
-    initialWeights: {
-      type: Object,
-      default: {},
+    selectedWorkloads: {
+      type: Array,
+      default: () => [],
     },
-    workload: {
-      type: String,
-      default: "",
+    initialWeights: {
+      type: Array,
+      default: () => [],
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const weights = ref<Weight[]>([]);
+    const weights = ref<Record<string, Weight[]>>({});
+    const panels = ref<number[]>([]);
 
     /* convert the linear sliderValues with exponential function: f(sliderValue) = value = a * b^sliderValue - a
     f(0) = 0, f(50) = 1.0, f(100) = 100 --> b = 99^(1/50), a = 1/98 */
@@ -100,8 +114,12 @@ export default defineComponent({
     function convertValueToSliderValue(value: number): number {
       return Math.round((Math.log((value + a) / a) / Math.log(b)) * 100) / 100;
     }
-    function updateWeight(name: string, sliderValueToValue: boolean): void {
-      const weight: Weight = Object.values(weights.value).find(
+    function updateWeight(
+      workload: string,
+      name: string,
+      sliderValueToValue: boolean
+    ): void {
+      const weight: Weight = Object.values(weights.value[workload]).find(
         (weight) => weight.name === name
       )!;
       if (sliderValueToValue) {
@@ -109,24 +127,43 @@ export default defineComponent({
       } else {
         weight.sliderValue = convertValueToSliderValue(weight.value);
       }
-      context.emit("change", name, weight.value);
+      context.emit("change", workload, name, weight.value);
     }
     watch(
       () => props.initialWeights,
       () => {
-        weights.value = Object.entries(props.initialWeights)
-          .sort()
-          .map(([name, value]) => {
-            return {
-              name: name,
-              value: value,
-              sliderValue: convertValueToSliderValue(value),
-            };
-          });
+        weights.value = {};
+        Object.entries(props.initialWeights).forEach(
+          ([workloadIndex, changedWeights]: [
+            string,
+            Record<string, number>
+          ]) => {
+            weights.value[
+              props.selectedWorkloads[parseInt(workloadIndex)]
+            ] = Object.entries(changedWeights)
+              .sort()
+              .map(([name, value]) => {
+                return {
+                  name: name,
+                  value: value,
+                  sliderValue: convertValueToSliderValue(value),
+                };
+              });
+          }
+        );
+      }
+    );
+    watch(
+      () => props.selectedWorkloads,
+      () => {
+        panels.value = Object.keys(props.selectedWorkloads).map((index) =>
+          parseInt(index)
+        );
       }
     );
     return {
       weights,
+      panels,
       getDisplayedWorkload,
       updateWeight,
     };
@@ -134,16 +171,20 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.v-expansion-panel--active > .v-expansion-panel-header {
+  min-height: 48px;
+}
+.v-expansion-panel-header {
+  border-radius: 4px 4px 0px 0px !important;
+}
 .query-div {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
 .query-slider {
   padding: 0px 24px 0px 24px;
 }
-
 .top-line {
   border-top: 2px solid #dfdfdf;
   width: 100%;
@@ -184,7 +225,6 @@ export default defineComponent({
 .query-text-field {
   width: 44px;
   margin: -22px 3px 0px 3px;
-  text-align: center !important;
 }
 .equalizer {
   margin-left: 20px;

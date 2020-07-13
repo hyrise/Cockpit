@@ -1,5 +1,5 @@
 <template>
-  <div id="overview-page">
+  <div id="overview-page" data-id="overview-page">
     <linear-loader
       :conditions="[$databaseController.databasesUpdated]"
       :evaluations="[false]"
@@ -25,15 +25,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  SetupContext,
-  watch,
-  computed,
-  Ref,
-  onMounted,
-  ref,
-} from "@vue/composition-api";
+import { defineComponent, SetupContext } from "@vue/composition-api";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { MetricViewData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
