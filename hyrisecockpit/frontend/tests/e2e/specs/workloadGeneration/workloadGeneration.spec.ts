@@ -17,7 +17,7 @@ import {
   assertWorkloadEqualizer,
 } from "./helpers";
 
-let backend = useBackendMock();
+const backend = useBackendMock();
 
 let statusData: any[] = [];
 

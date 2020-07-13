@@ -47,7 +47,7 @@
                   dot
                 />
               </v-subheader>
-              <v-sheet height="400">
+              <v-sheet height="350">
                 <v-container class="white container flex">
                   <v-row class="top-row" no gutters>
                     <v-col class="flex-item select">
@@ -80,17 +80,17 @@
                   dot
                 />
               </v-subheader>
-              <v-sheet height="400">
+              <v-sheet height="350">
                 <v-container class="white container flex">
                   <v-row no gutters>
-                    <v-col class="flex-item select">
+                    <v-col class="flex-item select remove-margin">
                       <timestamp-selection
                         label="Start"
                         @dateChanged="(newDate) => (startDate = newDate)"
                         @timeChanged="(newTime) => (startTime = newTime)"
                       />
                     </v-col>
-                    <v-col class="flex-item select">
+                    <v-col class="flex-item select remove-margin">
                       <timestamp-selection
                         label="End"
                         :min-date="startDate"
@@ -102,7 +102,7 @@
                   </v-row>
                 </v-container>
                 <v-container class="white container flex">
-                  <v-row no gutters>
+                  <v-row no gutters class="remove-margin-low">
                     <v-col class="flex-item select">
                       <precision-selection
                         :available-precisions="availableStaticPrecisions"
@@ -115,7 +115,11 @@
                     </v-col>
                   </v-row>
                 </v-container>
-                <v-alert v-if="!!errorMessage" type="error">
+                <v-alert
+                  v-if="!!errorMessage"
+                  type="error"
+                  class="remove-margin-low"
+                >
                   {{ errorMessage }}
                 </v-alert>
                 <v-btn
@@ -170,6 +174,7 @@ import {
   Ref,
   ref,
   onMounted,
+  watchEffect,
 } from "@vue/composition-api";
 
 import { Database } from "@/types/database";
@@ -274,9 +279,7 @@ function useDataChangeHandling(
   const { emitPageChangedEvent } = useWindowEvents();
 
   // update page
-  watch(page, () => {
-    emitPageChangedEvent(page.value);
-  });
+  watchEffect(() => emitPageChangedEvent(page.value));
 
   function handleDatabaseChange(databaseId: string, value: boolean): void {
     emitSelectedDatabasesChangedWithinEvent(page.value, databaseId, value);
@@ -438,5 +441,11 @@ function useStaticRangeSelection(
   display: block;
   margin-left: auto !important;
   margin-right: auto !important;
+}
+.remove-margin {
+  margin: -10px;
+}
+.remove-margin-low {
+  margin-top: -20px;
 }
 </style>

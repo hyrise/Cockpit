@@ -4,7 +4,7 @@ import { assertSQLRequest, selectors } from "./helpers";
 import { getPostAlias } from "../../setup/helpers";
 import * as faker from "faker";
 
-let backend = useBackendMock();
+const backend = useBackendMock();
 
 let databases: any = [];
 
