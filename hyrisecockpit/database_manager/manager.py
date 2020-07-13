@@ -81,7 +81,6 @@ class DatabaseManager(object):
             "get databases": (self._call_get_databases, None),
             "load data": (self._call_load_data, load_data_request_schema),
             "delete data": (self._call_delete_data, delete_data_request_schema),
-            "status": (self._call_status, None),
             "get plugins": (self._call_get_plugins, None),
             "activate plugin": (self._call_activate_plugin, None),
             "deactivate plugin": (self._call_deactivate_plugin, None),
@@ -179,25 +178,6 @@ class DatabaseManager(object):
             if not database.delete_data(folder_name):
                 return get_response(400)
         return get_response(200)
-
-    def _call_status(self, body: Body) -> Response:
-        status = []
-
-        for database_id, database in self._databases.items():
-            loaded_tables, loaded_benchmarks = database.get_loaded_benchmark_data()
-            status.append(
-                {
-                    "id": database_id,
-                    "hyrise_active": database.get_hyrise_active(),
-                    "database_blocked_status": database.get_database_blocked(),
-                    "worker_pool_status": database.get_worker_pool_status(),
-                    "loaded_benchmarks": loaded_benchmarks,
-                    "loaded_tables": loaded_tables,
-                }
-            )
-        response = get_response(200)
-        response["body"]["status"] = status
-        return response
 
     def _call_get_plugins(self, body: Body) -> Response:
         response = get_response(200)

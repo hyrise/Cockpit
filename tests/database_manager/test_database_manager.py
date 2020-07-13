@@ -60,7 +60,6 @@ def get_server_calls() -> List[str]:
         "get databases",
         "load data",
         "delete data",
-        "status",
         "get plugins",
         "activate plugin",
         "deactivate plugin",
@@ -462,35 +461,6 @@ class TestDatabaseManager:
 
         database.delete_data.assert_not_called()
         assert get_error_response(400, "Already loading data") == response
-
-    def test_call_status(self, database_manager: DatabaseManager) -> None:
-        """Call status."""
-        database = fake_database()
-        database.get_database_blocked.return_value = 0
-        database.get_hyrise_active.return_value = True
-        database.get_worker_pool_status.return_value = "closed"
-        database.get_loaded_benchmark_data.return_value = (
-            ["table1", "table2"],
-            ["hahahahahah", "wann darf ich wieder raus"],
-        )
-        database_manager._databases["db1"] = database
-
-        expected_status = [
-            {
-                "id": "db1",
-                "hyrise_active": True,
-                "database_blocked_status": 0,
-                "worker_pool_status": "closed",
-                "loaded_benchmarks": ["hahahahahah", "wann darf ich wieder raus"],
-                "loaded_tables": ["table1", "table2"],
-            }
-        ]
-        expected_response = get_response(200)
-        expected_response["body"]["status"] = expected_status
-        body: Dict = {}
-        response = database_manager._call_status(body)
-
-        assert expected_response == response
 
     def test_call_get_detailed_plugins(self, database_manager: DatabaseManager) -> None:
         """Call get plugins."""
