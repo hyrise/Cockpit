@@ -23,7 +23,7 @@ class datetime:
 class TPCCParameterGenerator:  # noqa
     """Generates TPC-C parameters for transactions."""
 
-    def __init__(self, warehouses, scalefactor):  # noqa
+    def __init__(self, warehouses):  # noqa
         """Initialize a parameter generator."""
         self.scaleParameters = scaleparameters.makeDefault(warehouses)
 

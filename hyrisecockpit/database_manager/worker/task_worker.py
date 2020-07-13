@@ -69,10 +69,12 @@ def execute_queries(  # noqa
                     )
                 except Empty:
                     continue
-                except (DatabaseError, InterfaceError):
+                except (DatabaseError, InterfaceError) as e:
+                    print(str(e))
                     task_queue.put(task)
                 except (ValueError, ProgrammingError) as e:
                     failed_queries.append((time_ns(), worker_id, str(task), str(e)))
+                    print(str(e))
 
                 if last_batched < time_ns() - 1_000_000_000:
                     log_results(log, succesful_queries, failed_queries)

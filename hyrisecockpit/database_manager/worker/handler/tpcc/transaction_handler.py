@@ -22,6 +22,7 @@ class TPCCTransactionHandler:
         """Initialize TransactionHandler."""
         self.cursor = cursor
         self.conn = cursor._connection
+        self.conn.set_session(autocommit=False)
         self._worker_id = worker_id
 
     def execute_task(self, task) -> Tuple[int, int, str, str]:
@@ -175,7 +176,6 @@ class TPCCTransactionHandler:
             [d_next_o_id, d_id, w_id, c_id, o_entry_d, o_carrier_id, ol_cnt, all_local],
         )
         self.cursor.execute(q["createNewOrder"], [d_next_o_id, d_id, w_id])
-
         ## ----------------
         ## Insert Order Item Information
         ## ----------------
@@ -191,7 +191,6 @@ class TPCCTransactionHandler:
             i_name = itemInfo[1]
             i_data = itemInfo[2]
             i_price = itemInfo[0]
-
             self.cursor.execute(
                 q["getStockInfo"],
                 [AsIs("{:02d}".format(d_id)), ol_i_id, ol_supply_w_id],
@@ -202,6 +201,9 @@ class TPCCTransactionHandler:
                     "No STOCK record for (ol_i_id=%d, ol_supply_w_id=%d)"
                     % (ol_i_id, ol_supply_w_id)
                 )
+                print(
+                    f"NO STOCK ID: d_next_o_id={d_next_o_id}, ol_i_id={ol_i_id}, ol_supply_w_id={ol_supply_w_id}"
+                )
                 continue
             s_quantity = stockInfo[0]
             s_ytd = stockInfo[2]
@@ -209,7 +211,6 @@ class TPCCTransactionHandler:
             s_remote_cnt = stockInfo[4]
             s_data = stockInfo[1]
             s_dist_xx = stockInfo[5]  # Fetches data from the s_dist_[d_id] column
-
             ## Update stock
             s_ytd += ol_quantity
             if s_quantity >= ol_quantity + 10:
@@ -225,7 +226,6 @@ class TPCCTransactionHandler:
                 q["updateStock"],
                 [s_quantity, s_ytd, s_order_cnt, s_remote_cnt, ol_i_id, ol_supply_w_id],
             )
-
             if (
                 i_data.find(constants.ORIGINAL_STRING) != -1
                 and s_data.find(constants.ORIGINAL_STRING) != -1
