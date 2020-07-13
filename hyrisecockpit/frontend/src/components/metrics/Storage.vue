@@ -1,10 +1,10 @@
 <template>
   <div>
-    <metric-detailed-view>
+    <metric-detailed-view metric="storage">
       <template #header>Data Size - Overview</template>
       <template #content>
         <Treemap
-          :graph-id="'1' + graphId || 'storage'"
+          :graph-id="'detailed-' + graphId || 'storage'"
           :data="data"
           :chart-configuration="chartConfiguration"
           :selected-databases="selectedDatabases"
@@ -18,9 +18,10 @@
       :databases="selectedDatabases"
       :decimal-digits="3"
       id-prefix="storage"
+      :total-number-of-databases="totalNumberOfDatabases"
     />
     <Treemap
-      :graph-id="'2' + graphId || 'storage'"
+      :graph-id="graphId || 'storage'"
       :data="data"
       :chart-configuration="chartConfiguration"
       :autosize="false"

@@ -1,28 +1,38 @@
 <template>
   <span>
     <v-switch
-      class="mt-0 pt-0"
       v-for="workload in availableWorkloads"
+      v-model="workloads"
+      class="mt-0 pt-0"
       :key="workload"
-      :input-value="workloadData[workload].loaded"
+      :value="workload"
       :label="getDisplayedWorkload(workload)"
+      :loading="loadingWorkloads.includes(workload)"
+      :disabled="loadingWorkloads.includes(workload) || disabled"
+      data-id="select-workload-data"
       @change="$emit('change', workload)"
-      :loading="workloadData[workload].loading"
-      :disabled="workloadData[workload].loading || disabled"
     >
     </v-switch>
   </span>
 </template>
 <script lang="ts">
-import { defineComponent, SetupContext } from "@vue/composition-api";
+import {
+  defineComponent,
+  SetupContext,
+  Ref,
+  ref,
+  watch,
+} from "@vue/composition-api";
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { getDisplayedWorkload } from "../../meta/workloads";
 
 interface Props {
-  workloadData: Record<string, { loaded: boolean; loading: boolean }>;
+  loadedWorkloads: Workload[];
+  loadingWorkloads: Workload[];
   disabled: boolean;
 }
 interface Data {
+  workloads: Ref<Workload[]>;
   availableWorkloads: string[];
   getDisplayedWorkload: (workload: Workload) => string;
 }
@@ -30,9 +40,13 @@ interface Data {
 export default defineComponent({
   name: "WorkloadDataSelector",
   props: {
-    workloadData: {
-      type: Object,
-      default: {},
+    loadedWorkloads: {
+      type: Array,
+      default: () => [],
+    },
+    loadingWorkloads: {
+      type: Array,
+      default: () => [],
     },
     disabled: {
       type: Boolean,
@@ -40,7 +54,15 @@ export default defineComponent({
     },
   },
   setup(props: Props, context: SetupContext): Data {
+    const workloads = ref<Workload[]>([]);
+    watch(
+      () => props.loadedWorkloads,
+      () => {
+        workloads.value = props.loadedWorkloads;
+      }
+    );
     return {
+      workloads,
       availableWorkloads,
       getDisplayedWorkload,
     };

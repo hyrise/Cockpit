@@ -1,109 +1,21 @@
-import { useBackendMock } from "../../setup/backendMock";
-import { getRoute } from "../views/helpers";
 import {
-  getSelector,
-  getSelectorWithID,
-  getDetailsSelectorWithID,
-  assertMetricDetails,
-  assertLineChartData,
-} from "./helpers";
-import { waitForChartRender } from "../helpers";
+  testLinechartOnComparison,
+  testLinechartOnOverview,
+} from "./abstractTests";
 
-const backend = useBackendMock();
-
-let databases: any[] = [];
-let data: any = {};
-
-// test on overview
-describe("visiting the overview page", () => {
-  before(() => {
-    cy.setupAppState(backend).then((xhr: any) => {
-      databases = xhr.response.body;
-    });
-    cy.visit(getRoute("overview"));
-    cy.setupData("system").then((xhr: any) => {
-      data = {};
-      xhr.response.body.forEach((entry: any) => {
-        data[entry.id] = 100 - entry.system_data[0].system_data.memory.percent;
-      });
-    });
-    waitForChartRender();
+const metric = "ram";
+const request = "system";
+const layout = { title: "Memory usage in %", min: 0, max: 105 };
+const transform = (xhr: any): any => {
+  const data: any = {};
+  xhr.response.body.forEach((entry: any) => {
+    data[entry.id] = 100 - entry.system_data[0].system_data.memory.percent;
   });
+  return data;
+};
 
-  // test data
-  it("will show the correct metric data", () => {
-    cy.get(getSelector("ram")).should((elements: any) => {
-      assertLineChartData(
-        elements[0].data,
-        data,
-        databases.map((db) => db.id)
-      );
-    });
-  });
+/* test on overview */
+testLinechartOnOverview(metric, request, layout, transform);
 
-  // test layout
-  it("will show the correct range and title", () => {
-    cy.get(getSelector("ram")).should((elements: any) => {
-      const layout = elements[0].layout;
-      expect(layout.yaxis.title.text).to.eq("Memory usage in %");
-      expect(layout.yaxis.range[0]).to.eq(0);
-      expect(layout.yaxis.range[1]).to.eq(105);
-    });
-  });
-
-  // test details
-  it("will not show metric details", () => {
-    databases.forEach((database: any) => {
-      cy.get(getDetailsSelectorWithID("ram", database.id)).should("not.exist");
-    });
-  });
-});
-
-// test on comparison
-describe("visiting the comparison page", () => {
-  before(() => {
-    cy.setupAppState(backend).then((xhr: any) => {
-      databases = xhr.response.body;
-    });
-    cy.visit(getRoute("comparison"));
-    cy.setupData("system").then((xhr: any) => {
-      data = {};
-      xhr.response.body.forEach((entry: any) => {
-        data[entry.id] = 100 - entry.system_data[0].system_data.memory.percent;
-      });
-    });
-    waitForChartRender();
-  });
-
-  // test data
-  it("will show the correct metric data", () => {
-    databases.forEach((database: any) => {
-      cy.get(getSelectorWithID("ram", database.id)).should((elements: any) => {
-        assertLineChartData(elements[0].data, data, [database.id]);
-      });
-    });
-  });
-
-  // test layout
-  it("will show the correct range and title", () => {
-    databases.forEach((database: any) => {
-      cy.get(getSelectorWithID("ram", database.id)).should((elements: any) => {
-        const layout = elements[0].layout;
-        expect(layout.yaxis.title.text).to.eq("Memory usage in %");
-        expect(layout.yaxis.range[0]).to.eq(0);
-        expect(layout.yaxis.range[1]).to.eq(105);
-      });
-    });
-  });
-
-  // test details
-  it("will show the correct metric detail data", () => {
-    databases.forEach((database: any) => {
-      cy.get(getDetailsSelectorWithID("ram", database.id))
-        .invoke("text")
-        .then((text: any) => {
-          assertMetricDetails(text, data[database.id]);
-        });
-    });
-  });
-});
+/* test on comparison */
+testLinechartOnComparison(metric, request, layout, transform);

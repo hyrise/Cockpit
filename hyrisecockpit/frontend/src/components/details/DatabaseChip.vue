@@ -3,11 +3,11 @@
     <v-tooltip v-if="closable" left>
       <template v-slot:activator="{ on, value }">
         <v-icon
-          id="remove-database-button"
           class="mr-3"
           v-on="on"
           color="error"
           :size="value ? 36 : 28"
+          data-id="remove-database-button"
           @click="$emit('closed')"
           >mdi-delete-forever</v-icon
         >
@@ -16,32 +16,35 @@
     </v-tooltip>
     <v-chip
       v-if="database"
-      id="database-chip"
       class="white--text"
+      data-id="database-chip"
       :color="database.color"
     >
       <div v-if="selectable">
         <v-icon
           v-if="selected"
-          id="add-select-database-button"
           left
+          data-id="add-select-database-button"
           @click="handleUnSelect(database.id)"
           >mdi-eye</v-icon
         >
         <v-icon
           v-if="!selected"
-          id="remove-select-database-button"
           left
+          data-id="remove-select-database-button"
           @click="handleSelect(database.id)"
           >mdi-eye-off</v-icon
         >
       </div>
-      <v-icon v-if="!selectable" left>mdi-database</v-icon>
+
       <v-tooltip right>
         <template v-slot:activator="{ on }">
-          <b v-on="on">{{
-            selectable ? truncateItemTitle(database.id) : database.id
-          }}</b>
+          <div v-on="on">
+            <v-icon v-if="!selectable" :left="!onlyIcon">mdi-database</v-icon>
+            <b v-if="!onlyIcon">
+              {{ selectable ? truncateItemTitle(database.id) : database.id }}
+            </b>
+          </div>
         </template>
         <span>{{ database.id }}</span>
       </v-tooltip>
@@ -69,6 +72,7 @@ interface Props {
   closable: boolean;
   selectable: boolean;
   selected: boolean;
+  onlyIcon: boolean;
 }
 
 export default defineComponent({
@@ -87,6 +91,10 @@ export default defineComponent({
       default: false,
     },
     selected: {
+      type: Boolean,
+      default: undefined,
+    },
+    onlyIcon: {
       type: Boolean,
       default: undefined,
     },

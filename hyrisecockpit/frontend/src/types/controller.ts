@@ -36,6 +36,7 @@ export interface PluginController {
   pluginEventData: Ref<any>;
   changePluginSetting: (
     databaseId: string,
+    pluginId: string,
     settingId: string,
     settingValue: string
   ) => Promise<void>;

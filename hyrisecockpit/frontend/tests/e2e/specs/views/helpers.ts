@@ -1,8 +1,8 @@
-import { getSelectorByConfig, clickElement } from "../helpers";
+import { getSelectorByCustomConfig } from "../helpers";
 
 /* ROUTES */
 
-const routes: Record<string, string> = {
+export const routes = {
   home: "/#/",
   overview: "/#/databases/overview",
   comparison: "/#/databases/compare",
@@ -11,55 +11,44 @@ const routes: Record<string, string> = {
 
 /* SELECTORS */
 
-const selectors: Record<string, string> = {
-  overviewButton: getSelectorByConfig("a", "overview-button"),
-  comparisonButton: getSelectorByConfig("a", "comparison-button"),
-  workloadMonitoringButton: getSelectorByConfig(
-    "a",
+export const selectors = {
+  overviewButton: getSelectorByCustomConfig("overview-button"),
+  comparisonButton: getSelectorByCustomConfig("comparison-button"),
+  workloadMonitoringButton: getSelectorByCustomConfig(
     "workload-monitoring-button"
   ),
-  databaseListButton: getSelectorByConfig("div", "database-list-button"),
-  workloadGenerationButton: getSelectorByConfig(
-    "div",
+  databaseListButton: getSelectorByCustomConfig("database-list-button"),
+  workloadGenerationButton: getSelectorByCustomConfig(
     "workload-generation-button"
   ),
-  pluginOverviewButton: getSelectorByConfig("div", "plugin-overview-button"),
-  selectionListButton: getSelectorByConfig("button", "selection-list-button"),
-  pluginOverview: getSelectorByConfig("div", "plugin-overview"),
-  databaseList: getSelectorByConfig("div", "database-list"),
-  workloadGeneration: getSelectorByConfig("div", "workload-generation"),
-  selectionList: getSelectorByConfig("div", "selection-list"),
-  unselectDatabase: getSelectorByConfig("button", "add-select-database-button"),
-  selectDatabase: getSelectorByConfig(
-    "button",
-    "remove-select-database-button"
-  ),
-  unselectMetric: getSelectorByConfig("button", "add-select-metric-button"),
-  selectMetric: getSelectorByConfig("button", "remove-select-metric-button"),
-  overviewPage: getSelectorByConfig("div", "overview-page"),
-  comparisonPage: getSelectorByConfig("div", "comparison-page"),
-  workloadMonitoringPage: getSelectorByConfig(
-    "div",
-    "workload-monitoring-page"
-  ),
-  metricChip: getSelectorByConfig("span", "metric-chip"),
-  loadingAnimation: getSelectorByConfig("div", "loading-animation"),
-  historicRangeSelection: getSelectorByConfig(
-    "input",
-    "historic-range-selection"
-  ),
-  precisionSelection: getSelectorByConfig("input", "precision-selection"),
-  changeRangeTypeButton: getSelectorByConfig("button", "change-range-type"),
-  datePickerText: getSelectorByConfig("input", "date-picker-text"),
-  timePickerText: getSelectorByConfig("input", "time-picker-text"),
-  datePickerSelect: getSelectorByConfig("div", "date-picker-select"),
-  timePickerSelect: getSelectorByConfig("div", "time-picker-select"),
-  setStaticRangeButton: getSelectorByConfig("button", "set-static-time-range"),
-  resetTimeRangeButton: getSelectorByConfig("button", "reset-time-range"),
+  pluginOverviewButton: getSelectorByCustomConfig("plugin-overview-button"),
+  selectionListButton: getSelectorByCustomConfig("selection-list-button"),
+  pluginOverview: getSelectorByCustomConfig("plugin-overview"),
+  databaseList: getSelectorByCustomConfig("database-list"),
+  workloadGeneration: getSelectorByCustomConfig("workload-generation"),
+  selectionList: getSelectorByCustomConfig("selection-list"),
+  unselectDatabase: getSelectorByCustomConfig("add-select-database-button"),
+  selectDatabase: getSelectorByCustomConfig("remove-select-database-button"),
+  unselectMetric: getSelectorByCustomConfig("add-select-metric-button"),
+  selectMetric: getSelectorByCustomConfig("remove-select-metric-button"),
+  overviewPage: getSelectorByCustomConfig("overview-page"),
+  comparisonPage: getSelectorByCustomConfig("comparison-page"),
+  workloadMonitoringPage: getSelectorByCustomConfig("workload-monitoring-page"),
+  metricChip: getSelectorByCustomConfig("metric-chip"),
+  loadingAnimation: getSelectorByCustomConfig("loading-animation"),
+  historicRangeSelection: getSelectorByCustomConfig("historic-range-selection"),
+  precisionSelection: getSelectorByCustomConfig("precision-selection"),
+  changeRangeTypeButton: getSelectorByCustomConfig("change-range-type"),
+  setStaticRangeButton: getSelectorByCustomConfig("set-static-time-range"),
+  resetTimeRangeButton: getSelectorByCustomConfig("reset-time-range"),
+  datePickerText: getSelectorByCustomConfig("date-picker-text"),
+  timePickerText: getSelectorByCustomConfig("time-picker-text"),
+  datePickerSelect: getSelectorByCustomConfig("date-picker-select"),
+  timePickerSelect: getSelectorByCustomConfig("time-picker-select"),
 };
 
-const metrics: Record<string, string[]> = {
-  workloadMonitoring: ["generatedQueryTypeProportion", "operatorProportion"],
+export const metrics = {
+  workloadMonitoring: ["queryTypeProportion", "operatorProportion"],
   comparison: [
     "throughput",
     "latency",
@@ -81,10 +70,7 @@ const metrics: Record<string, string[]> = {
   ],
 };
 
-export const historicRanges: Record<
-  string,
-  { title: string; value: number }
-> = {
+export const historicRanges = {
   0.5: { title: "last 30 seconds", value: 30 },
   1: { title: "last minute", value: 60 },
   5: { title: "last 5 minutes", value: 5 * 60 },
@@ -95,29 +81,19 @@ export const historicRanges: Record<
 
 export const basicPrecision = [1, 5, 15];
 
-export function getSelector(component: string): string {
-  return selectors[component];
-}
-
-export function getRoute(component: string): string {
-  return routes[component];
-}
-
-export function getMetrics(component: string): string[] {
-  return metrics[component];
-}
-
 /* ASSERTIONS */
 
 export function testRedirection(selector: string, newRoute: string): void {
-  clickElement(selector);
+  cy.get(selector).click();
   cy.url().should("contain", newRoute);
 }
 
-export function checkMultipleMetrics(metric: string): string {
-  if (metric === "storage") return "secondStorage";
-  if (metric === "access") return "secondAccess";
-  return metric;
+export function testElementTrigger(
+  rootSelector: string,
+  triggeredSelector: string
+): void {
+  cy.get(rootSelector).click();
+  cy.get(triggeredSelector);
 }
 
 export function assertItemSelect(
@@ -125,33 +101,31 @@ export function assertItemSelect(
   selected: boolean
 ): void {
   if (component === "database" && selected) {
-    cy.get(getSelector("selectDatabase")).should("not.be.visible", {
+    cy.get(selectors.selectDatabase).should("not.be.visible", {
       force: true,
     });
-    cy.get(getSelector("unselectDatabase"))
-      .scrollIntoView()
-      .should("be.visible", {
-        force: true,
-      });
+    cy.get(selectors.unselectDatabase).scrollIntoView().should("be.visible", {
+      force: true,
+    });
   } else if (component === "database" && !selected) {
-    cy.get(getSelector("selectDatabase"))
+    cy.get(selectors.selectDatabase)
       .scrollIntoView()
       .should("be.visible", { force: true });
-    cy.get(getSelector("unselectDatabase")).should("not.be.visible", {
+    cy.get(selectors.unselectDatabase).should("not.be.visible", {
       force: true,
     });
   } else if (component === "metric" && selected) {
-    cy.get(getSelector("selectMetric")).should("not.be.visible", {
+    cy.get(selectors.selectMetric).should("not.be.visible", {
       force: true,
     });
-    cy.get(getSelector("unselectMetric"))
+    cy.get(selectors.unselectMetric)
       .scrollIntoView()
       .should("be.visible", { force: true });
   } else if (component === "metric" && !selected) {
-    cy.get(getSelector("selectMetric"))
+    cy.get(selectors.selectMetric)
       .scrollIntoView()
       .should("be.visible", { force: true });
-    cy.get(getSelector("unselectMetric")).should("not.be.visible", {
+    cy.get(selectors.unselectMetric).should("not.be.visible", {
       force: true,
     });
   }
@@ -186,7 +160,7 @@ export function formatTimeString(date: Date): string {
   }`;
 }
 
-/* get metric time reuqest intervalls */
+/* get metric time request intervalls */
 function getStartTimeOfRequest(url: string): number {
   const startIndex = url.indexOf("=") + 1;
   return parseInt(url.substring(startIndex, url.indexOf("&")), 10);

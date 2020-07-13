@@ -24,38 +24,6 @@ export function fakeTimeStamp(): number {
   return getNanoSeconds(new Date());
 }
 
-export function fakeDate(
-  dayOffset = 0,
-  hourOffset = 0,
-  maxHour = 23
-): {
-  year: number;
-  month: number;
-  day: number;
-  hour: number;
-  minute: number;
-  date: Date;
-  dateTime: Date;
-} {
-  const date = {
-    year: generateRandomInt(2000, 20),
-    month: generateRandomInt(1, 12),
-    day: generateRandomInt(dayOffset, 28 - dayOffset),
-    hour: generateRandomInt(hourOffset, maxHour - dayOffset),
-    minute: generateRandomInt(0, 59),
-  };
-  return {
-    ...date,
-    date: new Date(`${date.year}-${date.month}-${date.day}`),
-    dateTime: new Date(
-      new Date(`${date.year}-${date.month}-${date.day}`).setHours(
-        date.hour,
-        date.minute
-      )
-    ),
-  };
-}
-
 // IDS
 
 export function fakeId(prefix: string, key: number): string {
@@ -156,20 +124,23 @@ export function fakeNumberData(): Object {
 
 // QUERY TYPE PROPORTION DATA
 
-function fakeQueryTypeProportion(): Object {
+function fakeQueryTypeProportionData(suffix: number): Object {
   return {
-    SELECT: generateRandomInt(0, 100),
-    INSERT: generateRandomInt(0, 100),
-    UPDATE: generateRandomInt(0, 100),
-    DELETE: generateRandomInt(0, 100),
+    query_type: faker.random.word() + suffix,
+    total_latency: generateRandomInt(1, Math.pow(10, 3)) * Math.pow(10, 6),
+    total_frequency: faker.random.number(Math.pow(10, 3)),
   };
 }
 
-export function fakeKruegerData(datebaseId: string): Object {
+export function fakeDatabaseQueryTypeData(
+  datebaseId: string,
+  numberOfTypes: number
+): Object {
   return {
     id: datebaseId,
-    executed: fakeQueryTypeProportion(),
-    generated: fakeQueryTypeProportion(),
+    workload_statement_information: [
+      ...Array(numberOfTypes).keys(),
+    ].map((key) => fakeQueryTypeProportionData(key)),
   };
 }
 
@@ -187,9 +158,9 @@ export function fakeDatabaseOperatorData(
 ): Object {
   return {
     id: databaseId,
-    operator_data: [...Array(numberOfOperators).keys()].map((key) =>
-      fakeOperatorData(key)
-    ),
+    workload_operator_information: [
+      ...Array(numberOfOperators).keys(),
+    ].map((key) => fakeOperatorData(key)),
   };
 }
 
@@ -259,11 +230,20 @@ export function fakeDatabaseQueryInformationData(
 
 // PLUGIN DATA
 
+export function fakeAvailablePlugin(plugin: string): Object {
+  return { name: plugin };
+}
+
 export function fakeDatabasePluginsData(
   databaseId: string,
   plugins: string[]
 ): Object {
-  return { id: databaseId, plugins: plugins };
+  return {
+    id: databaseId,
+    plugins: plugins.map((plugin) => {
+      return { name: plugin, settings: [fakePluginSetting(plugin)] };
+    }),
+  };
 }
 
 type PluginSetting = {
@@ -274,7 +254,7 @@ type PluginSetting = {
 
 function fakePluginSetting(plugin: string): PluginSetting {
   return {
-    name: plugin + "Plugin_" + faker.random.word(),
+    name: plugin + "_" + faker.random.word(),
     value: faker.random.number(),
     description: faker.random.words(),
   };

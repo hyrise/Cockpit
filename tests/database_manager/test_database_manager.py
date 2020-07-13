@@ -65,7 +65,6 @@ def get_server_calls() -> List[str]:
         "activate plugin",
         "deactivate plugin",
         "set plugin setting",
-        "get plugin setting",
         "execute sql query",
         "database status",
         "benchmark status",
@@ -493,13 +492,32 @@ class TestDatabaseManager:
 
         assert expected_response == response
 
-    def test_call_get_plugins(self, database_manager: DatabaseManager) -> None:
+    def test_call_get_detailed_plugins(self, database_manager: DatabaseManager) -> None:
         """Call get plugins."""
         database = fake_database()
-        database.get_plugins.return_value = ["Plugin1", "Plugin2"]
+        database.get_detailed_plugins.return_value = {
+            "Compression": [
+                {"name": "MemoryBudget", "value": "55555", "description": "..."}
+            ],
+            "Clustering": [],
+        }
         database_manager._databases["db1"] = database
 
-        expected_plugins = [{"id": "db1", "plugins": ["Plugin1", "Plugin2"]}]
+        expected_plugins = [
+            {
+                "id": "db1",
+                "plugins": {
+                    "Compression": [
+                        {
+                            "name": "MemoryBudget",
+                            "value": "55555",
+                            "description": "...",
+                        }
+                    ],
+                    "Clustering": [],
+                },
+            }
+        ]
         expected_response = get_response(200)
         expected_response["body"]["plugins"] = expected_plugins
         body: Dict = {}
@@ -572,36 +590,6 @@ class TestDatabaseManager:
         response = database_manager._call_deactivate_plugin(body)
 
         assert get_response(400) == response
-
-    def test_call_get_plugin_setting(self, database_manager: DatabaseManager) -> None:
-        """Call get plugin setting."""
-        database = fake_database()
-        database.get_plugin_setting.return_value = [
-            {
-                "name": "plugin_name",
-                "value": "plugin_value",
-                "description": "plugin_description",
-            }
-        ]
-        database_manager._databases["db1"] = database
-        expected_plugin_settings = [
-            {
-                "id": "db1",
-                "plugin_settings": [
-                    {
-                        "name": "plugin_name",
-                        "value": "plugin_value",
-                        "description": "plugin_description",
-                    }
-                ],
-            }
-        ]
-        expected_response = get_response(200)
-        expected_response["body"]["plugin_settings"] = expected_plugin_settings
-        body: Dict = {}
-        response = database_manager._call_get_plugin_setting(body)
-
-        assert expected_response == response
 
     def test_check_database_blocked(self, database_manager: DatabaseManager):
         """Test check if database blocked."""

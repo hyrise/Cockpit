@@ -1,5 +1,10 @@
-import { getSelectorByConfig, cutNumber, roundNumber } from "../helpers";
-import { testMaxDecimalDigits } from "../abstractTests";
+import {
+  getSelectorByConfig,
+  cutNumber,
+  roundNumber,
+  testMaxDecimalDigits,
+  getSelectorByCustomConfig,
+} from "../helpers";
 
 /* SELECTORS */
 const selectors: Record<string, { element: string; title: string }> = {
@@ -8,27 +13,21 @@ const selectors: Record<string, { element: string; title: string }> = {
   queueLength: { element: "div", title: "queueLength" },
   cpu: { element: "div", title: "cpu" },
   ram: { element: "div", title: "ram" },
-  executedQueryTypeProportion: {
+  queryTypeProportion: {
     element: "div",
-    title: "executedQueryTypeProportion",
-  },
-  generatedQueryTypeProportion: {
-    element: "div",
-    title: "generatedQueryTypeProportion",
+    title: "queryTypeProportion",
   },
   operatorProportion: {
     element: "div",
     title: "operatorProportion",
   },
   memoryFootprint: { element: "div", title: "memoryFootprint" },
-  firstStorage: { element: "div", title: "1storage" },
-  secondStorage: { element: "div", title: "2storage" },
-  firstAccess: { element: "div", title: "1access" },
-  secondAccess: { element: "div", title: "2access" },
-  firstAccessSelect: { element: "input", title: "1access-select" },
-  secondAccessSelect: { element: "input", title: "2access-select" },
-  openDetailed: { element: "button", title: "open-metric-detailed-view" },
-  closeDetailed: { element: "button", title: "close-metric-detailed-view" },
+  storage: { element: "div", title: "storage" },
+  detailedStorage: { element: "div", title: "detailed-storage" },
+  access: { element: "div", title: "access" },
+  detailedAccess: { element: "div", title: "detailed-access" },
+  accessSelect: { element: "input", title: "access-select" },
+  detailedAccessSelect: { element: "input", title: "detailed-access-select" },
 };
 
 export function getSelector(component: string): string {
@@ -56,12 +55,20 @@ export function getDetailsSelectorWithID(
   );
 }
 
+export function getDetailedViewButton(
+  metric: string,
+  buttonType: "open" | "close"
+): string {
+  return getSelectorByCustomConfig(
+    `${buttonType}-metric-detailed-view-${metric}`
+  );
+}
+
 /* ASSERTIONS */
 export function assertLineChartData(
   chartDatasets: any[],
   requestData: any,
-  databases: any[],
-  perIndex: boolean = false
+  databases: any[]
 ): void {
   databases.forEach((database: any, idx) => {
     const chartData: any = chartDatasets.find(
@@ -71,16 +78,8 @@ export function assertLineChartData(
     expect(chartData.x).to.exist;
     expect(chartData.y).to.exist;
 
-    chartData.x.forEach((item: any) => {
-      //testDateFormatting(item, "HHMMSS");
-    });
-
     chartData.y.forEach((item: any) => {
-      if (perIndex) {
-        expect(item).to.eq(requestData[idx]);
-      } else {
-        expect(item).to.eq(requestData[database]);
-      }
+      expect(item).to.eq(requestData[database]);
     });
   });
 }
@@ -88,7 +87,7 @@ export function assertLineChartData(
 export function assertBarChartData(
   chartDatasets: any[],
   requestData: any,
-  xaxis?: string,
+  xaxis?: string[],
   digits?: number
 ): void {
   Object.keys(requestData).forEach((label: string) => {
@@ -99,15 +98,15 @@ export function assertBarChartData(
     expect(chartData.x).to.exist;
     expect(chartData.y).to.exist;
 
-    if (xaxis) expect(chartData.x).to.eql([xaxis]);
+    if (xaxis) expect(chartData.x).to.eql(xaxis);
     if (digits) {
-      [requestData[label]].forEach((entry, idx) => {
+      (requestData[label] as any[]).forEach((entry, idx) => {
         expect(cutNumber(entry, digits)).to.eq(
           cutNumber(chartData.y[idx], digits)
         );
       });
     } else {
-      expect(chartData.y).to.eql([requestData[label]]);
+      expect(chartData.y).to.eql(requestData[label]);
     }
   });
 }
@@ -187,7 +186,7 @@ export function assertMetricDetails(
   }
 }
 
-// HELPERS
+// DATA HELPERS
 function getRoundedData(value: number): number {
   return roundNumber(value, 1000, 1 / Math.pow(10, 3), false);
 }

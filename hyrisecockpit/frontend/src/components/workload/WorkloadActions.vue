@@ -2,33 +2,33 @@
   <span>
     <v-btn-toggle>
       <v-btn
-        id="start-workload"
-        @click="$emit('start')"
         :disabled="actions.start.loading || disabled"
         :loading="actions.start.loading"
         :color="actions.start.active ? colorValueDefinition.green : ''"
+        data-id="start-workload"
+        @click="$emit('start')"
       >
         <v-icon>
           mdi-play
         </v-icon>
       </v-btn>
       <v-btn
-        id="pause-workload"
-        @click="$emit('pause')"
         :disabled="actions.pause.loading || disabled"
         :loading="actions.pause.loading"
         :color="actions.pause.active ? colorValueDefinition.blue : ''"
+        data-id="pause-workload"
+        @click="$emit('pause')"
       >
         <v-icon>
           mdi-pause
         </v-icon>
       </v-btn>
       <v-btn
-        id="stop-workload"
-        @click="$emit('stop')"
         :disabled="actions.stop.loading || disabled"
         :loading="actions.stop.loading"
         :color="actions.stop.active ? colorValueDefinition.red : ''"
+        data-id="stop-workload"
+        @click="$emit('stop')"
       >
         <v-icon>
           mdi-stop

@@ -1,30 +1,11 @@
-import { getSelectorByConfig, roundNumber } from "../helpers";
+import { roundNumber, getSelectorByCustomConfig } from "../helpers";
+import { displayedBenchmark } from "../../setup/helpers";
 
-const selectors: Record<string, string> = {
-  queryTable: getSelectorByConfig("div", "query-table"),
-  queryDataTable: getSelectorByConfig("div", "query-data-table"),
-  operatorProportion: getSelectorByConfig("div", "operatorProportion"),
-  generatedQueryTypeProportion: getSelectorByConfig(
-    "div",
-    "generatedQueryTypeProportion"
-  ),
-  querySearch: getSelectorByConfig("input", "query-search-input"),
+export const selectors = {
+  queryDataTable: getSelectorByCustomConfig("query-data-table"),
+  querySearch: getSelectorByCustomConfig("query-search-input"),
+  queryTable: getSelectorByCustomConfig("query-table"),
 };
-
-export function getSelector(component: string): string {
-  return selectors[component];
-}
-
-const displayedBenchmark: Record<string, string> = {
-  tpch_0_1: "TPC-H SF 0.1",
-  tpch_1: "TPC-H SF 1",
-  tpcds_1: "TPC-DS",
-  job_1: "Join Order Benchmark",
-};
-
-function getDisplayedBenchmark(benchmark: string): string {
-  return displayedBenchmark[benchmark];
-}
 
 export function assertQueryData(rowData: string, data: any): void {
   expect(rowData.includes(data.query_number)).to.eq(true);
@@ -32,5 +13,7 @@ export function assertQueryData(rowData: string, data: any): void {
   expect(
     rowData.includes(roundNumber(data.latency, Math.pow(10, 6)).toString())
   ).to.eq(true);
-  expect(rowData.includes(getDisplayedBenchmark(data.benchmark))).to.eq(true);
+  expect(rowData.includes((displayedBenchmark as any)[data.benchmark])).to.eq(
+    true
+  );
 }

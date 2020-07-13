@@ -19,12 +19,12 @@ export type TransformationService = (
 ) => any;
 
 export interface PluginService {
-  fetchActivePlugins: () => Promise<string[]>;
+  fetchActivePlugins: () => Promise<Object>;
   fetchAvailablePlugins: () => Promise<string[]>;
   fetchPluginLogs: () => Promise<Object>;
-  fetchPluginSettings: () => Promise<Object>;
   setPluginSetting: (
     databaseId: string,
+    pluginId: string,
     settingId: string,
     settingValue: string
   ) => Promise<void>;
@@ -61,5 +61,5 @@ export type Base =
   | "chunks_data"
   | "latency"
   | "queue_length"
-  | "krueger_data"
-  | "operator_data";
+  | "workload_statement_information"
+  | "workload_operator_information";

@@ -20,19 +20,18 @@ export type Request =
   | "throughput"
   | "latency"
   | "queue_length"
-  | "krueger_data"
   | "chunks"
   | "detailed_query_information"
   | "benchmark_tables"
   | "available_plugins"
   | "plugin"
-  | "plugin_settings"
   | "plugin_log"
   | "workload"
   | "status"
   | "sql"
   | "worker"
-  | "operator";
+  | "workload_statement_information"
+  | "workload_operator_information";
 
 export type BackendState = "up" | "down";
 
@@ -40,13 +39,20 @@ export type DatabaseState = "workloadRunning";
 
 export const benchmarks = ["tpch_0_1", "tpch_1", "tpcds_1", "job_1"];
 
+export const displayedBenchmark = {
+  tpch_0_1: "TPC-H SF 0.1",
+  tpch_1: "TPC-H SF 1",
+  tpcds_1: "TPC-DS",
+  job_1: "Join Order Benchmark",
+};
+
 export const comparisonRequests: Request[] = [
   "throughput",
   "latency",
   "queue_length",
   "system",
   "storage",
-  "operator",
+  "workload_operator_information",
 ];
 export const overviewRequests: Request[] = [
   "throughput",
@@ -56,8 +62,8 @@ export const overviewRequests: Request[] = [
   "storage",
 ];
 export const workloadMonitoringRequests: Request[] = [
-  "krueger_data",
-  "operator",
+  "workload_statement_information",
+  "workload_operator_information",
 ];
 
 const requestRoutes: Record<
@@ -78,7 +84,9 @@ const requestRoutes: Record<
   throughput: { get: "**/monitor/throughput**" },
   latency: { get: "**/monitor/latency**" },
   queue_length: { get: "**/monitor/queue_length**" },
-  krueger_data: { get: "**/monitor/krueger_data**" },
+  workload_statement_information: {
+    get: "**/monitor/workload_statement_information**",
+  },
   chunks: { get: "**/monitor/chunks**" },
   detailed_query_information: { get: "**/monitor/detailed_query_information" },
   status: { get: "**/monitor/status" },
@@ -87,15 +95,12 @@ const requestRoutes: Record<
     post: "**/control/database/benchmark_tables",
     delete: "**/control/database/benchmark_tables",
   },
-  available_plugins: { get: "**/control/available_plugins" },
+  available_plugins: { get: "**/control/plugin/available" },
   plugin: {
     get: "**/control/plugin",
-    post: "**/control/plugin",
-    delete: "**/control/plugin",
-  },
-  plugin_settings: {
-    get: "**/control/plugin_settings",
-    post: "**/control/plugin_settings",
+    post: "**/control/plugin/**",
+    delete: "**/control/plugin/**",
+    put: "**/control/plugin/**",
   },
   plugin_log: { get: "**/control/plugin_log" },
   workload: {
@@ -109,8 +114,8 @@ const requestRoutes: Record<
     post: "**/control/database/worker",
     delete: "**/control/database/worker",
   },
-  operator: {
-    get: "**/monitor/operator**",
+  workload_operator_information: {
+    get: "**/monitor/workload_operator_information**",
   },
 };
 
@@ -128,24 +133,22 @@ const getAliases: Partial<Record<Request, string>> = {
   throughput: "getThroughput",
   latency: "getLatency",
   queue_length: "getQueueLength",
-  krueger_data: "getKruegerData",
+  workload_statement_information: "getStatementData",
   chunks: "getChunksData",
   detailed_query_information: "getQueryInformation",
   benchmark_tables: "getBenchmarks",
   available_plugins: "getAvailablePLugins",
   plugin: "getPlugin",
-  plugin_settings: "getPluginSettings",
   plugin_log: "getPluginLog",
   status: "getDatabaseWorkloadState",
   workload: "getWorkloads",
-  operator: "getOperatorData",
+  workload_operator_information: "getOperatorData",
 };
 
 const postAliases: Partial<Record<Request, string>> = {
   database: "addDatabase",
   benchmark_tables: "loadTables",
   plugin: "activatePlugin",
-  plugin_settings: "setPluginSettings",
   workload: "startWorkload",
   sql: "sendSQL",
   worker: "startWorker",
@@ -160,6 +163,7 @@ const deleteAliases: Partial<Record<Request, string>> = {
 };
 
 const putAliases: Partial<Record<Request, string>> = {
+  plugin: "updatePlugin",
   workload: "updateWorkload",
 };
 
