@@ -104,7 +104,9 @@ function getQueryTypeProportionData(data: any, primaryKey: string = ""): any {
 
 /** transform to cpu process usage data */
 function getCPUData(data: any, primaryKey: string = ""): number[] {
-  return data.map((entry: any) => entry[primaryKey].cpu.cpu_process_usage);
+  return data.map(
+    (entry: any) => entry[primaryKey].cpu.cpu_process_usage / 10000000
+  );
 }
 
 /** transform available ram data to used ram data */
