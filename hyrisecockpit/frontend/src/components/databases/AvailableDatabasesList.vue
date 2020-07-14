@@ -1,38 +1,35 @@
 <template>
-  <v-list id="database-list" class="list">
-    <v-card flat>
-      <v-card-title class="header subtitle-1">
-        DATABASES
-        <v-spacer />
-        <v-tooltip right>
-          <template v-slot:activator="{ on }">
-            <v-chip
-              id="add-database-button"
-              class="button"
-              color="white primary--text"
-              v-on="on"
-              @click="$emit('addDatabase')"
-            >
-              <v-icon color="primary" size="26">mdi-plus</v-icon>
-            </v-chip>
-          </template>
-          <span>Add Database</span>
-        </v-tooltip>
+  <v-card id="database-list" class="list" width="280px">
+    <v-system-bar :height="50" color="secondary">
+      <v-card-title>
+        <div class="header">Databases</div>
       </v-card-title>
-    </v-card>
-    <v-divider class="my-2" />
-    <v-list-item class="mt-1" v-for="database in databases" :key="database.id">
-      <v-list-item-title class="database-list-item">
-        <database-chip
-          :database-id="database.id"
-          :closable="true"
-          @closed="$emit('removeDatabase', database)"
-        />
-        <v-spacer />
-        <s-q-l-editor :databaseId="database.id" />
-      </v-list-item-title>
-    </v-list-item>
-  </v-list>
+      <v-spacer></v-spacer>
+      <v-icon @click="onClose()">mdi-close</v-icon>
+    </v-system-bar>
+
+    <v-container class="white container flex">
+      <v-btn @click="$emit('addDatabase')" small elevation="3" class="add mt-1">
+        <v-text class="text font-weight-regular mr-1">Add</v-text>
+        <v-icon :size="20">mdi-database-plus</v-icon>
+      </v-btn>
+      <v-row no gutters>
+        <v-col class="flex-item">
+          <v-list class="mt-1" v-for="database in databases" :key="database.id">
+            <v-list-item-title class="database-list-item">
+              <database-chip
+                :database-id="database.id"
+                :closable="true"
+                @closed="$emit('removeDatabase', database)"
+              />
+              <v-spacer></v-spacer>
+              <s-q-l-editor :databaseId="database.id" />
+            </v-list-item-title>
+          </v-list>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -77,14 +74,10 @@ export default defineComponent({
 .database-list-item {
   display: flex;
 }
-.button {
-  margin-right: 10px;
-  margin-left: 10px;
-}
 .header {
-  padding: 5px !important;
-  margin-left: 10px !important;
-  align-content: center;
-  justify-content: center;
+  display: block;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  font-size: medium;
 }
 </style>
