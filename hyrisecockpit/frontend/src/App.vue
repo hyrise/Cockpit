@@ -6,7 +6,11 @@
       @closeSelection="showSelectionList = false"
     />
     <v-content>
-      <selection-list v-show="showSelectionList" :open="showSelectionList" />
+      <selection-list
+        v-show="showSelectionList"
+        :open="showSelectionList"
+        :onClose="toggleSelectionList"
+      />
       <plugins-overview v-if="showPluginEditor" :onClose="togglePluginEditor" />
       <router-view />
     </v-content>

@@ -2,7 +2,7 @@
   <v-list class="list">
     <v-card flat>
       <v-card-title class="header subtitle-1">
-        METRICS
+        Metrics
       </v-card-title>
     </v-card>
     <v-list-item v-for="metric in availableMetrics" :key="metric">
@@ -95,3 +95,10 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.v-card__subtitle,
+.v-card__text,
+.v-card__title {
+  padding: 6px;
+}
+</style>

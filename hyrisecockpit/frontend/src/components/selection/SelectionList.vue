@@ -1,19 +1,24 @@
 <template>
   <v-card id="selection-list" class="selection-list">
-    <v-card-title>
-      <div class="header">{{ pageName }}</div>
-    </v-card-title>
-    <v-card-text>
+    <v-system-bar :height="50" color="secondary">
+      <v-card-title>
+        <div class="header">{{ pageName }} Page Settings</div>
+      </v-card-title>
+      <v-spacer></v-spacer>
+      <v-icon @click="onClose()">mdi-close</v-icon>
+    </v-system-bar>
+
+    <v-card-text class="title">
       <v-tabs
         v-if="open"
         v-model="tab"
-        background-color="white"
+        background-color="grey lighten-2"
         color="primary"
-        grow
+        height="45"
       >
         <v-tabs-slider color="primary"></v-tabs-slider>
-        <v-tab>DATA</v-tab>
-        <v-tab>TIME</v-tab>
+        <v-tab class="body-2 font-weight-regular">Databases and Metrics</v-tab>
+        <v-tab class="body-2 font-weight-regular">Time Range</v-tab>
       </v-tabs>
       <v-divider />
       <v-tabs-items v-model="tab" color="primary">
@@ -40,7 +45,7 @@
           <v-window v-model="window">
             <v-window-item :value="1">
               <v-subheader class="mt-2">
-                CONTINUOUS RANGE
+                Continuous Range
                 <v-badge
                   class="ml-2 mt-1"
                   :color="!staticRange ? 'green' : 'red'"
@@ -63,6 +68,7 @@
                 </v-container>
                 <v-btn
                   id="reset-time-range"
+                  class="button body-2 font-weight-regular"
                   color="primary"
                   block
                   :disabled="!staticRange"
@@ -73,7 +79,7 @@
             </v-window-item>
             <v-window-item :value="2">
               <v-subheader class="mt-2">
-                STATIC RANGE
+                Static Range
                 <v-badge
                   class="ml-2 mt-1"
                   :color="staticRange ? 'green' : 'red'"
@@ -120,6 +126,7 @@
                 }}</v-alert>
                 <v-btn
                   id="set-static-time-range"
+                  class="body-2 font-weight-regular"
                   color="primary"
                   block
                   :disabled="invalidDates"
@@ -143,7 +150,7 @@
                     @click="window = window == 1 ? 2 : 1"
                   >
                     <v-icon v-if="window === 2" left>mdi-chevron-left</v-icon>
-                    {{ window == 1 ? "STATIC" : "CONTINUOUS" }}
+                    {{ window == 1 ? "Static" : "Continuous" }}
                     <v-icon v-if="window === 1" right>mdi-chevron-right</v-icon>
                   </v-btn>
                 </template>
@@ -189,6 +196,7 @@ import { isInvalidDateTimeString, isInFuture } from "@/utils/methods";
 
 interface Props {
   open: boolean;
+  onClose: () => void;
 }
 
 interface Data
@@ -212,6 +220,10 @@ export default defineComponent({
     open: {
       type: Boolean,
       default: false,
+    },
+    onClose: {
+      type: Function,
+      default: null,
     },
   },
   setup(props: Props, context: SetupContext): Data {
@@ -423,7 +435,7 @@ function useStaticRangeSelection(
 }
 .selection-list {
   position: fixed;
-  top: 100px;
+  top: 50px;
   z-index: 10;
   min-width: 500px;
 }
@@ -437,5 +449,17 @@ function useStaticRangeSelection(
   display: block;
   margin-left: auto !important;
   margin-right: auto !important;
+  font-size: medium;
+}
+.v-tab {
+  height: 48px;
+  text-transform: none !important;
+}
+.button {
+  text-transform: none !important;
+}
+.title {
+  margin: 0px;
+  padding: 0px;
 }
 </style>

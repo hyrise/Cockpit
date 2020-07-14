@@ -2,7 +2,7 @@
   <v-list class="list">
     <v-card flat>
       <v-card-title class="header subtitle-1">
-        DATABASES
+        Databases
       </v-card-title>
     </v-card>
     <v-list-item v-for="database in databases" :key="database">
@@ -93,3 +93,10 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.v-card__subtitle,
+.v-card__text,
+.v-card__title {
+  padding: 6px;
+}
+</style>
