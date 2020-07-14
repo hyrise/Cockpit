@@ -39,8 +39,8 @@ class TPCCTransactionHandler:
         """Execute random transaction."""
         txn, params = TPCCParameterGenerator(warehouses).generate_random_transaction()
         transaction_type: str = ""
-
         startts = time_ns()
+
         if constants.TransactionTypes.DELIVERY == txn:
             result = self.doDelivery(params)
             transaction_type = "delivery"
@@ -58,8 +58,8 @@ class TPCCTransactionHandler:
             transaction_type = "stock_level"
         else:
             assert False, "Unexpected TransactionType: " + txn  # nosec
-        endts = time_ns()
 
+        endts = time_ns()
         return endts, endts - startts, transaction_type
 
     # ____________________________________________
@@ -97,11 +97,6 @@ class TPCCTransactionHandler:
             # We remove the queued time, completed time, w_id, and o_carrier_id: the client can figure
             # them out
             # If there are no order lines, SUM returns null. There should always be order lines.
-
-            if ol_total is None:
-                print(f"  ol_total is none, params: {no_o_id}, {d_id}, {w_id}")
-                return
-            print(f"ol_total is OK, params: {no_o_id}, {d_id}, {w_id}")
 
             assert (  # nosec
                 ol_total != None
@@ -202,9 +197,6 @@ class TPCCTransactionHandler:
                 logging.warn(
                     "No STOCK record for (ol_i_id=%d, ol_supply_w_id=%d)"
                     % (ol_i_id, ol_supply_w_id)
-                )
-                print(
-                    f"NO STOCK ID: d_next_o_id={d_next_o_id}, ol_i_id={ol_i_id}, ol_supply_w_id={ol_supply_w_id}"
                 )
                 continue
             s_quantity = stockInfo[0]
@@ -411,6 +403,7 @@ class TPCCTransactionHandler:
         self.cursor.execute(
             q["getStockCount"], [w_id, d_id, o_id, (o_id - 20), w_id, threshold]
         )
+
         result = self.cursor.fetchone()
 
         self.conn.commit()
