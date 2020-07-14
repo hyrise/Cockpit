@@ -9,9 +9,9 @@
       <selection-list
         v-show="showSelectionList"
         :open="showSelectionList"
-        :onClose="toggleSelectionList"
+        @close="toggleSelectionList"
       />
-      <plugins-overview v-if="showPluginEditor" :onClose="togglePluginEditor" />
+      <plugins-overview v-if="showPluginEditor" @close="togglePluginEditor" />
       <router-view />
     </v-content>
   </v-app>

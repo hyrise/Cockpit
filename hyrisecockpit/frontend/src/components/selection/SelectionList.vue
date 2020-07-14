@@ -5,7 +5,7 @@
         <div class="header">{{ pageName }} Page Settings</div>
       </v-card-title>
       <v-spacer></v-spacer>
-      <v-icon @click="onClose()">mdi-close</v-icon>
+      <v-icon @click="$emit('close')">mdi-close</v-icon>
     </v-system-bar>
 
     <v-card-text class="title">
@@ -196,7 +196,6 @@ import { isInvalidDateTimeString, isInFuture } from "@/utils/methods";
 
 interface Props {
   open: boolean;
-  onClose: () => void;
 }
 
 interface Data
@@ -220,10 +219,6 @@ export default defineComponent({
     open: {
       type: Boolean,
       default: false,
-    },
-    onClose: {
-      type: Function,
-      default: null,
     },
   },
   setup(props: Props, context: SetupContext): Data {

@@ -3,7 +3,7 @@
     <v-card :id="pluginDraggerId" class="card" color="primary" dark>
       <v-card-title>
         Plugins
-        <v-icon class="close-icon" @click="onClose()">mdi-close</v-icon>
+        <v-icon class="close-icon" @click="$emit('close')">mdi-close</v-icon>
       </v-card-title>
     </v-card>
     <v-expansion-panels
@@ -78,9 +78,7 @@ import useDragElement from "@/meta/draggable";
 import DatabaseChip from "@/components/details/DatabaseChip.vue";
 import { PluginController } from "@/types/controller";
 
-interface Props {
-  onClose: () => void;
-}
+interface Props {}
 
 interface Data
   extends UsePluginSwitching,
@@ -98,12 +96,7 @@ export default defineComponent({
     PluginSetting,
     DatabaseChip,
   },
-  props: {
-    onClose: {
-      type: Function,
-      default: null,
-    },
-  },
+  props: {},
   setup(props: Props, context: SetupContext): Data {
     const pluginDraggableId = "plugin-overview";
     const pluginDraggerId = "plugin-card";
