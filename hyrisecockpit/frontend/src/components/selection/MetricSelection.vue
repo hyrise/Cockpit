@@ -95,10 +95,3 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
-.v-card__subtitle,
-.v-card__text,
-.v-card__title {
-  padding: 6px;
-}
-</style>

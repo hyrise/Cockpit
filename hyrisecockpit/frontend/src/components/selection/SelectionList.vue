@@ -452,7 +452,6 @@ function useStaticRangeSelection(
   font-size: medium;
 }
 .v-tab {
-  height: 48px;
   text-transform: none !important;
 }
 .button {
