@@ -35,6 +35,7 @@
       :show-details="showDetails"
       :max-chart-width="maxChartWidth"
       :total-number-of-databases="totalNumberOfDatabases"
+      :activate-plugin-event-click="activatePluginEventClick"
     />
   </v-card>
 </template>

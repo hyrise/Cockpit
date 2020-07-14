@@ -1,5 +1,6 @@
 <template>
   <div id="metric-comparison-table" class="metrics-table">
+    <plugin-log-popup :current-plugin-log="currentPluginLog" />
     <div
       class="metrics-column"
       :style="databaseFlex"
@@ -30,6 +31,7 @@
           :show-details="showDetails"
           :graph-id="`${metric}-${database.id}`"
           :max-chart-width="maxChartWidth"
+          :activate-plugin-event-click="activatePluginEventClick"
         />
       </div>
       <v-card tile class="column-bottom-border" :color="database.color">
@@ -56,16 +58,21 @@ import { useDatabaseFlex } from "../../meta/components";
 import MetricTile from "@/components/container/MetricTile.vue";
 import { Database } from "@/types/database";
 import { useUpdatingDatabases } from "@/meta/databases";
+import PluginLogPopup from "@/components/plugins/PluginLogPopup.vue";
+import { PlotlyHTMLElement, PlotMouseEvent } from "plotly.js";
 
 interface Data {
   databaseFlex: Readonly<Ref<Object>>;
   maxChartWidth: Readonly<Ref<number>>;
   databases: Ref<readonly Database[]>;
+  currentPluginLog: Ref<string>;
+  activatePluginEventClick: (graphId: string) => void;
 }
 
 export default defineComponent({
   components: {
     MetricTile,
+    PluginLogPopup,
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
@@ -82,10 +89,28 @@ export default defineComponent({
       )!.offsetWidth;
     });
 
+    const currentPluginLog: Ref<string> = ref("");
+
+    const activatePluginEventClick = (graphId: string) => {
+      const graphElement = document.getElementById(
+        graphId
+      ) as PlotlyHTMLElement;
+      graphElement.on("plotly_click", (data: PlotMouseEvent) => {
+        data.points.forEach((point: any) => {
+          if (point.curveNumber === 1) {
+            currentPluginLog.value = point.fullData.text[point.pointIndex];
+          }
+        });
+        console.log(currentPluginLog.value);
+      });
+    };
+
     return {
       ...useDatabaseFlex(props),
       maxChartWidth,
       ...useUpdatingDatabases(props, context),
+      currentPluginLog,
+      activatePluginEventClick,
     };
   },
 });

@@ -23,6 +23,7 @@ interface Props extends ChartProps {
   maxValue: number;
   timestamps: Date[];
   pluginEventData: any;
+  activatePluginEventClick: (graphId: string) => void;
 }
 
 export default defineComponent({
@@ -37,6 +38,10 @@ export default defineComponent({
     },
     pluginEventData: {
       type: Object,
+      default: null,
+    },
+    activatePluginEventClick: {
+      type: Function,
       default: null,
     },
     ...ChartPropsValidation,
@@ -81,6 +86,9 @@ export default defineComponent({
           updatePluginEventData();
         }
       );
+      if (props.activatePluginEventClick) {
+        props.activatePluginEventClick(props.graphId);
+      }
     });
 
     function updatePluginEventData(): void {

@@ -142,7 +142,7 @@ export function usePluginService(): PluginService {
               ],
               events: [
                 ...databaseEvents.events,
-                trimString(producePluginLogString(currentLog), 50),
+                producePluginLogString(currentLog),
               ],
             };
           } else {
