@@ -127,6 +127,9 @@ class Database(object):
 
     def activate_plugin(self, plugin: str) -> bool:
         """Activate plugin."""
+        active_plugins = self._get_plugins()
+        if active_plugins is None or plugin in active_plugins:
+            return False
         return self._background_scheduler.activate_plugin(plugin)
 
     def deactivate_plugin(self, plugin: str) -> bool:
