@@ -87,7 +87,7 @@ export default defineComponent({
     const watchedDatabase = useUpdatingDatabases(props, context).databases
       .value[0];
 
-    const accessData = ref<AccessData>({});
+    const accessData = ref<AccessData>(({} as unknown) as AccessData);
 
     watch([data, selectedTable], () => {
       if (Object.keys(data.value).length && selectedTable.value != "") {

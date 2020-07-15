@@ -38,7 +38,9 @@ export function useMocks(
   getMockedPostCallback: (request: Request) => (id: string) => void;
   getMockedDeleteCallback: (request: Request) => (id: string) => void;
 } {
-  let mockedState: Record<DatabaseState, boolean> = { workloadRunning: false };
+  const mockedState: Record<DatabaseState, boolean> = {
+    workloadRunning: false,
+  };
   const callbacks = useCallbacks(
     addMockedId,
     removeMockedId,
@@ -47,11 +49,11 @@ export function useMocks(
   );
   let mockedIds: Record<Entity, string[]> = mockIds();
   let responseMocks: Record<Request, any> = mockResponses();
-  let postCallbackMocks: Partial<Record<
+  const postCallbackMocks: Partial<Record<
     Request,
     (id: string) => void
   >> = mockPostCallbacks();
-  let deleteCallbackMocks: Partial<Record<
+  const deleteCallbackMocks: Partial<Record<
     Request,
     (id: string) => void
   >> = mockDeleteCallbacks();

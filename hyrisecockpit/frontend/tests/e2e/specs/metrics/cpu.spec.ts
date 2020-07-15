@@ -9,7 +9,8 @@ const layout = { title: "Workload in %", min: 0, max: 105 };
 const transform = (xhr: any): any => {
   const data: any = {};
   xhr.response.body.forEach((entry: any) => {
-    data[entry.id] = entry.system_data[0].system_data.cpu.cpu_process_usage;
+    data[entry.id] =
+      entry.system_data[0].system_data.cpu.cpu_process_usage / Math.pow(10, 7);
   });
 
   return data;
