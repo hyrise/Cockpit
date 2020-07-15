@@ -292,7 +292,6 @@ export function fakeDatabasePluginLogs(
 
 export function fakeDatabaseStatusData(
   databaseId: string,
-  loadedBenchmarks: string[],
   state: boolean
 ): Object {
   return {
@@ -300,6 +299,15 @@ export function fakeDatabaseStatusData(
     hyrise_active: true,
     database_blocked_status: false,
     worker_pool_status: state ? "running" : "",
+  };
+}
+
+export function fakeBenchmarkStatusData(
+  databaseId: string,
+  loadedBenchmarks: string[]
+): Object {
+  return {
+    id: databaseId,
     loaded_benchmarks: loadedBenchmarks,
     loaded_tables: [],
   };

@@ -17,6 +17,7 @@ export function getBenchmarkIndex(benchmark: string): number {
 
 /* ASSERTIONS */
 export function assertBenchmarks(statusData: any[]): void {
+  console.log(statusData);
   benchmarks.forEach((benchmark: string, idx: number) => {
     // assert loaded workload data
     cy.get(selectors.selectWorkloadData)
