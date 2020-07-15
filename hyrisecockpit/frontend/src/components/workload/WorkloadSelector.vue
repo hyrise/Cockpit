@@ -58,7 +58,8 @@ export default defineComponent({
       () => props.selectedWorkloads,
       () => {
         workloads.value = props.selectedWorkloads;
-      }
+      },
+      { immediate: true }
     );
     return {
       workloads,
