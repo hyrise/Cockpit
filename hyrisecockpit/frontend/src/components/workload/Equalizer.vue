@@ -151,7 +151,8 @@ export default defineComponent({
               });
           }
         );
-      }
+      },
+      { immediate: true }
     );
     watch(
       () => props.selectedWorkloads,
@@ -159,7 +160,8 @@ export default defineComponent({
         panels.value = Object.keys(props.selectedWorkloads).map((index) =>
           parseInt(index)
         );
-      }
+      },
+      { immediate: true }
     );
     return {
       weights,
