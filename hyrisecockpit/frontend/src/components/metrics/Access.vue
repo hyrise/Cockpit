@@ -1,11 +1,11 @@
 <template>
   <div>
     <div>
-      <metric-detailed-view>
+      <metric-detailed-view metric="access">
         <template #header>Access Frequency</template>
         <template #content>
           <v-select
-            :id="'1' + 'access-select'"
+            :id="'detailed-access-select'"
             v-model="selectedTable"
             class="select"
             :items="tables"
@@ -16,7 +16,7 @@
             width="100"
           />
           <Heatmap
-            :graph-id="'1' + graphId || 'access'"
+            :graph-id="'detailed-' + graphId || 'access'"
             :data="data"
             :chart-configuration="chartConfiguration"
             :autosize="false"
@@ -25,7 +25,7 @@
         </template>
       </metric-detailed-view>
       <v-select
-        :id="'2' + 'access-select'"
+        :id="'access-select'"
         v-model="selectedTable"
         class="select"
         :items="tables"
@@ -35,7 +35,7 @@
         prepend-icon="mdi-table"
       />
       <Heatmap
-        :graph-id="'2' + graphId || 'access'"
+        :graph-id="graphId || 'access'"
         :data="data"
         :chart-configuration="chartConfiguration"
         :selected-databases="selectedDatabases"
@@ -87,7 +87,7 @@ export default defineComponent({
     const watchedDatabase = useUpdatingDatabases(props, context).databases
       .value[0];
 
-    const accessData = ref<AccessData>({});
+    const accessData = ref<AccessData>(({} as unknown) as AccessData);
 
     watch([data, selectedTable], () => {
       if (Object.keys(data.value).length && selectedTable.value != "") {

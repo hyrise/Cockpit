@@ -1,9 +1,7 @@
 import { useBackendMock } from "../../setup/backendMock";
-import { clickElement } from "../helpers";
 import { getDeleteAlias } from "../../setup/helpers";
-import { getSelector as getViewSelector } from "../views/helpers";
-import { getSelector, assertDeleteValues } from "./helpers";
-import { testContentExistence } from "../abstractTests";
+import { selectors as viewSelectors } from "../views/helpers";
+import { assertDeleteValues, selectors } from "./helpers";
 
 const backend = useBackendMock({ databases: 2 });
 let databases: any = [];
@@ -28,15 +26,15 @@ describe("When removing a database", () => {
   // test cancel
   describe("and clicking the cancel button", () => {
     it("will not remove the selected database", () => {
-      clickElement(getViewSelector("databaseListButton"));
-      cy.get(getSelector("removeDatabaseButton")).first().click();
+      cy.get(viewSelectors.databaseListButton).click();
+      cy.get(selectors.removeDatabaseButton).first().click();
 
-      clickElement(getSelector("cancelRemoveDatabaseButton"));
+      cy.get(selectors.cancelRemoveDatabaseButton).click();
       cy.numberOfRequests(getDeleteAlias("database")).should("eq", 0);
 
-      clickElement(getViewSelector("databaseListButton"));
-      cy.get(getViewSelector("databaseList")).within(() => {
-        cy.get(getSelector("databaseChip")).contains(removeDatabase);
+      cy.get(viewSelectors.databaseListButton).click();
+      cy.get(viewSelectors.databaseList).within(() => {
+        cy.get(selectors.databaseChip).contains(removeDatabase);
       });
     });
   });
@@ -45,22 +43,26 @@ describe("When removing a database", () => {
   describe("and clicking the remove and cancel button multiple times", () => {
     it("will always select the clicked database to be removed", () => {
       const secondRemoveDatabase = databases[1].id;
-      clickElement(getViewSelector("databaseListButton"));
+      cy.get(viewSelectors.databaseListButton).click();
 
-      cy.get(getSelector("removeDatabaseButton")).first().click();
+      cy.get(selectors.removeDatabaseButton).first().click();
 
-      cy.get(getSelector("removeDatabase")).within(() => {
-        cy.get("span").contains(removeDatabase);
-        cy.get("span").contains(secondRemoveDatabase).should("not.exist");
+      cy.get(selectors.removeDatabase).within(() => {
+        cy.get(selectors.databaseChip).contains(removeDatabase);
+        cy.get(selectors.databaseChip)
+          .contains(secondRemoveDatabase)
+          .should("not.exist");
       });
-      clickElement(getSelector("cancelRemoveDatabaseButton"));
+      cy.get(selectors.cancelRemoveDatabaseButton).click();
 
-      clickElement(getViewSelector("databaseListButton"));
-      cy.get(getSelector("removeDatabaseButton")).last().click();
+      cy.get(viewSelectors.databaseListButton).click();
+      cy.get(selectors.removeDatabaseButton).last().click();
 
-      cy.get(getSelector("removeDatabase")).within(() => {
-        cy.get("span").contains(secondRemoveDatabase);
-        cy.get("span").contains(removeDatabase).should("not.exist");
+      cy.get(selectors.removeDatabase).within(() => {
+        cy.get(selectors.databaseChip).contains(secondRemoveDatabase);
+        cy.get(selectors.databaseChip)
+          .contains(removeDatabase)
+          .should("not.exist");
       });
     });
   });
@@ -68,9 +70,9 @@ describe("When removing a database", () => {
   // test delete
   describe("and clicking the remove button", () => {
     it("will remove the selected database", () => {
-      clickElement(getViewSelector("databaseListButton"));
-      cy.get(getSelector("removeDatabaseButton")).first().click();
-      testContentExistence(removeDatabase);
+      cy.get(viewSelectors.databaseListButton).click();
+      cy.get(selectors.removeDatabaseButton).first().click();
+      cy.contains(removeDatabase);
 
       // update tmp state
       cy.updateAppState(backend, {
@@ -79,7 +81,7 @@ describe("When removing a database", () => {
         method: "DELETE",
       });
 
-      clickElement(getSelector("deleteDatabaseButton"));
+      cy.get(selectors.deleteDatabaseButton).click();
 
       cy.wait("@" + getDeleteAlias("database"));
       cy.get("@" + getDeleteAlias("database")).should((xhr: any) => {
@@ -87,9 +89,9 @@ describe("When removing a database", () => {
       });
       cy.numberOfRequests(getDeleteAlias("database")).should("eq", 1);
 
-      clickElement(getViewSelector("databaseListButton"));
-      cy.get(getViewSelector("databaseList")).within(() => {
-        cy.get(getSelector("databaseChip"))
+      cy.get(viewSelectors.databaseListButton).click();
+      cy.get(viewSelectors.databaseList).within(() => {
+        cy.get(selectors.databaseChip)
           .contains(removeDatabase)
           .should("not.exist");
       });

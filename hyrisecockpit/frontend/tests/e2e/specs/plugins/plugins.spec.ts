@@ -1,23 +1,22 @@
 import { useBackendMock } from "../../setup/backendMock";
-import { clickElement } from "../helpers";
-import { getSelector as getViewSelector } from "../views/helpers";
-import { getSelector as getDatabaseSelector } from "../databases/helpers";
+import { selectors as viewSelectors } from "../views/helpers";
 import {
-  getSelector,
   assertActivePlugins,
-  assertPlugins,
+  assertPluginExistence,
   assertPluginLog,
   assertPluginSettings,
-  getPluginSelector,
+  selectors,
+  pluginButton,
+  getPluginsByState,
 } from "./helpers";
-import { testElementNoExistence } from "../abstractTests";
 
-let backend = useBackendMock();
+const backend = useBackendMock();
 
 let databases: any = [];
 let availablePlugins: any = [];
 let databasesActivePluginData: any = [];
 let databasesPluginLogs: any = [];
+
 // test plugins overview
 describe("When opening the plugins overview", () => {
   before(() => {
@@ -35,29 +34,13 @@ describe("When opening the plugins overview", () => {
     });
   });
 
-  // test correct number of databases
-  it("will show the correct number of databases", () => {
-    clickElement(getViewSelector("pluginOverviewButton"));
-    cy.get(getSelector("pluginOverview")).within(() => {
-      databases.forEach((database: any, idx: number) => {
-        cy.get(getDatabaseSelector("databaseChip"))
-          .eq(idx)
-          .contains(database.id);
-      });
-    });
-    clickElement(getViewSelector("pluginOverviewButton"));
-    testElementNoExistence(getSelector("pluginOverview"));
-  });
-
   // test correct plugins
   it("will show the correct plugins for every database", () => {
-    clickElement(getViewSelector("pluginOverviewButton"));
-    cy.get(getSelector("pluginOverview")).within(() => {
+    cy.get(viewSelectors.pluginOverviewButton).click();
+    cy.get(selectors.pluginOverview).within(() => {
       databases.forEach((database: any, idx: number) => {
-        cy.get("button")
-          .eq(idx + 1)
-          .click();
-        assertPlugins(availablePlugins);
+        cy.get(selectors.databaseHeader).eq(idx).click();
+        assertPluginExistence(availablePlugins);
         assertActivePlugins(
           database.id,
           availablePlugins,
@@ -65,18 +48,17 @@ describe("When opening the plugins overview", () => {
         );
       });
     });
-    clickElement(getViewSelector("pluginOverviewButton"));
-    testElementNoExistence(getSelector("pluginOverview"));
+    cy.get(viewSelectors.pluginOverviewButton).click();
   });
 
   // test correct plugin log messages
   it("will show the correct plugin logs for every database", () => {
-    clickElement(getViewSelector("pluginOverviewButton"));
-    cy.get(getSelector("pluginOverview")).within(() => {
+    cy.get(viewSelectors.pluginOverviewButton).click();
+    cy.get(selectors.pluginOverview).within(() => {
       databases.forEach((database: any, idx: number) => {
-        cy.get("button").contains(database.id).click();
-        cy.get(getSelector("pluginLog")).eq(idx).click({ force: true });
-        cy.get("textarea")
+        cy.get(selectors.databaseHeader).eq(idx).click();
+        cy.get(selectors.pluginLog).eq(idx).click({ force: true });
+        cy.get(selectors.pluginLogArea)
           .eq(idx)
           .then((textarea: any) => {
             assertPluginLog(
@@ -85,46 +67,34 @@ describe("When opening the plugins overview", () => {
               textarea[0].value
             );
           });
-        cy.get("button").contains(database.id).click();
+        cy.get(selectors.databaseHeader).eq(idx).click();
       });
     });
-    clickElement(getViewSelector("pluginOverviewButton"));
-    testElementNoExistence(getSelector("pluginOverview"));
+    cy.get(viewSelectors.pluginOverviewButton).click();
   });
 
   // test correct plugin settings
   it("will show the correct plugin settings for every active plugin and database", () => {
     cy.setupAppState(backend); // need this for properly open change settings button
     cy.wait(500);
-    clickElement(getViewSelector("pluginOverviewButton"));
-    cy.get(getSelector("pluginOverview")).within(() => {
+    cy.get(viewSelectors.pluginOverviewButton).click();
+    cy.get(selectors.pluginOverview).within(() => {
       databases.forEach((database: any, idx: number) => {
-        const activePlugins = availablePlugins.reduce(
-          (activePlugins: Object[], plugin: any, idx: number) => {
-            const pluginData = databasesActivePluginData.find(
-              (db: any) => db.id === database.id
-            );
-            if (
-              !!pluginData.plugins.find((active: any) => active.name === plugin)
-            ) {
-              activePlugins.push({
-                plugin: plugin,
-                idx: idx,
-              });
-            }
-            return activePlugins;
-          },
-          []
+        const activePlugins = getPluginsByState(
+          { availablePlugins, databases, databasesActivePluginData },
+          "active",
+          true
         );
-        cy.get("button").contains(database.id).click();
-        cy.get(getPluginSelector(activePlugins[0].plugin, "changeButton"))
+
+        cy.get(selectors.databaseHeader).eq(idx).click();
+        cy.get(pluginButton(activePlugins[0].plugin, "changeButton"))
           .eq(idx)
           .click();
         cy.wait(1000);
 
         assertPluginSettings(database.id, databasesActivePluginData, idx);
 
-        cy.get("button").contains(database.id).click();
+        cy.get(selectors.databaseHeader).eq(idx).click();
       });
     });
   });

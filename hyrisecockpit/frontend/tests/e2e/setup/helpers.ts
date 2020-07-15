@@ -252,7 +252,7 @@ export function generateUniqueRandomNumbers(
   let available = [...Array(range).keys()];
   const selected: number[] = [];
   for (let i = 0; i < length; i++) {
-    let index = selectRandomItem(available);
+    const index = selectRandomItem(available);
     selected.push(index);
     available = available.filter((item) => item !== index);
   }
