@@ -31,7 +31,14 @@ export default defineComponent({
     );
 
     onMounted(() => {
-      Plotly.newPlot(props.graphId, getDataset(), getLayout(), getOptions());
+      Plotly.newPlot(
+        props.graphId,
+        getDataset(),
+        getLayout(),
+        getOptions()
+      ).then((gd) => {
+        gd.on("plotly_treemapclick" as any, () => false);
+      });
       useChartReactivity(props, context, updateDatasets, updateLayout);
     });
 
@@ -71,6 +78,7 @@ function useTreemapConfiguration(
           yanchor: "bottom",
         },
       ],
+      clickmode: false,
       autosize: props.autosize,
       width: props.autosize ? 0 : 1400,
       height: props.autosize ? 0 : 700,
