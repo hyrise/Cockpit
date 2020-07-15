@@ -9,11 +9,11 @@
         {{ getDisplayedWorkload(workload) }}
       </v-expansion-panel-header>
       <v-expansion-panel-content class="mt-8">
-        <v-row class="equalizer mx-3">
+        <v-row class="query-weights mx-3">
           <div
             v-for="(weight, idx) in weights[workload]"
             :key="weight.name"
-            class="equalizer-row"
+            class="query-weights-row"
           >
             <div v-if="idx % 15 === 0">
               <div class="value-col">
@@ -88,7 +88,7 @@ interface Data {
 type Weight = { name: string; value: number; sliderValue: number };
 
 export default defineComponent({
-  name: "Equalizer",
+  name: "QueryWeights",
   props: {
     selectedWorkloads: {
       type: Array,
@@ -228,7 +228,7 @@ export default defineComponent({
   width: 44px;
   margin: -22px 3px 0px 3px;
 }
-.equalizer {
+.query-weights {
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -239,7 +239,7 @@ export default defineComponent({
   flex-basis: 100%;
   height: 0;
 }
-.equalizer-row {
+.query-weights-row {
   display: flex;
   margin-bottom: 10px;
 }
