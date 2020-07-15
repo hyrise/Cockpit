@@ -38,9 +38,9 @@ export function useMetricController(): MetricController {
 
   const metricIntervals = setupIntervals();
 
-  let data = {} as any;
-  let maxValueData = {} as any;
-  let timestamps = {} as any;
+  const data = {} as any;
+  const maxValueData = {} as any;
+  const timestamps = {} as any;
 
   mapToData(metricServices);
 

@@ -1,5 +1,5 @@
 <template>
-  <v-card id="selection-list" class="selection-list">
+  <v-card class="selection-list" data-id="selection-list" >
     <v-system-bar :height="50" color="secondary">
       <v-card-title>
         <div class="header">{{ pageName }} Page Settings</div>
@@ -52,7 +52,7 @@
                   dot
                 />
               </v-subheader>
-              <v-sheet height="400">
+              <v-sheet height="350">
                 <v-container class="white container flex">
                   <v-row class="top-row" no gutters>
                     <v-col class="flex-item select">
@@ -67,7 +67,7 @@
                   </v-row>
                 </v-container>
                 <v-btn
-                  id="reset-time-range"
+                  data-id="reset-time-range"
                   class="button body-2 font-weight-regular"
                   color="primary"
                   block
@@ -86,17 +86,17 @@
                   dot
                 />
               </v-subheader>
-              <v-sheet height="400">
+              <v-sheet height="350">
                 <v-container class="white container flex">
                   <v-row no gutters>
-                    <v-col class="flex-item select">
+                    <v-col class="flex-item select remove-margin">
                       <timestamp-selection
                         label="Start"
                         @dateChanged="(newDate) => (startDate = newDate)"
                         @timeChanged="(newTime) => (startTime = newTime)"
                       />
                     </v-col>
-                    <v-col class="flex-item select">
+                    <v-col class="flex-item select remove-margin">
                       <timestamp-selection
                         label="End"
                         :min-date="startDate"
@@ -108,7 +108,7 @@
                   </v-row>
                 </v-container>
                 <v-container class="white container flex">
-                  <v-row no gutters>
+                  <v-row no gutters class="remove-margin-low">
                     <v-col class="flex-item select">
                       <precision-selection
                         :available-precisions="availableStaticPrecisions"
@@ -121,11 +121,15 @@
                     </v-col>
                   </v-row>
                 </v-container>
-                <v-alert v-if="!!errorMessage" type="error">{{
-                  errorMessage
-                }}</v-alert>
+                <v-alert
+                  v-if="!!errorMessage"
+                  type="error"
+                  class="remove-margin-low"
+                >
+                  {{ errorMessage }}
+                </v-alert>
                 <v-btn
-                  id="set-static-time-range"
+                  data-id="set-static-time-range"
                   class="body-2 font-weight-regular"
                   color="primary"
                   block
@@ -143,10 +147,10 @@
               <v-tooltip top>
                 <template v-slot:activator="{ on }">
                   <v-btn
-                    id="change-range-type"
                     v-on="on"
                     color="white"
                     depressed
+                    data-id="change-range-type"
                     @click="window = window == 1 ? 2 : 1"
                   >
                     <v-icon v-if="window === 2" left>mdi-chevron-left</v-icon>
@@ -154,9 +158,10 @@
                     <v-icon v-if="window === 1" right>mdi-chevron-right</v-icon>
                   </v-btn>
                 </template>
-                <span>
-                  Select {{ window == 1 ? "Static" : "Continuous" }} Range Type
-                </span>
+                <span
+                  >Select {{ window == 1 ? "Static" : "Continuous" }} Range
+                  Type</span
+                >
               </v-tooltip>
             </v-card-actions>
           </v-card>
@@ -176,6 +181,7 @@ import {
   Ref,
   ref,
   onMounted,
+  watchEffect,
 } from "@vue/composition-api";
 
 import { Database } from "@/types/database";
@@ -280,9 +286,7 @@ function useDataChangeHandling(
   const { emitPageChangedEvent } = useWindowEvents();
 
   // update page
-  watch(page, () => {
-    emitPageChangedEvent(page.value);
-  });
+  watchEffect(() => emitPageChangedEvent(page.value));
 
   function handleDatabaseChange(databaseId: string, value: boolean): void {
     emitSelectedDatabasesChangedWithinEvent(page.value, databaseId, value);
@@ -455,5 +459,11 @@ function useStaticRangeSelection(
 .title {
   margin: 0px;
   padding: 0px;
+}
+.remove-margin {
+  margin: -10px;
+}
+.remove-margin-low {
+  margin-top: -20px;
 }
 </style>

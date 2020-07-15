@@ -1,5 +1,9 @@
 <template>
-  <div :id="pluginDraggableId" class="plugin-overview">
+  <div
+    :id="pluginDraggableId"
+    class="plugin-overview"
+    :data-id="pluginDraggableId"
+  >
     <v-card :id="pluginDraggerId" class="card" color="primary" dark>
       <v-card-title>
         Plugins
@@ -13,27 +17,34 @@
       accordion
     >
       <v-expansion-panel v-for="database in databases" :key="database">
-        <v-expansion-panel-header class="title">
+        <v-expansion-panel-header
+          class="title"
+          data-id="plugin-database-header"
+        >
           <v-list-item class="item">
             <database-chip :database-id="database" />
           </v-list-item>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <div v-for="plugin in availablePlugins" :key="plugin">
+          <div
+            v-for="plugin in availablePlugins"
+            :key="plugin"
+            data-id="plugin-entry"
+          >
             <div class="plugin">
               <div class="plugin-name">{{ plugin }}</div>
               <v-switch
-                :id="`${plugin}-switch-button`"
                 v-model="activePlugins"
                 :disabled="disableAll"
                 :loading="isLoading[database + '_' + plugin]"
                 :value="database + '_' + plugin"
+                :data-id="`${plugin}-switch-button`"
                 @change="onClickPluginSwitch(database, plugin)"
               />
               <v-btn
-                :id="`${plugin}-change-button`"
                 v-if="canSettingsBeChanged(database, plugin)"
                 text
+                :data-id="`${plugin}-change-button`"
                 @click="toggleSettingsView(database, plugin)"
               >
                 <v-icon>mdi-cog</v-icon>

@@ -10,20 +10,20 @@
     >
       <template v-slot:activator="{ on }">
         <v-text-field
-          id="date-picker-text"
           v-model="date"
           label="Date"
           prepend-icon="mdi-calendar"
           :error="!date"
           readonly
           v-on="on"
+          data-id="date-picker-text"
         ></v-text-field>
       </template>
       <v-date-picker
-        id="date-picker-select"
         v-model="date"
         color="primary"
         :allowed-dates="allowedDates"
+        data-id="date-picker-select"
       ></v-date-picker>
     </v-menu>
     <v-menu
@@ -35,22 +35,22 @@
     >
       <template v-slot:activator="{ on }">
         <v-text-field
-          id="time-picker-text"
           v-model="time"
           label="Time"
           prepend-icon="mdi-clock"
           :error="!time"
           hint="hh:mm"
           v-on="on"
+          data-id="time-picker-text"
         ></v-text-field>
       </template>
       <v-time-picker
-        id="time-picker-select"
         v-model="time"
         format="24hr"
         color="primary"
         :min="minTime"
         :max="maxTime"
+        data-id="time-picker-select"
       ></v-time-picker>
     </v-menu>
   </div>

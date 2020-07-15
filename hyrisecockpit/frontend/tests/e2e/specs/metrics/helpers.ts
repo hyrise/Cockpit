@@ -1,5 +1,10 @@
-import { getSelectorByConfig, cutNumber, roundNumber } from "../helpers";
-import { testMaxDecimalDigits } from "../abstractTests";
+import {
+  getSelectorByConfig,
+  cutNumber,
+  roundNumber,
+  testMaxDecimalDigits,
+  getSelectorByCustomConfig,
+} from "../helpers";
 
 /* SELECTORS */
 const selectors: Record<string, { element: string; title: string }> = {
@@ -17,14 +22,12 @@ const selectors: Record<string, { element: string; title: string }> = {
     title: "operatorProportion",
   },
   memoryFootprint: { element: "div", title: "memoryFootprint" },
-  firstStorage: { element: "div", title: "1storage" },
-  secondStorage: { element: "div", title: "2storage" },
-  firstAccess: { element: "div", title: "1access" },
-  secondAccess: { element: "div", title: "2access" },
-  firstAccessSelect: { element: "input", title: "1access-select" },
-  secondAccessSelect: { element: "input", title: "2access-select" },
-  openDetailed: { element: "button", title: "open-metric-detailed-view" },
-  closeDetailed: { element: "button", title: "close-metric-detailed-view" },
+  storage: { element: "div", title: "storage" },
+  detailedStorage: { element: "div", title: "detailed-storage" },
+  access: { element: "div", title: "access" },
+  detailedAccess: { element: "div", title: "detailed-access" },
+  accessSelect: { element: "input", title: "access-select" },
+  detailedAccessSelect: { element: "input", title: "detailed-access-select" },
 };
 
 export function getSelector(component: string): string {
@@ -52,12 +55,20 @@ export function getDetailsSelectorWithID(
   );
 }
 
+export function getDetailedViewButton(
+  metric: string,
+  buttonType: "open" | "close"
+): string {
+  return getSelectorByCustomConfig(
+    `${buttonType}-metric-detailed-view-${metric}`
+  );
+}
+
 /* ASSERTIONS */
 export function assertLineChartData(
   chartDatasets: any[],
   requestData: any,
-  databases: any[],
-  perIndex: boolean = false
+  databases: any[]
 ): void {
   databases.forEach((database: any, idx) => {
     const chartData: any = chartDatasets.find(
@@ -67,16 +78,8 @@ export function assertLineChartData(
     expect(chartData.x).to.exist;
     expect(chartData.y).to.exist;
 
-    chartData.x.forEach((item: any) => {
-      //testDateFormatting(item, "HHMMSS");
-    });
-
     chartData.y.forEach((item: any) => {
-      if (perIndex) {
-        expect(item).to.eq(requestData[idx]);
-      } else {
-        expect(item).to.eq(requestData[database]);
-      }
+      expect(item).to.eq(requestData[database]);
     });
   });
 }
@@ -183,7 +186,7 @@ export function assertMetricDetails(
   }
 }
 
-// HELPERS
+// DATA HELPERS
 function getRoundedData(value: number): number {
   return roundNumber(value, 1000, 1 / Math.pow(10, 3), false);
 }

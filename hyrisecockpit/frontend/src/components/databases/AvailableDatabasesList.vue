@@ -1,5 +1,5 @@
 <template>
-  <v-card id="database-list" class="list" width="280px">
+  <v-card class="list" data-id="database-list" width="280px">
     <v-system-bar :height="50" color="secondary">
       <v-card-title>
         <div class="header">Databases</div>

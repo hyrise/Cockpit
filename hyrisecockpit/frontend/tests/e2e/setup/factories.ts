@@ -24,38 +24,6 @@ export function fakeTimeStamp(): number {
   return getNanoSeconds(new Date());
 }
 
-export function fakeDate(
-  dayOffset = 0,
-  hourOffset = 0,
-  maxHour = 23
-): {
-  year: number;
-  month: number;
-  day: number;
-  hour: number;
-  minute: number;
-  date: Date;
-  dateTime: Date;
-} {
-  const date = {
-    year: generateRandomInt(2000, 20),
-    month: generateRandomInt(1, 12),
-    day: generateRandomInt(dayOffset, 28 - dayOffset),
-    hour: generateRandomInt(hourOffset, maxHour - dayOffset),
-    minute: generateRandomInt(0, 59),
-  };
-  return {
-    ...date,
-    date: new Date(`${date.year}-${date.month}-${date.day}`),
-    dateTime: new Date(
-      new Date(`${date.year}-${date.month}-${date.day}`).setHours(
-        date.hour,
-        date.minute
-      )
-    ),
-  };
-}
-
 // IDS
 
 export function fakeId(prefix: string, key: number): string {

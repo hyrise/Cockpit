@@ -1,11 +1,13 @@
-export function clickElement(selector: string): void {
-  cy.get(selector).click({ force: true });
+/** Test correct rounding of content with max number of digits */
+export function testMaxDecimalDigits(content: string, maxDigits: number): void {
+  const decimal = content.split(".");
+  const decimalOnly =
+    decimal.length > 1 ? decimal[1].split(" ") : decimal[0].split(" ");
+
+  expect(decimalOnly[0]).to.have.length.of.at.most(maxDigits);
 }
 
-export function getElement(selector: string): void {
-  cy.get(selector);
-}
-
+/** Click content of a select element */
 export function clickContentOfSelect(
   idx: number,
   content: string,
@@ -18,10 +20,17 @@ export function clickContentOfSelect(
     });
 }
 
+/** Access only metrics by real id */
 export function getSelectorByConfig(elementType: string, id: string): string {
   return `${elementType}[id=${id}]`;
 }
 
+/** Access testable elements by data-id - attribute */
+export function getSelectorByCustomConfig(id: string): string {
+  return `[data-id=${id}]`;
+}
+
+/** Wait a specified amount of time to let all of the displayed charts render */
 export function waitForChartRender(): void {
   cy.wait(1000);
 }
