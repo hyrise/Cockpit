@@ -1,6 +1,5 @@
 """Tests for the update plug-in log job."""
 
-from datetime import datetime
 from typing import List, Tuple
 from unittest.mock import patch
 
@@ -18,12 +17,8 @@ class TestUpdatePluginLogJob:
 
     @patch("hyrisecockpit.database_manager.job.update_plugin_log.sql_to_data_frame")
     @patch(
-        "hyrisecockpit.database_manager.job.update_plugin_log.time",
-        lambda: 1_000_000.0,
-    )
-    @patch(
-        "hyrisecockpit.database_manager.job.update_plugin_log._datetime_str_to_unix_timestamp",
-        lambda x: 10,
+        "hyrisecockpit.database_manager.job.update_plugin_log.time_ns",
+        lambda: 10_000_000_000,
     )
     def test_logs_plugin_log(self, mock_sql_to_data_frame: MagicMock) -> None:
         """Test logs plugin log."""
@@ -34,7 +29,7 @@ class TestUpdatePluginLogJob:
         )
         fake_not_empty_data_frame: DataFrame = DataFrame(
             {
-                "timestamp": ["2020-05-15 14:12:24", "2020-05-15 14:25:24"],
+                "timestamp": [1_000_000_000, 2_000_000_000],
                 "reporter": ["KeepHyriseRunning", "HyrisePleaseStayAlive"],
                 "message": ["error", "error"],
                 "log_level": ["Warning", "Warning"],
@@ -49,12 +44,12 @@ class TestUpdatePluginLogJob:
         )
 
         expected_function_argument: List[Tuple[int, str, str, str]] = [
-            (10, "KeepHyriseRunning", "error", "Warning"),
-            (10, "HyrisePleaseStayAlive", "error", "Warning"),
+            (1_000_000_000, "KeepHyriseRunning", "error", "Warning"),
+            (2_000_000_000, "HyrisePleaseStayAlive", "error", "Warning"),
         ]
 
-        expected_startts = str(datetime.fromtimestamp(1_000_000.0 - 5.0))
-        expected_endts = str(datetime.fromtimestamp(1_000_000.0))
+        expected_startts = 5_000_000_000
+        expected_endts = 10_000_000_000
 
         mock_sql_to_data_frame.assert_called_once_with(
             fake_database_blocked,
@@ -66,8 +61,8 @@ class TestUpdatePluginLogJob:
 
     @patch("hyrisecockpit.database_manager.job.update_plugin_log.sql_to_data_frame")
     @patch(
-        "hyrisecockpit.database_manager.job.update_plugin_log.time",
-        lambda: 1_000_000.0,
+        "hyrisecockpit.database_manager.job.update_plugin_log.time_ns",
+        lambda: 10_000_000_000,
     )
     def test_doesnt_log_plugin_log_when_empty(
         self, mock_sql_to_data_frame: MagicMock
