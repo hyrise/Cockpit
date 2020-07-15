@@ -76,7 +76,7 @@ interface Props {
 }
 
 interface Data {
-  weights: Ref<Record<Workload, Weight[]>>;
+  weights: Ref<Record<string, Weight[]>>;
   panels: Ref<number[]>;
   getDisplayedWorkload: (workload: Workload) => void;
   updateWeight: (

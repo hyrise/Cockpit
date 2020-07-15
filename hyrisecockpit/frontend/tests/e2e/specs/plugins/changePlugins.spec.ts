@@ -17,7 +17,7 @@ import {
 } from "./helpers";
 import { selectors as databaseSelectors } from "../databases/helpers";
 
-let backend = useBackendMock({ plugins: 3 });
+const backend = useBackendMock({ plugins: 3 });
 
 let databases: any = [];
 let availablePlugins: any = [];

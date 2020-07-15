@@ -28,7 +28,7 @@ export function useModifiedChartData<T>(
   context: SetupContext
 ): BasicChartComponentData<T> {
   const data = context.root.$metricController.data[props.metric];
-  const modifiedData = ref([]) as Ref<T>;
+  const modifiedData = (ref([]) as unknown) as Ref<T>;
   const metricMeta = getMetricMetadata(props.metric);
 
   // modify data on base data change
