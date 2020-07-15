@@ -78,7 +78,6 @@ function useTreemapConfiguration(
           yanchor: "bottom",
         },
       ],
-      clickmode: false,
       autosize: props.autosize,
       width: props.autosize ? 0 : 1400,
       height: props.autosize ? 0 : 700,
