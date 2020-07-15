@@ -1,18 +1,22 @@
 <template>
-  <v-card class="list" data-id="database-list" width="280px">
+  <v-card class="list" data-id="database-list" width="260px">
     <v-system-bar :height="50" color="secondary">
-      <v-card-title>
-        <div class="header">Databases</div>
-      </v-card-title>
+      <v-card-title class="header">Databases</v-card-title>
+      <v-btn
+        @click="$emit('addDatabase')"
+        elevation="4"
+        small
+        class="add ml-0"
+        rounded
+      >
+        <v-text class="text font-weight-regular mr-1">Add</v-text>
+        <v-icon class="mr-2" :size="20">mdi-database-plus</v-icon>
+      </v-btn>
       <v-spacer></v-spacer>
       <v-icon @click="onClose()">mdi-close</v-icon>
     </v-system-bar>
 
     <v-container class="white container flex">
-      <v-btn @click="$emit('addDatabase')" small elevation="3" class="add mt-1">
-        <v-text class="text font-weight-regular mr-1">Add</v-text>
-        <v-icon :size="20">mdi-database-plus</v-icon>
-      </v-btn>
       <v-row no gutters>
         <v-col class="flex-item">
           <v-list class="mt-1" v-for="database in databases" :key="database.id">

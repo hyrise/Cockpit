@@ -1,25 +1,25 @@
 <template>
   <div>
+    <v-tooltip v-if="closable" left>
+      <template v-slot:activator="{ on, value }">
+        <v-icon
+          class="mr-1"
+          v-on="on"
+          color="primary"
+          :size="value ? 36 : 28"
+          data-id="remove-database-button"
+          @click="$emit('closed')"
+          >mdi-delete-forever</v-icon
+        >
+      </template>
+      <span>Remove Database</span>
+    </v-tooltip>
     <v-chip
       v-if="database"
       class="white--text"
       data-id="database-chip"
       :color="database.color"
     >
-      <v-tooltip v-if="closable" left>
-        <template v-slot:activator="{ on, value }">
-          <v-icon
-            data-id="remove-database-button"
-            class="mr-3"
-            v-on="on"
-            color="secondary"
-            :size="value ? 25 : 20"
-            @click="$emit('closed')"
-            >mdi-close-circle</v-icon
-          >
-        </template>
-        <span>Remove Database</span>
-      </v-tooltip>
       <div v-if="selectable">
         <v-icon
           v-if="selected"
