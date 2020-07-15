@@ -1,5 +1,5 @@
 <template>
-  <v-card class="selection-list" data-id="selection-list" >
+  <v-card class="selection-list" data-id="selection-list">
     <v-system-bar :height="50" color="secondary">
       <v-card-title>
         <div class="header">{{ pageName }} Page Settings</div>

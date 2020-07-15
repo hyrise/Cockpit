@@ -1,7 +1,14 @@
 <template>
   <v-dialog v-model="showDialog" width="60%">
     <template v-slot:activator="{ on }">
-      <v-btn data-id="open-sql-dialog" v-on="on" depressed medium height="32">
+      <v-btn
+        data-id="open-sql-dialog"
+        v-on="on"
+        depressed
+        medium
+        height="32"
+        width="30"
+      >
         <v-icon class="mr-2" color="primary" size="18">mdi-file-edit</v-icon>
         <v-text class="text font-weight-regular">SQL</v-text>
       </v-btn>
