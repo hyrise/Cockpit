@@ -68,7 +68,6 @@
                       :actions="actions"
                       :disabled="disabled"
                       @start="start()"
-                      @pause="pause()"
                       @stop="stop()"
                     />
                   </v-col>
@@ -141,7 +140,6 @@ interface WorkloadActions {
   selectedWorkloads: Ref<Workload[]>;
   weights: Ref<Record<string, number>[]>;
   start: () => void;
-  pause: () => void;
   stop: () => void;
   handleFrequencyChange: (index: number, frequency: number) => void;
   handleWorkloadChange: (workload: Workload) => void;
@@ -213,10 +211,6 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
       active: false,
       loading: false,
     },
-    pause: {
-      active: false,
-      loading: false,
-    },
     stop: {
       active: false,
       loading: false,
@@ -253,17 +247,9 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
     const workersStopped = Object.values(databases).some(
       (database: any) => database.worker_pool_status === "closed"
     );
-    const frequenciesAreNull = Object.values(frequencies.value).every(
-      (frequency) => frequency === 0
-    );
     if (!workersStopped) {
-      if (!frequenciesAreNull) {
-        actions.start.active = true;
-        context.emit("start");
-      } else {
-        actions.pause.active = true;
-        context.emit("pause");
-      }
+      actions.start.active = true;
+      context.emit("start");
     }
   }
   function startLoading(action: string): void {
@@ -300,19 +286,10 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
       updatingWorkload(workload);
     });
   }
-  function startingWorker(action: string): void {
-    startLoading(action);
-    startWorker().then(() => stopLoading(action));
-  }
   function start(): void {
     context.emit("start");
-    startingWorker("start");
-  }
-  function pause(): void {
-    context.emit("pause");
-    frequencies.value = Object.values(frequencies.value).map(() => 0);
-    updatingWorkloads();
-    startingWorker("pause");
+    startLoading("start");
+    startWorker().then(() => stopLoading("start"));
   }
   function stop(): void {
     context.emit("stop");
@@ -321,19 +298,6 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
   }
   function handleFrequencyChange(index: number, frequency: number): void {
     frequencies.value[index] = frequency;
-    const frequenciesAreNull = Object.values(frequencies.value).every(
-      (frequency) => frequency === 0
-    );
-    if (actions.pause.active && !frequenciesAreNull) {
-      context.emit("start");
-      startLoading("start");
-      stopLoading("start");
-    }
-    if (actions.start.active && frequenciesAreNull) {
-      context.emit("pause");
-      startLoading("pause");
-      stopLoading("pause");
-    }
     if (selectedWorkloads.value.includes(availableWorkloads[index])) {
       updatingWorkload(availableWorkloads[index]);
     }
@@ -377,7 +341,6 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
     selectedWorkloads,
     weights,
     start,
-    pause,
     stop,
     handleFrequencyChange,
     handleWorkloadChange,
