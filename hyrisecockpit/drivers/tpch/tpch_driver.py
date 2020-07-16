@@ -3,7 +3,7 @@ from os import getcwd
 from os.path import abspath
 from typing import Dict, List, Tuple
 
-from hyrisecockpit.driver.default import DefaultDriver, DefaultTask
+from hyrisecockpit.drivers.default import DefaultDriver, DefaultTask
 
 
 class TpchDriver:
@@ -11,7 +11,7 @@ class TpchDriver:
 
     def __init__(self):
         """Initialize a tpch driver."""
-        self._query_path: str = f"{abspath(getcwd())}/hyrisecockpit/drivers/tpch/queries"
+        self._query_path: str = f"{abspath(getcwd())}/drivers/tpch"
         self._benchmark_type: str = "tpch"
         self._table_names: List[str] = [
             "customer",
@@ -23,6 +23,7 @@ class TpchDriver:
             "region",
             "supplier",
         ]
+        self._scale_factors = [0.1, 1]
         self._default_driver: DefaultDriver = DefaultDriver(
             self._query_path, self._benchmark_type, self._table_names
         )
