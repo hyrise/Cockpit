@@ -268,14 +268,14 @@ function getAccessData(
                 (sum: number, current: any) => sum + current
               );
             });
-            return tableValue > accessValue.total
+            return tableValue >= accessValue.total
               ? { total: tableValue, name: key }
               : accessValue;
           },
           { total: 0, name: "" }
         );
 
-        return mostAccessedTableOfDB.total > mostAccessed.total
+        return mostAccessedTableOfDB.total >= mostAccessed.total
           ? {
               total: mostAccessedTableOfDB.total,
               name: mostAccessedTableOfDB.name,
