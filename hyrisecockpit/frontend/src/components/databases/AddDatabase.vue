@@ -4,99 +4,50 @@
       <v-card-title>
         <span class="headline">Add new database</span>
       </v-card-title>
-      <v-card-text>
-        <v-container>
-          <v-row>
-            <v-col cols="6">
-              <v-text-field
-                v-model="host"
-                label="Host*"
-                required
-                data-id="host-input"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="6">
-              <v-text-field
-                v-model="id"
-                label="Id*"
-                required
-                :error-messages="idError"
-                data-id="id-input"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row align="center">
-            <v-col cols="12" sm="6">
-              <v-text-field
-                v-model="number_workers"
-                label="Number of Workers*"
-                type="number"
-                required
-                data-id="worker-input"
-              ></v-text-field>
-            </v-col>
-            <v-spacer />
-            <v-btn
-              text
-              @click="showAdvanced = !showAdvanced"
-              data-id="advanced-input-button"
-            >
-              <div v-if="!showAdvanced">show advanced</div>
-              <div v-else>hide advanced</div>
-            </v-btn>
-          </v-row>
-          <v-expand-transition>
-            <div v-if="showAdvanced">
-              <v-row>
-                <v-col cols="6" sm="6">
-                  <v-text-field
-                    v-model="port"
-                    label="Port*"
-                    required
-                    data-id="port-input"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="6" sm="6">
-                  <v-text-field
-                    v-model="dbname"
-                    label="Databasename*"
-                    required
-                    data-id="dbname-input"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="6">
-                  <v-text-field
-                    v-model="user"
-                    label="User*"
-                    required
-                    data-id="user-input"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="6">
-                  <v-text-field
-                    v-model="password"
-                    label="Password"
-                    type="password"
-                    data-id="password-input"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </div>
-          </v-expand-transition>
-        </v-container>
-        <small>*indicates required field</small>
+      <v-card-text class="pb-0">
+        <v-row>
+          <v-col cols="6">
+            <v-text-field
+              v-model="host"
+              label="Host"
+              data-id="host-input"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="6">
+            <v-text-field
+              v-model="id"
+              label="ID"
+              :error-messages="idError"
+              data-id="id-input"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="6">
+            <v-text-field
+              v-model="port"
+              label="Port"
+              data-id="port-input"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="6">
+            <v-text-field
+              v-model="number_workers"
+              label="Number of Workers"
+              type="number"
+              data-id="worker-input"
+            ></v-text-field>
+          </v-col>
+          <v-spacer />
+          <v-btn text data-id="advanced-input-button"> </v-btn>
+        </v-row>
       </v-card-text>
-      <v-card-actions>
+      <v-card-actions class="pt-0">
         <v-spacer></v-spacer>
         <v-btn
           color="primary"
           text
-          @click="
-            closeDialog();
-            showAdvanced = false;
-          "
+          @click="closeDialog()"
           data-id="cancel-add-database-button"
           >Cancel</v-btn
         >
@@ -105,7 +56,6 @@
           text
           @click="
             createNewDatabase();
-            showAdvanced = false;
             closeDialog();
           "
           :disabled="!!idError.length"
@@ -127,13 +77,10 @@ import {
   ref,
   watch,
 } from "@vue/composition-api";
-import { useDatabaseService } from "@/services/databaseService";
+import { useDatabaseService } from "../../services/databaseService";
 
 interface Props {
   open: boolean;
-}
-interface Data extends DatabaseCreationData {
-  showAdvanced: Ref<boolean>;
 }
 
 export default defineComponent({
@@ -143,11 +90,9 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props: Props, context: SetupContext): Data {
-    const showAdvanced = ref(false);
+  setup(props: Props, context: SetupContext): DatabaseCreationData {
     return {
       ...useDatabaseCreation(context),
-      showAdvanced,
     };
   },
 });
