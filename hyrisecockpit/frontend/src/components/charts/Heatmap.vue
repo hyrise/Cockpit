@@ -67,12 +67,14 @@ function useHeatMapConfiguration(
         title: {
           text: chartConfiguration.xaxis,
         },
+        fixedrange: true,
       },
       yaxis: {
         rangemode: "tozero",
         title: {
           text: chartConfiguration.yaxis,
         },
+        fixedrange: true,
       },
       autosize: autosize,
       width: autosize ? 0 : 1400,
