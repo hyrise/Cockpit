@@ -1,11 +1,84 @@
 """Module for default workload behavior."""
 
+from collections import OrderedDict
+from os import listdir
+from random import choice, choices
 from time import time_ns
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Tuple, TypedDict, Union
 
 from psycopg2.extensions import AsIs
 
-from .default_workload import DefaultWorkload
+
+class AbstractTask(TypedDict):
+    """Abstract task."""
+
+    type: str
+    benchmark: str
+
+
+class DefaultTask(AbstractTask):
+    """Type of a generated Query."""
+
+    query_type: str
+    query: str
+    args: Optional[Tuple]
+
+
+class TPCCTask(AbstractTask):
+    """TPC-C task."""
+
+    pass
+
+
+class WorkloadReader:
+    """Reads queries from workloads."""
+
+    @classmethod
+    def _read_query(cls, path_to_file: str) -> List[str]:
+        with open(path_to_file, "r") as f:
+            raw_queries: str = f.read()
+        return [
+            " ".join(transaction.split())
+            for transaction in raw_queries.split("---")
+            if transaction != ""
+        ]
+
+    @classmethod
+    def get(cls, query_path: str) -> Optional[Dict[str, List[str]]]:
+        """Get a workload from the workload folder. Returns the query names and a list of all queries."""
+        queries = {}
+        for file_name in listdir(query_path):
+            query_type = file_name.split(".sql")[0]
+            query_file_path = f"{query_path}/{file_name}"
+            queries[query_type] = cls._read_query(query_file_path)
+
+        return queries
+
+
+class DefaultWorkload:
+    """Generates workloads from queries."""
+
+    def __init__(self, benchmark: str, query_path: str):
+        """Initialize a Workload."""
+        self._benchmark = benchmark
+        self._queries = OrderedDict(WorkloadReader.get(query_path))  # type: ignore
+
+    def get(self, frequency, weights) -> List[DefaultTask]:
+        """Get a list of queries with the frequency and weights."""
+        return [
+            DefaultTask(
+                type="default",
+                query=choice(self._queries[query_type]),  # nosec
+                args=None,
+                query_type=query_type,
+                benchmark=self._benchmark,
+            )
+            for query_type in choices(
+                population=list(self._queries.keys()),
+                weights=list(weights),
+                k=frequency,
+            )
+        ]
 
 
 class DefaultDriver:
@@ -28,10 +101,10 @@ class DefaultDriver:
 
         return workload
 
-    def generate(self, scalefactor, frequence, weights):
+    def generate(self, scalefactor, frequency, weights):
         """Generate workload queries."""
         workload = self._get_workload_for_scale_factor(scalefactor)
-        return workload.get(frequence, weights)
+        return workload.get(frequency, weights)
 
     def get_load_queries(self, scalefactor):
         """Generate loading workload queries."""
@@ -64,27 +137,6 @@ class DefaultDriver:
             )
         return delete_queries
 
-    def execute_task(self, task, cursor, worker_id) -> Tuple[int, int, str, str]:
-        """Execute task of the query type."""
-        query = task["query"]
-        query = query.replace("[STREAM_ID]", str(worker_id))
-
-        not_formatted_parameters = task["args"]
-        formatted_parameters = self._get_formatted_parameters(not_formatted_parameters)
-
-        endts, latency = self._execute_query(cursor, query, formatted_parameters)
-        return endts, latency, task["benchmark"], task["query_type"]
-
-    def _execute_query(
-        self, cursor, query: str, formatted_parameters: Optional[Tuple[str, ...]]
-    ) -> Tuple[int, int]:
-        """Execute given query."""
-        startts = time_ns()
-        cursor.execute(query, formatted_parameters)
-        endts = time_ns()
-
-        return endts, endts - startts
-
     def _get_formatted_parameters(
         self,
         not_formatted_parameters: Tuple[Tuple[Union[str, int], Optional[str]], ...],
@@ -96,3 +148,24 @@ class DefaultDriver:
                 for parameter, protocol in not_formatted_parameters
             )
         return None
+
+    def _execute_query(
+        self, cursor, query: str, formatted_parameters: Optional[Tuple[str, ...]]
+    ) -> Tuple[int, int]:
+        """Execute given query."""
+        startts = time_ns()
+        cursor.execute(query, formatted_parameters)
+        endts = time_ns()
+
+        return endts, endts - startts
+
+    def execute_task(self, task, cursor, worker_id) -> Tuple[int, int, str, str]:
+        """Execute task of the query type."""
+        query = task["query"]
+        query = query.replace("[STREAM_ID]", str(worker_id))
+
+        not_formatted_parameters = task["args"]
+        formatted_parameters = self._get_formatted_parameters(not_formatted_parameters)
+
+        endts, latency = self._execute_query(cursor, query, formatted_parameters)
+        return endts, latency, task["benchmark"], task["query_type"]
