@@ -23,7 +23,7 @@ class TpchDriver:
             "region",
             "supplier",
         ]
-        self._scale_factors = [0.1, 1]
+        self.scale_factors = [0.1, 1]
         self._default_driver: DefaultDriver = DefaultDriver(
             self._query_path, self._benchmark_type, self._table_names
         )
