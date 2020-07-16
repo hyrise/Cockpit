@@ -197,7 +197,7 @@ export default defineComponent({
 function useWorkloadActions(context: SetupContext): WorkloadActions {
   const frequencies = ref<number[]>([]);
   const {
-    getLoadedWorkloadData,
+    getDatabaseStatus,
     startWorker,
     stopWorker,
     getWorkloads,
@@ -233,7 +233,7 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
     if (response.data.length > 0) {
       initializeWorkloadSelector(response.data);
     }
-    getLoadedWorkloadData().then((response: any) => {
+    getDatabaseStatus().then((response: any) => {
       if (response.data.length > 0) {
         initializeWorkloadActions(response.data);
       }
@@ -394,7 +394,8 @@ function useWorkloadDataHandler(
   const loadingWorkloads = ref<Workload[]>([]);
   const {
     stopWorkload,
-    getLoadedWorkloadData,
+    getLoadedWorkloads,
+    getDatabaseStatus,
     loadWorkloadData,
     deleteWorkloadData,
   } = useWorkloadService();
@@ -409,6 +410,7 @@ function useWorkloadDataHandler(
     if (!loadedWorkloads.value.includes(workload)) {
       // load workload data
       loadWorkloadData(workload).then(() => {
+        blocked = true;
         changeWorkloadData = true;
       });
     } else {
@@ -423,7 +425,7 @@ function useWorkloadDataHandler(
     }
   }
   function updateWorkloadInformation(): void {
-    getLoadedWorkloadData().then((response: any) => {
+    getLoadedWorkloads().then((response: any) => {
       if (response.data.length !== 0) {
         let loadedWorkloadData: string[] = response.data[0].loaded_benchmarks;
         Object.values(response.data).forEach((database: any) => {
@@ -432,6 +434,19 @@ function useWorkloadDataHandler(
               database.loaded_benchmarks.includes(benchmark) &&
               !["no-ops_0_1", "no-ops_1"].includes(benchmark)
           );
+        });
+        if (!blocked && changeWorkloadData) {
+          loadedWorkloads.value = [];
+          loadingWorkloads.value = [];
+          Object.values(loadedWorkloadData).forEach((transferred: string) => {
+            loadedWorkloads.value.push(getWorkloadFromTransferred(transferred));
+          });
+        }
+      }
+    });
+    getDatabaseStatus().then((response: any) => {
+      if (response.data.length !== 0) {
+        Object.values(response.data).forEach((database: any) => {
           emitDatabaseStatusChangedEvent(
             database.id,
             database.database_blocked_status,
@@ -446,13 +461,6 @@ function useWorkloadDataHandler(
             database.database_blocked_status === true ||
             database.hyrise_active === false
         );
-        if (!blocked && changeWorkloadData) {
-          loadedWorkloads.value = [];
-          loadingWorkloads.value = [];
-          Object.values(loadedWorkloadData).forEach((transferred: string) => {
-            loadedWorkloads.value.push(getWorkloadFromTransferred(transferred));
-          });
-        }
       }
     });
   }
