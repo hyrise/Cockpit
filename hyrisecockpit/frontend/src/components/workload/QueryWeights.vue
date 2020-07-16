@@ -8,14 +8,14 @@
       <v-expansion-panel-header color="grey lighten-1">
         {{ getDisplayedWorkload(workload) }}
       </v-expansion-panel-header>
-      <v-expansion-panel-content class="mt-8">
-        <v-row class="query-weights mx-3">
+      <v-expansion-panel-content class="mt-4">
+        <v-row class="query-weights">
           <div
             v-for="(weight, idx) in weights[workload]"
             :key="weight.name"
             class="query-weights-row"
           >
-            <div v-if="idx % 15 === 0">
+            <div v-if="idx % numberOfQueriesPerRow === 0">
               <div class="value-col">
                 <div class="max-value">
                   100
@@ -52,6 +52,25 @@
                 @change="updateWeight(workload, weight.name, false)"
               />
             </div>
+            <div
+              v-if="
+                idx % numberOfQueriesPerRow === numberOfQueriesPerRow - 1 ||
+                idx ===
+                  numberOfQueriesPerWorkload[
+                    selectedWorkloads.indexOf(workload)
+                  ] -
+                    1
+              "
+            >
+              <div class="text-col">
+                <div class="query-numbers-text">
+                  Query numbers
+                </div>
+                <div class="query-weights-text">
+                  Query weights
+                </div>
+              </div>
+            </div>
           </div>
         </v-row>
       </v-expansion-panel-content>
@@ -78,6 +97,8 @@ interface Props {
 interface Data {
   weights: Ref<Record<string, Weight[]>>;
   panels: Ref<number[]>;
+  numberOfQueriesPerRow: Ref<number>;
+  numberOfQueriesPerWorkload: Ref<number[]>;
   getDisplayedWorkload: (workload: Workload) => void;
   updateWeight: (
     workload: string,
@@ -102,6 +123,8 @@ export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
     const weights = ref<Record<string, Weight[]>>({});
     const panels = ref<number[]>([]);
+    const numberOfQueriesPerRow = ref<number>(14);
+    const numberOfQueriesPerWorkload = ref<number[]>([]);
 
     /* convert the linear sliderValues with exponential function: f(sliderValue) = value = a * b^sliderValue - a
     f(0) = 0, f(50) = 1.0, f(100) = 100 --> b = 99^(1/50), a = 1/98 */
@@ -149,6 +172,9 @@ export default defineComponent({
                   sliderValue: convertValueToSliderValue(value),
                 };
               });
+            numberOfQueriesPerWorkload.value[
+              parseInt(workloadIndex)
+            ] = Object.entries(changedWeights).length;
           }
         );
       },
@@ -166,6 +192,8 @@ export default defineComponent({
     return {
       weights,
       panels,
+      numberOfQueriesPerRow,
+      numberOfQueriesPerWorkload,
       getDisplayedWorkload,
       updateWeight,
     };
@@ -208,6 +236,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   margin-right: 8px;
+  margin-left: 8px;
 }
 .min-value {
   margin-top: 53px;
@@ -228,10 +257,6 @@ export default defineComponent({
   width: 44px;
   margin: -22px 3px 0px 3px;
 }
-.query-weights {
-  margin-left: 20px;
-  margin-right: 20px;
-}
 .query-name {
   margin-bottom: -22px;
 }
@@ -242,5 +267,11 @@ export default defineComponent({
 .query-weights-row {
   display: flex;
   margin-bottom: 10px;
+}
+.text-col {
+  margin-left: 2px;
+}
+.query-weights-text {
+  margin-top: 162px;
 }
 </style>
