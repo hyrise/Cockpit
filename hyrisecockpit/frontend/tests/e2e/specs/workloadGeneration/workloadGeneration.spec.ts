@@ -41,9 +41,9 @@ describe("opening workload generation", () => {
     assertBenchmarks(benchmarkStatus);
   });
 
-  // test start, pause and stop workload
-  describe("when clicking the start, pause and stop buttons", () => {
-    it("will start, pause and stop workload", () => {
+  // test start and stop workload
+  describe("when clicking the start and stop buttons", () => {
+    it("will start and stop workload", () => {
       const activeBenchmark = benchmarkStatus[0].loaded_benchmarks[0];
 
       cy.get(viewSelectors.workloadGenerationButton).click();
@@ -73,15 +73,6 @@ describe("opening workload generation", () => {
         method: "POST",
       });
 
-      // test pause workload
-      cy.wait("@" + getGetAlias("status_database"));
-
-      cy.get(selectors.pauseWorkload).click();
-      cy.wait("@" + getPutAlias("workload"));
-      cy.get("@" + getPutAlias("workload")).should((xhr: any) => {
-        assertWorkloadChange(xhr.request.body, activeBenchmark, 0);
-      });
-
       // test stop workload
       cy.get(selectors.stopWorkload).click();
       cy.wait("@" + getDeleteAlias("worker"));
@@ -95,7 +86,7 @@ describe("opening workload generation", () => {
       cy.numberOfRequests(getDeleteAlias("worker")).should("eq", 1);
       cy.numberOfRequests(getDeleteAlias("workload")).should("eq", 1);
 
-      cy.numberOfRequests(getPutAlias("workload")).should("eq", 2);
+      cy.numberOfRequests(getPutAlias("workload")).should("eq", 1);
 
       // update tmp state
       cy.updateAppState(backend, {
