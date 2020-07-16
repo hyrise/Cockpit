@@ -85,7 +85,12 @@ export function useBackendMock(
     cy.route("GET", getRequestRoute("detailed_query_information", "get")).as(
       getGetAlias("detailed_query_information")
     );
-    cy.route("GET", getRequestRoute("status", "get")).as(getGetAlias("status"));
+    cy.route("GET", getRequestRoute("status_benchmarks", "get")).as(
+      getGetAlias("status_benchmarks")
+    );
+    cy.route("GET", getRequestRoute("status_database", "get")).as(
+      getGetAlias("status_database")
+    );
     cy.route("GET", getRequestRoute("benchmark_tables", "get")).as(
       getGetAlias("benchmark_tables")
     );
@@ -254,9 +259,14 @@ export function mockBackend(
       getMockedResponse("detailed_query_information")
     );
     mock(
-      getRequestRoute("status", "get"),
-      getGetAlias("status"),
-      getMockedResponse("status")
+      getRequestRoute("status_benchmarks", "get"),
+      getGetAlias("status_benchmarks"),
+      getMockedResponse("status_benchmarks")
+    );
+    mock(
+      getRequestRoute("status_database", "get"),
+      getGetAlias("status_database"),
+      getMockedResponse("status_database")
     );
     mock(
       getRequestRoute("benchmark_tables", "get"),
