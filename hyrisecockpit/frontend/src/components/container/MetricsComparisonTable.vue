@@ -101,7 +101,6 @@ export default defineComponent({
             currentPluginLog.value = point.fullData.text[point.pointIndex];
           }
         });
-        console.log(currentPluginLog.value);
       });
     };
 

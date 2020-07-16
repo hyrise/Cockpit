@@ -1,18 +1,19 @@
 <template>
-  <div v-if="currentPluginLog" class="plugin-overview">
-    <v-card>
-      <v-card-title>
-        Plugin Log
-      </v-card-title>
-    </v-card>
-    <v-textarea
-      class="log-text"
-      readonly
-      solo
-      label="Plugin log messages"
+  <div
+    :id="logDraggableId"
+    class="log-popup"
+    :style="{ 'z-index': currentPluginLog ? '11' : '-1' }"
+  >
+    <v-alert
       :value="currentPluginLog"
-      data-id="chart-plugin-log-area"
-    ></v-textarea>
+      :toggle="toggleView"
+      text
+      dismissible
+      data-id="chart-plugin-log-alert"
+      elevation="20"
+    >
+      {{ currentPluginLog }}
+    </v-alert>
   </div>
 </template>
 
@@ -24,12 +25,17 @@ import {
   computed,
   Ref,
   ref,
+  watch,
 } from "@vue/composition-api";
+import useDragElement from "@/meta/draggable";
 
 interface Props {
   currentPluginLog: string;
 }
-interface Data {}
+interface Data {
+  logDraggableId: string;
+  toggleView: () => void;
+}
 
 export default defineComponent({
   name: "PluginLogPopup",
@@ -39,22 +45,37 @@ export default defineComponent({
       default: "",
     },
   },
-  setup(props: Props, context: SetupContext): void {
-    onMounted(() => {
+  setup(props: Props, context: SetupContext): Data {
+    const logDraggableId = "log-popup";
+
+    function toggleView(): void {
+      console.log("test");
+      props.currentPluginLog = "";
       console.log(props);
+    }
+
+    onMounted(() => {
+      useDragElement(logDraggableId, logDraggableId);
     });
+
+    return {
+      logDraggableId,
+      toggleView,
+    };
   },
 });
 </script>
 <style>
-.plugin {
+.log-popup {
   position: fixed;
-  top: 20px;
-  right: 10px;
+  top: 50%;
+  left: 40%;
   z-index: 11;
-  width: 500px;
+  width: 400px;
 }
 .log-text {
+  height: 100px;
+  overflow: auto;
   font-size: 16px;
 }
 </style>
