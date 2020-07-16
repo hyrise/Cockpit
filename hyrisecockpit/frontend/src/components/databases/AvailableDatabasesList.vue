@@ -3,6 +3,7 @@
     <v-system-bar :height="50" color="secondary">
       <v-card-title class="header">Databases</v-card-title>
       <v-btn
+        data-id="add-database-button"
         @click="$emit('addDatabase')"
         elevation="4"
         small
