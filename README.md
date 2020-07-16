@@ -32,7 +32,7 @@ brew install pyenv
 sudo apt-get update
 
 # Dependencies commonly missing, causing issues with pyenv
-sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+sudo apt-get install -y python-pip make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
 
 # Pyenv install script
 curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
@@ -89,7 +89,7 @@ Now, initialize and sync your virtual environment:
 ```bash
 python -m pip install pipenv
 exec "$SHELL"
-pipenv --three --python=`which python`
+pipenv --three --python=`python --version`
 pipenv sync
 ```
 

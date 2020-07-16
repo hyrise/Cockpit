@@ -21,3 +21,4 @@ RUN cd /usr/local/hyrise-git/cmake-build-release \
     && make CompressionPlugin ClusteringPlugin IndexSelectionPlugin \
     && cp lib/libClusteringPlugin.so lib/libCompressionPlugin.so lib/libIndexSelectionPlugin.so /usr/local/hyrise/lib/ 
 ENTRYPOINT ["/usr/local/hyrise/hyriseServer"]
+EXPOSE 5432

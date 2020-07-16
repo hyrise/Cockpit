@@ -1,5 +1,5 @@
 <template>
-  <div id="comparison-page">
+  <div id="comparison-page" data-id="comparison-page">
     <linear-loader
       :conditions="[$databaseController.databasesUpdated]"
       :evaluations="[false]"

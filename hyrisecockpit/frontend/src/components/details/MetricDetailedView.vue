@@ -1,16 +1,16 @@
 <template>
-  <div id="metric-detailed-view" class="mx-10 my-10">
+  <div data-id="metric-detailed-view" class="mx-10 my-10">
     <v-dialog v-model="showDialog" hide-overlay>
       <template v-slot:activator="{ on }">
         <v-btn
-          id="open-metric-detailed-view"
           color="primary"
           small
           right
           dark
           v-on="on"
+          :data-id="`open-metric-detailed-view-${metric}`"
         >
-          <v-icon left>mdi-arrow-expand</v-icon> Open detailed view
+          <v-icon left>mdi-arrow-expand</v-icon>Open detailed view
         </v-btn>
       </template>
       <v-card>
@@ -23,13 +23,12 @@
         </v-card-text>
         <v-card-actions>
           <v-btn
-            id="close-metric-detailed-view"
             block
             color="primary"
+            :data-id="`close-metric-detailed-view-${metric}`"
             @click="showDialog = false"
+            >Close detailed view</v-btn
           >
-            Close detailed view
-          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -45,14 +44,25 @@ import {
   ref,
   onMounted,
 } from "@vue/composition-api";
+import { Metric } from "@/types/metrics";
 
 interface Data {
   showDialog: Ref<boolean>;
 }
 
+interface Props {
+  metric: Metric;
+}
+
 export default defineComponent({
   name: "MetricDetailedView",
-  setup(props: {}, context: SetupContext): Data {
+  props: {
+    metric: {
+      type: String,
+      default: "",
+    },
+  },
+  setup(props: Props, context: SetupContext): Data {
     return {
       showDialog: ref(false),
     };
