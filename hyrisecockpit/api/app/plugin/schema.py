@@ -3,7 +3,7 @@ from marshmallow import Schema
 from marshmallow.fields import Integer, List, Nested, String
 
 field_id = String(
-    description="Identifier of the database.", required=True, default="citdalle"
+    description="Identifier of the database.", required=True, default="citadelle"
 )
 
 

@@ -22,6 +22,12 @@ class PluginService:
     """Services of the Plugin Controller."""
 
     @staticmethod
+    def _query_storage_connection(
+        query: str, database: str, bind_params: Optional[Dict[str, str]]
+    ):
+        storage_connection.query(query, database=database, bind_params=bind_params)
+
+    @staticmethod
     def _send_message_to_dbm(message: Request) -> Response:
         """Send an IPC message to the database manager."""
         with ManagerSocket() as socket:
@@ -100,8 +106,8 @@ class PluginService:
     @classmethod
     def get_all_plugin_logs(cls, level: Optional[str] = None) -> List[LogID]:
         """Get the Plugin Log of all databases."""
-        query: str = "SELECT timestamp, reporter, message, level from plugin_log;"
-        bind_params: Optional[Dict[str, str]] = None
+        query = "SELECT timestamp, reporter, message, level from plugin_log;"
+        bind_params = None
         if level:
             query = "SELECT timestamp, reporter, message, level from plugin_log where level = $level;"
             bind_params = {"level": level}
@@ -116,9 +122,9 @@ class PluginService:
                         level=row["level"],
                     )
                     for row in list(
-                        storage_connection.query(
-                            query, database=database, bind_params=bind_params,
-                        )["plugin_log", None]
+                        cls._query_storage_connection(query, database, bind_params)[
+                            "plugin_log", None
+                        ]
                     )
                 ],
             )
