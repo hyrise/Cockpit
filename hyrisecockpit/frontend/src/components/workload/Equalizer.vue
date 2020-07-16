@@ -76,7 +76,7 @@ interface Props {
 }
 
 interface Data {
-  weights: Ref<Record<Workload, Weight[]>>;
+  weights: Ref<Record<string, Weight[]>>;
   panels: Ref<number[]>;
   getDisplayedWorkload: (workload: Workload) => void;
   updateWeight: (
@@ -151,7 +151,8 @@ export default defineComponent({
               });
           }
         );
-      }
+      },
+      { immediate: true }
     );
     watch(
       () => props.selectedWorkloads,
@@ -159,7 +160,8 @@ export default defineComponent({
         panels.value = Object.keys(props.selectedWorkloads).map((index) =>
           parseInt(index)
         );
-      }
+      },
+      { immediate: true }
     );
     return {
       weights,

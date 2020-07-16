@@ -27,11 +27,12 @@ export type Request =
   | "plugin"
   | "plugin_log"
   | "workload"
-  | "status"
   | "sql"
   | "worker"
   | "workload_statement_information"
-  | "workload_operator_information";
+  | "workload_operator_information"
+  | "status_benchmarks"
+  | "status_database";
 
 export type BackendState = "up" | "down";
 
@@ -89,7 +90,6 @@ const requestRoutes: Record<
   },
   chunks: { get: "**/monitor/chunks**" },
   detailed_query_information: { get: "**/monitor/detailed_query_information" },
-  status: { get: "**/monitor/status" },
   benchmark_tables: {
     get: "**/control/database/benchmark_tables",
     post: "**/control/database/benchmark_tables",
@@ -117,6 +117,8 @@ const requestRoutes: Record<
   workload_operator_information: {
     get: "**/monitor/workload_operator_information**",
   },
+  status_benchmarks: { get: "**/status/benchmark" },
+  status_database: { get: "**/status/database" },
 };
 
 export function getRequestRoute(
@@ -140,9 +142,10 @@ const getAliases: Partial<Record<Request, string>> = {
   available_plugins: "getAvailablePLugins",
   plugin: "getPlugin",
   plugin_log: "getPluginLog",
-  status: "getDatabaseWorkloadState",
   workload: "getWorkloads",
   workload_operator_information: "getOperatorData",
+  status_benchmarks: "getBenchmarkStatus",
+  status_database: "getDatabaseStatus",
 };
 
 const postAliases: Partial<Record<Request, string>> = {
@@ -252,7 +255,7 @@ export function generateUniqueRandomNumbers(
   let available = [...Array(range).keys()];
   const selected: number[] = [];
   for (let i = 0; i < length; i++) {
-    let index = selectRandomItem(available);
+    const index = selectRandomItem(available);
     selected.push(index);
     available = available.filter((item) => item !== index);
   }

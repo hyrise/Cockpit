@@ -10,7 +10,7 @@ import {
   getPluginsByState,
 } from "./helpers";
 
-let backend = useBackendMock();
+const backend = useBackendMock();
 
 let databases: any = [];
 let availablePlugins: any = [];

@@ -20,7 +20,7 @@ export function usePluginService(): PluginService {
   }
 
   async function fetchActivePlugins(): Promise<Object> {
-    let plugins: any = { data: [], settings: [] };
+    const plugins: any = { data: [], settings: [] };
     await axios.get(controlBackend + "plugin").then((response) => {
       plugins.data = getActivePluginData(response.data);
       plugins.settings = getPluginSettingsData(response.data);
@@ -30,7 +30,7 @@ export function usePluginService(): PluginService {
   }
 
   async function fetchPluginLogs(): Promise<Object> {
-    let pluginMeta: any = { logs: {}, events: {} };
+    const pluginMeta: any = { logs: {}, events: {} };
     await axios.get(controlBackend + "plugin_log").then((response) => {
       pluginMeta.logs = getPluginLogsData(response.data);
       pluginMeta.events = getPluginEventData(response.data);

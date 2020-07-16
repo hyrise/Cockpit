@@ -36,7 +36,8 @@ export interface PluginService {
 }
 
 export interface WorkloadService {
-  getLoadedWorkloadData: () => Promise<string[]>;
+  getLoadedWorkloads: () => Promise<string[]>;
+  getDatabaseStatus: () => Promise<string[]>;
   loadWorkloadData: (workload: Workload) => Promise<void>;
   deleteWorkloadData: (workload: Workload) => Promise<void>;
   startWorker: () => Promise<void>;

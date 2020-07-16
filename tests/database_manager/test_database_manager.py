@@ -60,12 +60,13 @@ def get_server_calls() -> List[str]:
         "get databases",
         "load data",
         "delete data",
-        "status",
         "get plugins",
         "activate plugin",
         "deactivate plugin",
         "set plugin setting",
         "execute sql query",
+        "database status",
+        "benchmark status",
     ]
 
 
@@ -461,35 +462,6 @@ class TestDatabaseManager:
         database.delete_data.assert_not_called()
         assert get_error_response(400, "Already loading data") == response
 
-    def test_call_status(self, database_manager: DatabaseManager) -> None:
-        """Call status."""
-        database = fake_database()
-        database.get_database_blocked.return_value = 0
-        database.get_hyrise_active.return_value = True
-        database.get_worker_pool_status.return_value = "closed"
-        database.get_loaded_benchmark_data.return_value = (
-            ["table1", "table2"],
-            ["hahahahahah", "wann darf ich wieder raus"],
-        )
-        database_manager._databases["db1"] = database
-
-        expected_status = [
-            {
-                "id": "db1",
-                "hyrise_active": True,
-                "database_blocked_status": 0,
-                "worker_pool_status": "closed",
-                "loaded_benchmarks": ["hahahahahah", "wann darf ich wieder raus"],
-                "loaded_tables": ["table1", "table2"],
-            }
-        ]
-        expected_response = get_response(200)
-        expected_response["body"]["status"] = expected_status
-        body: Dict = {}
-        response = database_manager._call_status(body)
-
-        assert expected_response == response
-
     def test_call_get_detailed_plugins(self, database_manager: DatabaseManager) -> None:
         """Call get plugins."""
         database = fake_database()
@@ -683,6 +655,42 @@ class TestDatabaseManager:
         response = database_manager._call_execute_sql_query(fake_body)
 
         assert expected == response
+
+    def test_calls_database_status(self, database_manager: DatabaseManager) -> None:
+        """Test calls hyrise status."""
+        fake_database = MagicMock()
+        fake_database.get_hyrise_active.return_value = True
+        fake_database.get_database_blocked.return_value = True
+        fake_database.get_worker_pool_status.return_value = "running"
+        database_manager._databases = {"fake_db_id": fake_database}
+
+        response = database_manager._call_database_status({})
+        assert response["body"]["database_status"][0]["id"] == "fake_db_id"
+        assert response["body"]["database_status"][0]["database_blocked_status"]
+        assert response["body"]["database_status"][0]["worker_pool_status"] == "running"
+        assert response["body"]["database_status"][0]["hyrise_active"]
+        assert response["header"]["status"] == 200
+
+    def test_calls_benchmark_status(self, database_manager: DatabaseManager) -> None:
+        """Test calls benchmark status."""
+        fake_database = MagicMock()
+        fake_database.get_loaded_benchmark_data.return_value = (
+            ["tables", "more_tables"],
+            ["benchmark", "more-benchmarks"],
+        )
+        database_manager._databases = {"fake_db_id": fake_database}
+
+        response = database_manager._call_benchmark_status({})
+        assert response["body"]["benchmark_status"][0]["id"] == "fake_db_id"
+        assert response["body"]["benchmark_status"][0]["loaded_benchmarks"] == [
+            "benchmark",
+            "more-benchmarks",
+        ]
+        assert response["body"]["benchmark_status"][0]["loaded_tables"] == [
+            "tables",
+            "more_tables",
+        ]
+        assert response["header"]["status"] == 200
 
     def test_start_server(self, database_manager: DatabaseManager):
         """Test start server."""

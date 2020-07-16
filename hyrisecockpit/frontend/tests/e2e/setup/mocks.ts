@@ -13,6 +13,7 @@ import {
   fakeIds,
   fakeWorkloadData,
   fakeDatabaseOperatorData,
+  fakeBenchmarkStatusData,
 } from "./factories";
 import {
   assignFakeData,
@@ -38,7 +39,9 @@ export function useMocks(
   getMockedPostCallback: (request: Request) => (id: string) => void;
   getMockedDeleteCallback: (request: Request) => (id: string) => void;
 } {
-  let mockedState: Record<DatabaseState, boolean> = { workloadRunning: false };
+  const mockedState: Record<DatabaseState, boolean> = {
+    workloadRunning: false,
+  };
   const callbacks = useCallbacks(
     addMockedId,
     removeMockedId,
@@ -47,11 +50,11 @@ export function useMocks(
   );
   let mockedIds: Record<Entity, string[]> = mockIds();
   let responseMocks: Record<Request, any> = mockResponses();
-  let postCallbackMocks: Partial<Record<
+  const postCallbackMocks: Partial<Record<
     Request,
     (id: string) => void
   >> = mockPostCallbacks();
-  let deleteCallbackMocks: Partial<Record<
+  const deleteCallbackMocks: Partial<Record<
     Request,
     (id: string) => void
   >> = mockDeleteCallbacks();
@@ -141,16 +144,17 @@ export function useMocks(
     responseMocks.detailed_query_information = mockedIds.databases.map((id) =>
       fakeDatabaseQueryInformationData(id, numbers.queries)
     );
-    //TODO: handle loaded tables for every database
     responseMocks.benchmark_tables = benchmarks;
-    responseMocks.status = mockedIds.databases.map((id) =>
+    responseMocks.status_benchmarks = mockedIds.databases.map((id) =>
+      fakeBenchmarkStatusData(id, mockedIds.loaded_benchmarks)
+    );
+    responseMocks.status_database = mockedIds.databases.map((id) =>
       fakeDatabaseStatusData(
         id,
-        mockedIds.loaded_benchmarks,
+
         mockedState.workloadRunning
       )
     );
-
     responseMocks.available_plugins = mockedIds.plugins.map((plugin) =>
       fakeAvailablePlugin(plugin)
     );
