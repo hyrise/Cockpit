@@ -13,6 +13,7 @@ import {
   fakeIds,
   fakeWorkloadData,
   fakeDatabaseOperatorData,
+  fakeBenchmarkStatusData,
 } from "./factories";
 import {
   assignFakeData,
@@ -143,16 +144,17 @@ export function useMocks(
     responseMocks.detailed_query_information = mockedIds.databases.map((id) =>
       fakeDatabaseQueryInformationData(id, numbers.queries)
     );
-    //TODO: handle loaded tables for every database
     responseMocks.benchmark_tables = benchmarks;
-    responseMocks.status = mockedIds.databases.map((id) =>
+    responseMocks.status_benchmarks = mockedIds.databases.map((id) =>
+      fakeBenchmarkStatusData(id, mockedIds.loaded_benchmarks)
+    );
+    responseMocks.status_database = mockedIds.databases.map((id) =>
       fakeDatabaseStatusData(
         id,
-        mockedIds.loaded_benchmarks,
+
         mockedState.workloadRunning
       )
     );
-
     responseMocks.available_plugins = mockedIds.plugins.map((plugin) =>
       fakeAvailablePlugin(plugin)
     );
