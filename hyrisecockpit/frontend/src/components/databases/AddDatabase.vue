@@ -1,19 +1,19 @@
 <template>
-  <v-dialog v-model="open" persistent max-width="600px">
+  <v-dialog v-model="open" persistent max-width="500px">
     <v-card data-id="add-database">
       <v-card-title>
         <span class="headline">Add new database</span>
       </v-card-title>
       <v-card-text class="pb-0">
         <v-row>
-          <v-col cols="6">
+          <v-col class="pb-0" cols="6">
             <v-text-field
               v-model="host"
               label="Host"
               data-id="host-input"
             ></v-text-field>
           </v-col>
-          <v-col cols="6">
+          <v-col class="pb-0" cols="6">
             <v-text-field
               v-model="id"
               label="ID"
@@ -23,14 +23,14 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="6">
+          <v-col class="py-0" cols="6">
             <v-text-field
               v-model="port"
               label="Port"
               data-id="port-input"
             ></v-text-field>
           </v-col>
-          <v-col cols="6">
+          <v-col class="py-0" cols="6">
             <v-text-field
               v-model="number_workers"
               label="Number of Workers"
@@ -38,8 +38,6 @@
               data-id="worker-input"
             ></v-text-field>
           </v-col>
-          <v-spacer />
-          <v-btn text data-id="advanced-input-button"> </v-btn>
         </v-row>
       </v-card-text>
       <v-card-actions class="pt-0">
