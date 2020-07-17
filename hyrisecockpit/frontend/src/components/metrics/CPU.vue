@@ -1,6 +1,7 @@
 <template>
   <div>
     <metric-details
+      class="mt-10"
       v-if="showDetails"
       :metric="metric"
       :databases="selectedDatabases"

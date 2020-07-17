@@ -1,5 +1,5 @@
 <template>
-  <div class="body-2 interval secondary--text">{{ interval }}</div>
+  <div class="caption interval primary--text">{{ interval }}</div>
 </template>
 
 <script lang="ts">

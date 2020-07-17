@@ -66,12 +66,20 @@ function useHeatMapConfiguration(
         rangemode: "tozero",
         title: {
           text: chartConfiguration.xaxis,
+          font: {
+            family: "Roboto, regular",
+            size: 13,
+          },
         },
       },
       yaxis: {
         rangemode: "tozero",
         title: {
           text: chartConfiguration.yaxis,
+          font: {
+            family: "Roboto, regular",
+            size: 13,
+          },
         },
       },
       autosize: autosize,

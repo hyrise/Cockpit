@@ -41,12 +41,20 @@ function useBarChartConfiguration(
       xaxis: {
         title: {
           text: chartConfiguration.xaxis,
+          font: {
+            family: "Roboto, regular",
+            size: 13,
+          },
         },
         rangemode: "tozero",
       },
       yaxis: {
         title: {
           text: chartConfiguration.yaxis,
+          font: {
+            family: "Roboto, regular",
+            size: 13,
+          },
         },
         rangemode: "tozero",
         range: [0, 100],

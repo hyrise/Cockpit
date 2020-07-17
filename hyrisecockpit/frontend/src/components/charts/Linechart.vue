@@ -190,6 +190,10 @@ function useLineChartConfiguration(
       yaxis: {
         title: {
           text: props.chartConfiguration.yaxis,
+          font: {
+            family: "Roboto, regular",
+            size: 13,
+          },
         },
         range: [0, yMax],
       },
