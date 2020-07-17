@@ -93,13 +93,14 @@ class WorkloadGenerator(object):
             return get_response(404)
         if scale_factor not in self._workloads[workload_type].driver.scale_factors:
             return get_response(400)
-        self._workloads[workload_type].scale_factore = scale_factor
+        self._workloads[workload_type].scale_factor = scale_factor
         self._workloads[workload_type].frequency = frequency
+        self._workloads[workload_type].running = True
         response = get_response(200)
         response["body"]["workload"] = {
             "workload_type": workload_type,
             "frequency": self._workloads[workload_type].frequency,
-            "scale_factor": self._workloads[workload_type].scale_factore,
+            "scale_factor": self._workloads[workload_type].scale_factor,
         }
         return response
 
@@ -112,7 +113,7 @@ class WorkloadGenerator(object):
         response["body"]["workload"] = {
             "workload_type": workload_type,
             "frequency": self._workloads[workload_type].frequency,
-            "scale_factor": self._workloads[workload_type].scale_factore,
+            "scale_factor": self._workloads[workload_type].scale_factor,
             "weights": self._workloads[workload_type].weights,
         }
         return response
@@ -141,7 +142,7 @@ class WorkloadGenerator(object):
         response["body"]["workload"] = {
             "workload_type": workload_type,
             "frequency": self._workloads[workload_type].frequency,
-            "scale_factor": self._workloads[workload_type].scale_factore,
+            "scale_factor": self._workloads[workload_type].scale_factor,
             "weights": self._workloads[workload_type].weights,
         }
         return response
@@ -150,11 +151,10 @@ class WorkloadGenerator(object):
         queries = []
         for workload in self._workloads.values():
             if workload.running:
-                queries.append(
-                    workload.driver.generate(
-                        workload.scale_factor, workload.frequency, workload.weights
-                    )
+                queries += workload.driver.generate(
+                    workload.scale_factor, workload.frequency, workload.weights
                 )
+
         shuffle(queries)
         response = get_response(200)
         response["body"]["querylist"] = queries

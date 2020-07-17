@@ -12,7 +12,7 @@ class TpchDriver:
 
     def __init__(self):
         """Initialize a tpch driver."""
-        self._query_path: str = f"{abspath(getcwd())}/drivers/tpch"
+        self._query_path: str = f"{abspath(getcwd())}/hyrisecockpit/drivers/tpch"
         self._benchmark_type: str = "tpch"
         self._table_names: List[str] = [
             "customer",
