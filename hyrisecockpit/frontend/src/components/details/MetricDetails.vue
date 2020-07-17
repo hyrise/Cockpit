@@ -159,8 +159,8 @@ function useMetricColors(
 @media only screen and (max-width: 1600px) {
   .small-details {
     position: absolute;
-    top: 12px;
-    left: 60px;
+    top: 40px;
+    left: 90px;
   }
 }
 </style>
