@@ -6,7 +6,7 @@
       :style="databaseFlex"
       data-id="database-system-details"
     >
-      <v-card class="card" :color="database.color">
+      <v-card class="card" :color="database.color" elevation="4">
         <v-row class="detailsRow">
           <v-col col="2" class="mr-1" data-id="database-host">
             <v-card-title class="font-weight-bold white--text noPadding">{{
@@ -112,12 +112,6 @@ export default defineComponent({
   margin-right: 6px;
   margin-left: 6px;
   padding-left: 24px;
-}
-#comparison-page .card {
-  border-radius: 4px 4px 0px 0px;
-}
-#overview-page .card {
-  border-radius: 4px;
 }
 .v-card__title {
   margin-bottom: 6px;

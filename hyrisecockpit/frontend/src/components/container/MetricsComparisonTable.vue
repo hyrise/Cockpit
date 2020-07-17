@@ -1,7 +1,7 @@
 <template>
   <div id="metric-comparison-table" class="metrics-table">
-    <div
-      class="metrics-column"
+    <v-card
+      class="metrics-column mt-n2"
       :style="databaseFlex"
       v-for="database in databases"
       :key="database.id"
@@ -9,10 +9,8 @@
     >
       <v-card
         v-if="showHeader"
-        tile
         class="column-top-border"
         :color="database.color"
-        flat
       >
         <v-card-text class="white--text text-center">
           <strong>
@@ -32,12 +30,12 @@
           :max-chart-width="maxChartWidth"
         />
       </div>
-      <v-card tile class="column-bottom-border" :color="database.color">
+      <v-card class="column-bottom-border" :color="database.color">
         <v-card-text class="white--text text-center">
           {{ database.id }}
         </v-card-text>
       </v-card>
-    </div>
+    </v-card>
   </div>
 </template>
 
@@ -98,13 +96,11 @@ export default defineComponent({
 .metrics-column {
   display: flex;
   flex-direction: column;
-}
-.column-bottom-border {
   margin: 0px 6px 6px 6px;
-  border-radius: 0px 0px 4px 4px;
+  border-radius: 0px;
 }
-.column-top-border {
-  margin: 0px 6px -2px 6px;
-  border-radius: 0px 0px 4px 4px;
+.v-card:not(.v-sheet--tile):not(.v-card--shaped) {
+  border-radius: 4px;
+  box-shadow: 0px 0px;
 }
 </style>
