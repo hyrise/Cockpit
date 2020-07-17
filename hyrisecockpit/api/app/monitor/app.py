@@ -163,62 +163,6 @@ model_workload_composition = api.model(
     },
 )
 
-model_database_status = api.clone(
-    "Database status",
-    model_database,
-    {
-        "hyrise_active": fields.Boolean(
-            title="hyrise active status",
-            description="Hyrise is reachable.",
-            required=True,
-            example=True,
-        ),
-        "database_blocked_status": fields.Boolean(
-            title="Database blocked status",
-            description="Database blocked status of databases.",
-            required=True,
-            example=True,
-        ),
-        "worker_pool_status": fields.String(
-            title="Worker pool status",
-            description="Status of the worker pools of the databases.",
-            required=True,
-            example="running",
-        ),
-        "loaded_benchmarks": fields.List(
-            fields.String(
-                title="Benchmark",
-                description="Benchmark dataset that is completely loaded.",
-                required=True,
-                example="tpch_1",
-            ),
-        ),
-        "loaded_tables": fields.List(
-            fields.Nested(
-                api.model(
-                    "Loaded tables",
-                    {
-                        "table_name": fields.String(
-                            title="Table name",
-                            description="Name of loaded table",
-                            required=True,
-                            example="customer",
-                        ),
-                        "benchmark": fields.String(
-                            title="Benchmark",
-                            description="Name of the benchmark",
-                            required=True,
-                            example="tpch_0.1",
-                        ),
-                    },
-                )
-            ),
-            required=True,
-        ),
-    },
-)
-
-
 @api.route("/failed_tasks")
 class FailedTasks(Resource):
     """Failed tasks information of all databases."""
@@ -388,18 +332,6 @@ class WorkloadStatementInformation(Resource):
                     {"id": database, "workload_statement_information": []}
                 )
         return workload_statement_information
-
-
-@api.route("/status", methods=["GET"])
-class ProcessTableStatus(Resource):
-    """Database blocked status information of all databases."""
-
-    @api.doc(model=[model_database_status])
-    def get(self) -> List[Dict]:
-        """Return status of databases."""
-        return _send_message(
-            db_manager_socket, Request(header=Header(message="status"), body={}),
-        )["body"]["status"]
 
 
 @api.route("/workload_operator_information")

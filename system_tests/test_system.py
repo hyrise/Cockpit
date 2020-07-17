@@ -62,9 +62,6 @@ class TestSystem:
         """Check if database has successfully load default tables."""
         expected_status = {
             "id": database_id,
-            "hyrise_active": True,
-            "database_blocked_status": False,
-            "worker_pool_status": "closed",
             "loaded_benchmarks": ["tpch_0_1", "no-ops_0_1", "no-ops_1"],
             "loaded_tables": [
                 "orders_tpch_0_1",
@@ -78,19 +75,12 @@ class TestSystem:
             ],
         }
 
-        response = cls.backend.get_property("monitor/status")  # type: ignore
+        response = cls.backend.get_property("status/benchmark")  # type: ignore
         status = response.json()[0]
-
         assert response.status_code == 200  # nosec
-        for prop in [
-            "id",
-            "hyrise_active",
-            "database_blocked_status",
-            "worker_pool_status",
-        ]:
-            assert expected_status[prop] == status[prop]  # nosec
+
         for prop in ["loaded_benchmarks", "loaded_tables"]:
-            assert set(expected_status[prop]) == set(status[prop])  # type: ignore # nosec
+            assert set(expected_status[prop]) == set(status[prop])  # nosec
 
     def test_initializes_backend(self):
         """Test backend initializes without errors."""
@@ -222,9 +212,15 @@ class TestSystem:
 
         assert response.status_code == 200  # nosec
 
+    def test_do_not_activates_already_activated_plugin(self):
+        """Test activation of the already activated plugin."""
+        sleep(1.0)
+        response = self.backend.activate_plugin("test_database1", "Compression")
+
+        assert response.status_code == 423  # nosec
+
     def test_returns_activated_plugins(self):
         """Test activation of the plugin."""
-        sleep(1.0)
         response = self.backend.get_activated_plugins()
         assert response.status_code == 200  # nosec
         assert response.json() == [  # nosec

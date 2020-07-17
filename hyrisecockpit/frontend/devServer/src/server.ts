@@ -58,7 +58,8 @@ mockGetRoute("queue_length", "monitor");
 mockGetRoute("workload_statement_information", "monitor");
 mockGetRoute("chunks", "monitor", true);
 mockGetRoute("detailed_query_information", "monitor");
-mockGetRoute("status", "monitor");
+mockGetRoute("benchmark", "status", false, "status_benchmarks");
+mockGetRoute("database", "status", false, "status_database");
 mockGetRoute("database/benchmark_tables", "control");
 mockGetRoute("plugin/available", "control");
 mockGetRoute("plugin", "control");
@@ -102,10 +103,11 @@ server.post("/restart/", (req, res) => {
 
 function mockGetRoute(
   route: string,
-  backendRoute?: "control" | "monitor",
-  withBody: boolean = false
+  backendRoute?: "control" | "monitor" | "status",
+  withBody: boolean = false,
+  requestPlain?: Request
 ): void {
-  const request = getRequestOfRoute(route);
+  const request = requestPlain || getRequestOfRoute(route);
   server.get(getBackendRoute(route, backendRoute), (req, res) => {
     logRequest(req, res);
     const response = withBody
@@ -194,7 +196,7 @@ function getRequestOfRoute(route: string): Request {
 
 function getBackendRoute(
   route: string,
-  prefix?: "control" | "monitor"
+  prefix?: "control" | "monitor" | "status"
 ): string {
   return prefix ? `/${prefix}/${route}` : `/${route}`;
 }
