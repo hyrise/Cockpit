@@ -52,7 +52,7 @@ class WorkloadService:
         )
 
     @classmethod
-    def get_by_id(cls, folder_name: str) -> Optional[DetailedWorkload]:
+    def get_by_id(cls, workload_type: str) -> Optional[DetailedWorkload]:
         """Get a Workload.
 
         Returns the Workload with the given ID.
@@ -60,7 +60,8 @@ class WorkloadService:
         """
         response = cls._send_message_to_gen(
             Request(
-                header=Header(message="get workload"), body={"folder_name": folder_name}
+                header=Header(message="get workload"),
+                body={"workload_type": workload_type},
             ),
         )
         return (
@@ -70,7 +71,7 @@ class WorkloadService:
         )
 
     @classmethod
-    def delete_by_id(cls, folder_name: str) -> Optional[str]:
+    def delete_by_id(cls, workload_type: str) -> Optional[str]:
         """Delete a Workload.
 
         Returns the folder_name of the deleted Workload.
@@ -79,18 +80,18 @@ class WorkloadService:
         response = cls._send_message_to_gen(
             Request(
                 header=Header(message="stop workload"),
-                body={"folder_name": folder_name},
+                body={"workload_type": workload_type},
             ),
         )
         return (
             None
             if response["header"]["status"] == 404
-            else response["body"]["folder_name"]
+            else response["body"]["workload"]
         )
 
     @classmethod
     def update_by_id(
-        cls, folder_name: str, interface: DetailedWorkloadInterface
+        cls, workload_type: str, interface: DetailedWorkloadInterface
     ) -> Optional[DetailedWorkload]:
         """Update a Workload by ID.
 
@@ -100,7 +101,7 @@ class WorkloadService:
         response = cls._send_message_to_gen(
             Request(
                 header=Header(message="update workload"),
-                body={"folder_name": folder_name, "workload": dict(interface)},
+                body={"workload_type": workload_type, "workload": dict(interface)},
             ),
         )
         return (

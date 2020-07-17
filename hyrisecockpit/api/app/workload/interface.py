@@ -5,8 +5,9 @@ from typing import Dict, TypedDict
 class WorkloadInterface(TypedDict):
     """Interface of a Workload."""
 
-    folder_name: str
+    workload_type: str
     frequency: int
+    scalefactor: float
 
 
 class DetailedWorkloadInterface(WorkloadInterface):

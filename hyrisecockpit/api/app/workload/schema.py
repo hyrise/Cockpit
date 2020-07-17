@@ -6,13 +6,11 @@ from marshmallow.fields import Dict, Float, Integer, String
 class WorkloadSchema(Schema):
     """Schema of a Workload."""
 
-    folder_name = String(
-        description="Name of the folder containing the pregenerated tables.",
-        required=True,
-    )
+    workload_type = String(description="Name of the workload.", required=True,)
     frequency = Integer(
         description="Number of queries generated per second.", required=True
     )
+    scale_factor = Float(description="Scale factor of workload.", required=True)
 
 
 class DetailedWorkloadSchema(WorkloadSchema):
