@@ -44,8 +44,8 @@ class TestUpdatePluginLogJob:
         )
 
         expected_function_argument: List[Tuple[int, str, str, str]] = [
-            (1_000_000_000, "KeepHyriseRunning", "error", "Warning"),
-            (2_000_000_000, "HyrisePleaseStayAlive", "error", "Warning"),
+            (1_000, "KeepHyriseRunning", "error", "Warning"),
+            (2_000, "HyrisePleaseStayAlive", "error", "Warning"),
         ]
 
         expected_startts = 5_000_000_000
