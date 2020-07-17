@@ -7,7 +7,7 @@ class WorkloadInterface(TypedDict):
 
     workload_type: str
     frequency: int
-    scalefactor: float
+    scale_factor: float
 
 
 class DetailedWorkloadInterface(WorkloadInterface):
