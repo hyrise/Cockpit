@@ -99,7 +99,9 @@ function fakeTableStorageData(tableId: string, columnIds: string[]): Object {
   storageData[tableId] = {
     size: faker.random.number(),
     number_columns: columnIds.length,
-    data: assignFakeData(columnIds.map((id) => fakeColumnStorageData(id))),
+    data: assignFakeData(
+      columnIds.map((id) => fakeColumnStorageData(`${tableId}-${id}`))
+    ),
   };
   return storageData;
 }
@@ -182,7 +184,9 @@ function fakeTableChunksData(
 ): Object {
   const data: any = {};
   data[tableId] = assignFakeData(
-    columnIds.map((id) => fakeColumnChunksData(id, numberOfChunks))
+    columnIds.map((id) =>
+      fakeColumnChunksData(`${tableId}-${id}`, numberOfChunks)
+    )
   );
   return data;
 }
