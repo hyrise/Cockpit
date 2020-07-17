@@ -28,7 +28,12 @@ def update_plugin_log(
         return
 
     plugin_log = [
-        (row["timestamp"], row["reporter"], row["message"], row["log_level"],)
+        (
+            int(row["timestamp"] / 1_000_000),  # timestamp in ms
+            row["reporter"],
+            row["message"],
+            row["log_level"],
+        )
         for row in log_df.to_dict("index").values()
     ]
 
