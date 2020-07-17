@@ -11,7 +11,7 @@ export default new Vuetify({
       light: {
         primary: colorValueDefinition.darkgrey,
         secondary: colorValueDefinition.lightgrey,
-        background: colorValueDefinition.white,
+        background: colorValueDefinition.background,
         success: colorValueDefinition.green,
         error: colorValueDefinition.red,
         warning: colorValueDefinition.orange,
