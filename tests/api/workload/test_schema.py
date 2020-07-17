@@ -12,15 +12,21 @@ from hyrisecockpit.api.app.workload.model import DetailedWorkload, Workload
 from hyrisecockpit.api.app.workload.schema import DetailedWorkloadSchema, WorkloadSchema
 
 
-@fixture(params=["tpch_0.1", "job"])
-def folder_name(request) -> str:
-    """Get examples of folder names."""
+@fixture(params=["tpch", "job"])
+def workload_type(request) -> str:
+    """Get examples of workload types."""
     return request.param
 
 
 @fixture(params=[0, 420])
 def frequency(request) -> int:
     """Get examples of frequencies."""
+    return request.param
+
+
+@fixture(params=[0.1, 1])
+def scale_factor(request) -> int:
+    """Get examples of scale-factor."""
     return request.param
 
 
@@ -50,28 +56,42 @@ class TestWorkloadSchema:
         assert schema
 
     def test_deserializes(
-        self, schema: WorkloadSchema, folder_name: str, frequency: int
+        self,
+        schema: WorkloadSchema,
+        workload_type: str,
+        frequency: int,
+        scale_factor: float,
     ):
         """A Workload schema can create a Workload model."""
-        interface: WorkloadInterface = {
-            "folder_name": folder_name,
+        interface: WorkloadInterface = {  # type: ignore
+            "workload_type": workload_type,
             "frequency": frequency,
+            "scale_factor": scale_factor,
         }
         deserialized: WorkloadInterface = schema.load(interface)
-        workload = Workload(**deserialized)
-        assert folder_name == workload.folder_name == deserialized["folder_name"]
+        workload = Workload(**deserialized)  # type: ignore
+        assert workload_type == workload.workload_type == deserialized["workload_type"]
         assert frequency == workload.frequency == deserialized["frequency"]
+        assert scale_factor == workload.scale_factor == deserialized["scale_factor"]  # type: ignore
 
-    def test_serializes(self, schema: WorkloadSchema, folder_name: str, frequency: int):
+    def test_serializes(
+        self,
+        schema: WorkloadSchema,
+        workload_type: str,
+        frequency: int,
+        scale_factor: float,
+    ):
         """A Workload model can be serialized with a Workload schema."""
-        interface: WorkloadInterface = {
-            "folder_name": folder_name,
+        interface: WorkloadInterface = {  # type: ignore
+            "workload_type": workload_type,
             "frequency": frequency,
+            "scale_factor": scale_factor,
         }
-        workload = Workload(**interface)
+        workload = Workload(**interface)  # type: ignore
         serialized = schema.dump(workload)
-        assert folder_name == workload.folder_name == serialized["folder_name"]
+        assert workload_type == workload.workload_type == serialized["workload_type"]
         assert frequency == workload.frequency == serialized["frequency"]
+        assert scale_factor == workload.scale_factor == serialized["scale_factor"]
 
 
 class TestDetailedWorkloadSchema:
@@ -84,37 +104,43 @@ class TestDetailedWorkloadSchema:
     def test_deserializes(
         self,
         detailed_schema: DetailedWorkloadSchema,
-        folder_name: str,
+        workload_type: str,
         frequency: int,
+        scale_factor: float,
         weights: Dict[str, float],
     ):
         """A DetailedWorkload schema can create a DetailedWorkload model."""
-        interface: DetailedWorkloadInterface = {
-            "folder_name": folder_name,
+        interface: DetailedWorkloadInterface = {  # type: ignore
+            "workload_type": workload_type,
             "frequency": frequency,
+            "scale_factor": scale_factor,
             "weights": weights,
         }
         deserialized: DetailedWorkloadInterface = detailed_schema.load(interface)
-        workload = DetailedWorkload(**deserialized)
-        assert folder_name == workload.folder_name == deserialized["folder_name"]
+        workload = DetailedWorkload(**deserialized)  # type: ignore
+        assert workload_type == workload.workload_type == deserialized["workload_type"]
         assert frequency == workload.frequency == deserialized["frequency"]
+        assert scale_factor == workload.scale_factor == deserialized["scale_factor"]  # type: ignore
         assert weights == workload.weights == deserialized["weights"]
 
     def test_serializes(
         self,
         detailed_schema: DetailedWorkloadSchema,
-        folder_name: str,
+        workload_type: str,
         frequency: int,
+        scale_factor: float,
         weights: Dict[str, float],
     ):
         """A DetailedWorkload model can be serialized with a DetailedWorkload schema."""
-        interface: DetailedWorkloadInterface = {
-            "folder_name": folder_name,
+        interface: DetailedWorkloadInterface = {  # type: ignore
+            "workload_type": workload_type,
             "frequency": frequency,
+            "scale_factor": scale_factor,
             "weights": weights,
         }
-        workload = DetailedWorkload(**interface)
+        workload = DetailedWorkload(**interface)  # type: ignore
         serialized: DetailedWorkloadInterface = detailed_schema.dump(workload)
-        assert folder_name == workload.folder_name == serialized["folder_name"]
+        assert workload_type == workload.workload_type == serialized["workload_type"]
         assert frequency == workload.frequency == serialized["frequency"]
+        assert scale_factor == workload.scale_factor == serialized["scale_factor"]  # type: ignore
         assert weights == workload.weights == serialized["weights"]

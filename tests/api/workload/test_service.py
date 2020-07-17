@@ -79,11 +79,11 @@ class TestWorkloadService:
         response = get_response(200)
         response["body"]["workload"] = detailed_interface
         service._send_message_to_gen.return_value = response  # type: ignore
-        result = service.get_by_id(detailed_interface["folder_name"])
+        result = service.get_by_id(detailed_interface["workload_type"])
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="get workload"),
-                body={"folder_name": detailed_interface["folder_name"]},
+                body={"workload_type": detailed_interface["workload_type"]},
             )
         )
         assert detailed_interface == DetailedWorkloadSchema().dump(result)
@@ -94,11 +94,11 @@ class TestWorkloadService:
     ):
         """A Workload service gets all workloads."""
         service._send_message_to_gen.return_value = get_response(404)  # type: ignore
-        result = service.get_by_id(detailed_interface["folder_name"])
+        result = service.get_by_id(detailed_interface["workload_type"])
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="get workload"),
-                body={"folder_name": detailed_interface["folder_name"]},
+                body={"workload_type": detailed_interface["workload_type"]},
             )
         )
         assert result is None
@@ -109,18 +109,18 @@ class TestWorkloadService:
     ):
         """A Workload service gets all workloads."""
         response = get_response(200)
-        response["body"]["folder_name"] = detailed_interface["folder_name"]
+        response["body"]["workload"] = detailed_interface["workload_type"]
         service._send_message_to_gen.return_value = response  # type: ignore
 
-        result = service.delete_by_id(detailed_interface["folder_name"])
+        result = service.delete_by_id(detailed_interface["workload_type"])
 
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="stop workload"),
-                body={"folder_name": detailed_interface["folder_name"]},
+                body={"workload_type": detailed_interface["workload_type"]},
             )
         )
-        assert detailed_interface["folder_name"] == result
+        assert detailed_interface["workload_type"] == result
 
     @mark.parametrize("detailed_interface", detailed_interfaces())
     def test_deletes_no_workload_if_it_cannot_be_found(
@@ -129,12 +129,12 @@ class TestWorkloadService:
         """A Workload service gets all workloads."""
         service._send_message_to_gen.return_value = get_response(404)  # type: ignore
 
-        result = service.delete_by_id(detailed_interface["folder_name"])
+        result = service.delete_by_id(detailed_interface["workload_type"])
 
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="stop workload"),
-                body={"folder_name": detailed_interface["folder_name"]},
+                body={"workload_type": detailed_interface["workload_type"]},
             )
         )
         assert result is None
@@ -144,22 +144,23 @@ class TestWorkloadService:
         self, service: WorkloadService, detailed_interface: DetailedWorkloadInterface
     ):
         """A Workload service gets all workloads."""
-        new_detailed_interface = DetailedWorkloadInterface(
-            folder_name=detailed_interface["folder_name"] + "F",
+        new_detailed_interface = DetailedWorkloadInterface(  # type: ignore
+            workload_type=detailed_interface["workload_type"],
             frequency=detailed_interface["frequency"] + 1,
+            scale_factor=detailed_interface["scale_factor"],
             weights={k: v + 1 for k, v in detailed_interface["weights"].items()},
         )
         response = get_response(200)
         response["body"]["workload"] = new_detailed_interface
         service._send_message_to_gen.return_value = response  # type: ignore
         result = service.update_by_id(
-            detailed_interface["folder_name"], new_detailed_interface
+            detailed_interface["workload_type"], new_detailed_interface
         )
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="update workload"),
                 body={
-                    "folder_name": detailed_interface["folder_name"],
+                    "workload_type": detailed_interface["workload_type"],
                     "workload": dict(new_detailed_interface),
                 },
             )
@@ -171,20 +172,21 @@ class TestWorkloadService:
         self, service: WorkloadService, detailed_interface: DetailedWorkloadInterface
     ):
         """A Workload service gets all workloads."""
-        new_detailed_interface = DetailedWorkloadInterface(
-            folder_name=detailed_interface["folder_name"] + "F",
+        new_detailed_interface = DetailedWorkloadInterface(  # type: ignore
+            workload_type=detailed_interface["workload_type"],
             frequency=detailed_interface["frequency"] + 1,
+            scale_factor=detailed_interface["scale_factor"],
             weights={k: v + 1 for k, v in detailed_interface["weights"].items()},
         )
         service._send_message_to_gen.return_value = get_response(404)  # type: ignore
         result = service.update_by_id(
-            detailed_interface["folder_name"], new_detailed_interface
+            detailed_interface["workload_type"], new_detailed_interface
         )
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="update workload"),
                 body={
-                    "folder_name": detailed_interface["folder_name"],
+                    "workload_type": detailed_interface["workload_type"],
                     "workload": dict(new_detailed_interface),
                 },
             )

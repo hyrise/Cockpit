@@ -6,15 +6,21 @@ from pytest import fixture
 from hyrisecockpit.api.app.workload.model import DetailedWorkload, Workload
 
 
-@fixture(params=["tpch_0.1", "job"])
-def folder_name(request) -> str:
-    """Get examples of folder names."""
+@fixture(params=["tpch", "job"])
+def workload_type(request) -> str:
+    """Get examples of workload types."""
     return request.param
 
 
 @fixture(params=[0, 420])
 def frequency(request) -> int:
     """Get examples of frequencies."""
+    return request.param
+
+
+@fixture(params=[0.1, 1])
+def scale_factor(request) -> int:
+    """Get examples of scale-factor."""
     return request.param
 
 
@@ -25,18 +31,23 @@ def weights(request) -> Dict[str, float]:
 
 
 @fixture
-def workload(folder_name: str, frequency: int) -> Workload:
+def workload(workload_type: str, frequency: int, scale_factor: float) -> Workload:
     """Return a Workload model."""
-    return Workload(folder_name=folder_name, frequency=frequency)
+    return Workload(
+        workload_type=workload_type, frequency=frequency, scale_factor=scale_factor
+    )
 
 
 @fixture
 def detailed_workload(
-    folder_name: str, frequency: int, weights: Dict[str, float]
+    workload_type: str, frequency: int, scale_factor: float, weights: Dict[str, float]
 ) -> Workload:
     """Return a DetailedWorkload model."""
     return DetailedWorkload(
-        folder_name=folder_name, frequency=frequency, weights=weights
+        workload_type=workload_type,
+        frequency=frequency,
+        scale_factor=scale_factor,
+        weights=weights,
     )
 
 

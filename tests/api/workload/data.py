@@ -9,41 +9,49 @@ from hyrisecockpit.api.app.workload.interface import (
 )
 from hyrisecockpit.api.app.workload.model import DetailedWorkload, Workload
 
-__folder_names = ["tpch_0.1", "job"]
+__workload_types = ["tpch", "job"]
 __frequencies = [0, 420]
+__scale_factors = [0.1, 1]
 __weights: Tuple[Dict[str, float], ...] = ({}, {"01": 0.0, "23c": 100.1})
 
 
 def interfaces() -> List[WorkloadInterface]:
     """Return a list of WorkloadInterfaces."""
     return [
-        WorkloadInterface(folder_name=folder_name, frequency=frequency,)
-        for folder_name, frequency in product(__folder_names, __frequencies)
+        WorkloadInterface(  # type: ignore
+            workload_type=workload_type, frequency=frequency, scale_factor=scale_factor
+        )
+        for workload_type, frequency, scale_factor in product(
+            __workload_types, __frequencies, __scale_factors
+        )
     ]
 
 
 def workloads() -> List[Workload]:
     """Return a list of Workloads corresponding to the interfaces."""
-    return [Workload(**interface) for interface in interfaces()]
+    return [Workload(**interface) for interface in interfaces()]  # type: ignore
 
 
-def folder_names() -> List[str]:
-    """Return a list of folder_names corresponding to the Workloads."""
-    return [workload.folder_name for workload in workloads()]
+def workload_type() -> List[str]:
+    """Return a list of workload types corresponding to the Workloads."""
+    return [workload.workload_type for workload in workloads()]
 
 
 def detailed_interfaces() -> List[DetailedWorkloadInterface]:
     """Return a list of DetailedWorkloadInterfaces."""
     return [
-        DetailedWorkloadInterface(
-            folder_name=folder_name, frequency=frequency, weights=weights,
+        DetailedWorkloadInterface(  # type: ignore
+            workload_type=workload_type,
+            frequency=frequency,
+            scale_factor=scale_factor,
+            weights=weights,
         )
-        for folder_name, frequency, weights in product(
-            __folder_names, __frequencies, __weights
+        for workload_type, frequency, scale_factor, weights in product(
+            __workload_types, __frequencies, __scale_factors, __weights
         )
     ]
 
 
 def detailed_workloads() -> List[DetailedWorkload]:
     """Return a list of Workloads corresponding to the interfaces."""
-    return [DetailedWorkload(**interface) for interface in detailed_interfaces()]
+    return [DetailedWorkload(**interface) for interface in detailed_interfaces()]  # type: ignore

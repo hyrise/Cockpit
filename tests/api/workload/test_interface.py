@@ -1,4 +1,5 @@
 """Tests for the Workload interface."""
+
 from typing import Dict
 
 from pytest import fixture
@@ -10,15 +11,21 @@ from hyrisecockpit.api.app.workload.interface import (
 from hyrisecockpit.api.app.workload.model import DetailedWorkload, Workload
 
 
-@fixture(params=["tpch_0.1", "job"])
-def folder_name(request) -> str:
-    """Get examples of folder names."""
+@fixture(params=["tpch", "job"])
+def workload_type(request) -> str:
+    """Get examples of workload types."""
     return request.param
 
 
 @fixture(params=[0, 420])
 def frequency(request) -> int:
     """Get examples of frequencies."""
+    return request.param
+
+
+@fixture(params=[0.1, 1])
+def scale_factor(request) -> int:
+    """Get examples of scale-factor."""
     return request.param
 
 
@@ -29,18 +36,25 @@ def weights(request) -> Dict[str, int]:
 
 
 @fixture
-def interface(folder_name: str, frequency: int) -> WorkloadInterface:
+def interface(
+    workload_type: str, frequency: int, scale_factor: float
+) -> WorkloadInterface:
     """Return a Workload model."""
-    return WorkloadInterface(folder_name=folder_name, frequency=frequency)
+    return WorkloadInterface(  # type: ignore
+        workload_type=workload_type, frequency=frequency, scale_factor=scale_factor
+    )
 
 
 @fixture
 def detailed_interface(
-    folder_name: str, frequency: int, weights: Dict[str, float]
+    workload_type: str, frequency: int, scale_factor: float, weights: Dict[str, float]
 ) -> DetailedWorkloadInterface:
     """Return a DetailedWorkload model."""
-    return DetailedWorkloadInterface(
-        folder_name=folder_name, frequency=frequency, weights=weights
+    return DetailedWorkloadInterface(  # type: ignore
+        workload_type=workload_type,
+        frequency=frequency,
+        scale_factor=scale_factor,
+        weights=weights,
     )
 
 
@@ -53,7 +67,7 @@ class TestWorkloadInterface:
 
     def test_works(self, interface: WorkloadInterface):
         """A Workload model can be created from an interface."""
-        assert Workload(**interface)
+        assert Workload(**interface)  # type: ignore
 
 
 class TestDetailedWorkloadInterface:
@@ -65,4 +79,4 @@ class TestDetailedWorkloadInterface:
 
     def test_works(self, detailed_interface: DetailedWorkloadInterface):
         """A DetailedWorkload model can be created from an interface."""
-        assert DetailedWorkload(**detailed_interface)
+        assert DetailedWorkload(**detailed_interface)  # type: ignore
