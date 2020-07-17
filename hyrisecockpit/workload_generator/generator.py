@@ -10,7 +10,6 @@ from typing import Callable, Dict, Optional, Tuple, Type
 from apscheduler.schedulers.background import BackgroundScheduler
 from zmq import PUB, Context
 
-from hyrisecockpit.api.app.workload.interface import DetailedWorkloadInterface
 from hyrisecockpit.drivers.tpch.tpch_driver import TpchDriver
 from hyrisecockpit.request import Body
 from hyrisecockpit.response import Response, get_response
@@ -76,81 +75,84 @@ class WorkloadGenerator(object):
     def _call_get_all_workloads(self, body: Body) -> Response:
         response = get_response(200)
         response["body"]["workloads"] = [
-            {"workload": workload, "frequency": properties.frequency}
+            {
+                "workload": workload,
+                "frequency": properties.frequency,
+                "scale_factor": properties.scale_factor,
+            }
             for workload, properties in self._workloads.items()
+            if properties.running
         ]
         return response
 
     def _call_start_workload(self, body: Body) -> Response:
-        workload_name: str = body["workload"]
-        scale_factor = body["scale_factor"]
+        workload_type: str = body["workload_type"]
         frequency: int = body["frequency"]
-        if workload_name not in self._workloads:
+        scale_factor: float = body["scale_factor"]
+        if workload_type not in list(self._workloads.keys()):
             return get_response(404)
-        if scale_factor in self._workloads[workload_name].scale_factores:
+        if scale_factor not in self._workloads[workload_type].driver.scale_factors:
             return get_response(400)
-        if scale_factor in self._workloads[workload_name].driver.scale_factors:
-            return get_response(400)
-        self._workloads[workload_name].scale_factores.append(scale_factor)
-        self._workloads[workload_name].frequency = frequency
+        self._workloads[workload_type].scale_factore = scale_factor
+        self._workloads[workload_type].frequency = frequency
         response = get_response(200)
         response["body"]["workload"] = {
-            "workload": workload_name,
-            "frequency": self._workloads[workload_name].frequency,
-            "scale_factor": self._workloads[workload_name].scale_factores,
+            "workload_type": workload_type,
+            "frequency": self._workloads[workload_type].frequency,
+            "scale_factor": self._workloads[workload_type].scale_factore,
         }
         return response
 
     def _call_get_workload(self, body: Body) -> Response:
-        workload_name: str = body["workload"]
-        workload = self._workloads.get(workload_name)
+        workload_type: str = body["workload_type"]
+        workload = self._workloads.get(workload_type)
         if workload is None:
             return get_response(404)
         response = get_response(200)
         response["body"]["workload"] = {
-            "folder_name": workload,
-            "frequency": self._workloads[workload].frequency,
-            "weights": self._workloads[workload].weights,
-            "scale_factor": self._workloads[workload].scale_factores,
+            "workload_type": workload_type,
+            "frequency": self._workloads[workload_type].frequency,
+            "scale_factor": self._workloads[workload_type].scale_factore,
+            "weights": self._workloads[workload_type].weights,
         }
         return response
 
     def _call_stop_workload(self, body: Body) -> Response:
-        workload_name: str = body["workload"]
-        scale_factor = body["scale_factor"]
-        workload = self._workloads.get(workload_name)
+        workload_type: str = body["workload_type"]
+        workload = self._workloads.get(workload_type)
         if workload is None:
             return get_response(404)
-        if scale_factor not in workload.scale_factores:
-            return get_response(400)
-        workload.scale_factores.remove(scale_factor)
+        workload.running = False
+        workload.resert()
         response = get_response(200)
-        response["body"]["workload"] = workload
-        response["body"]["scale_factor"] = workload
+        response["body"]["workload"] = workload_type
         return response
 
     def _call_update_workload(self, body: Body) -> Response:
-        workload_name: str = body["workload"]
-        new_workload: DetailedWorkloadInterface = body["workload"]
-        workload = self._workloads.get(workload_name)
+        workload_type: str = body["workload_type"]
+        frequency: int = body["frequency"]
+        scale_factor: float = body["scale_factor"]
+        weights = body["weights"]
+        workload = self._workloads.get(workload_type)
         if workload is None:
             return get_response(404)
-        workload.update(new_workload)
+        workload.update(scale_factor=scale_factor, frequency=frequency, weights=weights)
         response = get_response(200)
-        response["body"]["workload"] = DetailedWorkloadInterface(
-            folder_name=workload_name,
-            frequency=workload.frequency,
-            weights=workload.weights,
-        )
+        response["body"]["workload"] = {
+            "workload_type": workload_type,
+            "frequency": self._workloads[workload_type].frequency,
+            "scale_factor": self._workloads[workload_type].scale_factore,
+            "weights": self._workloads[workload_type].weights,
+        }
         return response
 
     def _generate_workload(self) -> None:
         queries = []
         for workload in self._workloads.values():
-            for scale_factore in workload.scale_factores:
+            if workload.running:
                 queries.append(
                     workload.driver.generate(
-                        scale_factore, workload.frequency, workload.weights
+                        workload.scale_factor, workload.frequency, workload.weights
                     )
                 )
         shuffle(queries)

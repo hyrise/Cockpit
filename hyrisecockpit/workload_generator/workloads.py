@@ -2,16 +2,24 @@
 
 
 class Workload:
-    """Represents tpch workload."""
+    """Represents a workload."""
 
     def __init__(self, driver):
-        """Initialize a tpch object."""
-        self.scale_factores = []
-        self.weights = []
+        """Initialize a workload object."""
+        self.running = False
+        self.scale_factor = 0
+        self.weights = driver.get_default_weights()
         self.frequency = 0
         self.driver = driver
 
-    def update(self, weights, frequency):
-        """Update tpch object."""
+    def update(self, scale_factor, frequency, weights):
+        """Update workload object."""
         self.weights = weights
+        self.scale_factor = scale_factor
         self.frequency = frequency
+
+    def resert(self):
+        """Reset attributes."""
+        self.scale_factor = 0
+        self.weights = self.driver.get_default_weights()
+        self.frequency = 0
