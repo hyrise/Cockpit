@@ -15,13 +15,7 @@ from hyrisecockpit.api.app.historical_data_handling import (
     get_historical_metric,
     get_interval_limits,
 )
-from hyrisecockpit.api.app.shared import (
-    _get_active_databases,
-    _send_message,
-    db_manager_socket,
-    storage_connection,
-)
-from hyrisecockpit.request import Header, Request
+from hyrisecockpit.api.app.shared import _get_active_databases, storage_connection
 from hyrisecockpit.response import Response, get_response
 
 api = Namespace(
@@ -162,6 +156,7 @@ model_workload_composition = api.model(
         ),
     },
 )
+
 
 @api.route("/failed_tasks")
 class FailedTasks(Resource):
