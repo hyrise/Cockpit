@@ -78,7 +78,7 @@ class DefaultWorkload:
             )
             for query_type in choices(
                 population=list(self._queries.keys()),
-                weights=list(weights),
+                weights=list(weights.values()),
                 k=frequency,
             )
         ]
@@ -187,4 +187,4 @@ class DefaultDriver:
         formatted_parameters = self._get_formatted_parameters(not_formatted_parameters)
 
         endts, latency = self._execute_query(cursor, query, formatted_parameters)
-        return endts, latency, task["benchmark"], task["query_type"]
+        return endts, latency, task["scalefactor"], task["query_type"]

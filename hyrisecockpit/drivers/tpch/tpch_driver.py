@@ -1,4 +1,5 @@
 """Tpch driver."""
+from collections import OrderedDict
 from os import getcwd
 from os.path import abspath
 from typing import Dict, List, Tuple
@@ -31,6 +32,12 @@ class TpchDriver:
             self._benchmark_type,
             self._table_names,
         )
+
+    def get_default_weights(self):
+        """Get default weights."""
+        return OrderedDict(
+            ("{:02d}".format(i), 1.0) for i in range(1, 23)
+        )  # TODO why OrderedDict
 
     def generate(self, scalefactor, frequency, weights) -> List[DefaultTask]:
         """Generate tpch tasks."""
