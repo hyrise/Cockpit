@@ -22,6 +22,7 @@ class DefaultTask(AbstractTask):
     query_type: str
     query: str
     args: Optional[Tuple]
+    scalefactor: float
 
 
 class TPCCTask(AbstractTask):
@@ -58,9 +59,10 @@ class WorkloadReader:
 class DefaultWorkload:
     """Generates workloads from queries."""
 
-    def __init__(self, benchmark: str, query_path: str):
+    def __init__(self, benchmark: str, scalefactor: float, query_path: str):
         """Initialize a Workload."""
         self._benchmark = benchmark
+        self._scalefactor = scalefactor
         self._queries = OrderedDict(WorkloadReader.get(query_path))  # type: ignore
 
     def get(self, frequency, weights) -> List[DefaultTask]:
@@ -72,6 +74,7 @@ class DefaultWorkload:
                 args=None,
                 query_type=query_type,
                 benchmark=self._benchmark,
+                scalefactor=self._scalefactor,
             )
             for query_type in choices(
                 population=list(self._queries.keys()),
@@ -84,9 +87,16 @@ class DefaultWorkload:
 class DefaultDriver:
     """Driver for default behavior."""
 
-    def __init__(self, query_path: str, benchmark_type: str, table_names: List[str]):
+    def __init__(
+        self,
+        query_path: str,
+        scale_factor_query_path: Dict,
+        benchmark_type: str,
+        table_names: List[str],
+    ):
         """Initialize DefaultDriver."""
         self._query_path: str = query_path
+        self._scale_factor_query_path: Dict = scale_factor_query_path
         self._benchmark_type: str = benchmark_type
         self._workloads: Dict = {}
         self._table_names = table_names
@@ -94,9 +104,10 @@ class DefaultDriver:
     def _get_workload_for_scale_factor(self, scalefactor):
         workload = self._workloads.get(scalefactor)
         if workload is None:
-            benchmark = f"{self._benchmark_type}_{scalefactor}"
-            query_path = f"{self._query_path}/{benchmark}"
-            workload = DefaultWorkload(benchmark, query_path)
+            query_path = (
+                f"{self._query_path}/{self._scale_factor_query_path[scalefactor]}"
+            )
+            workload = DefaultWorkload(self._benchmark_type, scalefactor, query_path)
             self._workloads[scalefactor] = workload
 
         return workload

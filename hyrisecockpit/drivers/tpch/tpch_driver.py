@@ -24,8 +24,12 @@ class TpchDriver:
             "supplier",
         ]
         self.scale_factors = [0.1, 1]
+        self._scale_factor_query_path = {0.1: "tpch_0_1", 1: "tpch_1"}
         self._default_driver: DefaultDriver = DefaultDriver(
-            self._query_path, self._benchmark_type, self._table_names
+            self._query_path,
+            self._scale_factor_query_path,
+            self._benchmark_type,
+            self._table_names,
         )
 
     def generate(self, scalefactor, frequency, weights) -> List[DefaultTask]:

@@ -1,17 +1,15 @@
-"""Different workload classes."""
-
-from hyrisecockpit.drivers.tpch.tpch_driver import TpchDriver
+"""Default workload class."""
 
 
-class Tpch:
+class Workload:
     """Represents tpch workload."""
 
-    def __init__(self):
+    def __init__(self, driver):
         """Initialize a tpch object."""
         self.scale_factores = []
         self.weights = []
         self.frequency = 0
-        self.driver = TpchDriver()
+        self.driver = driver
 
     def update(self, weights, frequency):
         """Update tpch object."""
