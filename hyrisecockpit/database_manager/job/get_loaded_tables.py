@@ -4,9 +4,7 @@ from typing import List
 from psycopg2 import DatabaseError, InterfaceError
 
 
-def get_loaded_tables_for_scale_factor(
-    tables: List[str], benchmark: str, scale_factor: str, connection_factory
-) -> List[str]:
+def get_loaded_tables(tables: List[str], connection_factory) -> List[str]:
     """Check which tables exists and which not."""
     loaded_tables: List = []
     try:
@@ -15,7 +13,7 @@ def get_loaded_tables_for_scale_factor(
             results = cur.fetchall()
             all_loaded_tables = [row[0] for row in results] if results else []
             for table in tables:
-                if f"{table}_{benchmark}_{scale_factor}" in all_loaded_tables:
+                if table in all_loaded_tables:
                     loaded_tables.append(table)
 
     except (DatabaseError, InterfaceError):

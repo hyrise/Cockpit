@@ -119,6 +119,10 @@ class DefaultDriver:
 
     def get_load_queries(self, scalefactor):
         """Generate loading workload queries."""
+        if scalefactor < 1.0:
+            scalefactor = str(scalefactor).replace(".", "_")
+        else:
+            scalefactor = str(int(scalefactor))
         load_queries = {}
         for table in self._table_names:
             load_queries[f"{table}_{self._benchmark_type}_{scalefactor}"] = (
@@ -136,6 +140,10 @@ class DefaultDriver:
 
     def get_delete_queries(self, scalefactor):
         """Generate delete workload queries."""
+        if scalefactor < 1.0:
+            scalefactor = str(scalefactor).replace(".", "_")
+        else:
+            scalefactor = str(int(scalefactor))
         delete_queries = {}
         for table in self._table_names:
             delete_queries[f"{table}_{self._benchmark_type}_{scalefactor}"] = (

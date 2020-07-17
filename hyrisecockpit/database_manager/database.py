@@ -5,6 +5,8 @@ from typing import Dict, List, Optional, Tuple, TypedDict
 
 from psycopg2 import DatabaseError, Error, InterfaceError
 
+from hyrisecockpit.drivers.tpch.tpch_driver import TpchDriver
+
 from .background_scheduler import BackgroundJobManager
 from .cursor import ConnectionFactory, StorageConnectionFactory
 from .interfaces import SqlResultInterface
@@ -59,12 +61,14 @@ class Database(object):
 
         self._database_blocked: Value = Value("b", False)
         self._hyrise_active: Value = Value("b", True)
+        self._workload_drivers: Dict = {"tpch": TpchDriver()}
         self._worker_pool: WorkerPool = WorkerPool(
             self._connection_factory,
             self.number_workers,
             self._id,
             workload_publisher_url,
             self._database_blocked,
+            self._workload_drivers,
         )
         self._background_scheduler: BackgroundJobManager = BackgroundJobManager(
             self._id,
@@ -73,10 +77,11 @@ class Database(object):
             self._hyrise_active,
             self._worker_pool,
             self._storage_connection_factory,
+            self._workload_drivers,
         )
         self._initialize_influx()
         self._background_scheduler.start()
-        self._background_scheduler.load_tables(self._default_tables)
+        self.load_data(self._default_tables)
 
     def _initialize_influx(self) -> None:
         """Initialize Influx database."""
@@ -111,18 +116,22 @@ class Database(object):
 
     def load_data(self, folder_name: str) -> bool:
         """Load pre-generated tables."""
+        # TODO Change endpoint instead
+        workload, scale_factor = folder_name.split("_", maxsplit=1)
         return (
             False
             if self._worker_pool.get_status() != "closed"
-            else self._background_scheduler.load_tables(folder_name)
+            else self._background_scheduler.load_tables(workload, float(scale_factor))
         )
 
     def delete_data(self, folder_name: str) -> bool:
         """Delete tables."""
+        # TODO Change endpoint instead
+        workload, scale_factor = folder_name.split("_", maxsplit=1)
         return (
             False
             if self._worker_pool.get_status() != "closed"
-            else self._background_scheduler.delete_tables(folder_name)
+            else self._background_scheduler.delete_tables(workload, float(scale_factor))
         )
 
     def activate_plugin(self, plugin: str) -> bool:

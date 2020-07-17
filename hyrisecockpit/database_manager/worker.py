@@ -96,6 +96,7 @@ def execute_queries(
     database_id: str,
     i_am_done_event: EventType,
     worker_wait_for_exit_event: EventType,
+    workload_drivers,
 ) -> None:
     """Define workers work loop."""
     with cur:
@@ -119,7 +120,9 @@ def execute_queries(
                     formatted_parameters = get_formatted_parameters(
                         not_formatted_parameters
                     )
-                    endts, latency = execute_task(cur, query, formatted_parameters)
+                    endts, latency = workload_drivers[workload_type].execute_task(
+                        cur, query, formatted_parameters
+                    )
                     succesful_queries.append(
                         (endts, latency, workload_type, query_type, worker_id)
                     )

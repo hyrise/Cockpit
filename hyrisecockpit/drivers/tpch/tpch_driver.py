@@ -23,8 +23,8 @@ class TpchDriver:
             "region",
             "supplier",
         ]
-        self.scale_factors = [0.1, 1]
-        self._scale_factor_query_path = {0.1: "tpch_0_1", 1: "tpch_1"}
+        self.scale_factors = [0.1, 1.0]
+        self._scale_factor_query_path = {0.1: "tpch_0_1", 1.0: "tpch_1"}
         self._default_driver: DefaultDriver = DefaultDriver(
             self._query_path,
             self._scale_factor_query_path,

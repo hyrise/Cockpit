@@ -35,6 +35,7 @@ class BackgroundJobManager(object):
         hyrise_active: Value,
         worker_pool: WorkerPool,
         storage_connection_factory: StorageConnectionFactory,
+        workload_drivers,
     ):
         """Initialize BackgroundJobManager object."""
         self._database_id: str = database_id
@@ -42,6 +43,7 @@ class BackgroundJobManager(object):
         self._connection_factory: ConnectionFactory = connection_factory
         self._storage_connection_factory: StorageConnectionFactory = storage_connection_factory
         self._worker_pool: WorkerPool = worker_pool
+        self._workload_drivers = workload_drivers
         self._scheduler: BackgroundScheduler = BackgroundScheduler()
         self._hyrise_active: Value = hyrise_active
         self._init_jobs()
@@ -137,25 +139,37 @@ class BackgroundJobManager(object):
         self._ping_hyrise_job.remove()
         self._scheduler.shutdown()
 
-    def load_tables(self, folder_name: str) -> bool:
+    def load_tables(self, workload_type: str, scalefactor: float) -> bool:
         """Load tables."""
         if not self._database_blocked.value:
             self._database_blocked.value = True
             self._scheduler.add_job(
                 func=load_tables_job,
-                args=(self._database_blocked, folder_name, self._connection_factory),
+                args=(
+                    self._database_blocked,
+                    workload_type,
+                    scalefactor,
+                    self._connection_factory,
+                    self._workload_drivers,
+                ),
             )
             return True
         else:
             return False
 
-    def delete_tables(self, folder_name: str) -> bool:
+    def delete_tables(self, workload_type: str, scalefactor: float) -> bool:
         """Delete tables."""
         if not self._database_blocked.value:
             self._database_blocked.value = True
             self._scheduler.add_job(
                 func=delete_tables_job,
-                args=(self._database_blocked, folder_name, self._connection_factory),
+                args=(
+                    self._database_blocked,
+                    workload_type,
+                    scalefactor,
+                    self._connection_factory,
+                    self._workload_drivers,
+                ),
             )
             return True
         else:

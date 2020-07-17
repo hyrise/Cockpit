@@ -22,12 +22,14 @@ class WorkerPool:
         database_id: str,
         workload_publisher_url: str,
         database_blocked: Value,
+        workload_drivers,
     ) -> None:
         """Initialize WorkerPool object."""
         self._connection_factory: ConnectionFactory = connection_factory
         self._number_worker: int = number_worker
         self._database_id: str = database_id
         self._database_blocked: Value = database_blocked
+        self._workload_drivers = workload_drivers
         self._workload_publisher_url: str = workload_publisher_url
         self._status: str = "closed"
         self._continue_execution_flag: Value = Value("b", True)
@@ -54,6 +56,7 @@ class WorkerPool:
                     self._database_id,
                     self._execute_task_worker_done_event[i],
                     self._worker_wait_for_exit_event,
+                    self._workload_drivers,
                 ),
             )
             for i in range(self._number_worker)
