@@ -81,7 +81,6 @@ class Database(object):
         )
         self._initialize_influx()
         self._background_scheduler.start()
-        self.load_data(self._default_tables)
 
     def _initialize_influx(self) -> None:
         """Initialize Influx database."""

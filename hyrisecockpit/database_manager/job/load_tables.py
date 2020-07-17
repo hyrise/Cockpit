@@ -16,13 +16,15 @@ def load_tables(
     workload_drivers,
 ) -> None:
     """Load tables."""
-    load_queries: Dict = workload_drivers["workload_type"].get_load_queries(scalefactor)
+    load_queries: Dict = workload_drivers[workload_type].get_load_queries(scalefactor)
     table_names = list(load_queries.keys())
     loaded_tables: List[str] = get_loaded_tables(table_names, connection_factory)
     tables_to_load: List[str] = [
         table for table in table_names if table not in set(loaded_tables)
     ]
     queries = [load_queries[table] for table in tables_to_load]
+    print("Loading tables")
+    print(queries)
 
     execute_queries_parallel(queries, connection_factory)
 
