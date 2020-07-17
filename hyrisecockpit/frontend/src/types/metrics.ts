@@ -98,7 +98,7 @@ export interface MetricProps {
   showDetails: boolean;
   maxChartWidth: number;
   totalNumberOfDatabases: number;
-  activatePluginEventClick: (graphId: string) => void;
+  activatePluginEventClick: (graphId: string, database: any) => void;
 }
 
 export const MetricPropsValidation = {

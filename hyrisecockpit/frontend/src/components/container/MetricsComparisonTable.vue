@@ -1,6 +1,9 @@
 <template>
   <div id="metric-comparison-table" class="metrics-table">
-    <plugin-log-popup :current-plugin-log="currentPluginLog" />
+    <plugin-log-popup
+      :current-plugin-log="currentPluginLog"
+      :current-plugin-log-database="currentPluginLogDatabase"
+    />
     <div
       class="metrics-column"
       :style="databaseFlex"
@@ -66,7 +69,8 @@ interface Data {
   maxChartWidth: Readonly<Ref<number>>;
   databases: Ref<readonly Database[]>;
   currentPluginLog: Ref<string>;
-  activatePluginEventClick: (graphId: string) => void;
+  activatePluginEventClick: (graphId: string, database: any) => void;
+  currentPluginLogDatabase: Ref<any>;
 }
 
 export default defineComponent({
@@ -90,8 +94,9 @@ export default defineComponent({
     });
 
     const currentPluginLog: Ref<string> = ref("");
+    const currentPluginLogDatabase: Ref<any> = ref({});
 
-    const activatePluginEventClick = (graphId: string) => {
+    const activatePluginEventClick = (graphId: string, database: any) => {
       const graphElement = document.getElementById(
         graphId
       ) as PlotlyHTMLElement;
@@ -99,9 +104,11 @@ export default defineComponent({
         data.points.forEach((point: any) => {
           if (point.curveNumber === 1) {
             currentPluginLog.value = point.fullData.text[point.pointIndex];
+            currentPluginLogDatabase.value = database;
           }
         });
       });
+      console.log(props);
     };
 
     return {
@@ -110,6 +117,7 @@ export default defineComponent({
       ...useUpdatingDatabases(props, context),
       currentPluginLog,
       activatePluginEventClick,
+      currentPluginLogDatabase,
     };
   },
 });

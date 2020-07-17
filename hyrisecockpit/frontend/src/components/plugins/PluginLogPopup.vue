@@ -11,6 +11,7 @@
       dismissible
       data-id="chart-plugin-log-alert"
       elevation="20"
+      :color="currentPluginLogDatabase.color"
     >
       {{ currentPluginLog }}
     </v-alert>
@@ -31,6 +32,7 @@ import useDragElement from "@/meta/draggable";
 
 interface Props {
   currentPluginLog: string;
+  currentPluginLogDatabase: any;
 }
 interface Data {
   logDraggableId: string;
@@ -43,6 +45,10 @@ export default defineComponent({
     currentPluginLog: {
       type: String,
       default: "",
+    },
+    currentPluginLogDatabase: {
+      type: Object,
+      default: null,
     },
   },
   setup(props: Props, context: SetupContext): Data {
