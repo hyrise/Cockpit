@@ -48,9 +48,13 @@ class Server:
             if schema:
                 validate(request["body"], schema=schema)
             return func(request["body"])
-        except ValidationError:
+        except ValidationError as e:
+            # TODO BAD error handling. Can catch ValidationError in generator
+            print(f"ValidationError catched in server: {str(e)}")
             return get_response(400)
-        except KeyError:
+        except KeyError as e:
+            # TODO BAD error handling. Can catch key Errors in generator
+            print(f"KeyError catched in server: {str(e)}")
             return get_response(404)
 
     def close(self) -> None:
