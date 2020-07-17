@@ -3,7 +3,7 @@ from multiprocessing import Queue, Value
 from multiprocessing.synchronize import Event as EventType
 from queue import Empty
 from time import time_ns
-from typing import Dict, List, Tuple, Union
+from typing import List, Tuple
 
 from psycopg2 import DatabaseError, InterfaceError, ProgrammingError
 
@@ -14,9 +14,6 @@ from hyrisecockpit.settings import (
     STORAGE_PORT,
     STORAGE_USER,
 )
-
-from .handler.default.default_handler import DefaultHandler
-from .handler.tpcc.transaction_handler import TPCCTransactionHandler
 
 
 def log_results(
@@ -39,6 +36,7 @@ def execute_queries(  # noqa
     database_id: str,
     i_am_done_event: EventType,
     worker_wait_for_exit_event: EventType,
+    workload_drivers,
 ) -> None:
     """Define workers work loop."""
     with cur:
@@ -49,11 +47,6 @@ def execute_queries(  # noqa
             failed_queries: List[Tuple[int, str, str, str]] = []
             last_batched = time_ns()
 
-            handlers: Dict[str, Union[DefaultHandler, TPCCTransactionHandler]] = {
-                "query": DefaultHandler(cur, worker_id),
-                "tpcc_transaction": TPCCTransactionHandler(cur, worker_id),
-            }
-
             while True:
                 if not continue_execution_flag.value:
                     i_am_done_event.set()
@@ -61,8 +54,10 @@ def execute_queries(  # noqa
 
                 try:
                     task = task_queue.get(block=False)
-                    handler = handlers[task["type"]]
-                    endts, latency, benchmark, query_type = handler.execute_task(task)
+                    benchmark = task["benchmark"]
+                    endts, latency, scalefactor, query_type = workload_drivers[
+                        benchmark
+                    ].execute_task(task, cur, worker_id)
 
                     succesful_queries.append(
                         (endts, latency, benchmark, query_type, worker_id)
