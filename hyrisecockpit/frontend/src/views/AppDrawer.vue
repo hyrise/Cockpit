@@ -80,7 +80,6 @@
         :open="showWorkloadDialog"
         @close="showWorkloadDialog = false"
         @start="changeWorkloadIndicator('start')"
-        @pause="changeWorkloadIndicator('pause')"
         @stop="changeWorkloadIndicator('stop')"
       />
 
@@ -226,9 +225,6 @@ export default defineComponent({
       if (action === "start") {
         workloadIndicator.icon = "mdi-play";
         workloadIndicator.color = "green";
-      } else if (action === "pause") {
-        workloadIndicator.icon = "mdi-pause";
-        workloadIndicator.color = "blue";
       } else {
         workloadIndicator.icon = "mdi-stop";
         workloadIndicator.color = "red";
