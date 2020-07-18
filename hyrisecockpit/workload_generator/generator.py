@@ -15,7 +15,7 @@ from hyrisecockpit.request import Body
 from hyrisecockpit.response import Response, get_response
 from hyrisecockpit.server import Server
 
-from .workloads import Workload
+from .workload import Workload
 
 
 class WorkloadGenerator(object):
@@ -115,6 +115,7 @@ class WorkloadGenerator(object):
             "frequency": self._workloads[workload_type].frequency,
             "scale_factor": self._workloads[workload_type].scale_factor,
             "weights": self._workloads[workload_type].weights,
+            "running": self._workloads[workload_type].running,
         }
         return response
 
@@ -147,7 +148,7 @@ class WorkloadGenerator(object):
         }
         return response
 
-    def _generate_workload(self) -> None:
+    def _get_workload_queries(self):
         queries = []
         for workload in self._workloads.values():
             if workload.running:
@@ -156,8 +157,11 @@ class WorkloadGenerator(object):
                 )
 
         shuffle(queries)
+        return queries
+
+    def _generate_workload(self) -> None:
         response = get_response(200)
-        response["body"]["querylist"] = queries
+        response["body"]["querylist"] = self._get_workload_queries()  # type: ignore
         self._pub_socket.send_json(response)
 
     def start(self) -> None:

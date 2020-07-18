@@ -6,6 +6,7 @@ from pytest import fixture
 
 from hyrisecockpit.response import get_response
 from hyrisecockpit.workload_generator.generator import WorkloadGenerator
+from hyrisecockpit.workload_generator.workload import Workload
 
 
 @fixture
@@ -70,72 +71,206 @@ class TestWorkloadGenerator:
         assert generator._workload_listening == workload_listening
         assert generator._workload_pub_port == workload_pub_port
 
+    def test_get_all_workloads(self, generator: WorkloadGenerator):
+        """Test get all running workloads."""
+        fake_driver = MagicMock()
+        fake_running_workoad = Workload(fake_driver)  # type: ignore
+        fake_running_workoad.running = True
+        fake_running_workoad.frequency = 42
+        fake_running_workoad.scale_factor = 2.0
+        fake_stopped_workoad = Workload(fake_driver)  # type: ignore
+        fake_stopped_workoad.running = False
+        generator._workloads = {
+            "running_workload": fake_running_workoad,
+            "fake_stopped_workoad": fake_stopped_workoad,
+        }
+
+        response = generator._call_get_all_workloads({})
+
+        expected_response = [
+            {"workload": "running_workload", "frequency": 42, "scale_factor": 2.0}
+        ]
+        assert response["header"] == get_response(200)["header"]
+        assert response["body"]["workloads"] == expected_response
+
     def test_starts_a_workload(self, generator: WorkloadGenerator):
         """Test starting of the workload generation."""
-        folder_name = "myFolder"
-        assert generator._workloads == {}
-        with patch(
-            "hyrisecockpit.workload_generator.reader.WorkloadReader.get"
-        ) as mock_get:
-            mock_get.return_value = {"Query1": ["SELECT 1;"]}
-            response = generator._call_start_workload(
-                {"folder_name": folder_name, "frequency": 100}
-            )
-            mock_get.assert_called_once_with(folder_name)
+        fake_body = {
+            "workload_type": "fake_workload",
+            "frequency": 42,
+            "scale_factor": 1.0,
+        }
+        fake_driver = MagicMock()
+        fake_driver.scale_factors = [1.0]
+        fake_workoad = Workload(fake_driver)  # type: ignore
+        generator._workloads = {"fake_workload": fake_workoad}
+
+        expected_response = {
+            "workload_type": "fake_workload",
+            "frequency": 42,
+            "scale_factor": 1.0,
+        }
+
+        response = generator._call_start_workload(fake_body)
+
+        assert (
+            generator._workloads["fake_workload"].scale_factor
+            == fake_body["scale_factor"]
+        )
+        assert generator._workloads["fake_workload"].frequency == fake_body["frequency"]
+        assert generator._workloads["fake_workload"].running
+
         assert response["header"] == get_response(200)["header"]
-        assert "workload" in response["body"]
-        assert list(generator._workloads.keys()) == [folder_name]
+        assert response["body"]["workload"] == expected_response
 
-    def test_does_not_start_a_workload_if_it_cannot_be_found(
+    def test_starts_a_workload_with_wrong_scale_factor(
         self, generator: WorkloadGenerator
     ):
-        """Test starting of the workload generation."""
-        folder_name = "myFolder"
-        assert generator._workloads == {}
-        with patch(
-            "hyrisecockpit.workload_generator.reader.WorkloadReader.get"
-        ) as mock_get:
-            mock_get.return_value = None
-            response = generator._call_start_workload(
-                {"folder_name": folder_name, "frequency": 100}
-            )
-            mock_get.assert_called_once_with(folder_name)
-        assert response == get_response(404)
-        assert list(generator._workloads.keys()) == []
+        """Test starting of the workload generation with wrong scale factor."""
+        fake_body = {
+            "workload_type": "fake_workload",
+            "frequency": 42,
+            "scale_factor": 100.0,
+        }
+        fake_driver = MagicMock()
+        fake_driver.scale_factors = [1.0]
+        fake_workoad = Workload(fake_driver)  # type: ignore
+        generator._workloads = {"fake_workload": fake_workoad}
 
-    def test_does_not_start_a_workload_if_it_is_already_started(
+        response = generator._call_start_workload(fake_body)
+
+        assert response["header"] == get_response(400)["header"]
+
+    def test_starts_a_not_existing_workload(self, generator: WorkloadGenerator):
+        """Test starting of the workload generation of not existing workload."""
+        fake_body = {
+            "workload_type": "not_existing_workload",
+            "frequency": 42,
+            "scale_factor": 100.0,
+        }
+        generator._workloads = {}
+        response = generator._call_start_workload(fake_body)
+
+        assert response["header"] == get_response(404)["header"]
+
+    def test_get_workload_information(self, generator: WorkloadGenerator):
+        """Test get workload information."""
+        fake_body = {"workload_type": "fake_workoad"}
+
+        fake_driver = MagicMock()
+        fake_workoad = Workload(fake_driver)  # type: ignore
+        fake_workoad.running = True
+        fake_workoad.frequency = 42
+        fake_workoad.scale_factor = 2.0
+        fake_workoad.weights = {"01": 2, "02": 5}
+        generator._workloads = {"fake_workoad": fake_workoad}
+
+        expected_response = {
+            "workload_type": "fake_workoad",
+            "frequency": 42,
+            "scale_factor": 2.0,
+            "weights": {"01": 2, "02": 5},
+            "running": True,
+        }
+
+        response = generator._call_get_workload(fake_body)
+
+        assert response["header"] == get_response(200)["header"]
+        assert response["body"]["workload"] == expected_response
+
+    def test_get_information_for_not_existing_workload(
         self, generator: WorkloadGenerator
     ):
-        """Test starting of the workload generation."""
-        folder_name = "myFolder"
-        assert generator._workloads == {}
-        generator._workloads[folder_name] = MagicMock()
-        with patch(
-            "hyrisecockpit.workload_generator.reader.WorkloadReader.get"
-        ) as mock_get:
-            response = generator._call_start_workload(
-                {"folder_name": folder_name, "frequency": 100}
-            )
-            mock_get.assert_not_called()
-        assert response == get_response(409)
-        assert list(generator._workloads.keys()) == [folder_name]
+        """Test get workload information for not existing workload."""
+        fake_body = {"workload_type": "fake_workoad"}
+        generator._workloads = {}
 
-    def test_stops_a_workload(self, generator: WorkloadGenerator):
-        """Test stopping of the workload generation."""
-        folder_name = "myFolder"
-        assert generator._workloads == {}
-        generator._workloads[folder_name] = MagicMock()
-        response = generator._call_stop_workload({"folder_name": folder_name})
-        expected_response = get_response(200)
-        expected_response["body"]["folder_name"] = folder_name
-        assert response == expected_response
-        assert generator._workloads == {}
+        response = generator._call_get_workload(fake_body)
 
-    def test_does_not_stop_a_workload_if_there_is_none(
-        self, generator: WorkloadGenerator
-    ):
-        """Test stopping of the workload generation."""
-        assert generator._workloads == {}
-        response = generator._call_stop_workload({"folder_name": "myFolder"})
-        assert response == get_response(404)
-        assert generator._workloads == {}
+        assert response["header"] == get_response(404)["header"]
+
+    def test_stop_workload(self, generator: WorkloadGenerator):
+        """Test stop workload."""
+        fake_body = {"workload_type": "fake_workoad"}
+        fake_driver = MagicMock()
+        fake_workoad = Workload(fake_driver)  # type: ignore
+        fake_workoad.running = True
+        generator._workloads = {"fake_workoad": fake_workoad}
+
+        response = generator._call_stop_workload(fake_body)
+
+        assert response["header"] == get_response(200)["header"]
+        assert not generator._workloads["fake_workoad"].running
+
+    def test_stop_not_existing_workload(self, generator: WorkloadGenerator):
+        """Test stop of not existing workload."""
+        fake_body = {"workload_type": "fake_workoad"}
+        generator._workloads = {}
+
+        response = generator._call_stop_workload(fake_body)
+
+        assert response["header"] == get_response(404)["header"]
+
+    def test_update_workload(self, generator: WorkloadGenerator):
+        """Test update workload."""
+        fake_body = {
+            "workload_type": "fake_workoad",
+            "frequency": 42,
+            "scale_factor": 2.0,
+            "weights": {"01": 10000, "02": 99},
+        }
+        fake_driver = MagicMock()
+        fake_driver.get_default_weights.return_value = {"01": 2, "02": 5}
+        fake_workoad = Workload(fake_driver)  # type: ignore
+        fake_workoad.running = True
+        generator._workloads = {"fake_workoad": fake_workoad}
+
+        response = generator._call_update_workload(fake_body)
+
+        assert response["header"] == get_response(200)["header"]
+        assert generator._workloads["fake_workoad"].running
+        assert generator._workloads["fake_workoad"].scale_factor == 2.0
+        assert generator._workloads["fake_workoad"].frequency == 42
+        assert generator._workloads["fake_workoad"].weights == {"01": 10000, "02": 99}
+
+    def test_update_not_existing_workload(self, generator: WorkloadGenerator):
+        """Test update of not existing workload."""
+        fake_body = {
+            "workload_type": "fake_workoad",
+            "frequency": 42,
+            "scale_factor": 2.0,
+            "weights": {"01": 10000, "02": 99},
+        }
+        generator._workloads = {}
+
+        response = generator._call_update_workload(fake_body)
+
+        assert response["header"] == get_response(404)["header"]
+
+    @patch(
+        "hyrisecockpit.workload_generator.generator.shuffle", lambda x: x,
+    )
+    def test_get_workload_queries(self, generator: WorkloadGenerator):
+        """Test get workload queries."""
+        fake_driver_a = MagicMock()
+        fake_driver_a.generate.return_value = ["Select a", "Select a again"]
+        fake_workoad_a = Workload(fake_driver_a)  # type: ignore
+        fake_workoad_a.running = True
+        fake_driver_b = MagicMock()
+        fake_driver_b.generate.return_value = ["Select b", "Select b again"]
+        fake_workoad_b = Workload(fake_driver_b)  # type: ignore
+        fake_workoad_b.running = True
+        fake_driver_not_running = MagicMock()
+        fake_driver_not_running.generate.return_value = ["not running"]
+        fake_workoad_not_running = Workload(fake_driver_not_running)  # type: ignore
+        fake_workoad_not_running.running = False
+        generator._workloads = {
+            "fake_workoad_a": fake_workoad_a,
+            "fake_workoad_b": fake_workoad_b,
+            "fake_workoad_not_running": fake_workoad_not_running,
+        }
+        expected_queries = ["Select a", "Select a again", "Select b", "Select b again"]
+
+        response = generator._get_workload_queries()  # type: ignore
+
+        assert set(expected_queries) == set(response)
