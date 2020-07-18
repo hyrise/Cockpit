@@ -13,6 +13,7 @@
       </template>
     </metric-detailed-view>
     <metric-details
+      class="mt-n10"
       v-if="showDetails"
       metric="memoryFootprint"
       :databases="selectedDatabases"

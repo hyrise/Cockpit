@@ -9,7 +9,7 @@
             v-model="selectedTable"
             class="select"
             :items="tables"
-            chips
+            dense
             label="table"
             outlined
             prepend-icon="mdi-table"
@@ -27,14 +27,15 @@
       <v-select
         :id="'access-select'"
         v-model="selectedTable"
-        class="select"
+        class="select mt-n12"
         :items="tables"
-        chips
+        dense
         label="table"
         outlined
         prepend-icon="mdi-table"
       />
       <Heatmap
+        class="mt-n8"
         :graph-id="graphId || 'access'"
         :data="data"
         :chart-configuration="chartConfiguration"
@@ -114,5 +115,8 @@ export default defineComponent({
   z-index: 2;
   width: 30%;
   margin: auto;
+}
+.v-application .mt-n12 {
+  margin-top: -90px !important;
 }
 </style>

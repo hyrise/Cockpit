@@ -97,10 +97,8 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   margin: 0px 6px 6px 6px;
-  border-radius: 0px;
 }
 .v-card:not(.v-sheet--tile):not(.v-card--shaped) {
-  border-radius: 4px;
   box-shadow: 0px 0px;
 }
 </style>

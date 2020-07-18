@@ -3,14 +3,15 @@
     <v-dialog v-model="showDialog" hide-overlay>
       <template v-slot:activator="{ on }">
         <v-btn
-          color="primary"
+          class="mt-n10 ml-4"
+          outlined
+          color="secondary"
+          elevation="2"
           small
-          right
-          dark
           v-on="on"
           :data-id="`open-metric-detailed-view-${metric}`"
         >
-          <v-icon left>mdi-arrow-expand</v-icon>Open detailed view
+          <v-icon color="primary" size="18">mdi-magnify-plus</v-icon>
         </v-btn>
       </template>
       <v-card>
