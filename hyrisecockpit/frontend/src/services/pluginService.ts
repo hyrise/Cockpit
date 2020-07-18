@@ -88,17 +88,16 @@ export function usePluginService(): PluginService {
 
   function getPluginLogsData(data: any): any {
     return data.reduce((result: any, currentDatabase: any) => {
-      result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
-        (databaseLog: string, currentLog: any) => {
+      result[currentDatabase.id] = currentDatabase.plugin_log
+        .sort((logA: any, logB: any) => logB.timestamp - logA.timestamp)
+        .reduce((databaseLog: string, currentLog: any) => {
           return (
             databaseLog +
             `${currentLog.reporter} [${formatDateToHHMMSS(
               new Date(parseInt(currentLog.timestamp))
             )}]: ${currentLog.message}\n`
           );
-        },
-        ""
-      );
+        }, "");
       return result;
     }, {});
   }
