@@ -71,6 +71,7 @@ function useHeatMapConfiguration(
             size: 13,
           },
         },
+        fixedrange: true,
       },
       yaxis: {
         rangemode: "tozero",
@@ -81,6 +82,7 @@ function useHeatMapConfiguration(
             size: 13,
           },
         },
+        fixedrange: true,
       },
       autosize: autosize,
       width: autosize ? 0 : 1400,

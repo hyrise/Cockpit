@@ -23,20 +23,6 @@ testNoVisibilityOnOverview(metric);
 
 /* test generic and custom on comparison */
 testGenericChartsOnPage({ metric, request }, layout, transform, (getData) => {
-  // test data with no selected table
-  describe("when no table is selected", () => {
-    it("will show the correct empty metric data", () => {
-      const { databases } = getData();
-      databases.forEach((database: any) => {
-        cy.get(getSelectorWithID("access", database.id)).should(
-          (elements: any) => {
-            assertHeatMapData(elements[0].data[0]);
-          }
-        );
-      });
-    });
-  });
-
   // test data with selected table
   describe("when a table is selected", () => {
     it("will show the correct metric data", () => {

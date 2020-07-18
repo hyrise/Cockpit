@@ -186,6 +186,7 @@ function useLineChartConfiguration(
               selectedStaticRange.value.endDate,
             ]
           : [currentTime - (xMin - 1) * 1000, currentTime],
+        fixedrange: !selectedStaticRange.value,
       },
       yaxis: {
         title: {
@@ -196,6 +197,7 @@ function useLineChartConfiguration(
           },
         },
         range: [0, yMax],
+        fixedrange: !selectedStaticRange.value,
       },
       autosize: true,
       showlegend: multipleDatabasesAllowed,
@@ -231,4 +233,3 @@ function useLineChartConfiguration(
   return { getDataset, getLayout, getOptions };
 }
 </script>
-<style scoped></style>

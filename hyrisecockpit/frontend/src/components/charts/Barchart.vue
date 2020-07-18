@@ -47,6 +47,7 @@ function useBarChartConfiguration(
           },
         },
         rangemode: "tozero",
+        fixedrange: true,
       },
       yaxis: {
         title: {
@@ -58,6 +59,7 @@ function useBarChartConfiguration(
         },
         rangemode: "tozero",
         range: [0, 100],
+        fixedrange: true,
       },
       barmode: "stack",
       autosize: true,

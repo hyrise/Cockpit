@@ -11,8 +11,7 @@
       :disabled="loadingWorkloads.includes(workload) || disabled"
       data-id="select-workload-data"
       @change="$emit('change', workload)"
-    >
-    </v-switch>
+    />
   </span>
 </template>
 <script lang="ts">
@@ -59,7 +58,8 @@ export default defineComponent({
       () => props.loadedWorkloads,
       () => {
         workloads.value = props.loadedWorkloads;
-      }
+      },
+      { immediate: true }
     );
     return {
       workloads,
