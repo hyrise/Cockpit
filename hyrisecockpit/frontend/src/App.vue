@@ -6,8 +6,12 @@
       @closeSelection="showSelectionList = false"
     />
     <v-content>
-      <selection-list v-show="showSelectionList" :open="showSelectionList" />
-      <plugins-overview v-if="showPluginEditor" :onClose="togglePluginEditor" />
+      <selection-list
+        v-show="showSelectionList"
+        :open="showSelectionList"
+        @close="toggleSelectionList"
+      />
+      <plugins-overview v-if="showPluginEditor" @close="togglePluginEditor" />
       <router-view />
     </v-content>
   </v-app>
