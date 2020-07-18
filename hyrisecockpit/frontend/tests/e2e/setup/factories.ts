@@ -99,7 +99,9 @@ function fakeTableStorageData(tableId: string, columnIds: string[]): Object {
   storageData[tableId] = {
     size: faker.random.number(),
     number_columns: columnIds.length,
-    data: assignFakeData(columnIds.map((id) => fakeColumnStorageData(id))),
+    data: assignFakeData(
+      columnIds.map((id) => fakeColumnStorageData(`${tableId}-${id}`))
+    ),
   };
   return storageData;
 }
@@ -182,7 +184,9 @@ function fakeTableChunksData(
 ): Object {
   const data: any = {};
   data[tableId] = assignFakeData(
-    columnIds.map((id) => fakeColumnChunksData(id, numberOfChunks))
+    columnIds.map((id) =>
+      fakeColumnChunksData(`${tableId}-${id}`, numberOfChunks)
+    )
   );
   return data;
 }
@@ -292,7 +296,6 @@ export function fakeDatabasePluginLogs(
 
 export function fakeDatabaseStatusData(
   databaseId: string,
-  loadedBenchmarks: string[],
   state: boolean
 ): Object {
   return {
@@ -300,6 +303,15 @@ export function fakeDatabaseStatusData(
     hyrise_active: true,
     database_blocked_status: false,
     worker_pool_status: state ? "running" : "",
+  };
+}
+
+export function fakeBenchmarkStatusData(
+  databaseId: string,
+  loadedBenchmarks: string[]
+): Object {
+  return {
+    id: databaseId,
     loaded_benchmarks: loadedBenchmarks,
     loaded_tables: [],
   };

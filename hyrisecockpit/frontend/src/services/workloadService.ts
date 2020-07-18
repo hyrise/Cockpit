@@ -2,11 +2,14 @@ import axios from "axios";
 import { Workload } from "@/types/workloads";
 import { getTransferredWorkload } from "@/meta/workloads";
 import { WorkloadService } from "../types/services";
-import { controlBackend, monitorBackend, workloadBackend } from "../../config";
+import { controlBackend, statusBackend, workloadBackend } from "../../config";
 
 export function useWorkloadService(): WorkloadService {
-  async function getLoadedWorkloadData(): Promise<string[]> {
-    return axios.get(`${monitorBackend}status`);
+  async function getLoadedWorkloads(): Promise<string[]> {
+    return axios.get(`${statusBackend}benchmark`);
+  }
+  async function getDatabaseStatus(): Promise<string[]> {
+    return axios.get(`${statusBackend}database`);
   }
   async function loadWorkloadData(workload: Workload): Promise<void> {
     return axios.post(`${controlBackend}database/benchmark_tables`, {
@@ -61,7 +64,8 @@ export function useWorkloadService(): WorkloadService {
   }
 
   return {
-    getLoadedWorkloadData,
+    getLoadedWorkloads,
+    getDatabaseStatus,
     loadWorkloadData,
     deleteWorkloadData,
     startWorker,
