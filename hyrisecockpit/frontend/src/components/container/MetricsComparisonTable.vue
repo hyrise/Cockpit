@@ -108,7 +108,6 @@ export default defineComponent({
           }
         });
       });
-      console.log(props);
     };
 
     return {

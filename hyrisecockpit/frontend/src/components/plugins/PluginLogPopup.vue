@@ -2,11 +2,12 @@
   <div
     :id="logDraggableId"
     class="log-popup"
-    :style="{ 'z-index': currentPluginLog ? '11' : '-1' }"
+    :style="{
+      'z-index': currentPluginLog ? '11' : '-1',
+    }"
   >
     <v-alert
       :value="currentPluginLog"
-      :toggle="toggleView"
       text
       dismissible
       data-id="chart-plugin-log-alert"
@@ -36,7 +37,6 @@ interface Props {
 }
 interface Data {
   logDraggableId: string;
-  toggleView: () => void;
 }
 
 export default defineComponent({
@@ -54,19 +54,12 @@ export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
     const logDraggableId = "log-popup";
 
-    function toggleView(): void {
-      console.log("test");
-      props.currentPluginLog = "";
-      console.log(props);
-    }
-
     onMounted(() => {
       useDragElement(logDraggableId, logDraggableId);
     });
 
     return {
       logDraggableId,
-      toggleView,
     };
   },
 });
