@@ -9,16 +9,17 @@ from pytest import fixture
 from hyrisecockpit.api.app import create_app
 from hyrisecockpit.api.app.database import BASE_ROUTE
 from hyrisecockpit.api.app.database.model import (
-    AvailableBenchmarkTables,
+    AvailableWorkloadTables,
     DetailedDatabase,
+    WorkloadTables,
 )
 from hyrisecockpit.api.app.database.schema import (
-    AvailableBenchmarkTablesSchema,
+    AvailableWorkloadTablesSchema,
     DetailedDatabaseSchema,
 )
 
 url = f"/{BASE_ROUTE}"
-benchmark_tables_url = f"/{BASE_ROUTE}/benchmark_tables"
+workload_tables_url = f"/{BASE_ROUTE}/workload_tables"
 worker_url = f"/{BASE_ROUTE}/worker"
 
 fake_database_one_attributes = {
@@ -132,57 +133,59 @@ class TestController:
         assert 200 == response.status_code
 
     @patch("hyrisecockpit.api.app.database.controller.DatabaseService")
-    def test_gets_avaible_benchmark_tables(
+    def test_gets_avaible_workload_tables(
         self, mocked_database_service: MagicMock, client: FlaskClient
     ) -> None:
-        """A database controller routes get benchmark_tables  correctly."""
-        benchmark_tables = AvailableBenchmarkTables(
-            folder_names=["tpch_0.1", "tpch_1", "tpcds_1", "job"]
+        """A database controller routes get workload_tables  correctly."""
+        workload_tables = AvailableWorkloadTables(
+            [
+                WorkloadTables(workload_type="tpch", scale_factor=0.1),
+                WorkloadTables(workload_type="tpcds", scale_factor=1.0),
+            ]
         )
-        mocked_database_service.get_available_benchmark_tables.return_value = (
-            benchmark_tables
+        mocked_database_service.get_available_workload_tables.return_value = (
+            workload_tables
         )
-        response = client.get(benchmark_tables_url, follow_redirects=True)
+        response = client.get(workload_tables_url, follow_redirects=True)
         assert 200 == response.status_code
         assert (
-            AvailableBenchmarkTablesSchema().dump(benchmark_tables)
-            == response.get_json()
+            AvailableWorkloadTablesSchema().dump(workload_tables) == response.get_json()
         )
 
     @patch("hyrisecockpit.api.app.database.controller.DatabaseService")
-    def test_loads_benchmark_tables(
+    def test_loads_workload_tables(
         self, mocked_database_service: MagicMock, client: FlaskClient
     ) -> None:
-        """A database controller routes post benchmark_tables  correctly."""
-        benchmark_tables = {"folder_name": "tpchzzzzz!"}
-        mocked_database_service.load_benchmark_tables.return_value = 200
+        """A database controller routes post workload_tables  correctly."""
+        workload_tables = {"workload_type": "tpchzzzzz!", "scale_factor": 1.0}
+        mocked_database_service.load_workload_tables.return_value = 200
         response = client.post(
-            benchmark_tables_url,
+            workload_tables_url,
             follow_redirects=True,
-            data=dumps(benchmark_tables),
+            data=dumps(workload_tables),
             content_type="application/json",
         )
-        mocked_database_service.load_benchmark_tables.assert_called_once()
-        args = mocked_database_service.load_benchmark_tables.call_args_list
-        assert args[0][0][0] == benchmark_tables
+        mocked_database_service.load_workload_tables.assert_called_once()
+        args = mocked_database_service.load_workload_tables.call_args_list
+        assert args[0][0][0] == workload_tables
         assert 200 == response.status_code
 
     @patch("hyrisecockpit.api.app.database.controller.DatabaseService")
-    def test_drops_benchmark_tables(
+    def test_drops_workload_tables(
         self, mocked_database_service: MagicMock, client: FlaskClient
     ):
-        """A database controller routes delete benchmark_tables  correctly."""
-        benchmark_tables = {"folder_name": "tpchzzzzz!"}
-        mocked_database_service.delete_benchmark_tables.return_value = 200
+        """A database controller routes delete workload_tables  correctly."""
+        workload_tables = {"workload_type": "tpchzzzzz!", "scale_factor": 1.0}
+        mocked_database_service.delete_workload_tables.return_value = 200
         response = client.delete(
-            benchmark_tables_url,
+            workload_tables_url,
             follow_redirects=True,
-            data=dumps(benchmark_tables),
+            data=dumps(workload_tables),
             content_type="application/json",
         )
-        mocked_database_service.delete_benchmark_tables.assert_called_once()
-        args = mocked_database_service.delete_benchmark_tables.call_args_list
-        assert args[0][0][0] == benchmark_tables
+        mocked_database_service.delete_workload_tables.assert_called_once()
+        args = mocked_database_service.delete_workload_tables.call_args_list
+        assert args[0][0][0] == workload_tables
         assert 200 == response.status_code
 
     @patch("hyrisecockpit.api.app.database.controller.DatabaseService")

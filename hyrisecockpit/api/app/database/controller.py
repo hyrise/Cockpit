@@ -7,16 +7,16 @@ from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 
 from .interface import (
-    BenchmarkTablesInterface,
     DatabaseInterface,
     DetailedDatabaseInterface,
+    WorkloadTablesInterface,
 )
-from .model import AvailableBenchmarkTables, DetailedDatabase
+from .model import AvailableWorkloadTables, DetailedDatabase
 from .schema import (
-    AvailableBenchmarkTablesSchema,
-    BenchmarkTablesSchema,
+    AvailableWorkloadTablesSchema,
     DatabaseSchema,
     DetailedDatabaseSchema,
+    WorkloadTablesSchema,
 )
 from .service import DatabaseService
 
@@ -60,31 +60,33 @@ class Databases(Resource):
         return Response(status=status_code)
 
 
-@api.route("/benchmark_tables")
-class BenchmarkTables(Resource):
+@api.route("/workload_tables")
+class WorkloadTables(Resource):
     """Manage data in databases."""
 
-    @responds(schema=AvailableBenchmarkTablesSchema, api=api)
-    def get(self) -> AvailableBenchmarkTables:
+    @responds(schema=AvailableWorkloadTablesSchema, api=api)
+    def get(self) -> AvailableWorkloadTables:
         """Return all pre-generated tables that can be loaded."""
-        return DatabaseService.get_available_benchmark_tables()
+        return DatabaseService.get_available_workload_tables()
 
-    @accepts(schema=BenchmarkTablesSchema, api=api)
+    @accepts(schema=WorkloadTablesSchema, api=api)
     def post(self) -> Response:
-        """Load benchmark tables."""
-        interface: BenchmarkTablesInterface = BenchmarkTablesInterface(
-            folder_name=request.parsed_obj.folder_name
+        """Load workload tables."""
+        interface: WorkloadTablesInterface = WorkloadTablesInterface(
+            workload_type=request.parsed_obj.workload_type,
+            scale_factor=request.parsed_obj.scale_factor,
         )
-        status_code = DatabaseService.load_benchmark_tables(interface)
+        status_code = DatabaseService.load_workload_tables(interface)
         return Response(status=status_code)
 
-    @accepts(schema=BenchmarkTablesSchema, api=api)
+    @accepts(schema=WorkloadTablesSchema, api=api)
     def delete(self) -> Response:
-        """Delete benchmark tables."""
-        interface: BenchmarkTablesInterface = BenchmarkTablesInterface(
-            folder_name=request.parsed_obj.folder_name
+        """Delete workload tables."""
+        interface: WorkloadTablesInterface = WorkloadTablesInterface(
+            workload_type=request.parsed_obj.workload_type,
+            scale_factor=request.parsed_obj.scale_factor,
         )
-        status_code = DatabaseService.delete_benchmark_tables(interface)
+        status_code = DatabaseService.delete_workload_tables(interface)
         return Response(status=status_code)
 
 

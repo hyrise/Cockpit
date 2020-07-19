@@ -1,19 +1,11 @@
 """Tests for the database models."""
-from copy import deepcopy
-
 from pytest import fixture
 
-from hyrisecockpit.api.app.database.interface import (
-    AvailableBenchmarkTablesInterface,
-    BenchmarkTablesInterface,
-    DatabaseInterface,
-    DetailedDatabaseInterface,
-)
 from hyrisecockpit.api.app.database.model import (
-    AvailableBenchmarkTables,
-    BenchmarkTables,
+    AvailableWorkloadTables,
     Database,
     DetailedDatabase,
+    WorkloadTables,
 )
 
 database_one_parms = {
@@ -51,19 +43,23 @@ def detailed_database(request) -> DetailedDatabase:
 
 @fixture(
     params=[
-        ["A database professional walks into a bar", "And joins two tables"],
-        ["Albert", "Craftsteine"],
+        {
+            "workload_tables": [
+                {"workload_type": "tpcz", "scale_factor": 1.0},
+                {"workload_type": "tpcds", "scale_factor": 0.1},
+            ]
+        }
     ]
 )
-def available_benchmark_tables(request) -> AvailableBenchmarkTables:
-    """Return a available benchmark tables model."""
-    return AvailableBenchmarkTables(folder_names=request.param)
+def available_workload_tables(request) -> AvailableWorkloadTables:
+    """Return a available workload tables model."""
+    return AvailableWorkloadTables(**request.param)
 
 
-@fixture(params=[["where are the tables"], ["Are you there?"]])
-def benchmark_tables(request) -> BenchmarkTables:
-    """Return a benchmark tables model."""
-    return BenchmarkTables(folder_name=request.param)
+@fixture(params=[{"workload_type": "tpcz", "scale_factor": 1.0}])
+def workload_tables(request) -> WorkloadTables:
+    """Return a workload tables model."""
+    return WorkloadTables(**request.param)
 
 
 class TestDatabaseModel:
@@ -79,54 +75,12 @@ class TestDatabaseModel:
         """A detailed database model can be created."""
         assert detailed_database
 
-    def test_creates_available_benchmark_tables(
-        self, available_benchmark_tables: AvailableBenchmarkTables
+    def test_creates_available_workload_tables(
+        self, available_workload_tables: AvailableWorkloadTables
     ) -> None:
         """A available benchmark tables model can be created."""
-        assert available_benchmark_tables
+        assert available_workload_tables
 
-    def test_creates_benchmark_tables(self, benchmark_tables: BenchmarkTables) -> None:
+    def test_creates_workload_tables(self, workload_tables: WorkloadTables) -> None:
         """A benchmark table model can be created."""
-        assert benchmark_tables
-
-    def test_updates_database(self, database: Database) -> None:
-        """A Database model can be updated."""
-        new_id = "some_creativ_new_id"
-        database.update(DatabaseInterface(id=new_id))
-        assert new_id == database.id
-
-    def test_updates_detailed_database(
-        self, detailed_database: DetailedDatabase
-    ) -> None:
-        """A detailed Database model can be updated."""
-        old_detailed_database_attributes = deepcopy(vars(detailed_database))
-        detailed_database.update(
-            DetailedDatabaseInterface(
-                id="lowrise",
-                host="linux",
-                port="666",
-                number_workers=42,
-                dbname="post",
-                user="Alex",
-                password="1234",
-            )
-        )
-        new_detailed_database_attributes = vars(detailed_database)
-        assert old_detailed_database_attributes != new_detailed_database_attributes
-        assert "lowrise" == detailed_database.id
-
-    def test_updates_available_benchmark_tables(
-        self, available_benchmark_tables: AvailableBenchmarkTables
-    ) -> None:
-        """A available benchmark table model can be updated."""
-        new_folder_names = ["some_creativ_new_folder_name"]
-        available_benchmark_tables.update(
-            AvailableBenchmarkTablesInterface(folder_names=new_folder_names)
-        )
-        assert new_folder_names == available_benchmark_tables.folder_names
-
-    def test_updates_benchmark_tables(self, benchmark_tables: BenchmarkTables) -> None:
-        """A benchmark table model can be updated."""
-        new_folder = "some_creativ_new_folder_name"
-        benchmark_tables.update(BenchmarkTablesInterface(folder_name=new_folder))
-        assert new_folder == benchmark_tables.folder_name
+        assert workload_tables

@@ -3,22 +3,20 @@
 from pytest import fixture, mark
 
 from hyrisecockpit.api.app.database.interface import (
-    AvailableBenchmarkTablesInterface,
-    BenchmarkTablesInterface,
     DatabaseInterface,
     DetailedDatabaseInterface,
 )
 from hyrisecockpit.api.app.database.model import (
-    AvailableBenchmarkTables,
-    BenchmarkTables,
+    AvailableWorkloadTables,
     Database,
     DetailedDatabase,
+    WorkloadTables,
 )
 from hyrisecockpit.api.app.database.schema import (
-    AvailableBenchmarkTablesSchema,
-    BenchmarkTablesSchema,
+    AvailableWorkloadTablesSchema,
     DatabaseSchema,
     DetailedDatabaseSchema,
+    WorkloadTablesSchema,
 )
 
 database_one_parms = {
@@ -55,15 +53,15 @@ def detailed_database_schema() -> DetailedDatabaseSchema:
 
 
 @fixture
-def available_benchmark_tables_schema() -> AvailableBenchmarkTablesSchema:
+def available_workload_tables_schema() -> AvailableWorkloadTablesSchema:
     """Return a available benchmark tables schema."""
-    return AvailableBenchmarkTablesSchema()
+    return AvailableWorkloadTablesSchema()
 
 
 @fixture
-def benchmark_tables_schema() -> BenchmarkTablesSchema:
+def workload_tables_schema() -> WorkloadTablesSchema:
     """Return a benchmark tables schema."""
-    return BenchmarkTablesSchema()
+    return WorkloadTablesSchema()
 
 
 class TestDatabaseSchema:
@@ -79,17 +77,17 @@ class TestDatabaseSchema:
         """A detailed database schema can be created."""
         assert detailed_database_schema
 
-    def test_creates_available_benchmark_tables_schema(
-        self, available_benchmark_tables_schema: AvailableBenchmarkTablesSchema
+    def test_creates_available_workload_tables_schema(
+        self, available_workload_tables_schema: AvailableWorkloadTablesSchema
     ) -> None:
         """A available benchmark tables schema can be created."""
-        assert available_benchmark_tables_schema
+        assert available_workload_tables_schema
 
-    def test_creates_benchmark_tables_schema(
-        self, benchmark_tables_schema: BenchmarkTablesSchema
+    def test_creates_workload_tables_schema(
+        self, workload_tables_schema: WorkloadTablesSchema
     ) -> None:
         """A benchmark tables schema can be created."""
-        assert benchmark_tables_schema
+        assert workload_tables_schema
 
     @mark.parametrize("database_id", ["Tina", "Bibi"])
     def test_deserializes_database_schema(
@@ -116,34 +114,37 @@ class TestDatabaseSchema:
         assert isinstance(detailed_database, DetailedDatabase)
         assert vars(detailed_database) == detailed_database_interface
 
-    @mark.parametrize(
-        "available_benchmark_tables_interface",
-        [{"folder_names": ["hallo", "world"]}, {"folder_names": ["ping", "pong"]}],
-    )
-    def test_deserializes_available_benchmark_tables_schema(
-        self,
-        available_benchmark_tables_schema: AvailableBenchmarkTablesSchema,
-        available_benchmark_tables_interface: AvailableBenchmarkTablesInterface,
+    def test_deserializes_available_workload_tables_schema(
+        self, available_workload_tables_schema: AvailableWorkloadTablesSchema,
     ) -> None:
         """A available benchmark tables schema can create a database model."""
-        available_benchmark_tables: AvailableBenchmarkTables = available_benchmark_tables_schema.load(
-            available_benchmark_tables_interface
+        available_workload_tables_interface = {
+            "workload_tables": [
+                {"workload_type": "tpch", "scale_factor": 1.0},
+                {"workload_type": "tpcc", "scale_factor": 5.0},
+            ]
+        }
+        available_benchmark_tables: AvailableWorkloadTables = available_workload_tables_schema.load(
+            available_workload_tables_interface
         )
-        assert isinstance(available_benchmark_tables, AvailableBenchmarkTables)
-        assert vars(available_benchmark_tables) == available_benchmark_tables_interface
+        assert isinstance(available_benchmark_tables, AvailableWorkloadTables)
+        assert (
+            vars(available_benchmark_tables.workload_tables[0])
+            == available_workload_tables_interface["workload_tables"][0]
+        )
+        assert (
+            vars(available_benchmark_tables.workload_tables[1])
+            == available_workload_tables_interface["workload_tables"][1]
+        )
 
-    @mark.parametrize(
-        "benchmark_tables_interface", [{"folder_name": "Tina"}, {"folder_name": "Bibi"}]
-    )
-    def test_deserializes_benchmark_tables_schema(
-        self,
-        benchmark_tables_schema: BenchmarkTablesSchema,
-        benchmark_tables_interface: BenchmarkTablesInterface,
+    def test_deserializes_workload_tables_schema(
+        self, workload_tables_schema: WorkloadTablesSchema,
     ) -> None:
         """A benchmark tables schema can create a database model."""
-        benchmark_tables = benchmark_tables_schema.load(benchmark_tables_interface)
-        assert isinstance(benchmark_tables, BenchmarkTables)
-        assert vars(benchmark_tables) == benchmark_tables_interface
+        workload_tables_interface = {"workload_type": "tpch", "scale_factor": 1.0}
+        workload_tables = workload_tables_schema.load(workload_tables_interface)
+        assert isinstance(workload_tables, WorkloadTables)
+        assert vars(workload_tables) == workload_tables_interface
 
     @mark.parametrize("database_interface", [{"id": "Tina"}, {"id": "Bibi"}])
     def test_serializes_database(
@@ -169,37 +170,26 @@ class TestDatabaseSchema:
         serialized = detailed_database_schema.dump(detailed_database)
         assert vars(detailed_database) == serialized == detailed_database_interface
 
-    @mark.parametrize(
-        "available_benchmark_tables_interface",
-        [{"folder_names": ["hallo", "world"]}, {"folder_names": ["ping", "pong"]}],
-    )
-    def test_serializes_available_benchmark_tables(
-        self,
-        available_benchmark_tables_schema: AvailableBenchmarkTablesSchema,
-        available_benchmark_tables_interface: AvailableBenchmarkTablesInterface,
+    def test_serializes_available_workload_tables(
+        self, available_workload_tables_schema: AvailableWorkloadTablesSchema,
     ) -> None:
         """A available benchmark tables model can be serialized with a available benchmark tables schema."""
-        available_benchmark_tables: AvailableBenchmarkTables = AvailableBenchmarkTables(
-            **available_benchmark_tables_interface
+        available_workload_tables_interface = {
+            "workload_tables": [
+                {"workload_type": "tpch", "scale_factor": 1.0},
+                {"workload_type": "tpcc", "scale_factor": 5.0},
+            ]
+        }
+        available_workload_tables: AvailableWorkloadTables = AvailableWorkloadTables(
+            **available_workload_tables_interface  # type: ignore
         )
-        serialized = available_benchmark_tables_schema.dump(available_benchmark_tables)
-        assert (
-            vars(available_benchmark_tables)
-            == serialized
-            == available_benchmark_tables_interface
-        )
+        serialized = available_workload_tables_schema.dump(available_workload_tables)
+        assert serialized == available_workload_tables_interface
 
-    @mark.parametrize(
-        "benchmark_tables_interface", [{"folder_name": "Tina"}, {"folder_name": "Bibi"}]
-    )
-    def test_serializes_benchmark_tables(
-        self,
-        benchmark_tables_schema: BenchmarkTablesSchema,
-        benchmark_tables_interface: BenchmarkTablesInterface,
+    def test_serializes_workload_tables(
+        self, workload_tables_schema: WorkloadTablesSchema,
     ) -> None:
         """A benchmark_tables dictionary can be serialized with a benchmark tables schema."""
-        benchmark_tables: BenchmarkTables = BenchmarkTables(
-            **benchmark_tables_interface
-        )
-        serialized = benchmark_tables_schema.dump(benchmark_tables_interface)
-        assert vars(benchmark_tables) == serialized == benchmark_tables_interface
+        workload_tables_interface = {"workload_type": "tpch", "scale_factor": 1.0}
+        serialized = workload_tables_schema.dump(workload_tables_interface)
+        assert serialized == workload_tables_interface
