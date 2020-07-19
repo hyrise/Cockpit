@@ -113,24 +113,28 @@ class Database(object):
         """Return queue length."""
         return self._worker_pool.get_queue_length()
 
-    def load_data(self, folder_name: str) -> bool:
+    def load_data(self, workload: Dict) -> bool:
         """Load pre-generated tables."""
-        # TODO Change endpoint instead
-        workload, scale_factor = folder_name.split("_", maxsplit=1)
+        workload_type = workload["workload_type"]
+        scale_factor = workload["scale_factor"]
         return (
             False
             if self._worker_pool.get_status() != "closed"
-            else self._background_scheduler.load_tables(workload, float(scale_factor))
+            else self._background_scheduler.load_tables(
+                workload_type, float(scale_factor)
+            )
         )
 
-    def delete_data(self, folder_name: str) -> bool:
+    def delete_data(self, workload: Dict) -> bool:
         """Delete tables."""
-        # TODO Change endpoint instead
-        workload, scale_factor = folder_name.split("_", maxsplit=1)
+        workload_type = workload["workload_type"]
+        scale_factor = workload["scale_factor"]
         return (
             False
             if self._worker_pool.get_status() != "closed"
-            else self._background_scheduler.delete_tables(workload, float(scale_factor))
+            else self._background_scheduler.delete_tables(
+                workload_type, float(scale_factor)
+            )
         )
 
     def activate_plugin(self, plugin: str) -> bool:
@@ -158,6 +162,7 @@ class Database(object):
 
     def get_loaded_tables(self) -> List[Dict[str, str]]:
         """Return already loaded tables."""
+        # TODO Adjust
         try:
             with self._connection_factory.create_cursor() as cur:
                 cur.execute("select * from meta_tables;", None)

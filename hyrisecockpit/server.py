@@ -5,10 +5,8 @@ Used by Database Manager and Workload Generator.
 
 from typing import Callable, Dict, Optional, Tuple
 
-from jsonschema import ValidationError, validate
 from zmq import REP, Context
 
-from hyrisecockpit.message import request_schema
 from hyrisecockpit.request import Body, Request
 from hyrisecockpit.response import Response, get_response
 
@@ -42,20 +40,13 @@ class Server:
             self._socket.send_json(response)
 
     def _handle_request(self, request: Request) -> Response:
-        try:
-            validate(instance=request, schema=request_schema)
-            func, schema = self._calls[request["header"]["message"]]
-            if schema:
-                validate(request["body"], schema=schema)
-            return func(request["body"])
-        except ValidationError as e:
-            # TODO BAD error handling. Can catch ValidationError in generator
-            print(f"ValidationError catched in server: {str(e)}")
-            return get_response(400)
-        except KeyError as e:
-            # TODO BAD error handling. Can catch key Errors in generator
-            print(f"KeyError catched in server: {str(e)}")
+
+        # TODO remove validation schema
+        function_parameters = self._calls.get(request["header"]["message"])
+        if function_parameters is None:
             return get_response(404)
+        func, _ = function_parameters
+        return func(request["body"])
 
     def close(self) -> None:
         """Close the socket and terminate it."""

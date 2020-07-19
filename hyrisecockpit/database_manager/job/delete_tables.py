@@ -22,8 +22,6 @@ def delete_tables(
     table_names = list(delete_queries.keys())
     loaded_tables: List[str] = get_loaded_tables(table_names, connection_factory)
     queries = [delete_queries[table] for table in loaded_tables]
-    print("Delete queries")
-    print(queries)
 
     execute_queries_parallel(queries, connection_factory)
 

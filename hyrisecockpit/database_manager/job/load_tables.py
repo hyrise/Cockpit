@@ -23,8 +23,6 @@ def load_tables(
         table for table in table_names if table not in set(loaded_tables)
     ]
     queries = [load_queries[table] for table in tables_to_load]
-    print("Loading tables")
-    print(queries)
 
     execute_queries_parallel(queries, connection_factory)
 

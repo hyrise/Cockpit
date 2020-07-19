@@ -162,20 +162,18 @@ class DatabaseManager(object):
             return get_response(404)
 
     def _call_load_data(self, body: Body) -> Response:
-        folder_name: str = body["folder_name"]
         if self._check_if_database_blocked():
             return get_error_response(400, "Already loading data")
         for database in list(self._databases.values()):
-            if not database.load_data(folder_name):
+            if not database.load_data(body):
                 return get_response(400)  # TODO return which DB couldn't import
         return get_response(200)
 
     def _call_delete_data(self, body: Body) -> Response:
-        folder_name: str = body["folder_name"]
         if self._check_if_database_blocked():
             return get_error_response(400, "Already loading data")
         for database in list(self._databases.values()):
-            if not database.delete_data(folder_name):
+            if not database.delete_data(body):
                 return get_response(400)
         return get_response(200)
 
