@@ -278,7 +278,7 @@ class DatabaseManager(object):
                 }
             )
         response = get_response(200)
-        response["body"]["benchmark_status"] = status
+        response["body"]["workload_status"] = status
         return response
 
     def start(self) -> None:

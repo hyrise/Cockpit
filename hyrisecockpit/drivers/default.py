@@ -117,6 +117,17 @@ class DefaultDriver:
         workload = self._get_workload_for_scale_factor(scalefactor)
         return workload.get(frequency, weights)
 
+    def get_table_names(self, scalefactor):
+        """Return table name and representation in database."""
+        if scalefactor < 1.0:
+            scalefactor = str(scalefactor).replace(".", "_")
+        else:
+            scalefactor = str(int(scalefactor))
+        return {
+            table_name: f"{table_name}_{self._benchmark_type}_{scalefactor}"
+            for table_name in self._table_names
+        }
+
     def get_load_queries(self, scalefactor):
         """Generate loading workload queries."""
         if scalefactor < 1.0:

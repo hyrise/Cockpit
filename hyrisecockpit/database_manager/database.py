@@ -10,7 +10,6 @@ from hyrisecockpit.drivers.tpch.tpch_driver import TpchDriver
 from .background_scheduler import BackgroundJobManager
 from .cursor import ConnectionFactory, StorageConnectionFactory
 from .interfaces import SqlResultInterface
-from .table_names import table_names as _table_names
 from .worker_pool import WorkerPool
 
 PluginSetting = TypedDict(
@@ -160,7 +159,7 @@ class Database(object):
         """Return status of hyrise."""
         return bool(self._hyrise_active.value)
 
-    def get_loaded_tables(self) -> List[Dict[str, str]]:
+    def get_loaded_tables_in_database(self) -> List[Dict[str, str]]:
         """Return already loaded tables."""
         # TODO Adjust
         try:
@@ -172,33 +171,40 @@ class Database(object):
         else:
             return [row[0] for row in rows] if rows else []
 
-    def get_loaded_benchmarks(self, loaded_tables) -> List[str]:
+    def get_loaded_workloads(self, tables_in_database) -> Tuple:
         """Get list of all benchmarks which are completely loaded."""
-        loaded_benchmarks: List = []
-        benchmark_names = _table_names.keys()
-        scale_factors = ["0_1", "1"]
-
-        for benchmark_name in benchmark_names:
-            for scale_factor in scale_factors:
-                required_tables = _table_names[benchmark_name]
+        loaded_workloads = []
+        loaded_workload_tables = []
+        for workload_type, driver in self._workload_drivers.items():
+            for scale_factor in driver.scale_factors:
+                loaded_tables = []
+                workload_tables = driver.get_table_names(scale_factor)
                 loaded = True
-                for table_name in required_tables:
-                    loaded = loaded and (
-                        f"{table_name}_{benchmark_name}_{scale_factor}" in loaded_tables
-                    )
-
+                for table_name, database_representation in workload_tables.items():
+                    if database_representation not in tables_in_database:
+                        loaded = False
+                    else:
+                        loaded_tables.append(table_name)
                 if loaded:
-                    loaded_benchmarks.append(f"{benchmark_name}_{scale_factor}")
-
-        return loaded_benchmarks
+                    loaded_workloads.append(
+                        {"workload_type": workload_type, "scale_factor": scale_factor}
+                    )
+                loaded_workload_tables.append(
+                    {
+                        "workload_type": workload_type,
+                        "scale_factor": scale_factor,
+                        "loaded_tables": loaded_tables,
+                    }
+                )
+        return (loaded_workloads, loaded_workload_tables)
 
     def get_loaded_workload_data(self) -> Tuple:
         """Get loaded benchmark data."""
-        loaded_tables: List = self.get_loaded_tables()
-        loaded_benchmarks: List = self.get_loaded_benchmarks(loaded_tables)
+        tables_in_database: List = self.get_loaded_tables_in_database()
+        loaded_workloads, loaded_tables = self.get_loaded_workloads(tables_in_database)
         return (
             loaded_tables,
-            loaded_benchmarks,
+            loaded_workloads,
         )
 
     def start_worker(self) -> bool:

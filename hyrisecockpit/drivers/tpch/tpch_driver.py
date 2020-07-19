@@ -43,6 +43,10 @@ class TpchDriver:
         """Generate tpch tasks."""
         return self._default_driver.generate(scalefactor, frequency, weights)
 
+    def get_table_names(self, scalefactor):
+        """Return table name and representation in database."""
+        return self._default_driver.get_table_names(scalefactor)
+
     def get_load_queries(self, scalefactor) -> Dict[str, Tuple]:
         """Generate load tables queries."""
         return self._default_driver.get_load_queries(scalefactor)

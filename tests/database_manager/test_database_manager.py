@@ -690,12 +690,12 @@ class TestDatabaseManager:
         database_manager._databases = {"fake_db_id": fake_database}
 
         response = database_manager._call_workload_status({})
-        assert response["body"]["benchmark_status"][0]["id"] == "fake_db_id"
-        assert response["body"]["benchmark_status"][0]["loaded_workloads"] == [
+        assert response["body"]["workload_status"][0]["id"] == "fake_db_id"
+        assert response["body"]["workload_status"][0]["loaded_workloads"] == [
             {"workload_type": "tpch", "scale_factor": 1.0},
             {"workload_type": "tpcds", "scale_factor": 0.1},
         ]
-        assert response["body"]["benchmark_status"][0]["loaded_tables"] == [
+        assert response["body"]["workload_status"][0]["loaded_tables"] == [
             {"workload_type": "tpch", "scale_factor": 1.0, "loaded_tables": ["a", "b"]}
         ]
         assert response["header"]["status"] == 200
