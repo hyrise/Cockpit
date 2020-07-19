@@ -76,7 +76,7 @@ class WorkloadGenerator(object):
         response = get_response(200)
         response["body"]["workloads"] = [
             {
-                "workload": workload,
+                "workload_type": workload,
                 "frequency": properties.frequency,
                 "scale_factor": properties.scale_factor,
             }
@@ -145,6 +145,7 @@ class WorkloadGenerator(object):
             "frequency": self._workloads[workload_type].frequency,
             "scale_factor": self._workloads[workload_type].scale_factor,
             "weights": self._workloads[workload_type].weights,
+            "running": self._workloads[workload_type].running,
         }
         return response
 

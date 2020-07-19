@@ -14,3 +14,4 @@ class DetailedWorkloadInterface(WorkloadInterface):
     """Detailed interface of a Workload."""
 
     weights: Dict[str, float]
+    running: bool

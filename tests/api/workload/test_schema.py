@@ -36,6 +36,12 @@ def weights(request) -> Dict[str, int]:
     return request.param
 
 
+@fixture(params=[True, False])
+def running(request) -> bool:
+    """Get examples of running."""
+    return request.param
+
+
 @fixture
 def schema() -> WorkloadSchema:
     """Return a Workload schema."""
@@ -44,7 +50,7 @@ def schema() -> WorkloadSchema:
 
 @fixture
 def detailed_schema() -> DetailedWorkloadSchema:
-    """Return a Workload schema."""
+    """Return a detailed Workload schema."""
     return DetailedWorkloadSchema()
 
 
@@ -63,16 +69,16 @@ class TestWorkloadSchema:
         scale_factor: float,
     ):
         """A Workload schema can create a Workload model."""
-        interface: WorkloadInterface = {  # type: ignore
+        interface: WorkloadInterface = {
             "workload_type": workload_type,
             "frequency": frequency,
             "scale_factor": scale_factor,
         }
         deserialized: WorkloadInterface = schema.load(interface)
-        workload = Workload(**deserialized)  # type: ignore
+        workload = Workload(**deserialized)
         assert workload_type == workload.workload_type == deserialized["workload_type"]
         assert frequency == workload.frequency == deserialized["frequency"]
-        assert scale_factor == workload.scale_factor == deserialized["scale_factor"]  # type: ignore
+        assert scale_factor == workload.scale_factor == deserialized["scale_factor"]
 
     def test_serializes(
         self,
@@ -82,12 +88,12 @@ class TestWorkloadSchema:
         scale_factor: float,
     ):
         """A Workload model can be serialized with a Workload schema."""
-        interface: WorkloadInterface = {  # type: ignore
+        interface: WorkloadInterface = {
             "workload_type": workload_type,
             "frequency": frequency,
             "scale_factor": scale_factor,
         }
-        workload = Workload(**interface)  # type: ignore
+        workload = Workload(**interface)
         serialized = schema.dump(workload)
         assert workload_type == workload.workload_type == serialized["workload_type"]
         assert frequency == workload.frequency == serialized["frequency"]
@@ -108,20 +114,23 @@ class TestDetailedWorkloadSchema:
         frequency: int,
         scale_factor: float,
         weights: Dict[str, float],
+        running: bool,
     ):
         """A DetailedWorkload schema can create a DetailedWorkload model."""
-        interface: DetailedWorkloadInterface = {  # type: ignore
+        interface: DetailedWorkloadInterface = {
             "workload_type": workload_type,
             "frequency": frequency,
             "scale_factor": scale_factor,
             "weights": weights,
+            "running": running,
         }
         deserialized: DetailedWorkloadInterface = detailed_schema.load(interface)
-        workload = DetailedWorkload(**deserialized)  # type: ignore
+        workload = DetailedWorkload(**deserialized)
         assert workload_type == workload.workload_type == deserialized["workload_type"]
         assert frequency == workload.frequency == deserialized["frequency"]
-        assert scale_factor == workload.scale_factor == deserialized["scale_factor"]  # type: ignore
+        assert scale_factor == workload.scale_factor == deserialized["scale_factor"]
         assert weights == workload.weights == deserialized["weights"]
+        assert running == workload.running == deserialized["running"]
 
     def test_serializes(
         self,
@@ -130,17 +139,20 @@ class TestDetailedWorkloadSchema:
         frequency: int,
         scale_factor: float,
         weights: Dict[str, float],
+        running: bool,
     ):
         """A DetailedWorkload model can be serialized with a DetailedWorkload schema."""
-        interface: DetailedWorkloadInterface = {  # type: ignore
+        interface: DetailedWorkloadInterface = {
             "workload_type": workload_type,
             "frequency": frequency,
             "scale_factor": scale_factor,
             "weights": weights,
+            "running": running,
         }
-        workload = DetailedWorkload(**interface)  # type: ignore
+        workload = DetailedWorkload(**interface)
         serialized: DetailedWorkloadInterface = detailed_schema.dump(workload)
         assert workload_type == workload.workload_type == serialized["workload_type"]
         assert frequency == workload.frequency == serialized["frequency"]
-        assert scale_factor == workload.scale_factor == serialized["scale_factor"]  # type: ignore
+        assert scale_factor == workload.scale_factor == serialized["scale_factor"]
         assert weights == workload.weights == serialized["weights"]
+        assert running == workload.running == serialized["running"]

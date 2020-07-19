@@ -35,26 +35,37 @@ def weights(request) -> Dict[str, int]:
     return request.param
 
 
+@fixture(params=[True, False])
+def running(request) -> bool:
+    """Get examples of running."""
+    return request.param
+
+
 @fixture
 def interface(
     workload_type: str, frequency: int, scale_factor: float
 ) -> WorkloadInterface:
     """Return a Workload model."""
-    return WorkloadInterface(  # type: ignore
+    return WorkloadInterface(
         workload_type=workload_type, frequency=frequency, scale_factor=scale_factor
     )
 
 
 @fixture
 def detailed_interface(
-    workload_type: str, frequency: int, scale_factor: float, weights: Dict[str, float]
+    workload_type: str,
+    frequency: int,
+    scale_factor: float,
+    weights: Dict[str, float],
+    running: bool,
 ) -> DetailedWorkloadInterface:
     """Return a DetailedWorkload model."""
-    return DetailedWorkloadInterface(  # type: ignore
+    return DetailedWorkloadInterface(
         workload_type=workload_type,
         frequency=frequency,
         scale_factor=scale_factor,
         weights=weights,
+        running=running,
     )
 
 
@@ -67,7 +78,7 @@ class TestWorkloadInterface:
 
     def test_works(self, interface: WorkloadInterface):
         """A Workload model can be created from an interface."""
-        assert Workload(**interface)  # type: ignore
+        assert Workload(**interface)
 
 
 class TestDetailedWorkloadInterface:
@@ -79,4 +90,4 @@ class TestDetailedWorkloadInterface:
 
     def test_works(self, detailed_interface: DetailedWorkloadInterface):
         """A DetailedWorkload model can be created from an interface."""
-        assert DetailedWorkload(**detailed_interface)  # type: ignore
+        assert DetailedWorkload(**detailed_interface)

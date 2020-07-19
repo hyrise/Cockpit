@@ -21,8 +21,8 @@ from hyrisecockpit.api.app.workload.service import WorkloadService
 from .data import (
     detailed_interfaces,
     detailed_workloads,
-    folder_names,
     interfaces,
+    workload_type,
     workloads,
 )
 
@@ -33,7 +33,7 @@ bad_id = "id_that_will_fail"
 
 def create_workload(interface: WorkloadInterface) -> Optional[Workload]:
     """Create a Workload with the given arguments."""
-    if interface["folder_name"] == bad_id:
+    if interface["workload_type"] == bad_id:
         return None
     else:
         return Workload(**interface)
@@ -42,21 +42,21 @@ def create_workload(interface: WorkloadInterface) -> Optional[Workload]:
 def get_workload_by_id(id: str) -> Optional[DetailedWorkload]:
     """Return the Workload with the id."""
     try:
-        return [w for w in detailed_workloads() if w.folder_name == id].pop()
+        return [w for w in detailed_workloads() if w.workload_type == id].pop()
     except IndexError:
         return None
 
 
 def delete_workload_by_id(id: str) -> Optional[str]:
-    """Return the folder_name of the deleted Workload."""
+    """Return the workload_type of the deleted Workload."""
     return None if id == bad_id else id
 
 
 def update_workload_by_id(
-    id: str, detailed_interface: DetailedWorkloadInterface
+    detailed_interface: DetailedWorkloadInterface,
 ) -> Optional[DetailedWorkload]:
     """Return the updated Workload."""
-    workload = get_workload_by_id(id)
+    workload = get_workload_by_id(id)  # type: ignore
     if workload is None:
         return None
     return DetailedWorkload(**detailed_interface)
@@ -119,7 +119,7 @@ class TestWorkloadController:
         self, client: FlaskClient, interface: WorkloadInterface
     ):
         """A Workload controller routes create correctly."""
-        interface["folder_name"] = bad_id
+        interface["workload_type"] = bad_id
         response = client.post(
             url,
             follow_redirects=True,
@@ -133,7 +133,7 @@ class TestWorkloadController:
 class TestWorkloadIdController:
     """Tests for the WorkloadId controller."""
 
-    @mark.parametrize("id", folder_names())
+    @mark.parametrize("id", workload_type())
     @patch.object(
         WorkloadService, "get_by_id", get_workload_by_id,
     )
@@ -156,7 +156,7 @@ class TestWorkloadIdController:
         assert 404 == response.status_code
         assert not response.is_json
 
-    @mark.parametrize("id", folder_names())
+    @mark.parametrize("id", workload_type())
     @patch.object(
         WorkloadService, "delete_by_id", delete_workload_by_id,
     )
@@ -189,11 +189,13 @@ class TestWorkloadIdController:
         self, client: FlaskClient, detailed_interface: DetailedWorkloadInterface
     ):
         """A WorkloadId controller routes update correctly."""
-        id = detailed_interface["folder_name"]
+        id = detailed_interface["workload_type"]
         new_interface = DetailedWorkloadInterface(
-            folder_name=detailed_interface["folder_name"],
+            workload_type=detailed_interface["workload_type"],
             frequency=detailed_interface["frequency"] * 10,
             weights={k: v + 1 for k, v in detailed_interface["weights"].items()},
+            scale_factor=1.0,
+            running=True,
         )
         response_before = client.get(url + f"/{id}", follow_redirects=True)
         assert 200 == response_before.status_code

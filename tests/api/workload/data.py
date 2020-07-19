@@ -18,7 +18,7 @@ __weights: Tuple[Dict[str, float], ...] = ({}, {"01": 0.0, "23c": 100.1})
 def interfaces() -> List[WorkloadInterface]:
     """Return a list of WorkloadInterfaces."""
     return [
-        WorkloadInterface(  # type: ignore
+        WorkloadInterface(
             workload_type=workload_type, frequency=frequency, scale_factor=scale_factor
         )
         for workload_type, frequency, scale_factor in product(
@@ -29,7 +29,7 @@ def interfaces() -> List[WorkloadInterface]:
 
 def workloads() -> List[Workload]:
     """Return a list of Workloads corresponding to the interfaces."""
-    return [Workload(**interface) for interface in interfaces()]  # type: ignore
+    return [Workload(**interface) for interface in interfaces()]
 
 
 def workload_type() -> List[str]:
@@ -40,11 +40,12 @@ def workload_type() -> List[str]:
 def detailed_interfaces() -> List[DetailedWorkloadInterface]:
     """Return a list of DetailedWorkloadInterfaces."""
     return [
-        DetailedWorkloadInterface(  # type: ignore
+        DetailedWorkloadInterface(
             workload_type=workload_type,
             frequency=frequency,
             scale_factor=scale_factor,
             weights=weights,
+            running=True,
         )
         for workload_type, frequency, scale_factor, weights in product(
             __workload_types, __frequencies, __scale_factors, __weights
@@ -54,4 +55,4 @@ def detailed_interfaces() -> List[DetailedWorkloadInterface]:
 
 def detailed_workloads() -> List[DetailedWorkload]:
     """Return a list of Workloads corresponding to the interfaces."""
-    return [DetailedWorkload(**interface) for interface in detailed_interfaces()]  # type: ignore
+    return [DetailedWorkload(**interface) for interface in detailed_interfaces()]

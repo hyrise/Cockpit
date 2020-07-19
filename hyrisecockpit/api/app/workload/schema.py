@@ -1,6 +1,6 @@
 """Schema of a Workload."""
 from marshmallow import Schema
-from marshmallow.fields import Dict, Float, Integer, String
+from marshmallow.fields import Boolean, Dict, Float, Integer, String
 
 
 class WorkloadSchema(Schema):
@@ -21,3 +21,5 @@ class DetailedWorkloadSchema(WorkloadSchema):
         values=Float(description="Weight of the query."),
         description="Weights of queries used for generation.",
     )
+
+    running = Boolean(description="Running status of workload.",)

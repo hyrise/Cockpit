@@ -76,6 +76,7 @@ class TestWorkloadService:
         self, service: WorkloadService, detailed_interface: DetailedWorkloadInterface
     ):
         """A Workload service gets all workloads."""
+        detailed_interface["running"] = True
         response = get_response(200)
         response["body"]["workload"] = detailed_interface
         service._send_message_to_gen.return_value = response  # type: ignore
@@ -144,25 +145,21 @@ class TestWorkloadService:
         self, service: WorkloadService, detailed_interface: DetailedWorkloadInterface
     ):
         """A Workload service gets all workloads."""
-        new_detailed_interface = DetailedWorkloadInterface(  # type: ignore
+        new_detailed_interface = DetailedWorkloadInterface(
             workload_type=detailed_interface["workload_type"],
             frequency=detailed_interface["frequency"] + 1,
             scale_factor=detailed_interface["scale_factor"],
             weights={k: v + 1 for k, v in detailed_interface["weights"].items()},
+            running=True,
         )
         response = get_response(200)
         response["body"]["workload"] = new_detailed_interface
         service._send_message_to_gen.return_value = response  # type: ignore
-        result = service.update_by_id(
-            detailed_interface["workload_type"], new_detailed_interface
-        )
+        result = service.update_by_id(new_detailed_interface)
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="update workload"),
-                body={
-                    "workload_type": detailed_interface["workload_type"],
-                    "workload": dict(new_detailed_interface),
-                },
+                body=dict(new_detailed_interface),
             )
         )
         assert new_detailed_interface == DetailedWorkloadSchema().dump(result)
@@ -172,23 +169,19 @@ class TestWorkloadService:
         self, service: WorkloadService, detailed_interface: DetailedWorkloadInterface
     ):
         """A Workload service gets all workloads."""
-        new_detailed_interface = DetailedWorkloadInterface(  # type: ignore
+        new_detailed_interface = DetailedWorkloadInterface(
             workload_type=detailed_interface["workload_type"],
             frequency=detailed_interface["frequency"] + 1,
             scale_factor=detailed_interface["scale_factor"],
             weights={k: v + 1 for k, v in detailed_interface["weights"].items()},
+            running=True,
         )
         service._send_message_to_gen.return_value = get_response(404)  # type: ignore
-        result = service.update_by_id(
-            detailed_interface["workload_type"], new_detailed_interface
-        )
+        result = service.update_by_id(new_detailed_interface)
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
                 header=Header(message="update workload"),
-                body={
-                    "workload_type": detailed_interface["workload_type"],
-                    "workload": dict(new_detailed_interface),
-                },
+                body=dict(new_detailed_interface),
             )
         )
         assert result is None

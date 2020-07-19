@@ -91,7 +91,7 @@ class WorkloadService:
 
     @classmethod
     def update_by_id(
-        cls, workload_type: str, interface: DetailedWorkloadInterface
+        cls, interface: DetailedWorkloadInterface
     ) -> Optional[DetailedWorkload]:
         """Update a Workload by ID.
 
@@ -99,7 +99,7 @@ class WorkloadService:
         Returns None if a Workload with the given ID doesn't exist.
         """
         response = cls._send_message_to_gen(
-            Request(header=Header(message="update workload"), body={dict(interface)},),  # type: ignore
+            Request(header=Header(message="update workload"), body=dict(interface),),
         )
         return (
             None

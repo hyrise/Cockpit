@@ -88,7 +88,7 @@ class TestWorkloadGenerator:
         response = generator._call_get_all_workloads({})
 
         expected_response = [
-            {"workload": "running_workload", "frequency": 42, "scale_factor": 2.0}
+            {"workload_type": "running_workload", "frequency": 42, "scale_factor": 2.0}
         ]
         assert response["header"] == get_response(200)["header"]
         assert response["body"]["workloads"] == expected_response

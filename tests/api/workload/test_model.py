@@ -30,6 +30,12 @@ def weights(request) -> Dict[str, float]:
     return request.param
 
 
+@fixture(params=[True, False])
+def running(request) -> bool:
+    """Get examples of running."""
+    return request.param
+
+
 @fixture
 def workload(workload_type: str, frequency: int, scale_factor: float) -> Workload:
     """Return a Workload model."""
@@ -40,7 +46,11 @@ def workload(workload_type: str, frequency: int, scale_factor: float) -> Workloa
 
 @fixture
 def detailed_workload(
-    workload_type: str, frequency: int, scale_factor: float, weights: Dict[str, float]
+    workload_type: str,
+    frequency: int,
+    scale_factor: float,
+    weights: Dict[str, float],
+    running: bool,
 ) -> Workload:
     """Return a DetailedWorkload model."""
     return DetailedWorkload(
@@ -48,6 +58,7 @@ def detailed_workload(
         frequency=frequency,
         scale_factor=scale_factor,
         weights=weights,
+        running=running,
     )
 
 

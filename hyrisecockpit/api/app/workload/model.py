@@ -21,7 +21,9 @@ class DetailedWorkload(Workload):
         frequency: int,
         scale_factor: float,
         weights: Dict[str, float],
+        running: bool,
     ):
         """Initialize a Workload model."""
         self.weights: Dict[str, float] = weights
+        self.running: bool = running
         super().__init__(workload_type, frequency, scale_factor)
