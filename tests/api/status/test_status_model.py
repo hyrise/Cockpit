@@ -1,10 +1,12 @@
 """Tests for the status models."""
 
 from hyrisecockpit.api.app.status.model import (
-    BenchmarkStatus,
     DatabaseStatus,
     FailedQuery,
     FailedTask,
+    LoadedTables,
+    LoadedWorkload,
+    WorkloadStatus,
 )
 
 
@@ -20,10 +22,26 @@ class TestStatusModel:
             hyrise_active=True,
         )
 
-    def test_creates_benchmark_status(self) -> None:
-        """A BenchmarkStatus model can be created."""
-        assert BenchmarkStatus(
-            id="db", loaded_benchmarks=["tpch"], loaded_tables=["tpch_1"]
+    def test_creates_loaded_workload(self) -> None:
+        """A LoadedWorkload model can be created."""
+        assert LoadedWorkload(workload_type="tpch", scale_factor=1.0)
+
+    def test_creates_loaded_tables(self) -> None:
+        """A LoadedTables model can be created."""
+        assert LoadedTables(
+            workload_type="tpch", scale_factor=1.0, loaded_tables=["a", "b"]
+        )
+
+    def test_creates_workload_status(self) -> None:
+        """A WorkloadStatus model can be created."""
+        assert WorkloadStatus(
+            id="db",
+            loaded_workloads=[LoadedWorkload(workload_type="tpch", scale_factor=1.0)],
+            loaded_tables=[
+                LoadedTables(
+                    workload_type="tpch", scale_factor=1.0, loaded_tables=["a", "b"]
+                )
+            ],
         )
 
     def test_creates_failed_query(self) -> None:

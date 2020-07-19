@@ -87,7 +87,7 @@ class DatabaseManager(object):
             "set plugin setting": (self._call_plugin_setting, None),
             "execute sql query": (self._call_execute_sql_query, None),
             "database status": (self._call_database_status, None),
-            "benchmark status": (self._call_benchmark_status, None),
+            "workload status": (self._call_workload_status, None),
         }
 
     def _call_add_database(self, body: Body) -> Response:
@@ -266,7 +266,7 @@ class DatabaseManager(object):
         response["body"]["database_status"] = status
         return response
 
-    def _call_benchmark_status(self, body: Body) -> Response:
+    def _call_workload_status(self, body: Body) -> Response:
         status = []
         for database_id, database in self._databases.items():
             loaded_tables, loaded_benchmarks = database.get_loaded_benchmark_data()

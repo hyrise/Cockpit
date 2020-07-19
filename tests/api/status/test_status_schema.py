@@ -1,16 +1,20 @@
 """Tests for the status schema's."""
 
 from hyrisecockpit.api.app.status.model import (
-    BenchmarkStatus,
     DatabaseStatus,
     FailedQuery,
     FailedTask,
+    LoadedTables,
+    LoadedWorkload,
+    WorkloadStatus,
 )
 from hyrisecockpit.api.app.status.schema import (
-    BenchmarkStatusSchema,
     DatabaseStatusSchema,
     FailedQuerySchema,
     FailedTaskSchema,
+    LoadedTablesSchema,
+    LoadedWorkloadSchema,
+    WorkloadStatusSchema,
 )
 
 
@@ -21,9 +25,17 @@ class TestStatusSchema:
         """A DatabaseStatusSchema schema can be created."""
         assert DatabaseStatusSchema()
 
-    def test_creates_benchmark_status_schema(self) -> None:
-        """A BenchmarkStatusSchema schema can be created."""
-        assert BenchmarkStatusSchema()
+    def test_creates_loaded_tables_schema(self) -> None:
+        """A LoadedTablesSchema schema can be created."""
+        assert LoadedTablesSchema()
+
+    def test_creates_loaded_workload_schema(self) -> None:
+        """A LoadedWorkloadSchema schema can be created."""
+        assert LoadedWorkloadSchema()
+
+    def test_creates_workload_status_schema(self) -> None:
+        """A WorkloadStatusSchema schema can be created."""
+        assert WorkloadStatusSchema()
 
     def test_creates_failed_query_schema(self) -> None:
         """A FailedQuerySchema schema can be created."""
@@ -45,16 +57,63 @@ class TestStatusSchema:
         serialized = DatabaseStatusSchema().dump(database_status)
         assert serialized == interface == vars(database_status)
 
-    def test_serializes_benchmark_status_schema(self) -> None:
+    def test_serializes_loaded_table_schema(self) -> None:
+        """A LoadedWorkloadSchema schema can be serialized."""
+        interface = {
+            "workload_type": "tpch",
+            "scale_factor": 1.0,
+            "loaded_tables": ["a", "b"],
+        }
+        loaded_workload = LoadedTables(**interface)  # type: ignore
+        serialized = LoadedTablesSchema().dump(loaded_workload)
+        assert serialized == interface
+
+    def test_serializes_loaded_workload_schema(self) -> None:
+        """A LoadedWorkloadSchema schema can be serialized."""
+        interface = {"workload_type": "tpch", "scale_factor": 1.0}
+        loaded_workload = LoadedWorkload(**interface)  # type: ignore
+        serialized = LoadedWorkloadSchema().dump(loaded_workload)
+        assert serialized == interface
+
+    def test_serializes_workload_status_schema(self) -> None:
         """A BenchmarkStatusSchema schema can be serialized."""
         interface = {
             "id": "SomeID",
-            "loaded_benchmarks": ["tpch", "hcpt"],
-            "loaded_tables": ["tpch_0_1"],
+            "loaded_workloads": [
+                LoadedWorkload(workload_type="tpch", scale_factor=1.0),
+                LoadedWorkload(workload_type="tpcds", scale_factor=0.1),
+            ],
+            "loaded_tables": [
+                LoadedTables(
+                    workload_type="tpch", scale_factor=1.0, loaded_tables=["a", "b"]
+                ),
+                LoadedTables(
+                    workload_type="tpcds", scale_factor=0.1, loaded_tables=["c", "d"]
+                ),
+            ],
         }
-        benchmark_status = BenchmarkStatus(**interface)  # type: ignore
-        serialized = BenchmarkStatusSchema().dump(benchmark_status)
-        assert serialized == interface == vars(benchmark_status)
+        expected = {
+            "id": "SomeID",
+            "loaded_workloads": [
+                {"workload_type": "tpch", "scale_factor": 1.0},
+                {"workload_type": "tpcds", "scale_factor": 0.1},
+            ],
+            "loaded_tables": [
+                {
+                    "workload_type": "tpch",
+                    "scale_factor": 1.0,
+                    "loaded_tables": ["a", "b"],
+                },
+                {
+                    "workload_type": "tpcds",
+                    "scale_factor": 0.1,
+                    "loaded_tables": ["c", "d"],
+                },
+            ],
+        }
+        workload_status = WorkloadStatus(**interface)  # type: ignore
+        serialized = WorkloadStatusSchema().dump(workload_status)
+        assert serialized == expected
 
     def test_serializes_failed_query_schema(self) -> None:
         """A FailedQuerySchema schema can be serialized."""

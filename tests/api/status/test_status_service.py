@@ -5,9 +5,9 @@ from unittest.mock import patch
 from pytest import fixture
 
 from hyrisecockpit.api.app.status.model import (
-    BenchmarkStatus,
     DatabaseStatus,
     FailedTask,
+    WorkloadStatus,
 )
 from hyrisecockpit.api.app.status.service import StatusService
 from hyrisecockpit.cross_platform_support.testing_support import MagicMock
@@ -71,7 +71,7 @@ class TestStatusService:
 
     @patch("hyrisecockpit.api.app.status.service.Header")
     @patch("hyrisecockpit.api.app.status.service.Request")
-    def test_get_benchmark_status(
+    def test_get_workload_status(
         self,
         mock_request: MagicMock,
         mock_header: MagicMock,
@@ -83,21 +83,35 @@ class TestStatusService:
         fake_send_message: MagicMock = MagicMock()
         fake_hyrise_status = {
             "id": "SomeID",
-            "loaded_benchmarks": ["tpch", "hcpt"],
-            "loaded_tables": ["tpch_0_1"],
+            "loaded_workloads": [
+                {"workload_type": "tpch", "scale_factor": 1.0},
+                {"workload_type": "tpcds", "scale_factor": 0.1},
+            ],
+            "loaded_tables": [
+                {
+                    "workload_type": "tpch",
+                    "scale_factor": 1.0,
+                    "loaded_tables": ["a", "b"],
+                },
+                {
+                    "workload_type": "tpcds",
+                    "scale_factor": 0.1,
+                    "loaded_tables": ["c", "d"],
+                },
+            ],
         }
-        fake_response = {"body": {"benchmark_status": [fake_hyrise_status]}}
+        fake_response = {"body": {"workload_status": [fake_hyrise_status]}}
         fake_send_message.return_value = fake_response
 
         status_service._send_message = fake_send_message  # type: ignore
 
-        results = status_service.get_benchmark_status()
+        results = status_service.get_workload_status()
 
         mock_request.assert_called_once_with(header="Header", body={})
         fake_send_message.assert_called_once_with("request")
-        mock_header.assert_called_once_with(message="benchmark status")
+        mock_header.assert_called_once_with(message="workload status")
 
-        assert isinstance(results[0], BenchmarkStatus)
+        assert isinstance(results[0], WorkloadStatus)
 
     @patch("hyrisecockpit.api.app.status.service.StorageConnection")
     @patch("hyrisecockpit.api.app.status.service._get_active_databases")

@@ -19,14 +19,40 @@ class DatabaseStatus:
         self.hyrise_active: bool = hyrise_active
 
 
-class BenchmarkStatus:
-    """Model of benchmark status."""
+class LoadedTables:
+    """Model of workload."""
 
-    def __init__(self, id: str, loaded_benchmarks: List[str], loaded_tables: List[str]):
+    def __init__(
+        self, workload_type: str, scale_factor: float, loaded_tables: List[str]
+    ):
+        """Initialize a workload model."""
+        self.workload_type: str = workload_type
+        self.scale_factor: float = scale_factor
+        self.loaded_tables: List[str] = loaded_tables
+
+
+class LoadedWorkload:
+    """Model of a loaded workload."""
+
+    def __init__(self, workload_type: str, scale_factor: float):
+        """Initialize a loaded workload model."""
+        self.workload_type: str = workload_type
+        self.scale_factor: float = scale_factor
+
+
+class WorkloadStatus:
+    """Model of workload status."""
+
+    def __init__(
+        self,
+        id: str,
+        loaded_workloads: List[LoadedWorkload],
+        loaded_tables: List[LoadedTables],
+    ):
         """Initialize a benchmark status model."""
         self.id: str = id
-        self.loaded_benchmarks: List[str] = loaded_benchmarks
-        self.loaded_tables: List[str] = loaded_tables
+        self.loaded_workloads: List[LoadedWorkload] = loaded_workloads
+        self.loaded_tables: List[LoadedTables] = loaded_tables
 
 
 class FailedQuery:

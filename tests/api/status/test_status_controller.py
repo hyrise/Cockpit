@@ -8,9 +8,11 @@ from pytest import fixture
 from hyrisecockpit.api.app import create_app
 from hyrisecockpit.api.app.status import BASE_ROUTE
 from hyrisecockpit.api.app.status.model import (
-    BenchmarkStatus,
     DatabaseStatus,
     FailedTask,
+    LoadedTables,
+    LoadedWorkload,
+    WorkloadStatus,
 )
 from hyrisecockpit.cross_platform_support.testing_support import MagicMock
 
@@ -57,22 +59,51 @@ class TestStatusController:
         assert expected == response.get_json()
 
     @patch("hyrisecockpit.api.app.status.controller.StatusService")
-    def test_get_benchmark_status(
+    def test_get_workload_status(
         self, mock_status_service: MagicMock, client: FlaskClient
     ) -> None:
-        """A controller routes get_benchmark correctly."""
+        """A controller routes get_workload correctly."""
         interface = {
             "id": "SomeID",
-            "loaded_benchmarks": ["tpch", "hcpt"],
-            "loaded_tables": ["tpch_0_1"],
+            "loaded_workloads": [
+                LoadedWorkload(workload_type="tpch", scale_factor=1.0),
+                LoadedWorkload(workload_type="tpcds", scale_factor=0.1),
+            ],
+            "loaded_tables": [
+                LoadedTables(
+                    workload_type="tpch", scale_factor=1.0, loaded_tables=["a", "b"]
+                ),
+                LoadedTables(
+                    workload_type="tpcds", scale_factor=0.1, loaded_tables=["c", "d"]
+                ),
+            ],
         }
-        fake_benchmark_status = BenchmarkStatus(**interface)  # type: ignore
-        mock_status_service.get_benchmark_status.return_value = [fake_benchmark_status]
+        fake_workload_status = WorkloadStatus(**interface)  # type: ignore
+        mock_status_service.get_workload_status.return_value = [fake_workload_status]
 
-        expected = [interface]
+        expected = [
+            {
+                "id": "SomeID",
+                "loaded_workloads": [
+                    {"workload_type": "tpch", "scale_factor": 1.0},
+                    {"workload_type": "tpcds", "scale_factor": 0.1},
+                ],
+                "loaded_tables": [
+                    {
+                        "workload_type": "tpch",
+                        "scale_factor": 1.0,
+                        "loaded_tables": ["a", "b"],
+                    },
+                    {
+                        "workload_type": "tpcds",
+                        "scale_factor": 0.1,
+                        "loaded_tables": ["c", "d"],
+                    },
+                ],
+            }
+        ]
 
-        response = client.get(f"{url}/benchmark", follow_redirects=True)
-
+        response = client.get(f"{url}/workload", follow_redirects=True)
         assert 200 == response.status_code
         assert expected == response.get_json()
 
