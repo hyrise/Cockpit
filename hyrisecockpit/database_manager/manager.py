@@ -269,11 +269,11 @@ class DatabaseManager(object):
     def _call_workload_status(self, body: Body) -> Response:
         status = []
         for database_id, database in self._databases.items():
-            loaded_tables, loaded_benchmarks = database.get_loaded_benchmark_data()
+            loaded_tables, loaded_benchmarks = database.get_loaded_workload_data()
             status.append(
                 {
                     "id": database_id,
-                    "loaded_benchmarks": loaded_benchmarks,
+                    "loaded_workloads": loaded_benchmarks,
                     "loaded_tables": loaded_tables,
                 }
             )

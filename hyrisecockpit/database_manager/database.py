@@ -192,7 +192,7 @@ class Database(object):
 
         return loaded_benchmarks
 
-    def get_loaded_benchmark_data(self) -> Tuple:
+    def get_loaded_workload_data(self) -> Tuple:
         """Get loaded benchmark data."""
         loaded_tables: List = self.get_loaded_tables()
         loaded_benchmarks: List = self.get_loaded_benchmarks(loaded_tables)

@@ -66,7 +66,7 @@ def get_server_calls() -> List[str]:
         "set plugin setting",
         "execute sql query",
         "database status",
-        "benchmark status",
+        "workload status",
     ]
 
 
@@ -357,7 +357,7 @@ class TestDatabaseManager:
         database.load_data.return_value = True
         database_manager._databases["db1"] = database
 
-        body: Dict = {"folder_name": "tpch_0.1"}
+        body: Dict = {"workload_type": "tpch", "scale_factor": 1.0}
         response = database_manager._call_load_data(body)
 
         database.load_data.assert_called()
@@ -377,7 +377,7 @@ class TestDatabaseManager:
         database.load_data.return_value = False
         database_manager._databases["db1"] = database
 
-        body: Dict = {"folder_name": "tpch_0.1"}
+        body: Dict = {"workload_type": "tpch", "scale_factor": 1.0}
         response = database_manager._call_load_data(body)
 
         database.load_data.assert_called()
@@ -396,7 +396,7 @@ class TestDatabaseManager:
         database = fake_database()
         database.delete_data.return_value = True
         database_manager._databases["db1"] = database
-        body: Dict = {"folder_name": "tpch_0.1"}
+        body: Dict = {"workload_type": "tpch", "scale_factor": 1.0}
         response = database_manager._call_load_data(body)
 
         database.delete_data.assert_not_called()
@@ -416,7 +416,7 @@ class TestDatabaseManager:
         database.delete_data.return_value = True
         database_manager._databases["db1"] = database
 
-        body: Dict = {"folder_name": "tpch_0.1"}
+        body: Dict = {"workload_type": "tpch", "scale_factor": 1.0}
         response = database_manager._call_delete_data(body)
 
         database.delete_data.assert_called()
@@ -436,7 +436,7 @@ class TestDatabaseManager:
         database.delete_data.return_value = False
         database_manager._databases["db1"] = database
 
-        body: Dict = {"folder_name": "tpch_0.1"}
+        body: Dict = {"workload_type": "tpch", "scale_factor": 1.0}
         response = database_manager._call_delete_data(body)
 
         database.delete_data.assert_called()
@@ -456,7 +456,7 @@ class TestDatabaseManager:
         database.delete_data.return_value = True
         database_manager._databases["db1"] = database
 
-        body: Dict = {"folder_name": "tpch_0.1"}
+        body: Dict = {"workload_type": "tpch", "scale_factor": 1.0}
         response = database_manager._call_delete_data(body)
 
         database.delete_data.assert_not_called()
@@ -671,24 +671,32 @@ class TestDatabaseManager:
         assert response["body"]["database_status"][0]["hyrise_active"]
         assert response["header"]["status"] == 200
 
-    def test_calls_benchmark_status(self, database_manager: DatabaseManager) -> None:
-        """Test calls benchmark status."""
+    def test_calls_workload_status(self, database_manager: DatabaseManager) -> None:
+        """Test calls workload status."""
         fake_database = MagicMock()
-        fake_database.get_loaded_benchmark_data.return_value = (
-            ["tables", "more_tables"],
-            ["benchmark", "more-benchmarks"],
+        fake_database.get_loaded_workload_data.return_value = (
+            [
+                {
+                    "workload_type": "tpch",
+                    "scale_factor": 1.0,
+                    "loaded_tables": ["a", "b"],
+                }
+            ],
+            [
+                {"workload_type": "tpch", "scale_factor": 1.0},
+                {"workload_type": "tpcds", "scale_factor": 0.1},
+            ],
         )
         database_manager._databases = {"fake_db_id": fake_database}
 
-        response = database_manager._call_benchmark_status({})
+        response = database_manager._call_workload_status({})
         assert response["body"]["benchmark_status"][0]["id"] == "fake_db_id"
-        assert response["body"]["benchmark_status"][0]["loaded_benchmarks"] == [
-            "benchmark",
-            "more-benchmarks",
+        assert response["body"]["benchmark_status"][0]["loaded_workloads"] == [
+            {"workload_type": "tpch", "scale_factor": 1.0},
+            {"workload_type": "tpcds", "scale_factor": 0.1},
         ]
         assert response["body"]["benchmark_status"][0]["loaded_tables"] == [
-            "tables",
-            "more_tables",
+            {"workload_type": "tpch", "scale_factor": 1.0, "loaded_tables": ["a", "b"]}
         ]
         assert response["header"]["status"] == 200
 
