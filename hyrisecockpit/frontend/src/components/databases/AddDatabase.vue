@@ -6,6 +6,20 @@
       </v-card-title>
       <v-card-text>
         <v-container>
+          <v-alert
+            v-if="databaseStatus === 'success'"
+            type="success"
+            dismissible
+          >
+            Database was successfully added.
+          </v-alert>
+          <v-alert
+            v-if="databaseStatus === 'noSuccess'"
+            type="error"
+            dismissible
+          >
+            Database was not successfully added.
+          </v-alert>
           <v-row>
             <v-col cols="6">
               <v-text-field
@@ -96,6 +110,7 @@
           @click="
             closeDialog();
             showAdvanced = false;
+            databaseStatus = '';
           "
           data-id="cancel-add-database-button"
           >Cancel</v-btn
@@ -103,11 +118,7 @@
         <v-btn
           color="primary"
           text
-          @click="
-            createNewDatabase();
-            showAdvanced = false;
-            closeDialog();
-          "
+          @click="createNewDatabase()"
           :disabled="!!idError.length"
           data-id="save-database-button"
           >Save</v-btn
@@ -161,6 +172,7 @@ interface DatabaseCreationData {
   port: Ref<string>;
   dbname: Ref<string>;
   idError: Ref<string>;
+  databaseStatus: Ref<string>;
   createNewDatabase: () => void;
   closeDialog: () => void;
 }
@@ -176,6 +188,7 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
   const port = ref<string>("5432");
   const dbname = ref<string>("postgres");
   const idError = ref<string>("");
+  const databaseStatus = ref<string>("");
 
   watch(host, (host, prevHost) => {
     if (!id.value.length || id.value === prevHost) id.value = host;
@@ -212,7 +225,14 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
       host: host.value,
       port: port.value,
       dbname: dbname.value,
-    });
+    }).then(
+      () => {
+        databaseStatus.value = "success";
+      },
+      (error: any) => {
+        databaseStatus.value = "noSuccess";
+      }
+    );
     resetValues();
   }
 
@@ -231,6 +251,7 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
     createNewDatabase,
     closeDialog,
     idError,
+    databaseStatus,
   };
 }
 </script>
