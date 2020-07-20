@@ -38,6 +38,7 @@ hyrise_active: Value = Value("b", True)
 storage_connection_factory: MagicMock = MagicMock()
 connection_factory: MagicMock = MagicMock()
 worker_pool: MagicMock = MagicMock()
+workload_drivers = MagicMock()
 
 
 class TestBackgroundJobManager:
@@ -61,6 +62,7 @@ class TestBackgroundJobManager:
             hyrise_active,
             worker_pool,
             storage_connection_factory,
+            workload_drivers,
         )
 
     def test_creates(self, background_job_manager: BackgroundJobManager):
@@ -82,12 +84,14 @@ class TestBackgroundJobManager:
             hyrise_active,
             worker_pool,
             storage_connection_factory,
+            workload_drivers,
         )
 
         assert isinstance(background_job_manager, BackgroundJobManager)
         assert background_job_manager._database_id == database_id
         assert background_job_manager._database_blocked == database_blocked
         assert background_job_manager._connection_factory == connection_factory
+        assert background_job_manager._workload_drivers == workload_drivers
         assert (
             background_job_manager._storage_connection_factory
             == storage_connection_factory
@@ -239,16 +243,21 @@ class TestBackgroundJobManager:
         background_job_manager._database_blocked.value = False
         background_job_manager._scheduler = MagicMock()
         background_job_manager._connection_factory = MagicMock()
-        fake_folder_name = "folder_name"
+        fake_workload_type = "tpch"
+        fake_scale_factor = 1.0
 
-        result: bool = background_job_manager.load_tables(fake_folder_name)
+        result: bool = background_job_manager.load_tables(
+            fake_workload_type, fake_scale_factor
+        )
 
         background_job_manager._scheduler.add_job.assert_called_once_with(
             func=load_tables_job,
             args=(
                 background_job_manager._database_blocked,
-                fake_folder_name,
+                fake_workload_type,
+                fake_scale_factor,
                 background_job_manager._connection_factory,
+                workload_drivers,
             ),
         )
         assert result
@@ -260,9 +269,12 @@ class TestBackgroundJobManager:
         background_job_manager._database_blocked.value = True
         background_job_manager._scheduler = MagicMock()
         background_job_manager._connection_factory = MagicMock()
-        fake_folder_name = "folder_name"
+        fake_workload_type = "tpch"
+        fake_scale_factor = 1.0
 
-        result: bool = background_job_manager.load_tables(fake_folder_name)
+        result: bool = background_job_manager.load_tables(
+            fake_workload_type, fake_scale_factor
+        )
 
         background_job_manager._scheduler.add_job.assert_not_called()
         assert not result
@@ -274,16 +286,21 @@ class TestBackgroundJobManager:
         background_job_manager._database_blocked.value = False
         background_job_manager._scheduler = MagicMock()
         background_job_manager._connection_factory = MagicMock()
-        fake_folder_name = "folder_name"
+        fake_workload_type = "tpch"
+        fake_scale_factor = 1.0
 
-        result: bool = background_job_manager.delete_tables(fake_folder_name)
+        result: bool = background_job_manager.delete_tables(
+            fake_workload_type, fake_scale_factor
+        )
 
         background_job_manager._scheduler.add_job.assert_called_once_with(
             func=delete_tables_job,
             args=(
                 background_job_manager._database_blocked,
-                fake_folder_name,
+                fake_workload_type,
+                fake_scale_factor,
                 background_job_manager._connection_factory,
+                workload_drivers,
             ),
         )
         assert result
@@ -295,9 +312,12 @@ class TestBackgroundJobManager:
         background_job_manager._database_blocked.value = True
         background_job_manager._scheduler = MagicMock()
         background_job_manager._connection_factory = MagicMock()
-        fake_folder_name = "folder_name"
+        fake_workload_type = "tpch"
+        fake_scale_factor = 1.0
 
-        result: bool = background_job_manager.delete_tables(fake_folder_name)
+        result: bool = background_job_manager.delete_tables(
+            fake_workload_type, fake_scale_factor
+        )
 
         background_job_manager._scheduler.add_job.assert_not_called()
         assert not result

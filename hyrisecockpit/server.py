@@ -41,7 +41,7 @@ class Server:
 
     def _handle_request(self, request: Request) -> Response:
 
-        # TODO remove validation schema
+        # TODO remove validation schema and call not found. We handle all this stuff in flask.
         function_parameters = self._calls.get(request["header"]["message"])
         if function_parameters is None:
             return get_response(404)
