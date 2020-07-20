@@ -140,6 +140,22 @@ class TestDatabase(object):
         assert type(result) is bool
         assert not result
 
+    def test_loads_data_with_no_valid_workload_type(self, database: Database) -> None:
+        """Test load data with no valid workload type."""
+        mocked_worker_pool: MagicMock = MagicMock()
+        mocked_worker_pool.get_status.return_value = "running"
+        mocked_background_scheduler: MagicMock = MagicMock()
+        mocked_background_scheduler.load_tables.return_value = True
+        fake_workload = {"workload_type": "tpcc_not_valid", "scale_factor": 1.0}
+        database._worker_pool = mocked_worker_pool
+        database._background_scheduler = mocked_background_scheduler
+
+        result: bool = database.load_data(fake_workload)
+
+        mocked_background_scheduler.load_tables.assert_not_called()
+        assert type(result) is bool
+        assert not result
+
     def test_loads_data_while_worker_pool_is_closed_and_load_table_failed(
         self, database: Database
     ) -> None:
@@ -193,6 +209,22 @@ class TestDatabase(object):
         result: bool = database.delete_data(fake_workload)
 
         mocked_worker_pool.get_status.assert_called_once()
+        mocked_background_scheduler.delete_tables.assert_not_called()
+        assert type(result) is bool
+        assert not result
+
+    def test_delete_data_with_no_valid_workload_type(self, database: Database) -> None:
+        """Test delete data with no valid workload type."""
+        mocked_worker_pool: MagicMock = MagicMock()
+        mocked_worker_pool.get_status.return_value = "running"
+        mocked_background_scheduler: MagicMock = MagicMock()
+        mocked_background_scheduler.load_tables.return_value = True
+        fake_workload = {"workload_type": "tpcc_not_valid", "scale_factor": 1.0}
+        database._worker_pool = mocked_worker_pool
+        database._background_scheduler = mocked_background_scheduler
+
+        result: bool = database.delete_data(fake_workload)
+
         mocked_background_scheduler.delete_tables.assert_not_called()
         assert type(result) is bool
         assert not result

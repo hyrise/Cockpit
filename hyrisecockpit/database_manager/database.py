@@ -116,25 +116,27 @@ class Database(object):
         """Load pre-generated tables."""
         workload_type = workload["workload_type"]
         scale_factor = workload["scale_factor"]
-        return (
-            False
-            if self._worker_pool.get_status() != "closed"
-            else self._background_scheduler.load_tables(
+        if workload_type not in list(self._workload_drivers.keys()):
+            return False
+        elif self._worker_pool.get_status() != "closed":
+            return False
+        else:
+            return self._background_scheduler.load_tables(
                 workload_type, float(scale_factor)
             )
-        )
 
     def delete_data(self, workload: Dict) -> bool:
         """Delete tables."""
         workload_type = workload["workload_type"]
         scale_factor = workload["scale_factor"]
-        return (
-            False
-            if self._worker_pool.get_status() != "closed"
-            else self._background_scheduler.delete_tables(
+        if workload_type not in list(self._workload_drivers.keys()):
+            return False
+        elif self._worker_pool.get_status() != "closed":
+            return False
+        else:
+            return self._background_scheduler.delete_tables(
                 workload_type, float(scale_factor)
             )
-        )
 
     def activate_plugin(self, plugin: str) -> bool:
         """Activate plugin."""
