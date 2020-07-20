@@ -31,7 +31,6 @@ class WorkloadGenerator(object):
         self._workload_pub_port = workload_pub_port
         server_calls: Dict[str, Tuple[Callable[[Body], Response], Optional[Dict]]] = {
             "get all workloads": (self._call_get_all_workloads, None),
-            "start workload": (self._call_start_workload, None,),
             "get workload": (self._call_get_workload, None),
             "stop workload": (self._call_stop_workload, None),
             "update workload": (self._call_update_workload, None),
@@ -77,29 +76,13 @@ class WorkloadGenerator(object):
                 "workload_type": workload,
                 "frequency": properties.frequency,
                 "scale_factor": properties.scale_factor,
+                "default_weights": properties.get_default_weights(),
+                "supported_scale_factors": properties.driver.scale_factors,
+                "weights": properties.weights,
+                "running": properties.running,
             }
             for workload, properties in self._workloads.items()
-            if properties.running
         ]
-        return response
-
-    def _call_start_workload(self, body: Body) -> Response:
-        workload_type: str = body["workload_type"]
-        frequency: int = body["frequency"]
-        scale_factor: float = body["scale_factor"]
-        if workload_type not in list(self._workloads.keys()):
-            return get_response(404)
-        if scale_factor not in self._workloads[workload_type].driver.scale_factors:
-            return get_response(400)
-        self._workloads[workload_type].scale_factor = scale_factor
-        self._workloads[workload_type].frequency = frequency
-        self._workloads[workload_type].running = True
-        response = get_response(200)
-        response["body"]["workload"] = {
-            "workload_type": workload_type,
-            "frequency": self._workloads[workload_type].frequency,
-            "scale_factor": self._workloads[workload_type].scale_factor,
-        }
         return response
 
     def _call_get_workload(self, body: Body) -> Response:
@@ -136,14 +119,16 @@ class WorkloadGenerator(object):
         workload = self._workloads.get(workload_type)
         if workload is None:
             return get_response(404)
+        if scale_factor not in self._workloads[workload_type].driver.scale_factors:
+            return get_response(400)
         workload.update(scale_factor=scale_factor, frequency=frequency, weights=weights)
+        workload.running = True
         response = get_response(200)
         response["body"]["workload"] = {
             "workload_type": workload_type,
             "frequency": self._workloads[workload_type].frequency,
             "scale_factor": self._workloads[workload_type].scale_factor,
             "weights": self._workloads[workload_type].weights,
-            "running": self._workloads[workload_type].running,
         }
         return response
 

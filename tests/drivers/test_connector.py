@@ -19,6 +19,14 @@ class TestWorkload:
         assert worklaod.frequency == 0
         assert worklaod.driver == mock_driver
 
+    def test_get_default_weights(self) -> None:
+        """Test get default weights workload."""
+        mock_driver = MagicMock()
+        mock_driver.get_default_weights.return_value = {"01": 2, "02": 1}
+        worklaod = Workload(mock_driver)
+        results = worklaod.get_default_weights()
+        assert results == {"01": 2, "02": 1}
+
     def test_update_workload(self) -> None:
         """Test update workload."""
         mock_driver = MagicMock()

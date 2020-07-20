@@ -13,6 +13,10 @@ class Workload:
         self.frequency = 0
         self.driver = driver
 
+    def get_default_weights(self):
+        """Return default weights."""
+        return self.driver.get_default_weights()
+
     def update(self, scale_factor, frequency, weights):
         """Update workload object."""
         self.weights = weights
