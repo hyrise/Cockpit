@@ -68,7 +68,7 @@ export function fakeDatabaseSystemData(): Object {
       free: generateRandomInt(Math.pow(10, 8), Math.pow(10, 8)),
       used: generateRandomInt(Math.pow(10, 8), Math.pow(10, 8)),
       total: generateRandomInt(Math.pow(10, 9), Math.pow(10, 10)),
-      percent: generateRandomFloat(0, 100),
+      percent: generateRandomFloat(0, 1),
     },
     database_threads: faker.random.number(),
   };
