@@ -1,7 +1,7 @@
 <template>
   <v-expansion-panels flat>
     <v-expansion-panel>
-      <v-expansion-panel-header flat>
+      <v-expansion-panel-header flat @click="scrollToBottom(300)">
         <div class="log" data-id="plugin-log">Plugin log messages</div>
       </v-expansion-panel-header>
       <v-expansion-panel-content class="content">
@@ -22,10 +22,10 @@
 import {
   defineComponent,
   SetupContext,
-  onMounted,
   computed,
   Ref,
   ref,
+  watch,
 } from "@vue/composition-api";
 
 interface Props {
@@ -49,9 +49,40 @@ export default defineComponent({
         if (props.logText == "") return "No messages";
         return props.logText;
       }),
+      ...useAutoScroll(props, context),
     };
   },
 });
+
+/** Scroll textbox to the latest log entry */
+function useAutoScroll(
+  props: Props,
+  context: SetupContext
+): {
+  scrollToBottom: () => void;
+} {
+  watch(
+    () => props.logText,
+    () => {
+      scrollToBottom();
+    },
+    { immediate: true }
+  );
+
+  function scrollToBottom(offset = 0): void {
+    setTimeout(() => {
+      const textBox = document.querySelector(
+        "textarea[data-id='plugin-log-area']"
+      );
+      /* stop scrolling, if it was manually scrolled to the top with an offset of 200px */
+      if (textBox && textBox.scrollHeight - textBox.scrollTop < 200) {
+        textBox.scrollTop = textBox.scrollHeight;
+      }
+    }, offset);
+  }
+
+  return { scrollToBottom };
+}
 </script>
 <style>
 .log {
