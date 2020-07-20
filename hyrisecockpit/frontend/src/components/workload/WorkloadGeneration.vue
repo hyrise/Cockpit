@@ -68,7 +68,6 @@
                       :actions="actions"
                       :disabled="disabled"
                       @start="start()"
-                      @pause="pause()"
                       @stop="stop()"
                     />
                   </v-col>
@@ -141,7 +140,6 @@ interface WorkloadActions {
   selectedWorkloads: Ref<Workload[]>;
   weights: Ref<Record<string, number>[]>;
   start: () => void;
-  pause: () => void;
   stop: () => void;
   handleFrequencyChange: (index: number, frequency: number) => void;
   handleWorkloadChange: (workload: Workload) => void;
@@ -197,7 +195,7 @@ export default defineComponent({
 function useWorkloadActions(context: SetupContext): WorkloadActions {
   const frequencies = ref<number[]>([]);
   const {
-    getLoadedWorkloadData,
+    getDatabaseStatus,
     startWorker,
     stopWorker,
     getWorkloads,
@@ -210,10 +208,6 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
     { active: boolean; loading: boolean }
   > = reactive({
     start: {
-      active: false,
-      loading: false,
-    },
-    pause: {
       active: false,
       loading: false,
     },
@@ -233,7 +227,7 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
     if (response.data.length > 0) {
       initializeWorkloadSelector(response.data);
     }
-    getLoadedWorkloadData().then((response: any) => {
+    getDatabaseStatus().then((response: any) => {
       if (response.data.length > 0) {
         initializeWorkloadActions(response.data);
       }
@@ -253,17 +247,9 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
     const workersStopped = Object.values(databases).some(
       (database: any) => database.worker_pool_status === "closed"
     );
-    const frequenciesAreNull = Object.values(frequencies.value).every(
-      (frequency) => frequency === 0
-    );
     if (!workersStopped) {
-      if (!frequenciesAreNull) {
-        actions.start.active = true;
-        context.emit("start");
-      } else {
-        actions.pause.active = true;
-        context.emit("pause");
-      }
+      actions.start.active = true;
+      context.emit("start");
     }
   }
   function startLoading(action: string): void {
@@ -300,19 +286,10 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
       updatingWorkload(workload);
     });
   }
-  function startingWorker(action: string): void {
-    startLoading(action);
-    startWorker().then(() => stopLoading(action));
-  }
   function start(): void {
     context.emit("start");
-    startingWorker("start");
-  }
-  function pause(): void {
-    context.emit("pause");
-    frequencies.value = Object.values(frequencies.value).map(() => 0);
-    updatingWorkloads();
-    startingWorker("pause");
+    startLoading("start");
+    startWorker().then(() => stopLoading("start"));
   }
   function stop(): void {
     context.emit("stop");
@@ -321,19 +298,6 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
   }
   function handleFrequencyChange(index: number, frequency: number): void {
     frequencies.value[index] = frequency;
-    const frequenciesAreNull = Object.values(frequencies.value).every(
-      (frequency) => frequency === 0
-    );
-    if (actions.pause.active && !frequenciesAreNull) {
-      context.emit("start");
-      startLoading("start");
-      stopLoading("start");
-    }
-    if (actions.start.active && frequenciesAreNull) {
-      context.emit("pause");
-      startLoading("pause");
-      stopLoading("pause");
-    }
     if (selectedWorkloads.value.includes(availableWorkloads[index])) {
       updatingWorkload(availableWorkloads[index]);
     }
@@ -377,7 +341,6 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
     selectedWorkloads,
     weights,
     start,
-    pause,
     stop,
     handleFrequencyChange,
     handleWorkloadChange,
@@ -394,7 +357,8 @@ function useWorkloadDataHandler(
   const loadingWorkloads = ref<Workload[]>([]);
   const {
     stopWorkload,
-    getLoadedWorkloadData,
+    getLoadedWorkloads,
+    getDatabaseStatus,
     loadWorkloadData,
     deleteWorkloadData,
   } = useWorkloadService();
@@ -409,6 +373,7 @@ function useWorkloadDataHandler(
     if (!loadedWorkloads.value.includes(workload)) {
       // load workload data
       loadWorkloadData(workload).then(() => {
+        blocked = true;
         changeWorkloadData = true;
       });
     } else {
@@ -423,7 +388,7 @@ function useWorkloadDataHandler(
     }
   }
   function updateWorkloadInformation(): void {
-    getLoadedWorkloadData().then((response: any) => {
+    getLoadedWorkloads().then((response: any) => {
       if (response.data.length !== 0) {
         let loadedWorkloadData: string[] = response.data[0].loaded_benchmarks;
         Object.values(response.data).forEach((database: any) => {
@@ -432,6 +397,19 @@ function useWorkloadDataHandler(
               database.loaded_benchmarks.includes(benchmark) &&
               !["no-ops_0_1", "no-ops_1"].includes(benchmark)
           );
+        });
+        if (!blocked && changeWorkloadData) {
+          loadedWorkloads.value = [];
+          loadingWorkloads.value = [];
+          Object.values(loadedWorkloadData).forEach((transferred: string) => {
+            loadedWorkloads.value.push(getWorkloadFromTransferred(transferred));
+          });
+        }
+      }
+    });
+    getDatabaseStatus().then((response: any) => {
+      if (response.data.length !== 0) {
+        Object.values(response.data).forEach((database: any) => {
           emitDatabaseStatusChangedEvent(
             database.id,
             database.database_blocked_status,
@@ -446,13 +424,6 @@ function useWorkloadDataHandler(
             database.database_blocked_status === true ||
             database.hyrise_active === false
         );
-        if (!blocked && changeWorkloadData) {
-          loadedWorkloads.value = [];
-          loadingWorkloads.value = [];
-          Object.values(loadedWorkloadData).forEach((transferred: string) => {
-            loadedWorkloads.value.push(getWorkloadFromTransferred(transferred));
-          });
-        }
       }
     });
   }

@@ -6,6 +6,7 @@ const backendUrl = (window as any).Cypress?.env("stubless")
 export const monitorBackend = backendUrl + "monitor/";
 export const controlBackend = backendUrl + "control/";
 export const workloadBackend = backendUrl + "workload/";
+export const statusBackend = backendUrl + "status/";
 
 export const isInTestMode: boolean =
   (window as any).Cypress || backendUrl.includes("127.0.0.1:3000");

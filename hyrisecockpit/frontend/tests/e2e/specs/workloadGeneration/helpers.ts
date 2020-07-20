@@ -3,7 +3,6 @@ import { getSelectorByCustomConfig } from "../helpers";
 
 export const selectors = {
   openEqualizer: getSelectorByCustomConfig("open-equalizer"),
-  pauseWorkload: getSelectorByCustomConfig("pause-workload"),
   selectWorkload: getSelectorByCustomConfig("select-workload"),
   selectWorkloadData: getSelectorByCustomConfig("select-workload-data"),
   startWorkload: getSelectorByCustomConfig("start-workload"),

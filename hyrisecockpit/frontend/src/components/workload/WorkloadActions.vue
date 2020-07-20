@@ -13,17 +13,6 @@
         </v-icon>
       </v-btn>
       <v-btn
-        :disabled="actions.pause.loading || disabled"
-        :loading="actions.pause.loading"
-        :color="actions.pause.active ? colorValueDefinition.blue : ''"
-        data-id="pause-workload"
-        @click="$emit('pause')"
-      >
-        <v-icon>
-          mdi-pause
-        </v-icon>
-      </v-btn>
-      <v-btn
         :disabled="actions.stop.loading || disabled"
         :loading="actions.stop.loading"
         :color="actions.stop.active ? colorValueDefinition.red : ''"

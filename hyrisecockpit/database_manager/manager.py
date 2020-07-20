@@ -81,12 +81,13 @@ class DatabaseManager(object):
             "get databases": (self._call_get_databases, None),
             "load data": (self._call_load_data, load_data_request_schema),
             "delete data": (self._call_delete_data, delete_data_request_schema),
-            "status": (self._call_status, None),
             "get plugins": (self._call_get_plugins, None),
             "activate plugin": (self._call_activate_plugin, None),
             "deactivate plugin": (self._call_deactivate_plugin, None),
             "set plugin setting": (self._call_plugin_setting, None),
             "execute sql query": (self._call_execute_sql_query, None),
+            "database status": (self._call_database_status, None),
+            "benchmark status": (self._call_benchmark_status, None),
         }
 
     def _call_add_database(self, body: Body) -> Response:
@@ -178,25 +179,6 @@ class DatabaseManager(object):
                 return get_response(400)
         return get_response(200)
 
-    def _call_status(self, body: Body) -> Response:
-        status = []
-
-        for database_id, database in self._databases.items():
-            loaded_tables, loaded_benchmarks = database.get_loaded_benchmark_data()
-            status.append(
-                {
-                    "id": database_id,
-                    "hyrise_active": database.get_hyrise_active(),
-                    "database_blocked_status": database.get_database_blocked(),
-                    "worker_pool_status": database.get_worker_pool_status(),
-                    "loaded_benchmarks": loaded_benchmarks,
-                    "loaded_tables": loaded_tables,
-                }
-            )
-        response = get_response(200)
-        response["body"]["status"] = status
-        return response
-
     def _call_get_plugins(self, body: Body) -> Response:
         response = get_response(200)
         response["body"]["plugins"] = [
@@ -270,6 +252,35 @@ class DatabaseManager(object):
         results = self._databases[database_id].execute_sql_query(query)
         response = get_response(200)
         response["body"]["results"] = results
+        return response
+
+    def _call_database_status(self, body: Body) -> Response:
+        status = [
+            {
+                "id": database_id,
+                "database_blocked_status": database.get_database_blocked(),
+                "worker_pool_status": database.get_worker_pool_status(),
+                "hyrise_active": database.get_hyrise_active(),
+            }
+            for database_id, database in self._databases.items()
+        ]
+        response = get_response(200)
+        response["body"]["database_status"] = status
+        return response
+
+    def _call_benchmark_status(self, body: Body) -> Response:
+        status = []
+        for database_id, database in self._databases.items():
+            loaded_tables, loaded_benchmarks = database.get_loaded_benchmark_data()
+            status.append(
+                {
+                    "id": database_id,
+                    "loaded_benchmarks": loaded_benchmarks,
+                    "loaded_tables": loaded_tables,
+                }
+            )
+        response = get_response(200)
+        response["body"]["benchmark_status"] = status
         return response
 
     def start(self) -> None:
