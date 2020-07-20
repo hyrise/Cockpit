@@ -5,9 +5,7 @@ from psycopg2 import DatabaseError, InterfaceError
 from pytest import mark
 
 from hyrisecockpit.cross_platform_support.testing_support import MagicMock
-from hyrisecockpit.database_manager.job.get_loaded_tables import (
-    get_loaded_tables_for_scale_factor,
-)
+from hyrisecockpit.database_manager.job.get_loaded_tables import get_loaded_tables
 
 
 class TestGetLoadedTablesJob:
@@ -22,14 +20,10 @@ class TestGetLoadedTablesJob:
         )
 
         fake_tables = ["table_name_one", "table_name_two"]
-        fake_benchmark = "benchmark"
-        fake_scale_factor = "4_2"
 
-        mock_cursor.fetchall.return_value = [("table_name_one_benchmark_4_2",)]
+        mock_cursor.fetchall.return_value = [("table_name_one",)]
 
-        result: List[str] = get_loaded_tables_for_scale_factor(
-            fake_tables, fake_benchmark, fake_scale_factor, mock_connection_factory,
-        )
+        result: List[str] = get_loaded_tables(fake_tables, mock_connection_factory)
 
         expected: List[str] = ["table_name_one"]
 
@@ -53,11 +47,9 @@ class TestGetLoadedTablesJob:
         )
 
         fake_tables = ["table_name_one", "table_name_two"]
-        fake_benchmark = "benchmark"
-        fake_scale_factor = "4_2"
 
-        result: List[str] = get_loaded_tables_for_scale_factor(
-            fake_tables, fake_benchmark, fake_scale_factor, mock_connection_factory,
+        result: List[str] = get_loaded_tables(
+            fake_tables, mock_connection_factory,
         )
 
         expected: List = []
