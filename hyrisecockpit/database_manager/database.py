@@ -5,7 +5,7 @@ from typing import Dict, List, Optional, Tuple, TypedDict
 
 from psycopg2 import DatabaseError, Error, InterfaceError
 
-from hyrisecockpit.drivers.tpch.tpch_driver import TpchDriver
+from hyrisecockpit.drivers.connector import Connector
 
 from .background_scheduler import BackgroundJobManager
 from .cursor import ConnectionFactory, StorageConnectionFactory
@@ -60,7 +60,7 @@ class Database(object):
 
         self._database_blocked: Value = Value("b", False)
         self._hyrise_active: Value = Value("b", True)
-        self._workload_drivers: Dict = {"tpch": TpchDriver()}
+        self._workload_drivers: Dict = Connector.get_workload_drivers()
         self._worker_pool: WorkerPool = WorkerPool(
             self._connection_factory,
             self.number_workers,

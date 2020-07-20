@@ -1,4 +1,5 @@
-"""Default workload class."""
+"""Connector for cockpit and drivers."""
+from hyrisecockpit.drivers.tpch.tpch_driver import TpchDriver
 
 
 class Workload:
@@ -23,3 +24,17 @@ class Workload:
         self.scale_factor = 0
         self.weights = self.driver.get_default_weights()
         self.frequency = 0
+
+
+class Connector:
+    """Represents a connector between drivers and cockpit."""
+
+    @classmethod
+    def get_workload(cls):
+        """Return a dictionary with workload objects."""
+        return {"tpch": Workload(TpchDriver())}
+
+    @classmethod
+    def get_workload_drivers(cls):
+        """Return a dictionary with workload drivers."""
+        return {"tpch": TpchDriver()}

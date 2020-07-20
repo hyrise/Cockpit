@@ -10,12 +10,10 @@ from typing import Callable, Dict, Optional, Tuple, Type
 from apscheduler.schedulers.background import BackgroundScheduler
 from zmq import PUB, Context
 
-from hyrisecockpit.drivers.tpch.tpch_driver import TpchDriver
+from hyrisecockpit.drivers.connector import Connector
 from hyrisecockpit.request import Body
 from hyrisecockpit.response import Response, get_response
 from hyrisecockpit.server import Server
-
-from .workload import Workload
 
 
 class WorkloadGenerator(object):
@@ -40,7 +38,7 @@ class WorkloadGenerator(object):
         }
         self._server = Server(generator_listening, generator_port, server_calls)
 
-        self._workloads: Dict = {"tpch": Workload(TpchDriver())}  # type: ignore
+        self._workloads: Dict = Connector.get_workload()
         self._init_server()
         self._init_scheduler()
 
