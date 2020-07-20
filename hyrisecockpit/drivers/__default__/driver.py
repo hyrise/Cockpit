@@ -1,87 +1,11 @@
 """Module for default workload behavior."""
 
-from collections import OrderedDict
-from os import listdir
-from random import choice, choices
 from time import time_ns
-from typing import Dict, List, Optional, Tuple, TypedDict, Union
+from typing import Dict, List, Optional, Tuple, Union
 
 from psycopg2.extensions import AsIs
 
-
-class AbstractTask(TypedDict):
-    """Abstract task."""
-
-    type: str
-    benchmark: str
-
-
-class DefaultTask(AbstractTask):
-    """Type of a generated Query."""
-
-    query_type: str
-    query: str
-    args: Optional[Tuple]
-    scalefactor: float
-
-
-class TPCCTask(AbstractTask):
-    """TPC-C task."""
-
-    pass
-
-
-class WorkloadReader:
-    """Reads queries from workloads."""
-
-    @classmethod
-    def _read_query(cls, path_to_file: str) -> List[str]:
-        with open(path_to_file, "r") as f:
-            raw_queries: str = f.read()
-        return [
-            " ".join(transaction.split())
-            for transaction in raw_queries.split("---")
-            if transaction != ""
-        ]
-
-    @classmethod
-    def get(cls, query_path: str) -> Optional[Dict[str, List[str]]]:
-        """Get a workload from the workload folder. Returns the query names and a list of all queries."""
-        queries = {}
-        for file_name in listdir(query_path):
-            query_type = file_name.split(".sql")[0]
-            query_file_path = f"{query_path}/{file_name}"
-            queries[query_type] = cls._read_query(query_file_path)
-
-        return queries
-
-
-class DefaultWorkload:
-    """Generates workloads from queries."""
-
-    def __init__(self, benchmark: str, scalefactor: float, query_path: str):
-        """Initialize a Workload."""
-        self._benchmark = benchmark
-        self._scalefactor = scalefactor
-        self._queries = OrderedDict(WorkloadReader.get(query_path))  # type: ignore
-
-    def get(self, frequency, weights) -> List[DefaultTask]:
-        """Get a list of queries with the frequency and weights."""
-        return [
-            DefaultTask(
-                type="default",
-                query=choice(self._queries[query_type]),  # nosec
-                args=None,
-                query_type=query_type,
-                benchmark=self._benchmark,
-                scalefactor=self._scalefactor,
-            )
-            for query_type in choices(
-                population=list(self._queries.keys()),
-                weights=list(weights.values()),
-                k=frequency,
-            )
-        ]
+from hyrisecockpit.drivers.__default__.default_workload import DefaultWorkload
 
 
 class DefaultDriver:

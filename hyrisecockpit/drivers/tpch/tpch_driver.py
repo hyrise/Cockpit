@@ -1,10 +1,11 @@
-"""Tpch driver."""
+"""TPC-H driver."""
 from collections import OrderedDict
 from os import getcwd
 from os.path import abspath
 from typing import Dict, List, Tuple
 
-from hyrisecockpit.drivers.default import DefaultDriver, DefaultTask
+from hyrisecockpit.drivers.__default__.driver import DefaultDriver
+from hyrisecockpit.drivers.__default__.task_types import DefaultTask
 
 
 class TpchDriver:
