@@ -1,55 +1,101 @@
 """Tests for the worker module."""
-from typing import Optional, Tuple, Union
+from multiprocessing import Queue
 from unittest.mock import MagicMock, patch
 
-from psycopg2.extensions import AsIs
+from hyrisecockpit.database_manager.worker.queue_worker import (
+    fill_queue,
+    handle_published_data,
+)
 
-from hyrisecockpit.database_manager.worker import execute_task, get_formatted_parameters
 
+class TestQueueWorker:
+    """Tests for queue worker."""
 
-class TestWorker:
-    """Tests Worker functions."""
+    def test_handle_published_date(self) -> None:
+        """Test handle of published data."""
+        fake_data = {}  # type: ignore
+        fake_data["body"] = {}
+        fake_data["body"]["querylist"] = ["query a"]
+        fake_queue = Queue()  # type: ignore
+        handle_published_data(fake_data, fake_queue)
+        assert fake_queue.get() == "query a"
 
-    def test_get_formatted_parameters_returns_parameters_without_protocol(self) -> None:
-        """Test get_formatted_parameters returns parameters for not present protocols."""
-        unformatted_params = ((1, None), (2, None), (3, None))
-
-        formatted_params = get_formatted_parameters(unformatted_params)
-
-        for uf_param, f_param in zip(unformatted_params, formatted_params):  # type: ignore
-            assert uf_param[0] == f_param
-
-    def test_get_formatted_parameters_returns_parameters_with_asis_protocol(
-        self,
+    @patch("hyrisecockpit.database_manager.worker.queue_worker.handle_published_data")
+    @patch("hyrisecockpit.database_manager.worker.queue_worker.SUB")
+    @patch("hyrisecockpit.database_manager.worker.queue_worker.SUBSCRIBE")
+    @patch("hyrisecockpit.database_manager.worker.queue_worker.Context")
+    def test_fill_queue_worker(
+        self, mock_context, mock_subscribe, mock_sub, mock_handle_published_data
     ) -> None:
-        """Test get_formatted_parameters returns parameters for asis protocol."""
-        unformatted_params: Tuple[Tuple[Union[str, int], Optional[str]], ...] = (
-            (1, "as_is"),
-            ("2", "as_is"),
-            (3, None),
-            ("4", None),
+        """Test of fill queue worker."""
+
+        class LoopDone(Exception):
+            pass
+
+        mock_socket = MagicMock()
+        mock_socket.recv_json.return_value = ["publish_data"]
+        mock_context_obj = MagicMock()
+        mock_context_obj.socket.return_value = mock_socket
+        mock_context.return_value = mock_context_obj
+        workload_publisher_url = "localhost"
+        task_queue = []  # type: ignore
+        mock_continue_execution_flag = MagicMock()
+        mock_worker_wait_for_exit_event = MagicMock()
+        mock_continue_execution_flag.value = True
+        mock_worker_wait_for_exit_event.wait.side_effect = MagicMock(
+            side_effect=LoopDone
         )
+        mock_handle_published_data.side_effect = MagicMock(side_effect=LoopDone)
 
-        formatted_params = get_formatted_parameters(unformatted_params)
-        for uf_param, f_param in zip(unformatted_params, formatted_params):  # type: ignore
-            if uf_param[1] == "as_is":
-                assert isinstance(f_param, AsIs)
-                assert str(uf_param[0]) == f_param.getquoted().decode("utf-8")
-            else:
-                assert isinstance(f_param, (str, int))
-                assert uf_param[0] == f_param
+        try:
+            fill_queue(
+                workload_publisher_url,
+                task_queue,  # type: ignore
+                mock_continue_execution_flag,
+                mock_worker_wait_for_exit_event,
+            )
+        except LoopDone:
+            pass
 
-    @patch("hyrisecockpit.database_manager.worker.time_ns")
-    def test_execute_task(self, time_ns):
-        """Test execute_task."""
-        time_ns.return_value = 10
-        mocked_query = "SELECT 1;"
-        mocked_cursor = MagicMock()
-        mocked_cursor.execute.return_value = None
-        formatted_params = None
+        mock_worker_wait_for_exit_event.wait.assert_not_called()
+        mock_handle_published_data.assert_called_once_with(["publish_data"], task_queue)
 
-        endts, latency = execute_task(mocked_cursor, mocked_query, formatted_params)
+    @patch("hyrisecockpit.database_manager.worker.queue_worker.handle_published_data")
+    @patch("hyrisecockpit.database_manager.worker.queue_worker.SUB")
+    @patch("hyrisecockpit.database_manager.worker.queue_worker.SUBSCRIBE")
+    @patch("hyrisecockpit.database_manager.worker.queue_worker.Context")
+    def test_fill_queue_worker_with_unset_continue_execution_flag(
+        self, mock_context, mock_subscribe, mock_sub, mock_handle_published_data
+    ) -> None:
+        """Test of fill queue worker with unset continue execution flag."""
 
-        mocked_cursor.execute.assert_called_once_with("SELECT 1;", None)
-        assert endts == 10
-        assert latency == 0
+        class LoopDone(Exception):
+            pass
+
+        mock_socket = MagicMock()
+        mock_socket.recv_json.return_value = ["publish_data"]
+        mock_context_obj = MagicMock()
+        mock_context_obj.socket.return_value = mock_socket
+        mock_context.return_value = mock_context_obj
+        workload_publisher_url = "localhost"
+        task_queue = []  # type: ignore
+        mock_continue_execution_flag = MagicMock()
+        mock_worker_wait_for_exit_event = MagicMock()
+        mock_continue_execution_flag.value = False
+        mock_worker_wait_for_exit_event.wait.side_effect = MagicMock(
+            side_effect=LoopDone
+        )
+        mock_handle_published_data.side_effect = MagicMock(side_effect=LoopDone)
+
+        try:
+            fill_queue(
+                workload_publisher_url,
+                task_queue,  # type: ignore
+                mock_continue_execution_flag,
+                mock_worker_wait_for_exit_event,
+            )
+        except LoopDone:
+            pass
+
+        mock_worker_wait_for_exit_event.wait.assert_called_once()
+        mock_handle_published_data.assert_not_called()
