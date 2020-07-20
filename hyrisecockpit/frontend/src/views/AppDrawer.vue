@@ -2,7 +2,7 @@
   <v-navigation-drawer app fixed width="134" color="grey lighten-4">
     <v-list subheader>
       <v-list-item>
-        <v-list-item-avatar tile size="65" class="mt-0 mb-0 mr-0 ml-4">
+        <v-list-item-avatar tile size="71" class="mt-0 mb-0 mr-0 ml-4">
           <img src="../../src/assets/images/hyrise_logo.png" />
         </v-list-item-avatar>
       </v-list-item>
@@ -55,7 +55,7 @@
         color="#02789D"
       >
         <v-icon class="ml-8 mb-4">mdi-chart-bar</v-icon>
-        <v-text class="caption ml-n13 mt-10 font-weight-regular-light"
+        <v-text class="caption ml-n15 mt-10 font-weight-regular-light"
           >Workload Analysis</v-text
         >
       </v-list-item>
@@ -230,9 +230,5 @@ export default defineComponent({
 .v-list-item {
   padding-top: 4px;
   padding-bottom: 4px;
-}
-.v-application .mt-10 {
-  margin-top: 43px !important;
-  margin-left: -60px;
 }
 </style>

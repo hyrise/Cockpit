@@ -6,7 +6,7 @@
       :style="databaseFlex"
       data-id="database-system-details"
     >
-      <v-card class="card" :color="database.color" elevation="4">
+      <v-card class="card" :color="database.color">
         <v-row class="detailsRow">
           <v-col col="2" class="mr-1" data-id="database-host">
             <v-card-title class="font-weight-bold white--text noPadding">{{

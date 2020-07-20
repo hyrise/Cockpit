@@ -8,7 +8,7 @@
             :id="'detailed-access-select'"
             v-model="selectedItem"
             class="select"
-            :items="tables"
+            :items="selectionItems"
             dense
             label="table"
             outlined
@@ -26,9 +26,9 @@
       </metric-detailed-view>
       <v-select
         :id="'access-select'"
-        v-model="selectedTable"
+        v-model="selectedItem"
         class="select mt-n12"
-        :items="tables"
+        :items="selectedItems"
         dense
         label="table"
         outlined
@@ -151,8 +151,5 @@ function usePreSelect(metric: Metric): Ref<string> {
   z-index: 2;
   width: 30%;
   margin: auto;
-}
-.v-application .mt-n12 {
-  margin-top: -90px !important;
 }
 </style>

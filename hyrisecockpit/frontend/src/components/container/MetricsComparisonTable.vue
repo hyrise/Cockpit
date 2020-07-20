@@ -6,6 +6,7 @@
       v-for="database in databases"
       :key="database.id"
       :color="database.color"
+      flat
     >
       <v-card
         v-if="showHeader"
@@ -97,8 +98,5 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   margin: 0px 6px 6px 6px;
-}
-.v-card:not(.v-sheet--tile):not(.v-card--shaped) {
-  box-shadow: 0px 0px;
 }
 </style>

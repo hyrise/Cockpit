@@ -1,9 +1,5 @@
 <template>
-  <v-card
-    :id="`${tileDatabase}-${metric}-tile`"
-    class="card mt-2 mx-2"
-    elevation="4"
-  >
+  <v-card :id="`${tileDatabase}-${metric}-tile`" class="card mt-2 mx-2">
     <v-card-title
       class="card subtitle-1 font-weight-regular mb-n7"
       :ref="`${tileDatabase}-${metric}-title`"
@@ -67,7 +63,6 @@ interface Props extends MetricProps {
 interface Data {
   getMetricTitle: (metric: Metric) => string;
   getMetricComponent: (metric: Metric) => string;
-  getBorderColor: (databaseId: string) => Object;
 }
 
 export default defineComponent({
@@ -93,21 +88,10 @@ export default defineComponent({
     ...MetricPropsValidation,
   },
   setup(props: Props, context: SetupContext): Data {
-    function getBorderColor(databaseId: string): Object {
-      if (!databaseId) return {};
-      const database = getDatabasesByIds([databaseId])[0];
-
-      return {
-        borderLeft: `4px solid ${database.color}`,
-        borderRight: `4px solid ${database.color}`,
-      };
-    }
-
     const { getDatabasesByIds } = context.root.$databaseController;
     return {
       getMetricTitle,
       getMetricComponent,
-      getBorderColor,
     };
   },
 });
