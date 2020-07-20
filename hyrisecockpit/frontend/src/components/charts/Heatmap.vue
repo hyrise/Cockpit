@@ -67,7 +67,7 @@ function useHeatMapConfiguration(
         title: {
           text: chartConfiguration.xaxis,
           font: {
-            family: "Roboto, regular",
+            family: "Roboto",
             size: 13,
           },
         },
@@ -78,7 +78,7 @@ function useHeatMapConfiguration(
         title: {
           text: chartConfiguration.yaxis,
           font: {
-            family: "Roboto, regular",
+            family: "Roboto",
             size: 13,
           },
         },
