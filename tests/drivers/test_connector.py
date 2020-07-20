@@ -27,8 +27,8 @@ class TestWorkload:
         results = worklaod.get_default_weights()
         assert results == {"01": 2, "02": 1}
 
-    def test_update_workload(self) -> None:
-        """Test update workload."""
+    def test_update_workload_with_weights(self) -> None:
+        """Test update workload with weights."""
         mock_driver = MagicMock()
         mock_driver.get_default_weights.return_value = {"01": 2, "02": 1}
         worklaod = Workload(mock_driver)
@@ -39,6 +39,21 @@ class TestWorkload:
         worklaod.update(scale_factor, frequency, weights)
 
         assert worklaod.weights == weights
+        assert worklaod.frequency == frequency
+        assert worklaod.scale_factor == scale_factor
+
+    def test_update_workload_with_no_weights(self) -> None:
+        """Test update workload with weights."""
+        mock_driver = MagicMock()
+        mock_driver.get_default_weights.return_value = {"01": 2, "02": 1}
+        worklaod = Workload(mock_driver)
+        scale_factor = 1.0
+        frequency = 200
+        weights = {}  # type: ignore
+
+        worklaod.update(scale_factor, frequency, weights)
+
+        assert worklaod.weights == {"01": 2, "02": 1}
         assert worklaod.frequency == frequency
         assert worklaod.scale_factor == scale_factor
 

@@ -19,7 +19,8 @@ class Workload:
 
     def update(self, scale_factor, frequency, weights):
         """Update workload object."""
-        self.weights = weights
+        if bool(weights):
+            self.weights = weights
         self.scale_factor = scale_factor
         self.frequency = frequency
 
