@@ -27,7 +27,7 @@
       <v-select
         :id="'access-select'"
         v-model="selectedItem"
-        class="select mt-n12"
+        class="select"
         :items="selectedItems"
         dense
         label="table"
@@ -151,5 +151,6 @@ function usePreSelect(metric: Metric): Ref<string> {
   z-index: 2;
   width: 30%;
   margin: auto;
+  margin-top: -90px;
 }
 </style>
