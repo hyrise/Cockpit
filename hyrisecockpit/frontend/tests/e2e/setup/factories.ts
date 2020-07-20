@@ -68,7 +68,7 @@ export function fakeDatabaseSystemData(): Object {
       free: generateRandomInt(Math.pow(10, 8), Math.pow(10, 8)),
       used: generateRandomInt(Math.pow(10, 8), Math.pow(10, 8)),
       total: generateRandomInt(Math.pow(10, 9), Math.pow(10, 10)),
-      percent: generateRandomFloat(0, 100),
+      percent: generateRandomFloat(0, 1),
     },
     database_threads: faker.random.number(),
   };
@@ -99,7 +99,9 @@ function fakeTableStorageData(tableId: string, columnIds: string[]): Object {
   storageData[tableId] = {
     size: faker.random.number(),
     number_columns: columnIds.length,
-    data: assignFakeData(columnIds.map((id) => fakeColumnStorageData(id))),
+    data: assignFakeData(
+      columnIds.map((id) => fakeColumnStorageData(`${tableId}-${id}`))
+    ),
   };
   return storageData;
 }
@@ -182,7 +184,9 @@ function fakeTableChunksData(
 ): Object {
   const data: any = {};
   data[tableId] = assignFakeData(
-    columnIds.map((id) => fakeColumnChunksData(id, numberOfChunks))
+    columnIds.map((id) =>
+      fakeColumnChunksData(`${tableId}-${id}`, numberOfChunks)
+    )
   );
   return data;
 }
