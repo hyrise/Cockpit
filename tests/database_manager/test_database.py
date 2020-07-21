@@ -2,7 +2,7 @@
 
 from collections import Counter
 from multiprocessing.sharedctypes import Synchronized as ValueType
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 from unittest.mock import MagicMock, patch
 
 from psycopg2 import DatabaseError, Error, InterfaceError
@@ -364,18 +364,32 @@ class TestDatabase(object):
         }
         fake_loaded_tables = ["customer_tpch_1", "item_tpch_1", "gary_rock_1"]
 
-        expected_loaded_workloads = [{"workload_type": "tpch", "scale_factor": 1.0}]
-        expected_loaded_workload_tables = [
+        expected = [
             {
                 "workload_type": "tpch",
                 "scale_factor": 1.0,
                 "loaded_tables": ["customer", "item"],
+                "missing_tables": [],
+                "completely_loaded": True,
+                "database_representation": {
+                    "customer": "customer_tpch_1",
+                    "item": "item_tpch_1",
+                },
             },
-            {"workload_type": "rock", "scale_factor": 1.0, "loaded_tables": ["Gary"]},
+            {
+                "workload_type": "rock",
+                "scale_factor": 1.0,
+                "loaded_tables": ["Gary"],
+                "missing_tables": ["Clark"],
+                "completely_loaded": False,
+                "database_representation": {
+                    "Gary": "gary_rock_1",
+                    "Clark": "clark_rock_1",
+                },
+            },
         ]
-        expected: Tuple = (expected_loaded_workloads, expected_loaded_workload_tables)
 
-        results: Tuple = database.get_loaded_workloads(fake_loaded_tables)
+        results: List = database._workoad_tables_status(fake_loaded_tables)
         assert results == expected
 
     def test_gets_worker_pool_status(self, database: Database) -> None:
@@ -846,25 +860,39 @@ class TestDatabase(object):
             "latency_calculation", latency_query, resample_options
         )
 
-    def test_get_loaded_workload_data(self, database: Database):
+    def test_get_status_of_workload_tables(self, database: Database):
         """Test get loaded benchmark data."""
-        fake_loaded_workloads = [{"workload_type": "tpch", "scale_factor": 1.0}]
-        fake_loaded_workload_tables = [
+        fake_status_of_workload = [
             {
                 "workload_type": "tpch",
                 "scale_factor": 1.0,
                 "loaded_tables": ["customer", "item"],
+                "missing_tables": [],
+                "completely_loaded": True,
+                "database_representation": {
+                    "customer": "customer_tpch_1",
+                    "item": "item_tpch_1",
+                },
             },
-            {"workload_type": "rock", "scale_factor": 1.0, "loaded_tables": ["Gary"]},
+            {
+                "workload_type": "rock",
+                "scale_factor": 1.0,
+                "loaded_tables": ["Gary"],
+                "missing_tables": ["Clark"],
+                "completely_loaded": False,
+                "database_representation": {
+                    "Gary": "gary_rock_1",
+                    "Clark": "clark_rock_1",
+                },
+            },
         ]
         database.get_loaded_tables_in_database = MagicMock()  # type: ignore
         database.get_loaded_tables_in_database.return_value = ["table1", "table2"]  # type: ignore
-        database.get_loaded_workloads = MagicMock()  # type: ignore
-        database.get_loaded_workloads.return_value = (fake_loaded_workloads, fake_loaded_workload_tables)  # type: ignore
+        database._workoad_tables_status = MagicMock()  # type: ignore
+        database._workoad_tables_status.return_value = fake_status_of_workload  # type: ignore
 
-        loaded_tables, loaded_workloads = database.get_loaded_workload_data()
+        loaded_workloads = database.get_workoad_tables_status()
 
         database.get_loaded_tables_in_database.assert_called_once()  # type: ignore
-        database.get_loaded_workloads.assert_called_once_with(["table1", "table2"])  # type: ignore
-        assert loaded_tables == fake_loaded_workload_tables
-        assert loaded_workloads == fake_loaded_workloads
+        database._workoad_tables_status.assert_called_once_with(["table1", "table2"])  # type: ignore
+        assert loaded_workloads == fake_status_of_workload

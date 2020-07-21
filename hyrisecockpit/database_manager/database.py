@@ -1,7 +1,7 @@
 """The database object represents the instance of a database."""
 
 from multiprocessing import Value
-from typing import Dict, List, Optional, Tuple, TypedDict
+from typing import Dict, List, Optional, TypedDict
 
 from psycopg2 import DatabaseError, Error, InterfaceError
 
@@ -173,41 +173,37 @@ class Database(object):
         else:
             return [row[0] for row in rows] if rows else []
 
-    def get_loaded_workloads(self, tables_in_database) -> Tuple:
+    def _workoad_tables_status(self, tables_in_database) -> List:
         """Get list of all benchmarks which are completely loaded."""
-        loaded_workloads = []
-        loaded_workload_tables = []
+        workoad_tables_status = []
         for workload_type, driver in self._workload_drivers.items():
             for scale_factor in driver.scale_factors:
                 loaded_tables = []
+                missing_tables = []
                 workload_tables = driver.get_table_names(scale_factor)
                 loaded = True
                 for table_name, database_representation in workload_tables.items():
                     if database_representation not in tables_in_database:
                         loaded = False
+                        missing_tables.append(table_name)
                     else:
                         loaded_tables.append(table_name)
-                if loaded:
-                    loaded_workloads.append(
-                        {"workload_type": workload_type, "scale_factor": scale_factor}
-                    )
-                loaded_workload_tables.append(
-                    {
-                        "workload_type": workload_type,
-                        "scale_factor": scale_factor,
-                        "loaded_tables": loaded_tables,
-                    }
-                )
-        return (loaded_workloads, loaded_workload_tables)
+                table = {
+                    "workload_type": workload_type,
+                    "scale_factor": scale_factor,
+                    "loaded_tables": loaded_tables,
+                    "missing_tables": missing_tables,
+                    "completely_loaded": loaded,
+                    "database_representation": workload_tables,
+                }
+                workoad_tables_status.append(table)
+        return workoad_tables_status
 
-    def get_loaded_workload_data(self) -> Tuple:
+    def get_workoad_tables_status(self) -> List:
         """Get loaded benchmark data."""
         tables_in_database: List = self.get_loaded_tables_in_database()
-        loaded_workloads, loaded_tables = self.get_loaded_workloads(tables_in_database)
-        return (
-            loaded_tables,
-            loaded_workloads,
-        )
+        workoad_tables_status = self._workoad_tables_status(tables_in_database)
+        return workoad_tables_status
 
     def start_worker(self) -> bool:
         """Start worker."""

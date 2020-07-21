@@ -66,7 +66,7 @@ def get_server_calls() -> List[str]:
         "set plugin setting",
         "execute sql query",
         "database status",
-        "workload status",
+        "workload tables status",
     ]
 
 
@@ -671,33 +671,30 @@ class TestDatabaseManager:
         assert response["body"]["database_status"][0]["hyrise_active"]
         assert response["header"]["status"] == 200
 
-    def test_calls_workload_status(self, database_manager: DatabaseManager) -> None:
+    def test_calls_workoad_tables_status(
+        self, database_manager: DatabaseManager
+    ) -> None:
         """Test calls workload status."""
         fake_database = MagicMock()
-        fake_database.get_loaded_workload_data.return_value = (
-            [
-                {
-                    "workload_type": "tpch",
-                    "scale_factor": 1.0,
-                    "loaded_tables": ["a", "b"],
-                }
-            ],
-            [
-                {"workload_type": "tpch", "scale_factor": 1.0},
-                {"workload_type": "tpcds", "scale_factor": 0.1},
-            ],
+        fake_status_workload_tables = {
+            "workload_type": "rock",
+            "scale_factor": 1.0,
+            "loaded_tables": ["Gary"],
+            "missing_tables": ["Clark"],
+            "completely_loaded": False,
+            "database_representation": {"Gary": "gary_rock_1", "Clark": "clark_rock_1"},
+        }
+        fake_database.get_workoad_tables_status.return_value = (
+            fake_status_workload_tables
         )
         database_manager._databases = {"fake_db_id": fake_database}
 
-        response = database_manager._call_workload_status({})
-        assert response["body"]["workload_status"][0]["id"] == "fake_db_id"
-        assert response["body"]["workload_status"][0]["loaded_workloads"] == [
-            {"workload_type": "tpch", "scale_factor": 1.0},
-            {"workload_type": "tpcds", "scale_factor": 0.1},
-        ]
-        assert response["body"]["workload_status"][0]["loaded_tables"] == [
-            {"workload_type": "tpch", "scale_factor": 1.0, "loaded_tables": ["a", "b"]}
-        ]
+        response = database_manager._call_workoad_tables_status({})
+        assert response["body"]["status_workoad_tables"][0]["id"] == "fake_db_id"
+        assert (
+            response["body"]["status_workoad_tables"][0]["workoad_tables_status"]
+            == fake_status_workload_tables
+        )
         assert response["header"]["status"] == 200
 
     def test_start_server(self, database_manager: DatabaseManager):
