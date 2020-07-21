@@ -31,22 +31,26 @@ class TestCursor:
     @mark.parametrize(
         "queries",
         [
-            [(1, 2, "benchmark1", "query_no_1", "worker1")],
+            [(1, 2, "benchmark1", 1.0, "query_no_1", "worker1", True)],
             [
-                (1, 2, "benchmark1", "query_no_1", "worker1"),
-                (3, 4, "benchmark2", "query_no_2", "worker2"),
+                (1, 2, "benchmark1", 1.0, "query_no_1", "worker1", True),
+                (3, 4, "benchmark2", 1.0, "query_no_2", "worker2", True),
             ],
         ],
     )
-    def test_logs_queries(self, queries: List[Tuple[int, int, str, str, str]]):
+    def test_logs_queries(
+        self, queries: List[Tuple[int, int, str, float, str, str, bool]]
+    ):
         """Test queries logging."""
         expected_points = [
             {
                 "measurement": "successful_queries",
                 "tags": {
                     "benchmark": query[2],
-                    "query_no": query[3],
-                    "worker_id": query[4],
+                    "scalefactor": query[3],
+                    "query_no": query[4],
+                    "worker_id": query[5],
+                    "commited": query[6],
                 },
                 "fields": {"latency": query[1]},
                 "time": query[0],

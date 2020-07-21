@@ -136,8 +136,8 @@ class TestTaskWorker:
         """Test log of results."""
         mock_storage_curser = MagicMock()
         succesful_queries = [
-            (10, 5, "tpch", 1.0, "01", "worker_01"),
-            (10, 5, "tpch", 1.0, "02", "worker_02"),
+            (10, 5, "tpch", 1.0, "01", "worker_01", True),
+            (10, 5, "tpch", 1.0, "02", "worker_02", True),
         ]
         failed_queries = [(10, "worker_03", "select ...", "Error")]
         log_results(mock_storage_curser, succesful_queries, failed_queries)
@@ -213,7 +213,7 @@ class TestTaskWorker:
         workload_drivers = {"tpch": mock_workload_driver}
         fake_queue = Queue()  # type: ignore
         fake_queue.put(task)
-        excepted_successful_queries = [(1, 1, "tpch", 1.0, "01", "worker_id")]
+        excepted_successful_queries = [(1, 1, "tpch", 1.0, "01", "worker_id", True)]
         try:
             execute_queries(
                 worker_id,
