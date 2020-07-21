@@ -28,8 +28,8 @@ export function useDatabaseController(): DatabaseController {
     }
   });
 
-  eventBus.$on("CPU_DATA_CHANGED", (data: any) => {
-    if (allDatabasesExist(Object.keys(data))) {
+  eventBus.$on("CPU_DATA_CHANGED", (data: any[]) => {
+    if (allDatabasesExist(data.map((entry) => entry.id))) {
       updateDatabaseCPUInformation(data);
     }
   });

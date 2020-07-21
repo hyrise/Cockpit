@@ -2,7 +2,7 @@
   <v-list class="list">
     <v-card flat>
       <v-card-title class="header subtitle-1">
-        METRICS
+        Metrics
       </v-card-title>
     </v-card>
     <v-list-item v-for="metric in availableMetrics" :key="metric">

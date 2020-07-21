@@ -1,9 +1,20 @@
 <template>
   <v-dialog v-model="open" persistent max-width="600px">
     <v-card data-id="add-database">
-      <v-card-title>
-        <span class="headline">Add new database</span>
-      </v-card-title>
+      <v-system-bar :height="50" color="secondary">
+        <v-card-title>
+          <span class="subtitle-1">Add new database</span>
+        </v-card-title>
+        <v-spacer />
+        <v-icon
+          data-id="cancel-add-database-button"
+          @click="
+            closeDialog();
+            showAdvanced = false;
+          "
+          >mdi-close</v-icon
+        >
+      </v-system-bar>
       <v-card-text>
         <v-container>
           <v-row>
@@ -90,16 +101,6 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn
-          color="primary"
-          text
-          @click="
-            closeDialog();
-            showAdvanced = false;
-          "
-          data-id="cancel-add-database-button"
-          >Cancel</v-btn
-        >
         <v-btn
           color="primary"
           text
