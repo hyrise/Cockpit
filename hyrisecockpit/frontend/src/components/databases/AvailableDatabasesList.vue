@@ -10,7 +10,7 @@
         class="add ml-0"
         rounded
       >
-        <v-text class="text font-weight-regular mr-1">Add</v-text>
+        <div class="text font-weight-regular mr-1">Add</div>
         <v-icon class="mr-2" :size="20">mdi-database-plus</v-icon>
       </v-btn>
       <v-spacer></v-spacer>

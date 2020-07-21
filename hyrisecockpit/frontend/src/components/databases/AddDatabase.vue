@@ -51,11 +51,10 @@
           </v-col>
         </v-row>
       </v-card-text>
-      <v-card-actions class="pt-0">
-        <v-spacer></v-spacer>
+      <v-card-actions class="justify-center pt-0">
         <v-btn
-          color="primary"
-          text
+          class="secondary primary--text mb-3"
+          small
           @click="
             createNewDatabase();
             closeDialog();
