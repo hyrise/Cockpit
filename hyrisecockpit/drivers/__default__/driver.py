@@ -43,12 +43,13 @@ class DefaultDriver:
 
     def get_table_names(self, scalefactor):
         """Return table name and representation in database."""
-        if scalefactor < 1.0:
-            scalefactor = str(scalefactor).replace(".", "_")
+        if scalefactor == int(scalefactor):
+            formatted_scalefactor = str(int(scalefactor))
         else:
-            scalefactor = str(int(scalefactor))
+            formatted_scalefactor = str(scalefactor).replace(".", "_")
+
         return {
-            table_name: f"{table_name}_{self._benchmark_type}_{scalefactor}"
+            table_name: f"{table_name}_{self._benchmark_type}_{formatted_scalefactor}"
             for table_name in self._table_names
         }
 
