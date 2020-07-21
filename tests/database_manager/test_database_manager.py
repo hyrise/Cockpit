@@ -690,9 +690,9 @@ class TestDatabaseManager:
         database_manager._databases = {"fake_db_id": fake_database}
 
         response = database_manager._call_workoad_tables_status({})
-        assert response["body"]["status_workoad_tables"][0]["id"] == "fake_db_id"
+        assert response["body"]["workoad_tables"][0]["id"] == "fake_db_id"
         assert (
-            response["body"]["status_workoad_tables"][0]["workoad_tables_status"]
+            response["body"]["workoad_tables"][0]["workoad_tables_status"]
             == fake_status_workload_tables
         )
         assert response["header"]["status"] == 200

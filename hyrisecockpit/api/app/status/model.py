@@ -1,5 +1,5 @@
 """Model for status information namespace."""
-from typing import List
+from typing import Dict, List
 
 
 class DatabaseStatus:
@@ -19,40 +19,36 @@ class DatabaseStatus:
         self.hyrise_active: bool = hyrise_active
 
 
-class LoadedTables:
-    """Model of workload."""
-
-    def __init__(
-        self, workload_type: str, scale_factor: float, loaded_tables: List[str]
-    ):
-        """Initialize a workload model."""
-        self.workload_type: str = workload_type
-        self.scale_factor: float = scale_factor
-        self.loaded_tables: List[str] = loaded_tables
-
-
-class LoadedWorkload:
-    """Model of a loaded workload."""
-
-    def __init__(self, workload_type: str, scale_factor: float):
-        """Initialize a loaded workload model."""
-        self.workload_type: str = workload_type
-        self.scale_factor: float = scale_factor
-
-
-class WorkloadStatus:
-    """Model of workload status."""
+class TablesStatus:
+    """Model of a tables status."""
 
     def __init__(
         self,
-        id: str,
-        loaded_workloads: List[LoadedWorkload],
-        loaded_tables: List[LoadedTables],
+        workload_type: str,
+        scale_factor: float,
+        loaded_tables: List[str],
+        missing_tables: List[str],
+        completely_loaded: bool,
+        database_representation: Dict,
     ):
-        """Initialize a benchmark status model."""
+        """Initialize a tables status model."""
+        self.workload_type: str = workload_type
+        self.scale_factor: float = scale_factor
+        self.loaded_tables: List[str] = loaded_tables
+        self.missing_tables: List[str] = missing_tables
+        self.completely_loaded: bool = completely_loaded
+        self.database_representation: Dict = database_representation
+
+
+class WorkloadTablesStatus:
+    """Model of workload tables status."""
+
+    def __init__(
+        self, id: str, workload_tables_status: List[TablesStatus],
+    ):
+        """Initialize a Workload tables model."""
         self.id: str = id
-        self.loaded_workloads: List[LoadedWorkload] = loaded_workloads
-        self.loaded_tables: List[LoadedTables] = loaded_tables
+        self.workload_tables_status: List[TablesStatus] = workload_tables_status
 
 
 class FailedQuery:

@@ -4,9 +4,8 @@ from hyrisecockpit.api.app.status.model import (
     DatabaseStatus,
     FailedQuery,
     FailedTask,
-    LoadedTables,
-    LoadedWorkload,
-    WorkloadStatus,
+    TablesStatus,
+    WorkloadTablesStatus,
 )
 
 
@@ -22,24 +21,34 @@ class TestStatusModel:
             hyrise_active=True,
         )
 
-    def test_creates_loaded_workload(self) -> None:
-        """A LoadedWorkload model can be created."""
-        assert LoadedWorkload(workload_type="tpch", scale_factor=1.0)
-
-    def test_creates_loaded_tables(self) -> None:
-        """A LoadedTables model can be created."""
-        assert LoadedTables(
-            workload_type="tpch", scale_factor=1.0, loaded_tables=["a", "b"]
+    def test_creates_tables_status(self) -> None:
+        """A TablesStatus model can be created."""
+        assert TablesStatus(
+            workload_type="tpch",
+            scale_factor=1.0,
+            loaded_tables=["a", "b"],
+            missing_tables=["c", "d"],
+            completely_loaded=False,
+            database_representation={"a": "a_1", "b": "b_1", "c": "c_1", "d": "d_1"},
         )
 
-    def test_creates_workload_status(self) -> None:
-        """A WorkloadStatus model can be created."""
-        assert WorkloadStatus(
+    def test_creates_worklaod_tables_status(self) -> None:
+        """A WorkloadTablesStatus model can be created."""
+        assert WorkloadTablesStatus(
             id="db",
-            loaded_workloads=[LoadedWorkload(workload_type="tpch", scale_factor=1.0)],
-            loaded_tables=[
-                LoadedTables(
-                    workload_type="tpch", scale_factor=1.0, loaded_tables=["a", "b"]
+            workload_tables_status=[
+                TablesStatus(
+                    workload_type="tpch",
+                    scale_factor=1.0,
+                    loaded_tables=["a", "b"],
+                    missing_tables=["c", "d"],
+                    completely_loaded=False,
+                    database_representation={
+                        "a": "a_1",
+                        "b": "b_1",
+                        "c": "c_1",
+                        "d": "d_1",
+                    },
                 )
             ],
         )

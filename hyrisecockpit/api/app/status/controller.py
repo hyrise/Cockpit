@@ -4,8 +4,8 @@ from typing import List
 from flask_accepts import responds
 from flask_restx import Namespace, Resource
 
-from .model import DatabaseStatus, FailedTask, WorkloadStatus
-from .schema import DatabaseStatusSchema, FailedTaskSchema, WorkloadStatusSchema
+from .model import DatabaseStatus, FailedTask, WorkloadTablesStatus
+from .schema import DatabaseStatusSchema, FailedTaskSchema, WorkloadTablesStatusSchema
 from .service import StatusService
 
 api = Namespace("status", description="Get status information.")
@@ -21,14 +21,14 @@ class DatabaseStatusController(Resource):
         return StatusService.get_database_status()
 
 
-@api.route("/workload")
-class WorkloadStatusController(Resource):
-    """Controller for returning the loaded benchmark and tables."""
+@api.route("/workload_tables")
+class WorkloadTablesController(Resource):
+    """Controller for returning the workload tables status information."""
 
-    @responds(schema=WorkloadStatusSchema(many=True), api=api)
-    def get(self) -> List[WorkloadStatus]:
-        """Get status of loaded benchmark or tables."""
-        return StatusService.get_workload_status()
+    @responds(schema=WorkloadTablesStatusSchema(many=True), api=api)
+    def get(self) -> List[WorkloadTablesStatus]:
+        """Get status of workload tables."""
+        return StatusService.get_workload_tables()
 
 
 @api.route("/failed_tasks")

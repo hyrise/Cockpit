@@ -1,7 +1,7 @@
 """Schema's for status module."""
 
 from marshmallow import Schema
-from marshmallow.fields import Boolean, Float, List, Nested, String
+from marshmallow.fields import Boolean, Dict, Float, List, Nested, String
 
 
 class DatabaseStatusSchema(Schema):
@@ -33,8 +33,8 @@ class DatabaseStatusSchema(Schema):
     )
 
 
-class LoadedTablesSchema(Schema):
-    """Schema of a workload object."""
+class TablesStatusSchema(Schema):
+    """Schema of a table status object."""
 
     workload_type = String(
         title="Workload type",
@@ -56,27 +56,29 @@ class LoadedTablesSchema(Schema):
             example="orders",
         )
     )
-
-
-class LoadedWorkloadSchema(Schema):
-    """Schema of a loaded workload status object."""
-
-    workload_type = String(
-        title="Workload type",
-        description="Workload type dataset that is completely loaded.",
-        required=True,
-        example="tpch",
+    missing_tables = List(
+        String(
+            title="Table name",
+            description="Name of missing table.",
+            required=True,
+            example="orders",
+        )
     )
-    scale_factor = Float(
-        title="Scale factor of tables",
-        description="Scale factor of tables for workload type.",
+    completely_loaded = Boolean(
+        title="Completely loaded",
+        description="All tables for workload are completely loaded in database.",
         required=True,
-        example=1.0,
+        example=True,
+    )
+    database_representation = Dict(
+        keys=String(description="Name of table."),
+        values=String(description="Name of table representation in database."),
+        description="Mapping between table names and their names in database.",
     )
 
 
-class WorkloadStatusSchema(Schema):
-    """Schema of a workload status object."""
+class WorkloadTablesStatusSchema(Schema):
+    """Schema of a workload tables status object."""
 
     id = String(
         title="Database ID",
@@ -84,8 +86,7 @@ class WorkloadStatusSchema(Schema):
         required=True,
         example="hyrise-1",
     )
-    loaded_workloads = List(Nested(LoadedWorkloadSchema))
-    loaded_tables = List(Nested(LoadedTablesSchema))
+    workload_tables_status = List(Nested(TablesStatusSchema))
 
 
 class FailedQuerySchema(Schema):

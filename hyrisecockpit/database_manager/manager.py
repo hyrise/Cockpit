@@ -274,7 +274,7 @@ class DatabaseManager(object):
                 {"id": database_id, "workoad_tables_status": workoad_tables_status}
             )
         response = get_response(200)
-        response["body"]["status_workoad_tables"] = status
+        response["body"]["workoad_tables"] = status
         return response
 
     def start(self) -> None:
