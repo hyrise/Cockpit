@@ -1,65 +1,24 @@
 """Tests for the Workload controller."""
 
 from json import dumps
-from typing import Optional
 from unittest.mock import patch
 
 from flask import Flask
 from flask.testing import FlaskClient
-from pytest import fixture, mark
+from pytest import fixture
 
 from hyrisecockpit.api.app import create_app
 from hyrisecockpit.api.app.workload import BASE_ROUTE
-from hyrisecockpit.api.app.workload.interface import (
-    DetailedWorkloadInterface,
-    WorkloadInterface,
-)
+from hyrisecockpit.api.app.workload.interface import BaseWorkloadInterface
 from hyrisecockpit.api.app.workload.model import DetailedWorkload, Workload
-from hyrisecockpit.api.app.workload.schema import DetailedWorkloadSchema, WorkloadSchema
+from hyrisecockpit.api.app.workload.schema import (
+    BaseWorkloadSchema,
+    DetailedWorkloadSchema,
+    WorkloadSchema,
+)
 from hyrisecockpit.api.app.workload.service import WorkloadService
 
-from .data import (
-    detailed_interfaces,
-    detailed_workloads,
-    interfaces,
-    workload_type,
-    workloads,
-)
-
 url = f"/{BASE_ROUTE}"
-
-bad_id = "id_that_will_fail"
-
-
-def create_workload(interface: WorkloadInterface) -> Optional[Workload]:
-    """Create a Workload with the given arguments."""
-    if interface["workload_type"] == bad_id:
-        return None
-    else:
-        return Workload(**interface)
-
-
-def get_workload_by_id(id: str) -> Optional[DetailedWorkload]:
-    """Return the Workload with the id."""
-    try:
-        return [w for w in detailed_workloads() if w.workload_type == id].pop()
-    except IndexError:
-        return None
-
-
-def delete_workload_by_id(id: str) -> Optional[str]:
-    """Return the workload_type of the deleted Workload."""
-    return None if id == bad_id else id
-
-
-def update_workload_by_id(
-    detailed_interface: DetailedWorkloadInterface,
-) -> Optional[DetailedWorkload]:
-    """Return the updated Workload."""
-    workload = get_workload_by_id(id)  # type: ignore
-    if workload is None:
-        return None
-    return DetailedWorkload(**detailed_interface)
 
 
 @fixture
@@ -80,152 +39,146 @@ def client(app: Flask) -> FlaskClient:
 class TestWorkloadController:
     """Tests for the Workload controller."""
 
-    @patch.object(
-        WorkloadService, "get_all", workloads,
-    )
-    def test_gets_all_workloads(self, client: FlaskClient):
+    @patch("hyrisecockpit.api.app.workload.controller.WorkloadService")
+    def test_gets_all_workloads(
+        self, mock_workload_service: WorkloadService, client: FlaskClient
+    ):
         """A Workload controller routes get_all correctly."""
+        detailed_workload_one = DetailedWorkload(
+            workload_type="tpch",
+            frequency=200,
+            scale_factor=1.0,
+            weights={"01": 3.0, "02": 2.0},
+            running=True,
+            supported_scale_factors=[0.1, 1.0],
+            default_weights={"01": 1.0, "02": 1.0},
+        )
+        detailed_workload_two = DetailedWorkload(
+            workload_type="tpcc",
+            frequency=300,
+            scale_factor=5.0,
+            weights={"01": 1.0, "02": 2.0},
+            running=True,
+            supported_scale_factors=[1.0, 5.0],
+            default_weights={"01": 1.0, "02": 1.0},
+        )
+        mock_workload_service.get_all.return_value = [  # type: ignore
+            detailed_workload_one,
+            detailed_workload_two,
+        ]
         response = client.get(url, follow_redirects=True)
         assert 200 == response.status_code
-        assert WorkloadSchema(many=True).dump(workloads()) == response.get_json()
+        assert (
+            DetailedWorkloadSchema(many=True).dump(
+                [detailed_workload_one, detailed_workload_two]
+            )
+            == response.get_json()
+        )
 
-    @patch.object(
-        WorkloadService, "get_all", lambda: [],
-    )
-    def test_gets_no_workloads_if_there_are_none(self, client: FlaskClient):
+    @patch("hyrisecockpit.api.app.workload.controller.WorkloadService")
+    def test_gets_no_workloads_if_there_are_none(
+        self, mock_workload_service: WorkloadService, client: FlaskClient
+    ):
         """A Workload controller routes get_all correctly."""
+        mock_workload_service.get_all.return_value = []  # type: ignore
         response = client.get(url, follow_redirects=True)
         assert 200 == response.status_code
         assert WorkloadSchema(many=True).dump([]) == response.get_json()
 
-    @mark.parametrize("interface", interfaces())
-    @patch.object(WorkloadService, "create", create_workload)
+    @patch("hyrisecockpit.api.app.workload.controller.WorkloadService")
     def test_creates_a_workload(
-        self, client: FlaskClient, interface: WorkloadInterface
+        self, mock_workload_service: WorkloadService, client: FlaskClient
     ):
         """A Workload controller routes create correctly."""
+        request = BaseWorkloadInterface(
+            workload_type="tpch",
+            frequency=200,
+            scale_factor=1.0,
+            weights={"01": 1.0, "02": 1.0},
+        )
+        mock_workload_service.update_by_id.return_value = request  # type: ignore
         response = client.post(
             url,
             follow_redirects=True,
-            data=dumps(interface),
+            data=dumps(request),
             content_type="application/json",
         )
         assert 200 == response.status_code
-        assert WorkloadSchema().load(interface) == response.get_json()
+        mock_workload_service.update_by_id.assert_called_once()  # type: ignore
+        assert BaseWorkloadSchema().load(request) == response.get_json()
 
-    @mark.parametrize("interface", interfaces())
-    @patch.object(WorkloadService, "create", create_workload)
+    @patch("hyrisecockpit.api.app.workload.controller.WorkloadService")
     def test_creates_no_workload_if_it_already_exists(
-        self, client: FlaskClient, interface: WorkloadInterface
+        self, mock_workload_service: WorkloadService, client: FlaskClient
     ):
         """A Workload controller routes create correctly."""
-        interface["workload_type"] = bad_id
+        request = BaseWorkloadInterface(
+            workload_type="tpch",
+            frequency=200,
+            scale_factor=1.0,
+            weights={"01": 1.0, "02": 1.0},
+        )
+        mock_workload_service.update_by_id.return_value = None  # type: ignore
         response = client.post(
             url,
             follow_redirects=True,
-            data=dumps(interface),
+            data=dumps(request),
             content_type="application/json",
         )
-        assert 409 == response.status_code
+        assert 404 == response.status_code
         assert not response.is_json
 
 
 class TestWorkloadIdController:
     """Tests for the WorkloadId controller."""
 
-    @mark.parametrize("id", workload_type())
-    @patch.object(
-        WorkloadService, "get_by_id", get_workload_by_id,
-    )
-    def test_gets_the_correct_workload(self, client: FlaskClient, id: str):
-        """A WorkloadId controller routes get correctly."""
-        response = client.get(url + f"/{id}", follow_redirects=True)
-        assert 200 == response.status_code
-        assert (
-            DetailedWorkloadSchema().dump(get_workload_by_id(id)) == response.get_json()
-        )
-
-    @patch.object(
-        WorkloadService, "get_by_id", get_workload_by_id,
-    )
-    def test_gets_no_workload_if_it_cannot_be_found(
-        self, client: FlaskClient, id: str = bad_id
+    @patch("hyrisecockpit.api.app.workload.controller.WorkloadService")
+    def test_gets_the_correct_workload(
+        self, mock_workload_service: WorkloadService, client: FlaskClient
     ):
         """A WorkloadId controller routes get correctly."""
-        response = client.get(url + f"/{id}", follow_redirects=True)
-        assert 404 == response.status_code
-        assert not response.is_json
-
-    @mark.parametrize("id", workload_type())
-    @patch.object(
-        WorkloadService, "delete_by_id", delete_workload_by_id,
-    )
-    def test_deletes_the_correct_workload(self, client: FlaskClient, id: str):
-        """A WorkloadId controller routes delete correctly."""
-        response = client.delete(url + f"/{id}", follow_redirects=True)
-        assert 200 == response.status_code
-        assert not response.is_json
-
-    @patch.object(
-        WorkloadService, "delete_by_id", delete_workload_by_id,
-    )
-    def test_deletes_no_workload_if_it_cannot_be_found(
-        self, client: FlaskClient, id: str = bad_id
-    ):
-        """A WorkloadId controller routes delete correctly."""
-        response = client.delete(url + f"/{id}", follow_redirects=True)
-        assert 404 == response.status_code
-        assert not response.is_json
-
-    @mark.skip(reason="Data from data.py seems to be inconsistent.")
-    @mark.parametrize("detailed_interface", detailed_interfaces())
-    @patch.object(
-        WorkloadService, "update_by_id", update_workload_by_id,
-    )
-    @patch.object(
-        WorkloadService, "get_by_id", get_workload_by_id,
-    )
-    def test_updates_the_correct_workload(
-        self, client: FlaskClient, detailed_interface: DetailedWorkloadInterface
-    ):
-        """A WorkloadId controller routes update correctly."""
-        id = detailed_interface["workload_type"]
-        new_interface = DetailedWorkloadInterface(
-            workload_type=detailed_interface["workload_type"],
-            frequency=detailed_interface["frequency"] * 10,
-            weights={k: v + 1 for k, v in detailed_interface["weights"].items()},
+        workload = Workload(
+            workload_type="tpch",
+            frequency=200,
             scale_factor=1.0,
+            weights={"01": 1.0, "02": 1.0},
             running=True,
         )
-        response_before = client.get(url + f"/{id}", follow_redirects=True)
-        assert 200 == response_before.status_code
-        assert (
-            DetailedWorkloadSchema().load(detailed_interface)
-            == response_before.get_json()
-        )
-        response_after = client.put(
-            url + f"/{id}",
-            data=dumps(new_interface),
-            content_type="application/json",
-            follow_redirects=True,
-        )
-        assert 200 == response_after.status_code
-        assert DetailedWorkloadSchema().load(new_interface) == response_after.get_json()
+        workload_id = "tpch"
+        mock_workload_service.get_by_id.return_value = workload  # type: ignore
+        response = client.get(url + f"/{workload_id}", follow_redirects=True)
+        assert 200 == response.status_code
+        assert DetailedWorkloadSchema().dump(workload) == response.get_json()
 
-    @mark.parametrize("detailed_interface", detailed_interfaces())
-    @patch.object(
-        WorkloadService, "update_by_id", update_workload_by_id,
-    )
-    def test_updates_no_workload_if_it_cannot_be_found(
-        self, client: FlaskClient, detailed_interface: DetailedWorkloadInterface
+    @patch("hyrisecockpit.api.app.workload.controller.WorkloadService")
+    def test_gets_no_workload_if_it_cannot_be_found(
+        self, mock_workload_service: WorkloadService, client: FlaskClient
     ):
-        """A WorkloadId controller routes update correctly."""
-        id = bad_id
-        response = client.put(
-            url + f"/{id}",
-            data=dumps(detailed_interface),
-            content_type="application/json",
-            follow_redirects=True,
-        )
+        """A WorkloadId controller routes get correctly."""
+        workload_id = "tpch"
+        mock_workload_service.get_by_id.return_value = None  # type: ignore
+        response = client.get(url + f"/{workload_id}", follow_redirects=True)
+        assert 404 == response.status_code
+        assert not response.is_json
+
+    @patch("hyrisecockpit.api.app.workload.controller.WorkloadService")
+    def test_deletes_the_correct_workload(
+        self, mock_workload_service: WorkloadService, client: FlaskClient
+    ):
+        """A WorkloadId controller routes delete correctly."""
+        workload_id = "tpch"
+        mock_workload_service.delete_by_id.return_value = "tpch"  # type: ignore
+        response = client.delete(url + f"/{workload_id}", follow_redirects=True)
+        assert 200 == response.status_code
+        assert not response.is_json
+
+    @patch("hyrisecockpit.api.app.workload.controller.WorkloadService")
+    def test_deletes_no_workload_if_it_cannot_be_found(
+        self, mock_workload_service: WorkloadService, client: FlaskClient
+    ):
+        """A WorkloadId controller routes delete correctly."""
+        workload_id = "tpch"
+        mock_workload_service.delete_by_id.return_value = None  # type: ignore
+        response = client.delete(url + f"/{workload_id}", follow_redirects=True)
         assert 404 == response.status_code
         assert not response.is_json

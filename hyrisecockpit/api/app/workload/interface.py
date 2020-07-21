@@ -1,17 +1,25 @@
 """Interface of a Workload."""
-from typing import Dict, TypedDict
+from typing import Dict, List, TypedDict
 
 
-class WorkloadInterface(TypedDict):
-    """Interface of a Workload."""
+class BaseWorkloadInterface(TypedDict):
+    """Interface of a base Workload."""
 
     workload_type: str
     frequency: int
     scale_factor: float
+    weights: Dict[str, float]
 
 
-class DetailedWorkloadInterface(WorkloadInterface):
+class WorkloadInterface(BaseWorkloadInterface):
+    """Interface of a Workload."""
+
+    running: bool
+
+
+class DetailedWorkloadInterface(BaseWorkloadInterface):
     """Detailed interface of a Workload."""
 
-    weights: Dict[str, float]
     running: bool
+    supported_scale_factors: List
+    default_weights: Dict

@@ -13,9 +13,8 @@ from .model import (
     DatabaseStatus,
     FailedQuery,
     FailedTask,
-    LoadedTables,
-    LoadedWorkload,
-    WorkloadStatus,
+    TablesStatus,
+    WorkloadTablesStatus,
 )
 
 
@@ -42,25 +41,20 @@ class StatusService:
         ]
 
     @classmethod
-    def get_workload_status(cls) -> List[WorkloadStatus]:
+    def get_workload_tables(cls) -> List[WorkloadTablesStatus]:
         """Get get status for all benchmark data."""
         response = cls._send_message(
-            Request(header=Header(message="workload status"), body={})
+            Request(header=Header(message="workload tables status"), body={})
         )
-        workload_status: List[WorkloadStatus] = []
-        for database in response["body"]["workload_status"]:
-            loaded_workloads: List[LoadedWorkload] = [
-                LoadedWorkload(**loaded_workload)
-                for loaded_workload in database["loaded_workloads"]
+        workload_tables: List[WorkloadTablesStatus] = []
+        for database in response["body"]["workoad_tables"]:
+            workload_tables_status = [
+                TablesStatus(**status) for status in database["workoad_tables_status"]
             ]
-            loaded_tables: List[LoadedTables] = [
-                LoadedTables(**loaded_tables)
-                for loaded_tables in database["loaded_tables"]
-            ]
-            workload_status.append(
-                WorkloadStatus(database["id"], loaded_workloads, loaded_tables)
+            workload_tables.append(
+                WorkloadTablesStatus(database["id"], workload_tables_status)
             )
-        return workload_status
+        return workload_tables
 
     @classmethod
     def get_failed_tasks(cls) -> List[FailedTask]:

@@ -5,8 +5,8 @@ from hyrisecockpit.api.app.socket_manager import GeneratorSocket, ManagerSocket
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
-from .interface import DetailedWorkloadInterface, WorkloadInterface
-from .model import DetailedWorkload, Workload
+from .interface import BaseWorkloadInterface
+from .model import BaseWorkload, DetailedWorkload, Workload
 
 
 class WorkloadService:
@@ -25,7 +25,7 @@ class WorkloadService:
             return socket.send_message(message)
 
     @classmethod
-    def get_all(cls) -> List[Workload]:
+    def get_all(cls) -> List[DetailedWorkload]:
         """Get all Workloads.
 
         Returns a list of all Workloads.
@@ -33,26 +33,12 @@ class WorkloadService:
         response = cls._send_message_to_gen(
             Request(header=Header(message="get all workloads"), body={}),
         )
-        return [Workload(**interface) for interface in response["body"]["workloads"]]
+        return [
+            DetailedWorkload(**interface) for interface in response["body"]["workloads"]
+        ]
 
     @classmethod
-    def create(cls, interface: WorkloadInterface) -> Optional[Workload]:
-        """Create a Workload.
-
-        Returns the created Workload.
-        Returns None if a Workload with the given ID already exists.
-        """
-        response = cls._send_message_to_gen(
-            Request(header=Header(message="start workload"), body=dict(interface)),
-        )
-        return (
-            None
-            if response["header"]["status"] != 200
-            else Workload(**response["body"]["workload"])
-        )
-
-    @classmethod
-    def get_by_id(cls, workload_type: str) -> Optional[DetailedWorkload]:
+    def get_by_id(cls, workload_type: str) -> Optional[Workload]:
         """Get a Workload.
 
         Returns the Workload with the given ID.
@@ -67,7 +53,7 @@ class WorkloadService:
         return (
             None
             if response["header"]["status"] == 404
-            else DetailedWorkload(**response["body"]["workload"])
+            else Workload(**response["body"]["workload"])
         )
 
     @classmethod
@@ -90,9 +76,7 @@ class WorkloadService:
         )
 
     @classmethod
-    def update_by_id(
-        cls, interface: DetailedWorkloadInterface
-    ) -> Optional[DetailedWorkload]:
+    def update_by_id(cls, interface: BaseWorkloadInterface) -> Optional[BaseWorkload]:
         """Update a Workload by ID.
 
         Returns the updated Workload.
@@ -104,5 +88,5 @@ class WorkloadService:
         return (
             None
             if response["header"]["status"] == 404
-            else DetailedWorkload(**response["body"]["workload"])
+            else BaseWorkload(**response["body"]["workload"])
         )
