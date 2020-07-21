@@ -223,7 +223,7 @@ class TPCCParameterGenerator:  # noqa
             "stock_level": self.generateStockLevelParams,
             "delivery": self.generateDeliveryParams,
             "order_status": self.generateOrderStatusParams,
-            "payment": self.generateOrderStatusParams,
+            "payment": self.generatePaymentParams,
             "new_order": self.generateNewOrderParams,
         }
 

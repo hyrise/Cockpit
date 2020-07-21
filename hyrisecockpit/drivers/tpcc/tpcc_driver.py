@@ -1,11 +1,12 @@
 """TPC-C driver."""
 from os import getcwd
 from os.path import abspath
+from time import time_ns
 from typing import Dict, List, Tuple
 
-from hyrisecockpit.drivers.__default__.driver import DefaultDriver
 from hyrisecockpit.drivers.__default__.task_types import DefaultTask
 from hyrisecockpit.drivers.tpcc.parameter_generator import TPCCParameterGenerator
+from hyrisecockpit.drivers.tpcc.transaction_handler import TPCCTransactionHandler
 
 
 class TpccDriver:
@@ -22,20 +23,13 @@ class TpccDriver:
             "CUSTOMER",
             "HISTORY",
             "NEW_ORDER",
-            "ORDER",
+            "ORDERS",
             "ORDER_LINE",
             "ITEM",
             "STOCK",
         ]
         self.scale_factors = [5.0]
-        self._scale_factor_query_path = {5.0: "tpcc_1"}
-
-        self._default_driver: DefaultDriver = DefaultDriver(  # TODO: remove
-            self._query_path,
-            self._scale_factor_query_path,
-            self._benchmark_type,
-            self._table_names,
-        )
+        self._transaction_handler = TPCCTransactionHandler()
 
     def get_default_weights(self):
         """Get default weights."""
@@ -58,21 +52,34 @@ class TpccDriver:
         """Return table name and representation in database."""
         return {table_name: table_name for table_name in self._table_names}
 
-    def get_load_queries(self, scalefactor) -> Dict[str, Tuple]:
+    def get_load_queries(self, scalefactor) -> Dict[str, Tuple[str, Tuple]]:
         """Generate load tables queries."""
         formatted_scalefactor = str(int(scalefactor))
-        return {
-            table: (
-                """COPY "%s" FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';""",
-                (
-                    (table, "as_is"),
-                    (self._benchmark_type, "as_is"),
-                    (formatted_scalefactor, "as_is"),
-                    (table.lower(), "as_is"),
-                ),
-            )
-            for table in self._table_names
-        }
+        load_queries = {}
+
+        for table in self._table_names:
+            if table != "ORDERS":
+                load_queries[table] = (
+                    """COPY "%s" FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';""",
+                    (
+                        (table, "as_is"),
+                        (self._benchmark_type, "as_is"),
+                        (formatted_scalefactor, "as_is"),
+                        (table.lower(), "as_is"),
+                    ),
+                )
+            else:
+                load_queries[table] = (
+                    """COPY "%s" FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';""",
+                    (
+                        (table, "as_is"),
+                        (self._benchmark_type, "as_is"),
+                        (formatted_scalefactor, "as_is"),
+                        ("order", "as_is"),
+                    ),
+                )
+
+        return load_queries  # type: ignore
 
     def get_delete_queries(self, scalefactor) -> Dict[str, Tuple]:
         """Generate delete table queries."""
@@ -82,5 +89,15 @@ class TpccDriver:
         }
 
     def execute_task(self, task, cursor, worker_id) -> Tuple[int, int, float, str]:
-        """Generate execute task queries."""
-        return self._default_driver.execute_task(task, cursor, worker_id)
+        """Execute task of the transaction type."""
+        transaction_type = task["transaction_type"]
+        parameters = task["args"]
+
+        startts = time_ns()
+        self._transaction_handler.execute_transaction(
+            cursor, transaction_type, parameters
+        )
+        endts = time_ns()
+
+        latency = endts - startts
+        return endts, latency, task["scalefactor"], task["transaction_type"]
