@@ -1,7 +1,7 @@
 <template>
   <v-list class="list">
     <v-card flat>
-      <v-card-title class="header subtitle-1">
+      <v-card-title class="subtitle-2 mt-n5">
         Metrics
       </v-card-title>
     </v-card>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="mb-2">{{ label }}</div>
+    <div class="body-2 interval primary--text">{{ label }}</div>
     <v-menu
       v-model="datePicker"
       :close-on-content-click="false"
@@ -17,6 +17,7 @@
           readonly
           v-on="on"
           data-id="date-picker-text"
+          class="caption"
         ></v-text-field>
       </template>
       <v-date-picker
@@ -35,6 +36,7 @@
     >
       <template v-slot:activator="{ on }">
         <v-text-field
+          class="mt-n2 caption"
           v-model="time"
           label="Time"
           prepend-icon="mdi-clock"
@@ -44,14 +46,6 @@
           data-id="time-picker-text"
         ></v-text-field>
       </template>
-      <v-time-picker
-        v-model="time"
-        format="24hr"
-        color="primary"
-        :min="minTime"
-        :max="maxTime"
-        data-id="time-picker-select"
-      ></v-time-picker>
     </v-menu>
   </div>
 </template>

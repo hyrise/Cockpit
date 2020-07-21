@@ -17,7 +17,9 @@
         height="45"
       >
         <v-tabs-slider color="primary"></v-tabs-slider>
-        <v-tab class="body-2 font-weight-regular">Databases and Metrics</v-tab>
+        <v-tab class="body-2 font-weight-regular ml-2"
+          >Databases and Metrics</v-tab
+        >
         <v-tab class="body-2 font-weight-regular">Time Range</v-tab>
       </v-tabs>
       <v-divider />
@@ -42,129 +44,97 @@
           </v-container>
         </v-tab-item>
         <v-tab-item>
-          <v-window v-model="window">
-            <v-window-item :value="1">
-              <v-subheader class="mt-2">
-                Continuous Range
-                <v-badge
-                  class="ml-2 mt-1"
-                  :color="!staticRange ? 'green' : 'red'"
-                  dot
-                />
-              </v-subheader>
-              <v-sheet height="350">
-                <v-container class="white container flex">
-                  <v-row class="top-row" no gutters>
-                    <v-col class="flex-item select">
-                      <range-selection :disabled="staticRange" />
-                    </v-col>
-                    <v-col class="flex-item select">
-                      <precision-selection
-                        :available-precisions="availablePrecisions"
-                        :disabled="staticRange"
-                      />
-                    </v-col>
-                  </v-row>
-                </v-container>
-                <v-btn
-                  data-id="reset-time-range"
-                  class="button body-2 font-weight-regular"
-                  color="primary"
-                  block
-                  :disabled="!staticRange"
-                  @click="resetTimeRange"
-                  >Set Continuous Time Range</v-btn
-                >
-              </v-sheet>
-            </v-window-item>
-            <v-window-item :value="2">
-              <v-subheader class="mt-2">
-                Static Range
-                <v-badge
-                  class="ml-2 mt-1"
-                  :color="staticRange ? 'green' : 'red'"
-                  dot
-                />
-              </v-subheader>
-              <v-sheet height="350">
-                <v-container class="white container flex">
-                  <v-row no gutters>
-                    <v-col class="flex-item select remove-margin">
-                      <timestamp-selection
-                        label="Start"
-                        @dateChanged="(newDate) => (startDate = newDate)"
-                        @timeChanged="(newTime) => (startTime = newTime)"
-                      />
-                    </v-col>
-                    <v-col class="flex-item select remove-margin">
-                      <timestamp-selection
-                        label="End"
-                        :min-date="startDate"
-                        :min-time="startTime"
-                        @dateChanged="(newDate) => (endDate = newDate)"
-                        @timeChanged="(newTime) => (endTime = newTime)"
-                      />
-                    </v-col>
-                  </v-row>
-                </v-container>
-                <v-container class="white container flex">
-                  <v-row no gutters class="remove-margin-low">
-                    <v-col class="flex-item select">
-                      <precision-selection
-                        :available-precisions="availableStaticPrecisions"
-                        :global="false"
-                        :max-precision="maxPrecision"
-                        @precisionChanged="
-                          (newPrecision) => (staticPrecision = newPrecision)
-                        "
-                      />
-                    </v-col>
-                  </v-row>
-                </v-container>
-                <v-alert
+          <v-subheader class="subtitle-2 mt-2 ml-1">
+            Continuous Range
+            <v-badge
+              class="ml-2 mt-1"
+              :color="!staticRange ? 'green' : 'red'"
+              dot
+            />
+          </v-subheader>
+          <v-sheet height="100" class="ml-4 mt-n3">
+            <v-container class="white container flex">
+              <v-row class="top-row" no gutters>
+                <v-col class="flex-item select">
+                  <range-selection :disabled="staticRange" />
+                </v-col>
+                <v-col class="flex-item select">
+                  <precision-selection
+                    :available-precisions="availablePrecisions"
+                    :disabled="staticRange"
+                  />
+                </v-col>
+                <v-col>
+                  <v-btn
+                    data-id="reset-time-range"
+                    class="button body-2 font-weight-regular"
+                    color="primary"
+                    :disabled="!staticRange"
+                    @click="resetTimeRange"
+                    >Apply</v-btn
+                  >
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-sheet>
+
+          <v-subheader class="subtitle-2 mt-2 ml-1 mt-n3">
+            Static Range
+            <v-badge
+              class="ml-2 mt-1"
+              :color="staticRange ? 'green' : 'red'"
+              dot
+            />
+          </v-subheader>
+          <v-sheet height="200" width="700" class="ml-5 mt-n1">
+            <v-container class="white container flex">
+              <v-row no gutters>
+                <v-col class="flex-item select remove-margin">
+                  <timestamp-selection
+                    label="Start"
+                    @dateChanged="(newDate) => (startDate = newDate)"
+                    @timeChanged="(newTime) => (startTime = newTime)"
+                  />
+                </v-col>
+                <v-col class="flex-item select remove-margin">
+                  <timestamp-selection
+                    label="End"
+                    :min-date="startDate"
+                    :min-time="startTime"
+                    @dateChanged="(newDate) => (endDate = newDate)"
+                    @timeChanged="(newTime) => (endTime = newTime)"
+                  />
+                </v-col>
+                <v-col class="flex-item select">
+                  <precision-selection
+                    :available-precisions="availableStaticPrecisions"
+                    :global="false"
+                    :max-precision="maxPrecision"
+                    @precisionChanged="
+                      (newPrecision) => (staticPrecision = newPrecision)
+                    "
+                  />
+                </v-col>
+                <v-col>
+                  <!--       <v-alert
                   v-if="!!errorMessage"
                   type="error"
                   class="remove-margin-low"
                 >
-                  {{ errorMessage }}
-                </v-alert>
-                <v-btn
-                  data-id="set-static-time-range"
-                  class="body-2 font-weight-regular"
-                  color="primary"
-                  block
-                  :disabled="invalidDates"
-                  @click="setStaticTimeRange"
-                  >Set Static Time Range</v-btn
-                >
-              </v-sheet>
-            </v-window-item>
-          </v-window>
-          <v-divider class="my-2" />
-          <v-card flat>
-            <v-card-actions>
-              <v-spacer v-show="window === 1" />
-              <v-tooltip top>
-                <template v-slot:activator="{ on }">
+                  {{ errorMessage }} 
+                </v-alert>  -->
                   <v-btn
-                    v-on="on"
-                    color="white"
-                    depressed
-                    data-id="change-range-type"
-                    @click="window = window == 1 ? 2 : 1"
+                    data-id="set-static-time-range"
+                    class="button body-2 font-weight-regular"
+                    color="primary"
+                    :disabled="invalidDates"
+                    @click="setStaticTimeRange"
+                    >Apply</v-btn
                   >
-                    <v-icon v-if="window === 2" left>mdi-chevron-left</v-icon>
-                    {{ window == 1 ? "Static" : "Continuous" }}
-                    <v-icon v-if="window === 1" right>mdi-chevron-right</v-icon>
-                  </v-btn>
-                </template>
-                <span
-                  >Select {{ window == 1 ? "Static" : "Continuous" }} Range
-                  Type</span
-                >
-              </v-tooltip>
-            </v-card-actions>
-          </v-card>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-sheet>
         </v-tab-item>
       </v-tabs-items>
     </v-card-text>
