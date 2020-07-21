@@ -117,7 +117,7 @@ class DefaultDriver:
 
         return endts, endts - startts
 
-    def execute_task(self, task, cursor, worker_id) -> Tuple[int, int, str, str]:
+    def execute_task(self, task, cursor, worker_id) -> Tuple[int, int, float, str]:
         """Execute task of the query type."""
         query = task["query"]
         query = query.replace("[STREAM_ID]", str(worker_id))

@@ -83,7 +83,7 @@ class TestDatabase(object):
         )
 
     def test_inintializes_database(self, database: Database) -> None:
-        """Test initialization of worker pool attributes."""
+        """Test initialization of database attributes."""
         assert database._id == database_id
         assert database.number_workers == number_workers
         assert database._default_tables == default_tables

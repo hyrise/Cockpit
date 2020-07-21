@@ -13,7 +13,8 @@ class TpchDriver:
 
     def __init__(self):
         """Initialize a tpch driver."""
-        self._query_path: str = f"{abspath(getcwd())}/hyrisecockpit/drivers/tpch"
+        # TODO Move queries to driver folder
+        self._query_path: str = f"{abspath(getcwd())}/workload_generator/workloads"
         self._benchmark_type: str = "tpch"
         self._table_names: List[str] = [
             "customer",
@@ -56,6 +57,6 @@ class TpchDriver:
         """Generate delete table queries."""
         return self._default_driver.get_delete_queries(scalefactor)
 
-    def execute_task(self, task, cursor, worker_id) -> Tuple[int, int, str, str]:
+    def execute_task(self, task, cursor, worker_id) -> Tuple[int, int, float, str]:
         """Generate execute task queries."""
         return self._default_driver.execute_task(task, cursor, worker_id)
