@@ -74,6 +74,12 @@ class TestDefaultDriver:
 
         assert generated_workload == ["task 1", "task 2"]
 
+    def test_gets_formatted_scalefactor(self, default_driver) -> None:
+        """Test get formatted scalefactor."""
+        assert "0_5" == default_driver._get_formatted_scalefactor(0.5)
+        assert "1" == default_driver._get_formatted_scalefactor(1.0)
+        assert "1_5" == default_driver._get_formatted_scalefactor(1.5)
+
     def test_gets_table_names(self, default_driver) -> None:
         """Test get table names."""
         table_names = default_driver.get_table_names(0.5)
@@ -83,16 +89,46 @@ class TestDefaultDriver:
             "table2": "table2_benchmark_0_5",
         }
 
-        table_names = default_driver.get_table_names(1.0)
+    def test_gets_load_queries(self, default_driver) -> None:
+        """Test get load table queries."""
+        load_table_queies = default_driver.get_load_queries(0.5)
 
-        assert table_names == {
-            "table1": "table1_benchmark_1",
-            "table2": "table2_benchmark_1",
+        assert load_table_queies == {
+            "table1_benchmark_0_5": (
+                "COPY %s_%s_%s FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';",
+                (
+                    ("table1", "as_is"),
+                    ("benchmark", "as_is"),
+                    ("0_5", "as_is"),
+                    ("benchmark", "as_is"),
+                    ("0_5", "as_is"),
+                    ("table1", "as_is"),
+                ),
+            ),
+            "table2_benchmark_0_5": (
+                "COPY %s_%s_%s FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';",
+                (
+                    ("table2", "as_is"),
+                    ("benchmark", "as_is"),
+                    ("0_5", "as_is"),
+                    ("benchmark", "as_is"),
+                    ("0_5", "as_is"),
+                    ("table2", "as_is"),
+                ),
+            ),
         }
 
-        table_names = default_driver.get_table_names(1.5)
+    def test_gets_delete_queries(self, default_driver) -> None:
+        """Test get delete tables queries."""
+        load_table_queies = default_driver.get_delete_queries(0.5)
 
-        assert table_names == {
-            "table1": "table1_benchmark_1_5",
-            "table2": "table2_benchmark_1_5",
+        assert load_table_queies == {
+            "table1_benchmark_0_5": (
+                "DROP TABLE %s_%s_%s;",
+                (("table1", "as_is"), ("benchmark", "as_is"), ("0_5", "as_is"),),
+            ),
+            "table2_benchmark_0_5": (
+                "DROP TABLE %s_%s_%s;",
+                (("table2", "as_is"), ("benchmark", "as_is"), ("0_5", "as_is"),),
+            ),
         }
