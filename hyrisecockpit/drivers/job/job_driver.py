@@ -1,4 +1,4 @@
-"""TPCDS driver."""
+"""JOB driver."""
 from collections import OrderedDict
 from os import getcwd
 from os.path import abspath
@@ -6,20 +6,20 @@ from typing import Dict, List, Tuple
 
 from hyrisecockpit.drivers.__default__.driver import DefaultDriver
 from hyrisecockpit.drivers.__default__.task_types import DefaultTask
-from hyrisecockpit.drivers.tpcds.tpcds_meta_information import default_weights, tables
+from hyrisecockpit.drivers.job.job_meta_information import default_weights, tables
 
 
-class TpcdsDriver:
-    """Tpcds driver."""
+class JobDriver:
+    """job driver."""
 
     def __init__(self):
-        """Initialize a tpcds driver."""
+        """Initialize a job driver."""
         # TODO Move queries to driver folder
         self._query_path: str = f"{abspath(getcwd())}/workload_generator/workloads"
-        self._benchmark_type: str = "tpcds"
+        self._benchmark_type: str = "job"
         self._table_names: List[str] = tables
         self.scale_factors = [1.0]
-        self._scale_factor_query_path = {1.0: "tpcds_1"}
+        self._scale_factor_query_path = {1.0: "job_1"}
         self._default_driver: DefaultDriver = DefaultDriver(
             self._query_path,
             self._scale_factor_query_path,
@@ -32,7 +32,7 @@ class TpcdsDriver:
         return OrderedDict(default_weights)  # TODO why OrderedDict
 
     def generate(self, scalefactor, frequency, weights) -> List[DefaultTask]:
-        """Generate tpcds tasks."""
+        """Generate job tasks."""
         return self._default_driver.generate(scalefactor, frequency, weights)
 
     def get_table_names(self, scalefactor):

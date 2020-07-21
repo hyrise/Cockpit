@@ -22,7 +22,7 @@ class TestTpcdsDriver:
     @patch("hyrisecockpit.drivers.tpcds.tpcds_driver.DefaultDriver")
     @patch("hyrisecockpit.drivers.tpcds.tpcds_driver.abspath")
     @patch("hyrisecockpit.drivers.tpcds.tpcds_driver.getcwd")
-    def test_inintializes_tpch_driver(
+    def test_inintializes_tpcds_driver(
         self,
         mock_getcwd: MagicMock,
         mock_abspath: MagicMock,
@@ -70,36 +70,36 @@ class TestTpcdsDriver:
         """Test get table names for workload."""
         mock_default_driver = MagicMock()
         mock_default_driver.get_table_names.return_value = {
-            "customer": "customer_tpch_1"
+            "customer": "customer_tpcds_1"
         }
         tpcds_driver._default_driver = mock_default_driver
         scalefactor = 1.0
         response = tpcds_driver.get_table_names(scalefactor)
-        assert {"customer": "customer_tpch_1"} == response
+        assert {"customer": "customer_tpcds_1"} == response
         mock_default_driver.get_table_names.assert_called_once_with(scalefactor)
 
     def test_get_load_queries(self, tpcds_driver) -> None:
         """Test get loading queries for workload tables."""
         mock_default_driver = MagicMock()
         mock_default_driver.get_load_queries.return_value = {
-            "customer_tpch_1": "load customer"
+            "customer_tpcds_1": "load customer"
         }
         tpcds_driver._default_driver = mock_default_driver
         scalefactor = 1.0
         response = tpcds_driver.get_load_queries(scalefactor)
-        assert {"customer_tpch_1": "load customer"} == response
+        assert {"customer_tpcds_1": "load customer"} == response
         mock_default_driver.get_load_queries.assert_called_once_with(scalefactor)
 
     def test_get_delete_queries(self, tpcds_driver) -> None:
         """Test get delete queries for workload tables."""
         mock_default_driver = MagicMock()
         mock_default_driver.get_delete_queries.return_value = {
-            "customer_tpch_1": "delete customer"
+            "customer_tpcds_1": "delete customer"
         }
         tpcds_driver._default_driver = mock_default_driver
         scalefactor = 1.0
         response = tpcds_driver.get_delete_queries(scalefactor)
-        assert {"customer_tpch_1": "delete customer"} == response
+        assert {"customer_tpcds_1": "delete customer"} == response
         mock_default_driver.get_delete_queries.assert_called_once_with(scalefactor)
 
     def test_execute_task(self, tpcds_driver) -> None:
