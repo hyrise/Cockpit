@@ -9,7 +9,8 @@ const layout = { title: "Memory usage in %", min: 0, max: 105 };
 const transform = (xhr: any): any => {
   const data: any = {};
   xhr.response.body.forEach((entry: any) => {
-    data[entry.id] = 100 - entry.system_data[0].system_data.memory.percent;
+    data[entry.id] =
+      (1 - entry.system_data[0].system_data.memory.percent) * 100;
   });
   return data;
 };
