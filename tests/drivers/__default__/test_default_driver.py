@@ -1,6 +1,7 @@
 """Tests for default driver."""
 from unittest.mock import MagicMock, patch
 
+from psycopg2.extensions import AsIs
 from pytest import fixture
 
 from hyrisecockpit.drivers.__default__.driver import DefaultDriver
@@ -132,3 +133,59 @@ class TestDefaultDriver:
                 (("table2", "as_is"), ("benchmark", "as_is"), ("0_5", "as_is"),),
             ),
         }
+
+    def test_gets_formatted_parameters(self, default_driver) -> None:
+        """Test get formatted parameters."""
+        not_formatted_parameters = ((12, None), ("info", "as_is"))
+        formatted_parameters = default_driver._get_formatted_parameters(
+            not_formatted_parameters
+        )
+        empty_parameters = default_driver._get_formatted_parameters([])
+
+        assert empty_parameters is None
+        assert len(formatted_parameters) == 2
+        assert formatted_parameters[0] == 12
+        assert formatted_parameters[1].getquoted() == AsIs("info").getquoted()
+
+    @patch("hyrisecockpit.drivers.__default__.driver.time_ns")
+    def test_executes_query(self, mock_time_ns, default_driver) -> None:
+        """Test executes query."""
+        mock_time_ns.return_value = 10
+        mock_cursor = MagicMock()
+        mock_query = "SQL query;"
+        mock_formatted_parameters = ["param1", "param2"]
+
+        endts, latency = default_driver._execute_query(
+            mock_cursor, mock_query, mock_formatted_parameters
+        )
+
+        assert endts == 10
+        assert latency == 0
+        assert mock_cursor.execute.called_once_with(
+            mock_query, mock_formatted_parameters
+        )
+
+    @patch("hyrisecockpit.drivers.__default__.driver.time_ns")
+    def test_executes_task(self, mock_time_ns, default_driver) -> None:
+        """Test executes task."""
+        mock_time_ns.return_value = 10
+        mock_cursor = MagicMock()
+        mock_worker_id = 10
+        mock_task = {
+            "query": "SQL query with worker [STREAM_ID];",
+            "args": [("param1", None), ("param2", None)],
+            "query_type": "query_type",
+            "scalefactor": 1.0,
+        }
+        expected_query = "SQL query with worker 10;"
+        expected_parameters = ["param1", "param2"]
+
+        endts, latency, scalefactor, query_type = default_driver.execute_task(
+            mock_task, mock_cursor, mock_worker_id
+        )
+
+        assert endts == 10
+        assert latency == 0
+        assert scalefactor == 1.0
+        assert query_type == "query_type"
+        assert mock_cursor.execute.called_once_with(expected_query, expected_parameters)
