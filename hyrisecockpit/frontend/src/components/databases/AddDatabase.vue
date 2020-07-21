@@ -21,6 +21,7 @@
             <v-text-field
               v-model="host"
               label="Host"
+              :error-messages="host.length < 4 ? 'Required' : ''"
               data-id="host-input"
             ></v-text-field>
           </v-col>
@@ -28,7 +29,7 @@
             <v-text-field
               v-model="id"
               label="ID"
-              :error-messages="idError"
+              :error-messages="!id.length ? 'Required' : idError"
               data-id="id-input"
             ></v-text-field>
           </v-col>
@@ -38,6 +39,7 @@
             <v-text-field
               v-model="port"
               label="Port"
+              :error-messages="!port.length ? 'Required' : ''"
               data-id="port-input"
             ></v-text-field>
           </v-col>
@@ -46,6 +48,8 @@
               v-model="number_workers"
               label="Number of Workers"
               type="number"
+              min="1"
+              :error-messages="number_workers.length === 0 ? 'Required' : ''"
               data-id="worker-input"
             ></v-text-field>
           </v-col>
@@ -59,7 +63,13 @@
             createNewDatabase();
             closeDialog();
           "
-          :disabled="!!idError.length"
+          :disabled="
+            !!idError.length ||
+            !host.length ||
+            !id.length ||
+            !port.length ||
+            number_workers.length === 0
+          "
           data-id="save-database-button"
           >Save</v-btn
         >
@@ -132,8 +142,6 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
       context.root.$databaseController.availableDatabasesById.value.includes(id)
     ) {
       idError.value = "ID is already taken.";
-    } else if (id.length === 0) {
-      idError.value = "Choose an Id";
     } else {
       idError.value = "";
     }
