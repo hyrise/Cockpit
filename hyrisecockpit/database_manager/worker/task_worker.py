@@ -18,11 +18,11 @@ from hyrisecockpit.settings import (
 
 def log_results(
     log: StorageCursor,
-    succesful_queries: List[Tuple[int, int, str, str, str]],
+    succesful_queries: List[Tuple[int, int, str, float, str, str]],
     failed_queries: List[Tuple[int, str, str, str]],
 ) -> None:
     """Log results to database."""
-    log.log_queries(succesful_queries)
+    log.log_queries(succesful_queries)  # type: ignore
     succesful_queries.clear()
     log.log_failed_queries(failed_queries)
     failed_queries.clear()
@@ -43,7 +43,7 @@ def execute_queries(  # noqa
         with StorageCursor(
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
         ) as log:
-            succesful_queries: List[Tuple[int, int, str, str, str]] = []
+            succesful_queries: List[Tuple[int, int, str, float, str, str]] = []
             failed_queries: List[Tuple[int, str, str, str]] = []
             last_batched = time_ns()
 
@@ -60,7 +60,7 @@ def execute_queries(  # noqa
                     ].execute_task(task, cur, worker_id)
 
                     succesful_queries.append(
-                        (endts, latency, benchmark, query_type, worker_id)
+                        (endts, latency, benchmark, scalefactor, query_type, worker_id)
                     )
                 except Empty:
                     continue
@@ -70,7 +70,6 @@ def execute_queries(  # noqa
                     task_queue.put(task)
                 except (ValueError, ProgrammingError) as e:
                     failed_queries.append((time_ns(), worker_id, str(task), str(e)))
-
                 if last_batched < time_ns() - 1_000_000_000:
                     log_results(log, succesful_queries, failed_queries)
                     last_batched = time_ns()
