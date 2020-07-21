@@ -18,11 +18,11 @@ from hyrisecockpit.settings import (
 
 def log_results(
     log: StorageCursor,
-    succesful_queries: List[Tuple[int, int, str, float, str, str]],
+    succesful_queries: List[Tuple[int, int, str, float, str, str, bool]],
     failed_queries: List[Tuple[int, str, str, str]],
 ) -> None:
     """Log results to database."""
-    log.log_queries(succesful_queries)  # type: ignore
+    log.log_queries(succesful_queries)
     succesful_queries.clear()
     log.log_failed_queries(failed_queries)
     failed_queries.clear()
@@ -43,7 +43,7 @@ def execute_queries(  # noqa
         with StorageCursor(
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
         ) as log:
-            succesful_queries: List[Tuple[int, int, str, float, str, str]] = []
+            succesful_queries: List[Tuple[int, int, str, float, str, str, bool]] = []
             failed_queries: List[Tuple[int, str, str, str]] = []
             last_batched = time_ns()
 
@@ -60,7 +60,15 @@ def execute_queries(  # noqa
                     ].execute_task(task, cur, worker_id)
 
                     succesful_queries.append(
-                        (endts, latency, benchmark, scalefactor, query_type, worker_id)
+                        (
+                            endts,
+                            latency,
+                            benchmark,
+                            scalefactor,
+                            query_type,
+                            worker_id,
+                            True,
+                        )
                     )
                 except Empty:
                     continue

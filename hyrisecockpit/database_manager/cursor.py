@@ -178,15 +178,19 @@ class StorageCursor:
             Point(measurement=measurement, fields=fields, time=time_stamp)
         )
 
-    def log_queries(self, query_list: List[Tuple[int, int, str, str, str]]) -> None:
+    def log_queries(
+        self, query_list: List[Tuple[int, int, str, float, str, str, bool]]
+    ) -> None:
         """Log a couple of succesfully executed queries."""
         self.__write_points(
             Point(
                 measurement="successful_queries",
                 tags={
                     "benchmark": query[2],
-                    "query_no": query[3],
-                    "worker_id": query[4],
+                    "scalefactor": query[3],
+                    "query_no": query[4],
+                    "worker_id": query[5],
+                    "commited": query[6],
                 },
                 fields={"latency": query[1]},
                 time=query[0],
