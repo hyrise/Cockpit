@@ -52,8 +52,6 @@ class TpccDriver:
         tasks = TPCCParameterGenerator(scalefactor).generate_transactions(
             frequency, weights
         )
-        print(len(tasks))
-        print(tasks)
         return tasks
 
     def get_table_names(self, scalefactor):
