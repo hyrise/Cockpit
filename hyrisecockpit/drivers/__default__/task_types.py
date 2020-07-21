@@ -5,8 +5,10 @@ from typing import Optional, Tuple, TypedDict
 class AbstractTask(TypedDict):
     """Abstract task."""
 
-    type: str
+    type: str  # TODO: do we still need it?
     benchmark: str
+    scalefactor: float
+    args: Optional[Tuple]
 
 
 class DefaultTask(AbstractTask):
@@ -14,11 +16,9 @@ class DefaultTask(AbstractTask):
 
     query_type: str
     query: str
-    args: Optional[Tuple]
-    scalefactor: float
 
 
 class TPCCTask(AbstractTask):
     """TPC-C task."""
 
-    pass
+    transaction_type: str
