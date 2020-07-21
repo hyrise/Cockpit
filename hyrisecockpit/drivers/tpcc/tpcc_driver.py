@@ -30,6 +30,7 @@ class TpccDriver:
         ]
         self.scale_factors = [5.0]
         self._transaction_handler = TPCCTransactionHandler()
+        self._parameter_generator = TPCCParameterGenerator()
 
     def get_default_weights(self):
         """Get default weights."""
@@ -43,9 +44,8 @@ class TpccDriver:
 
     def generate(self, scalefactor, frequency, weights) -> List[DefaultTask]:
         """Generate tpch tasks."""
-        tasks = TPCCParameterGenerator(scalefactor).generate_transactions(
-            frequency, weights
-        )
+        self._parameter_generator.apply_scalefactor(scalefactor)
+        tasks = self._parameter_generator.generate_transactions(frequency, weights)
         return tasks
 
     def get_table_names(self, scalefactor):
