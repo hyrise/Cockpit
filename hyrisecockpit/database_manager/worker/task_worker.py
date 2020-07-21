@@ -64,12 +64,12 @@ def execute_queries(  # noqa
                     )
                 except Empty:
                     continue
+                except (ValueError, ProgrammingError) as e:
+                    failed_queries.append((time_ns(), worker_id, str(task), str(e)))
                 except (DatabaseError, InterfaceError):
                     cur._connection.rollback()
                     cur._connection.set_session(autocommit=True)
                     task_queue.put(task)
-                except (ValueError, ProgrammingError) as e:
-                    failed_queries.append((time_ns(), worker_id, str(task), str(e)))
                 if last_batched < time_ns() - 1_000_000_000:
                     log_results(log, succesful_queries, failed_queries)
                     last_batched = time_ns()
