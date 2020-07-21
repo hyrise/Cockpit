@@ -41,12 +41,18 @@ class DefaultDriver:
         workload = self._get_workload_for_scale_factor(scalefactor)
         return workload.get(frequency, weights)
 
-    def get_table_names(self, scalefactor):
-        """Return table name and representation in database."""
+    def _get_formatted_scalefactor(self, scalefactor: int) -> str:
+        """Get formatted scalefactor."""
         if scalefactor == int(scalefactor):
             formatted_scalefactor = str(int(scalefactor))
         else:
             formatted_scalefactor = str(scalefactor).replace(".", "_")
+
+        return formatted_scalefactor
+
+    def get_table_names(self, scalefactor):
+        """Return table name and representation in database."""
+        formatted_scalefactor = self._get_formatted_scalefactor(scalefactor)
 
         return {
             table_name: f"{table_name}_{self._benchmark_type}_{formatted_scalefactor}"
@@ -55,20 +61,18 @@ class DefaultDriver:
 
     def get_load_queries(self, scalefactor):
         """Generate loading workload queries."""
-        if scalefactor < 1.0:
-            scalefactor = str(scalefactor).replace(".", "_")
-        else:
-            scalefactor = str(int(scalefactor))
+        formatted_scalefactor = self._get_formatted_scalefactor(scalefactor)
         load_queries = {}
+
         for table in self._table_names:
-            load_queries[f"{table}_{self._benchmark_type}_{scalefactor}"] = (
+            load_queries[f"{table}_{self._benchmark_type}_{formatted_scalefactor}"] = (
                 "COPY %s_%s_%s FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';",
                 (
                     (table, "as_is"),
                     (self._benchmark_type, "as_is"),
-                    (scalefactor, "as_is"),
+                    (formatted_scalefactor, "as_is"),
                     (self._benchmark_type, "as_is"),
-                    (scalefactor, "as_is"),
+                    (formatted_scalefactor, "as_is"),
                     (table, "as_is"),
                 ),
             )
@@ -76,18 +80,17 @@ class DefaultDriver:
 
     def get_delete_queries(self, scalefactor):
         """Generate delete workload queries."""
-        if scalefactor < 1.0:
-            scalefactor = str(scalefactor).replace(".", "_")
-        else:
-            scalefactor = str(int(scalefactor))
+        formatted_scalefactor = self._get_formatted_scalefactor(scalefactor)
         delete_queries = {}
         for table in self._table_names:
-            delete_queries[f"{table}_{self._benchmark_type}_{scalefactor}"] = (
+            delete_queries[
+                f"{table}_{self._benchmark_type}_{formatted_scalefactor}"
+            ] = (
                 "DROP TABLE %s_%s_%s;",
                 (
                     (table, "as_is"),
                     (self._benchmark_type, "as_is"),
-                    (scalefactor, "as_is"),
+                    (formatted_scalefactor, "as_is"),
                 ),
             )
         return delete_queries
