@@ -77,7 +77,7 @@ class WorkloadGenerator(object):
                 "frequency": properties.frequency,
                 "scale_factor": properties.scale_factor,
                 "default_weights": properties.get_default_weights(),
-                "supported_scale_factors": properties.driver.scale_factors,
+                "supported_scale_factors": properties.driver.get_scalefactors(),
                 "weights": properties.weights,
                 "running": properties.running,
             }
@@ -119,7 +119,7 @@ class WorkloadGenerator(object):
         workload = self._workloads.get(workload_type)
         if workload is None:
             return get_response(404)
-        if scale_factor not in self._workloads[workload_type].driver.scale_factors:
+        if scale_factor not in self._workloads[workload_type].driver.get_scalefactors():
             return get_response(400)
         workload.update(scale_factor=scale_factor, frequency=frequency, weights=weights)
         workload.running = True

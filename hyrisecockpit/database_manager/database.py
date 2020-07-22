@@ -118,6 +118,10 @@ class Database(object):
         scale_factor = workload["scale_factor"]
         if workload_type not in list(self._workload_drivers.keys()):
             return False
+        elif (
+            scale_factor not in self._workload_drivers[workload_type].get_scalefactors()
+        ):
+            return False
         elif self._worker_pool.get_status() != "closed":
             return False
         else:
@@ -130,6 +134,10 @@ class Database(object):
         workload_type = workload["workload_type"]
         scale_factor = workload["scale_factor"]
         if workload_type not in list(self._workload_drivers.keys()):
+            return False
+        elif (
+            scale_factor not in self._workload_drivers[workload_type].get_scalefactors()
+        ):
             return False
         elif self._worker_pool.get_status() != "closed":
             return False

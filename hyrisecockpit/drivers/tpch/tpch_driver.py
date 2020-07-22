@@ -35,6 +35,10 @@ class TpchDriver:
             self._table_names,
         )
 
+    def get_scalefactors(self):
+        """Get supported scalefactors."""
+        return self.scale_factors
+
     def get_default_weights(self):
         """Get default weights."""
         return OrderedDict(
