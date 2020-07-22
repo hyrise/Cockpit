@@ -14,7 +14,7 @@ class TpchDriver:
     def __init__(self):
         """Initialize a tpch driver."""
         # TODO Move queries to driver folder
-        self._query_path: str = f"{abspath(getcwd())}/workload_generator/workloads"
+        self._query_path: str = f"{abspath(getcwd())}/hyrisecockpit/workload_generator/workloads"
         self._benchmark_type: str = "tpch"
         self._table_names: List[str] = [
             "customer",
