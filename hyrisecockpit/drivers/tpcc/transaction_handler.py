@@ -235,9 +235,6 @@ class TPCCTransactionHandler:
         self.conn.commit()
 
         ## Adjust the total for the discount
-        # print "c_discount:", c_discount, type(c_discount)
-        # print "w_tax:", w_tax, type(w_tax)
-        # print "d_tax:", d_tax, type(d_tax)
         total *= (1 - c_discount) * (1 + w_tax + d_tax)
 
         ## Pack up values the client is missing (see TPC-C 2.4.3.5)
