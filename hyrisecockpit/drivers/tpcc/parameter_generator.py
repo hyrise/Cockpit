@@ -240,7 +240,6 @@ class TPCCParameterGenerator:  # noqa
 
         return [
             TPCCTask(
-                type="tpcc_transaction",  # TODO: do we still need it?
                 args=generators[transaction_type](),
                 benchmark="tpcc",
                 scalefactor=self._warehouses,

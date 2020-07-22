@@ -20,7 +20,6 @@ class DefaultWorkload:
         """Get a list of queries with the frequency and weights."""
         return [
             DefaultTask(
-                type="default",
                 query=choice(self._queries[query_type]),  # nosec
                 args=None,
                 query_type=query_type,

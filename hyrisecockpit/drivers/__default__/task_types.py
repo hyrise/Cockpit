@@ -5,7 +5,6 @@ from typing import Optional, Tuple, TypedDict
 class AbstractTask(TypedDict):
     """Abstract task."""
 
-    type: str  # TODO: do we still need it?
     benchmark: str
     scalefactor: float
     args: Optional[Tuple]
