@@ -180,7 +180,7 @@ class TestDefaultDriver:
         expected_query = "SQL query with worker 10;"
         expected_parameters = ["param1", "param2"]
 
-        endts, latency, scalefactor, query_type = default_driver.execute_task(
+        endts, latency, scalefactor, query_type, commited = default_driver.execute_task(
             mock_task, mock_cursor, mock_worker_id
         )
 
@@ -188,4 +188,5 @@ class TestDefaultDriver:
         assert latency == 0
         assert scalefactor == 1.0
         assert query_type == "query_type"
+        assert commited
         assert mock_cursor.execute.called_once_with(expected_query, expected_parameters)

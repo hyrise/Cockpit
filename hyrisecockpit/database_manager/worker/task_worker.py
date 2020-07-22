@@ -55,9 +55,13 @@ def execute_queries(  # noqa
                 try:
                     task = task_queue.get(block=False)
                     benchmark = task["benchmark"]
-                    endts, latency, scalefactor, query_type = workload_drivers[
-                        benchmark
-                    ].execute_task(task, cur, worker_id)
+                    (
+                        endts,
+                        latency,
+                        scalefactor,
+                        query_type,
+                        commited,
+                    ) = workload_drivers[benchmark].execute_task(task, cur, worker_id)
 
                     succesful_queries.append(
                         (
@@ -67,7 +71,7 @@ def execute_queries(  # noqa
                             scalefactor,
                             query_type,
                             worker_id,
-                            True,
+                            commited,
                         )
                     )
                 except Empty:

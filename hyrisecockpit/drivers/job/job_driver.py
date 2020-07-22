@@ -47,6 +47,8 @@ class JobDriver:
         """Generate delete table queries."""
         return self._default_driver.get_delete_queries(scalefactor)
 
-    def execute_task(self, task, cursor, worker_id) -> Tuple[int, int, float, str]:
+    def execute_task(
+        self, task, cursor, worker_id
+    ) -> Tuple[int, int, float, str, bool]:
         """Generate execute task queries."""
         return self._default_driver.execute_task(task, cursor, worker_id)

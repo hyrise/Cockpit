@@ -207,7 +207,7 @@ class TestTaskWorker:
             side_effect=LoopDone
         )
         mock_workload_driver = MagicMock()
-        mock_workload_driver.execute_task.return_value = (1, 1, 1.0, "01")
+        mock_workload_driver.execute_task.return_value = (1, 1, 1.0, "01", True)
         mock_log_results.side_effect = MagicMock(side_effect=LoopDone)
         task = {"benchmark": "tpch"}
         workload_drivers = {"tpch": mock_workload_driver}

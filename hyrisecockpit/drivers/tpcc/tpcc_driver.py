@@ -4,6 +4,8 @@ from os.path import abspath
 from time import time_ns
 from typing import Dict, List, Tuple
 
+from psycopg2.errors import lookup
+
 from hyrisecockpit.drivers.__default__.task_types import DefaultTask
 from hyrisecockpit.drivers.tpcc.parameter_generator import TPCCParameterGenerator
 from hyrisecockpit.drivers.tpcc.transaction_handler import TPCCTransactionHandler
@@ -88,16 +90,25 @@ class TpccDriver:
             for table in self._table_names
         }
 
-    def execute_task(self, task, cursor, worker_id) -> Tuple[int, int, float, str]:
+    def execute_task(
+        self, task, cursor, worker_id
+    ) -> Tuple[int, int, float, str, bool]:
         """Execute task of the transaction type."""
         transaction_type = task["transaction_type"]
         parameters = task["args"]
-
+        commited = True
+        cursor._connection.set_session(autocommit=False)
         startts = time_ns()
-        self._transaction_handler.execute_transaction(
-            cursor, transaction_type, parameters
-        )
+        try:
+            self._transaction_handler.execute_transaction(
+                cursor, transaction_type, parameters
+            )
+        except lookup("40001"):  # SerializationFailure
+            commited = False
+            cursor._connection.rollback()
         endts = time_ns()
 
+        cursor._connection.set_session(autocommit=True)
+
         latency = endts - startts
-        return endts, latency, task["scalefactor"], task["transaction_type"]
+        return endts, latency, task["scalefactor"], task["transaction_type"], commited

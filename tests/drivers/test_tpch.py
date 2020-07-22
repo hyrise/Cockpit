@@ -113,13 +113,19 @@ class TestTpchDriver:
     def test_execute_task(self, tpch_driver) -> None:
         """Test call execute task from driver."""
         mock_default_driver = MagicMock()
-        mock_default_driver.execute_task.return_value = (10, 20, 1.0, "query_type")
+        mock_default_driver.execute_task.return_value = (
+            10,
+            20,
+            1.0,
+            "query_type",
+            True,
+        )
         tpch_driver._default_driver = mock_default_driver
         task = "task"
         cursor = MagicMock()
         worker_id = "worker_01"
         response = tpch_driver.execute_task(task, cursor, worker_id)
-        assert (10, 20, 1.0, "query_type") == response
+        assert (10, 20, 1.0, "query_type", True) == response
         mock_default_driver.execute_task.assert_called_once_with(
             task, cursor, worker_id
         )

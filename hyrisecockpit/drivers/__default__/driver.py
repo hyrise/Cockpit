@@ -117,13 +117,16 @@ class DefaultDriver:
 
         return endts, endts - startts
 
-    def execute_task(self, task, cursor, worker_id) -> Tuple[int, int, float, str]:
+    def execute_task(
+        self, task, cursor, worker_id
+    ) -> Tuple[int, int, float, str, bool]:
         """Execute task of the query type."""
         query = task["query"]
         query = query.replace("[STREAM_ID]", str(worker_id))
 
         not_formatted_parameters = task["args"]
         formatted_parameters = self._get_formatted_parameters(not_formatted_parameters)
+        commited = True
 
         endts, latency = self._execute_query(cursor, query, formatted_parameters)
-        return endts, latency, task["scalefactor"], task["query_type"]
+        return endts, latency, task["scalefactor"], task["query_type"], commited

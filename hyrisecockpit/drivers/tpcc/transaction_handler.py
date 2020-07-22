@@ -30,15 +30,11 @@ class TPCCTransactionHandler:
     def execute_transaction(self, cursor, transaction_type, parameters) -> None:
         """Execute task of the transaction type."""
         self.conn = cursor._connection
-        self.conn.set_session(autocommit=False)
-
         handler = self._handlers.get(transaction_type)
         assert handler is not None, (  # nosec
             "Unexpected TransactionType: " + transaction_type
         )
-
         handler(cursor, parameters)
-        self.conn.set_session(autocommit=True)
 
     # ____________________________________________
 
