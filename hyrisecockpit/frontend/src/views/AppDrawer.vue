@@ -37,9 +37,9 @@
         :color="colorValueDefinition.hyriselogo"
       >
         <v-icon class="ml-8 mb-4">mdi-database-search</v-icon>
-        <div class="caption ml-n9 mt-10 font-weight-regular-light"
-          >Overview</div
-        >
+        <div class="caption ml-n9 mt-10 font-weight-regular-light">
+          Overview
+        </div>
       </v-list-item>
 
       <v-list-item
@@ -48,9 +48,9 @@
         :color="colorValueDefinition.hyriselogo"
       >
         <v-icon class="ml-8 mb-4">mdi-chart-line</v-icon>
-        <div class="caption ml-n11 mt-10 font-weight-regular-light"
-          >Comparison</div
-        >
+        <div class="caption ml-n11 mt-10 font-weight-regular-light">
+          Comparison
+        </div>
       </v-list-item>
 
       <v-list-item
@@ -59,9 +59,9 @@
         :color="colorValueDefinition.hyriselogo"
       >
         <v-icon class="ml-8 mb-4">mdi-chart-bar</v-icon>
-        <div class="caption ml-n15 mt-10 font-weight-regular-light"
-          >Workload Analysis</div
-        >
+        <div class="caption ml-n15 mt-10 font-weight-regular-light">
+          Workload Analysis
+        </div>
       </v-list-item>
       <v-list-item
         :color="colorValueDefinition.hyriselogo"
@@ -96,9 +96,9 @@
           class="primary--text"
         ></v-badge>
 
-        <div class="caption ml-n9 mt-10 font-weight-regular-light"
-          >Workload</div
-        >
+        <div class="caption ml-n9 mt-10 font-weight-regular-light">
+          Workload
+        </div>
       </v-list-item>
 
       <v-list-item
@@ -107,9 +107,7 @@
       >
         <v-icon class="ml-8 mb-4">mdi-tune</v-icon>
 
-        <div class="caption ml-n8 mt-10 font-weight-regular-light"
-          >Plugins</div
-        >
+        <div class="caption ml-n8 mt-10 font-weight-regular-light">Plugins</div>
       </v-list-item>
 
       <add-database
@@ -140,9 +138,9 @@
               data-id="number-of-databases"
             ></v-badge>
 
-            <div class="caption ml-n10 mt-10 font-weight-regular-light"
-              >Databases</div
-            >
+            <div class="caption ml-n10 mt-10 font-weight-regular-light">
+              Databases
+            </div>
           </v-list-item>
         </template>
         <available-databases-list
