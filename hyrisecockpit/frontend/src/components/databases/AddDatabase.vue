@@ -57,8 +57,7 @@
       </v-card-text>
       <v-card-actions class="justify-center pt-0">
         <v-btn
-          class="secondary primary--text mb-3"
-          small
+          class="secondary primary--text my-2"
           @click="
             createNewDatabase();
             closeDialog();
@@ -88,7 +87,7 @@ import {
   ref,
   watch,
 } from "@vue/composition-api";
-import { useDatabaseService } from "../../services/databaseService";
+import { useDatabaseService } from "@/services/databaseService";
 
 interface Props {
   open: boolean;
