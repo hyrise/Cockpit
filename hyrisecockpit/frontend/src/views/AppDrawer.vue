@@ -37,8 +37,8 @@
         :color="colorValueDefinition.hyriselogo"
       >
         <v-icon class="ml-8 mb-4">mdi-database-search</v-icon>
-        <v-title class="caption ml-n9 mt-10 font-weight-regular-light"
-          >Overview</v-title
+        <div class="caption ml-n9 mt-10 font-weight-regular-light"
+          >Overview</div
         >
       </v-list-item>
 
@@ -48,8 +48,8 @@
         :color="colorValueDefinition.hyriselogo"
       >
         <v-icon class="ml-8 mb-4">mdi-chart-line</v-icon>
-        <v-title class="caption ml-n11 mt-10 font-weight-regular-light"
-          >Comparison</v-title
+        <div class="caption ml-n11 mt-10 font-weight-regular-light"
+          >Comparison</div
         >
       </v-list-item>
 
@@ -59,8 +59,8 @@
         :color="colorValueDefinition.hyriselogo"
       >
         <v-icon class="ml-8 mb-4">mdi-chart-bar</v-icon>
-        <v-title class="caption ml-n15 mt-10 font-weight-regular-light"
-          >Workload Analysis</v-title
+        <div class="caption ml-n15 mt-10 font-weight-regular-light"
+          >Workload Analysis</div
         >
       </v-list-item>
       <v-list-item
@@ -96,8 +96,8 @@
           class="primary--text"
         ></v-badge>
 
-        <v-title class="caption ml-n9 mt-10 font-weight-regular-light"
-          >Workload</v-title
+        <div class="caption ml-n9 mt-10 font-weight-regular-light"
+          >Workload</div
         >
       </v-list-item>
 
@@ -107,8 +107,8 @@
       >
         <v-icon class="ml-8 mb-4">mdi-tune</v-icon>
 
-        <v-title class="caption ml-n8 mt-10 font-weight-regular-light"
-          >Plugins</v-title
+        <div class="caption ml-n8 mt-10 font-weight-regular-light"
+          >Plugins</div
         >
       </v-list-item>
 
@@ -140,8 +140,8 @@
               data-id="number-of-databases"
             ></v-badge>
 
-            <v-title class="caption ml-n10 mt-10 font-weight-regular-light"
-              >Databases</v-title
+            <div class="caption ml-n10 mt-10 font-weight-regular-light"
+              >Databases</div
             >
           </v-list-item>
         </template>
