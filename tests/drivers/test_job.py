@@ -46,6 +46,10 @@ class TestJobDriver:
             job_driver._table_names,
         )
 
+    def test_get_scalefactors(self, job_driver) -> None:
+        """Test gets scalefactors."""
+        assert job_driver.get_scalefactors() == [1.0]
+
     def test_get_default_weights(self, job_driver) -> None:
         """Test get default weights for workload."""
         expected = OrderedDict(default_weights)

@@ -55,6 +55,10 @@ class TestTpccDriver:
         assert tpcc_driver._transaction_handler == mock_tpcc_transaction_handler_obj
         assert tpcc_driver._parameter_generator == mock_tpcc_parameter_generator_obj
 
+    def test_get_scalefactors(self, tpcc_driver) -> None:
+        """Test gets scalefactors."""
+        assert tpcc_driver.get_scalefactors() == [5.0]
+
     def test_get_default_weights(self, tpcc_driver) -> None:
         """Test get default weights for workload."""
         expected = OrderedDict(

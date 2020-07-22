@@ -46,6 +46,10 @@ class TestTpcdsDriver:
             tpcds_driver._table_names,
         )
 
+    def test_get_scalefactors(self, tpcds_driver) -> None:
+        """Test gets scalefactors."""
+        assert tpcds_driver.get_scalefactors() == [1.0]
+
     def test_get_default_weights(self, tpcds_driver) -> None:
         """Test get default weights for workload."""
         expected = OrderedDict(default_weights)
