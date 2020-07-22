@@ -1,5 +1,13 @@
 # type: ignore
 # flake8: noqa
+
+# -----------------------------------------------------------------------
+# Title: py-tpcc source code
+# Date: 22 July 2020
+# Last commit: e62144ca3809054
+# Availability: https://github.com/apavlo/py-tpcc
+# -----------------------------------------------------------------------
+
 """Module for TPC-C constants."""
 
 MONEY_DECIMALS = 2

@@ -1,5 +1,12 @@
 """Module for query templates."""
 
+# -----------------------------------------------------------------------
+# Title: py-tpcc source code
+# Date: 22 July 2020
+# Last commit: e62144ca3809054
+# Availability: https://github.com/apavlo/py-tpcc
+# -----------------------------------------------------------------------
+
 TXN_QUERIES = {
     "DELIVERY": {
         "getNewOrder": "SELECT NO_O_ID FROM NEW_ORDER WHERE NO_D_ID = %s AND NO_W_ID = %s AND NO_O_ID > -1 LIMIT 1",  #
