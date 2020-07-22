@@ -64,10 +64,10 @@
             >
               <div class="text-col">
                 <div class="query-numbers-text">
-                  Query numbers
+                  Query ID
                 </div>
                 <div class="query-weights-text">
-                  Query weights
+                  Query weight
                 </div>
               </div>
             </div>
