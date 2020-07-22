@@ -156,7 +156,7 @@ class TestDatabase(object):
         assert not result
 
     def test_loads_data_with_no_valid_scalefactor(self, database: Database) -> None:
-        """Test load data with no valid workload type."""
+        """Test load data with no valid scalefactor."""
         mocked_worker_pool: MagicMock = MagicMock()
         mocked_worker_pool.get_status.return_value = "running"
         mocked_background_scheduler: MagicMock = MagicMock()
@@ -248,7 +248,7 @@ class TestDatabase(object):
         assert not result
 
     def test_delete_data_with_no_valid_scalefactor(self, database: Database) -> None:
-        """Test delete data with no valid workload type."""
+        """Test delete data with no valid scalefactor."""
         mocked_worker_pool: MagicMock = MagicMock()
         mocked_worker_pool.get_status.return_value = "running"
         mocked_background_scheduler: MagicMock = MagicMock()
