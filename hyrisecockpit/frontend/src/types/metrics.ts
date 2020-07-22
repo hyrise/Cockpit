@@ -1,4 +1,4 @@
-import { TransformationService, Base, FetchType } from "./services";
+import { TransformationService, FetchType } from "./services";
 import { Ref } from "@vue/composition-api";
 
 export type MetricValueState = "low" | "average" | "high";
@@ -13,7 +13,8 @@ export type Metric =
   | "queueLength"
   | "queryTypeProportion"
   | "memoryFootprint"
-  | "operatorProportion";
+  | "operatorProportion"
+  | "negativeThroughput";
 
 export const availableMetrics: Metric[] = [
   "access",
@@ -26,11 +27,13 @@ export const availableMetrics: Metric[] = [
   "queryTypeProportion",
   "memoryFootprint",
   "operatorProportion",
+  "negativeThroughput",
 ];
 
 export const comparisonMetrics: Metric[] = [
   "throughput",
   "latency",
+  "negativeThroughput",
   "queueLength",
   "cpu",
   "ram",
@@ -42,6 +45,7 @@ export const comparisonMetrics: Metric[] = [
 export const overviewMetrics: Metric[] = [
   "throughput",
   "latency",
+  "negativeThroughput",
   "queueLength",
   "cpu",
   "ram",
@@ -69,7 +73,7 @@ export type DataType = "interval" | "snapshot";
 export interface MetricMetadata {
   fetchType: FetchType;
   transformationService: TransformationService;
-  base?: Base;
+  base?: string;
   endpoint: string;
   component: string;
   requestTime: number;

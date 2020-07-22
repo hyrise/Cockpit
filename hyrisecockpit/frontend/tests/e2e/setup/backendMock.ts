@@ -71,6 +71,9 @@ export function useBackendMock(
     cy.route("GET", getRequestRoute("throughput", "get")).as(
       getGetAlias("throughput")
     );
+    cy.route("GET", getRequestRoute("negative_throughput", "get")).as(
+      getGetAlias("negative_throughput")
+    );
     cy.route("GET", getRequestRoute("latency", "get")).as(
       getGetAlias("latency")
     );
@@ -231,6 +234,11 @@ export function mockBackend(
       getRequestRoute("throughput", "get"),
       getGetAlias("throughput"),
       getMockedResponse("throughput")
+    );
+    mock(
+      getRequestRoute("negative_throughput", "get"),
+      getGetAlias("negative_throughput"),
+      getMockedResponse("negative_throughput")
     );
     mock(
       getRequestRoute("latency", "get"),

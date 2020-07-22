@@ -27,6 +27,7 @@ const transformationServiceMap: Record<Metric, TransformationService> = {
   ram: getRAMData,
   storage: getStorageData,
   throughput: getReadOnlyData,
+  negativeThroughput: getReadOnlyData,
 };
 
 /** export appropriate transformation function of given metric */

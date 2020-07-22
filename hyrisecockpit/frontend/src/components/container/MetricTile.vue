@@ -5,10 +5,7 @@
     :style="getBorderColor(tileDatabase)"
     tile
   >
-    <v-card-title
-      class="card-title font-weight-regular"
-      :ref="`${tileDatabase}-${metric}-title`"
-    >
+    <v-card-title class="card-title font-weight-regular" :ref="`${tileDatabase}-${metric}-title`">
       <v-container fluid>
         <v-row no-gutters>
           <v-col class="metric-title">
@@ -51,13 +48,10 @@ import Storage from "@/components/metrics/Storage.vue";
 import Access from "@/components/metrics/Access.vue";
 import MemoryFootprint from "@/components/metrics/MemoryFootprint.vue";
 import OperatorProportion from "@/components/metrics/OperatorProportion.vue";
-import { getMetricTitle, getMetricComponent } from "../../meta/metrics";
-import {
-  Metric,
-  MetricProps,
-  MetricPropsValidation,
-} from "../../types/metrics";
-import { Database } from "../../types/database";
+import NegativeThroughput from "@/components/metrics/NegativeThroughput.vue";
+import { getMetricTitle, getMetricComponent } from "@/meta/metrics";
+import { Metric, MetricProps, MetricPropsValidation } from "@/types/metrics";
+import { Database } from "@/types/database";
 import DatabaseChip from "@/components/details/DatabaseChip.vue";
 import TimeInterval from "@/components/details/TimeInterval.vue";
 
@@ -84,6 +78,7 @@ export default defineComponent({
     Storage,
     MemoryFootprint,
     OperatorProportion,
+    NegativeThroughput,
     TimeInterval,
   },
   props: {

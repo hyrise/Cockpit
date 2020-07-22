@@ -25,6 +25,7 @@ import {
   benchmarks,
   DatabaseState,
   empty,
+  generateRandomFloat,
 } from "./helpers";
 import { useCallbacks } from "./callbacks";
 
@@ -171,6 +172,11 @@ export function useMocks(
     );
     responseMocks.workload_operator_information = mockedIds.databases.map(
       (id) => fakeDatabaseOperatorData(id, 7)
+    );
+    responseMocks.negative_throughput = fakeDataByIdsWithTimestamps(
+      mockedIds.databases,
+      "negative_throughput",
+      () => generateRandomFloat(0, 100)
     );
     return responseMocks as Record<Request, any>;
   }

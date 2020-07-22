@@ -1,48 +1,46 @@
 <template>
   <div>
-    <div>
-      <metric-detailed-view metric="access">
-        <template #header>Access Frequency</template>
-        <template #content>
-          <v-select
-            :id="'detailed-access-select'"
-            v-model="selectedItem"
-            class="select"
-            :items="selectionItems"
-            chips
-            label="table"
-            outlined
-            prepend-icon="mdi-table"
-            width="100"
-          />
-          <Heatmap
-            :graph-id="'detailed-' + graphId || 'access'"
-            :data="data"
-            :chart-configuration="chartConfiguration"
-            :autosize="false"
-            :max-value="maxValue"
-          />
-        </template>
-      </metric-detailed-view>
-      <v-select
-        :id="'access-select'"
-        v-model="selectedItem"
-        class="select"
-        :items="selectionItems"
-        chips
-        label="table"
-        outlined
-        prepend-icon="mdi-table"
-      />
-      <Heatmap
-        :graph-id="graphId || 'access'"
-        :data="data"
-        :chart-configuration="chartConfiguration"
-        :selected-databases="selectedDatabases"
-        :max-chart-width="maxChartWidth"
-        :max-value="maxValue"
-      />
-    </div>
+    <metric-detailed-view metric="access">
+      <template #header>Access Frequency</template>
+      <template #content>
+        <v-select
+          :id="'detailed-access-select'"
+          v-model="selectedItem"
+          class="select"
+          :items="selectionItems"
+          chips
+          label="table"
+          outlined
+          prepend-icon="mdi-table"
+          width="100"
+        />
+        <Heatmap
+          :graph-id="'detailed-' + graphId || 'access'"
+          :data="data"
+          :chart-configuration="chartConfiguration"
+          :autosize="false"
+          :max-value="maxValue"
+        />
+      </template>
+    </metric-detailed-view>
+    <v-select
+      :id="'access-select'"
+      v-model="selectedItem"
+      class="select"
+      :items="selectionItems"
+      chips
+      label="table"
+      outlined
+      prepend-icon="mdi-table"
+    />
+    <Heatmap
+      :graph-id="graphId || 'access'"
+      :data="data"
+      :chart-configuration="chartConfiguration"
+      :selected-databases="selectedDatabases"
+      :max-chart-width="maxChartWidth"
+      :max-value="maxValue"
+    />
   </div>
 </template>
 

@@ -53,6 +53,7 @@ mockGetRoute("database/", "control");
 mockGetRoute("system", "monitor");
 mockGetRoute("storage", "monitor", true);
 mockGetRoute("throughput", "monitor");
+mockGetRoute("negative_throughput", "monitor");
 mockGetRoute("latency", "monitor");
 mockGetRoute("queue_length", "monitor");
 mockGetRoute("workload_statement_information", "monitor");
