@@ -41,7 +41,6 @@ class TestDefaultWorkload:
         tasks = default_workload.get(frequency, weights)
 
         expected_task = DefaultTask(
-            type="default",
             query="query 1",
             args=None,
             query_type="q1",
