@@ -10,7 +10,11 @@
         class="body-3 font-weight-regular text--secondary mt-0 mb-0 ml-9"
         >Cockpit</v-list-item-title
       >
-      <v-list-item color="#02789D" input-value="true" dense>
+      <v-list-item
+        :color="colorValueDefinition.hyriselogo"
+        input-value="true"
+        dense
+      >
         <v-list-item-content>
           <v-list-item-title class="subtitle-2 ml-3 mt-5 mb-n2"
             >Monitoring</v-list-item-title
@@ -30,36 +34,40 @@
       <v-list-item
         :to="{ name: 'overview' }"
         data-id="overview-button"
-        color="#02789D"
+        :color="colorValueDefinition.hyriselogo"
       >
         <v-icon class="ml-8 mb-4">mdi-database-search</v-icon>
-        <v-text class="caption ml-n9 mt-10 font-weight-regular-light"
-          >Overview</v-text
+        <v-title class="caption ml-n9 mt-10 font-weight-regular-light"
+          >Overview</v-title
         >
       </v-list-item>
 
       <v-list-item
         :to="{ name: 'comparison' }"
         data-id="comparison-button"
-        color="#02789D"
+        :color="colorValueDefinition.hyriselogo"
       >
         <v-icon class="ml-8 mb-4">mdi-chart-line</v-icon>
-        <v-text class="caption ml-n11 mt-10 font-weight-regular-light"
-          >Comparison</v-text
+        <v-title class="caption ml-n11 mt-10 font-weight-regular-light"
+          >Comparison</v-title
         >
       </v-list-item>
 
       <v-list-item
         :to="{ name: 'workload' }"
         data-id="workload-monitoring-button"
-        color="#02789D"
+        :color="colorValueDefinition.hyriselogo"
       >
         <v-icon class="ml-8 mb-4">mdi-chart-bar</v-icon>
-        <v-text class="caption ml-n15 mt-10 font-weight-regular-light"
-          >Workload Analysis</v-text
+        <v-title class="caption ml-n15 mt-10 font-weight-regular-light"
+          >Workload Analysis</v-title
         >
       </v-list-item>
-      <v-list-item color="#02789D" input-value="true" dense>
+      <v-list-item
+        :color="colorValueDefinition.hyriselogo"
+        input-value="true"
+        dense
+      >
         <v-list-item-content>
           <v-list-item-title class="subtitle-2 ml-2 mt-4 mb-n2"
             >Configuration</v-list-item-title
@@ -88,8 +96,8 @@
           class="primary--text"
         ></v-badge>
 
-        <v-text class="caption ml-n9 mt-10 font-weight-regular-light"
-          >Workload</v-text
+        <v-title class="caption ml-n9 mt-10 font-weight-regular-light"
+          >Workload</v-title
         >
       </v-list-item>
 
@@ -99,8 +107,8 @@
       >
         <v-icon class="ml-8 mb-4">mdi-tune</v-icon>
 
-        <v-text class="caption ml-n8 mt-10 font-weight-regular-light"
-          >Plugins</v-text
+        <v-title class="caption ml-n8 mt-10 font-weight-regular-light"
+          >Plugins</v-title
         >
       </v-list-item>
 
@@ -132,8 +140,8 @@
               data-id="number-of-databases"
             ></v-badge>
 
-            <v-text class="caption ml-n10 mt-10 font-weight-regular-light"
-              >Databases</v-text
+            <v-title class="caption ml-n10 mt-10 font-weight-regular-light"
+              >Databases</v-title
             >
           </v-list-item>
         </template>

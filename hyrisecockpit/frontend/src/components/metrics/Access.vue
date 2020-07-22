@@ -28,7 +28,7 @@
         :id="'access-select'"
         v-model="selectedItem"
         class="select"
-        :items="selectedItems"
+        :items="selectionItems"
         dense
         label="table"
         outlined

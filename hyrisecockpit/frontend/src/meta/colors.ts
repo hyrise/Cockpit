@@ -9,6 +9,7 @@ export const colorValueDefinition = {
   blue: "#96ccce",
   darkblue: "#1f688a",
   background: "#F5F5F5",
+  hyriselogo: "#02789D",
 };
 
 export const colorDatabaseDefinition = {
