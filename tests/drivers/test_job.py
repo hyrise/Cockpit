@@ -33,7 +33,10 @@ class TestJobDriver:
         mock_default_driver.return_value = mock_default_driver_obj
         mock_abspath.return_value = "/abspath"
         job_driver = JobDriver()
-        assert job_driver._query_path == "/abspath/workload_generator/workloads"
+        assert (
+            job_driver._query_path
+            == "/abspath/hyrisecockpit/workload_generator/workloads"
+        )
         assert job_driver._benchmark_type == "job"
         assert job_driver._table_names == tables
         assert job_driver.scale_factors == [1.0]

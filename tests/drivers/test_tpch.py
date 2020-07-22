@@ -32,7 +32,10 @@ class TestTpchDriver:
         mock_default_driver.return_value = mock_default_driver_obj
         mock_abspath.return_value = "/abspath"
         tpch_driver = TpchDriver()
-        assert tpch_driver._query_path == "/abspath/workload_generator/workloads"
+        assert (
+            tpch_driver._query_path
+            == "/abspath/hyrisecockpit/workload_generator/workloads"
+        )
         assert tpch_driver._benchmark_type == "tpch"
         assert tpch_driver._table_names == [
             "customer",

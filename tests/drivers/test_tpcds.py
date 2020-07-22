@@ -33,7 +33,10 @@ class TestTpcdsDriver:
         mock_default_driver.return_value = mock_default_driver_obj
         mock_abspath.return_value = "/abspath"
         tpcds_driver = TpcdsDriver()
-        assert tpcds_driver._query_path == "/abspath/workload_generator/workloads"
+        assert (
+            tpcds_driver._query_path
+            == "/abspath/hyrisecockpit/workload_generator/workloads"
+        )
         assert tpcds_driver._benchmark_type == "tpcds"
         assert tpcds_driver._table_names == tables
         assert tpcds_driver.scale_factors == [1.0]
