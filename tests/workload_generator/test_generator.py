@@ -75,7 +75,7 @@ class TestWorkloadGenerator:
         """Test get all running workloads."""
         fake_driver = MagicMock()
         fake_driver.get_default_weights.return_value = {"01": 5.0, "02": 5.0}
-        fake_driver.scale_factors = [1.0, 2.0]
+        fake_driver.get_scalefactors.return_value = [1.0, 2.0]
         fake_running_workoad = Workload(fake_driver)
         fake_running_workoad.running = True
         fake_running_workoad.frequency = 42
@@ -168,7 +168,7 @@ class TestWorkloadGenerator:
         }
         fake_driver = MagicMock()
         fake_driver.get_default_weights.return_value = {"01": 2, "02": 5}
-        fake_driver.scale_factors = [2.0]
+        fake_driver.get_scalefactors.return_value = [2.0]
         fake_workoad = Workload(fake_driver)
         fake_workoad.running = True
         generator._workloads = {"fake_workoad": fake_workoad}
