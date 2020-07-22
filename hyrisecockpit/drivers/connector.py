@@ -1,5 +1,7 @@
 """Connector for cockpit and drivers."""
+from hyrisecockpit.drivers.job.job_driver import JobDriver
 from hyrisecockpit.drivers.tpcc.tpcc_driver import TpccDriver
+from hyrisecockpit.drivers.tpcds.tpcds_driver import TpcdsDriver
 from hyrisecockpit.drivers.tpch.tpch_driver import TpchDriver
 
 
@@ -38,7 +40,12 @@ class Connector:
     @classmethod
     def get_workload(cls):
         """Return a dictionary with workload objects."""
-        return {"tpch": Workload(TpchDriver()), "tpcc": Workload(TpccDriver())}
+        return {
+            "tpch": Workload(TpchDriver()),
+            "tpcc": Workload(TpccDriver()),
+            "tpcds": Workload(TpcdsDriver()),
+            "job": Workload(JobDriver()),
+        }
 
     @classmethod
     def get_workload_drivers(cls):
@@ -46,4 +53,6 @@ class Connector:
         return {
             "tpch": TpchDriver(),
             "tpcc": TpccDriver(),
+            "tpcds": TpcdsDriver(),
+            "job": JobDriver(),
         }
