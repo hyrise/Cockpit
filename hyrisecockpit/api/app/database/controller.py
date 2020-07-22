@@ -66,7 +66,7 @@ class WorkloadTables(Resource):
 
     @responds(schema=AvailableWorkloadTablesSchema, api=api)
     def get(self) -> AvailableWorkloadTables:
-        """Return all pre-generated tables that can be loaded."""
+        """Return all available workloads."""
         return DatabaseService.get_available_workload_tables()
 
     @accepts(schema=WorkloadTablesSchema, api=api)

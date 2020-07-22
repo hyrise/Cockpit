@@ -5,6 +5,7 @@ from jsonschema import validate
 
 from hyrisecockpit.api.app.shared import _add_active_database, _remove_active_database
 from hyrisecockpit.api.app.socket_manager import ManagerSocket
+from hyrisecockpit.drivers.connector import Connector
 from hyrisecockpit.message import response_schema
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
@@ -64,15 +65,16 @@ class DatabaseService:
     @classmethod
     def get_available_workload_tables(cls) -> AvailableWorkloadTables:
         """Return all available workloads."""
-        # TODO get this information from drivers
-        return AvailableWorkloadTables(
-            workload_tables=[
-                WorkloadTables(workload_type="tpch", scale_factor=0.1),
-                WorkloadTables(workload_type="tpch", scale_factor=1.0),
-                WorkloadTables(workload_type="tpcds", scale_factor=1.0),
-                WorkloadTables(workload_type="job", scale_factor=1.0),
-            ]
-        )
+        drivers = Connector.get_workload_drivers()
+        workload_tables = []
+        for workload_type, driver in drivers.items():
+            for scale_factor in driver.scale_factors:
+                workload_tables.append(
+                    WorkloadTables(
+                        workload_type=workload_type, scale_factor=scale_factor
+                    )
+                )
+        return AvailableWorkloadTables(workload_tables=workload_tables)
 
     @classmethod
     def load_workload_tables(cls, interface: WorkloadTablesInterface) -> int:
