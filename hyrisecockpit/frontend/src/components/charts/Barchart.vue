@@ -42,7 +42,7 @@ function useBarChartConfiguration(
         title: {
           text: chartConfiguration.xaxis,
           font: {
-            family: "Roboto",
+            family: "Roboto, sans-serif",
             size: 13,
           },
         },
@@ -53,7 +53,7 @@ function useBarChartConfiguration(
         title: {
           text: chartConfiguration.yaxis,
           font: {
-            family: "Roboto",
+            family: "Roboto, sans-serif",
             size: 13,
           },
         },

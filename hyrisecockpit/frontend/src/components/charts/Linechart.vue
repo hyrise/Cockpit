@@ -192,7 +192,7 @@ function useLineChartConfiguration(
         title: {
           text: props.chartConfiguration.yaxis,
           font: {
-            family: "Roboto",
+            family: "Roboto, sans-serif",
             size: 13,
           },
         },
