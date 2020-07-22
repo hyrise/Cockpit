@@ -30,7 +30,7 @@
             type="error"
             dismissible
           >
-            Database was not successfully added.
+            Database was not added.
           </v-alert>
           <v-row>
             <v-col cols="6">
