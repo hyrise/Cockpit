@@ -13,6 +13,7 @@ from .job.ping_hyrise import ping_hyrise
 from .job.update_chunks_data import update_chunks_data
 from .job.update_plugin_log import update_plugin_log
 from .job.update_queue_length import update_queue_length
+from .job.update_segment_configuration import update_segment_configuration
 from .job.update_storage_data import update_storage_data
 from .job.update_system_data import update_system_data
 from .job.update_workload_operator_information import (
@@ -112,6 +113,16 @@ class BackgroundJobManager(object):
         )
         self._update_workload_operator_information_job = self._scheduler.add_job(
             func=update_workload_operator_information,
+            trigger="interval",
+            seconds=5,
+            args=(
+                self._database_blocked,
+                self._connection_factory,
+                self._storage_connection_factory,
+            ),
+        )
+        self._update_segment_configuration_job = self._scheduler.add_job(
+            func=update_segment_configuration,
             trigger="interval",
             seconds=5,
             args=(
