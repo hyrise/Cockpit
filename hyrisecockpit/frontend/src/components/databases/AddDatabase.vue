@@ -11,25 +11,17 @@
           @click="
             closeDialog();
             showAdvanced = false;
-            databaseStatus = false;
+            databaseAdded = null;
           "
           >mdi-close</v-icon
         >
       </v-system-bar>
       <v-card-text>
         <v-container>
-          <v-alert
-            v-if="databaseStatus === 'success'"
-            type="success"
-            dismissible
-          >
+          <v-alert v-if="databaseAdded === true" type="success" dismissible>
             Database was successfully added.
           </v-alert>
-          <v-alert
-            v-if="databaseStatus === 'noSuccess'"
-            type="error"
-            dismissible
-          >
+          <v-alert v-if="databaseAdded === false" type="error" dismissible>
             Database was not added.
           </v-alert>
           <v-row>
@@ -119,7 +111,10 @@
         <v-btn
           color="primary"
           text
-          @click="createNewDatabase()"
+          @click="
+            databaseAdded = null;
+            createNewDatabase();
+          "
           :disabled="!!idError.length"
           data-id="save-database-button"
           >Save</v-btn
@@ -173,7 +168,7 @@ interface DatabaseCreationData {
   port: Ref<string>;
   dbname: Ref<string>;
   idError: Ref<string>;
-  databaseStatus: Ref<string>;
+  databaseAdded: Ref<boolean | null>;
   createNewDatabase: () => void;
   closeDialog: () => void;
 }
@@ -189,7 +184,7 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
   const port = ref<string>("5432");
   const dbname = ref<string>("postgres");
   const idError = ref<string>("");
-  const databaseStatus = ref<string>("");
+  const databaseAdded = ref<boolean | null>(null);
 
   watch(host, (host, prevHost) => {
     if (!id.value.length || id.value === prevHost) id.value = host;
@@ -228,10 +223,10 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
       dbname: dbname.value,
     }).then(
       () => {
-        databaseStatus.value = "success";
+        databaseAdded.value = true;
       },
-      (error: any) => {
-        databaseStatus.value = "noSuccess";
+      () => {
+        databaseAdded.value = false;
       }
     );
     resetValues();
@@ -252,7 +247,7 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
     createNewDatabase,
     closeDialog,
     idError,
-    databaseStatus,
+    databaseAdded,
   };
 }
 </script>
