@@ -20,7 +20,7 @@
             >Monitoring</v-list-item-title
           >
         </v-list-item-content>
-        <v-list-item-btn class="mr-0 mt-6">
+        <div class="mt-6">
           <v-icon
             size="18"
             dense
@@ -29,7 +29,7 @@
             @click="$emit('toggleSelection')"
             >mdi-cog-outline</v-icon
           >
-        </v-list-item-btn>
+        </div>
       </v-list-item>
       <v-list-item
         :to="{ name: 'overview' }"
@@ -236,5 +236,10 @@ export default defineComponent({
 .v-list-item {
   padding-top: 4px;
   padding-bottom: 4px;
+}
+.settingsbutton {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 0px;
 }
 </style>
