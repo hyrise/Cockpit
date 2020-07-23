@@ -1,15 +1,10 @@
 <template>
-  <v-card
-    :id="`${tileDatabase}-${metric}-tile`"
-    class="card"
-    :style="getBorderColor(tileDatabase)"
-    tile
-  >
+  <v-card :id="`${tileDatabase}-${metric}-tile`" class="card mt-2 mx-2">
     <v-card-title
-      class="card-title font-weight-regular"
+      class="card subtitle-1 font-weight-regular mb-n7"
       :ref="`${tileDatabase}-${metric}-title`"
     >
-      <v-container fluid>
+      <v-container fluid class="mt-n4">
         <v-row no-gutters>
           <v-col class="metric-title">
             <div>{{ getMetricTitle(metric) }}</div>
@@ -68,7 +63,6 @@ interface Props extends MetricProps {
 interface Data {
   getMetricTitle: (metric: Metric) => string;
   getMetricComponent: (metric: Metric) => string;
-  getBorderColor: (databaseId: string) => Object;
 }
 
 export default defineComponent({
@@ -94,21 +88,10 @@ export default defineComponent({
     ...MetricPropsValidation,
   },
   setup(props: Props, context: SetupContext): Data {
-    function getBorderColor(databaseId: string): Object {
-      if (!databaseId) return {};
-      const database = getDatabasesByIds([databaseId])[0];
-
-      return {
-        borderLeft: `4px solid ${database.color}`,
-        borderRight: `4px solid ${database.color}`,
-      };
-    }
-
     const { getDatabasesByIds } = context.root.$databaseController;
     return {
       getMetricTitle,
       getMetricComponent,
-      getBorderColor,
     };
   },
 });
@@ -116,8 +99,7 @@ export default defineComponent({
 
 <style scoped>
 .card {
-  margin-left: 6px;
-  margin-right: 6px;
+  max-width: 97.5%;
 }
 .card-title {
   padding-bottom: 0 !important;
@@ -142,12 +124,5 @@ export default defineComponent({
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-}
-#comparison-page .card {
-  border-radius: 0px;
-  box-shadow: 0px 0px;
-}
-#overview-page .card {
-  border-radius: 4px;
 }
 </style>
