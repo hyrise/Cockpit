@@ -12,7 +12,17 @@
       elevation="20"
       :color="currentPluginLogDatabase.color"
     >
-      {{ currentPluginLog && currentPluginLog.message }}
+      <div v-if="!!currentPluginLog">
+        <div class="header-row">
+          <div class="log-header">
+            {{ currentPluginLog.header }}
+          </div>
+          <v-btn @click="onClose()" icon>
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </div>
+        {{ currentPluginLog.message }}
+      </div>
     </v-alert>
   </div>
 </template>
@@ -35,6 +45,7 @@ interface Props {
 }
 interface Data {
   logDraggableId: string;
+  onClose: () => void;
 }
 
 export default defineComponent({
@@ -50,11 +61,15 @@ export default defineComponent({
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const logDraggableId = "log-popup";
+    const logDraggableId = "log-popup" + props.currentPluginLogDatabase.id;
 
     watch(props, (props) => {
       console.log(props);
     });
+
+    function onClose() {
+      props.currentPluginLog = null;
+    }
 
     onMounted(() => {
       useDragElement(logDraggableId, logDraggableId);
@@ -62,6 +77,7 @@ export default defineComponent({
 
     return {
       logDraggableId,
+      onClose,
     };
   },
 });
@@ -78,5 +94,14 @@ export default defineComponent({
   height: 100px;
   overflow: auto;
   font-size: 16px;
+}
+.log-header {
+  font-weight: bold;
+  font-size: 16px;
+}
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }
 </style>
