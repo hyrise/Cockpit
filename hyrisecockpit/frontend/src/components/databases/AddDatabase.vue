@@ -17,10 +17,22 @@
         >
       </v-system-bar>
       <v-card-text class="pb-0">
-        <v-alert v-if="databaseAdded === true" type="success" dismissible>
+        <v-alert
+          v-if="databaseAdded === true"
+          class="mt-4 mb-0"
+          type="success"
+          dismissible
+          dense
+        >
           Database was successfully added.
         </v-alert>
-        <v-alert v-if="databaseAdded === false" type="error" dismissible>
+        <v-alert
+          v-if="databaseAdded === false"
+          class="mt-4 mb-0"
+          type="error"
+          dismissible
+          dense
+        >
           Database was not added.
         </v-alert>
         <v-row>
