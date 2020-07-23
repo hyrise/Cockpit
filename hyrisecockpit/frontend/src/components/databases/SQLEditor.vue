@@ -10,7 +10,7 @@
         width="30"
       >
         <v-icon class="mr-2" color="primary" size="18">mdi-file-edit</v-icon>
-        <v-text class="text font-weight-regular">SQL</v-text>
+        <div class="text font-weight-regular">SQL</div>
       </v-btn>
     </template>
     <v-card>

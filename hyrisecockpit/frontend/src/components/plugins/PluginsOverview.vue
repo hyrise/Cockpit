@@ -65,7 +65,7 @@
               </div>
             </v-expand-transition>
           </div>
-          <PluginsLog :logText="pluginLogs[database]" />
+          <PluginsLog :logText="pluginLogs[database]" :database="database" />
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
