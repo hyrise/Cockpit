@@ -118,6 +118,16 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     dataType: "interval",
     historic: true,
   },
+  queryInformation: {
+    fetchType: "modify",
+    transformationService: useDataTransformation("queryInformation"),
+    base: "query_information",
+    endpoint: monitorBackend + "query_information",
+    component: "QueryInformation",
+    requestTime: 1000,
+    dataType: "interval",
+    historic: true,
+  },
 };
 
 const metricDetailColor: Record<MetricValueState, string> = {
@@ -186,6 +196,9 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
     xaxis: timeLabel,
     yaxis: `${queryLabel} / s`,
   },
+  queryInformation: {
+    title: "Query Information",
+  },
 };
 
 const metricDetailsConfiguration: Partial<Record<
@@ -222,6 +235,7 @@ const metricDetailsConfiguration: Partial<Record<
     unit: "q/s",
     stateOrder: getMetricValueStateOrder("desc"),
   },
+  queryInformation: {},
 };
 
 export function getMetricMetadata(metric: Metric): MetricMetadata {
