@@ -18,7 +18,7 @@ from psycopg2.extensions import AsIs
 
 import hyrisecockpit.drivers.tpcc.constants as constants
 from hyrisecockpit.drivers.tpcc.parameter_generator import TPCCParameterGenerator
-from hyrisecockpit.drivers.tpcc.query_template import TXN_QUERIES
+from hyrisecockpit.drivers.tpcc.query_template import get_queries_for_scale_factor
 
 
 class TPCCTransactionHandler:
@@ -34,19 +34,21 @@ class TPCCTransactionHandler:
             "new_order": self.doNewOrder,
         }
 
-    def execute_transaction(self, cursor, transaction_type, parameters) -> None:
+    def execute_transaction(
+        self, cursor, transaction_type, scalefactor, parameters
+    ) -> None:
         """Execute task of the transaction type."""
         self.conn = cursor.connection
         handler = self._handlers.get(transaction_type)
         assert handler is not None, (  # nosec
             "Unexpected TransactionType: " + transaction_type
         )
-        handler(cursor, parameters)
+        handler(cursor, parameters, scalefactor)
 
     # ____________________________________________
 
-    def doDelivery(self, cursor, params):  # noqa
-        q = TXN_QUERIES["DELIVERY"]
+    def doDelivery(self, cursor, params, scalefactor):  # noqa
+        q = get_queries_for_scale_factor(scalefactor)["DELIVERY"]
 
         w_id = params["w_id"]
         o_carrier_id = params["o_carrier_id"]
@@ -93,8 +95,8 @@ class TPCCTransactionHandler:
     ## ----------------------------------------------
     ## doNewOrder
     ## ----------------------------------------------
-    def doNewOrder(self, cursor, params):  # noqa
-        q = TXN_QUERIES["NEW_ORDER"]
+    def doNewOrder(self, cursor, params, scalefactor):  # noqa
+        q = get_queries_for_scale_factor(scalefactor)["NEW_ORDER"]
 
         w_id = params["w_id"]
         d_id = params["d_id"]
@@ -245,8 +247,8 @@ class TPCCTransactionHandler:
     ## ----------------------------------------------
     ## doOrderStatus
     ## ----------------------------------------------
-    def doOrderStatus(self, cursor, params):  # noqa
-        q = TXN_QUERIES["ORDER_STATUS"]
+    def doOrderStatus(self, cursor, params, scalefactor):  # noqa
+        q = get_queries_for_scale_factor(scalefactor)["ORDER_STATUS"]
 
         w_id = params["w_id"]
         d_id = params["d_id"]
@@ -285,8 +287,8 @@ class TPCCTransactionHandler:
     ## ----------------------------------------------
     ## doPayment
     ## ----------------------------------------------
-    def doPayment(self, cursor, params):  # noqa
-        q = TXN_QUERIES["PAYMENT"]
+    def doPayment(self, cursor, params, scalefactor):  # noqa
+        q = get_queries_for_scale_factor(scalefactor)["PAYMENT"]
 
         w_id = params["w_id"]
         d_id = params["d_id"]
@@ -364,8 +366,8 @@ class TPCCTransactionHandler:
     ## ----------------------------------------------
     ## doStockLevel
     ## ----------------------------------------------
-    def doStockLevel(self, cursor, params):  # noqa
-        q = TXN_QUERIES["STOCK_LEVEL"]
+    def doStockLevel(self, cursor, params, scalefactor):  # noqa
+        q = get_queries_for_scale_factor(scalefactor)["STOCK_LEVEL"]
 
         w_id = params["w_id"]
         d_id = params["d_id"]

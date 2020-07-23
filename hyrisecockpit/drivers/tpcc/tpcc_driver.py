@@ -6,6 +6,7 @@ from typing import Dict, List, Tuple
 
 from psycopg2.errors import SerializationFailure
 
+from hyrisecockpit.drivers.__default__.driver import DefaultDriver
 from hyrisecockpit.drivers.__default__.task_types import DefaultTask
 from hyrisecockpit.drivers.tpcc.parameter_generator import TPCCParameterGenerator
 from hyrisecockpit.drivers.tpcc.transaction_handler import TPCCTransactionHandler
@@ -20,19 +21,26 @@ class TpccDriver:
         self._query_path: str = f"{abspath(getcwd())}/workload_generator/workloads"
         self._benchmark_type: str = "tpcc"
         self._table_names: List[str] = [
-            "WAREHOUSE",
-            "DISTRICT",
-            "CUSTOMER",
-            "HISTORY",
-            "NEW_ORDER",
-            "ORDERS",
-            "ORDER_LINE",
-            "ITEM",
-            "STOCK",
+            "warehouse",
+            "district",
+            "customer",
+            "history",
+            "new_order",
+            "order",
+            "order_line",
+            "item",
+            "stock",
         ]
         self.scale_factors = [5.0]
         self._transaction_handler = TPCCTransactionHandler()
         self._parameter_generator = TPCCParameterGenerator()
+
+        self._default_driver: DefaultDriver = DefaultDriver(
+            self._query_path,
+            "no_scale_factor_query_path",  # is not used
+            self._benchmark_type,
+            self._table_names,
+        )
 
     def get_scalefactors(self):
         """Get supported scalefactors."""
@@ -56,58 +64,31 @@ class TpccDriver:
 
     def get_table_names(self, scalefactor):
         """Return table name and representation in database."""
-        return {table_name: table_name for table_name in self._table_names}
+        return self._default_driver.get_table_names(scalefactor)
 
     def get_load_queries(self, scalefactor) -> Dict[str, Tuple[str, Tuple]]:
         """Generate load tables queries."""
-        formatted_scalefactor = str(int(scalefactor))
-        load_queries = {}
-
-        for table in self._table_names:
-            if table != "ORDERS":
-                load_queries[table] = (
-                    """COPY "%s" FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';""",
-                    (
-                        (table, "as_is"),
-                        (self._benchmark_type, "as_is"),
-                        (formatted_scalefactor, "as_is"),
-                        (table.lower(), "as_is"),
-                    ),
-                )
-            else:
-                load_queries[table] = (
-                    """COPY "%s" FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';""",
-                    (
-                        (table, "as_is"),
-                        (self._benchmark_type, "as_is"),
-                        (formatted_scalefactor, "as_is"),
-                        ("order", "as_is"),
-                    ),
-                )
-
-        return load_queries  # type: ignore
+        return self._default_driver.get_load_queries(scalefactor)
 
     def get_delete_queries(self, scalefactor) -> Dict[str, Tuple]:
         """Generate delete table queries."""
-        return {
-            table: ("""DROP TABLE "%s";""", ((table, "as_is"),),)
-            for table in self._table_names
-        }
+        return self._default_driver.get_delete_queries(scalefactor)
 
     def execute_task(
         self, task, cursor, worker_id
     ) -> Tuple[int, int, float, str, bool]:
         """Execute task of the transaction type."""
         transaction_type = task["transaction_type"]
+        scalefactor = task["scalefactor"]
         parameters = task["args"]
         commited = True
         startts = time_ns()
         try:
             self._transaction_handler.execute_transaction(
-                cursor, transaction_type, parameters
+                cursor, transaction_type, scalefactor, parameters
             )
         except SerializationFailure:
             commited = False
         endts = time_ns()
         latency = endts - startts
-        return endts, latency, task["scalefactor"], task["transaction_type"], commited
+        return endts, latency, scalefactor, task["transaction_type"], commited
