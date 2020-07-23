@@ -7,14 +7,12 @@
     }"
   >
     <v-alert
-      :value="currentPluginLog"
       text
-      dismissible
       data-id="chart-plugin-log-alert"
       elevation="20"
       :color="currentPluginLogDatabase.color"
     >
-      {{ currentPluginLog }}
+      {{ currentPluginLog && currentPluginLog.message }}
     </v-alert>
   </div>
 </template>
@@ -32,7 +30,7 @@ import {
 import useDragElement from "@/meta/draggable";
 
 interface Props {
-  currentPluginLog: string;
+  currentPluginLog: any;
   currentPluginLogDatabase: any;
 }
 interface Data {
@@ -43,8 +41,8 @@ export default defineComponent({
   name: "PluginLogPopup",
   props: {
     currentPluginLog: {
-      type: String,
-      default: "",
+      type: Object,
+      default: null,
     },
     currentPluginLogDatabase: {
       type: Object,
@@ -53,6 +51,10 @@ export default defineComponent({
   },
   setup(props: Props, context: SetupContext): Data {
     const logDraggableId = "log-popup";
+
+    watch(props, (props) => {
+      console.log(props);
+    });
 
     onMounted(() => {
       useDragElement(logDraggableId, logDraggableId);

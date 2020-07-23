@@ -1,9 +1,5 @@
 <template>
   <div id="metric-comparison-table" class="metrics-table">
-    <plugin-log-popup
-      :current-plugin-log="currentPluginLog"
-      :current-plugin-log-database="currentPluginLogDatabase"
-    />
     <div
       class="metrics-column"
       :style="databaseFlex"
@@ -11,6 +7,10 @@
       :key="database.id"
       :color="database.color"
     >
+      <plugin-log-popup
+        :current-plugin-log="currentPluginLogs[database.id]"
+        :current-plugin-log-database="database"
+      />
       <v-card
         v-if="showHeader"
         tile
@@ -55,7 +55,10 @@ import {
   onMounted,
   computed,
   provide,
+  reactive,
 } from "@vue/composition-api";
+import Vue from "vue";
+
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
 import { useDatabaseFlex } from "../../meta/components";
 import MetricTile from "@/components/container/MetricTile.vue";
@@ -68,7 +71,7 @@ interface Data {
   databaseFlex: Readonly<Ref<Object>>;
   maxChartWidth: Readonly<Ref<number>>;
   databases: Ref<readonly Database[]>;
-  currentPluginLog: Ref<string>;
+  currentPluginLogs: any;
   activatePluginEventClick: (graphId: string, database: any) => void;
   currentPluginLogDatabase: Ref<any>;
 }
@@ -93,17 +96,22 @@ export default defineComponent({
       )!.offsetWidth;
     });
 
-    const currentPluginLog: Ref<string> = ref("");
+    const currentPluginLogs: any = reactive({});
     const currentPluginLogDatabase: Ref<any> = ref({});
 
-    const activatePluginEventClick = (graphId: string, database: any) => {
+    const activatePluginEventClick = (graphId: string, database: Database) => {
       const graphElement = document.getElementById(
         graphId
       ) as PlotlyHTMLElement;
       graphElement.on("plotly_click", (data: PlotMouseEvent) => {
         data.points.forEach((point: any) => {
           if (point.curveNumber === 1) {
-            currentPluginLog.value = point.fullData.text[point.pointIndex];
+            Vue.set(
+              currentPluginLogs,
+              database.id,
+              point.fullData.text[point.pointIndex]
+            );
+
             currentPluginLogDatabase.value = database;
           }
         });
@@ -114,7 +122,7 @@ export default defineComponent({
       ...useDatabaseFlex(props),
       maxChartWidth,
       ...useUpdatingDatabases(props, context),
-      currentPluginLog,
+      currentPluginLogs,
       activatePluginEventClick,
       currentPluginLogDatabase,
     };

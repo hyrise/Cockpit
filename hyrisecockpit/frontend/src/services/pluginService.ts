@@ -140,10 +140,7 @@ export function usePluginService(): PluginService {
                 ...databaseEvents.timestamps,
                 new Date(parseInt(currentLog.timestamp)),
               ],
-              events: [
-                ...databaseEvents.events,
-                producePluginLogString(currentLog),
-              ],
+              events: [...databaseEvents.events, currentLog],
             };
           } else {
             return databaseEvents;
