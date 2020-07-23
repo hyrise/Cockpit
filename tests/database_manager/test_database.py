@@ -388,13 +388,13 @@ class TestDatabase(object):
             "customer": "customer_tpch_1",
             "item": "item_tpch_1",
         }
-        mock_driver_all_tables_loaded.scale_factors = [1.0]
+        mock_driver_all_tables_loaded.get_scalefactors.return_value = [1.0]
         mock_driver_not_all_tables_loaded = MagicMock()
         mock_driver_not_all_tables_loaded.get_table_names.return_value = {
             "Gary": "gary_rock_1",
             "Clark": "clark_rock_1",
         }
-        mock_driver_not_all_tables_loaded.scale_factors = [1.0]
+        mock_driver_not_all_tables_loaded.get_scalefactors.return_value = [1.0]
         database._workload_drivers = {
             "tpch": mock_driver_all_tables_loaded,
             "rock": mock_driver_not_all_tables_loaded,
