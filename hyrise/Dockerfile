@@ -1,5 +1,5 @@
 # https://github.com/hyrise/hyrise/wiki/Docker-Image
-FROM hyrise/opossum-ci:19.10
+FROM hyrise/opossum-ci:20.04
 LABEL maintainer="upigorsch@me.com"
 ENV OPOSSUM_HEADLESS_SETUP=true
 
