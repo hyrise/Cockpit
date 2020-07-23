@@ -185,7 +185,7 @@ class Database(object):
         """Get list of all benchmarks which are completely loaded."""
         workoad_tables_status = []
         for workload_type, driver in self._workload_drivers.items():
-            for scale_factor in driver.scale_factors:
+            for scale_factor in driver.get_scalefactors():
                 loaded_tables = []
                 missing_tables = []
                 workload_tables = driver.get_table_names(scale_factor)
