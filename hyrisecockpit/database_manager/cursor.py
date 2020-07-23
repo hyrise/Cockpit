@@ -22,30 +22,37 @@ class Point(PointBase, total=False):
     time: int
 
 
-class PoolCursor:
-    """Context manager for connections from a pool."""
+class HyriseCursor:
+    """Context manager for a hyrise connection."""
 
     def __init__(
-        self, host: str, port: str, user: str, password: str, dbname: str
+        self,
+        host: str,
+        port: str,
+        user: str,
+        password: str,
+        dbname: str,
+        autocommit: bool = True,
     ) -> None:
-        """Initialize a PoolCursor."""
+        """Initialize a HyriseCursor."""
         self._user: str = user
         self._password: str = password
         self._host: str = host
         self._port: str = port
         self._dbname: str = dbname
+        self._autocommit: bool = autocommit
 
-    def __enter__(self) -> "PoolCursor":
+    def __enter__(self) -> "HyriseCursor":
         """Return self for a context manager."""
-        self._connection = connect(
+        self.connection = connect(
             host=self._host,
             port=self._port,
             user=self._user,
             password=self._password,
             dbname=self._dbname,
         )
-        self._connection.set_session(autocommit=True)
-        self._cur = self._connection.cursor()
+        self.connection.set_session(autocommit=self._autocommit)
+        self._cur = self.connection.cursor()
         return self
 
     def __exit__(
@@ -56,7 +63,7 @@ class PoolCursor:
     ) -> Optional[bool]:
         """Call close with a context manager."""
         self._cur.close()
-        self._connection.close()
+        self.connection.close()
         return None
 
     def execute(
@@ -79,7 +86,7 @@ class PoolCursor:
 
     def read_sql_query(self, sql: str, params: Optional[Tuple]) -> DataFrame:
         """Execute query and return result as data-frame."""
-        return read_sql_query_pandas(sql, self._connection, params=params)
+        return read_sql_query_pandas(sql, self.connection, params=params)
 
     @classmethod
     def validate_connection(
@@ -98,9 +105,7 @@ class PoolCursor:
 class ConnectionFactory:
     """Factory for creating cursors."""
 
-    def __init__(
-        self, user: str, password: str, host: str, port: str, dbname: str,
-    ):
+    def __init__(self, user: str, password: str, host: str, port: str, dbname: str):
         """Initialize the connection attributes."""
         self._user: str = user
         self._password: str = password
@@ -108,10 +113,10 @@ class ConnectionFactory:
         self._port: str = port
         self._dbname: str = dbname
 
-    def create_cursor(self) -> PoolCursor:
-        """Create new PoolCurosr."""
-        return PoolCursor(
-            self._host, self._port, self._user, self._password, self._dbname
+    def create_cursor(self, autocommit: bool = True) -> HyriseCursor:
+        """Create new HyriseCursor."""
+        return HyriseCursor(
+            self._host, self._port, self._user, self._password, self._dbname, autocommit
         )
 
 

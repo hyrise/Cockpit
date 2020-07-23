@@ -7,7 +7,7 @@ from typing import List, Tuple
 
 from psycopg2 import DatabaseError, InterfaceError, ProgrammingError
 
-from hyrisecockpit.database_manager.cursor import PoolCursor, StorageCursor
+from hyrisecockpit.database_manager.cursor import HyriseCursor, StorageCursor
 from hyrisecockpit.settings import (
     STORAGE_HOST,
     STORAGE_PASSWORD,
@@ -31,7 +31,7 @@ def log_results(
 def execute_queries(  # noqa
     worker_id: str,
     task_queue: Queue,
-    cur: PoolCursor,
+    cur: HyriseCursor,
     continue_execution_flag: Value,
     database_id: str,
     i_am_done_event: EventType,
@@ -62,7 +62,8 @@ def execute_queries(  # noqa
                         query_type,
                         commited,
                     ) = workload_drivers[benchmark].execute_task(task, cur, worker_id)
-
+                    if not commited:
+                        print(f"inside worker not commited -> {worker_id}")
                     succesful_queries.append(
                         (
                             endts,
@@ -79,8 +80,6 @@ def execute_queries(  # noqa
                 except (ValueError, ProgrammingError) as e:
                     failed_queries.append((time_ns(), worker_id, str(task), str(e)))
                 except (DatabaseError, InterfaceError):
-                    cur._connection.rollback()
-                    cur._connection.set_session(autocommit=True)
                     task_queue.put(task)
                 if last_batched < time_ns() - 1_000_000_000:
                     log_results(log, succesful_queries, failed_queries)

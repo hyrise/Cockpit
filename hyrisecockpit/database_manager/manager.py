@@ -14,7 +14,7 @@ from hyrisecockpit.request import Body
 from hyrisecockpit.response import Response, get_error_response, get_response
 from hyrisecockpit.server import Server
 
-from .cursor import PoolCursor
+from .cursor import HyriseCursor
 from .database import Database, Plugins
 
 DatabaseActivatedPlugins = TypedDict(
@@ -98,7 +98,7 @@ class DatabaseManager(object):
         port = body["port"]
         dbname = body["dbname"]
         number_workers = body["number_workers"]
-        if not PoolCursor.validate_connection(
+        if not HyriseCursor.validate_connection(
             user, password, host, port, dbname
         ):  # TODO move to Database
             return get_response(400)

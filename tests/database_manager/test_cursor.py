@@ -7,7 +7,7 @@ from pytest import fixture, mark
 
 from hyrisecockpit.database_manager.cursor import (
     ConnectionFactory,
-    PoolCursor,
+    HyriseCursor,
     StorageConnectionFactory,
     StorageCursor,
 )
@@ -17,8 +17,8 @@ class TestCursor:
     """Tests Cursor classes."""
 
     @fixture
-    def pool_cursor(self) -> PoolCursor:
-        """Return patched pool cursor object."""
+    def hyrise_cursor(self) -> HyriseCursor:
+        """Return patched hyrise cursor object."""
         fake_connection_information: Dict[str, str] = {
             "host": "lowrise",
             "port": "666",
@@ -26,7 +26,7 @@ class TestCursor:
             "password": "boeslich",
             "dbname": "Mike der Schlitzer",
         }
-        return PoolCursor(**fake_connection_information)
+        return HyriseCursor(**fake_connection_information)  # type: ignore
 
     @mark.parametrize(
         "queries",
@@ -194,7 +194,7 @@ class TestCursor:
         )
 
     @patch("hyrisecockpit.database_manager.cursor.connect")
-    def test_initializes_pool_cursor_correctly(self, mock_connect: MagicMock) -> None:
+    def test_initializes_hyrise_cursor_correctly(self, mock_connect: MagicMock) -> None:
         """Test initializes pool cursor correctly."""
         mocked_cursor = MagicMock()
         mocked_connection = MagicMock()
@@ -209,9 +209,9 @@ class TestCursor:
             "dbname": "Mike der Schlitzer",
         }
 
-        pool_cursor: PoolCursor = PoolCursor(**fake_connection_information)
+        hyrise_cursor: HyriseCursor = HyriseCursor(**fake_connection_information)  # type: ignore
 
-        with pool_cursor:
+        with hyrise_cursor:
             pass
 
         mock_connect.assert_called_once_with(
@@ -227,56 +227,59 @@ class TestCursor:
         mocked_cursor.close.assert_called_once()
         mocked_connection.close.assert_called_once()
 
-    def test_executes(self, pool_cursor) -> None:
+    def test_executes(self, hyrise_cursor) -> None:
         """Test execute witch valid pool cursor and no exception."""
-        pool_cursor._cur = MagicMock()
-        pool_cursor._cur.execute.return_value = None
+        hyrise_cursor._cur = MagicMock()
+        hyrise_cursor._cur.execute.return_value = None
 
-        pool_cursor.execute("query", None)
+        hyrise_cursor.execute("query", None)
 
-        pool_cursor._cur.execute.assert_called_once_with("query", None)
+        hyrise_cursor._cur.execute.assert_called_once_with("query", None)
 
-    def test_fetches_one(self, pool_cursor) -> None:
+    def test_fetches_one(self, hyrise_cursor) -> None:
         """Test fetch one witch valid pool cursor and no exception."""
-        pool_cursor._cur = MagicMock()
-        pool_cursor._cur.fetchone.return_value = ("hallo",)
+        hyrise_cursor._cur = MagicMock()
+        hyrise_cursor._cur.fetchone.return_value = ("hallo",)
 
-        results: Tuple[Any, ...] = pool_cursor.fetchone()
+        results: Tuple[Any, ...] = hyrise_cursor.fetchone()
 
         assert results == ("hallo",)
-        pool_cursor._cur.fetchone.assert_called_once()
+        hyrise_cursor._cur.fetchone.assert_called_once()
 
-    def test_fetches_all(self, pool_cursor) -> None:
+    def test_fetches_all(self, hyrise_cursor) -> None:
         """Test fetch all witch valid pool cursor and no exception."""
-        pool_cursor._cur = MagicMock()
-        pool_cursor._cur.fetchall.return_value = [("hallo",), ("world",)]
+        hyrise_cursor._cur = MagicMock()
+        hyrise_cursor._cur.fetchall.return_value = [("hallo",), ("world",)]
 
-        results: List[Tuple[Any, ...]] = pool_cursor.fetchall()
+        results: List[Tuple[Any, ...]] = hyrise_cursor.fetchall()
 
         assert results == [("hallo",), ("world",)]
-        pool_cursor._cur.fetchall.assert_called_once()
+        hyrise_cursor._cur.fetchall.assert_called_once()
 
-    def test_fetches_column_names(self, pool_cursor) -> None:
+    def test_fetches_column_names(self, hyrise_cursor) -> None:
         """Test fetches column names (in case you're not sure)."""
-        pool_cursor._cur = MagicMock()
-        pool_cursor._cur.description = [("hallo", "encoding",), ("world", "encoding",)]
+        hyrise_cursor._cur = MagicMock()
+        hyrise_cursor._cur.description = [
+            ("hallo", "encoding",),
+            ("world", "encoding",),
+        ]
 
-        results: List[str] = pool_cursor.fetch_column_names()
+        results: List[str] = hyrise_cursor.fetch_column_names()
 
         assert results == ["hallo", "world"]
 
     @patch("hyrisecockpit.database_manager.cursor.read_sql_query_pandas",)
     def test_reads_sql_query_pandas(
-        self, mocked_read_sql_query_pandas, pool_cursor
+        self, mocked_read_sql_query_pandas, hyrise_cursor
     ) -> None:
         """Test read sql query witch valid pool cursor and no exception."""
-        pool_cursor.cur = MagicMock()
+        hyrise_cursor.cur = MagicMock()
         fake_df: DataFrame = DataFrame({"hallo": [1, 2]})
         mocked_connection: MagicMock = MagicMock()
-        pool_cursor._connection = mocked_connection
+        hyrise_cursor.connection = mocked_connection
         mocked_read_sql_query_pandas.return_value = fake_df
 
-        results: DataFrame = pool_cursor.read_sql_query("query", None)
+        results: DataFrame = hyrise_cursor.read_sql_query("query", None)
 
         assert results.equals(fake_df)
 
@@ -302,9 +305,9 @@ class TestCursor:
         assert factory._port == "port"
         assert factory._dbname == "dbname"
 
-    @patch("hyrisecockpit.database_manager.cursor.PoolCursor",)
-    def test_create_cursor(self, mock_pool_cursor_constructor: MagicMock) -> None:
-        """Test creation of PoolCursor."""
+    @patch("hyrisecockpit.database_manager.cursor.HyriseCursor",)
+    def test_create_cursor(self, mock_hyrise_cursor_constructor: MagicMock) -> None:
+        """Test creation of HyriseCursor."""
         fake_user: str = "user"
         fake_password: str = "password"
         fake_host: str = "host"
@@ -312,15 +315,38 @@ class TestCursor:
         fake_dbname: str = "dbname"
 
         mock_cursor = MagicMock()
-        mock_pool_cursor_constructor.return_value = mock_cursor
+        mock_hyrise_cursor_constructor.return_value = mock_cursor
         factory = ConnectionFactory(
             fake_user, fake_password, fake_host, fake_port, fake_dbname
         )
         cursor = factory.create_cursor()
 
         assert cursor == mock_cursor
-        mock_pool_cursor_constructor.assert_called_once_with(
-            "host", "port", "user", "password", "dbname"
+        mock_hyrise_cursor_constructor.assert_called_once_with(
+            "host", "port", "user", "password", "dbname", True
+        )
+
+    @patch("hyrisecockpit.database_manager.cursor.HyriseCursor",)
+    def test_create_cursor_with_autocommit_off(
+        self, mock_hyrise_cursor_constructor: MagicMock
+    ) -> None:
+        """Test creation of HyriseCursor with autocommit off."""
+        fake_user: str = "user"
+        fake_password: str = "password"
+        fake_host: str = "host"
+        fake_port: str = "port"
+        fake_dbname: str = "dbname"
+
+        mock_cursor = MagicMock()
+        mock_hyrise_cursor_constructor.return_value = mock_cursor
+        factory = ConnectionFactory(
+            fake_user, fake_password, fake_host, fake_port, fake_dbname
+        )
+        cursor = factory.create_cursor(autocommit=False)
+
+        assert cursor == mock_cursor
+        mock_hyrise_cursor_constructor.assert_called_once_with(
+            "host", "port", "user", "password", "dbname", False
         )
 
     def test_storage_connection_factory_initializes(self) -> None:

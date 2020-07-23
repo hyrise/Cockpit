@@ -164,6 +164,7 @@ class TestDefaultDriver:
         assert mock_cursor.execute.called_once_with(
             mock_query, mock_formatted_parameters
         )
+        mock_cursor.connection.commit.assert_called_once()
 
     @patch("hyrisecockpit.drivers.__default__.driver.time_ns")
     def test_executes_task(self, mock_time_ns, default_driver) -> None:

@@ -291,15 +291,10 @@ class TestTaskWorker:
         except LoopDone:
             pass
 
-        mock_pool_curser._connection.rollback.assert_called_once()
-        mock_pool_curser._connection.set_session.assert_called_once_with(
-            autocommit=True
-        )
-
         mock_workload_driver.execute_task.assert_called_once_with(
             task, mock_pool_curser, worker_id
         )
-        mock_log_results.assert_not_called()
+        mock_log_results.assert_called_once_with(mock_storage_log, [], [])
 
     @mark.parametrize(
         "exception", [ProgrammingError(), ValueError()],

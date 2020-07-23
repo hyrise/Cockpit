@@ -213,7 +213,7 @@ class TestDatabaseManager:
         for call in database_manager._get_server_calls().keys():
             assert call in calls
 
-    @patch("hyrisecockpit.database_manager.manager.PoolCursor.validate_connection")
+    @patch("hyrisecockpit.database_manager.manager.HyriseCursor.validate_connection")
     @patch("hyrisecockpit.database_manager.manager.Database")
     def test_call_add_database(
         self,
@@ -252,7 +252,7 @@ class TestDatabaseManager:
         assert response == get_response(200)
         assert "database_id" in database_manager._databases.keys()
 
-    @patch("hyrisecockpit.database_manager.manager.PoolCursor.validate_connection")
+    @patch("hyrisecockpit.database_manager.manager.HyriseCursor.validate_connection")
     @patch("hyrisecockpit.database_manager.manager.Database")
     def test_call_add_database_with_invalid_connection(
         self,
@@ -277,7 +277,7 @@ class TestDatabaseManager:
         assert response == get_response(400)
         assert "database_id" not in database_manager._databases.keys()
 
-    @patch("hyrisecockpit.database_manager.manager.PoolCursor.validate_connection")
+    @patch("hyrisecockpit.database_manager.manager.HyriseCursor.validate_connection")
     @patch("hyrisecockpit.database_manager.manager.Database")
     def test_call_add_existing_database(
         self,

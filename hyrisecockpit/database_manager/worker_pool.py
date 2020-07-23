@@ -51,7 +51,7 @@ class WorkerPool:
                 args=(
                     i,
                     self._task_queue,
-                    self._connection_factory.create_cursor(),
+                    self._connection_factory.create_cursor(autocommit=False),
                     self._continue_execution_flag,
                     self._database_id,
                     self._execute_task_worker_done_event[i],

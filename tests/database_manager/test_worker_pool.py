@@ -115,7 +115,7 @@ class TestWorkerPool(object):
                 ),
             )
 
-        mock_connection_factory.create_cursor.assert_called()
+        mock_connection_factory.create_cursor.assert_called_with(autocommit=False)
 
     @patch(
         "hyrisecockpit.database_manager.worker_pool.execute_queries",

@@ -113,6 +113,7 @@ class DefaultDriver:
         """Execute given query."""
         startts = time_ns()
         cursor.execute(query, formatted_parameters)
+        cursor.connection.commit()
         endts = time_ns()
 
         return endts, endts - startts

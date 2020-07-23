@@ -227,7 +227,6 @@ class TestTpccDriver:
 
         response = tpcc_driver.execute_task(task, mock_cursor, "worker_id")
 
-        mock_cursor._connection.set_session.assert_called_with(autocommit=True)
         assert expected == response
 
     @patch("hyrisecockpit.drivers.tpcc.tpcc_driver.time_ns", lambda: 1)
@@ -244,6 +243,4 @@ class TestTpccDriver:
 
         response = tpcc_driver.execute_task(task, mock_cursor, "worker_id")
 
-        mock_cursor._connection.rollback.assert_called_once()
-        mock_cursor._connection.set_session.assert_called_with(autocommit=True)
         assert expected == response
