@@ -3,9 +3,9 @@
     <v-tooltip v-if="closable" left>
       <template v-slot:activator="{ on, value }">
         <v-icon
-          class="mr-3"
+          class="mr-1"
           v-on="on"
-          color="error"
+          color="primary"
           :size="value ? 36 : 28"
           data-id="remove-database-button"
           @click="$emit('closed')"

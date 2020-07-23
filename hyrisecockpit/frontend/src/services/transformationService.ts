@@ -113,7 +113,7 @@ function getCPUData(data: any, primaryKey: string = ""): number[] {
 
 /** transform available ram data to used ram data */
 function getRAMData(data: any, primaryKey: string = ""): number[] {
-  return data.map((entry: any) => 100 - entry[primaryKey].memory.percent);
+  return data.map((entry: any) => (1 - entry[primaryKey].memory.percent) * 100);
 }
 
 /** read data only by primary key */

@@ -8,11 +8,12 @@
           :data="data"
           :chart-configuration="chartConfiguration"
           :selected-databases="selectedDatabases"
-          :max-chart-width="1600"
+          :max-chart-width="1330"
         />
       </template>
     </metric-detailed-view>
     <metric-details
+      class="mt-n10"
       v-if="showDetails"
       metric="memoryFootprint"
       :databases="selectedDatabases"
