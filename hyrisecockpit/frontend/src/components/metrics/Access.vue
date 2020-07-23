@@ -35,7 +35,7 @@
         prepend-icon="mdi-table"
       />
       <Heatmap
-        class="mt-n8"
+        class="mt-n8 mb-5"
         :graph-id="graphId || 'access'"
         :data="data"
         :chart-configuration="chartConfiguration"
