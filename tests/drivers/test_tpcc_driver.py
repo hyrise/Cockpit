@@ -41,15 +41,15 @@ class TestTpccDriver:
         assert tpcc_driver._query_path == "/abspath/workload_generator/workloads"
         assert tpcc_driver._benchmark_type == "tpcc"
         assert tpcc_driver._table_names == [
-            "WAREHOUSE",
-            "DISTRICT",
-            "CUSTOMER",
-            "HISTORY",
-            "NEW_ORDER",
-            "ORDERS",
-            "ORDER_LINE",
-            "ITEM",
-            "STOCK",
+            "warehouse",
+            "district",
+            "customer",
+            "history",
+            "new_order",
+            "order",
+            "order_line",
+            "item",
+            "stock",
         ]
         assert tpcc_driver.scale_factors == [5.0]
         assert tpcc_driver._transaction_handler == mock_tpcc_transaction_handler_obj
@@ -98,123 +98,42 @@ class TestTpccDriver:
         """Test get table names for workload."""
         scalefactor = 1.0
         expected = {
-            "WAREHOUSE": "WAREHOUSE",
-            "DISTRICT": "DISTRICT",
-            "CUSTOMER": "CUSTOMER",
-            "HISTORY": "HISTORY",
-            "NEW_ORDER": "NEW_ORDER",
-            "ORDERS": "ORDERS",
-            "ORDER_LINE": "ORDER_LINE",
-            "ITEM": "ITEM",
-            "STOCK": "STOCK",
+            "warehouse": "warehouse_tpcc_1",
+            "district": "district_tpcc_1",
+            "customer": "customer_tpcc_1",
+            "history": "history_tpcc_1",
+            "new_order": "new_order_tpcc_1",
+            "order": "order_tpcc_1",
+            "order_line": "order_line_tpcc_1",
+            "item": "item_tpcc_1",
+            "stock": "stock_tpcc_1",
         }
         response = tpcc_driver.get_table_names(scalefactor)
         assert expected == response
 
     def test_get_load_queries(self, tpcc_driver) -> None:
         """Test get loading queries for workload tables."""
-        expected = {
-            "WAREHOUSE": (
-                """COPY "%s" FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';""",
-                (
-                    ("WAREHOUSE", "as_is"),
-                    ("tpcc", "as_is"),
-                    ("1", "as_is"),
-                    ("warehouse", "as_is"),
-                ),
-            ),
-            "DISTRICT": (
-                """COPY "%s" FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';""",
-                (
-                    ("DISTRICT", "as_is"),
-                    ("tpcc", "as_is"),
-                    ("1", "as_is"),
-                    ("district", "as_is"),
-                ),
-            ),
-            "CUSTOMER": (
-                """COPY "%s" FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';""",
-                (
-                    ("CUSTOMER", "as_is"),
-                    ("tpcc", "as_is"),
-                    ("1", "as_is"),
-                    ("customer", "as_is"),
-                ),
-            ),
-            "HISTORY": (
-                """COPY "%s" FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';""",
-                (
-                    ("HISTORY", "as_is"),
-                    ("tpcc", "as_is"),
-                    ("1", "as_is"),
-                    ("history", "as_is"),
-                ),
-            ),
-            "NEW_ORDER": (
-                """COPY "%s" FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';""",
-                (
-                    ("NEW_ORDER", "as_is"),
-                    ("tpcc", "as_is"),
-                    ("1", "as_is"),
-                    ("new_order", "as_is"),
-                ),
-            ),
-            "ORDERS": (
-                """COPY "%s" FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';""",
-                (
-                    ("ORDERS", "as_is"),
-                    ("tpcc", "as_is"),
-                    ("1", "as_is"),
-                    ("order", "as_is"),
-                ),
-            ),
-            "ORDER_LINE": (
-                """COPY "%s" FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';""",
-                (
-                    ("ORDER_LINE", "as_is"),
-                    ("tpcc", "as_is"),
-                    ("1", "as_is"),
-                    ("order_line", "as_is"),
-                ),
-            ),
-            "ITEM": (
-                """COPY "%s" FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';""",
-                (
-                    ("ITEM", "as_is"),
-                    ("tpcc", "as_is"),
-                    ("1", "as_is"),
-                    ("item", "as_is"),
-                ),
-            ),
-            "STOCK": (
-                """COPY "%s" FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';""",
-                (
-                    ("STOCK", "as_is"),
-                    ("tpcc", "as_is"),
-                    ("1", "as_is"),
-                    ("stock", "as_is"),
-                ),
-            ),
+        mock_default_driver = MagicMock()
+        mock_default_driver.get_load_queries.return_value = {
+            "customer_tpcc_1": "load customer"
         }
-
-        response = tpcc_driver.get_load_queries(1.0)
-        assert response == expected
+        tpcc_driver._default_driver = mock_default_driver
+        scalefactor = 1.0
+        response = tpcc_driver.get_load_queries(scalefactor)
+        assert {"customer_tpcc_1": "load customer"} == response
+        mock_default_driver.get_load_queries.assert_called_once_with(scalefactor)
 
     def test_get_delete_queries(self, tpcc_driver) -> None:
         """Test get delete queries for workload tables."""
-        expected = {
-            "WAREHOUSE": ("""DROP TABLE "%s";""", (("WAREHOUSE", "as_is"),),),
-            "DISTRICT": ("""DROP TABLE "%s";""", (("DISTRICT", "as_is"),),),
-            "CUSTOMER": ("""DROP TABLE "%s";""", (("CUSTOMER", "as_is"),),),
-            "HISTORY": ("""DROP TABLE "%s";""", (("HISTORY", "as_is"),),),
-            "NEW_ORDER": ("""DROP TABLE "%s";""", (("NEW_ORDER", "as_is"),),),
-            "ORDERS": ("""DROP TABLE "%s";""", (("ORDERS", "as_is"),),),
-            "ORDER_LINE": ("""DROP TABLE "%s";""", (("ORDER_LINE", "as_is"),),),
-            "ITEM": ("""DROP TABLE "%s";""", (("ITEM", "as_is"),),),
-            "STOCK": ("""DROP TABLE "%s";""", (("STOCK", "as_is"),),),
+        mock_default_driver = MagicMock()
+        mock_default_driver.get_delete_queries.return_value = {
+            "customer_tpcc_1": "delete customer"
         }
-        response = tpcc_driver.get_delete_queries(1.0)
-        assert response == expected
+        tpcc_driver._default_driver = mock_default_driver
+        scalefactor = 1.0
+        response = tpcc_driver.get_delete_queries(scalefactor)
+        assert {"customer_tpcc_1": "delete customer"} == response
+        mock_default_driver.get_delete_queries.assert_called_once_with(scalefactor)
 
     @patch("hyrisecockpit.drivers.tpcc.tpcc_driver.time_ns", lambda: 1)
     def test_execute_task(self, tpcc_driver) -> None:
