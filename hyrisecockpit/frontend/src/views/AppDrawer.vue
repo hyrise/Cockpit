@@ -1,80 +1,79 @@
 <template>
-  <v-navigation-drawer app fixed width="200" color="grey lighten-4">
+  <v-navigation-drawer app fixed width="134" color="grey lighten-4">
     <v-list subheader>
       <v-list-item>
-        <v-list-item-avatar tile size="70" class="mt-0 mb-2 mr-2">
+        <v-list-item-avatar tile size="71" class="mt-0 mb-0 mr-0 ml-4">
           <img src="../../src/assets/images/hyrise_logo.png" />
         </v-list-item-avatar>
-        <v-list-item-title
-          class="title font-weight-regular text--secondary mt-2"
-          >Cockpit</v-list-item-title
-        >
       </v-list-item>
-      <v-divider />
-      <v-list-item color="#02789D" input-value="true" dense>
+      <v-list-item-title
+        class="body-3 font-weight-regular text--secondary mt-0 mb-0 ml-9"
+        >Cockpit</v-list-item-title
+      >
+      <v-list-item
+        :color="colorValueDefinition.hyriselogo"
+        input-value="true"
+        dense
+      >
         <v-list-item-content>
-          <v-list-item-title class="body-2 ml-1"
-            >Analysis Views</v-list-item-title
+          <v-list-item-title class="subtitle-2 ml-3 mt-5 mb-n2"
+            >Monitoring</v-list-item-title
           >
         </v-list-item-content>
-        <v-list-item-icon>
+        <v-list-item-btn class="mr-0 mt-6">
           <v-icon
+            size="18"
             dense
             color="secondary"
             data-id="selection-list-button"
             @click="$emit('toggleSelection')"
             >mdi-cog-outline</v-icon
           >
-        </v-list-item-icon>
+        </v-list-item-btn>
       </v-list-item>
-      <v-divider />
-
-      <v-list-item :to="{ name: 'overview' }" data-id="overview-button">
-        <v-list-item-icon class="mr-4 ml-1">
-          <v-icon>mdi-database-search</v-icon>
-        </v-list-item-icon>
-
-        <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light"
-            >Overview</v-list-item-title
-          >
-        </v-list-item-content>
+      <v-list-item
+        :to="{ name: 'overview' }"
+        data-id="overview-button"
+        :color="colorValueDefinition.hyriselogo"
+      >
+        <v-icon class="ml-8 mb-4">mdi-database-search</v-icon>
+        <div class="caption ml-n9 mt-10 font-weight-regular-light">
+          Overview
+        </div>
       </v-list-item>
 
-      <v-list-item :to="{ name: 'comparison' }" data-id="comparison-button">
-        <v-list-item-icon class="mr-4 ml-1">
-          <v-icon>mdi-chart-line</v-icon>
-        </v-list-item-icon>
-
-        <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light"
-            >Comparison</v-list-item-title
-          >
-        </v-list-item-content>
+      <v-list-item
+        :to="{ name: 'comparison' }"
+        data-id="comparison-button"
+        :color="colorValueDefinition.hyriselogo"
+      >
+        <v-icon class="ml-8 mb-4">mdi-chart-line</v-icon>
+        <div class="caption ml-n11 mt-10 font-weight-regular-light">
+          Comparison
+        </div>
       </v-list-item>
 
       <v-list-item
         :to="{ name: 'workload' }"
         data-id="workload-monitoring-button"
+        :color="colorValueDefinition.hyriselogo"
       >
-        <v-list-item-icon class="mr-4 ml-1">
-          <v-icon>mdi-chart-bar</v-icon>
-        </v-list-item-icon>
-
+        <v-icon class="ml-8 mb-4">mdi-chart-bar</v-icon>
+        <div class="caption ml-n15 mt-10 font-weight-regular-light">
+          Workload Analysis
+        </div>
+      </v-list-item>
+      <v-list-item
+        :color="colorValueDefinition.hyriselogo"
+        input-value="true"
+        dense
+      >
         <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light"
-            >Workload Analysis</v-list-item-title
+          <v-list-item-title class="subtitle-2 ml-2 mt-4 mb-n2"
+            >Configuration</v-list-item-title
           >
         </v-list-item-content>
       </v-list-item>
-
-      <v-divider />
-      <v-list-item color="#02789D" input-value="true" dense>
-        <v-list-item-content>
-          <v-list-item-title class="body-2 ml-1">Settings</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-      <v-divider />
 
       <workload-generation
         :open="showWorkloadDialog"
@@ -87,38 +86,28 @@
         @click="showWorkloadDialog = true"
         data-id="workload-generation-button"
       >
-        <v-list-item-icon class="mr-4 ml-1">
-          <v-icon>mdi-account-cog</v-icon>
-        </v-list-item-icon>
+        <v-icon class="ml-8 mb-4">mdi-account-cog</v-icon>
         <v-badge
           v-if="workloadIndicator.icon != ''"
           :icon="workloadIndicator.icon"
           :color="colorValueDefinition[workloadIndicator.color]"
-          offset-y="1"
-          offset-x="50"
+          offset-y="-7"
+          offset-x="36"
           class="primary--text"
         ></v-badge>
 
-        <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light"
-            >Workload</v-list-item-title
-          >
-        </v-list-item-content>
+        <div class="caption ml-n9 mt-10 font-weight-regular-light">
+          Workload
+        </div>
       </v-list-item>
 
       <v-list-item
         @click="$emit('openPlugins')"
         data-id="plugin-overview-button"
       >
-        <v-list-item-icon class="mr-4 ml-1">
-          <v-icon>mdi-tune</v-icon>
-        </v-list-item-icon>
+        <v-icon class="ml-8 mb-4">mdi-tune</v-icon>
 
-        <v-list-item-content>
-          <v-list-item-title class="body-2 font-weight-light"
-            >Plugins</v-list-item-title
-          >
-        </v-list-item-content>
+        <div class="caption ml-n8 mt-10 font-weight-regular-light">Plugins</div>
       </v-list-item>
 
       <add-database
@@ -138,22 +127,20 @@
             data-id="database-list-button"
             @click="$emit('closeSelection')"
           >
-            <v-list-item-icon class="mr-4 ml-1">
-              <v-icon>mdi-database-sync</v-icon>
-            </v-list-item-icon>
+            <v-icon class="ml-8 mb-4 font-weight-regular-light"
+              >mdi-database-sync</v-icon
+            >
             <v-badge
               color="secondary"
               :content="databaseCount"
-              offset-y="1"
-              offset-x="50"
+              offset-y="-7"
+              offset-x="36"
               data-id="number-of-databases"
             ></v-badge>
 
-            <v-list-item-content>
-              <v-list-item-title class="body-2 font-weight-light"
-                >Databases</v-list-item-title
-              >
-            </v-list-item-content>
+            <div class="caption ml-n10 mt-10 font-weight-regular-light">
+              Databases
+            </div>
           </v-list-item>
         </template>
         <available-databases-list
@@ -161,16 +148,14 @@
           @removeDatabase="handleDatabaseDeletion"
         />
       </v-menu>
-      <v-divider />
     </v-list>
-
-    <v-footer absolute class="font-weight-medium mb-1" color="grey lighten-3">
-      <v-img
-        src="../../src/assets/images/hpi_logo_bw.png"
-        max-width="80"
-        max-height="80"
-      ></v-img>
-    </v-footer>
+    <v-spacer class="spacer mt-16 pt-5"></v-spacer>
+    <v-img
+      class="ml-8"
+      src="../../src/assets/images/hpi_logo_bw.png"
+      max-width="65"
+      max-height="65"
+    ></v-img>
   </v-navigation-drawer>
 </template>
 ​

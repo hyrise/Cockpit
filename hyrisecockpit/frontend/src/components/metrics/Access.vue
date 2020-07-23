@@ -9,7 +9,7 @@
             v-model="selectedItem"
             class="select"
             :items="selectionItems"
-            chips
+            dense
             label="table"
             outlined
             prepend-icon="mdi-table"
@@ -29,12 +29,13 @@
         v-model="selectedItem"
         class="select"
         :items="selectionItems"
-        chips
+        dense
         label="table"
         outlined
         prepend-icon="mdi-table"
       />
       <Heatmap
+        class="mt-n8"
         :graph-id="graphId || 'access'"
         :data="data"
         :chart-configuration="chartConfiguration"
@@ -148,7 +149,8 @@ function usePreSelect(metric: Metric): Ref<string> {
 <style scoped>
 .select {
   z-index: 2;
-  width: 50%;
+  width: 30%;
   margin: auto;
+  margin-top: -90px;
 }
 </style>
