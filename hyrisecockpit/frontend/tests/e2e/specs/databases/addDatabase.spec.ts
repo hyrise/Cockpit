@@ -1,11 +1,6 @@
 import { useBackendMock } from "../../setup/backendMock";
 import { selectors as viewSelectors } from "../views/helpers";
-import {
-  assertDefaultPostValues,
-  assertAdvancedPostValues,
-  DatabaseData,
-  selectors,
-} from "./helpers";
+import { assertPostRequest, DatabaseData, selectors } from "./helpers";
 import { fakeId, fakeDatabaseData } from "../../setup/factories";
 import { getPostAlias } from "../../setup/helpers";
 
@@ -44,56 +39,32 @@ describe("When adding a new database", () => {
     });
   });
 
-  // test default save
-  describe("and clicking the save button with default data", () => {
-    it("will add a new database with the correct data", () => {
+  // test cancel
+  describe("and not filling out all input fields", () => {
+    it("will not add a new database", () => {
       cy.get(viewSelectors.databaseListButton).click();
       cy.get(selectors.addDatabaseButton).click();
-      cy.contains(newDatabase.host).should("not.exist");
-
-      // update tmp state
-      cy.updateAppState(backend, {
-        request: "database",
-        id: newDatabase.host,
-        method: "POST",
-      });
 
       cy.get(selectors.hostInput).clear().type(newDatabase.host);
       cy.get(selectors.workerInput)
         .clear()
         .type(newDatabase.number_workers.toString());
+      cy.get(selectors.portInput).clear().type(newDatabase.port);
 
-      cy.get(selectors.saveDatabaseButton).click();
+      // dont add an ID
+      cy.get(selectors.idInput).clear();
 
-      cy.wait("@" + getPostAlias("database"));
-      cy.get("@" + getPostAlias("database")).should((xhr: any) => {
-        assertDefaultPostValues(newDatabase, xhr.request.body);
-      });
-      cy.numberOfRequests(getPostAlias("database")).should("eq", 1);
+      cy.get(selectors.saveDatabaseButton).should("be.disabled");
 
-      cy.wait(500);
-      cy.get(viewSelectors.databaseListButton).click();
-      cy.get(viewSelectors.databaseList).within(() => {
-        cy.get(selectors.databaseChip)
-          .eq(databases.length)
-          .contains(newDatabase.host);
-      });
-
-      // clean tmp state
-      cy.cleanAppState(backend, {
-        request: "database",
-        id: newDatabase.host,
-        method: "DELETE",
-      });
+      cy.numberOfRequests(getPostAlias("database")).should("eq", 0);
     });
   });
 
-  // test advanced save
-  describe("and clicking the save button with advanced data", () => {
+  // test  save
+  describe("and clicking the save button", () => {
     it("will add a new database with the correct data", () => {
       cy.get(viewSelectors.databaseListButton).click();
       cy.get(selectors.addDatabaseButton).click();
-      cy.contains(newDatabase.id).should("not.exist");
 
       // update tmp state
       cy.updateAppState(backend, {
@@ -107,19 +78,13 @@ describe("When adding a new database", () => {
       cy.get(selectors.workerInput)
         .clear()
         .type(newDatabase.number_workers.toString());
-
-      cy.get(selectors.advancedInputButton).click();
-
       cy.get(selectors.portInput).clear().type(newDatabase.port);
-      cy.get(selectors.dbNameInput).clear().type(newDatabase.dbname);
-      cy.get(selectors.userInput).clear().type(newDatabase.port);
-      cy.get(selectors.passwordInput).clear().type(newDatabase.dbname);
 
       cy.get(selectors.saveDatabaseButton).click();
 
       cy.wait("@" + getPostAlias("database"));
       cy.get("@" + getPostAlias("database")).should((xhr: any) => {
-        assertAdvancedPostValues(newDatabase, xhr.request.body);
+        assertPostRequest(newDatabase, xhr.request.body);
       });
       cy.numberOfRequests(getPostAlias("database")).should("eq", 1);
 
