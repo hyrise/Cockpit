@@ -99,7 +99,7 @@ export default defineComponent({
 
 <style scoped>
 .card {
-  max-width: 97.5%;
+  max-width: 99%;
 }
 .card-title {
   padding-bottom: 0 !important;
