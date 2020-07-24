@@ -62,8 +62,6 @@ def execute_queries(  # noqa
                         query_type,
                         commited,
                     ) = workload_drivers[benchmark].execute_task(task, cur, worker_id)
-                    if not commited:
-                        print(f"inside worker not commited -> {worker_id}")
                     succesful_queries.append(
                         (
                             endts,
