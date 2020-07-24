@@ -113,12 +113,6 @@ export default defineComponent({
   margin-left: 6px;
   padding-left: 24px;
 }
-#comparison-page .card {
-  border-radius: 4px 4px 0px 0px;
-}
-#overview-page .card {
-  border-radius: 4px;
-}
 .v-card__title {
   margin-bottom: 6px;
   white-space: nowrap;

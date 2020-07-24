@@ -66,6 +66,10 @@ function useHeatMapConfiguration(
         rangemode: "tozero",
         title: {
           text: chartConfiguration.xaxis,
+          font: {
+            family: "Roboto, sans-serif",
+            size: 13,
+          },
         },
         fixedrange: true,
       },
@@ -73,6 +77,10 @@ function useHeatMapConfiguration(
         rangemode: "tozero",
         title: {
           text: chartConfiguration.yaxis,
+          font: {
+            family: "Roboto, sans-serif",
+            size: 13,
+          },
         },
         fixedrange: true,
       },

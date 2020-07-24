@@ -3,9 +3,9 @@
 from typing import Dict, List
 from unittest.mock import MagicMock, patch
 
-from hyrisecockpit.api.app.monitor.app import (
-    fill_missing_points,
-    get_historical_data,
+from hyrisecockpit.api.app.historical_data_handling import (
+    _fill_missing_points,
+    _get_historical_data,
     get_historical_metric,
     get_interval_limits,
 )
@@ -49,7 +49,7 @@ class TestMonitor:
             for point in points
         ]
 
-        filled_points: List[Dict] = fill_missing_points(
+        filled_points: List[Dict] = _fill_missing_points(
             startts, endts, precision_ns, table_name, metrics, points
         )
 
@@ -64,8 +64,8 @@ class TestMonitor:
         for point in expected_points:
             assert point in filled_points
 
-    @patch("hyrisecockpit.api.app.monitor.app._get_active_databases")
-    @patch("hyrisecockpit.api.app.monitor.app.get_historical_data")
+    @patch("hyrisecockpit.api.app.historical_data_handling._get_active_databases")
+    @patch("hyrisecockpit.api.app.historical_data_handling._get_historical_data")
     def test_gets_historical_metric(
         self, mock_get_historical_data: MagicMock, mock_get_active_databases: MagicMock
     ):
@@ -82,6 +82,7 @@ class TestMonitor:
         ]
         mock_get_active_databases.return_value = databases
         mock_get_historical_data.return_value = historical_data
+        mock_storage_clinet: MagicMock = MagicMock()
 
         expected_points: List = [
             {"timestamp": 1587997260000000000, "metric1": 1.0, "metric2": 2.0},
@@ -92,14 +93,13 @@ class TestMonitor:
         ]
 
         result: List = get_historical_metric(
-            startts, endts, precision_ns, table_name, metrics
+            startts, endts, precision_ns, table_name, metrics, mock_storage_clinet
         )
 
         for database in databases:
             assert {"id": database, table_name: expected_points} in result
 
-    @patch("hyrisecockpit.api.app.monitor.app.storage_connection")
-    def test_gets_historical_data(self, mock_storage_connection: MagicMock):
+    def test_gets_historical_data(self):
         """Test retrieving of the historical data."""
         startts: int = 1587997260000000000
         endts: int = 1587997265000000000
@@ -107,7 +107,7 @@ class TestMonitor:
         table_name = "table_name"
         metrics: List[str] = ["metric1", "metric2"]
         database: str = "database"
-
+        mock_storage_connection: MagicMock = MagicMock()
         mock_storage_connection.query.return_value = {
             (table_name, None): ["point1", "point2"]
         }
@@ -127,11 +127,17 @@ class TestMonitor:
         GROUP BY TIME({precision_ns}ns)
         FILL(0.0);"""
 
-        result = get_historical_data(
-            startts, endts, precision_ns, table_name, metrics, database
+        result = _get_historical_data(
+            startts,
+            endts,
+            precision_ns,
+            table_name,
+            metrics,
+            database,
+            mock_storage_connection,
         )
 
-        assert result == ["point1", "point2"]  # type: ignore
+        assert result == ["point1", "point2"]
         mock_storage_connection.query.assert_any_call(
             expected_query,
             database=database,
