@@ -48,7 +48,7 @@ def update_segment_configuration(
     connection_factory,
     storage_connection_factory: StorageConnectionFactory,
 ) -> None:
-    """Update chunks data for database instance."""
+    """Update segment configuration data for database instance."""
     time_stamp = time_ns()
     encoding_query = """SELECT table_name, column_name, chunk_id, encoding_type FROM meta_segments;"""
     order_query = (

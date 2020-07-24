@@ -273,6 +273,31 @@ class Chunks(Resource):
         return response
 
 
+@api.route("/storage_configuration")
+class StorageConfiguration(Resource):
+    """Storage Configuration data information of all databases."""
+
+    def get(self) -> Union[int, Response]:
+        """Return storage configuration information for every database."""
+        storage_configuration: Dict[str, Dict] = {}
+        active_databases = _get_active_databases()
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT LAST("storage_configuration_information") FROM storage_configuration',
+                database=database,
+            )
+            storage_configuration_data = list(result["storage_configuration", None])
+            if len(storage_configuration_data) > 0:
+                storage_configuration[database] = loads(
+                    storage_configuration_data[0]["last"]
+                )
+            else:
+                storage_configuration[database] = {}
+        response = get_response(200)
+        response["body"]["storage_configuration"] = storage_configuration
+        return response
+
+
 @api.route("/storage")
 class Storage(Resource):
     """Storage information of all databases."""
