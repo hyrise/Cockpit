@@ -73,6 +73,20 @@
             </div>
           </div>
         </v-row>
+        <div class="text-center">
+          <v-tooltip right>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                v-on="on"
+                class="secondary primary--text"
+                @click="resetWeights(workload)"
+              >
+                Reset
+              </v-btn>
+            </template>
+            <span>Sets all weights to 1</span>
+          </v-tooltip>
+        </div>
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-expansion-panels>
@@ -105,6 +119,7 @@ interface Data {
     name: string,
     sliderValueToValue: boolean
   ) => void;
+  resetWeights: (workload: Workload) => void;
 }
 type Weight = { name: string; value: number; sliderValue: number };
 
@@ -152,6 +167,15 @@ export default defineComponent({
       }
       context.emit("change", workload, name, weight.value);
     }
+    function resetWeights(workload: Workload): void {
+      Object.values(weights.value[workload]).forEach((weight) => {
+        if (weight.value !== 1) {
+          weight.value = 1;
+          weight.sliderValue = 50;
+          context.emit("change", workload, weight.name, weight.value);
+        }
+      });
+    }
     watch(
       () => props.initialWeights,
       () => {
@@ -196,6 +220,7 @@ export default defineComponent({
       numberOfQueriesPerWorkload,
       getDisplayedWorkload,
       updateWeight,
+      resetWeights,
     };
   },
 });
@@ -272,6 +297,6 @@ export default defineComponent({
   margin-left: 2px;
 }
 .query-weights-text {
-  margin-top: 162px;
+  margin-top: 161px;
 }
 </style>
