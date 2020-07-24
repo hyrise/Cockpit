@@ -3,29 +3,12 @@ from unittest.mock import MagicMock, patch
 
 from pytest import fixture
 
-from hyrisecockpit.api.app.socket_manager import (
+from hyrisecockpit.api.app.connection_manager import (
     BaseSocket,
     GeneratorSocket,
     ManagerSocket,
+    StorageConnection,
 )
-
-mocked_socket_context: MagicMock = MagicMock()
-mocked_context: MagicMock = MagicMock()
-mocked_socket: MagicMock = MagicMock()
-mocked_context.socket.return_value = mocked_socket
-mocked_socket_context.return_value = mocked_context
-
-
-def reset_socket_context() -> None:
-    """Reset mocked socket context."""
-    global mocked_socket_context
-    global mocked_context
-    global mocked_socket
-    mocked_socket_context = MagicMock()
-    mocked_context = MagicMock()
-    mocked_socket = MagicMock()
-    mocked_context.socket.return_value = mocked_socket
-    mocked_socket_context.return_value = mocked_context
 
 
 @fixture
@@ -35,14 +18,14 @@ def base_socket():
 
 
 @fixture
-@patch("hyrisecockpit.api.app.socket_manager.BaseSocket", MagicMock())
+@patch("hyrisecockpit.api.app.connection_manager.BaseSocket", MagicMock())
 def generator_socket():
     """Return a generator socket."""
     return GeneratorSocket()
 
 
 @fixture
-@patch("hyrisecockpit.api.app.socket_manager.BaseSocket", MagicMock())
+@patch("hyrisecockpit.api.app.connection_manager.BaseSocket", MagicMock())
 def manager_socket():
     """Return a manager socket."""
     return ManagerSocket()
@@ -55,23 +38,24 @@ class TestSocketManager:
         """Test that base socket initializes correctly."""
         assert base_socket._url == "some_url"
 
-    @patch("hyrisecockpit.api.app.socket_manager.Context", mocked_socket_context)
-    @patch("hyrisecockpit.api.app.socket_manager.REQ", "fake_req")
-    def test_base_socket_opens_socket_connection(self, base_socket: BaseSocket) -> None:
+    @patch("hyrisecockpit.api.app.connection_manager.Context")
+    @patch("hyrisecockpit.api.app.connection_manager.REQ", "fake_req")
+    def test_base_socket_opens_socket_connection(
+        self, mock_context: MagicMock, base_socket: BaseSocket
+    ) -> None:
         """Test that base socket connection is created correctly."""
-        global mocked_socket_context
-        global mocked_context
-        global mocked_socket
+        mock_context_object = MagicMock()
+        mock_socket = MagicMock()
+        mock_context_object.socket.return_value = mock_socket
+        mock_context.return_value = mock_context_object
 
         base_socket.open()
 
-        mocked_socket_context.assert_called_once_with(io_threads=1)
-        mocked_context.socket.assert_called_once_with("fake_req")
-        mocked_socket.connect.assert_called_once_with("some_url")
+        mock_context.assert_called_once_with(io_threads=1)
+        mock_context_object.socket.assert_called_once_with("fake_req")
+        mock_socket.connect.assert_called_once_with("some_url")
 
-        assert base_socket._socket == mocked_socket
-
-        reset_socket_context()
+        assert base_socket._socket == mock_socket
 
     def test_base_socket_closes_socket_connection(
         self, base_socket: BaseSocket
@@ -97,9 +81,9 @@ class TestSocketManager:
         mocked_socket.send_json.assert_called_once_with("What's up")
         assert responce == "Hi"  # type: ignore
 
-    @patch("hyrisecockpit.api.app.socket_manager.BaseSocket")
-    @patch("hyrisecockpit.api.app.socket_manager.GENERATOR_HOST", "hallo")
-    @patch("hyrisecockpit.api.app.socket_manager.GENERATOR_PORT", "world")
+    @patch("hyrisecockpit.api.app.connection_manager.BaseSocket")
+    @patch("hyrisecockpit.api.app.connection_manager.GENERATOR_HOST", "hallo")
+    @patch("hyrisecockpit.api.app.connection_manager.GENERATOR_PORT", "world")
     def test_initializes_generator_socket_correctly(
         self, mocked_base_socket: MagicMock
     ) -> None:
@@ -124,9 +108,9 @@ class TestSocketManager:
 
         mocked_base_socket.send_req.assert_called_once_with("hi")
 
-    @patch("hyrisecockpit.api.app.socket_manager.BaseSocket")
-    @patch("hyrisecockpit.api.app.socket_manager.DB_MANAGER_HOST", "hallo")
-    @patch("hyrisecockpit.api.app.socket_manager.DB_MANAGER_PORT", "manager")
+    @patch("hyrisecockpit.api.app.connection_manager.BaseSocket")
+    @patch("hyrisecockpit.api.app.connection_manager.DB_MANAGER_HOST", "hallo")
+    @patch("hyrisecockpit.api.app.connection_manager.DB_MANAGER_PORT", "manager")
     def test_initializes_manager_socket_correctly(
         self, mocked_base_socket: MagicMock
     ) -> None:
@@ -148,3 +132,26 @@ class TestSocketManager:
         manager_socket.send_message("hi")  # type: ignore
 
         mocked_base_socket.send_req.assert_called_once_with("hi")
+
+    @patch("hyrisecockpit.api.app.connection_manager.InfluxDBClient")
+    @patch("hyrisecockpit.api.app.connection_manager.STORAGE_HOST", "fake_host")
+    @patch("hyrisecockpit.api.app.connection_manager.STORAGE_PORT", "fake_port")
+    @patch("hyrisecockpit.api.app.connection_manager.STORAGE_USER", "fake_user")
+    @patch("hyrisecockpit.api.app.connection_manager.STORAGE_PASSWORD", "fake_password")
+    def test_storage_connection(
+        self, mock_influx_db_client_constructor: MagicMock
+    ) -> None:
+        """Test use of storage connection object."""
+        mock_client: MagicMock = MagicMock()
+        mock_influx_db_client_constructor.return_value = mock_client
+
+        with StorageConnection() as client:  # noqa
+            pass
+
+        mock_influx_db_client_constructor.assert_called_once_with(
+            host="fake_host",
+            port="fake_port",
+            username="fake_user",
+            password="fake_password",
+        )
+        mock_client.close.assert_called_once()
