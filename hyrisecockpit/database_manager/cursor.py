@@ -66,6 +66,20 @@ class HyriseCursor:
         self.connection.close()
         return None
 
+    def reset(self) -> None:
+        """Reset connection."""
+        self._cur.close()
+        self.connection.close()
+        self.connection = connect(
+            host=self._host,
+            port=self._port,
+            user=self._user,
+            password=self._password,
+            dbname=self._dbname,
+        )
+        self.connection.set_session(autocommit=self._autocommit)
+        self._cur = self.connection.cursor()
+
     def execute(
         self, query: str, parameters: Optional[Tuple[Union[str, int], ...]]
     ) -> None:
