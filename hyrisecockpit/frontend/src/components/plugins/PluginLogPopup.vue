@@ -10,7 +10,7 @@
       text
       data-id="chart-plugin-log-alert"
       elevation="20"
-      :color="currentPluginLogDatabase.color"
+      :color="currentPluginLogDatabaseColor"
     >
       <div v-if="!!currentPluginLog">
         <div class="header-row">
@@ -41,7 +41,8 @@ import useDragElement from "@/meta/draggable";
 
 interface Props {
   currentPluginLog: any;
-  currentPluginLogDatabase: any;
+  currentPluginLogDatabaseColor: string;
+  currentPluginLogDatabaseId: string;
 }
 interface Data {
   logDraggableId: string;
@@ -55,17 +56,17 @@ export default defineComponent({
       type: Object,
       default: null,
     },
-    currentPluginLogDatabase: {
-      type: Object,
+    currentPluginLogDatabaseColor: {
+      type: String,
+      default: null,
+    },
+    currentPluginLogDatabaseId: {
+      type: String,
       default: null,
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const logDraggableId = "log-popup" + props.currentPluginLogDatabase.id;
-
-    watch(props, (props) => {
-      console.log(props);
-    });
+    const logDraggableId = "log-popup" + props.currentPluginLogDatabaseId;
 
     function onClose() {
       props.currentPluginLog = null;
@@ -84,8 +85,8 @@ export default defineComponent({
 </script>
 <style>
 .log-popup {
-  position: fixed;
-  top: 50%;
+  position: absolute;
+  top: 20%;
   left: 40%;
   z-index: 11;
   width: 400px;

@@ -8,10 +8,6 @@
       :color="database.color"
       flat
     >
-      <plugin-log-popup
-        :current-plugin-log="currentPluginLogs[database.id]"
-        :current-plugin-log-database="database"
-      />
       <v-card
         v-if="showHeader"
         class="column-top-border"
@@ -33,7 +29,8 @@
           :show-details="showDetails"
           :graph-id="`${metric}-${database.id}`"
           :max-chart-width="maxChartWidth"
-          :activate-plugin-event-click="activatePluginEventClick"
+          show-plugin-popup
+          :popup-color="database.color"
         />
       </div>
       <v-card class="column-bottom-border" :color="database.color">
@@ -56,29 +53,22 @@ import {
   provide,
   reactive,
 } from "@vue/composition-api";
-import Vue from "vue";
 
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
 import { useDatabaseFlex } from "../../meta/components";
 import MetricTile from "@/components/container/MetricTile.vue";
 import { Database } from "@/types/database";
 import { useUpdatingDatabases } from "@/meta/databases";
-import PluginLogPopup from "@/components/plugins/PluginLogPopup.vue";
-import { PlotlyHTMLElement, PlotMouseEvent } from "plotly.js";
 
 interface Data {
   databaseFlex: Readonly<Ref<Object>>;
   maxChartWidth: Readonly<Ref<number>>;
   databases: Ref<readonly Database[]>;
-  currentPluginLogs: any;
-  activatePluginEventClick: (graphId: string, database: any) => void;
-  currentPluginLogDatabase: Ref<any>;
 }
 
 export default defineComponent({
   components: {
     MetricTile,
-    PluginLogPopup,
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
@@ -95,35 +85,10 @@ export default defineComponent({
       )!.offsetWidth;
     });
 
-    const currentPluginLogs: any = reactive({});
-    const currentPluginLogDatabase: Ref<any> = ref({});
-
-    const activatePluginEventClick = (graphId: string, database: Database) => {
-      const graphElement = document.getElementById(
-        graphId
-      ) as PlotlyHTMLElement;
-      graphElement.on("plotly_click", (data: PlotMouseEvent) => {
-        data.points.forEach((point: any) => {
-          if (point.curveNumber === 1) {
-            Vue.set(
-              currentPluginLogs,
-              database.id,
-              point.fullData.text[point.pointIndex]
-            );
-
-            currentPluginLogDatabase.value = database;
-          }
-        });
-      });
-    };
-
     return {
       ...useDatabaseFlex(props),
       maxChartWidth,
       ...useUpdatingDatabases(props, context),
-      currentPluginLogs,
-      activatePluginEventClick,
-      currentPluginLogDatabase,
     };
   },
 });

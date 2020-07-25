@@ -22,6 +22,12 @@
         </v-row>
       </v-container>
     </v-card-title>
+    <plugin-log-popup
+      v-if="showPluginPopup"
+      :current-plugin-log="currentPluginLog"
+      :current-plugin-log-database-color="popupColor"
+      :current-plugin-log-database-id="tileDatabase"
+    />
     <component
       :is="getMetricComponent(metric)"
       :selected-databases="selectedDatabases"
@@ -30,13 +36,19 @@
       :show-details="showDetails"
       :max-chart-width="maxChartWidth"
       :total-number-of-databases="totalNumberOfDatabases"
-      :activate-plugin-event-click="activatePluginEventClick"
+      :activate-plugin-event-click="activatePluginEventOnClick"
     />
   </v-card>
 </template>
 
 <script lang="ts">
-import { defineComponent, SetupContext, onMounted } from "@vue/composition-api";
+import {
+  defineComponent,
+  SetupContext,
+  onMounted,
+  ref,
+  Ref,
+} from "@vue/composition-api";
 import Throughput from "@/components/metrics/Throughput.vue";
 import CPU from "@/components/metrics/CPU.vue";
 import Latency from "@/components/metrics/Latency.vue";
@@ -56,14 +68,20 @@ import {
 import { Database } from "../../types/database";
 import DatabaseChip from "@/components/details/DatabaseChip.vue";
 import TimeInterval from "@/components/details/TimeInterval.vue";
+import { PlotlyHTMLElement, PlotMouseEvent } from "plotly.js";
+import PluginLogPopup from "@/components/plugins/PluginLogPopup.vue";
 
 interface Props extends MetricProps {
   tileDatabase: string;
+  showPluginPopup: boolean;
+  popupColor: string;
 }
 
 interface Data {
   getMetricTitle: (metric: Metric) => string;
   getMetricComponent: (metric: Metric) => string;
+  activatePluginEventOnClick: (graphId: string, database: any) => void;
+  currentPluginLog: Ref<any>;
 }
 
 export default defineComponent({
@@ -80,9 +98,18 @@ export default defineComponent({
     MemoryFootprint,
     OperatorProportion,
     TimeInterval,
+    PluginLogPopup,
   },
   props: {
     tileDatabase: {
+      type: String,
+      default: null,
+    },
+    showPluginPopup: {
+      type: Boolean,
+      default: false,
+    },
+    popupColor: {
       type: String,
       default: null,
     },
@@ -90,9 +117,29 @@ export default defineComponent({
   },
   setup(props: Props, context: SetupContext): Data {
     const { getDatabasesByIds } = context.root.$databaseController;
+
+    const currentPluginLog: Ref<any> = ref(null);
+
+    const activatePluginEventOnClick = (
+      graphId: string,
+      database: Database
+    ) => {
+      const graphElement = document.getElementById(
+        graphId
+      ) as PlotlyHTMLElement;
+      graphElement.on("plotly_click", (data: PlotMouseEvent) => {
+        data.points.forEach((point: any) => {
+          if (point.curveNumber === 1) {
+            currentPluginLog.value = point.fullData.text[point.pointIndex];
+          }
+        });
+      });
+    };
     return {
       getMetricTitle,
       getMetricComponent,
+      activatePluginEventOnClick,
+      currentPluginLog,
     };
   },
 });
