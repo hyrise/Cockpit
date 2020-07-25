@@ -42,7 +42,7 @@ import useDragElement from "@/meta/draggable";
 interface Props {
   currentPluginLog: any;
   currentPluginLogDatabaseColor: string;
-  currentPluginLogDatabaseId: string;
+  currentPluginLogMetricId: string;
 }
 interface Data {
   logDraggableId: string;
@@ -60,13 +60,13 @@ export default defineComponent({
       type: String,
       default: null,
     },
-    currentPluginLogDatabaseId: {
+    currentPluginLogMetricId: {
       type: String,
       default: null,
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const logDraggableId = "log-popup" + props.currentPluginLogDatabaseId;
+    const logDraggableId = "log-popup" + props.currentPluginLogMetricId;
 
     function onClose() {
       props.currentPluginLog = null;
