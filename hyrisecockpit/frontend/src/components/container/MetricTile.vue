@@ -27,6 +27,7 @@
       :current-plugin-log="currentPluginLog"
       :current-plugin-log-database-color="popupColor"
       :current-plugin-log-metric-id="tileDatabase + metric"
+      :onClose="onLogPopupClose"
     />
     <component
       :is="getMetricComponent(metric)"
@@ -82,6 +83,7 @@ interface Data {
   getMetricComponent: (metric: Metric) => string;
   activatePluginEventOnClick: (graphId: string, database: any) => void;
   currentPluginLog: Ref<any>;
+  onLogPopupClose: () => void;
 }
 
 export default defineComponent({
@@ -120,10 +122,7 @@ export default defineComponent({
 
     const currentPluginLog: Ref<any> = ref(null);
 
-    const activatePluginEventOnClick = (
-      graphId: string,
-      database: Database
-    ) => {
+    function activatePluginEventOnClick(graphId: string, database: Database) {
       const graphElement = document.getElementById(
         graphId
       ) as PlotlyHTMLElement;
@@ -134,12 +133,18 @@ export default defineComponent({
           }
         });
       });
-    };
+    }
+
+    function onLogPopupClose() {
+      currentPluginLog.value = null;
+    }
+
     return {
       getMetricTitle,
       getMetricComponent,
       activatePluginEventOnClick,
       currentPluginLog,
+      onLogPopupClose,
     };
   },
 });

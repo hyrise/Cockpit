@@ -43,10 +43,11 @@ interface Props {
   currentPluginLog: any;
   currentPluginLogDatabaseColor: string;
   currentPluginLogMetricId: string;
+  onClose: () => void;
 }
 interface Data {
   logDraggableId: string;
-  onClose: () => void;
+  currentPluginLogComputed: any;
 }
 
 export default defineComponent({
@@ -64,13 +65,14 @@ export default defineComponent({
       type: String,
       default: null,
     },
+    onClose: {
+      type: Function,
+      default: () => {},
+    },
   },
   setup(props: Props, context: SetupContext): Data {
     const logDraggableId = "log-popup" + props.currentPluginLogMetricId;
-
-    function onClose() {
-      props.currentPluginLog = null;
-    }
+    const currentPluginLogComputed = computed(() => props.currentPluginLog);
 
     onMounted(() => {
       useDragElement(logDraggableId, logDraggableId);
@@ -78,7 +80,7 @@ export default defineComponent({
 
     return {
       logDraggableId,
-      onClose,
+      currentPluginLogComputed,
     };
   },
 });
