@@ -41,7 +41,6 @@ export default defineComponent({
   },
   setup(props: {}, context: SetupContext): MetricViewData {
     return {
-      watchedMetrics: workloadMetrics,
       ...useSelectionHandling(context, "workload"),
     };
   },
