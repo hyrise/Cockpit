@@ -9,7 +9,6 @@
         :selected-databases="selectedDatabases"
         :selected-metrics="selectedMetrics"
       />
-      <database-query-tables :selected-databases="selectedDatabases" />
       <metrics-comparison-table
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"
@@ -26,7 +25,6 @@ import { defineComponent, SetupContext } from "@vue/composition-api";
 import { Metric, workloadMetrics } from "../types/metrics";
 import { Database } from "../types/database";
 import LinearLoader from "../components/alerts/LinearLoader.vue";
-import DatabaseQueryTables from "@/components/queries/DatabaseQueryTables.vue";
 import { MetricViewData } from "../types/views";
 import { useSelectionHandling } from "@/meta/selection";
 import StatusWarning from "@/components/alerts/StatusWarning.vue";
@@ -37,7 +35,6 @@ export default defineComponent({
   name: "WorkloadMonitoring",
   components: {
     LinearLoader,
-    DatabaseQueryTables,
     StatusWarning,
     SelectionList,
     MetricsComparisonTable,

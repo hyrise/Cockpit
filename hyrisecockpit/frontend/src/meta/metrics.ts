@@ -75,6 +75,15 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     dataType: "interval",
     historic: false,
   },
+  queryInformation: {
+    fetchType: "read",
+    transformationService: useDataTransformation("queryInformation"),
+    endpoint: metricBackend + "detailed_query_information",
+    component: "QueryInformation",
+    requestTime: 5000,
+    dataType: "interval",
+    historic: false,
+  },
   queueLength: {
     fetchType: "modify",
     transformationService: useDataTransformation("queueLength"),
@@ -114,16 +123,6 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "throughput",
     endpoint: metricBackend + "throughput",
     component: "Throughput",
-    requestTime: 1000,
-    dataType: "interval",
-    historic: true,
-  },
-  queryInformation: {
-    fetchType: "modify",
-    transformationService: useDataTransformation("queryInformation"),
-    base: "query_information",
-    endpoint: monitorBackend + "query_information",
-    component: "QueryInformation",
     requestTime: 1000,
     dataType: "interval",
     historic: true,
@@ -235,7 +234,6 @@ const metricDetailsConfiguration: Partial<Record<
     unit: "q/s",
     stateOrder: getMetricValueStateOrder("desc"),
   },
-  queryInformation: {},
 };
 
 export function getMetricMetadata(metric: Metric): MetricMetadata {

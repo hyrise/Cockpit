@@ -89,7 +89,7 @@ const requestRoutes: Record<
     get: "**/monitor/workload_statement_information**",
   },
   chunks: { get: "**/monitor/chunks**" },
-  detailed_query_information: { get: "**/metric/detailed_query_information" },
+  detailed_query_information: { get: "**/metric/detailed_query_information**" },
   benchmark_tables: {
     get: "**/control/database/benchmark_tables",
     post: "**/control/database/benchmark_tables",

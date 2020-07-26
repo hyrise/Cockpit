@@ -1,4 +1,4 @@
-import { ChartConfiguration, Metric } from "./metrics";
+import { ChartConfiguration } from "./metrics";
 
 export interface ChartProps {
   selectedDatabases: string[];
