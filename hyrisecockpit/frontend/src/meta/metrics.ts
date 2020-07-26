@@ -70,7 +70,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     fetchType: "modify",
     transformationService: useDataTransformation("negativeThroughput"),
     base: "negative_throughput",
-    endpoint: monitorBackend + "negative_throughput",
+    endpoint: metricBackend + "negative_throughput",
     component: "NegativeThroughput",
     requestTime: 1000,
     dataType: "interval",
