@@ -122,7 +122,7 @@ const requestRoutes: Record<
   },
   status_benchmarks: { get: "**/status/benchmark" },
   status_database: { get: "**/status/database" },
-  negative_throughput: { get: "**/monitor/negative_throughput**" },
+  negative_throughput: { get: "**/metric/negative_throughput**" },
 };
 
 export function getRequestRoute(
