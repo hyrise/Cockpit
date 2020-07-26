@@ -9,24 +9,8 @@ import {
   getGetAlias,
   getPutAlias,
   getRequestRoute,
+  getNumberOfEntities,
 } from "./helpers";
-
-function getInitialNumbers(
-  numbers: Partial<Record<Entity, number>>
-): Record<Entity, number> {
-  return {
-    databases: 1,
-    tables: 2,
-    columns: 2,
-    chunks: 2,
-    queries: 10,
-    plugins: 3,
-    activated_plugins: 1,
-    loaded_benchmarks: 1,
-    workloads: 0,
-    ...numbers,
-  };
-}
 
 export interface Backend {
   start(status?: BackendState, delay?: number): void;
@@ -167,7 +151,7 @@ export function mockBackend(
     getMockedPostCallback,
     getMockedDeleteCallback,
     renewMocks,
-  } = useMocks(getInitialNumbers(numbers));
+  } = useMocks(getNumberOfEntities(numbers));
 
   function start(status: BackendState = "up", delay?: number): void {
     cy.server();
