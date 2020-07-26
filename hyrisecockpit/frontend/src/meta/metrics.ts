@@ -1,4 +1,4 @@
-import { monitorBackend } from "../../config";
+import { monitorBackend, metricBackend } from "../../config";
 import {
   Metric,
   MetricMetadata,
@@ -50,7 +50,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     fetchType: "modify",
     transformationService: useDataTransformation("latency"),
     base: "latency",
-    endpoint: monitorBackend + "latency",
+    endpoint: metricBackend + "latency",
     component: "Latency",
     requestTime: 1000,
     dataType: "interval",
@@ -79,7 +79,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     fetchType: "modify",
     transformationService: useDataTransformation("queueLength"),
     base: "queue_length",
-    endpoint: monitorBackend + "queue_length",
+    endpoint: metricBackend + "queue_length",
     component: "QueueLength",
     requestTime: 1000,
     dataType: "interval",
@@ -112,7 +112,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     fetchType: "modify",
     transformationService: useDataTransformation("throughput"),
     base: "throughput",
-    endpoint: monitorBackend + "throughput",
+    endpoint: metricBackend + "throughput",
     component: "Throughput",
     requestTime: 1000,
     dataType: "interval",

@@ -82,14 +82,14 @@ const requestRoutes: Record<
   storage: {
     get: "**/monitor/storage**",
   },
-  throughput: { get: "**/monitor/throughput**" },
-  latency: { get: "**/monitor/latency**" },
-  queue_length: { get: "**/monitor/queue_length**" },
+  throughput: { get: "**/metric/throughput**" },
+  latency: { get: "**/metric/latency**" },
+  queue_length: { get: "**/metric/queue_length**" },
   workload_statement_information: {
     get: "**/monitor/workload_statement_information**",
   },
   chunks: { get: "**/monitor/chunks**" },
-  detailed_query_information: { get: "**/monitor/detailed_query_information" },
+  detailed_query_information: { get: "**/metric/detailed_query_information" },
   benchmark_tables: {
     get: "**/control/database/benchmark_tables",
     post: "**/control/database/benchmark_tables",
@@ -193,6 +193,23 @@ export function getPutAlias(request: Request): string {
 
 export function getResponseStatus(BackendState: BackendState): number {
   return responseStatus[BackendState];
+}
+
+export function getNumberOfEntities(
+  numbers: Partial<Record<Entity, number>>
+): Record<Entity, number> {
+  return {
+    databases: 1,
+    tables: 2,
+    columns: 2,
+    chunks: 2,
+    queries: 10,
+    plugins: 3,
+    activated_plugins: 1,
+    loaded_benchmarks: 1,
+    workloads: 0,
+    ...numbers,
+  };
 }
 
 // ASSIGN FAKE DATA HELPERS
