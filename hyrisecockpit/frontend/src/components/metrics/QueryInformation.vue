@@ -1,23 +1,30 @@
 <template>
-  <v-card data-id="query-table" class="mx-3 mt-n5" flat :min-height="minHeight">
-    <v-card-title>
-      <v-text-field
-        v-model="searchQueries"
-        append-icon="mdi-magnify"
-        label="Search queries"
-        single-line
-        hide-details
-        data-id="query-search-input"
+  <div :id="graphId">
+    <v-card
+      data-id="query-table"
+      class="mx-3 mt-n5"
+      flat
+      :min-height="minHeight"
+    >
+      <v-card-title>
+        <v-text-field
+          v-model="searchQueries"
+          append-icon="mdi-magnify"
+          label="Search queries"
+          single-line
+          hide-details
+          data-id="query-search-input"
+        />
+      </v-card-title>
+      <v-data-table
+        :headers="headers"
+        :items="displayedQueries"
+        :search="searchQueries"
+        item-key="queryNumber"
+        data-id="query-data-table"
       />
-    </v-card-title>
-    <v-data-table
-      :headers="headers"
-      :items="displayedQueries"
-      :search="searchQueries"
-      item-key="queryNumber"
-      data-id="query-data-table"
-    />
-  </v-card>
+    </v-card>
+  </div>
 </template>
 
 <script lang="ts">

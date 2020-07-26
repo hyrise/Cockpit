@@ -63,9 +63,9 @@ export const overviewRequests: Request[] = [
   "storage",
 ];
 export const workloadMonitoringRequests: Request[] = [
+  "detailed_query_information",
   "workload_statement_information",
   "workload_operator_information",
-  "detailed_query_information",
 ];
 
 const requestRoutes: Record<

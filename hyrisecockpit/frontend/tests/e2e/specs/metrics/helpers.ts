@@ -8,6 +8,7 @@ import {
 
 /* SELECTORS */
 const selectors: Record<string, { element: string; title: string }> = {
+  queryInformation: { element: "div", title: "queryInformation" },
   throughput: { element: "div", title: "throughput" },
   latency: { element: "div", title: "latency" },
   queueLength: { element: "div", title: "queueLength" },
