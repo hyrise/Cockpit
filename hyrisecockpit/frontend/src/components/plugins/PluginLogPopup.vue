@@ -12,7 +12,7 @@
       elevation="20"
       :color="databaseColor"
     >
-      <div v-if="!!currentPluginLog">
+      <div class="log-popup-text" v-if="!!currentPluginLog">
         <div class="header-row">
           <div class="log-header">
             {{ currentPluginLog.header }}
@@ -90,10 +90,8 @@ export default defineComponent({
   z-index: 11;
   width: 400px;
 }
-.log-text {
-  height: 100px;
-  overflow: auto;
-  font-size: 16px;
+.log-popup-text {
+  color: #424242;
 }
 .log-header {
   font-weight: bold;
