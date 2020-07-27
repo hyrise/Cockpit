@@ -11,17 +11,36 @@
           @click="
             closeDialog();
             showAdvanced = false;
+            databaseAdded = null;
           "
           >mdi-close</v-icon
         >
       </v-system-bar>
       <v-card-text class="pb-0">
+        <v-alert
+          v-if="databaseAdded"
+          class="mt-4 mb-0"
+          type="success"
+          dismissible
+          dense
+        >
+          Database was successfully added.
+        </v-alert>
+        <v-alert
+          v-if="databaseAdded === false"
+          class="mt-4 mb-0"
+          type="error"
+          dismissible
+          dense
+        >
+          Database was not added.
+        </v-alert>
         <v-row>
           <v-col class="pb-0" cols="6">
             <v-text-field
               v-model="host"
               label="Host"
-              :error-messages="host.length < 4 ? 'Required' : ''"
+              :error-messages="!host.length ? 'Required' : ''"
               data-id="host-input"
             ></v-text-field>
           </v-col>
@@ -59,8 +78,8 @@
         <v-btn
           class="secondary primary--text my-2"
           @click="
+            databaseAdded = null;
             createNewDatabase();
-            closeDialog();
           "
           :disabled="
             !!idError.length ||
@@ -116,6 +135,7 @@ interface DatabaseCreationData {
   port: Ref<string>;
   dbname: Ref<string>;
   idError: Ref<string>;
+  databaseAdded: Ref<boolean | null>;
   createNewDatabase: () => void;
   closeDialog: () => void;
 }
@@ -131,6 +151,7 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
   const port = ref<string>("5432");
   const dbname = ref<string>("postgres");
   const idError = ref<string>("");
+  const databaseAdded = ref<boolean | null>(null);
 
   watch(host, (host, prevHost) => {
     if (!id.value.length || id.value === prevHost) id.value = host;
@@ -165,7 +186,14 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
       host: host.value,
       port: port.value,
       dbname: dbname.value,
-    });
+    }).then(
+      () => {
+        databaseAdded.value = true;
+      },
+      () => {
+        databaseAdded.value = false;
+      }
+    );
     resetValues();
   }
 
@@ -184,6 +212,7 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
     createNewDatabase,
     closeDialog,
     idError,
+    databaseAdded,
   };
 }
 </script>

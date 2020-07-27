@@ -16,7 +16,7 @@ export interface Database {
 }
 
 export interface DatabaseService {
-  addDatabase: (databaseConnection: any) => void;
+  addDatabase: (databaseConnection: any) => Promise<void>;
   removeDatabase: (databaseId: string) => void;
   fetchDatabases: () => Promise<any[]>;
   fetchDatabasesCPUInformation: () => Promise<any[]>;
