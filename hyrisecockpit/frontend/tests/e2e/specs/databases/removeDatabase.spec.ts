@@ -1,7 +1,7 @@
 import { useBackendMock } from "../../setup/backendMock";
 import { getDeleteAlias } from "../../setup/helpers";
 import { selectors as viewSelectors } from "../views/helpers";
-import { assertDeleteValues, selectors } from "./helpers";
+import { assertDeleteRequest, selectors } from "./helpers";
 
 const backend = useBackendMock({ databases: 2 });
 let databases: any = [];
@@ -85,7 +85,7 @@ describe("When removing a database", () => {
 
       cy.wait("@" + getDeleteAlias("database"));
       cy.get("@" + getDeleteAlias("database")).should((xhr: any) => {
-        assertDeleteValues(removeDatabase, xhr.request.body);
+        assertDeleteRequest(removeDatabase, xhr.request.body);
       });
       cy.numberOfRequests(getDeleteAlias("database")).should("eq", 1);
 

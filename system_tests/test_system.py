@@ -62,9 +62,6 @@ class TestSystem:
         """Check if database has successfully load default tables."""
         expected_status = {
             "id": database_id,
-            "hyrise_active": True,
-            "database_blocked_status": False,
-            "worker_pool_status": "closed",
             "loaded_benchmarks": ["tpch_0_1", "no-ops_0_1", "no-ops_1"],
             "loaded_tables": [
                 "orders_tpch_0_1",
@@ -78,19 +75,12 @@ class TestSystem:
             ],
         }
 
-        response = cls.backend.get_property("monitor/status")  # type: ignore
+        response = cls.backend.get_property("status/benchmark")  # type: ignore
         status = response.json()[0]
-
         assert response.status_code == 200  # nosec
-        for prop in [
-            "id",
-            "hyrise_active",
-            "database_blocked_status",
-            "worker_pool_status",
-        ]:
-            assert expected_status[prop] == status[prop]  # nosec
+
         for prop in ["loaded_benchmarks", "loaded_tables"]:
-            assert set(expected_status[prop]) == set(status[prop])  # type: ignore # nosec
+            assert set(expected_status[prop]) == set(status[prop])  # nosec
 
     def test_initializes_backend(self):
         """Test backend initializes without errors."""
@@ -109,16 +99,15 @@ class TestSystem:
 
         for i in range(len(metrics)):
             response = self.backend.get_property(metrics[i])
-
             assert response.status_code == 200  # nosec
             assert response.json()["body"][metrics_attributes[i]] == {}  # nosec
 
     def test_returns_historical_metric_values_with_no_database_registered(self):
         """Test historical metric endpoints return correct values."""
         historical_metrics = [
-            "monitor/throughput",
-            "monitor/latency",
-            "monitor/queue_length",
+            "metric/throughput",
+            "metric/latency",
+            "metric/queue_length",
             "monitor/system",
         ]
         for metric in historical_metrics:
@@ -129,20 +118,19 @@ class TestSystem:
             response = self.backend.get_historical_property(
                 metric, startts, endts, 1_000_000_000
             )
-
             assert response.status_code == 200  # nosec
             assert response.json() == []  # nosec
 
     def test_returns_available_databases(self):
         """Ensure a new backend has no databases."""
-        response = self.backend.get_control_property("database")
+        response = self.backend.get_property("control/database")
 
         assert response.status_code == 200  # nosec
         assert response.json() == []  # nosec
 
     def test_returns_available_datasets(self):
         """Test available datasets."""
-        response = self.backend.get_control_property("database/benchmark_tables")
+        response = self.backend.get_property("control/database/benchmark_tables")
 
         assert response.status_code == 200  # nosec
         assert response.json() == {  # nosec
@@ -162,7 +150,7 @@ class TestSystem:
 
     def test_added_database_is_in_available_databases(self):
         """Test added database is in available databases."""
-        response = self.backend.get_control_property("database")
+        response = self.backend.get_property("control/database")
 
         assert response.status_code == 200  # nosec
         assert response.json() == [  # nosec
@@ -204,7 +192,7 @@ class TestSystem:
         """Test responses of the historical metrics."""
         sleep(4.0)  # wait for query executions
 
-        metrics = ["monitor/throughput", "monitor/latency", "monitor/queue_length"]
+        metrics = ["metric/throughput", "metric/latency", "metric/queue_length"]
         attributes = ["throughput", "latency", "queue_length"]
         for metric, attribute in zip(metrics, attributes):
             timestamp: int = time_ns()
@@ -224,9 +212,15 @@ class TestSystem:
 
         assert response.status_code == 200  # nosec
 
+    def test_do_not_activates_already_activated_plugin(self):
+        """Test activation of the already activated plugin."""
+        sleep(1.0)
+        response = self.backend.activate_plugin("test_database1", "Compression")
+
+        assert response.status_code == 423  # nosec
+
     def test_returns_activated_plugins(self):
         """Test activation of the plugin."""
-        sleep(1.0)
         response = self.backend.get_activated_plugins()
         assert response.status_code == 200  # nosec
         assert response.json() == [  # nosec

@@ -133,6 +133,9 @@ class Database(object):
 
     def activate_plugin(self, plugin: str) -> bool:
         """Activate plugin."""
+        active_plugins = self._get_plugins()
+        if active_plugins is None or plugin in active_plugins:
+            return False
         return self._asynchronous_job_manager.activate_plugin(plugin)
 
     def deactivate_plugin(self, plugin: str) -> bool:

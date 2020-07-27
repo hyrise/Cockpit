@@ -186,12 +186,18 @@ function useLineChartConfiguration(
               selectedStaticRange.value.endDate,
             ]
           : [currentTime - (xMin - 1) * 1000, currentTime],
+        fixedrange: !selectedStaticRange.value,
       },
       yaxis: {
         title: {
           text: props.chartConfiguration.yaxis,
+          font: {
+            family: "Roboto, sans-serif",
+            size: 13,
+          },
         },
         range: [0, yMax],
+        fixedrange: !selectedStaticRange.value,
       },
       autosize: true,
       showlegend: multipleDatabasesAllowed,
@@ -227,4 +233,3 @@ function useLineChartConfiguration(
   return { getDataset, getLayout, getOptions };
 }
 </script>
-<style scoped></style>

@@ -9,24 +9,8 @@ import {
   getGetAlias,
   getPutAlias,
   getRequestRoute,
+  getNumberOfEntities,
 } from "./helpers";
-
-function getInitialNumbers(
-  numbers: Partial<Record<Entity, number>>
-): Record<Entity, number> {
-  return {
-    databases: 1,
-    tables: 2,
-    columns: 2,
-    chunks: 2,
-    queries: 10,
-    plugins: 3,
-    activated_plugins: 1,
-    loaded_benchmarks: 1,
-    workloads: 0,
-    ...numbers,
-  };
-}
 
 export interface Backend {
   start(status?: BackendState, delay?: number): void;
@@ -85,7 +69,12 @@ export function useBackendMock(
     cy.route("GET", getRequestRoute("detailed_query_information", "get")).as(
       getGetAlias("detailed_query_information")
     );
-    cy.route("GET", getRequestRoute("status", "get")).as(getGetAlias("status"));
+    cy.route("GET", getRequestRoute("status_benchmarks", "get")).as(
+      getGetAlias("status_benchmarks")
+    );
+    cy.route("GET", getRequestRoute("status_database", "get")).as(
+      getGetAlias("status_database")
+    );
     cy.route("GET", getRequestRoute("benchmark_tables", "get")).as(
       getGetAlias("benchmark_tables")
     );
@@ -159,7 +148,7 @@ export function mockBackend(
     getMockedPostCallback,
     getMockedDeleteCallback,
     renewMocks,
-  } = useMocks(getInitialNumbers(numbers));
+  } = useMocks(getNumberOfEntities(numbers));
 
   function start(status: BackendState = "up", delay?: number): void {
     cy.server();
@@ -254,9 +243,14 @@ export function mockBackend(
       getMockedResponse("detailed_query_information")
     );
     mock(
-      getRequestRoute("status", "get"),
-      getGetAlias("status"),
-      getMockedResponse("status")
+      getRequestRoute("status_benchmarks", "get"),
+      getGetAlias("status_benchmarks"),
+      getMockedResponse("status_benchmarks")
+    );
+    mock(
+      getRequestRoute("status_database", "get"),
+      getGetAlias("status_database"),
+      getMockedResponse("status_database")
     );
     mock(
       getRequestRoute("benchmark_tables", "get"),

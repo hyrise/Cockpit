@@ -41,15 +41,25 @@ function useBarChartConfiguration(
       xaxis: {
         title: {
           text: chartConfiguration.xaxis,
+          font: {
+            family: "Roboto, sans-serif",
+            size: 13,
+          },
         },
         rangemode: "tozero",
+        fixedrange: true,
       },
       yaxis: {
         title: {
           text: chartConfiguration.yaxis,
+          font: {
+            family: "Roboto, sans-serif",
+            size: 13,
+          },
         },
         rangemode: "tozero",
         range: [0, 100],
+        fixedrange: true,
       },
       barmode: "stack",
       autosize: true,

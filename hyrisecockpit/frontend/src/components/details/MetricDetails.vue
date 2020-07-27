@@ -7,7 +7,7 @@
       :key="database"
       :style="{
         color: valueColor[database],
-        fontSize: '20px',
+        fontSize: '18px',
         fontWeight: 'bold',
       }"
       :class="{ 'small-details': totalNumberOfDatabases > 2 }"
@@ -159,7 +159,8 @@ function useMetricColors(
 @media only screen and (max-width: 1600px) {
   .small-details {
     position: absolute;
-    top: 60px;
+    top: 40px;
+    left: 90px;
   }
 }
 </style>

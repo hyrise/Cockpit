@@ -3,33 +3,33 @@
     <v-dialog v-model="showDialog" hide-overlay>
       <template v-slot:activator="{ on }">
         <v-btn
-          color="primary"
+          class="mt-n10 ml-4"
+          outlined
+          color="secondary"
+          elevation="2"
           small
-          right
-          dark
           v-on="on"
           :data-id="`open-metric-detailed-view-${metric}`"
         >
-          <v-icon left>mdi-arrow-expand</v-icon>Open detailed view
+          <v-icon color="primary" size="18">mdi-magnify-plus</v-icon>
         </v-btn>
       </template>
-      <v-card>
-        <v-card-title class="metric-title">
-          <slot name="header" />
-        </v-card-title>
-        <v-spacer />
-        <v-card-text>
-          <slot name="content" />
-        </v-card-text>
-        <v-card-actions>
-          <v-btn
-            block
-            color="primary"
+      <v-card class="detailed-view" data-id="detailed-view">
+        <v-system-bar :height="50" color="secondary">
+          <v-spacer />
+          <v-card-title class="subtitle-1">
+            <slot name="header" />
+          </v-card-title>
+          <v-spacer />
+          <v-icon
             :data-id="`close-metric-detailed-view-${metric}`"
             @click="showDialog = false"
-            >Close detailed view</v-btn
+            >mdi-close</v-icon
           >
-        </v-card-actions>
+        </v-system-bar>
+        <v-card-content>
+          <slot name="content" />
+        </v-card-content>
       </v-card>
     </v-dialog>
   </div>
@@ -69,8 +69,3 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
-.metric-title {
-  justify-content: center;
-}
-</style>

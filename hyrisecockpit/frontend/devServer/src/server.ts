@@ -1,30 +1,19 @@
 /* eslint-disable prettier/prettier */
-import { Entity, Request } from "../../tests/e2e/setup/helpers";
-import { useMocks } from "../../tests/e2e/setup/mocks";
+import { useMocking } from "./helpers";
 
 import express from "express";
 
 import bodyParser from "body-parser";
 
 const server = express();
-let mocks = useMocks(
-  process.env.TEST ? getInitialNumbers({ databases: 1 }) : getInitialNumbers({})
-);
-
-function getInitialNumbers(numbers: Partial<Record<Entity, number>>) {
-  return {
-    activated_plugins: 1,
-    chunks: 2,
-    columns: 2,
-    databases: 2,
-    loaded_benchmarks: 1,
-    plugins: 3,
-    queries: 10,
-    tables: 2,
-    workloads: 0,
-    ...numbers,
-  };
-}
+const {
+  callActions,
+  mockGetRoute,
+  mockPostRoute,
+  mockDeleteRoute,
+  mockPutRoute,
+  resetMocks,
+} = useMocking(server, !process.env.TEST ? { databases: 2 } : {});
 
 const port = 3000;
 
@@ -44,167 +33,66 @@ server.use((_, res, next) => {
 
 server.use(bodyParser.json());
 
+/* root */
 server.get("/", (_, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.json("This is just a development server with mocked data!");
 });
 
-mockGetRoute("database/", "control");
-mockGetRoute("system", "monitor");
-mockGetRoute("storage", "monitor", true);
-mockGetRoute("throughput", "monitor");
-mockGetRoute("latency", "monitor");
-mockGetRoute("queue_length", "monitor");
-mockGetRoute("workload_statement_information", "monitor");
-mockGetRoute("chunks", "monitor", true);
-mockGetRoute("detailed_query_information", "monitor");
-mockGetRoute("status", "monitor");
-mockGetRoute("database/benchmark_tables", "control");
-mockGetRoute("plugin/available", "control");
-mockGetRoute("plugin", "control");
-mockGetRoute("plugin_log", "control");
-mockGetRoute("workload/");
-mockGetRoute("workload_operator_information", "monitor");
+/* control */
+mockGetRoute("database");
+mockGetRoute("benchmark_tables");
+mockGetRoute("available_plugins");
+mockGetRoute("plugin");
+mockGetRoute("plugin_log");
 
-mockPostRoute("database/", "control");
-mockPostRoute("database/benchmark_tables", "control");
-mockPostRoute("workload/");
-mockPostRoute("plugin/*", "control");
-mockPostRoute("plugin_settings", "control", true);
-mockPostRoute("sql/", "control");
-mockPostRoute("database/worker", "control", true);
+mockPostRoute("database");
+mockPostRoute("benchmark_tables");
+mockPostRoute("plugin");
+mockPostRoute("sql");
+mockPostRoute("worker");
 
-mockDeleteRoute("database/", "control");
-mockDeleteRoute("database/benchmark_tables", "control");
-mockDeleteRoute("workload/*");
-mockDeleteRoute("plugin/*", "control");
-mockDeleteRoute("database/worker", "control", true);
+mockDeleteRoute("database");
+mockDeleteRoute("benchmark_tables");
+mockDeleteRoute("plugin");
+mockDeleteRoute("worker");
 
-mockPutRoute("workload/*");
-mockPutRoute("plugin/*", "control");
+mockPutRoute("plugin");
+
+/* monitor */
+mockGetRoute("system");
+mockGetRoute("storage", true);
+mockGetRoute("chunks", true);
+mockGetRoute("workload_statement_information");
+mockGetRoute("workload_operator_information");
+
+/* metric */
+mockGetRoute("throughput");
+mockGetRoute("latency");
+mockGetRoute("queue_length");
+mockGetRoute("detailed_query_information");
+
+/* status */
+mockGetRoute("status_benchmarks");
+mockGetRoute("status_database");
+
+/* workload */
+mockGetRoute("workload");
+
+mockPostRoute("workload");
+
+mockDeleteRoute("workload");
+
+mockPutRoute("workload");
 
 /* route for manual state cleaning */
 server.post("/clean/", (req, res) => {
-  logRequest(req, res);
-  if (req.body.method === "POST")
-    mocks.getMockedPostCallback(req.body.request)(req.body.id);
-  if (req.body.method === "DELETE")
-    mocks.getMockedDeleteCallback(req.body.request)(req.body.id);
+  callActions(req);
   res.send({});
 });
 
 /* route for manual restarting with different numbers */
 server.post("/restart/", (req, res) => {
-  logRequest(req, res);
-  mocks = useMocks(getInitialNumbers(req.body));
+  resetMocks(req.body);
   res.send({});
 });
-
-function mockGetRoute(
-  route: string,
-  backendRoute?: "control" | "monitor",
-  withBody: boolean = false
-): void {
-  const request = getRequestOfRoute(route);
-  server.get(getBackendRoute(route, backendRoute), (req, res) => {
-    logRequest(req, res);
-    const response = withBody
-      ? { body: mocks.getMockedResponse(request) }
-      : mocks.getMockedResponse(request);
-    res.send(response);
-  });
-}
-
-function mockPutRoute(
-  route: string,
-  backendRoute?: "control" | "monitor"
-): void {
-  const request = getRequestOfRoute(route);
-  server.put(getBackendRoute(route, backendRoute), (req, res) => {
-    logRequest(req, res);
-    res.send(request === "workload" ? mocks.getMockedResponse("workload") : {});
-  });
-}
-
-function mockPostRoute(
-  route: string,
-  backendRoute?: "control" | "monitor",
-  stub = false
-): void {
-  const request = getRequestOfRoute(route);
-  server.post(getBackendRoute(route, backendRoute), (req, res) => {
-    logRequest(req, res);
-    if (!stub)
-      mocks.getMockedPostCallback(request)(handleRequestBody(request, req));
-    res.send({});
-  });
-}
-
-function mockDeleteRoute(
-  route: string,
-  backendRoute?: "control" | "monitor",
-  stub = false
-): void {
-  const request = getRequestOfRoute(route);
-  server.delete(getBackendRoute(route, backendRoute), (req, res) => {
-    logRequest(req, res);
-    if (!stub)
-      mocks.getMockedDeleteCallback(request)(
-        handleRequestBody(request, req, true)
-      );
-    res.send({});
-  });
-}
-
-function handleRequestBody(
-  request: Request,
-  req: any,
-  del: boolean = false
-): string {
-  let id = "";
-  if (request === "database") {
-    id = req.body.id;
-  } else if (request === "benchmark_tables") {
-    id = req.body.folder_name;
-  } else if (request === "plugin") {
-    id = req.body.name;
-  } else if (request === "workload") {
-    if (del) {
-      const split = req.url.split("/");
-      id = split[split.length - 1];
-    } else {
-      id = req.body.folder_name;
-    }
-  }
-  return id;
-}
-
-function getRequestOfRoute(route: string): Request {
-  if (route === "plugin/available") return "available_plugins";
-  const split = route.split("/");
-  if (split.length === 1) {
-    return split[0] as Request;
-  } else {
-    if (split[split.length - 1] === "" || split[split.length - 1] === "*") {
-      return split[split.length - 2] as Request;
-    }
-    return split[split.length - 1] as Request;
-  }
-}
-
-function getBackendRoute(
-  route: string,
-  prefix?: "control" | "monitor"
-): string {
-  return prefix ? `/${prefix}/${route}` : `/${route}`;
-}
-
-function logRequest(req, res): void {
-  if (!process.env.QUIET) {
-    console.log(
-      `${new Date().toLocaleTimeString()} - ${req.method} - ${
-        res.statusCode
-      } - ${req.url}`
-    );
-  }
-}

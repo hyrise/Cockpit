@@ -27,11 +27,12 @@ export type Request =
   | "plugin"
   | "plugin_log"
   | "workload"
-  | "status"
   | "sql"
   | "worker"
   | "workload_statement_information"
-  | "workload_operator_information";
+  | "workload_operator_information"
+  | "status_benchmarks"
+  | "status_database";
 
 export type BackendState = "up" | "down";
 
@@ -81,15 +82,14 @@ const requestRoutes: Record<
   storage: {
     get: "**/monitor/storage**",
   },
-  throughput: { get: "**/monitor/throughput**" },
-  latency: { get: "**/monitor/latency**" },
-  queue_length: { get: "**/monitor/queue_length**" },
+  throughput: { get: "**/metric/throughput**" },
+  latency: { get: "**/metric/latency**" },
+  queue_length: { get: "**/metric/queue_length**" },
   workload_statement_information: {
     get: "**/monitor/workload_statement_information**",
   },
   chunks: { get: "**/monitor/chunks**" },
-  detailed_query_information: { get: "**/monitor/detailed_query_information" },
-  status: { get: "**/monitor/status" },
+  detailed_query_information: { get: "**/metric/detailed_query_information" },
   benchmark_tables: {
     get: "**/control/database/benchmark_tables",
     post: "**/control/database/benchmark_tables",
@@ -117,6 +117,8 @@ const requestRoutes: Record<
   workload_operator_information: {
     get: "**/monitor/workload_operator_information**",
   },
+  status_benchmarks: { get: "**/status/benchmark" },
+  status_database: { get: "**/status/database" },
 };
 
 export function getRequestRoute(
@@ -140,9 +142,10 @@ const getAliases: Partial<Record<Request, string>> = {
   available_plugins: "getAvailablePLugins",
   plugin: "getPlugin",
   plugin_log: "getPluginLog",
-  status: "getDatabaseWorkloadState",
   workload: "getWorkloads",
   workload_operator_information: "getOperatorData",
+  status_benchmarks: "getBenchmarkStatus",
+  status_database: "getDatabaseStatus",
 };
 
 const postAliases: Partial<Record<Request, string>> = {
@@ -190,6 +193,23 @@ export function getPutAlias(request: Request): string {
 
 export function getResponseStatus(BackendState: BackendState): number {
   return responseStatus[BackendState];
+}
+
+export function getNumberOfEntities(
+  numbers: Partial<Record<Entity, number>>
+): Record<Entity, number> {
+  return {
+    databases: 1,
+    tables: 2,
+    columns: 2,
+    chunks: 2,
+    queries: 10,
+    plugins: 3,
+    activated_plugins: 1,
+    loaded_benchmarks: 1,
+    workloads: 0,
+    ...numbers,
+  };
 }
 
 // ASSIGN FAKE DATA HELPERS

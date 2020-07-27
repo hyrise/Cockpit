@@ -7,12 +7,14 @@ import {
 import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
 import { colorValueDefinition, multiColors } from "@/meta/colors";
+import { useDataEvents } from "@/meta/events";
 
 const { roundNumber, formatPercentage, formatTimeUnit } = useFormatting();
 const {
   getTableMemoryFootprint,
   getDatabaseMemoryFootprint,
 } = useDataTransformationHelpers();
+const { emitPreSelectEvent } = useDataEvents();
 
 const transformationServiceMap: Record<Metric, TransformationService> = {
   access: getAccessData,
@@ -111,7 +113,7 @@ function getCPUData(data: any, primaryKey: string = ""): number[] {
 
 /** transform available ram data to used ram data */
 function getRAMData(data: any, primaryKey: string = ""): number[] {
-  return data.map((entry: any) => 100 - entry[primaryKey].memory.percent);
+  return data.map((entry: any) => (1 - entry[primaryKey].memory.percent) * 100);
 }
 
 /** read data only by primary key */
@@ -254,6 +256,39 @@ function getAccessData(
 
   const availableColumns: string[] = [];
 
+  if (!secondaryKey) {
+    /** detect most accessed table and initialize it if no table selected */
+    const mostAccessedTable = Object.values(data).reduce(
+      (mostAccessed: any, tables: any) => {
+        const mostAccessedTableOfDB = Object.entries(tables).reduce(
+          (accessValue, [key, columns]: [string, any]) => {
+            let tableValue = 0;
+            Object.values(columns).forEach((chunks: any) => {
+              tableValue += chunks.reduce(
+                (sum: number, current: any) => sum + current
+              );
+            });
+            return tableValue >= accessValue.total
+              ? { total: tableValue, name: key }
+              : accessValue;
+          },
+          { total: 0, name: "" }
+        );
+
+        return mostAccessedTableOfDB.total >= mostAccessed.total
+          ? {
+              total: mostAccessedTableOfDB.total,
+              name: mostAccessedTableOfDB.name,
+            }
+          : mostAccessed;
+      },
+      { total: 0, name: "" }
+    ) as { total: number; name: string };
+
+    secondaryKey = mostAccessedTable.name;
+    emitPreSelectEvent("access", secondaryKey);
+  }
+
   Object.entries(data[primaryKey][secondaryKey]).forEach(
     ([column, columnData]: [string, any]) => {
       dataByColumns.push(columnData);
@@ -278,6 +313,7 @@ function getAccessData(
     });
     dataByChunks.push(chunk);
   }
+
   return { chunks, columns, dataByChunks, descriptions };
 }
 

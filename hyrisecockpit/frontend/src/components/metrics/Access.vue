@@ -6,10 +6,10 @@
         <template #content>
           <v-select
             :id="'detailed-access-select'"
-            v-model="selectedTable"
+            v-model="selectedItem"
             class="select"
-            :items="tables"
-            chips
+            :items="selectionItems"
+            dense
             label="table"
             outlined
             prepend-icon="mdi-table"
@@ -26,15 +26,16 @@
       </metric-detailed-view>
       <v-select
         :id="'access-select'"
-        v-model="selectedTable"
+        v-model="selectedItem"
         class="select"
-        :items="tables"
-        chips
+        :items="selectionItems"
+        dense
         label="table"
         outlined
         prepend-icon="mdi-table"
       />
       <Heatmap
+        class="mt-n8"
         :graph-id="graphId || 'access'"
         :data="data"
         :chart-configuration="chartConfiguration"
@@ -63,13 +64,15 @@ import {
   ChartConfiguration,
   AccessData,
   BasicChartComponentData,
+  Metric,
 } from "@/types/metrics";
 import { useUpdatingDatabases } from "@/meta/databases";
 import { getMetricChartConfiguration, getMetricMetadata } from "@/meta/metrics";
+import { eventBus } from "@/plugins/eventBus";
 
-interface Data extends BasicChartComponentData<AccessData> {
-  tables: Ref<readonly string[]>;
-  selectedTable: Ref<string>;
+interface Data
+  extends BasicChartComponentData<AccessData>,
+    UseDataWithSelection {
   maxValue: Ref<number>;
 }
 
@@ -81,38 +84,73 @@ export default defineComponent({
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
-    const metricMeta = getMetricMetadata(props.metric);
-    const selectedTable = ref<string>("");
-    const data = context.root.$metricController.data[props.metric];
-    const watchedDatabase = useUpdatingDatabases(props, context).databases
-      .value[0];
-
-    const accessData = ref<AccessData>(({} as unknown) as AccessData);
-
-    watch([data, selectedTable], () => {
-      if (Object.keys(data.value).length && selectedTable.value != "") {
-        accessData.value = metricMeta.transformationService(
-          data.value,
-          watchedDatabase.id,
-          selectedTable.value
-        );
-      }
-    });
-
+    const { transformedData, selection } = useDataWithSelection(props, context);
     return {
       chartConfiguration: getMetricChartConfiguration(props.metric),
-      tables: computed(() => watchedDatabase.tables),
-      data: accessData,
-      selectedTable,
+      data: transformedData,
       maxValue: context.root.$metricController.maxValueData[props.metric],
+      ...selection,
     };
   },
 });
+
+interface UseDataWithSelection {
+  selectionItems: Ref<readonly string[]>;
+  selectedItem: Ref<string>;
+}
+
+function useDataWithSelection(
+  props: MetricProps,
+  context: SetupContext
+): { selection: UseDataWithSelection; transformedData: Ref<AccessData> } {
+  const metricMeta = getMetricMetadata(props.metric);
+  const data = context.root.$metricController.data[props.metric];
+  const { databases } = useUpdatingDatabases(props, context);
+
+  const selectedTable = usePreSelect(props.metric);
+  const accessData = ref<AccessData>(({} as unknown) as AccessData);
+
+  /** update access data on base data and selection change */
+  watch(
+    [data, selectedTable],
+    () => {
+      if (Object.keys(data.value).length) {
+        accessData.value = metricMeta.transformationService(
+          data.value,
+          databases.value[0].id,
+          selectedTable.value
+        );
+      }
+    },
+    { immediate: true }
+  );
+
+  return {
+    selection: {
+      selectionItems: computed(() => databases.value[0].tables),
+      selectedItem: selectedTable,
+    },
+    transformedData: accessData,
+  };
+}
+
+/** Use reactive selected item with preselection depending on metric */
+function usePreSelect(metric: Metric): Ref<string> {
+  const selectedItem = ref("");
+
+  eventBus.$on(`PRESELECT_${metric.toUpperCase()}`, (item: string) => {
+    selectedItem.value = item;
+    eventBus.$off(`PRESELECT_${metric.toUpperCase()}`);
+  });
+
+  return selectedItem;
+}
 </script>
 <style scoped>
 .select {
   z-index: 2;
-  width: 50%;
+  width: 30%;
   margin: auto;
+  margin-top: -90px;
 }
 </style>

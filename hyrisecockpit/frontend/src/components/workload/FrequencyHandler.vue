@@ -69,7 +69,8 @@ export default defineComponent({
       () => props.initialFrequencies,
       () => {
         frequencies.value = props.initialFrequencies;
-      }
+      },
+      { immediate: true }
     );
     return {
       frequencies,

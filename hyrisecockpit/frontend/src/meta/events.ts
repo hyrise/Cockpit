@@ -115,6 +115,7 @@ export function useDatabaseEvents(): {
 export function useDataEvents(): {
   emitStorageDataChangedEvent: (data: any) => void;
   emitCPUDataChangedEvent: (data: any) => void;
+  emitPreSelectEvent: (metric: Metric, selected: string) => void;
 } {
   function emitStorageDataChangedEvent(data: any): void {
     eventBus.$emit("STORAGE_DATA_CHANGED", data);
@@ -122,5 +123,13 @@ export function useDataEvents(): {
   function emitCPUDataChangedEvent(data: any): void {
     eventBus.$emit("CPU_DATA_CHANGED", data);
   }
-  return { emitCPUDataChangedEvent, emitStorageDataChangedEvent };
+
+  function emitPreSelectEvent(metric: Metric, selected: string): void {
+    eventBus.$emit(`PRESELECT_${metric.toUpperCase()}`, selected);
+  }
+  return {
+    emitCPUDataChangedEvent,
+    emitStorageDataChangedEvent,
+    emitPreSelectEvent,
+  };
 }
