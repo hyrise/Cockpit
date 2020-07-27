@@ -30,17 +30,16 @@ def _create_dictionary(meta_segments: DataFrame) -> Dict:  # TODO refactoring
     return segment_configuration_data
 
 
-def _join_dataframes(
+def _get_meta_segments(
     segments_encoding: DataFrame, segment_orders: DataFrame
 ) -> DataFrame:
-    segments_encoding.set_index(
-        ["table_name", "column_id", "chunk_id"], inplace=True, verify_integrity=True,
+    return segments_encoding.set_index(
+        ["table_name", "column_id", "chunk_id"], verify_integrity=True,
+    ).join(
+        segment_orders.set_index(
+            ["table_name", "column_id", "chunk_id"], verify_integrity=True,
+        )
     )
-    segment_orders.set_index(
-        ["table_name", "column_id", "chunk_id"], inplace=True, verify_integrity=True,
-    )
-    meta_segments = segments_encoding.join(segment_orders)
-    return meta_segments
 
 
 def update_segment_configuration(
@@ -50,22 +49,25 @@ def update_segment_configuration(
 ) -> None:
     """Update segment configuration data for database instance."""
     time_stamp = time_ns()
-    encoding_query = """SELECT table_name, column_name, chunk_id, encoding_type FROM meta_segments;"""
-    order_query = (
-        """SELECT table_name, chunk_id, order_mode FROM meta_chunk_sort_orders;"""
-    )
 
     segments_encodings = sql_to_data_frame(
-        database_blocked, connection_factory, encoding_query, None
+        database_blocked,
+        connection_factory,
+        """SELECT table_name, column_name, chunk_id, encoding_type FROM meta_segments;""",
+        None,
     )
     segments_orders = sql_to_data_frame(
-        database_blocked, connection_factory, order_query, None
+        database_blocked,
+        connection_factory,
+        """SELECT table_name, chunk_id, order_mode FROM meta_chunk_sort_orders;""",
+        None,
     )
 
     segment_configuration = {}
-    if not segments_encodings.empty and not segments_orders.empty:
-        meta_segments = _join_dataframes(segments_encodings, segments_orders)
-        segment_configuration = _create_dictionary(meta_segments)
+    if not (segments_encodings.empty or segments_orders.empty):
+        segment_configuration = _create_dictionary(
+            _get_meta_segments(segments_encodings, segments_orders)
+        )
 
     with storage_connection_factory.create_cursor() as log:
         log.log_meta_information(
