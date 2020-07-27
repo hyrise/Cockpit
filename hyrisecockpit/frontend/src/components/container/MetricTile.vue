@@ -1,5 +1,5 @@
 <template>
-  <v-card :id="`${tileDatabase}-${metric}-tile`" class="card mt-2 mx-2">
+  <v-card :id="`${tileDatabase}-${metric}-tile`" class="card mt-2 mx-2 pb-1">
     <v-card-title
       class="card subtitle-1 font-weight-regular mb-n7"
       :ref="`${tileDatabase}-${metric}-title`"
@@ -152,7 +152,7 @@ export default defineComponent({
 
 <style scoped>
 .card {
-  max-width: 97.5%;
+  max-width: 99%;
 }
 .card-title {
   padding-bottom: 0 !important;
