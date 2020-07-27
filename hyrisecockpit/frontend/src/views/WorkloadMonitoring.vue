@@ -34,7 +34,7 @@ import { useSelectionHandling } from "@/meta/selection";
 import StatusWarning from "@/components/alerts/StatusWarning.vue";
 import SelectionList from "@/components/selection/SelectionList.vue";
 import MetricsComparisonTable from "@/components/container/MetricsComparisonTable.vue";
-import DatabaseSystemDetails from "../components/details/DatabaseSystemDetails.vue";
+import DatabaseSystemDetails from "@/components/details/DatabaseSystemDetails.vue";
 
 export default defineComponent({
   name: "WorkloadMonitoring",
