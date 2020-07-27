@@ -10,14 +10,14 @@
       text
       data-id="chart-plugin-log-alert"
       elevation="20"
-      :color="currentPluginLogDatabaseColor"
+      :color="databaseColor"
     >
       <div v-if="!!currentPluginLog">
         <div class="header-row">
           <div class="log-header">
             {{ currentPluginLog.header }}
           </div>
-          <v-btn @click="onClose()" icon>
+          <v-btn @click="$emit('close')" icon>
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
@@ -41,13 +41,12 @@ import useDragElement from "@/meta/draggable";
 
 interface Props {
   currentPluginLog: any;
-  currentPluginLogDatabaseColor: string;
-  currentPluginLogMetricId: string;
+  databaseColor: string;
+  metricId: string;
   onClose: () => void;
 }
 interface Data {
   logDraggableId: string;
-  currentPluginLogComputed: any;
 }
 
 export default defineComponent({
@@ -57,11 +56,11 @@ export default defineComponent({
       type: Object,
       default: null,
     },
-    currentPluginLogDatabaseColor: {
+    databaseColor: {
       type: String,
       default: null,
     },
-    currentPluginLogMetricId: {
+    metricId: {
       type: String,
       default: null,
     },
@@ -71,8 +70,7 @@ export default defineComponent({
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const logDraggableId = "log-popup" + props.currentPluginLogMetricId;
-    const currentPluginLogComputed = computed(() => props.currentPluginLog);
+    const logDraggableId = "log-popup" + props.metricId;
 
     onMounted(() => {
       useDragElement(logDraggableId, logDraggableId);
@@ -80,7 +78,6 @@ export default defineComponent({
 
     return {
       logDraggableId,
-      currentPluginLogComputed,
     };
   },
 });

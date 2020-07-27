@@ -25,9 +25,9 @@
     <plugin-log-popup
       v-if="showPluginPopup"
       :current-plugin-log="currentPluginLog"
-      :current-plugin-log-database-color="popupColor"
-      :current-plugin-log-metric-id="tileDatabase + metric"
-      :onClose="onLogPopupClose"
+      :database-color="popupColor"
+      :metric-id="tileDatabase + metric"
+      @close="onLogPopupClose"
     />
     <component
       :is="getMetricComponent(metric)"

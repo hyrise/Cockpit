@@ -51,7 +51,6 @@ import {
   onMounted,
   computed,
   provide,
-  reactive,
 } from "@vue/composition-api";
 
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
