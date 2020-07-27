@@ -237,9 +237,4 @@ export default defineComponent({
   padding-top: 4px;
   padding-bottom: 4px;
 }
-.settingsbutton {
-  margin-left: 0px;
-  margin-right: 0px;
-  padding: 0px;
-}
 </style>
