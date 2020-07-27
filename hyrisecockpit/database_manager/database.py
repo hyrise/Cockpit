@@ -82,7 +82,7 @@ class Database(object):
         )
         self._initialize_influx()
         self._background_job_manager.start()
-        self._background_job_manager.load_tables(self._default_tables)
+        self._asynchronous_job_manager.load_tables(self._default_tables)
 
     def _initialize_influx(self) -> None:
         """Initialize Influx database."""

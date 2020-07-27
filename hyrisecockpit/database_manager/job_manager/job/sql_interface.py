@@ -4,7 +4,7 @@ from typing import Optional
 
 from psycopg2 import Error
 
-from hyrisecockpit.database_manager.interface import SqlResultInterface
+from hyrisecockpit.database_manager.interfaces import SqlResultInterface
 
 
 def execute_sql_query(

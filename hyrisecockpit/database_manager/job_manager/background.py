@@ -4,9 +4,12 @@ from multiprocessing import Value
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
+from hyrisecockpit.database_manager.cursor import (
+    ConnectionFactory,
+    StorageConnectionFactory,
+)
 from hyrisecockpit.database_manager.worker_pool import WorkerPool
 
-from .cursor import ConnectionFactory, StorageConnectionFactory
 from .job.ping_hyrise import ping_hyrise
 from .job.update_chunks_data import update_chunks_data
 from .job.update_plugin_log import update_plugin_log

@@ -3,8 +3,9 @@
 from multiprocessing import Value
 from threading import Thread
 
+from hyrisecockpit.database_manager.cursor import ConnectionFactory
+
 from .background import BackgroundJobManager
-from .cursor import ConnectionFactory
 from .job.delete_tables import delete_tables as delete_tables_job
 from .job.load_tables import load_tables as load_tables_job
 from .job.plugin import activate_plugin as activate_plugin_job

@@ -2,10 +2,10 @@
 from multiprocessing import Value
 from typing import List, Optional, Tuple, Union
 
-from hyrisecockpit.database_manager.job.execute_queries_parallel import (
+from hyrisecockpit.database_manager.job_manager.job.execute_queries_parallel import (
     execute_queries_parallel,
 )
-from hyrisecockpit.database_manager.job.get_loaded_tables import (
+from hyrisecockpit.database_manager.job_manager.job.get_loaded_tables import (
     get_loaded_tables_for_scale_factor,
 )
 from hyrisecockpit.database_manager.table_names import table_names as _table_names

@@ -7,7 +7,9 @@ from typing import Dict
 from pandas import DataFrame
 
 from hyrisecockpit.database_manager.cursor import StorageConnectionFactory
-from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_frame
+from hyrisecockpit.database_manager.job_manager.job.sql_to_data_frame import (
+    sql_to_data_frame,
+)
 
 previous_chunks_data: Dict = {}
 

@@ -4,7 +4,9 @@ from datetime import datetime
 from time import time
 
 from hyrisecockpit.database_manager.cursor import StorageConnectionFactory
-from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_frame
+from hyrisecockpit.database_manager.job_manager.job.sql_to_data_frame import (
+    sql_to_data_frame,
+)
 
 
 def _datetime_str_to_unix_timestamp(datetime_str: str) -> int:

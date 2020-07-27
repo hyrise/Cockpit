@@ -5,15 +5,15 @@ from typing import Dict, List, Optional, Tuple, TypedDict
 
 from psycopg2 import DatabaseError, InterfaceError
 
-from hyrisecockpit.database_manager.interface import SqlResultInterface
+from hyrisecockpit.database_manager.cursor import ConnectionFactory
+from hyrisecockpit.database_manager.interfaces import SqlResultInterface
 from hyrisecockpit.database_manager.table_names import table_names as _table_names
 
-from .cursor import ConnectionFactory
-from .job.plugin import execute_sql_query as execute_sql_query_job
 from .job.plugin import get_detailed_plugins as get_detailed_plugins_job
 from .job.plugin import get_plugin_setting as get_plugin_setting_job
 from .job.plugin import get_plugins as get_plugins_job
 from .job.plugin import set_plugin_setting as set_plugin_setting_job
+from .job.sql_interface import execute_sql_query as execute_sql_query_job
 
 PluginSetting = TypedDict(
     "PluginSetting", {"name": str, "value": str, "description": str}
