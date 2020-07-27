@@ -3,8 +3,8 @@ from typing import Optional, Tuple
 
 from jsonschema import validate
 
+from hyrisecockpit.api.app.connection_manager import ManagerSocket
 from hyrisecockpit.api.app.exception import StatusCodeNotFoundException
-from hyrisecockpit.api.app.socket_manager import ManagerSocket
 from hyrisecockpit.message import response_schema
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
