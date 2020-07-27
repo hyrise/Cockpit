@@ -12,12 +12,8 @@
         v-if="showHeader"
         class="column-top-border"
         :color="database.color"
+        flat
       >
-        <v-card-text class="white--text text-center">
-          <strong>
-            {{ database.id }}
-          </strong>
-        </v-card-text>
       </v-card>
       <div v-for="metric in selectedMetrics" :key="metric">
         <metric-tile

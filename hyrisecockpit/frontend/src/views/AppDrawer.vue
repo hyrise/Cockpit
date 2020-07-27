@@ -149,7 +149,7 @@
         />
       </v-menu>
     </v-list>
-    <v-spacer class="spacer mt-16 pt-5"></v-spacer>
+    <v-spacer class="spacer mt-12 pt-5"></v-spacer>
     <v-img
       class="ml-8"
       src="../../src/assets/images/hpi_logo_bw.png"

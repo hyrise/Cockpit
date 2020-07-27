@@ -4,10 +4,14 @@
       :conditions="[$databaseController.databasesUpdated]"
       :evaluations="[false]"
     />
-    <div class="mx-6">
+    <div class="mx-2">
       <status-warning
         :selected-databases="selectedDatabases"
         :selected-metrics="selectedMetrics"
+      />
+      <database-system-details
+        v-if="selectedDatabases.length"
+        :selected-databases="selectedDatabases"
       />
       <metrics-comparison-table
         v-if="selectedDatabases.length"
@@ -30,6 +34,7 @@ import { useSelectionHandling } from "@/meta/selection";
 import StatusWarning from "@/components/alerts/StatusWarning.vue";
 import SelectionList from "@/components/selection/SelectionList.vue";
 import MetricsComparisonTable from "@/components/container/MetricsComparisonTable.vue";
+import DatabaseSystemDetails from "../components/details/DatabaseSystemDetails.vue";
 
 export default defineComponent({
   name: "WorkloadMonitoring",
@@ -38,6 +43,7 @@ export default defineComponent({
     StatusWarning,
     SelectionList,
     MetricsComparisonTable,
+    DatabaseSystemDetails,
   },
   setup(props: {}, context: SetupContext): MetricViewData {
     return {
@@ -50,15 +56,5 @@ export default defineComponent({
 .select {
   margin-top: 0.5%;
   margin-bottom: 0.5%;
-}
-.flex {
-  margin-top: 6px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.flex-item {
-  flex: 0 0 49%;
-  margin: 5px 0.5% 5px 0.5%;
 }
 </style>

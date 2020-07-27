@@ -11,9 +11,9 @@
           v-model="searchQueries"
           append-icon="mdi-magnify"
           label="Search queries"
-          single-line
           hide-details
           data-id="query-search-input"
+          class="body-3 mt-n4"
         />
       </v-card-title>
       <v-data-table
