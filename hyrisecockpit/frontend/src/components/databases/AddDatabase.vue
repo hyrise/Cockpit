@@ -18,7 +18,7 @@
       </v-system-bar>
       <v-card-text class="pb-0">
         <v-alert
-          v-if="databaseAdded === true"
+          v-if="databaseAdded"
           class="mt-4 mb-0"
           type="success"
           dismissible
@@ -40,7 +40,7 @@
             <v-text-field
               v-model="host"
               label="Host"
-              :error-messages="host.length < 4 ? 'Required' : ''"
+              :error-messages="!host.length ? 'Required' : ''"
               data-id="host-input"
             ></v-text-field>
           </v-col>
