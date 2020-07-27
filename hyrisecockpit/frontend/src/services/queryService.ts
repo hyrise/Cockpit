@@ -1,5 +1,5 @@
 import axios from "axios";
-import { monitorBackend } from "../../config";
+import { metricBackend } from "../../config";
 import { DetailedQueryInformation } from "@/types/queries";
 import { useFormatting } from "@/meta/formatting";
 import { getDisplayedFromTransferred } from "@/meta/workloads";
@@ -19,7 +19,7 @@ export function useQueryService(): {
       DetailedQueryInformation[]
     > = {};
     await axios
-      .get(`${monitorBackend}detailed_query_information`)
+      .get(`${metricBackend}detailed_query_information`)
       .then((response: any) => {
         detailedQueryInformation = response.data.reduce(
           (

@@ -63,11 +63,6 @@ class CockpitBackend:
         url = f"http://{self._backend_host}:{self._backend_port}/{property}?startts={startts}&endts={endts}&precision={precision}"
         return get(url, timeout=REQUEST_TIMEOUT)
 
-    def get_control_property(self, property: str):
-        """Get control property."""
-        url = f"http://{self._backend_host}:{self._backend_port}/control/{property}"
-        return get(url, timeout=REQUEST_TIMEOUT)
-
     def add_database(self, id: str, host: str, port: str):
         """Add database."""
         body = {
