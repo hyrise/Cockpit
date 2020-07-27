@@ -1,8 +1,8 @@
 """Services used by the Plugin controller."""
 from typing import Dict, List, Optional, Union
 
+from hyrisecockpit.api.app.connection_manager import ManagerSocket
 from hyrisecockpit.api.app.shared import _get_active_databases, storage_connection
-from hyrisecockpit.api.app.socket_manager import ManagerSocket
 from hyrisecockpit.plugins import available_plugins
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response

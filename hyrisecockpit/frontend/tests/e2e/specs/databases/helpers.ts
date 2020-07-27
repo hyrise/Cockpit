@@ -25,10 +25,7 @@ export const selectors = {
   idInput: getSelectorByCustomConfig("id-input"),
   hostInput: getSelectorByCustomConfig("host-input"),
   portInput: getSelectorByCustomConfig("port-input"),
-  dbNameInput: getSelectorByCustomConfig("dbname-input"),
   workerInput: getSelectorByCustomConfig("worker-input"),
-  userInput: getSelectorByCustomConfig("user-input"),
-  passwordInput: getSelectorByCustomConfig("password-input"),
   databaseDetailsPanel: getSelectorByCustomConfig("database-details-panel"),
   databaseSystemDetails: getSelectorByCustomConfig("database-system-details"),
   hostDetails: getSelectorByCustomConfig("database-host"),
@@ -47,28 +44,17 @@ export const selectors = {
   sendSQLInput: getSelectorByCustomConfig("send-sql-input"),
 };
 
-export function assertAdvancedPostValues(
+export function assertPostRequest(
   input: DatabaseData,
   requested: DatabaseData
 ): void {
-  expect(input.id).to.eq(requested.id);
+  expect(requested.id).to.eq(requested.id);
   expect(input.host).to.eq(requested.host);
   expect(input.number_workers).to.eq(requested.number_workers);
   expect(input.port).to.eq(requested.port);
-  expect(input.dbname).to.eq(requested.dbname);
 }
 
-export function assertDefaultPostValues(
-  input: DatabaseData,
-  requested: DatabaseData
-): void {
-  expect(input.host).to.eq(requested.host);
-  expect(input.number_workers).to.eq(requested.number_workers);
-  expect(requested.id).to.eq(requested.host);
-  expect(input.host).to.eq(requested.id);
-}
-
-export function assertDeleteValues(
+export function assertDeleteRequest(
   input: string,
   requested: { id: string }
 ): void {
