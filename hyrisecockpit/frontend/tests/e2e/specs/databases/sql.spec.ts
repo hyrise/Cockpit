@@ -23,7 +23,7 @@ describe("when opening the sql input", () => {
           cy.get(selectors.openSQLDialog).eq(idx).click();
         });
         cy.get(selectors.sqlInput).should("exist");
-        cy.get(selectors.closeSQLInput).click();
+        cy.get(selectors.closeSQLDialog).click();
         cy.get(selectors.sqlInput).should("not.be.visible");
         cy.numberOfRequests(getPostAlias("sql")).should("eq", 0);
         cy.reload();
