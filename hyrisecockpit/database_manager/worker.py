@@ -5,6 +5,7 @@ Workers run in pools and are started by other components.
 from multiprocessing import Queue, Value
 from multiprocessing.synchronize import Event as EventType
 from queue import Empty
+from threading import Thread
 from time import time_ns
 from typing import Dict, List, Optional, Tuple, Union
 
@@ -74,18 +75,12 @@ def execute_task(
 
 def log_results(
     log: StorageCursor,
-    last_batched: int,
     succesful_queries: List[Tuple[int, int, str, str, str]],
     failed_queries: List[Tuple[int, str, str, str]],
-) -> int:
+) -> None:
     """Log results to database."""
-    if last_batched < time_ns() - 1_000_000_000:
-        log.log_queries(succesful_queries)
-        succesful_queries.clear()
-        log.log_failed_queries(failed_queries)
-        failed_queries.clear()
-        return time_ns()
-    return last_batched
+    log.log_queries(succesful_queries)
+    log.log_failed_queries(failed_queries)
 
 
 def execute_queries(
@@ -133,6 +128,14 @@ def execute_queries(
                 ) as e:
                     failed_queries.append((time_ns(), worker_id, str(task), str(e)))
 
-                last_batched = log_results(
-                    log, last_batched, succesful_queries, failed_queries
-                )
+                if last_batched < time_ns() - 1_000_000_000 and (
+                    succesful_queries != [] or failed_queries != []
+                ):
+                    t = Thread(
+                        target=log_results,
+                        args=(log, succesful_queries, failed_queries),
+                    )
+                    t.start()
+                    succesful_queries = []
+                    failed_queries = []
+                    last_batched = time_ns()
