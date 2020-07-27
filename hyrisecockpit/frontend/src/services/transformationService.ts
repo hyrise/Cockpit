@@ -25,6 +25,7 @@ const transformationServiceMap: Record<Metric, TransformationService> = {
   operatorProportion: getOperatorData,
   queueLength: getReadOnlyData,
   ram: getRAMData,
+  segmentConfiguration: getSegmentData,
   storage: getStorageData,
   throughput: getReadOnlyData,
 };
@@ -35,6 +36,73 @@ export function useDataTransformation(metric: Metric): TransformationService {
 }
 
 // TRANSFORM FUNCTION POOL
+
+function getSegmentData(
+  data: any,
+  primaryKey = "",
+  secondaryKey = "",
+  tertiaryKey = ""
+): any {
+  const dataByColumns: any[][] = [];
+  const dataByChunks: number[][] = [];
+  const chunks: string[] = [];
+  const columns: string[] = [];
+  const descriptions: string[][] = [];
+
+  const availableColumns: string[] = [];
+
+  /* store all detected values */
+  const valueToId: any = {};
+
+  /* map values to int */
+  Object.values(data).forEach((dbData: any) => {
+    Object.values(dbData).forEach((tableData: any) => {
+      Object.values(tableData).forEach((columnData: any) => {
+        columnData.forEach((column: any) => {
+          const id = valueToId[column[tertiaryKey]];
+          if (id) return;
+
+          valueToId[column[tertiaryKey]] = Object.keys(valueToId).length;
+        });
+      });
+    });
+  });
+
+  Object.entries(data[primaryKey][secondaryKey]).forEach(
+    ([column, columnData]: [string, any]) => {
+      dataByColumns.push(columnData);
+      columns.push(truncateColumnName(column));
+      availableColumns.push(column);
+    }
+  );
+
+  const numberOfChunks = dataByColumns[0].length;
+
+  function truncateColumnName(column: string): string {
+    return column.length > 7 ? column.substring(0, 7) + ".." : column;
+  }
+
+  for (let i = 0; i < numberOfChunks; i++) {
+    chunks.push("Nr. " + i);
+    const description: any = [];
+    availableColumns.forEach((column) => {
+      description.push({ column });
+    });
+
+    const chunk: number[] = [];
+    dataByColumns.forEach((column, idx) => {
+      chunk.push(valueToId[column[i][tertiaryKey]]);
+      description[idx] = {
+        ...description[idx],
+        value: column[i][tertiaryKey],
+      };
+    });
+    descriptions.push(description);
+    dataByChunks.push(chunk);
+  }
+
+  return { chunks, columns, dataByChunks, descriptions, valueToId };
+}
 
 /** transform query type data to barchart structure */
 function getQueryTypeProportionData(data: any, primaryKey: string = ""): any {

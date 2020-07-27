@@ -14,6 +14,7 @@ import {
   fakeWorkloadData,
   fakeDatabaseOperatorData,
   fakeBenchmarkStatusData,
+  fakeDatabaseSegmentData,
 } from "./factories";
 import {
   assignFakeData,
@@ -172,6 +173,18 @@ export function useMocks(
     responseMocks.workload_operator_information = mockedIds.databases.map(
       (id) => fakeDatabaseOperatorData(id, 7)
     );
+    responseMocks.segment_configuration = {
+      segment_data: assignFakeData(
+        mockedIds.databases.map((id) =>
+          fakeDatabaseSegmentData(
+            id,
+            mockedIds.tables,
+            mockedIds.columns,
+            numbers.chunks
+          )
+        )
+      ),
+    };
     return responseMocks as Record<Request, any>;
   }
 

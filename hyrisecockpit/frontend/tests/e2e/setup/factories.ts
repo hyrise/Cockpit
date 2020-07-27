@@ -204,6 +204,47 @@ export function fakeDatabaseChunksData(
   return data;
 }
 
+// SEGMENT CONFIG DATA
+
+function fakeColumnSegmentData(
+  columnId: string,
+  numberOfChunks: number
+): Object {
+  const data: any = {};
+  data[columnId] = generateRandomNumbers(numberOfChunks).map(() => ({
+    encoding_type: faker.random.word(),
+    order_mode: faker.random.word(),
+  }));
+  return data;
+}
+
+function fakeTableSegmentData(
+  tableId: string,
+  columnIds: string[],
+  numberOfChunks: number
+): Object {
+  const data: any = {};
+  data[tableId] = assignFakeData(
+    columnIds.map((id) =>
+      fakeColumnSegmentData(`${tableId}-${id}`, numberOfChunks)
+    )
+  );
+  return data;
+}
+
+export function fakeDatabaseSegmentData(
+  databaseId: string,
+  tableIds: string[],
+  columnIds: string[],
+  numberOfChunks: number
+): Object {
+  const data: any = {};
+  data[databaseId] = assignFakeData(
+    tableIds.map((id) => fakeTableSegmentData(id, columnIds, numberOfChunks))
+  );
+  return data;
+}
+
 // DETAILED QUERY INFORMATION DATA
 
 function fakeQueryInformationData(latency: number): Object {

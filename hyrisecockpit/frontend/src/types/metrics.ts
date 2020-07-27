@@ -13,7 +13,8 @@ export type Metric =
   | "queueLength"
   | "queryTypeProportion"
   | "memoryFootprint"
-  | "operatorProportion";
+  | "operatorProportion"
+  | "segmentConfiguration";
 
 export const availableMetrics: Metric[] = [
   "access",
@@ -26,6 +27,7 @@ export const availableMetrics: Metric[] = [
   "queryTypeProportion",
   "memoryFootprint",
   "operatorProportion",
+  "segmentConfiguration",
 ];
 
 export const comparisonMetrics: Metric[] = [
@@ -37,6 +39,7 @@ export const comparisonMetrics: Metric[] = [
   "memoryFootprint",
   "storage",
   "access",
+  "segmentConfiguration",
   "operatorProportion",
 ];
 export const overviewMetrics: Metric[] = [
@@ -69,7 +72,7 @@ export type DataType = "interval" | "snapshot";
 export interface MetricMetadata {
   fetchType: FetchType;
   transformationService: TransformationService;
-  base?: Base;
+  base?: string;
   endpoint: string;
   component: string;
   requestTime: number;

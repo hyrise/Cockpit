@@ -65,6 +65,7 @@ mockGetRoute("storage", true);
 mockGetRoute("chunks", true);
 mockGetRoute("workload_statement_information");
 mockGetRoute("workload_operator_information");
+mockGetRoute("segment_configuration", true);
 
 /* metric */
 mockGetRoute("throughput");

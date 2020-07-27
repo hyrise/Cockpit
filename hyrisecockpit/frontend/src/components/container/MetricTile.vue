@@ -46,6 +46,7 @@ import Storage from "@/components/metrics/Storage.vue";
 import Access from "@/components/metrics/Access.vue";
 import MemoryFootprint from "@/components/metrics/MemoryFootprint.vue";
 import OperatorProportion from "@/components/metrics/OperatorProportion.vue";
+import SegmentConfiguration from "@/components/metrics/SegmentConfiguration.vue";
 import { getMetricTitle, getMetricComponent } from "../../meta/metrics";
 import {
   Metric,
@@ -75,6 +76,7 @@ export default defineComponent({
     QueueLength,
     QueryTypeProportion,
     Access,
+    SegmentConfiguration,
     Storage,
     MemoryFootprint,
     OperatorProportion,

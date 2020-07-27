@@ -92,6 +92,9 @@ export function useBackendMock(
     cy.route("GET", getRequestRoute("workload_operator_information", "get")).as(
       getGetAlias("workload_operator_information")
     );
+    cy.route("GET", getRequestRoute("segment_configuration", "get")).as(
+      getGetAlias("segment_configuration")
+    );
 
     /* POST */
     cy.route("POST", getRequestRoute("database", "post")).as(
@@ -235,6 +238,12 @@ export function mockBackend(
       getRequestRoute("chunks", "get"),
       getGetAlias("chunks"),
       getMockedResponse("chunks"),
+      true
+    );
+    mock(
+      getRequestRoute("segment_configuration", "get"),
+      getGetAlias("segment_configuration"),
+      getMockedResponse("segment_configuration"),
       true
     );
     mock(

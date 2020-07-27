@@ -5,14 +5,17 @@
 <script lang="ts">
 import { defineComponent, SetupContext, onMounted } from "@vue/composition-api";
 import Plotly from "@/../plotlyBundle.ts";
-import { ChartConfiguration, AccessData } from "../../types/metrics";
-import { ChartProps, ChartPropsValidation } from "../../types/charts";
-import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
-import { colorValueDefinition } from "../../meta/colors";
+import { ChartConfiguration, AccessData } from "@/types/metrics";
+import { ChartProps, ChartPropsValidation } from "@/types/charts";
+import { useChartReactivity, useResizingOnChange } from "@/meta/charts";
+import { colorValueDefinition } from "@/meta/colors";
 
 interface Props extends ChartProps {
   autosize: boolean;
+  hoverTemplate: string;
   maxValue: number;
+  colorScale: (string | number)[][];
+  colorBar: Object;
 }
 
 export default defineComponent({
@@ -22,16 +25,33 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    colorScale: {
+      type: Array,
+      default: () => [
+        [0.0, colorValueDefinition.darkblue],
+        [0.25, colorValueDefinition.blue],
+        [0.5, "#F5F5F5"],
+        [0.75, colorValueDefinition.red],
+        [1, colorValueDefinition.darkred],
+      ],
+    },
+    colorBar: {
+      type: Object,
+      default: () => {},
+    },
     maxValue: {
       type: Number,
       default: 0,
+    },
+    hoverTemplate: {
+      type: String,
+      default: "",
     },
     ...ChartPropsValidation,
   },
   setup(props: Props, context: SetupContext): void {
     const { getDataset, getLayout, getOptions } = useHeatMapConfiguration(
-      props.chartConfiguration,
-      props.autosize
+      props
     );
     const { updateLayout } = useResizingOnChange(props);
 
@@ -53,8 +73,7 @@ export default defineComponent({
 });
 
 function useHeatMapConfiguration(
-  chartConfiguration: ChartConfiguration,
-  autosize: boolean
+  props: Props
 ): {
   getDataset: (maxValue: number, data?: AccessData) => Object;
   getLayout: () => Object;
@@ -65,7 +84,7 @@ function useHeatMapConfiguration(
       xaxis: {
         rangemode: "tozero",
         title: {
-          text: chartConfiguration.xaxis,
+          text: props.chartConfiguration.xaxis,
           font: {
             family: "Roboto, sans-serif",
             size: 13,
@@ -76,7 +95,7 @@ function useHeatMapConfiguration(
       yaxis: {
         rangemode: "tozero",
         title: {
-          text: chartConfiguration.yaxis,
+          text: props.chartConfiguration.yaxis,
           font: {
             family: "Roboto, sans-serif",
             size: 13,
@@ -84,9 +103,9 @@ function useHeatMapConfiguration(
         },
         fixedrange: true,
       },
-      autosize: autosize,
-      width: autosize ? 0 : 1400,
-      height: autosize ? 0 : 700,
+      autosize: props.autosize,
+      width: props.autosize ? 0 : 1400,
+      height: props.autosize ? 0 : 700,
       margin: {
         l: 80,
         r: 50,
@@ -114,16 +133,11 @@ function useHeatMapConfiguration(
       zmax: maxValue,
       text: data.descriptions,
       type: "heatmap",
-      colorscale: [
-        [0.0, colorValueDefinition.darkblue],
-        [0.25, colorValueDefinition.blue],
-        [0.5, "#F5F5F5"],
-        [0.75, colorValueDefinition.red],
-        [1, colorValueDefinition.darkred],
-      ],
+      colorscale: props.colorScale,
+      cauto: false,
       hovermode: "closest",
-      hovertemplate:
-        "<b>column: %{text}</b> <br><b>chunk: %{y}</b> <br>%{z} accesses <extra></extra>",
+      hovertemplate: props.hoverTemplate,
+      colorbar: props.colorBar,
     };
   }
   function getOptions(): Object {

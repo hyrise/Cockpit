@@ -21,6 +21,7 @@
             :chart-configuration="chartConfiguration"
             :autosize="false"
             :max-value="maxValue"
+            :hover-template="'<b>column: %{text}</b> <br><b>chunk: %{y}</b> <br>%{z} accesses <extra></extra>'"
           />
         </template>
       </metric-detailed-view>
@@ -42,6 +43,7 @@
         :selected-databases="selectedDatabases"
         :max-chart-width="maxChartWidth"
         :max-value="maxValue"
+        :hover-template="'<b>column: %{text}</b> <br><b>chunk: %{y}</b> <br>%{z} accesses <extra></extra>'"
       />
     </div>
   </div>

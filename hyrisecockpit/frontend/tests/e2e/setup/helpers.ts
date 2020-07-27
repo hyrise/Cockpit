@@ -32,7 +32,8 @@ export type Request =
   | "workload_statement_information"
   | "workload_operator_information"
   | "status_benchmarks"
-  | "status_database";
+  | "status_database"
+  | "segment_configuration";
 
 export type BackendState = "up" | "down";
 
@@ -119,6 +120,7 @@ const requestRoutes: Record<
   },
   status_benchmarks: { get: "**/status/benchmark" },
   status_database: { get: "**/status/database" },
+  segment_configuration: { get: "**/monitor/segment_configuration" },
 };
 
 export function getRequestRoute(
@@ -146,6 +148,7 @@ const getAliases: Partial<Record<Request, string>> = {
   workload_operator_information: "getOperatorData",
   status_benchmarks: "getBenchmarkStatus",
   status_database: "getDatabaseStatus",
+  segment_configuration: "getSegmentData",
 };
 
 const postAliases: Partial<Record<Request, string>> = {

@@ -98,6 +98,16 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
       y: { max: 100 },
     },
   },
+  segmentConfiguration: {
+    fetchType: "read",
+    transformationService: useDataTransformation("segmentConfiguration"),
+    base: "segment_data",
+    endpoint: monitorBackend + "segment_configuration",
+    component: "SegmentConfiguration",
+    requestTime: 5000,
+    dataType: "interval",
+    historic: false,
+  },
   storage: {
     fetchType: "read",
     transformationService: useDataTransformation("storage"),
@@ -177,6 +187,11 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
     title: "Process Memory (RSS)", //RAM
     xaxis: timeLabel,
     yaxis: "Memory usage in %",
+  },
+  segmentConfiguration: {
+    title: "Segment Configuration",
+    xaxis: "Columns",
+    yaxis: "Chunks",
   },
   storage: {
     title: "Data Size - Overview", //Storage
