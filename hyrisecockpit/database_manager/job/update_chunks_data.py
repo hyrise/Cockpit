@@ -1,6 +1,7 @@
 """This job updates the chunks data."""
 from copy import deepcopy
 from json import dumps
+from threading import local
 from time import time_ns
 from typing import Dict
 
@@ -9,7 +10,7 @@ from pandas import DataFrame
 from hyrisecockpit.database_manager.cursor import StorageConnectionFactory
 from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_frame
 
-previous_chunks_data: Dict = {}
+previous_chunks_data = local()
 
 
 def _calculate_chunks_difference(base: Dict, substractor: Dict) -> Dict:
@@ -63,15 +64,20 @@ def update_chunks_data(
         FROM meta_segments;"""
 
     meta_segments = sql_to_data_frame(database_blocked, connection_factory, sql, None)
-
     chunks_data = {}
+
     if not meta_segments.empty:
         new_chunks_data = _create_chunks_dictionary(meta_segments)
+
+        if getattr(previous_chunks_data, "value", None) is None:
+            previous_chunks_data.value = new_chunks_data
+            return
+
         new_chunks_deep_copy = deepcopy(new_chunks_data)
         chunks_data = _calculate_chunks_difference(
-            new_chunks_deep_copy, previous_chunks_data
+            new_chunks_deep_copy, previous_chunks_data.value
         )
-        previous_chunks_data = new_chunks_data
+        previous_chunks_data.value = new_chunks_data
 
     with storage_connection_factory.create_cursor() as log:
         log.log_meta_information(
