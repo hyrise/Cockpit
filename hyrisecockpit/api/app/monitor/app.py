@@ -279,20 +279,33 @@ class SegmentConfiguration(Resource):
 
     def get(self) -> Union[int, Response]:
         """Return storage configuration information for every database."""
-        segment_configuration: Dict[str, Dict] = {}
+        segment_configuration: Dict[str, Dict[str, Dict]] = {}
         active_databases = _get_active_databases()
         for database in active_databases:
-            result = storage_connection.query(
-                'SELECT LAST("segment_configuration_information") FROM segment_configuration',
+            encodings = storage_connection.query(
+                'SELECT LAST("segment_configuration_encoding_type") FROM segment_configuration',
                 database=database,
             )
-            segment_configuration_data = list(result["segment_configuration", None])
-            if len(segment_configuration_data) > 0:
-                segment_configuration[database] = loads(
-                    segment_configuration_data[0]["last"]
+            orders = storage_connection.query(
+                'SELECT LAST("segment_configuration_order_mode") FROM segment_configuration',
+                database=database,
+            )
+            segment_configuration_encodings = list(
+                encodings["segment_configuration", None]
+            )
+            segment_configuration_orders = list(orders["segment_configuration", None])
+            if len(segment_configuration_encodings) > 0:
+                segment_configuration[database]["encoding_type"] = loads(
+                    segment_configuration_encodings[0]["last"]
                 )
             else:
-                segment_configuration[database] = {}
+                segment_configuration[database]["encoding_type"] = {}
+            if len(segment_configuration_orders) > 0:
+                segment_configuration[database]["order_mode"] = loads(
+                    segment_configuration_orders[0]["last"]
+                )
+            else:
+                segment_configuration[database]["order_mode"] = {}
         response = get_response(200)
         response["body"]["segment_configuration"] = segment_configuration
         return response
