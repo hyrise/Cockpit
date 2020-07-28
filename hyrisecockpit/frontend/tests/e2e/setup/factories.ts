@@ -226,7 +226,9 @@ export function fakeDatabaseQueryInformationData(
   ).map((latency: any) => latency + Math.pow(10, 2));
   return {
     id: databaseId,
-    query_information: [...Array(numberOfQueries).keys()].map((idx: number) =>
+    details_query_information: [
+      ...Array(numberOfQueries).keys(),
+    ].map((idx: number) =>
       fakeQueryInformationData(latencyData[idx] * Math.pow(10, 6))
     ),
   };
