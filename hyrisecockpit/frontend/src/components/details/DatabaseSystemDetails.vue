@@ -1,5 +1,5 @@
 <template>
-  <div class="flex mb-n4">
+  <div class="flex">
     <div
       v-for="database in databases"
       :key="database.id"
@@ -102,6 +102,9 @@ export default defineComponent({
   flex-wrap: wrap;
   margin-top: 6px;
   margin-bottom: 0px;
+}
+#comparison-page .flex {
+  margin-bottom: -16px;
 }
 .col {
   padding: 0px;
