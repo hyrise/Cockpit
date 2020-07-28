@@ -71,6 +71,7 @@ import {
 import { useUpdatingDatabases } from "@/meta/databases";
 import { getMetricChartConfiguration, getMetricMetadata } from "@/meta/metrics";
 import { eventBus } from "@/plugins/eventBus";
+import { useDataWithSelection, UseDataWithSelection } from "@/meta/components";
 
 interface Data
   extends BasicChartComponentData<AccessData>,
@@ -86,7 +87,10 @@ export default defineComponent({
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
-    const { transformedData, selection } = useDataWithSelection(props, context);
+    const { transformedData, selection } = useDataWithSelection<AccessData>(
+      props,
+      context
+    );
     return {
       chartConfiguration: getMetricChartConfiguration(props.metric),
       data: transformedData,
@@ -95,58 +99,6 @@ export default defineComponent({
     };
   },
 });
-
-interface UseDataWithSelection {
-  selectionItems: Ref<readonly string[]>;
-  selectedItem: Ref<string>;
-}
-
-function useDataWithSelection(
-  props: MetricProps,
-  context: SetupContext
-): { selection: UseDataWithSelection; transformedData: Ref<AccessData> } {
-  const metricMeta = getMetricMetadata(props.metric);
-  const data = context.root.$metricController.data[props.metric];
-  const { databases } = useUpdatingDatabases(props, context);
-
-  const selectedTable = usePreSelect(props.metric);
-  const accessData = ref<AccessData>(({} as unknown) as AccessData);
-
-  /** update access data on base data and selection change */
-  watch(
-    [data, selectedTable],
-    () => {
-      if (Object.keys(data.value).length) {
-        accessData.value = metricMeta.transformationService(
-          data.value,
-          databases.value[0].id,
-          selectedTable.value
-        );
-      }
-    },
-    { immediate: true }
-  );
-
-  return {
-    selection: {
-      selectionItems: computed(() => databases.value[0].tables),
-      selectedItem: selectedTable,
-    },
-    transformedData: accessData,
-  };
-}
-
-/** Use reactive selected item with preselection depending on metric */
-function usePreSelect(metric: Metric): Ref<string> {
-  const selectedItem = ref("");
-
-  eventBus.$on(`PRESELECT_${metric.toUpperCase()}`, (item: string) => {
-    selectedItem.value = item;
-    eventBus.$off(`PRESELECT_${metric.toUpperCase()}`);
-  });
-
-  return selectedItem;
-}
 </script>
 <style scoped>
 .select {

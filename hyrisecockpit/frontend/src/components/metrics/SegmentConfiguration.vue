@@ -20,7 +20,7 @@
           :chart-configuration="chartConfiguration"
           :autosize="false"
           :max-value="maxValue"
-          :hover-template="'<b>column: %{text.column}</b> <br><b>chunk: %{y}</b> <br>%{text.value} <extra></extra>'"
+          :hover-template="hoverTemplate"
           :color-scale="colorScale"
           :color-bar="colorBar"
         />
@@ -50,7 +50,7 @@
       :selected-databases="selectedDatabases"
       :max-chart-width="maxChartWidth"
       :max-value="maxValue"
-      :hover-template="'<b>column: %{text.column}</b> <br><b>chunk: %{y}</b> <br>%{text.value} %{z} <extra></extra>'"
+      :hover-template="hoverTemplate"
       :color-scale="colorScale"
       :color-bar="colorBar"
     />
@@ -72,7 +72,7 @@ import {
   MetricProps,
   MetricPropsValidation,
   ChartConfiguration,
-  AccessData,
+  SegmentData,
   BasicChartComponentData,
   Metric,
 } from "@/types/metrics";
@@ -80,12 +80,15 @@ import { useUpdatingDatabases } from "@/meta/databases";
 import { getMetricChartConfiguration, getMetricMetadata } from "@/meta/metrics";
 import { eventBus } from "@/plugins/eventBus";
 import { multiColors } from "@/meta/colors";
+import { useDataWithSelection, UseDataWithSelection } from "@/meta/components";
 
-interface Data extends BasicChartComponentData<any>, UseDataWithSelection {
+interface Data
+  extends BasicChartComponentData<SegmentData>,
+    UseDataWithSelection {
   maxValue: Ref<number>;
   colorScale: Ref<(string | number)[][]>;
   colorBar: Ref<Object>;
-  selectedType: Ref<string>;
+  hoverTemplate: Ref<string>;
 }
 
 export default defineComponent({
@@ -96,81 +99,52 @@ export default defineComponent({
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
-    const metricMeta = getMetricMetadata(props.metric);
-    const data = context.root.$metricController.data[props.metric];
-    const { databases } = useUpdatingDatabases(props, context);
-
-    //TODO: preselect table
-    const selectedTable = ref("table-0");
-    const selectedType = ref("encoding_type");
-    const transformedData = ref<any>({});
     const colorScale = ref<(string | number)[][]>([]);
     const colorBar = ref({});
     const maxValue = ref(0);
 
-    /** update access data on base data and selection change */
-    watch(
-      [data, selectedTable, selectedType],
-      () => {
-        if (Object.keys(data.value).length) {
-          transformedData.value = metricMeta.transformationService(
-            data.value,
-            databases.value[0].id,
-            selectedTable.value,
-            selectedType.value
-          );
-          const scaleLength = Object.keys(transformedData.value.valueToId)
-            .length;
-          colorScale.value = Object.values(transformedData.value.valueToId).map(
-            (id: any) => {
-              return [id / (scaleLength - 1), multiColors[id]];
-            }
-          );
+    const { transformedData, selection } = useDataWithSelection<SegmentData>(
+      props,
+      context,
+      "encoding_type",
+      (newData) => {
+        const scaleLength = Object.keys(newData.valueToId).length;
 
-          maxValue.value = scaleLength - 1;
-          colorBar.value = {
-            autotick: false,
-            tick0: !0,
-            dtick: 1,
-            ticktext: Object.keys(transformedData.value.valueToId).map((id) =>
-              id.length > 3 ? id.substring(0, 3) + ".." : id
-            ),
-            tickvals: [...Array(scaleLength).keys()],
-          };
-        }
-      },
-      { immediate: true }
+        /* set static color scale */
+        colorScale.value = Object.values(newData.valueToId).map((id: any) => {
+          return [id / (scaleLength - 1), multiColors[id]];
+        });
+
+        /* set max value of scale */
+        maxValue.value = scaleLength - 1;
+
+        /* set color bar config */
+        colorBar.value = {
+          autotick: false,
+          tick0: !0,
+          dtick: 1,
+          ticktext: Object.keys(newData.valueToId).map((id) =>
+            id.length > 3 ? id.substring(0, 3) + ".." : id
+          ),
+          tickvals: [...Array(scaleLength).keys()],
+        };
+      }
     );
 
     return {
       chartConfiguration: getMetricChartConfiguration(props.metric),
       maxValue,
       data: transformedData,
-      selectedItem: selectedTable,
-      selectionItems: computed(() => databases.value[0].tables),
       colorScale,
       colorBar,
-      selectedType,
+      ...selection,
+      hoverTemplate: computed(
+        () =>
+          `<b>column: %{text.column}</b> <br><b>chunk: %{y}</b> <br>${selection.selectedType.value}: %{text.value} <extra></extra>`
+      ),
     };
   },
 });
-
-interface UseDataWithSelection {
-  selectionItems: Ref<readonly string[]>;
-  selectedItem: Ref<string>;
-}
-
-/** Use reactive selected item with preselection depending on metric */
-function usePreSelect(metric: Metric): Ref<string> {
-  const selectedItem = ref("");
-
-  eventBus.$on(`PRESELECT_${metric.toUpperCase()}`, (item: string) => {
-    selectedItem.value = item;
-    eventBus.$off(`PRESELECT_${metric.toUpperCase()}`);
-  });
-
-  return selectedItem;
-}
 </script>
 <style scoped>
 .select {
@@ -178,7 +152,5 @@ function usePreSelect(metric: Metric): Ref<string> {
   width: 30%;
   margin: auto;
   margin-top: -90px;
-}
-.select-type {
 }
 </style>

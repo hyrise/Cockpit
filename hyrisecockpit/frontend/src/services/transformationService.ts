@@ -3,7 +3,8 @@ import {
   StorageData,
   TreemapDescription,
   AccessData,
-} from "../types/metrics";
+  SegmentData,
+} from "@/types/metrics";
 import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
 import { colorValueDefinition, multiColors } from "@/meta/colors";
@@ -42,7 +43,7 @@ function getSegmentData(
   primaryKey = "",
   secondaryKey = "",
   tertiaryKey = ""
-): any {
+): SegmentData {
   const dataByColumns: any[][] = [];
   const dataByChunks: number[][] = [];
   const chunks: string[] = [];
@@ -56,6 +57,11 @@ function getSegmentData(
 
   /* map values to int */
   Object.values(data).forEach((dbData: any) => {
+    // set secondary key if no key existst
+    if (!secondaryKey) {
+      secondaryKey = Object.keys(dbData)[0];
+      emitPreSelectEvent("segmentConfiguration", secondaryKey);
+    }
     Object.values(dbData).forEach((tableData: any) => {
       Object.values(tableData).forEach((columnData: any) => {
         columnData.forEach((column: any) => {

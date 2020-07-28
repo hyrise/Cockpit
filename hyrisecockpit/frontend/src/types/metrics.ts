@@ -158,6 +158,10 @@ export type AccessData = {
   descriptions: string[][];
 };
 
+export type SegmentData = AccessData & {
+  valueToId: Record<string, number>;
+};
+
 export type MetricDetailsConfiguration = {
   border: number;
   unit: string;
