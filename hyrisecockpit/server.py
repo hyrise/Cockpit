@@ -5,12 +5,11 @@ Used by Database Manager and Workload Generator.
 
 from typing import Callable, Dict, Optional, Tuple
 
-from jsonschema import ValidationError, validate
 from zmq import REP, Context
 
-from hyrisecockpit.message import request_schema
+from hyrisecockpit.errors import CockpitError
 from hyrisecockpit.request import Body, Request
-from hyrisecockpit.response import Response, get_response
+from hyrisecockpit.response import Response, get_custom_response
 
 
 class Server:
@@ -43,15 +42,16 @@ class Server:
 
     def _handle_request(self, request: Request) -> Response:
         try:
-            validate(instance=request, schema=request_schema)
-            func, schema = self._calls[request["header"]["message"]]
-            if schema:
-                validate(request["body"], schema=schema)
-            return func(request["body"])
-        except ValidationError:
-            return get_response(400)
-        except KeyError:
-            return get_response(404)
+            func, schema = self._calls[
+                request["header"]["message"]
+            ]  # TODO: do we still need a shema?
+            status_code, message, body = func(request["body"])  # type: ignore
+        except CockpitError as e:
+            message = e.args[0]
+            status_code = e.args[1]
+            body = {}  # type: ignore
+
+        return get_custom_response(message=message, code=status_code, body=body)
 
     def close(self) -> None:
         """Close the socket and terminate it."""

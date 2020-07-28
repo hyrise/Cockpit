@@ -4,6 +4,7 @@ from types import TracebackType
 from typing import Callable, Dict, Optional, Tuple, Type, TypedDict
 
 from hyrisecockpit.api.app.plugin.interface import UpdatePluginSettingInterface
+from hyrisecockpit.errors import CockpitError
 from hyrisecockpit.message import (
     add_database_request_schema,
     delete_data_request_schema,
@@ -101,9 +102,11 @@ class DatabaseManager(object):
         if not PoolCursor.validate_connection(
             user, password, host, port, dbname
         ):  # TODO move to Database
-            return get_response(400)
+            raise CockpitError("Could not establish a connection to the database", 400)
         if body["id"] in self._databases:
-            return get_response(400)
+            raise CockpitError(
+                f"""Database with the ID {body["id"]} already exists""", 400
+            )
 
         db_instance = Database(
             body["id"],

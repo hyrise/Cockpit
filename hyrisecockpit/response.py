@@ -46,3 +46,8 @@ def get_error_response(code: int, message: str) -> Response:
     response: Response = get_response(code)
     response["body"]["error"] = message
     return response
+
+
+def get_custom_response(message: str, code: int, body={}) -> Response:  # noqa
+    """Get a custom response."""
+    return Response(header=Header(status=code, message=message), body=body)
