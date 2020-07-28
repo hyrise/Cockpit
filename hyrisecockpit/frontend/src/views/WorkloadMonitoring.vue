@@ -9,7 +9,6 @@
         :selected-databases="selectedDatabases"
         :selected-metrics="selectedMetrics"
       />
-
       <metrics-comparison-table
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"

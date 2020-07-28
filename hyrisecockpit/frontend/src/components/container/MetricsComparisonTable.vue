@@ -33,7 +33,7 @@
         />
       </div>
       <v-card class="column-bottom-border" :color="database.color">
-        <v-card-text class="white--text text-center">
+        <v-card-text class="temp white--text text-center mt-n3 mb-n2">
           {{ database.id }}
         </v-card-text>
       </v-card>
