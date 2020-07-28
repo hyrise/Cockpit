@@ -1,24 +1,22 @@
 <template>
-  <v-dialog v-model="open" persistent max-width="400px">
+  <v-dialog v-model="open" persistent max-width="500px">
     <v-card data-id="remove-database">
-      <v-card-title>
-        <span class="headline">Remove database</span>
-      </v-card-title>
-      <v-card-text>
+      <v-system-bar :height="50" color="secondary">
+        <v-card-title>
+          <span class="subtitle-1">Remove database</span>
+        </v-card-title>
+        <v-spacer />
+        <v-icon data-id="cancel-remove-database-button" @click="$emit('close')"
+          >mdi-close</v-icon
+        >
+      </v-system-bar>
+      <v-card-text class="mt-5">
         <div>Do you really want to remove this database?</div>
         <database-chip class="mt-4" :database-id="databaseId" />
       </v-card-text>
-      <v-card-actions>
-        <v-spacer />
+      <v-card-actions class="justify-center pt-0">
         <v-btn
-          color="primary"
-          text
-          data-id="cancel-remove-database-button"
-          @click="$emit('close')"
-          >Cancel</v-btn
-        >
-        <v-btn
-          color="primary"
+          class="secondary primary--text my-2"
           text
           data-id="delete-database-button"
           @click="onRemoveDatabase()"
