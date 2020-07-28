@@ -282,6 +282,7 @@ class SegmentConfiguration(Resource):
         segment_configuration: Dict[str, Dict[str, Dict]] = {}
         active_databases = _get_active_databases()
         for database in active_databases:
+            segment_configuration[database] = {}
             encodings = storage_connection.query(
                 'SELECT LAST("segment_configuration_encoding_type") FROM segment_configuration',
                 database=database,
