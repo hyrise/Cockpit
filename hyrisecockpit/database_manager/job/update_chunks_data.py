@@ -24,6 +24,9 @@ def _calculate_chunks_difference(base: Dict, substractor: Dict) -> Dict:
                         base[table_name][column_name] = [
                             base[table_name][column_name][i]
                             - substractor[table_name][column_name][i]
+                            if base[table_name][column_name][i]
+                            >= substractor[table_name][column_name][i]
+                            else base[table_name][column_name][i]
                             for i in range(len(base[table_name][column_name]))
                         ]
     return base
