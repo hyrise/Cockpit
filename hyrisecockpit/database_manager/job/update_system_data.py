@@ -1,13 +1,13 @@
 """This job updates the system data."""
 
+from threading import local
 from time import time_ns
 from typing import Dict, Union
 
 from hyrisecockpit.database_manager.cursor import StorageConnectionFactory
 from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_frame
 
-previous_system_usage = None
-previous_process_usage = None
+thread_local_storage = local()
 
 
 def _create_system_data_dict(utilization_df, system_df) -> Dict[str, Union[int, float]]:
@@ -30,8 +30,7 @@ def update_system_data(
     storage_connection_factory: StorageConnectionFactory,
 ) -> None:
     """Update system data for database instance."""
-    global previous_system_usage
-    global previous_process_usage
+    global thread_local_storage
 
     utilization_df = sql_to_data_frame(
         database_blocked,
@@ -50,17 +49,21 @@ def update_system_data(
         utilization_df, system_df
     )
 
-    if previous_system_usage is None:
-        previous_system_usage = system_data["cpu_system_usage"]
-        previous_process_usage = system_data["cpu_process_usage"]
+    if getattr(thread_local_storage, "previous_system_usage", None) is None:
+        thread_local_storage.previous_system_usage = system_data["cpu_system_usage"]
+        thread_local_storage.previous_process_usage = system_data["cpu_process_usage"]
         return
 
-    current_system_usage = system_data["cpu_system_usage"]  # type: ignore
+    current_system_usage = system_data["cpu_system_usage"]
     current_process_usage = system_data["cpu_process_usage"]
-    system_data["cpu_system_usage"] = current_system_usage - previous_system_usage
-    system_data["cpu_process_usage"] = current_process_usage - previous_process_usage
-    previous_system_usage = current_system_usage
-    previous_process_usage = current_process_usage
+    system_data["cpu_system_usage"] = (
+        current_system_usage - thread_local_storage.previous_system_usage
+    )
+    system_data["cpu_process_usage"] = (
+        current_process_usage - thread_local_storage.previous_process_usage
+    )
+    thread_local_storage.previous_system_usage = current_system_usage
+    thread_local_storage.previous_process_usage = current_process_usage
 
     time_stamp = time_ns()
 
