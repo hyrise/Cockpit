@@ -24,6 +24,7 @@
               :autosize="false"
               :max-value="maxValue"
               :hover-template="'<b>column: %{text}</b> <br><b>chunk: %{y}</b> <br>%{z} accesses <extra></extra>'"
+              :max-chart-width="1300"
             />
           </template>
         </metric-detailed-view>

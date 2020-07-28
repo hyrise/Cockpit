@@ -14,7 +14,7 @@
         </v-btn>
       </template>
       <v-card class="detailed-view" data-id="detailed-view">
-        <v-system-bar :height="50" color="secondary">
+        <v-system-bar :height="50" color="secondary" class="mb-4">
           <v-spacer />
           <v-card-title class="subtitle-1">
             <slot name="header" />
