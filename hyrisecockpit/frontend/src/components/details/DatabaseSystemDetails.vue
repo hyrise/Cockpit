@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="flex mb-n4">
     <div
       v-for="database in databases"
       :key="database.id"

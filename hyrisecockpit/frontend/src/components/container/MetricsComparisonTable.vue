@@ -14,6 +14,11 @@
         :color="database.color"
         flat
       >
+        <v-card-text class="white--text text-center mt-n3 mb-n4">
+          <strong>
+            {{ database.id }}
+          </strong>
+        </v-card-text>
       </v-card>
       <div v-for="metric in selectedMetrics" :key="metric">
         <metric-tile
@@ -89,6 +94,7 @@ export default defineComponent({
 .metrics-table {
   display: flex;
   flex-direction: row;
+  margin-top: 14px;
 }
 .metrics-column {
   display: flex;
