@@ -56,19 +56,18 @@ class TestUpdateSystemDataJob:
     @patch("hyrisecockpit.database_manager.job.update_system_data.sql_to_data_frame")
     @patch("hyrisecockpit.database_manager.job.update_system_data.time_ns", lambda: 42)
     @patch(
-        "hyrisecockpit.database_manager.job.update_system_data.previous_system_usage",
-        10,
-    )
-    @patch(
-        "hyrisecockpit.database_manager.job.update_system_data.previous_process_usage",
-        20,
+        "hyrisecockpit.database_manager.job.update_system_data.thread_local_storage",
     )
     def test_logs_updated_system_data(
         self,
+        mock_thread_local_storage: MagicMock,
         mock_sql_to_data_frame: MagicMock,
         mock_create_system_data_dict: MagicMock,
     ) -> None:
         """Test logs updated system data."""
+        mock_thread_local_storage.previous_system_usage = 10
+        mock_thread_local_storage.previous_process_usage = 20
+
         fake_not_empty_df: DataFrame = DataFrame({"column1": [1]})
         fake_system_dict: Dict[str, float] = {
             "cpu_system_usage": 120.0,
@@ -115,14 +114,6 @@ class TestUpdateSystemDataJob:
     )
     @patch("hyrisecockpit.database_manager.job.update_system_data.sql_to_data_frame")
     @patch("hyrisecockpit.database_manager.job.update_system_data.time_ns", lambda: 42)
-    @patch(
-        "hyrisecockpit.database_manager.job.update_system_data.previous_system_usage",
-        None,
-    )
-    @patch(
-        "hyrisecockpit.database_manager.job.update_system_data.previous_process_usage",
-        None,
-    )
     def test_doesnt_log_updated_system_data(
         self,
         mock_sql_to_data_frame: MagicMock,
