@@ -27,7 +27,7 @@ export function useQueryService(): {
             entry: any
           ) => {
             const database: string = entry.id;
-            queryInformation[database] = entry.query_information.map(
+            queryInformation[database] = entry.detailed_query_information.map(
               (query: any) => {
                 return {
                   queryNumber: query.query_number,
