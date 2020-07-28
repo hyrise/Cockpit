@@ -129,7 +129,7 @@ def execute_queries(
                     failed_queries.append((time_ns(), worker_id, str(task), str(e)))
 
                 if last_batched < time_ns() - 1_000_000_000 and (
-                    succesful_queries != [] or failed_queries != []
+                    succesful_queries or failed_queries
                 ):
                     t = Thread(
                         target=log_results,
