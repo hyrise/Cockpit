@@ -108,17 +108,17 @@ class TestUpdateChunksData:
     )
     @patch("hyrisecockpit.database_manager.job.update_chunks_data.deepcopy",)
     @patch("hyrisecockpit.database_manager.job.update_chunks_data.time_ns", lambda: 42)
-    @patch(
-        "hyrisecockpit.database_manager.job.update_chunks_data.previous_chunks_data", 42
-    )
+    @patch("hyrisecockpit.database_manager.job.update_chunks_data.previous_chunks_data")
     def test_logs_updated_chunks_data_with_meta_chunks(
         self,
+        mock_previous_chunks_data: MagicMock,
         mock_deep_copy: MagicMock,
         mock_calculate_chunks_difference: MagicMock,
         mock_create_chunks_dictionary: MagicMock,
         mock_sql_to_data_frame: MagicMock,
     ) -> None:
         """Test logs updated chunks data when meta chunks is empty."""
+        mock_previous_chunks_data.value = {"col1": 42}
         fake_not_empty_data_frame = DataFrame({"col1": [42]})
         mock_sql_to_data_frame.return_value = fake_not_empty_data_frame
         mock_cursor = MagicMock()
@@ -142,7 +142,9 @@ class TestUpdateChunksData:
             fake_database_blocked, fake_connection_factory, expected_sql, None
         )
         mock_create_chunks_dictionary.assert_called_once_with(fake_not_empty_data_frame)
-        mock_calculate_chunks_difference.assert_called_once_with({"new": 55}, 42)
+        mock_calculate_chunks_difference.assert_called_once_with(
+            {"new": 55}, {"col1": 42}
+        )
         mock_cursor.log_meta_information.assert_called_once_with(
             "chunks_data", {"chunks_data_meta_information": '{"new": 55}'}, 42
         )
