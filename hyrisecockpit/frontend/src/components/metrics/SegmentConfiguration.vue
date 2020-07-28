@@ -1,50 +1,78 @@
 <template>
   <div>
-    <metric-detailed-view metric="access">
-      <template #header>Access Frequency</template>
-      <template #content>
+    <v-row class="mt-2 ml-n3" no-gutters align="center" justify="center">
+      <v-col class="text-center">
+        <metric-detailed-view metric="segmentConfiguration">
+          <template #header>Access Frequency</template>
+          <template #content>
+            <v-select
+              :id="'detailed-segment-select'"
+              v-model="selectedItem"
+              style="width: 80%;"
+              :items="selectionItems"
+              dense
+              label="table"
+              outlined
+              hide-details
+              prepend-icon="mdi-table"
+              width="100"
+            />
+            <v-btn-toggle v-model="selectedType" mandatory>
+              <v-btn
+                v-for="type in types"
+                :key="type.name"
+                :value="type.name"
+                :color="selectedType === type.name ? 'primary' : 'white'"
+              >
+                <v-icon :color="selectedType === type.name ? 'white' : ''">{{
+                  type.icon
+                }}</v-icon>
+              </v-btn>
+            </v-btn-toggle>
+            <Heatmap
+              :graph-id="'detailed-' + graphId || 'segmentConfiguration'"
+              :data="data"
+              :chart-configuration="chartConfiguration"
+              :autosize="false"
+              :max-value="maxValue"
+              :hover-template="hoverTemplate"
+              :color-scale="colorScale"
+              :color-bar="colorBar"
+            />
+          </template>
+        </metric-detailed-view>
+      </v-col>
+      <v-col class="text-center">
         <v-select
-          :id="'detailed-access-select'"
+          :id="'segment-select'"
           v-model="selectedItem"
-          class="select"
+          style="width: 80%;"
           :items="selectionItems"
           dense
           label="table"
           outlined
           prepend-icon="mdi-table"
-          width="100"
+          hide-details
         />
-        <Heatmap
-          :graph-id="'detailed-' + graphId || 'access'"
-          :data="data"
-          :chart-configuration="chartConfiguration"
-          :autosize="false"
-          :max-value="maxValue"
-          :hover-template="hoverTemplate"
-          :color-scale="colorScale"
-          :color-bar="colorBar"
-        />
-      </template>
-    </metric-detailed-view>
-    <v-select
-      :id="'access-select'"
-      class="select"
-      v-model="selectedItem"
-      :items="selectionItems"
-      dense
-      label="table"
-      outlined
-      prepend-icon="mdi-table"
-    />
-
-    <v-btn-toggle class="select-type" v-model="selectedType">
-      <v-btn value="encoding_type">E</v-btn>
-      <v-btn value="order_mode">O</v-btn>
-    </v-btn-toggle>
+      </v-col>
+      <v-col class="text-center">
+        <v-btn-toggle v-model="selectedType" mandatory>
+          <v-btn
+            v-for="type in types"
+            :key="type.name"
+            :value="type.name"
+            :color="selectedType === type.name ? 'primary' : 'white'"
+          >
+            <v-icon :color="selectedType === type.name ? 'white' : ''">{{
+              type.icon
+            }}</v-icon>
+          </v-btn>
+        </v-btn-toggle>
+      </v-col>
+    </v-row>
 
     <Heatmap
-      class="mt-n8"
-      :graph-id="graphId || 'access'"
+      :graph-id="graphId || 'segmentConfiguration'"
       :data="data"
       :chart-configuration="chartConfiguration"
       :selected-databases="selectedDatabases"
@@ -89,6 +117,7 @@ interface Data
   colorScale: Ref<(string | number)[][]>;
   colorBar: Ref<Object>;
   hoverTemplate: Ref<string>;
+  types: { name: string; icon: string }[];
 }
 
 export default defineComponent({
@@ -142,15 +171,11 @@ export default defineComponent({
         () =>
           `<b>column: %{text.column}</b> <br><b>chunk: %{y}</b> <br>${selection.selectedType.value}: %{text.value} <extra></extra>`
       ),
+      types: [
+        { name: "encoding_type", icon: "mdi-barcode" },
+        { name: "order_mode", icon: "mdi-sort" },
+      ],
     };
   },
 });
 </script>
-<style scoped>
-.select {
-  z-index: 2;
-  width: 30%;
-  margin: auto;
-  margin-top: -90px;
-}
-</style>

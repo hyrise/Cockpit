@@ -1,51 +1,58 @@
 <template>
   <div>
-    <div>
-      <metric-detailed-view metric="access">
-        <template #header>Access Frequency</template>
-        <template #content>
-          <v-select
-            :id="'detailed-access-select'"
-            v-model="selectedItem"
-            class="select"
-            :items="selectionItems"
-            dense
-            label="table"
-            outlined
-            prepend-icon="mdi-table"
-            width="100"
-          />
-          <Heatmap
-            :graph-id="'detailed-' + graphId || 'access'"
-            :data="data"
-            :chart-configuration="chartConfiguration"
-            :autosize="false"
-            :max-value="maxValue"
-            :hover-template="'<b>column: %{text}</b> <br><b>chunk: %{y}</b> <br>%{z} accesses <extra></extra>'"
-          />
-        </template>
-      </metric-detailed-view>
-      <v-select
-        :id="'access-select'"
-        v-model="selectedItem"
-        class="select"
-        :items="selectionItems"
-        dense
-        label="table"
-        outlined
-        prepend-icon="mdi-table"
-      />
-      <Heatmap
-        class="mt-n8"
-        :graph-id="graphId || 'access'"
-        :data="data"
-        :chart-configuration="chartConfiguration"
-        :selected-databases="selectedDatabases"
-        :max-chart-width="maxChartWidth"
-        :max-value="maxValue"
-        :hover-template="'<b>column: %{text}</b> <br><b>chunk: %{y}</b> <br>%{z} accesses <extra></extra>'"
-      />
-    </div>
+    <v-row class="mt-2 ml-n3" no-gutters align="center" justify="center">
+      <v-col class="text-center">
+        <metric-detailed-view metric="access">
+          <template #header>Access Frequency</template>
+          <template #content>
+            <v-select
+              :id="'detailed-access-select'"
+              v-model="selectedItem"
+              style="width: 80%;"
+              :items="selectionItems"
+              dense
+              label="table"
+              outlined
+              hide-details
+              prepend-icon="mdi-table"
+              width="100"
+            />
+            <Heatmap
+              :graph-id="'detailed-' + graphId || 'access'"
+              :data="data"
+              :chart-configuration="chartConfiguration"
+              :autosize="false"
+              :max-value="maxValue"
+              :hover-template="'<b>column: %{text}</b> <br><b>chunk: %{y}</b> <br>%{z} accesses <extra></extra>'"
+            />
+          </template>
+        </metric-detailed-view>
+      </v-col>
+      <v-col class="text-center">
+        <v-select
+          :id="'access-select'"
+          v-model="selectedItem"
+          style="width: 80%;"
+          :items="selectionItems"
+          dense
+          label="table"
+          outlined
+          hide-details
+          prepend-icon="mdi-table"
+        />
+      </v-col>
+      <v-col class="text-center"></v-col>
+    </v-row>
+
+    <Heatmap
+      :graph-id="graphId || 'access'"
+      :data="data"
+      :chart-configuration="chartConfiguration"
+      :selected-databases="selectedDatabases"
+      :max-chart-width="maxChartWidth"
+      :max-value="maxValue"
+      :hover-template="'<b>column: %{text}</b> <br><b>chunk: %{y}</b> <br>%{z} accesses <extra></extra>'"
+    />
   </div>
 </template>
 
@@ -100,11 +107,3 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
-.select {
-  z-index: 2;
-  width: 30%;
-  margin: auto;
-  margin-top: -90px;
-}
-</style>
