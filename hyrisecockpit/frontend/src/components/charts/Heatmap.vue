@@ -104,14 +104,14 @@ function useHeatMapConfiguration(
         fixedrange: true,
       },
       autosize: props.autosize,
-      width: props.autosize ? 0 : 1400,
-      height: props.autosize ? 0 : 700,
+      width: props.autosize ? 0 : 1300,
+      height: props.autosize ? 0 : 600,
+
       margin: {
-        l: 80,
+        l: 100,
         r: 50,
-        b: 100,
-        t: 50,
-        pad: 10,
+        b: 50,
+        t: 20,
       },
     };
   }

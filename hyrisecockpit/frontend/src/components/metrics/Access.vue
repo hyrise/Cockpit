@@ -7,13 +7,12 @@
           <v-select
             :id="'detailed-access-select'"
             v-model="selectedItem"
-            class="select"
+            class="select mt-1 mb-n8"
             :items="selectionItems"
             dense
             label="table"
             outlined
             prepend-icon="mdi-table"
-            width="100"
           />
           <Heatmap
             :graph-id="'detailed-' + graphId || 'access'"
@@ -22,6 +21,7 @@
             :autosize="false"
             :max-value="maxValue"
             :hover-template="'<b>column: %{text}</b> <br><b>chunk: %{y}</b> <br>%{z} accesses <extra></extra>'"
+            :max-chart-width="1300"
           />
         </template>
       </metric-detailed-view>
@@ -36,7 +36,7 @@
         prepend-icon="mdi-table"
       />
       <Heatmap
-        class="mt-n8"
+        class="mt-n8 mb-5"
         :graph-id="graphId || 'access'"
         :data="data"
         :chart-configuration="chartConfiguration"

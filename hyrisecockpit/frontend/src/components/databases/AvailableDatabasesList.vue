@@ -1,5 +1,5 @@
 <template>
-  <v-card class="list" data-id="database-list" width="260px">
+  <v-card class="list" data-id="database-list" max-width="800px">
     <v-system-bar :height="50" color="secondary">
       <v-card-title class="header">Databases</v-card-title>
       <v-btn
@@ -7,7 +7,7 @@
         @click="$emit('addDatabase')"
         elevation="4"
         small
-        class="add ml-0"
+        class="add mr-4"
         rounded
       >
         <div class="text font-weight-regular mr-1">Add</div>
