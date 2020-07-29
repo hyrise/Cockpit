@@ -22,7 +22,9 @@
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
-        {{ currentPluginLog.message }}
+        <div class="log-text-area">
+          {{ currentPluginLog.message }}
+        </div>
       </div>
     </v-alert>
   </div>
@@ -92,7 +94,10 @@ export default defineComponent({
   width: 50%;
   height: 50%;
 }
-
+.log-text-area {
+  height: 90px;
+  overflow: auto;
+}
 .log-header {
   font-weight: bold;
 }
