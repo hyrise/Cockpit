@@ -44,7 +44,7 @@
         >
           <v-row>
             <v-col class="grow pr-0 py-0"
-              >Stop worker before adding databases.</v-col
+              >Stop workers before adding databases.</v-col
             >
             <v-col class="shrink mr-2 pl-0 py-0">
               <v-tooltip right>
