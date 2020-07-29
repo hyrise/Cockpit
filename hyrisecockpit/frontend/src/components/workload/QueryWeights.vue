@@ -52,13 +52,7 @@
                 @change="updateWeight(workload, weight.name, false)"
               />
             </div>
-            <div
-              v-if="
-                idx % queriesPerRow === queriesPerRow - 1 ||
-                idx ===
-                  queriesPerWorkload[selectedWorkloads.indexOf(workload)] - 1
-              "
-            >
+            <div v-if="isEndOfLine(workload, idx)">
               <div class="text-col">
                 <div class="query-numbers-text">
                   Query ID
@@ -117,6 +111,7 @@ interface Data {
     sliderValueToValue: boolean
   ) => void;
   resetWeights: (workload: Workload) => void;
+  isEndOfLine: (workload: Workload, index: number) => boolean;
 }
 type Weight = { name: string; value: number; sliderValue: number };
 
@@ -175,6 +170,14 @@ export default defineComponent({
         }
       });
     }
+    function isEndOfLine(workload: Workload, index: number): boolean {
+      return (
+        index % queriesPerRow.value === queriesPerRow.value - 1 ||
+        index ===
+          queriesPerWorkload.value[props.selectedWorkloads.indexOf(workload)] -
+            1
+      );
+    }
     watch(
       () => props.initialWeights,
       () => {
@@ -220,6 +223,7 @@ export default defineComponent({
       getDisplayedWorkload,
       updateWeight,
       resetWeights,
+      isEndOfLine,
     };
   },
 });
