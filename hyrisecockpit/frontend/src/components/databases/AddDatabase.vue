@@ -35,6 +35,34 @@
         >
           Database was not added.
         </v-alert>
+        <v-alert
+          v-if="workersRunning"
+          class="mt-4 mb-0"
+          type="error"
+          dismissible
+          dense
+        >
+          <v-row>
+            <v-col class="grow pr-0 py-0"
+              >Stop worker before adding databases.</v-col
+            >
+            <v-col class="shrink mr-2 pl-0 py-0">
+              <v-tooltip right>
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    v-on="on"
+                    class="secondary primary--text"
+                    x-small
+                    @click="stop()"
+                  >
+                    Stop
+                  </v-btn>
+                </template>
+                <span>Stops workers</span>
+              </v-tooltip>
+            </v-col>
+          </v-row>
+        </v-alert>
         <v-row>
           <v-col class="pb-0" cols="6">
             <v-text-field
@@ -107,9 +135,15 @@ import {
   watch,
 } from "@vue/composition-api";
 import { useDatabaseService } from "@/services/databaseService";
+import { useWorkloadService } from "../../services/workloadService";
 
 interface Props {
   open: boolean;
+}
+
+interface Data extends DatabaseCreationData {
+  workersRunning: Ref<boolean>;
+  stop: () => void;
 }
 
 export default defineComponent({
@@ -119,9 +153,23 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props: Props, context: SetupContext): DatabaseCreationData {
+  setup(props: Props, context: SetupContext): Data {
+    const workersRunning = ref<boolean>(false);
+    const { getDatabaseStatus, stopWorker } = useWorkloadService();
+    getDatabaseStatus().then((response: any) => {
+      if (response.data.length > 0) {
+        workersRunning.value = Object.values(response.data).some(
+          (database: any) => database.worker_pool_status === "running"
+        );
+      }
+    });
+    function stop(): void {
+      stopWorker();
+    }
     return {
       ...useDatabaseCreation(context),
+      stop,
+      workersRunning,
     };
   },
 });
