@@ -15,7 +15,7 @@
             :key="weight.name"
             class="query-weights-row"
           >
-            <div v-if="idx % numberOfQueriesPerRow === 0">
+            <div v-if="idx % queriesPerRow === 0">
               <div class="value-col">
                 <div class="max-value">
                   100
@@ -54,12 +54,9 @@
             </div>
             <div
               v-if="
-                idx % numberOfQueriesPerRow === numberOfQueriesPerRow - 1 ||
+                idx % queriesPerRow === queriesPerRow - 1 ||
                 idx ===
-                  numberOfQueriesPerWorkload[
-                    selectedWorkloads.indexOf(workload)
-                  ] -
-                    1
+                  queriesPerWorkload[selectedWorkloads.indexOf(workload)] - 1
               "
             >
               <div class="text-col">
@@ -111,8 +108,8 @@ interface Props {
 interface Data {
   weights: Ref<Record<string, Weight[]>>;
   panels: Ref<number[]>;
-  numberOfQueriesPerRow: Ref<number>;
-  numberOfQueriesPerWorkload: Ref<number[]>;
+  queriesPerRow: Ref<number>;
+  queriesPerWorkload: Ref<number[]>;
   getDisplayedWorkload: (workload: Workload) => void;
   updateWeight: (
     workload: string,
@@ -138,8 +135,8 @@ export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
     const weights = ref<Record<string, Weight[]>>({});
     const panels = ref<number[]>([]);
-    const numberOfQueriesPerRow = ref<number>(14);
-    const numberOfQueriesPerWorkload = ref<number[]>([]);
+    const queriesPerRow = ref<number>(14);
+    const queriesPerWorkload = ref<number[]>([]);
 
     /* convert the linear sliderValues with exponential function: f(sliderValue) = value = a * b^sliderValue - a
     f(0) = 0, f(50) = 1.0, f(100) = 100 --> b = 99^(1/50), a = 1/98 */
@@ -198,9 +195,9 @@ export default defineComponent({
                   sliderValue: convertValueToSliderValue(value),
                 };
               });
-            numberOfQueriesPerWorkload.value[
-              parseInt(workloadIndex)
-            ] = Object.entries(changedWeights).length;
+            queriesPerWorkload.value[parseInt(workloadIndex)] = Object.entries(
+              changedWeights
+            ).length;
           }
         );
       },
@@ -218,8 +215,8 @@ export default defineComponent({
     return {
       weights,
       panels,
-      numberOfQueriesPerRow,
-      numberOfQueriesPerWorkload,
+      queriesPerRow,
+      queriesPerWorkload,
       getDisplayedWorkload,
       updateWeight,
       resetWeights,
