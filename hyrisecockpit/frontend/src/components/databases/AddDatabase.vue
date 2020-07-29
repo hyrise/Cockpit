@@ -159,11 +159,11 @@ export default defineComponent({
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const { stopWorker } = useWorkloadService();
+    const { stopWorkers } = useWorkloadService();
 
     function stop(): void {
       context.emit("stop");
-      stopWorker();
+      stopWorkers();
     }
     return {
       ...useDatabaseCreation(context),

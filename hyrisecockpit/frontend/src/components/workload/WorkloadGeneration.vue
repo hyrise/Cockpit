@@ -62,7 +62,7 @@
                   </v-row>
                   <v-col class="text-center pt-0">
                     <p class="subtitle-1 font-weight-medium mb-2">
-                      Start and stop worker
+                      Start and stop workers
                     </p>
                     <workload-actions
                       :actions="actions"
@@ -205,8 +205,8 @@ function useWorkloadActions(
   const frequencies = ref<number[]>([]);
   const {
     getDatabaseStatus,
-    startWorker,
-    stopWorker,
+    startWorkers,
+    stopWorkers,
     getWorkloads,
     startWorkload,
     updateWorkload,
@@ -311,12 +311,12 @@ function useWorkloadActions(
   function start(): void {
     context.emit("start");
     startLoading("start");
-    startWorker().then(() => stopLoading("start"));
+    startWorkers().then(() => stopLoading("start"));
   }
   function stop(): void {
     context.emit("stop");
     startLoading("stop");
-    stopWorker().then(() => stopLoading("stop"));
+    stopWorkers().then(() => stopLoading("stop"));
   }
   function handleFrequencyChange(index: number, frequency: number): void {
     frequencies.value[index] = frequency;
