@@ -170,7 +170,9 @@ export default defineComponent({
     function resetWeights(workload: Workload): void {
       Object.values(weights.value[workload]).forEach((weight) => {
         if (weight.value !== 1) {
+          // set weights to the initial value of 1
           weight.value = 1;
+          // set current slider values to the middle of the slider (50/100)
           weight.sliderValue = 50;
           context.emit("change", workload, weight.name, weight.value);
         }
