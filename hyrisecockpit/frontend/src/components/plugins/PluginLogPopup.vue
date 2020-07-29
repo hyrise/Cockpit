@@ -8,11 +8,12 @@
   >
     <v-alert
       text
+      dense
       data-id="chart-plugin-log-alert"
       elevation="20"
       :color="databaseColor"
     >
-      <div class="log-popup-text" v-if="!!currentPluginLog">
+      <div v-if="!!currentPluginLog" class="primary--text">
         <div class="header-row">
           <div class="log-header">
             {{ currentPluginLog.header }}
@@ -88,14 +89,12 @@ export default defineComponent({
   top: 20%;
   left: 40%;
   z-index: 11;
-  width: 400px;
+  width: 50%;
+  height: 50%;
 }
-.log-popup-text {
-  color: #424242;
-}
+
 .log-header {
   font-weight: bold;
-  font-size: 16px;
 }
 .header-row {
   display: flex;
