@@ -101,9 +101,6 @@ export default defineComponent({
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 6px;
-  margin-bottom: 0px;
-}
-#comparison-page .flex {
   margin-bottom: -16px;
 }
 .col {
