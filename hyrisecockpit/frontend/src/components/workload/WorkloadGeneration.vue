@@ -112,6 +112,7 @@ import {
   Ref,
   reactive,
   computed,
+  watch,
 } from "@vue/composition-api";
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
@@ -126,6 +127,7 @@ import WorkloadDataSelector from "./WorkloadDataSelector.vue";
 
 interface Props {
   open: boolean;
+  workersStopped: boolean;
 }
 
 interface Data extends WorkloadActions, WorkloadDataHandler {
@@ -173,10 +175,14 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    workersStopped: {
+      type: Boolean,
+      default: false,
+    },
   },
-  setup(props: {}, context: SetupContext): Data {
+  setup(props: Props, context: SetupContext): Data {
     const tab = ref<number>(0);
-    const workloadActions = useWorkloadActions(context);
+    const workloadActions = useWorkloadActions(context, props);
     return {
       databases: computed(
         () => context.root.$databaseController.availableDatabasesById.value
@@ -192,7 +198,10 @@ export default defineComponent({
   },
 });
 
-function useWorkloadActions(context: SetupContext): WorkloadActions {
+function useWorkloadActions(
+  context: SetupContext,
+  props: Props
+): WorkloadActions {
   const frequencies = ref<number[]>([]);
   const {
     getDatabaseStatus,
@@ -221,6 +230,19 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
 
   // initialize frequency for every workload
   frequencies.value = Object.values(availableWorkloads).map(() => 200);
+
+  watch(
+    () => props.workersStopped,
+    () => {
+      if (props.workersStopped) {
+        actions.start.active = false;
+        actions.stop.active = true;
+      } else {
+        actions.stop.active = false;
+        actions.start.active = true;
+      }
+    }
+  );
 
   // running workload indicator
   getWorkloads().then((response: any) => {

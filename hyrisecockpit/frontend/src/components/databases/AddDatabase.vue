@@ -114,7 +114,8 @@
             !host.length ||
             !id.length ||
             !port.length ||
-            number_workers.length === 0
+            number_workers.length === 0 ||
+            workersRunning
           "
           data-id="save-database-button"
           >Save</v-btn
@@ -139,10 +140,10 @@ import { useWorkloadService } from "../../services/workloadService";
 
 interface Props {
   open: boolean;
+  workersRunning: boolean;
 }
 
 interface Data extends DatabaseCreationData {
-  workersRunning: Ref<boolean>;
   stop: () => void;
 }
 
@@ -152,24 +153,21 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    workersRunning: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props: Props, context: SetupContext): Data {
-    const workersRunning = ref<boolean>(false);
-    const { getDatabaseStatus, stopWorker } = useWorkloadService();
-    getDatabaseStatus().then((response: any) => {
-      if (response.data.length > 0) {
-        workersRunning.value = Object.values(response.data).some(
-          (database: any) => database.worker_pool_status === "running"
-        );
-      }
-    });
+    const { stopWorker } = useWorkloadService();
+
     function stop(): void {
+      context.emit("stop");
       stopWorker();
     }
     return {
       ...useDatabaseCreation(context),
       stop,
-      workersRunning,
     };
   },
 });
