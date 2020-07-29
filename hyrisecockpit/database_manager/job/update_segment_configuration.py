@@ -21,6 +21,7 @@ def _create_dictionary(
         grouped_columns = table.reset_index().groupby("chunk_id")
 
         for column_name in grouped_columns.groups:
+            segment_configuration_data[table_name][column_name] = {}
             column = grouped_columns.get_group(column_name)
             for _, row in column.iterrows():
                 segment_configuration_data[table_name][column_name][
@@ -51,7 +52,7 @@ def update_segment_configuration(
     )
 
     segment_configuration_encoding_type = {}
-    if not (segments_encodings.empty or segments_orders.empty):
+    if not (segments_encodings.empty):
         segment_configuration_encoding_type = _create_dictionary(
             segments_encodings, "encoding_type"
         )
@@ -66,7 +67,7 @@ def update_segment_configuration(
         log.log_meta_information(
             "segment_configuration",
             {
-                "segment_cofiguration_encoding_type": dumps(
+                "segment_configuration_encoding_type": dumps(
                     segment_configuration_encoding_type
                 ),
                 "segment_configuration_order_mode": dumps(
