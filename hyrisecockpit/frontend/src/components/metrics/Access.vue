@@ -149,7 +149,7 @@ function usePreSelect(metric: Metric): Ref<string> {
 <style scoped>
 .select {
   z-index: 2;
-  width: 30%;
+  width: 45%;
   margin: auto;
   margin-top: -90px;
 }

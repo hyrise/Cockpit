@@ -8,6 +8,7 @@ import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
 import { colorValueDefinition, multiColors } from "@/meta/colors";
 import { useDataEvents } from "@/meta/events";
+import { changeTableName } from "@/meta/names";
 
 const { roundNumber, formatPercentage, formatTimeUnit } = useFormatting();
 const {
@@ -197,6 +198,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
 
   Object.entries(data[primaryKey]).forEach(
     ([table, tableData]: [string, any]) => {
+      table = changeTableName(table);
       labels.push(table);
       parents.push(primaryKey);
       sizes.push(0);
