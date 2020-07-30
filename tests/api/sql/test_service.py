@@ -67,7 +67,7 @@ class TestSqlService:
             "col_names": ["col_name_1", "col_name_2"],
             "error_message": "",
         }
-        mock_sql_service._send_message.return_value = {  # type: ignore
+        mock_sql_service._send_message.return_value = {
             "header": {"status": 200},
             "body": {"results": mock_results},
         }
@@ -81,7 +81,7 @@ class TestSqlService:
         mock_request.assert_called_once_with(
             header="header object", body=dict(interface)
         )
-        mock_sql_service._send_message.assert_called_once_with("request object")  # type: ignore
+        mock_sql_service._send_message.assert_called_once_with("request object")
 
         schema = SqlResponseSchema()
 
@@ -106,7 +106,7 @@ class TestSqlService:
             "col_names": [],
             "error_message": "Error",
         }
-        mock_sql_service._send_message.return_value = {  # type: ignore
+        mock_sql_service._send_message.return_value = {
             "header": {"status": 404},
             "body": {"results": mock_results},
         }
@@ -120,7 +120,7 @@ class TestSqlService:
         mock_request.assert_called_once_with(
             header="header object", body=dict(interface)
         )
-        mock_sql_service._send_message.assert_called_once_with("request object")  # type: ignore
+        mock_sql_service._send_message.assert_called_once_with("request object")
 
         assert response[0] is None
         assert response[1] == 404
@@ -137,7 +137,7 @@ class TestSqlService:
         mock_sql_service = SqlService
         mock_sql_service._send_message = MagicMock()  # type: ignore
 
-        mock_sql_service._send_message.return_value = {  # type: ignore
+        mock_sql_service._send_message.return_value = {
             "header": {"status": 123456},
         }
 
@@ -153,4 +153,4 @@ class TestSqlService:
         mock_request.assert_called_once_with(
             header="header object", body=dict(interface)
         )
-        mock_sql_service._send_message.assert_called_once_with("request object")  # type: ignore
+        mock_sql_service._send_message.assert_called_once_with("request object")
