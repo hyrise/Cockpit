@@ -18,7 +18,7 @@ describe("visiting workload monitoring page", () => {
     cy.setupData("detailed_query_information").then((xhr: any) => {
       data = [];
       xhr.response.body.forEach((database: any) => {
-        database.query_information = database.query_information.sort(
+        database.detailed_query_information = database.detailed_query_information.sort(
           (query1: any, query2: any) => query2.latency - query1.latency
         );
         data.push(database);
@@ -37,7 +37,7 @@ describe("visiting workload monitoring page", () => {
               if (rowIdx !== 0)
                 assertQueryData(
                   row.textContent,
-                  data[idx].query_information[rowIdx - 1]
+                  data[idx].detailed_query_information[rowIdx - 1]
                 );
             });
           });
@@ -60,7 +60,7 @@ describe("visiting workload monitoring page", () => {
           .within(() => {
             cy.get("table").should((table: any) => {
               table[0].rows.forEach((row: any, rowIdx: number) => {
-                const requestData = data[idx].query_information;
+                const requestData = data[idx].detailed_query_information;
                 if (rowIdx !== 0)
                   assertQueryData(
                     row.textContent,
@@ -82,12 +82,15 @@ describe("visiting workload monitoring page", () => {
   // test searching
   describe("when searching for a specific query", () => {
     it("will show only the matching queries", () => {
-      const index = generateRandomInt(0, data[0].query_information.length);
+      const index = generateRandomInt(
+        0,
+        data[0].detailed_query_information.length
+      );
       databases.forEach((database: any, idx: number) => {
         cy.get(selectors.querySearch)
           .eq(idx)
           .click()
-          .type(data[idx].query_information[index].query_number);
+          .type(data[idx].detailed_query_information[index].query_number);
         cy.wait(500);
 
         cy.get(selectors.queryTable)
@@ -98,7 +101,7 @@ describe("visiting workload monitoring page", () => {
                 if (rowIdx !== 0)
                   assertQueryData(
                     row.textContent,
-                    data[idx].query_information[index]
+                    data[idx].detailed_query_information[index]
                   );
               });
               expect(table[0].rows.length).to.eq(2);
