@@ -8,15 +8,15 @@
             <template v-slot:activator="{ on }">
               <div v-on="on">
                 <v-tab
-                  :disabled="disabled || !enableEqualizer"
+                  :disabled="disabled || !enableQueryWeights"
                   data-id="open-equalizer"
-                  >Equalizer</v-tab
+                  >Query Weights</v-tab
                 >
               </div>
             </template>
             <span>
               {{
-                enableEqualizer
+                enableQueryWeights
                   ? "Customize workload"
                   : "Select a workload first"
               }}
@@ -91,11 +91,11 @@
         <v-tab-item>
           <v-card>
             <v-card-text>
-              <equalizer
+              <query-weights
                 :selected-workloads="selectedWorkloads"
                 :initial-weights="weights"
                 @change="handleWeightChange"
-              ></equalizer>
+              ></query-weights>
             </v-card-text>
           </v-card>
         </v-tab-item>
@@ -119,7 +119,7 @@ import { useDatabaseEvents } from "../../meta/events";
 import { getWorkloadFromTransferred } from "../../meta/workloads";
 import StatusWarning from "../alerts/StatusWarning.vue";
 import FrequencyHandler from "./FrequencyHandler.vue";
-import Equalizer from "./Equalizer.vue";
+import QueryWeights from "./QueryWeights.vue";
 import WorkloadSelector from "./WorkloadSelector.vue";
 import WorkloadActions from "./WorkloadActions.vue";
 import WorkloadDataSelector from "./WorkloadDataSelector.vue";
@@ -134,7 +134,7 @@ interface Data extends WorkloadActions, WorkloadDataHandler {
 }
 
 interface WorkloadActions {
-  enableEqualizer: Ref<boolean>;
+  enableQueryWeights: Ref<boolean>;
   frequencies: Ref<number[]>;
   actions: Record<string, { active: boolean; loading: boolean }>;
   selectedWorkloads: Ref<Workload[]>;
@@ -163,7 +163,7 @@ export default defineComponent({
   components: {
     StatusWarning,
     FrequencyHandler,
-    Equalizer,
+    QueryWeights,
     WorkloadSelector,
     WorkloadActions,
     WorkloadDataSelector,
@@ -335,7 +335,7 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
     weights.value.splice(index, 0, changedWeights);
   }
   return {
-    enableEqualizer: computed(() => selectedWorkloads.value.length !== 0),
+    enableQueryWeights: computed(() => selectedWorkloads.value.length !== 0),
     frequencies,
     actions,
     selectedWorkloads,
