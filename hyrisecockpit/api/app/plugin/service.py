@@ -25,7 +25,9 @@ class PluginService:
     def _query_storage_connection(
         query: str, database: str, bind_params: Optional[Dict[str, str]]
     ):
-        storage_connection.query(query, database=database, bind_params=bind_params)
+        return storage_connection.query(
+            query, database=database, bind_params=bind_params
+        )
 
     @staticmethod
     def _send_message_to_dbm(message: Request) -> Response:
