@@ -86,6 +86,16 @@
               dot
             />
           </v-subheader>
+          <v-alert
+            v-if="!!errorMessage"
+            type="error"
+            class="mt-n3 ml-3"
+            max-width="510"
+            dense
+            text
+          >
+            {{ errorMessage }}
+          </v-alert>
           <v-sheet height="200" width="700" class="ml-5 mt-n1">
             <v-container class="white container flex">
               <v-row no gutters>
@@ -116,13 +126,6 @@
                   />
                 </v-col>
                 <v-col>
-                  <!--       <v-alert
-                  v-if="!!errorMessage"
-                  type="error"
-                  class="remove-margin-low"
-                >
-                  {{ errorMessage }} 
-                </v-alert>  -->
                   <v-btn
                     data-id="set-static-time-range"
                     class="button body-2 font-weight-regular"
