@@ -1,12 +1,12 @@
 <template>
   <div>
     <v-tooltip v-if="closable" left>
-      <template v-slot:activator="{ on, value }">
+      <template v-slot:activator="{ on }">
         <v-icon
           class="mr-1"
           v-on="on"
           color="primary"
-          :size="value ? 36 : 28"
+          size="25"
           data-id="remove-database-button"
           @click="$emit('closed')"
           >mdi-delete-forever</v-icon
@@ -36,18 +36,10 @@
           >mdi-eye-off</v-icon
         >
       </div>
-
-      <v-tooltip right>
-        <template v-slot:activator="{ on }">
-          <div v-on="on">
-            <v-icon v-if="!selectable" :left="!onlyIcon">mdi-database</v-icon>
-            <b v-if="!onlyIcon">
-              {{ selectable ? truncateItemTitle(database.id) : database.id }}
-            </b>
-          </div>
-        </template>
-        <span>{{ database.id }}</span>
-      </v-tooltip>
+      <v-icon v-if="!selectable" :left="!onlyIcon">mdi-database</v-icon>
+      <b v-if="!onlyIcon">
+        {{ selectable ? truncateItemTitle(database.id) : database.id }}
+      </b>
     </v-chip>
   </div>
 </template>

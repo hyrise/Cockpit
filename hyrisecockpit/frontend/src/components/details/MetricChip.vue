@@ -14,12 +14,7 @@
       @click="handleSelect(metric)"
       >mdi-eye-off</v-icon
     >
-    <v-tooltip right>
-      <template v-slot:activator="{ on }">
-        <b v-on="on">{{ truncateItemTitle(getMetricTitle(metric)) }}</b>
-      </template>
-      <span>{{ getMetricTitle(metric) }}</span>
-    </v-tooltip>
+    <b v-on="on">{{ truncateItemTitle(getMetricTitle(metric)) }}</b>
   </v-chip>
 </template>
 <script lang="ts">

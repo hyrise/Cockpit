@@ -144,25 +144,17 @@
           <v-card flat>
             <v-card-actions>
               <v-spacer v-show="window === 1" />
-              <v-tooltip top>
-                <template v-slot:activator="{ on }">
-                  <v-btn
-                    v-on="on"
-                    color="white"
-                    depressed
-                    data-id="change-range-type"
-                    @click="window = window == 1 ? 2 : 1"
-                  >
-                    <v-icon v-if="window === 2" left>mdi-chevron-left</v-icon>
-                    {{ window == 1 ? "Static" : "Continuous" }}
-                    <v-icon v-if="window === 1" right>mdi-chevron-right</v-icon>
-                  </v-btn>
-                </template>
-                <span
-                  >Select {{ window == 1 ? "Static" : "Continuous" }} Range
-                  Type</span
-                >
-              </v-tooltip>
+              <v-btn
+                v-on="on"
+                color="white"
+                depressed
+                data-id="change-range-type"
+                @click="window = window == 1 ? 2 : 1"
+              >
+                <v-icon v-if="window === 2" left>mdi-chevron-left</v-icon>
+                {{ window == 1 ? "Static" : "Continuous" }}
+                <v-icon v-if="window === 1" right>mdi-chevron-right</v-icon>
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-tab-item>
