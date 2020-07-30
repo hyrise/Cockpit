@@ -44,6 +44,10 @@ class BackgroundJobManager(object):
         self._worker_pool: WorkerPool = worker_pool
         self._scheduler: BackgroundScheduler = BackgroundScheduler()
         self._hyrise_active: Value = hyrise_active
+        self._previous_system_data = {
+            "previous_system_usage": None,
+            "previous_process_usage": None,
+        }
         self._init_jobs()
 
     def _init_jobs(self) -> None:
@@ -68,6 +72,7 @@ class BackgroundJobManager(object):
                 self._database_blocked,
                 self._connection_factory,
                 self._storage_connection_factory,
+                self._previous_system_data,
             ),
         )
         self._update_storage_data_job = self._scheduler.add_job(
