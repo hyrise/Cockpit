@@ -78,10 +78,12 @@ function useAutoScroll(
   function scrollToBottom(offset = 0, force = false): void {
     setTimeout(() => {
       const textBox = document.getElementById(`${props.database}-log-text`);
-      /* stop scrolling, if it was manually scrolled to the top with an offset of 200px */
+      /* stop scrolling, if it was manually scrolled to the top with an offset of 100px */
       if (
         textBox &&
-        (textBox.scrollHeight - textBox.scrollTop < 200 || force)
+        (textBox.scrollHeight - textBox.offsetHeight - textBox.scrollTop <
+          100 ||
+          force)
       ) {
         textBox.scrollTop = textBox.scrollHeight;
       }
