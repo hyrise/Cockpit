@@ -97,7 +97,7 @@ function testContinuousRangeOnPage({
       cy.get("div[role=tab]").eq(1).click();
 
       cy.get(selectors.selectionList).within(() => {
-        cy.get(selectors.precisionSelection).click({
+        cy.get(selectors.precisionSelection).eq(0).click({
           force: true,
         });
       });
