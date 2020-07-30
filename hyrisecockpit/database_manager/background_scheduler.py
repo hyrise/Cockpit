@@ -48,6 +48,10 @@ class BackgroundJobManager(object):
             "previous_system_usage": None,
             "previous_process_usage": None,
         }
+        self._previous_chunk_data = {
+            "value": None,
+        }
+
         self._init_jobs()
 
     def _init_jobs(self) -> None:
@@ -103,6 +107,7 @@ class BackgroundJobManager(object):
                 self._database_blocked,
                 self._connection_factory,
                 self._storage_connection_factory,
+                self._previous_chunk_data,
             ),
         )
         self._update_workload_statement_information_job = self._scheduler.add_job(
