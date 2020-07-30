@@ -101,7 +101,7 @@ export default defineComponent({
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 6px;
-  margin-bottom: 0px;
+  margin-bottom: -16px;
 }
 .col {
   padding: 0px;
