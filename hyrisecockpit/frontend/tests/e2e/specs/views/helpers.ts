@@ -133,8 +133,7 @@ export function assertItemSelect(
 
 export function assertTimeIntervalRequest(url: string, range: number): void {
   expect(getEndTimeOfRequest(url) - getStartTimeOfRequest(url)).to.eq(
-    range * Math.pow(10, 9) +
-      Math.max(getPrecisionOfRequest(url), 3 * Math.pow(10, 9))
+    range * Math.pow(10, 9)
   );
 }
 
