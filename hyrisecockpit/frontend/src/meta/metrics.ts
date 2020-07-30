@@ -75,6 +75,15 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     dataType: "interval",
     historic: false,
   },
+  queryInformation: {
+    fetchType: "read",
+    transformationService: useDataTransformation("queryInformation"),
+    endpoint: metricBackend + "detailed_query_information",
+    component: "QueryInformation",
+    requestTime: 5000,
+    dataType: "interval",
+    historic: false,
+  },
   queueLength: {
     fetchType: "modify",
     transformationService: useDataTransformation("queueLength"),
@@ -185,6 +194,9 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
     title: "Throughput",
     xaxis: timeLabel,
     yaxis: `${queryLabel} / s`,
+  },
+  queryInformation: {
+    title: "Query Information",
   },
 };
 
