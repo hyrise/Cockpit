@@ -43,7 +43,7 @@ class PluginIdController(Resource):
     @accepts(schema=PluginSchema, api=api)
     def post(self, database_id: str) -> Response:
         """Activate a Plugin in a database."""
-        interface: PluginInterface = request.parsed_obj
+        interface: PluginInterface = request.parsed_obj  # type: ignore
         status = PluginService.activate_by_id(database_id, interface)
         if status in {200, 404, 423}:
             return Response(status=status)
@@ -53,7 +53,7 @@ class PluginIdController(Resource):
     @accepts(schema=PluginSchema, api=api)
     def delete(self, database_id: str) -> Response:
         """Deactivate a Plugin in a database."""
-        interface: PluginInterface = request.parsed_obj
+        interface: PluginInterface = request.parsed_obj  # type: ignore
         status = PluginService.deactivate_by_id(database_id, interface)
         if status in {200, 404, 423}:
             return Response(status=status)
@@ -63,7 +63,7 @@ class PluginIdController(Resource):
     @accepts(schema=UpdatePluginSettingSchema, api=api)
     def put(self, database_id: str) -> Response:
         """Set a setting of a Plugin in a database."""
-        interface: UpdatePluginSettingInterface = request.parsed_obj
+        interface: UpdatePluginSettingInterface = request.parsed_obj  # type: ignore
         status = PluginService.update_plugin_setting(database_id, interface)
         if status in {200, 404, 423}:
             return Response(status=status)
