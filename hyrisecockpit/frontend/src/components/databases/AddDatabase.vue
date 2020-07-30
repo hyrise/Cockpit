@@ -75,22 +75,28 @@
         </v-row>
       </v-card-text>
       <v-card-actions class="justify-center pt-0">
-        <v-btn
-          class="secondary primary--text my-2"
-          @click="
-            databaseAdded = null;
-            createNewDatabase();
-          "
-          :disabled="
-            !!idError.length ||
-            !host.length ||
-            !id.length ||
-            !port.length ||
-            number_workers.length === 0
-          "
-          data-id="save-database-button"
-          >Save</v-btn
-        >
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              v-on="on"
+              class="secondary primary--text my-2"
+              @click="
+                databaseAdded = null;
+                createNewDatabase();
+              "
+              :disabled="
+                !!idError.length ||
+                !host.length ||
+                !id.length ||
+                !port.length ||
+                number_workers.length === 0
+              "
+              data-id="save-database-button"
+              >Save</v-btn
+            >
+          </template>
+          <span>Add new database</span>
+        </v-tooltip>
       </v-card-actions>
     </v-card>
   </v-dialog>

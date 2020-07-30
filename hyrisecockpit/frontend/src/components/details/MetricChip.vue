@@ -14,7 +14,7 @@
       @click="handleSelect(metric)"
       >mdi-eye-off</v-icon
     >
-    <b v-on="on">{{ truncateItemTitle(getMetricTitle(metric)) }}</b>
+    <b>{{ truncateItemTitle(getMetricTitle(metric)) }}</b>
   </v-chip>
 </template>
 <script lang="ts">

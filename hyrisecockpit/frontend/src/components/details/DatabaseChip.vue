@@ -12,7 +12,7 @@
           >mdi-delete-forever</v-icon
         >
       </template>
-      <span>Remove Database</span>
+      <span>Remove database</span>
     </v-tooltip>
     <v-chip
       v-if="database"

@@ -145,7 +145,6 @@
             <v-card-actions>
               <v-spacer v-show="window === 1" />
               <v-btn
-                v-on="on"
                 color="white"
                 depressed
                 data-id="change-range-type"
