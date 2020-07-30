@@ -41,7 +41,7 @@ export function useDataTransformation(metric: Metric): TransformationService {
 /** transform query information data to table structure */
 function getQueryInformationData(data: any, primaryKey: string = ""): any {
   const entry = data.find((dbEntry: any) => dbEntry.id === primaryKey);
-  return entry.query_information.map((query: any) => {
+  return entry.detailed_query_information.map((query: any) => {
     return {
       queryNumber: query.query_number,
       workloadType: getDisplayedFromTransferred(query.benchmark),
@@ -425,11 +425,12 @@ export function useMaxValueHelper(
 
   /* detect max number of queries per db */
   function getNumberOfQueries(data: any[]): number {
-    return data.reduce(
+    const maxNumber = data.reduce(
       (numberOfQueries, queryData) =>
-        Math.max(numberOfQueries, queryData.query_information.length),
+        Math.max(numberOfQueries, queryData.detailed_query_information.length),
       0
     );
+    return maxNumber > 10 ? 10 : maxNumber;
   }
 
   /* detect max value of access data */

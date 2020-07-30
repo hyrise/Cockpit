@@ -1,11 +1,6 @@
 <template>
   <div :id="graphId">
-    <v-card
-      data-id="query-table"
-      class="mx-3 mt-n5"
-      flat
-      :min-height="minHeight"
-    >
+    <v-card data-id="query-table" class="mt-n5" flat :min-height="minHeight">
       <v-card-title>
         <v-text-field
           v-model="searchQueries"
@@ -13,7 +8,7 @@
           label="Search queries"
           hide-details
           data-id="query-search-input"
-          class="body-3 mt-n4"
+          class="body-3 mt-n3"
         />
       </v-card-title>
       <v-data-table
@@ -96,7 +91,7 @@ export default defineComponent({
           `${
             context.root.$metricController.maxValueData.queryInformation.value *
               48 +
-            218
+            180
           }`
       ),
     };
