@@ -186,7 +186,7 @@ class TestPluginService:
             ("456", "yourreporter", "yourmessage", "yourlevel"),
         ]
         service._query_storage_connection = MagicMock()  # type: ignore
-        service._query_storage_connection.return_value = {  # type: ignore
+        service._query_storage_connection.return_value = {
             ("plugin_log", None): [
                 {
                     "timestamp": row[0],
@@ -200,7 +200,7 @@ class TestPluginService:
         with patch("hyrisecockpit.api.app.plugin.service._get_active_databases") as gad:
             gad.return_value = ["hyrise"]
             returned = service.get_all_plugin_logs()
-        service._query_storage_connection.assert_called_once_with(  # type: ignore
+        service._query_storage_connection.assert_called_once_with(
             "SELECT timestamp, reporter, message, level from plugin_log;",
             "hyrise",
             None,
