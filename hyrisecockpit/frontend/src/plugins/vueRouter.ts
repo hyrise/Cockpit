@@ -8,7 +8,7 @@ import WorkloadMonitoring from "../views/WorkloadMonitoring.vue";
 Vue.use(VueRouter);
 
 const routes = [
-  { name: "home", path: "/", component: Home },
+  { name: "home", path: "/", component: Overview },
   { name: "workload", path: "/workload", component: WorkloadMonitoring },
   {
     name: "comparison",
