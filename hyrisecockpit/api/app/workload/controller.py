@@ -28,7 +28,7 @@ class WorkloadController(Resource):
     @responds(schema=WorkloadSchema, api=api)
     def post(self) -> Union[Workload, Response]:
         """Create a Workload."""
-        interface: WorkloadInterface = request.parsed_obj
+        interface: WorkloadInterface = request.parsed_obj  # type: ignore
         workload = WorkloadService.create(interface)
         return Response(status=409) if workload is None else workload
 
@@ -57,6 +57,6 @@ class WorkloadIdController(Resource):
     @responds(schema=DetailedWorkloadSchema, api=api)
     def put(self, folder_name: str) -> Union[DetailedWorkload, Response]:
         """Update a Workload."""
-        interface: DetailedWorkloadInterface = request.parsed_obj
+        interface: DetailedWorkloadInterface = request.parsed_obj  # type: ignore
         workload = WorkloadService.update_by_id(folder_name, interface)
         return Response(status=404) if workload is None else workload

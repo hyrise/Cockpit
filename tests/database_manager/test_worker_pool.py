@@ -149,7 +149,7 @@ class TestWorkerPool(object):
         worker_pool._execute_task_workers = [MagicMock() for _ in range(number_worker)]
         worker_pool._terminate_worker()
 
-        assert worker_pool._fill_task_worker is None
+        # assert worker_pool._fill_task_worker is None  # makes the below unreachable
         assert type(worker_pool._execute_task_workers) is list
         assert len(worker_pool._execute_task_workers) == 0
         assert type(worker_pool._worker_wait_for_exit_event) is EventType
@@ -176,7 +176,7 @@ class TestWorkerPool(object):
         worker_pool._continue_execution_flag.value = False
         mocked_fill_worker_process: MagicMock = MagicMock()
         mocked_fill_worker_process.start.return_value = None
-        mocked_processes: MagicMock = []
+        mocked_processes: List = []
         for _ in range(number_worker):
             mocked_execute_task_worker_process = MagicMock()
             mocked_execute_task_worker_process.start.return_value = None

@@ -24,7 +24,7 @@ class Sql(Resource):
     def post(self) -> Union[Optional[Response], SqlResponse]:
         """Execute SQL query."""
         interface: SqlQueryInterface = SqlQueryInterface(
-            id=request.parsed_obj.id, query=request.parsed_obj.query
+            id=request.parsed_obj.id, query=request.parsed_obj.query  # type: ignore
         )
         response, status_code = SqlService.execute_sql(interface)
         if status_code == 200:
