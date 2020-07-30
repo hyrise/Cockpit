@@ -28,9 +28,10 @@ class WorkloadController(Resource):
     @responds(schema=BaseWorkloadSchema, api=api)
     def post(self) -> Union[BaseWorkload, Response]:
         """Create/update a Workload."""
-        interface: BaseWorkloadInterface = request.parsed_obj
+        interface: BaseWorkloadInterface = request.parsed_obj  # type: ignore
         workload = WorkloadService.update_by_id(interface)
         return Response(status=404) if workload is None else workload
+
 
 @api.response(404, "A Workload with the given folder name does not exist.")
 @api.route("/<string:workload_type>")

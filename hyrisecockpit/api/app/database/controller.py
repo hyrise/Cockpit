@@ -73,8 +73,8 @@ class WorkloadTables(Resource):
     def post(self) -> Response:
         """Load workload tables."""
         interface: WorkloadTablesInterface = WorkloadTablesInterface(
-            workload_type=request.parsed_obj.workload_type,
-            scale_factor=request.parsed_obj.scale_factor,
+            workload_type=request.parsed_obj.workload_type,  # type: ignore
+            scale_factor=request.parsed_obj.scale_factor,  # type: ignore
         )
         status_code = DatabaseService.load_workload_tables(interface)
         return Response(status=status_code)
@@ -83,8 +83,8 @@ class WorkloadTables(Resource):
     def delete(self) -> Response:
         """Delete workload tables."""
         interface: WorkloadTablesInterface = WorkloadTablesInterface(
-            workload_type=request.parsed_obj.workload_type,
-            scale_factor=request.parsed_obj.scale_factor,
+            workload_type=request.parsed_obj.workload_type,  # type: ignore
+            scale_factor=request.parsed_obj.scale_factor,  # type: ignore
         )
         status_code = DatabaseService.delete_workload_tables(interface)
         return Response(status=status_code)
