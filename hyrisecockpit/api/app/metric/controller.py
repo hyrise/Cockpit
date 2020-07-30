@@ -37,9 +37,9 @@ class ThroughputController(Resource):
     def get(self) -> List[Throughput]:
         """Get throughput data for the requested time interval."""
         time_interval: TimeInterval = TimeInterval(
-            startts=request.parsed_args["startts"],
-            endts=request.parsed_args["endts"],
-            precision=request.parsed_args["precision"],
+            startts=request.parsed_args["startts"],  # type: ignore
+            endts=request.parsed_args["endts"],  # type: ignore
+            precision=request.parsed_args["precision"],  # type: ignore
         )
         return MetricService.get_throughput(time_interval)
 
@@ -58,9 +58,9 @@ class LatencyController(Resource):
     def get(self) -> List[Latency]:
         """Get latency data for the requested time interval."""
         time_interval: TimeInterval = TimeInterval(
-            startts=request.parsed_args["startts"],
-            endts=request.parsed_args["endts"],
-            precision=request.parsed_args["precision"],
+            startts=request.parsed_args["startts"],  # type: ignore
+            endts=request.parsed_args["endts"],  # type: ignore
+            precision=request.parsed_args["precision"],  # type: ignore
         )
         return MetricService.get_latency(time_interval)
 
@@ -79,9 +79,9 @@ class QueueLengthController(Resource):
     def get(self) -> List[QueueLength]:
         """Get queue length data for the requested time interval."""
         time_interval: TimeInterval = TimeInterval(
-            startts=request.parsed_args["startts"],
-            endts=request.parsed_args["endts"],
-            precision=request.parsed_args["precision"],
+            startts=request.parsed_args["startts"],  # type: ignore
+            endts=request.parsed_args["endts"],  # type: ignore
+            precision=request.parsed_args["precision"],  # type: ignore
         )
         return MetricService.get_queue_length(time_interval)
 
