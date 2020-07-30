@@ -51,7 +51,7 @@
                 <template v-slot:activator="{ on }">
                   <v-btn
                     v-on="on"
-                    class="secondary primary--text"
+                    class="white primary--text"
                     x-small
                     @click="stop()"
                   >
