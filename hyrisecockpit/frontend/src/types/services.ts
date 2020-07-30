@@ -54,13 +54,3 @@ export interface WorkloadService {
 }
 
 export type FetchType = "read" | "modify";
-
-export type Base =
-  | "system_data"
-  | "throughput"
-  | "storage"
-  | "chunks_data"
-  | "latency"
-  | "queue_length"
-  | "workload_statement_information"
-  | "workload_operator_information";

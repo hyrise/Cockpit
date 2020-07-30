@@ -14,7 +14,7 @@
         :color="database.color"
         flat
       >
-        <v-card-text class="white--text text-center">
+        <v-card-text class="white--text text-center mt-n3 mb-n4">
           <strong>
             {{ database.id }}
           </strong>
@@ -33,7 +33,7 @@
         />
       </div>
       <v-card class="column-bottom-border" :color="database.color">
-        <v-card-text class="white--text text-center">
+        <v-card-text class="white--text text-center mt-n3 mb-n2">
           {{ database.id }}
         </v-card-text>
       </v-card>
@@ -94,6 +94,7 @@ export default defineComponent({
 .metrics-table {
   display: flex;
   flex-direction: row;
+  margin-top: 14px;
 }
 .metrics-column {
   display: flex;
