@@ -32,7 +32,6 @@ class WorkloadController(Resource):
         workload = WorkloadService.update_by_id(interface)
         return Response(status=404) if workload is None else workload
 
-
 @api.response(404, "A Workload with the given folder name does not exist.")
 @api.route("/<string:workload_type>")
 @api.param("workload_type", "Workload type")
