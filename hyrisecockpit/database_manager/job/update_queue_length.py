@@ -12,5 +12,5 @@ def update_queue_length(
     time_stamp: int = time_ns()
     with storage_connection_factory.create_cursor() as log:
         log.log_meta_information(
-            "queue_length", {"queue_length": queue_length}, time_stamp,
+            "raw_queue_length", {"queue_length": queue_length}, time_stamp,
         )

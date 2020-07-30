@@ -104,6 +104,17 @@ class Database(object):
                 latency_continuous_query,
                 latency_resample_options,
             )
+            queue_length_continuous_query = """SELECT mean("queue_length") AS "queue_length"
+                INTO "queue_length"
+                FROM "raw_queue_length"
+                GROUP BY time(1s)
+                FILL(linear)"""
+            queue_length_resample_options = "EVERY 1s FOR 5s"
+            cursor.create_continuous_query(
+                "queue_length_calculation",
+                queue_length_continuous_query,
+                queue_length_resample_options,
+            )
             system_data_metrics = [
                 "available_memory",
                 "cpu_count",
