@@ -48,7 +48,11 @@ export const selectors = {
 };
 
 export const metrics = {
-  workloadMonitoring: ["queryTypeProportion", "operatorProportion"],
+  workloadMonitoring: [
+    "queryInformation",
+    "queryTypeProportion",
+    "operatorProportion",
+  ],
   comparison: [
     "throughput",
     "latency",
