@@ -5,8 +5,8 @@ if platform.startswith("linux"):  # noqa
     from multiprocessing import Queue
 
 elif platform.startswith("darwin"):
-    from multiprocessing import Value
     from multiprocessing import Queue as DefaultQueue
+    from multiprocessing import Value
 
     class SharedCounter:
         """A synchronized shared counter."""
