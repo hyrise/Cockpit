@@ -125,9 +125,8 @@
                   v-if="!!errorMessage"
                   type="error"
                   class="remove-margin-low"
+                  >{{ errorMessage }}</v-alert
                 >
-                  {{ errorMessage }}
-                </v-alert>
                 <v-btn
                   data-id="set-static-time-range"
                   class="body-2 font-weight-regular"
@@ -158,10 +157,9 @@
                     <v-icon v-if="window === 1" right>mdi-chevron-right</v-icon>
                   </v-btn>
                 </template>
-                <span
-                  >Select {{ window == 1 ? "Static" : "Continuous" }} Range
-                  Type</span
-                >
+                <span>
+                  Select {{ window == 1 ? "Static" : "Continuous" }} Range Type
+                </span>
               </v-tooltip>
             </v-card-actions>
           </v-card>
@@ -228,7 +226,12 @@ export default defineComponent({
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const page = computed(() => context.root.$route.name! as PageName);
+    const page = computed(() => {
+      const pageName = context.root.$route.name!;
+      if (pageName === "home") return "overview";
+
+      return pageName as PageName;
+    });
 
     return {
       pageName: computed(
