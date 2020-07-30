@@ -40,7 +40,6 @@ export const selectors = {
   sqlInput: getSelectorByCustomConfig("sql-input"),
   openSQLDialog: getSelectorByCustomConfig("open-sql-dialog"),
   closeSQLDialog: getSelectorByCustomConfig("close-sql-dialog"),
-  closeSQLInput: getSelectorByCustomConfig("close-sql-input"),
   sendSQLInput: getSelectorByCustomConfig("send-sql-input"),
 };
 

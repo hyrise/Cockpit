@@ -88,7 +88,7 @@ describe("When adding a new database", () => {
       });
       cy.numberOfRequests(getPostAlias("database")).should("eq", 1);
 
-      cy.wait(500);
+      cy.get(selectors.cancelAddDatabaseButton).click();
       cy.get(viewSelectors.databaseListButton).click();
       cy.get(viewSelectors.databaseList).within(() => {
         cy.get(selectors.databaseChip)

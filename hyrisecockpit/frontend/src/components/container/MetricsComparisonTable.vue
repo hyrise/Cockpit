@@ -12,6 +12,7 @@
         v-if="showHeader"
         class="column-top-border"
         :color="database.color"
+        flat
       >
         <v-card-text class="white--text text-center">
           <strong>
