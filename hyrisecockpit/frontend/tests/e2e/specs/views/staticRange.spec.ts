@@ -40,7 +40,6 @@ describe("requesting static historic time range", () => {
         endTime: "23:59",
       });
 
-      cy.contains("The selected dates and times are in the future.");
       cy.get(selectors.setStaticRangeButton).should("be.disabled");
     });
 
@@ -87,11 +86,6 @@ function fillDateAndTime({
   // open static range selection tab
   cy.get(selectors.selectionListButton).click();
   cy.get("div[role=tab]").eq(1).click();
-  cy.get(selectors.changeRangeTypeButton).click();
-  cy.wait(300);
-
-  // unfilled dates are invalid per default
-  cy.contains("The selected dates or times are invalid.");
 
   // set start date
   cy.get(selectors.datePickerText).eq(0).click();
