@@ -807,13 +807,13 @@ class TestDatabase(object):
     def test_get_loaded_benchmark_data(self, database: Database):
         """Test get loaded benchmark data."""
         database.get_loaded_tables = MagicMock()  # type: ignore
-        database.get_loaded_tables.return_value = ["table1", "table2"]  # type: ignore
+        database.get_loaded_tables.return_value = ["table1", "table2"]
         database.get_loaded_benchmarks = MagicMock()  # type: ignore
-        database.get_loaded_benchmarks.return_value = ["benchmark"]  # type: ignore
+        database.get_loaded_benchmarks.return_value = ["benchmark"]
 
         (loaded_tables, loaded_benchmarks) = database.get_loaded_benchmark_data()
 
-        database.get_loaded_tables.assert_called_once()  # type: ignore
-        database.get_loaded_benchmarks.assert_called_once_with(["table1", "table2"])  # type: ignore
+        database.get_loaded_tables.assert_called_once()
+        database.get_loaded_benchmarks.assert_called_once_with(["table1", "table2"])
         assert loaded_tables == ["table1", "table2"]
         assert loaded_benchmarks == ["benchmark"]
