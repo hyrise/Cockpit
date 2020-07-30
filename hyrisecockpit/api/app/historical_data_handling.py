@@ -14,7 +14,6 @@ def _get_historical_data(
     metrics: List[str],
     database: str,
     client: InfluxDBClient,
-    fill_option: str,
 ) -> List[Dict[str, Union[int, float]]]:
     """Retrieve historical data for provided metrics and precision."""
     select_clause = ",".join(f" mean({metric}) as {metric}" for metric in metrics)
@@ -23,7 +22,7 @@ def _get_historical_data(
         WHERE time >=  $startts AND
         time < $endts
         GROUP BY TIME(1s)
-        FILL({fill_option})"""  # fill empty 1s-slots with 0
+        FILL(0.0)"""  # fill empty 1s-slots with 0
 
     query = f"""SELECT {select_clause}
         FROM ({subquery})
@@ -83,20 +82,12 @@ def get_historical_metric(
     table_name: str,
     metrics: List,
     client: InfluxDBClient,
-    fill_option="0.0",  # Fill option for Influx fill command. Supports '0.0', 'None', 'Null', 'linear', 'previous'
 ) -> List[Dict[str, Union[str, List]]]:
     """Get historical metric data for all databases."""
     result: List = []
     for database in _get_active_databases():
         metric_points: List[Dict[str, Union[int, float]]] = _get_historical_data(
-            startts,
-            endts,
-            precision_ns,
-            table_name,
-            metrics,
-            database,
-            client,
-            fill_option,
+            startts, endts, precision_ns, table_name, metrics, database, client,
         )
         metric: List[Dict[str, float]] = _fill_missing_points(
             startts, endts, precision_ns, table_name, metrics, metric_points

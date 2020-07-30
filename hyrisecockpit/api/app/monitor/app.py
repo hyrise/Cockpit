@@ -214,7 +214,6 @@ class System(Resource):
                     "available_memory",
                 ],
                 client,
-                fill_option="linear",
             )
 
         response: List[Dict] = [
