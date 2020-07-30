@@ -295,7 +295,7 @@ function getAccessData(
         return mostAccessedTableOfDB.total >= mostAccessed.total
           ? {
               total: mostAccessedTableOfDB.total,
-              name: mostAccessedTableOfDB.name,
+              name: changeTableName(mostAccessedTableOfDB.name),
             }
           : mostAccessed;
       },
