@@ -1,4 +1,7 @@
+import { isInTestMode } from "../../config";
+
 export function changeTableName(table: string): string {
+  if (isInTestMode) return table;
   const words = table.split("_");
   if (words.length === 4) {
     return (
