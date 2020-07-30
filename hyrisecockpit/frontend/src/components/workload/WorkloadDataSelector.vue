@@ -12,6 +12,7 @@
           :disabled="loadingWorkloads.includes(workload) || disabled"
           data-id="select-workload-data"
           @change="$emit('change', workload)"
+          :color="colorValueDefinition.hyriselogo"
         />
       </template>
       <span>
@@ -30,6 +31,7 @@ import {
 } from "@vue/composition-api";
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { getDisplayedWorkload } from "../../meta/workloads";
+import { colorValueDefinition } from "../../meta/colors";
 
 interface Props {
   loadedWorkloads: Workload[];
@@ -40,6 +42,7 @@ interface Data {
   workloads: Ref<Workload[]>;
   availableWorkloads: string[];
   getDisplayedWorkload: (workload: Workload) => string;
+  colorValueDefinition: Record<string, string>;
 }
 
 export default defineComponent({
@@ -71,6 +74,7 @@ export default defineComponent({
       workloads,
       availableWorkloads,
       getDisplayedWorkload,
+      colorValueDefinition,
     };
   },
 });
