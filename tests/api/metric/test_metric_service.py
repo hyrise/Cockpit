@@ -107,7 +107,7 @@ class TestMetricService:
         metric_service.get_detailed_query_information()
 
         mock_client.query.assert_called_once_with(
-            'SELECT COUNT("latency") as "throughput", MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
+            'SELECT COUNT("latency") as "throughput", MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no, scalefactor;',
             database="database",
             bind_params={"startts": 1_000_000_000, "endts": 2_000_000_000},
         )
