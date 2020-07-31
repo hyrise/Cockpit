@@ -62,14 +62,3 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
-.icon {
-  margin-right: 10px;
-}
-.tooltip {
-  z-index: 10;
-}
-.db-tooltip {
-  z-index: 1;
-}
-</style>
