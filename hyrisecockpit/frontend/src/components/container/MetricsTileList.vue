@@ -31,7 +31,7 @@ export default defineComponent({
 </script>
 <style scoped>
 .metrics {
-  margin-top: 5px;
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
