@@ -141,6 +141,12 @@ class DetailedQueryInformationEntrySchema(Schema):
         required=True,
         example=5,
     )
+    scalefactor = Float(
+        title="scalefactor",
+        description="Scalefactor of the benachmark.",
+        required=True,
+        example=1.0,
+    )
     throughput = Integer(
         title="throughput",
         description="Number of successfully executed queries in given time interval.",
