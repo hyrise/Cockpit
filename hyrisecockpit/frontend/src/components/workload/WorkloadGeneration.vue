@@ -62,7 +62,7 @@
                   </v-row>
                   <v-col class="text-center pt-0">
                     <p class="subtitle-1 font-weight-medium mb-2">
-                      Start and stop worker
+                      Start and stop workers
                     </p>
                     <workload-actions
                       :actions="actions"
@@ -112,6 +112,7 @@ import {
   Ref,
   reactive,
   computed,
+  watch,
 } from "@vue/composition-api";
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
@@ -126,6 +127,7 @@ import WorkloadDataSelector from "./WorkloadDataSelector.vue";
 
 interface Props {
   open: boolean;
+  workersStopped: boolean;
 }
 
 interface Data extends WorkloadActions, WorkloadDataHandler {
@@ -173,10 +175,14 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    workersStopped: {
+      type: Boolean,
+      default: false,
+    },
   },
-  setup(props: {}, context: SetupContext): Data {
+  setup(props: Props, context: SetupContext): Data {
     const tab = ref<number>(0);
-    const workloadActions = useWorkloadActions(context);
+    const workloadActions = useWorkloadActions(context, props);
     return {
       databases: computed(
         () => context.root.$databaseController.availableDatabasesById.value
@@ -192,12 +198,15 @@ export default defineComponent({
   },
 });
 
-function useWorkloadActions(context: SetupContext): WorkloadActions {
+function useWorkloadActions(
+  context: SetupContext,
+  props: Props
+): WorkloadActions {
   const frequencies = ref<number[]>([]);
   const {
     getDatabaseStatus,
-    startWorker,
-    stopWorker,
+    startWorkers,
+    stopWorkers,
     getWorkloads,
     startWorkload,
     updateWorkload,
@@ -221,6 +230,19 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
 
   // initialize frequency for every workload
   frequencies.value = Object.values(availableWorkloads).map(() => 200);
+
+  watch(
+    () => props.workersStopped,
+    () => {
+      if (props.workersStopped) {
+        actions.start.active = false;
+        actions.stop.active = true;
+      } else {
+        actions.stop.active = false;
+        actions.start.active = true;
+      }
+    }
+  );
 
   // running workload indicator
   getWorkloads().then((response: any) => {
@@ -289,12 +311,12 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
   function start(): void {
     context.emit("start");
     startLoading("start");
-    startWorker().then(() => stopLoading("start"));
+    startWorkers().then(() => stopLoading("start"));
   }
   function stop(): void {
     context.emit("stop");
     startLoading("stop");
-    stopWorker().then(() => stopLoading("stop"));
+    stopWorkers().then(() => stopLoading("stop"));
   }
   function handleFrequencyChange(index: number, frequency: number): void {
     frequencies.value[index] = frequency;
