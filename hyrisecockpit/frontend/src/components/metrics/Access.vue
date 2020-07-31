@@ -69,7 +69,7 @@ import {
 import { useUpdatingDatabases } from "@/meta/databases";
 import { getMetricChartConfiguration, getMetricMetadata } from "@/meta/metrics";
 import { eventBus } from "@/plugins/eventBus";
-import { changeTableName } from "@/meta/workloads";
+import { getTableName } from "@/meta/workloads";
 
 interface Data
   extends BasicChartComponentData<AccessData>,
@@ -130,7 +130,7 @@ function useDataWithSelection(
     selection: {
       selectionItems: computed(() =>
         databases.value[0].tables.map((table) => ({
-          text: changeTableName(table),
+          text: getTableName(table),
           value: table,
         }))
       ),

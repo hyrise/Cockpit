@@ -37,12 +37,22 @@ export function getDisplayedFromTransferred(transferred: string): string {
   )!.displayed;
 }
 
-export function changeTableName(table: string): string {
+export function getTableName(table: string): string {
   if (isInTestMode) return table;
 
-  const words = table.split("_");
-  if (words.length === 4) {
-    return `${words[0]} (${words[1].toUpperCase()} SF ${words[2]}.${words[3]})`;
+  const index: number = Math.max(
+    table.indexOf("tpch"),
+    table.indexOf("tpcds"),
+    table.indexOf("tpcc"),
+    table.indexOf("job")
+  );
+  const words: string[] = table.slice(index).split("_");
+  if (words.length === 3) {
+    return `${table.slice(0, index - 1)} (${words[0].toUpperCase()} SF ${
+      words[1]
+    }.${words[2]})`;
   }
-  return `${words[0]} (${words[1].toUpperCase()} SF ${words[2]})`;
+  return `${table.slice(0, index - 1)} (${words[0].toUpperCase()} SF ${
+    words[1]
+  })`;
 }
