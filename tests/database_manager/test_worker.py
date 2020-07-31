@@ -2,7 +2,7 @@
 from multiprocessing import Queue
 from unittest.mock import MagicMock, patch
 
-from psycopg2 import DatabaseError, InterfaceError, ProgrammingError
+from psycopg2 import ProgrammingError
 from pytest import mark
 
 from hyrisecockpit.database_manager.worker.queue_worker import (
@@ -143,11 +143,9 @@ class TestTaskWorker:
         log_results(mock_storage_curser, succesful_queries, failed_queries)
         mock_storage_curser.log_queries.assert_called_once_with(succesful_queries)
         mock_storage_curser.log_failed_queries.assert_called_once_with(failed_queries)
-        assert not succesful_queries
-        assert not failed_queries
 
     @patch("hyrisecockpit.database_manager.worker.task_worker.StorageCursor")
-    @patch("hyrisecockpit.database_manager.worker.task_worker.log_results")
+    @patch("hyrisecockpit.database_manager.worker.task_worker.Thread")
     def test_execute_queries_with_unset_continue_execution_flag(
         self, mock_log_results: MagicMock, mock_storage_cursor: MagicMock
     ) -> None:
@@ -184,19 +182,19 @@ class TestTaskWorker:
         mock_worker_wait_for_exit_event.wait.assert_called_once()
 
     @patch("hyrisecockpit.database_manager.worker.task_worker.StorageCursor")
-    @patch("hyrisecockpit.database_manager.worker.task_worker.log_results")
+    @patch("hyrisecockpit.database_manager.worker.task_worker.Thread")
     @patch("hyrisecockpit.database_manager.worker.task_worker.time_ns")
     def test_execute_queries(
         self,
         mock_time_ns: MagicMock,
-        mock_log_results: MagicMock,
+        mock_thread: MagicMock,
         mock_storage_cursor: MagicMock,
     ) -> None:
         """Test execute queries if continues execution flag is not set."""
         mock_time_ns.return_value = OverloadTime(0)  # type: ignore
         worker_id = "worker_id"
         database_id = "database_id"
-        mock_pool_curser = MagicMock()
+        mock_pool_cursor = MagicMock()
         mock_storage_log = MagicMock()
         mock_storage_cursor.return_value.__enter__.return_value = mock_storage_log
         mock_i_am_done_event = MagicMock()
@@ -208,71 +206,7 @@ class TestTaskWorker:
         )
         mock_workload_driver = MagicMock()
         mock_workload_driver.execute_task.return_value = (1, 1, 1.0, "01", True)
-        mock_log_results.side_effect = MagicMock(side_effect=LoopDone)
-        task = {"benchmark": "tpch"}
-        workload_drivers = {"tpch": mock_workload_driver}
-        fake_queue = Queue()  # type: ignore
-        fake_queue.put(task)
-        excepted_successful_queries = [(1, 1, "tpch", 1.0, "01", "worker_id", True)]
-        try:
-            execute_queries(
-                worker_id,
-                fake_queue,
-                mock_pool_curser,
-                mock_continue_execution_flag,
-                database_id,
-                mock_i_am_done_event,
-                mock_worker_wait_for_exit_event,
-                workload_drivers,
-            )
-        except LoopDone:
-            pass
-
-        mock_workload_driver.execute_task.assert_called_once_with(
-            task, mock_pool_curser, worker_id
-        )
-        mock_log_results.assert_called_once_with(
-            mock_storage_log, excepted_successful_queries, []
-        )
-
-    @mark.parametrize(
-        "exception", [DatabaseError(), InterfaceError()],
-    )
-    @patch("hyrisecockpit.database_manager.worker.task_worker.StorageCursor")
-    @patch("hyrisecockpit.database_manager.worker.task_worker.log_results")
-    @patch("hyrisecockpit.database_manager.worker.task_worker.time_ns")
-    def test_execute_task_if_database_error_occurs(
-        self,
-        mock_time_ns: MagicMock,
-        mock_log_results: MagicMock,
-        mock_storage_cursor: MagicMock,
-        exception,
-    ) -> None:
-        """Test execute task if database error occurs."""
-
-        def raise_exception(*args) -> Exception:
-            """Throw exception."""
-            raise exception
-
-        mock_time_ns.return_value = OverloadTime(0)  # type: ignore
-        worker_id = "worker_id"
-        database_id = "database_id"
-        mock_pool_curser = MagicMock()
-        mock_pool_curser._connection.set_session.side_effect = MagicMock(
-            side_effect=LoopDone
-        )
-        mock_storage_log = MagicMock()
-        mock_storage_cursor.return_value.__enter__.return_value = mock_storage_log
-        mock_i_am_done_event = MagicMock()
-        mock_continue_execution_flag = MagicMock()
-        mock_worker_wait_for_exit_event = MagicMock()
-        mock_continue_execution_flag.value = True
-        mock_worker_wait_for_exit_event.wait.side_effect = MagicMock(
-            side_effect=LoopDone
-        )
-        mock_workload_driver = MagicMock()
-        mock_workload_driver.execute_task.side_effect = raise_exception
-        mock_log_results.side_effect = MagicMock(side_effect=LoopDone)
+        mock_thread.side_effect = MagicMock(side_effect=LoopDone)
         task = {"benchmark": "tpch"}
         workload_drivers = {"tpch": mock_workload_driver}
         fake_queue = Queue()  # type: ignore
@@ -281,7 +215,7 @@ class TestTaskWorker:
             execute_queries(
                 worker_id,
                 fake_queue,
-                mock_pool_curser,
+                mock_pool_cursor,
                 mock_continue_execution_flag,
                 database_id,
                 mock_i_am_done_event,
@@ -290,22 +224,20 @@ class TestTaskWorker:
             )
         except LoopDone:
             pass
-
         mock_workload_driver.execute_task.assert_called_once_with(
-            task, mock_pool_curser, worker_id
+            task, mock_pool_cursor, worker_id
         )
-        mock_log_results.assert_called_once_with(mock_storage_log, [], [])
 
     @mark.parametrize(
         "exception", [ProgrammingError(), ValueError()],
     )
     @patch("hyrisecockpit.database_manager.worker.task_worker.StorageCursor")
-    @patch("hyrisecockpit.database_manager.worker.task_worker.log_results")
+    @patch("hyrisecockpit.database_manager.worker.task_worker.Thread")
     @patch("hyrisecockpit.database_manager.worker.task_worker.time_ns")
     def test_execute_task_if_programming_error_occurs(
         self,
         mock_time_ns: MagicMock,
-        mock_log_results: MagicMock,
+        mock_thread: MagicMock,
         mock_storage_cursor: MagicMock,
         exception,
     ) -> None:
@@ -333,7 +265,7 @@ class TestTaskWorker:
         )
         mock_workload_driver = MagicMock()
         mock_workload_driver.execute_task.side_effect = raise_exception
-        mock_log_results.side_effect = MagicMock(side_effect=LoopDone)
+        mock_thread.side_effect = MagicMock(side_effect=LoopDone)
         task = {"benchmark": "tpch"}
         workload_drivers = {"tpch": mock_workload_driver}
         fake_queue = Queue()  # type: ignore
@@ -354,4 +286,4 @@ class TestTaskWorker:
         mock_workload_driver.execute_task.assert_called_once_with(
             task, mock_pool_curser, worker_id
         )
-        mock_log_results.assert_called_once()
+        mock_thread.assert_called_once()
