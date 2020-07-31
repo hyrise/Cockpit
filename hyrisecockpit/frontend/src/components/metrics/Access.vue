@@ -69,6 +69,7 @@ import {
 import { useUpdatingDatabases } from "@/meta/databases";
 import { getMetricChartConfiguration, getMetricMetadata } from "@/meta/metrics";
 import { eventBus } from "@/plugins/eventBus";
+import { changeTableName } from "@/meta/workloads";
 
 interface Data
   extends BasicChartComponentData<AccessData>,
@@ -95,7 +96,7 @@ export default defineComponent({
 });
 
 interface UseDataWithSelection {
-  selectionItems: Ref<readonly string[]>;
+  selectionItems: Ref<readonly { text: string; value: string }[]>;
   selectedItem: Ref<string>;
 }
 
@@ -127,7 +128,12 @@ function useDataWithSelection(
 
   return {
     selection: {
-      selectionItems: computed(() => databases.value[0].tables),
+      selectionItems: computed(() =>
+        databases.value[0].tables.map((table) => ({
+          text: changeTableName(table),
+          value: table,
+        }))
+      ),
       selectedItem: selectedTable,
     },
     transformedData: accessData,

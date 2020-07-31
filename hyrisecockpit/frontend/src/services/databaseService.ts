@@ -10,7 +10,6 @@ import { monitorBackend, controlBackend } from "../../config";
 import { useDataTransformationHelpers } from "@/services/transformationService";
 import { useDatabaseEvents } from "@/meta/events";
 import { useFormatting } from "@/meta/formatting";
-import { changeTableName } from "@/meta/names";
 
 export function useDatabaseService(): DatabaseService {
   const { formatDateToNanoSec, subSeconds, getNanoSeconds } = useFormatting();
@@ -104,9 +103,7 @@ export function useDatabaseService(): DatabaseService {
       databasesWithStorageInformation.push({
         id: id,
         memoryFootprint: getDatabaseMemoryFootprint(data),
-        tables: Object.keys(data).map((table: string) => {
-          return changeTableName(table);
-        }),
+        tables: Object.keys(data),
       } as DatabaseStorageResponse);
     });
     return databasesWithStorageInformation;

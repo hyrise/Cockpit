@@ -8,8 +8,7 @@ import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
 import { colorValueDefinition, multiColors } from "@/meta/colors";
 import { useDataEvents } from "@/meta/events";
-import { changeTableName } from "@/meta/names";
-import { getDisplayedFromTransferred } from "@/meta/workloads";
+import { getDisplayedFromTransferred, changeTableName } from "@/meta/workloads";
 
 const { roundNumber, formatPercentage, formatTimeUnit } = useFormatting();
 const {
@@ -295,7 +294,7 @@ function getAccessData(
         return mostAccessedTableOfDB.total >= mostAccessed.total
           ? {
               total: mostAccessedTableOfDB.total,
-              name: changeTableName(mostAccessedTableOfDB.name),
+              name: mostAccessedTableOfDB.name,
             }
           : mostAccessed;
       },
