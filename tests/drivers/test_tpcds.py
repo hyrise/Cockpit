@@ -13,30 +13,25 @@ class TestTpcdsDriver:
 
     @fixture
     @patch("hyrisecockpit.drivers.tpcds.tpcds_driver.DefaultDriver", MagicMock())
-    @patch("hyrisecockpit.drivers.tpcds.tpcds_driver.abspath", MagicMock())
-    @patch("hyrisecockpit.drivers.tpcds.tpcds_driver.getcwd", MagicMock())
     def tpcds_driver(self) -> TpcdsDriver:
         """Get a new tpcds driver."""
         return TpcdsDriver()
 
     @patch("hyrisecockpit.drivers.tpcds.tpcds_driver.DefaultDriver")
-    @patch("hyrisecockpit.drivers.tpcds.tpcds_driver.abspath")
-    @patch("hyrisecockpit.drivers.tpcds.tpcds_driver.getcwd")
+    @patch("hyrisecockpit.drivers.tpcds.tpcds_driver.Path")
     def test_inintializes_tpcds_driver(
-        self,
-        mock_getcwd: MagicMock,
-        mock_abspath: MagicMock,
-        mock_default_driver: MagicMock,
+        self, mock_path: MagicMock, mock_default_driver: MagicMock,
     ) -> None:
         """Test initialization of tpcds driver attributes."""
         mock_default_driver_obj = MagicMock()
         mock_default_driver.return_value = mock_default_driver_obj
-        mock_abspath.return_value = "/abspath"
+
+        mock_file_path = MagicMock()
+        mock_file_path.parent.parent.parent = "/abspath"
+        mock_path.return_value = mock_file_path
+
         tpcds_driver = TpcdsDriver()
-        assert (
-            tpcds_driver._query_path
-            == "/abspath/hyrisecockpit/workload_generator/workloads"
-        )
+        assert tpcds_driver._query_path == "/abspath/workload_generator/workloads"
         assert tpcds_driver._benchmark_type == "tpcds"
         assert tpcds_driver._table_names == tables
         assert tpcds_driver.scale_factors == [1.0]

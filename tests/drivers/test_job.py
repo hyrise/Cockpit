@@ -13,30 +13,25 @@ class TestJobDriver:
 
     @fixture
     @patch("hyrisecockpit.drivers.job.job_driver.DefaultDriver", MagicMock())
-    @patch("hyrisecockpit.drivers.job.job_driver.abspath", MagicMock())
-    @patch("hyrisecockpit.drivers.job.job_driver.getcwd", MagicMock())
     def job_driver(self) -> JobDriver:
         """Get a new job driver."""
         return JobDriver()
 
     @patch("hyrisecockpit.drivers.job.job_driver.DefaultDriver")
-    @patch("hyrisecockpit.drivers.job.job_driver.abspath")
-    @patch("hyrisecockpit.drivers.job.job_driver.getcwd")
+    @patch("hyrisecockpit.drivers.job.job_driver.Path")
     def test_inintializes_job_driver(
-        self,
-        mock_getcwd: MagicMock,
-        mock_abspath: MagicMock,
-        mock_default_driver: MagicMock,
+        self, mock_path: MagicMock, mock_default_driver: MagicMock,
     ) -> None:
         """Test initialization of job driver attributes."""
         mock_default_driver_obj = MagicMock()
         mock_default_driver.return_value = mock_default_driver_obj
-        mock_abspath.return_value = "/abspath"
+
+        mock_file_path = MagicMock()
+        mock_file_path.parent.parent.parent = "/abspath"
+        mock_path.return_value = mock_file_path
+
         job_driver = JobDriver()
-        assert (
-            job_driver._query_path
-            == "/abspath/hyrisecockpit/workload_generator/workloads"
-        )
+        assert job_driver._query_path == "/abspath/workload_generator/workloads"
         assert job_driver._benchmark_type == "job"
         assert job_driver._table_names == tables
         assert job_driver.scale_factors == [1.0]
