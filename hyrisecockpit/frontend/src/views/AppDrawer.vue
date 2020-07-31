@@ -83,9 +83,16 @@
 
       <workload-generation
         :open="showWorkloadDialog"
+        :workers-stopped="!workersRunning"
         @close="showWorkloadDialog = false"
-        @start="changeWorkloadIndicator('start')"
-        @stop="changeWorkloadIndicator('stop')"
+        @start="
+          changeWorkloadIndicator('start');
+          workersRunning = true;
+        "
+        @stop="
+          changeWorkloadIndicator('stop');
+          workersRunning = false;
+        "
       />
 
       <v-list-item
@@ -118,7 +125,12 @@
 
       <add-database
         :open="showAddDatabaseDialog"
+        :workers-running="workersRunning"
         @close="showAddDatabaseDialog = false"
+        @stop="
+          changeWorkloadIndicator('stop');
+          workersRunning = false;
+        "
       />
       <remove-database
         :open="showRemoveDatabaseDialog"
@@ -187,6 +199,7 @@ interface Data {
   showAddDatabaseDialog: Ref<boolean>;
   showRemoveDatabaseDialog: Ref<boolean>;
   databaseCount: Ref<string>;
+  workersRunning: Ref<boolean>;
   handleDatabaseDeletion: (database: Database) => void;
   changeWorkloadIndicator: (action: string) => void;
   removedDatabaseId: Ref<string>;
@@ -229,6 +242,7 @@ export default defineComponent({
       databaseCount: computed(() =>
         context.root.$databaseController.availableDatabasesById.value.length.toString()
       ),
+      workersRunning: ref(false),
       handleDatabaseDeletion,
       changeWorkloadIndicator,
       removedDatabaseId,
