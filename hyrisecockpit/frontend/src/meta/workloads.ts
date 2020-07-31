@@ -2,10 +2,7 @@ export function getWorkloadName(
   workloadType: string,
   scaleFactor: string
 ): string {
-  return `${getWorkloadTypeOfWorkloadName(workloadType)} SF ${scaleFactor}`;
-}
-export function getWorkloadTypeOfWorkloadName(workloadType: string): string {
-  return `${workloadType.toUpperCase()}`;
+  return `${workloadType.toUpperCase()} SF ${scaleFactor}`;
 }
 export function getWorkloadType(workloadName: string): string {
   return workloadName.split(" ")[0].toLowerCase();
