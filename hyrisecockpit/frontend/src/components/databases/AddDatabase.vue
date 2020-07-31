@@ -35,6 +35,34 @@
         >
           Database was not added.
         </v-alert>
+        <v-alert
+          v-if="workersRunning"
+          class="mt-4 mb-0"
+          type="error"
+          dismissible
+          dense
+        >
+          <v-row>
+            <v-col class="grow pr-0 py-0"
+              >Stop workers before adding databases.</v-col
+            >
+            <v-col class="shrink mr-2 pl-0 py-0">
+              <v-tooltip right>
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    v-on="on"
+                    class="white primary--text"
+                    x-small
+                    @click="stop()"
+                  >
+                    Stop
+                  </v-btn>
+                </template>
+                <span>Stops workers</span>
+              </v-tooltip>
+            </v-col>
+          </v-row>
+        </v-alert>
         <v-row>
           <v-col class="pb-0" cols="6">
             <v-text-field
@@ -86,7 +114,8 @@
             !host.length ||
             !id.length ||
             !port.length ||
-            number_workers.length === 0
+            number_workers.length === 0 ||
+            workersRunning
           "
           data-id="save-database-button"
           >Save</v-btn
@@ -107,9 +136,15 @@ import {
   watch,
 } from "@vue/composition-api";
 import { useDatabaseService } from "@/services/databaseService";
+import { useWorkloadService } from "../../services/workloadService";
 
 interface Props {
   open: boolean;
+  workersRunning: boolean;
+}
+
+interface Data extends DatabaseCreationData {
+  stop: () => void;
 }
 
 export default defineComponent({
@@ -118,9 +153,19 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    workersRunning: {
+      type: Boolean,
+      default: false,
+    },
   },
-  setup(props: Props, context: SetupContext): DatabaseCreationData {
+  setup(props: Props, context: SetupContext): Data {
+    const { stopWorkers } = useWorkloadService();
+    function stop(): void {
+      context.emit("stop");
+      stopWorkers();
+    }
     return {
+      stop,
       ...useDatabaseCreation(context),
     };
   },
