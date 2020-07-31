@@ -230,7 +230,7 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
     frequencies.value = Object.values(availableWorkloads.value).map(() => 200);
   });
 
-  // running workload indicator
+  // initializing running workload indicator
   getWorkloads().then((response: any) => {
     initializeWorkloadSelector(response.data);
     getDatabaseStatus().then((response: any) => {
@@ -239,7 +239,6 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
       }
     });
   });
-
   function initializeWorkloadSelector(workloads: any): void {
     Object.values(workloads).forEach((workloadData: any) => {
       if (workloadData.running) {
@@ -263,6 +262,8 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
       context.emit("start");
     }
   }
+
+  //start and stop workers and loading of buttons
   function startLoading(action: string): void {
     actions[action].loading = true;
     Object.values(actions).forEach((action: any) => {
@@ -273,9 +274,18 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
   function stopLoading(action: string): void {
     actions[action].loading = false;
   }
-  //TODO: refactor start and update workload
+  function start(): void {
+    context.emit("start");
+    startLoading("start");
+    startWorker().then(() => stopLoading("start"));
+  }
+  function stop(): void {
+    context.emit("stop");
+    startLoading("stop");
+    stopWorker().then(() => stopLoading("stop"));
+  }
+
   //TODO: add check for selected workloads
-  //TODO: add disabling of the same workloads with different scale factors
   function updatingWorkload(workload: string) {
     const index = selectedWorkloads.value.indexOf(workload);
     if (weights.value[index] !== undefined) {
@@ -300,16 +310,6 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
       updatingWorkload(workload);
     });
   }
-  function start(): void {
-    context.emit("start");
-    startLoading("start");
-    startWorker().then(() => stopLoading("start"));
-  }
-  function stop(): void {
-    context.emit("stop");
-    startLoading("stop");
-    stopWorker().then(() => stopLoading("stop"));
-  }
   function handleFrequencyChange(index: number, frequency: number): void {
     frequencies.value[index] = frequency;
     if (selectedWorkloads.value.includes(availableWorkloads.value[index])) {
@@ -320,11 +320,7 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
     const index = selectedWorkloads.value.indexOf(workload);
     if (!selectedWorkloads.value.includes(workload)) {
       selectedWorkloads.value.push(workload);
-      startWorkload(
-        workload,
-        frequencies.value[availableWorkloads.value.indexOf(workload)],
-        {}
-      ).then(() => updatingWorkload(workload));
+      updatingWorkload(workload);
     } else {
       selectedWorkloads.value.splice(index, 1);
       weights.value.splice(index, 1);
