@@ -5,6 +5,9 @@
     label="Observed Time Range"
     :disabled="disabled"
     data-id="historic-range-selection"
+    dense
+    outlined
+    class="caption"
   />
 </template>
 

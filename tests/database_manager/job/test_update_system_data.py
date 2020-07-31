@@ -35,8 +35,8 @@ class TestUpdateSystemDataJob:
             {"cpu_count": [10], "system_memory_total_bytes": [1234]}
         )
         expected_dict: Dict[str, float] = {
-            "cpu_system_usage": 12.0,
-            "cpu_process_usage": 30.0,
+            "cpu_system_usage": 120,
+            "cpu_process_usage": 300,
             "cpu_count": 10,
             "free_memory": 0,
             "available_memory": 0,
@@ -55,24 +55,21 @@ class TestUpdateSystemDataJob:
     )
     @patch("hyrisecockpit.database_manager.job.update_system_data.sql_to_data_frame")
     @patch("hyrisecockpit.database_manager.job.update_system_data.time_ns", lambda: 42)
-    @patch(
-        "hyrisecockpit.database_manager.job.update_system_data.previous_system_usage",
-        10,
-    )
-    @patch(
-        "hyrisecockpit.database_manager.job.update_system_data.previous_process_usage",
-        20,
-    )
     def test_logs_updated_system_data(
         self,
         mock_sql_to_data_frame: MagicMock,
         mock_create_system_data_dict: MagicMock,
     ) -> None:
         """Test logs updated system data."""
+        mock_previous_system_data = {
+            "previous_system_usage": 10.0,
+            "previous_process_usage": 20.0,
+        }
+
         fake_not_empty_df: DataFrame = DataFrame({"column1": [1]})
         fake_system_dict: Dict[str, float] = {
-            "cpu_system_usage": 120.0,
-            "cpu_process_usage": 300.0,
+            "cpu_system_usage": 160.0 + 10.0,
+            "cpu_process_usage": 320.0 + 20.0,
             "cpu_count": 16,
             "cpu_clock_speed": 120,
             "free_memory": 0,
@@ -81,8 +78,8 @@ class TestUpdateSystemDataJob:
             "database_threads": 16,
         }
         expected_system_data = {
-            "cpu_system_usage": 110.0,
-            "cpu_process_usage": 280.0,
+            "cpu_system_usage": 10.0,
+            "cpu_process_usage": 20.0,
             "cpu_count": 16,
             "cpu_clock_speed": 120,
             "free_memory": 0,
@@ -104,10 +101,11 @@ class TestUpdateSystemDataJob:
             fake_database_blocked,
             fake_connection_factory,
             mock_storage_connection_factory,
+            mock_previous_system_data,
         )
 
         mock_cursor.log_meta_information.assert_called_once_with(
-            "system_data", expected_system_data, 42
+            "raw_system_data", expected_system_data, 42
         )
 
     @patch(
@@ -115,14 +113,6 @@ class TestUpdateSystemDataJob:
     )
     @patch("hyrisecockpit.database_manager.job.update_system_data.sql_to_data_frame")
     @patch("hyrisecockpit.database_manager.job.update_system_data.time_ns", lambda: 42)
-    @patch(
-        "hyrisecockpit.database_manager.job.update_system_data.previous_system_usage",
-        None,
-    )
-    @patch(
-        "hyrisecockpit.database_manager.job.update_system_data.previous_process_usage",
-        None,
-    )
     def test_doesnt_log_updated_system_data(
         self,
         mock_sql_to_data_frame: MagicMock,
@@ -136,6 +126,10 @@ class TestUpdateSystemDataJob:
         mock_storage_connection_factory.create_cursor.return_value.__enter__.return_value = (
             mock_cursor
         )
+        mock_previous_system_data = {
+            "previous_system_usage": 10.0,
+            "previous_process_usage": 20.0,
+        }
 
         mock_sql_to_data_frame.return_value = fake_empty_df
 
@@ -143,6 +137,7 @@ class TestUpdateSystemDataJob:
             fake_database_blocked,
             fake_connection_factory,
             mock_storage_connection_factory,
+            mock_previous_system_data,
         )
 
         mock_cursor.log_meta_information.assert_not_called()

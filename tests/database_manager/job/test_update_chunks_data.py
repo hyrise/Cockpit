@@ -80,6 +80,7 @@ class TestUpdateChunksData:
         mock_storage_connection_factory.create_cursor.return_value.__enter__.return_value = (
             mock_cursor
         )
+        mock_previous_chunk_data: Dict = {"value": {}}
 
         expected_sql = """SELECT table_name, column_name, chunk_id, (point_accesses + sequential_accesses + monotonic_accesses + random_accesses) as access_count
         FROM meta_segments;"""
@@ -88,6 +89,7 @@ class TestUpdateChunksData:
             fake_database_blocked,
             fake_connection_factory,
             mock_storage_connection_factory,
+            mock_previous_chunk_data,
         )
 
         mock_sql_to_data_frame.assert_called_once_with(
@@ -108,9 +110,6 @@ class TestUpdateChunksData:
     )
     @patch("hyrisecockpit.database_manager.job.update_chunks_data.deepcopy",)
     @patch("hyrisecockpit.database_manager.job.update_chunks_data.time_ns", lambda: 42)
-    @patch(
-        "hyrisecockpit.database_manager.job.update_chunks_data.previous_chunks_data", 42
-    )
     def test_logs_updated_chunks_data_with_meta_chunks(
         self,
         mock_deep_copy: MagicMock,
@@ -119,6 +118,7 @@ class TestUpdateChunksData:
         mock_sql_to_data_frame: MagicMock,
     ) -> None:
         """Test logs updated chunks data when meta chunks is empty."""
+        mock_previous_chunk_data = {"value": {"col1": 42}}
         fake_not_empty_data_frame = DataFrame({"col1": [42]})
         mock_sql_to_data_frame.return_value = fake_not_empty_data_frame
         mock_cursor = MagicMock()
@@ -136,13 +136,16 @@ class TestUpdateChunksData:
             fake_database_blocked,
             fake_connection_factory,
             mock_storage_connection_factory,
+            mock_previous_chunk_data,
         )
 
         mock_sql_to_data_frame.assert_called_once_with(
             fake_database_blocked, fake_connection_factory, expected_sql, None
         )
         mock_create_chunks_dictionary.assert_called_once_with(fake_not_empty_data_frame)
-        mock_calculate_chunks_difference.assert_called_once_with({"new": 55}, 42)
+        mock_calculate_chunks_difference.assert_called_once_with(
+            {"new": 55}, {"col1": 42}
+        )
         mock_cursor.log_meta_information.assert_called_once_with(
             "chunks_data", {"chunks_data_meta_information": '{"new": 55}'}, 42
         )
