@@ -42,8 +42,6 @@ export const colorTreemapDefinition = {
 };
 
 export const multiColors = Object.entries({
-  ...colorValueDefinition,
-  ...colorDatabaseDefinition,
   ...colorTreemapDefinition,
 })
   .filter(([id, _]) =>

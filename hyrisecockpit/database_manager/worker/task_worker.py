@@ -2,6 +2,7 @@
 from multiprocessing import Queue, Value
 from multiprocessing.synchronize import Event as EventType
 from queue import Empty
+from threading import Thread
 from time import time_ns
 from typing import List, Tuple
 
@@ -23,9 +24,7 @@ def log_results(
 ) -> None:
     """Log results to database."""
     log.log_queries(succesful_queries)
-    succesful_queries.clear()
     log.log_failed_queries(failed_queries)
-    failed_queries.clear()
 
 
 def execute_queries(  # noqa
@@ -79,6 +78,15 @@ def execute_queries(  # noqa
                     failed_queries.append((time_ns(), worker_id, str(task), str(e)))
                 except (DatabaseError, InterfaceError):
                     task_queue.put(task)
-                if last_batched < time_ns() - 1_000_000_000:
-                    log_results(log, succesful_queries, failed_queries)
+
+                if last_batched < time_ns() - 1_000_000_000 and (
+                    succesful_queries or failed_queries
+                ):
+                    t = Thread(
+                        target=log_results,
+                        args=(log, succesful_queries, failed_queries),
+                    )
+                    t.start()
+                    succesful_queries = []
+                    failed_queries = []
                     last_batched = time_ns()

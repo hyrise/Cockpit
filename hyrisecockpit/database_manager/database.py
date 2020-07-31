@@ -107,6 +107,43 @@ class Database(object):
                 latency_continuous_query,
                 latency_resample_options,
             )
+            queue_length_continuous_query = """SELECT mean("queue_length") AS "queue_length"
+                INTO "queue_length"
+                FROM "raw_queue_length"
+                GROUP BY time(1s)
+                FILL(linear)"""
+            queue_length_resample_options = "EVERY 1s FOR 5s"
+            cursor.create_continuous_query(
+                "queue_length_calculation",
+                queue_length_continuous_query,
+                queue_length_resample_options,
+            )
+            system_data_metrics = [
+                "available_memory",
+                "cpu_count",
+                "cpu_process_usage",
+                "cpu_system_usage",
+                "database_threads",
+                "free_memory",
+                "total_memory",
+            ]
+            system_data_select_clause = ", ".join(
+                [
+                    f"""mean("{metric}") AS "{metric}" """
+                    for metric in system_data_metrics
+                ]
+            )
+            system_data_continuous_query = f"""SELECT {system_data_select_clause}
+                INTO "system_data"
+                FROM "raw_system_data"
+                GROUP BY time(1s)
+                FILL(linear)"""
+            system_data_resample_options = "EVERY 1s FOR 5s"
+            cursor.create_continuous_query(
+                "system_data_calculation",
+                system_data_continuous_query,
+                system_data_resample_options,
+            )
 
     def get_queue_length(self) -> int:
         """Return queue length."""

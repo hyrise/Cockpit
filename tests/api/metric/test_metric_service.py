@@ -89,7 +89,7 @@ class TestMetricService:
 
     @patch("hyrisecockpit.api.app.metric.service.StorageConnection")
     @patch("hyrisecockpit.api.app.metric.service._get_active_databases")
-    @patch("hyrisecockpit.api.app.metric.service.time_ns", lambda: 5_000_000_000)
+    @patch("hyrisecockpit.api.app.metric.service.time_ns", lambda: 10_000_000_000)
     def test_get_detailed_query_information(
         self,
         mock_get_active_databases: MagicMock,
@@ -109,5 +109,5 @@ class TestMetricService:
         mock_client.query.assert_called_once_with(
             'SELECT COUNT("latency") as "throughput", MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no, scalefactor;',
             database="database",
-            bind_params={"startts": 1_000_000_000, "endts": 2_000_000_000},
+            bind_params={"startts": 2_000_000_000, "endts": 7_000_000_000},
         )
