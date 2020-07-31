@@ -34,22 +34,25 @@ import {
   ref,
   watch,
 } from "@vue/composition-api";
-import { Workload, availableWorkloads } from "../../types/workloads";
 
 interface Props {
+  availableWorkloads: string[];
   initialFrequencies: number[];
-  loadedWorkloads: Workload[];
+  loadedWorkloads: string[];
   disabled: boolean;
 }
 
 interface Data {
   frequencies: Ref<number[]>;
-  availableWorkloads: string[];
 }
 
 export default defineComponent({
   name: "FrequencyHandler",
   props: {
+    availableWorkloads: {
+      type: Array,
+      default: () => [],
+    },
     initialFrequencies: {
       type: Array,
       default: () => [],
@@ -74,7 +77,6 @@ export default defineComponent({
     );
     return {
       frequencies,
-      availableWorkloads,
     };
   },
 });

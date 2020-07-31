@@ -6,7 +6,7 @@
       data-id="workload-equalizer"
     >
       <v-expansion-panel-header color="grey lighten-1">
-        {{ getDisplayedWorkload(workload) }}
+        {{ workload }}
       </v-expansion-panel-header>
       <v-expansion-panel-content class="mt-4">
         <v-row class="query-weights">
@@ -91,11 +91,9 @@ import {
   watch,
   reactive,
 } from "@vue/composition-api";
-import { Workload } from "../../types/workloads";
-import { getDisplayedWorkload } from "../../meta/workloads";
 
 interface Props {
-  selectedWorkloads: Workload[];
+  selectedWorkloads: string[];
   initialWeights: Record<string, number>[];
 }
 
@@ -104,14 +102,13 @@ interface Data {
   panels: Ref<number[]>;
   queriesPerRow: Ref<number>;
   queriesPerWorkload: Ref<number[]>;
-  getDisplayedWorkload: (workload: Workload) => void;
   updateWeight: (
     workload: string,
     name: string,
     sliderValueToValue: boolean
   ) => void;
-  resetWeights: (workload: Workload) => void;
-  isEndOfLine: (workload: Workload, index: number) => boolean;
+  resetWeights: (workload: string) => void;
+  isEndOfLine: (workload: string, index: number) => boolean;
 }
 type Weight = { name: string; value: number; sliderValue: number };
 
@@ -159,7 +156,7 @@ export default defineComponent({
       }
       context.emit("change", workload, name, weight.value);
     }
-    function resetWeights(workload: Workload): void {
+    function resetWeights(workload: string): void {
       Object.values(weights.value[workload]).forEach((weight) => {
         if (weight.value !== 1) {
           // set weights to the initial value of 1
@@ -170,7 +167,7 @@ export default defineComponent({
         }
       });
     }
-    function isEndOfLine(workload: Workload, index: number): boolean {
+    function isEndOfLine(workload: string, index: number): boolean {
       return (
         index % queriesPerRow.value === queriesPerRow.value - 1 ||
         index ===
@@ -220,7 +217,6 @@ export default defineComponent({
       panels,
       queriesPerRow,
       queriesPerWorkload,
-      getDisplayedWorkload,
       updateWeight,
       resetWeights,
       isEndOfLine,

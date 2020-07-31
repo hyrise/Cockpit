@@ -1,25 +1,30 @@
 import axios from "axios";
-import { Workload } from "@/types/workloads";
-import { getTransferredWorkload } from "@/meta/workloads";
+import { getWorkloadType, getScaleFactor } from "@/meta/workloads";
 import { WorkloadService } from "../types/services";
 import { controlBackend, statusBackend, workloadBackend } from "../../config";
 
 export function useWorkloadService(): WorkloadService {
   async function getLoadedWorkloads(): Promise<string[]> {
-    return axios.get(`${statusBackend}benchmark`);
+    return axios.get(`${statusBackend}workload_tables`);
   }
   async function getDatabaseStatus(): Promise<string[]> {
     return axios.get(`${statusBackend}database`);
   }
-  async function loadWorkloadData(workload: Workload): Promise<void> {
-    return axios.post(`${controlBackend}database/benchmark_tables`, {
-      folder_name: getTransferredWorkload(workload),
+
+  async function getAllAvailableWorkloads(): Promise<void> {
+    return axios.get(`${controlBackend}database/workload_tables`);
+  }
+  async function loadWorkload(workload: string): Promise<void> {
+    return axios.post(`${controlBackend}database/workload_tables`, {
+      scale_factor: getScaleFactor(workload),
+      workload_type: getWorkloadType(workload),
     });
   }
-  async function deleteWorkloadData(workload: Workload): Promise<void> {
-    return axios.delete(`${controlBackend}database/benchmark_tables`, {
+  async function deleteWorkload(workload: string): Promise<void> {
+    return axios.delete(`${controlBackend}database/workload_tables`, {
       data: {
-        folder_name: getTransferredWorkload(workload),
+        scale_factor: getScaleFactor(workload),
+        workload_type: getWorkloadType(workload),
       },
     });
   }
@@ -31,49 +36,39 @@ export function useWorkloadService(): WorkloadService {
     return axios.delete(`${controlBackend}database/worker`);
   }
 
-  async function getWorkload(workload: Workload): Promise<void> {
-    return axios.get(`${workloadBackend}${getTransferredWorkload(workload)}`);
+  async function getWorkload(workload: string): Promise<void> {
+    return axios.get(`${workloadBackend}${getWorkloadType(workload)}`);
   }
   async function getWorkloads(): Promise<void> {
     return axios.get(`${workloadBackend}`);
   }
   async function startWorkload(
-    workload: Workload,
-    frequency: number
-  ): Promise<void> {
-    return axios.post(`${workloadBackend}`, {
-      folder_name: getTransferredWorkload(workload),
-      frequency: frequency,
-    });
-  }
-  async function updateWorkload(
-    workload: Workload,
+    workload: string,
     frequency: number,
     weights: Object
   ): Promise<void> {
-    return axios.put(`${workloadBackend}${getTransferredWorkload(workload)}`, {
-      folder_name: getTransferredWorkload(workload),
-      frequency: frequency,
+    return axios.post(`${workloadBackend}`, {
+      scale_factor: getScaleFactor(workload),
+      workload_type: getWorkloadType(workload),
       weights: weights,
+      frequency: frequency,
     });
   }
-  async function stopWorkload(workload: Workload): Promise<void> {
-    return axios.delete(
-      `${workloadBackend}${getTransferredWorkload(workload)}`
-    );
+  async function stopWorkload(workload: string): Promise<void> {
+    return axios.delete(`${workloadBackend}${getWorkloadType(workload)}`);
   }
 
   return {
     getLoadedWorkloads,
     getDatabaseStatus,
-    loadWorkloadData,
-    deleteWorkloadData,
+    getAllAvailableWorkloads,
+    loadWorkload,
+    deleteWorkload,
     startWorker,
     stopWorker,
     getWorkload,
     getWorkloads,
     startWorkload,
-    updateWorkload,
     stopWorkload,
   };
 }

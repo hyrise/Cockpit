@@ -6,7 +6,7 @@
       class="mt-0 pt-0"
       :key="workload"
       :value="workload"
-      :label="getDisplayedWorkload(workload)"
+      :label="workload"
       :loading="loadingWorkloads.includes(workload)"
       :disabled="loadingWorkloads.includes(workload) || disabled"
       data-id="select-workload-data"
@@ -22,23 +22,24 @@ import {
   ref,
   watch,
 } from "@vue/composition-api";
-import { Workload, availableWorkloads } from "../../types/workloads";
-import { getDisplayedWorkload } from "../../meta/workloads";
 
 interface Props {
-  loadedWorkloads: Workload[];
-  loadingWorkloads: Workload[];
+  availableWorkloads: string[];
+  loadedWorkloads: string[];
+  loadingWorkloads: string[];
   disabled: boolean;
 }
 interface Data {
-  workloads: Ref<Workload[]>;
-  availableWorkloads: string[];
-  getDisplayedWorkload: (workload: Workload) => string;
+  workloads: Ref<string[]>;
 }
 
 export default defineComponent({
   name: "WorkloadDataSelector",
   props: {
+    availableWorkloads: {
+      type: Array,
+      default: () => [],
+    },
     loadedWorkloads: {
       type: Array,
       default: () => [],
@@ -53,7 +54,7 @@ export default defineComponent({
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const workloads = ref<Workload[]>([]);
+    const workloads = ref<string[]>([]);
     watch(
       () => props.loadedWorkloads,
       () => {
@@ -63,8 +64,6 @@ export default defineComponent({
     );
     return {
       workloads,
-      availableWorkloads,
-      getDisplayedWorkload,
     };
   },
 });

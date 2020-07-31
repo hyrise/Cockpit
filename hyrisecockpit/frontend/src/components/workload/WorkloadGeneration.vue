@@ -42,6 +42,7 @@
                         Start and stop workloads
                       </p>
                       <workload-selector
+                        :available-workloads="availableWorkloads"
                         :selected-workloads="selectedWorkloads"
                         :loaded-workloads="loadedWorkloads"
                         :disabled="disabled"
@@ -53,6 +54,7 @@
                         Change number of queries per second
                       </p>
                       <frequency-handler
+                        :available-workloads="availableWorkloads"
                         :initial-frequencies="frequencies"
                         :loaded-workloads="loadedWorkloads"
                         :disabled="disabled"
@@ -78,6 +80,7 @@
                     Load and remove data into/from instances
                   </p>
                   <workload-data-selector
+                    :available-workloads="availableWorkloads"
                     :loaded-workloads="loadedWorkloads"
                     :loading-workloads="loadingWorkloads"
                     :disabled="runningWorkload || disabled"
@@ -113,10 +116,9 @@ import {
   reactive,
   computed,
 } from "@vue/composition-api";
-import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
 import { useDatabaseEvents } from "../../meta/events";
-import { getWorkloadFromTransferred } from "../../meta/workloads";
+import { getWorkloadName } from "../../meta/workloads";
 import StatusWarning from "../alerts/StatusWarning.vue";
 import FrequencyHandler from "./FrequencyHandler.vue";
 import QueryWeights from "./QueryWeights.vue";
@@ -134,28 +136,25 @@ interface Data extends WorkloadActions, WorkloadDataHandler {
 }
 
 interface WorkloadActions {
+  availableWorkloads: Ref<string[]>;
   enableQueryWeights: Ref<boolean>;
   frequencies: Ref<number[]>;
   actions: Record<string, { active: boolean; loading: boolean }>;
-  selectedWorkloads: Ref<Workload[]>;
+  selectedWorkloads: Ref<string[]>;
   weights: Ref<Record<string, number>[]>;
   start: () => void;
   stop: () => void;
   handleFrequencyChange: (index: number, frequency: number) => void;
-  handleWorkloadChange: (workload: Workload) => void;
-  handleWeightChange: (
-    workload: Workload,
-    name: string,
-    weight: number
-  ) => void;
+  handleWorkloadChange: (workload: string) => void;
+  handleWeightChange: (workload: string, name: string, weight: number) => void;
 }
 
 interface WorkloadDataHandler {
-  loadedWorkloads: Ref<Workload[]>;
-  loadingWorkloads: Ref<Workload[]>;
+  loadedWorkloads: Ref<string[]>;
+  loadingWorkloads: Ref<string[]>;
   runningWorkload: Ref<boolean>;
   disabled: Ref<boolean>;
-  handleWorkloadDataChange: (workload: Workload) => void;
+  handleWorkloadDataChange: (workload: string) => void;
 }
 
 export default defineComponent({
@@ -193,14 +192,15 @@ export default defineComponent({
 });
 
 function useWorkloadActions(context: SetupContext): WorkloadActions {
+  const availableWorkloads = ref<string[]>([]);
   const frequencies = ref<number[]>([]);
   const {
     getDatabaseStatus,
+    getAllAvailableWorkloads,
     startWorker,
     stopWorker,
     getWorkloads,
     startWorkload,
-    updateWorkload,
     stopWorkload,
   } = useWorkloadService();
   const actions: Record<
@@ -216,17 +216,23 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
       loading: false,
     },
   });
-  const selectedWorkloads = ref<Workload[]>([]);
+  const selectedWorkloads = ref<string[]>([]);
   const weights = ref<Record<string, number>[]>([]);
 
-  // initialize frequency for every workload
-  frequencies.value = Object.values(availableWorkloads).map(() => 200);
+  getAllAvailableWorkloads().then((response: any) => {
+    // set all available workloads
+    availableWorkloads.value = Object.values(response.data.workload_tables).map(
+      (workload: any) => {
+        return getWorkloadName(workload.workload_type, workload.scale_factor);
+      }
+    );
+    // initialize frequency for every workload
+    frequencies.value = Object.values(availableWorkloads.value).map(() => 200);
+  });
 
   // running workload indicator
   getWorkloads().then((response: any) => {
-    if (response.data.length > 0) {
-      initializeWorkloadSelector(response.data);
-    }
+    initializeWorkloadSelector(response.data);
     getDatabaseStatus().then((response: any) => {
       if (response.data.length > 0) {
         initializeWorkloadActions(response.data);
@@ -236,11 +242,16 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
 
   function initializeWorkloadSelector(workloads: any): void {
     Object.values(workloads).forEach((workloadData: any) => {
-      const workload = getWorkloadFromTransferred(workloadData.folder_name);
-      selectedWorkloads.value.push(workload);
-      frequencies.value[availableWorkloads.indexOf(workload)] =
-        workloadData.frequency;
-      updatingWorkload(workload);
+      if (workloadData.running) {
+        const workload = getWorkloadName(
+          workloadData.workload_type,
+          workloadData.scale_factor
+        );
+        selectedWorkloads.value.push(workload);
+        frequencies.value[availableWorkloads.value.indexOf(workload)] =
+          workloadData.frequency;
+        updatingWorkload(workload);
+      }
     });
   }
   function initializeWorkloadActions(databases: any): void {
@@ -262,18 +273,21 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
   function stopLoading(action: string): void {
     actions[action].loading = false;
   }
-  function updatingWorkload(workload: Workload) {
+  //TODO: refactor start and update workload
+  //TODO: add check for selected workloads
+  //TODO: add disabling of the same workloads with different scale factors
+  function updatingWorkload(workload: string) {
     const index = selectedWorkloads.value.indexOf(workload);
     if (weights.value[index] !== undefined) {
-      updateWorkload(
+      startWorkload(
         workload,
-        frequencies.value[availableWorkloads.indexOf(workload)],
+        frequencies.value[availableWorkloads.value.indexOf(workload)],
         weights.value[index]
       );
     } else {
-      updateWorkload(
+      startWorkload(
         workload,
-        frequencies.value[availableWorkloads.indexOf(workload)],
+        frequencies.value[availableWorkloads.value.indexOf(workload)],
         {}
       ).then((response: any) => {
         if (response.data.weights)
@@ -282,7 +296,7 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
     }
   }
   function updatingWorkloads(): void {
-    Object.values(selectedWorkloads.value).forEach((workload: Workload) => {
+    Object.values(selectedWorkloads.value).forEach((workload: string) => {
       updatingWorkload(workload);
     });
   }
@@ -298,17 +312,18 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
   }
   function handleFrequencyChange(index: number, frequency: number): void {
     frequencies.value[index] = frequency;
-    if (selectedWorkloads.value.includes(availableWorkloads[index])) {
-      updatingWorkload(availableWorkloads[index]);
+    if (selectedWorkloads.value.includes(availableWorkloads.value[index])) {
+      updatingWorkload(availableWorkloads.value[index]);
     }
   }
-  function handleWorkloadChange(workload: Workload): void {
+  function handleWorkloadChange(workload: string): void {
     const index = selectedWorkloads.value.indexOf(workload);
     if (!selectedWorkloads.value.includes(workload)) {
       selectedWorkloads.value.push(workload);
       startWorkload(
         workload,
-        frequencies.value[availableWorkloads.indexOf(workload)]
+        frequencies.value[availableWorkloads.value.indexOf(workload)],
+        {}
       ).then(() => updatingWorkload(workload));
     } else {
       selectedWorkloads.value.splice(index, 1);
@@ -317,7 +332,7 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
     }
   }
   function handleWeightChange(
-    workload: Workload,
+    workload: string,
     key: string,
     weight: number
   ): void {
@@ -335,6 +350,7 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
     weights.value.splice(index, 0, changedWeights);
   }
   return {
+    availableWorkloads,
     enableQueryWeights: computed(() => selectedWorkloads.value.length !== 0),
     frequencies,
     actions,
@@ -350,29 +366,29 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
 
 function useWorkloadDataHandler(
   context: SetupContext,
-  selectedWorkloads: Ref<Workload[]>,
+  selectedWorkloads: Ref<string[]>,
   weights: Ref<Record<string, number>[]>
 ): WorkloadDataHandler {
-  const loadedWorkloads = ref<Workload[]>([]);
-  const loadingWorkloads = ref<Workload[]>([]);
+  const loadedWorkloads = ref<string[]>([]);
+  const loadingWorkloads = ref<string[]>([]);
   const {
     stopWorkload,
     getLoadedWorkloads,
     getDatabaseStatus,
-    loadWorkloadData,
-    deleteWorkloadData,
+    loadWorkload,
+    deleteWorkload,
   } = useWorkloadService();
   const runningWorkload = ref<boolean>(false);
   let blocked: boolean = false;
   let changeWorkloadData: boolean = true;
   const { emitDatabaseStatusChangedEvent } = useDatabaseEvents();
 
-  function handleWorkloadDataChange(workload: Workload): void {
+  function handleWorkloadDataChange(workload: string): void {
     loadingWorkloads.value.push(workload);
     changeWorkloadData = false;
     if (!loadedWorkloads.value.includes(workload)) {
       // load workload data
-      loadWorkloadData(workload).then(() => {
+      loadWorkload(workload).then(() => {
         blocked = true;
         changeWorkloadData = true;
       });
@@ -382,7 +398,7 @@ function useWorkloadDataHandler(
       selectedWorkloads.value.splice(index, 1);
       weights.value.splice(index, 1);
       stopWorkload(workload);
-      deleteWorkloadData(workload).then(() => {
+      deleteWorkload(workload).then(() => {
         changeWorkloadData = true;
       });
     }
@@ -390,19 +406,31 @@ function useWorkloadDataHandler(
   function updateWorkloadInformation(): void {
     getLoadedWorkloads().then((response: any) => {
       if (response.data.length !== 0) {
-        let loadedWorkloadData: string[] = response.data[0].loaded_benchmarks;
+        let loadedWorkloadData: string[] = response.data[0].workload_tables_status.filter(
+          (workload: any) => {
+            if (workload.completely_loaded) return workload;
+          }
+        );
         Object.values(response.data).forEach((database: any) => {
-          loadedWorkloadData = loadedWorkloadData.filter(
-            (benchmark: any) =>
-              database.loaded_benchmarks.includes(benchmark) &&
-              !["no-ops_0_1", "no-ops_1"].includes(benchmark)
-          );
+          loadedWorkloadData = loadedWorkloadData.filter((workload: any) => {
+            workload = Object.values(database.workload_tables_status).find(
+              (currentWorkload: any) =>
+                currentWorkload.workload_type === workload.workload_type &&
+                currentWorkload.scale_factor === workload.scale_factor
+            );
+            if (workload.completely_loaded) return workload;
+          });
         });
         if (!blocked && changeWorkloadData) {
           loadedWorkloads.value = [];
           loadingWorkloads.value = [];
-          Object.values(loadedWorkloadData).forEach((transferred: string) => {
-            loadedWorkloads.value.push(getWorkloadFromTransferred(transferred));
+          Object.values(loadedWorkloadData).forEach((transferred: any) => {
+            loadedWorkloads.value.push(
+              getWorkloadName(
+                transferred.workload_type,
+                transferred.scale_factor
+              )
+            );
           });
         }
       }
