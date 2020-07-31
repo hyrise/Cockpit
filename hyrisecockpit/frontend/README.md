@@ -41,7 +41,7 @@ To automatically lint all files, run:
 npm run lint
 ```
 
-### Testing
+## Testing
 
 This project uses Cypress (https://www.cypress.io/) for UI/E2E-Testing. To start all tests with UI, run:
 
