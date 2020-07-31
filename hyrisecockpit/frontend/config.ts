@@ -3,7 +3,9 @@ const devServerUrl = "http://127.0.0.1:3000/";
 //const backendUrl = devServerUrl;
 const backendUrl = (window as any).Cypress?.env("stubless")
   ? devServerUrl
-  : `http://${process.env.VUE_APP_BACKEND_HOST}:${process.env.VUE_APP_BACKEND_PORT}/`;
+  : `http://${process.env.VUE_APP_BACKEND_HOST || "backend"}:${
+      process.env.VUE_APP_BACKEND_PORT || "8000"
+    }/`;
 
 export const monitorBackend = backendUrl + "monitor/";
 export const metricBackend = backendUrl + "metric/";
