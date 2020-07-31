@@ -1,7 +1,6 @@
 """TPCDS driver."""
 from collections import OrderedDict
-from os import getcwd
-from os.path import abspath
+from pathlib import Path
 from typing import Dict, List, Tuple
 
 from hyrisecockpit.drivers.__default__.driver import DefaultDriver
@@ -15,7 +14,7 @@ class TpcdsDriver:
     def __init__(self):
         """Initialize a tpcds driver."""
         # TODO Move queries to driver folder
-        self._query_path: str = f"{abspath(getcwd())}/hyrisecockpit/workload_generator/workloads"
+        self._query_path: str = f"{Path(__file__).parent.parent.parent}/workload_generator/workloads"
         self._benchmark_type: str = "tpcds"
         self._table_names: List[str] = tables
         self.scale_factors = [1.0]
