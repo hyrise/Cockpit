@@ -6,23 +6,17 @@
       'z-index': currentPluginLog ? '11' : '-1',
     }"
   >
-    <v-alert
-      text
-      dense
-      data-id="chart-plugin-log-alert"
-      elevation="20"
-      :color="databaseColor"
-    >
+    <v-alert dense data-id="chart-plugin-log-alert" elevation="5" color="white">
       <div v-if="!!currentPluginLog" class="primary--text">
-        <div class="header-row">
+        <div class="caption mt-n3 header-row">
           <div class="log-header">
             {{ currentPluginLog.header }}
           </div>
-          <v-btn @click="$emit('close')" icon>
-            <v-icon>mdi-close</v-icon>
+          <v-btn @click="$emit('close')" icon class="mr-n4">
+            <v-icon small>mdi-close-box</v-icon>
           </v-btn>
         </div>
-        <div class="log-text-area">
+        <div class="caption mb-n3 log-text-area">
           {{ currentPluginLog.message }}
         </div>
       </div>
@@ -91,8 +85,8 @@ export default defineComponent({
   top: 20%;
   left: 40%;
   z-index: 11;
-  width: 50%;
-  height: 50%;
+  width: 40%;
+  height: 40%;
 }
 .log-text-area {
   height: 90px;
