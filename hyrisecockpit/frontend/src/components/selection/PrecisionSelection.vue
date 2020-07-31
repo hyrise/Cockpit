@@ -5,6 +5,9 @@
     label="Aggregation Interval"
     :disabled="disabled"
     data-id="precision-selection"
+    dense
+    outlined
+    class="caption"
   />
 </template>
 

@@ -24,5 +24,5 @@ class TestUpdateQueueLength:
         )
 
         mock_cursor.log_meta_information.assert_called_once_with(
-            "queue_length", {"queue_length": 100}, 42
+            "raw_queue_length", {"queue_length": 100}, 42
         )

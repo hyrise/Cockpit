@@ -181,7 +181,6 @@ import {
   onMounted,
   watchEffect,
 } from "@vue/composition-api";
-
 import { Database } from "@/types/database";
 import DatabaseSelection from "@/components/selection/DatabaseSelection.vue";
 import MetricSelection from "@/components/selection/MetricSelection.vue";
@@ -197,11 +196,9 @@ import { PageName } from "@/types/views";
 import { Metric } from "@/types/metrics";
 import { useFormatting } from "@/meta/formatting";
 import { isInvalidDateTimeString, isInFuture } from "@/utils/methods";
-
 interface Props {
   open: boolean;
 }
-
 interface Data
   extends UseGlobalInstances,
     UseDataChangeHandling,
@@ -210,7 +207,6 @@ interface Data
   tab: Ref<number>;
   window: Ref<number>;
 }
-
 export default defineComponent({
   components: {
     DatabaseSelection,
@@ -229,10 +225,8 @@ export default defineComponent({
     const page = computed(() => {
       const pageName = context.root.$route.name!;
       if (pageName === "home") return "overview";
-
       return pageName as PageName;
     });
-
     return {
       pageName: computed(
         () => page.value[0].toUpperCase() + page.value.substring(1)
@@ -245,14 +239,12 @@ export default defineComponent({
     };
   },
 });
-
 interface UseGlobalInstances {
   availableMetrics: Ref<readonly Metric[]>;
   availablePrecisions: { text: string; value: number }[];
   selectedDatabases: Ref<readonly string[]>;
   selectedMetrics: Ref<readonly Metric[]>;
 }
-
 function useGlobalInstances(
   context: SetupContext,
   page: Ref<PageName>
@@ -274,12 +266,10 @@ function useGlobalInstances(
     selectedMetrics: context.root.$selectionController.selectedMetrics,
   };
 }
-
 interface UseDataChangeHandling {
   handleDatabaseChange: (databaseId: string, value: boolean) => void;
   handleMetricChange: (metric: Metric, value: boolean) => void;
 }
-
 function useDataChangeHandling(
   context: SetupContext,
   page: Ref<PageName>
@@ -287,23 +277,19 @@ function useDataChangeHandling(
   const { emitSelectedDatabasesChangedWithinEvent } = useDatabaseEvents();
   const { emitSelectedMetricsChangedWithinEvent } = useMetricEvents();
   const { emitPageChangedEvent } = useWindowEvents();
-
   // update page
   watchEffect(() => emitPageChangedEvent(page.value));
-
   function handleDatabaseChange(databaseId: string, value: boolean): void {
     emitSelectedDatabasesChangedWithinEvent(page.value, databaseId, value);
   }
   function handleMetricChange(metric: Metric, value: boolean): void {
     emitSelectedMetricsChangedWithinEvent(page.value, metric, value);
   }
-
   return {
     handleDatabaseChange,
     handleMetricChange,
   };
 }
-
 interface UseStaticRangeSelection {
   // variables
   availableStaticPrecisions: { text: string; value: number }[];
@@ -321,26 +307,22 @@ interface UseStaticRangeSelection {
   setStaticTimeRange: () => void;
   staticRange: Ref<boolean>;
 }
-
 function useStaticRangeSelection(
   context: SetupContext
 ): UseStaticRangeSelection {
   const { formatMinutesToSeconds, formatStringsToDate } = useFormatting();
   const { emitStaticRangeChangedEvent } = useWindowEvents();
-
   /* variables */
   const startDate = ref("");
   const startTime = ref("");
   const endDate = ref("");
   const endTime = ref("");
   const staticPrecision = ref(0);
-
   const invalidInput = computed(() =>
     [startDate.value, startTime.value, endDate.value, endTime.value].some(
       (value) => ["", null].includes(value) || isInvalidDateTimeString(value)
     )
   );
-
   /* set max selectable precision, depending on start and end date */
   const maxPrecision = computed(() =>
     !invalidInput.value
@@ -349,7 +331,6 @@ function useStaticRangeSelection(
         Math.pow(10, 3)
       : 60
   );
-
   /* error handling of invalid dates and times */
   const errorMessage = ref("");
   const invalidDates = computed(() => {
@@ -357,7 +338,6 @@ function useStaticRangeSelection(
     // case: input is invalid
     if (invalidInput.value)
       errorMessage.value = "The selected dates or times are invalid.";
-
     // case: precision is invalid
     if (
       formatStringsToDate(endDate.value, endTime.value).getTime() -
@@ -366,21 +346,17 @@ function useStaticRangeSelection(
     )
       errorMessage.value =
         "The selected range is too small for the selected precision.";
-
     // case: selected dates are in the future
     if (
       isInFuture(formatStringsToDate(startDate.value, startTime.value), 3) ||
       isInFuture(formatStringsToDate(endDate.value, endTime.value), 3)
     )
       errorMessage.value = "The selected dates and times are in the future.";
-
     return !!errorMessage.value;
   });
-
   const staticRange = computed(
     () => !!context.root.$selectionController.selectedStaticRange.value
   );
-
   /* range handlers */
   function setStaticTimeRange(): void {
     emitStaticRangeChangedEvent(
@@ -389,11 +365,9 @@ function useStaticRangeSelection(
       staticPrecision.value
     );
   }
-
   function resetTimeRange(): void {
     emitStaticRangeChangedEvent();
   }
-
   return {
     startDate,
     startTime,

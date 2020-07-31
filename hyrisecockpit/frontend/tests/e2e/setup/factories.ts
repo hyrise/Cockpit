@@ -304,7 +304,7 @@ export function fakeDatabaseStatusData(
     id: databaseId,
     hyrise_active: true,
     database_blocked_status: false,
-    worker_pool_status: state ? "running" : "",
+    worker_pool_status: state ? "running" : "closed",
   };
 }
 
