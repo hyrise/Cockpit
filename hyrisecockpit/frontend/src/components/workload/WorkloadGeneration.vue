@@ -249,7 +249,7 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
         selectedWorkloads.value.push(workload);
         frequencies.value[availableWorkloads.value.indexOf(workload)] =
           workloadData.frequency;
-        updatingWorkload(workload);
+        startingWorkload(workload);
       }
     });
   }
@@ -285,42 +285,54 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
     stopWorker().then(() => stopLoading("stop"));
   }
 
-  //TODO: add check for selected workloads
-  function updatingWorkload(workload: string) {
+  function startingWorkload(workload: string) {
     const index = selectedWorkloads.value.indexOf(workload);
     if (weights.value[index] !== undefined) {
       startWorkload(
         workload,
         frequencies.value[availableWorkloads.value.indexOf(workload)],
         weights.value[index]
-      );
+      ).then(() => {
+        updateStartedWorkloads();
+      });
     } else {
       startWorkload(
         workload,
         frequencies.value[availableWorkloads.value.indexOf(workload)],
         {}
       ).then((response: any) => {
+        updateStartedWorkloads();
         if (response.data.weights)
           handleWeightsChange(index, response.data.weights);
       });
     }
   }
-  function updatingWorkloads(): void {
-    Object.values(selectedWorkloads.value).forEach((workload: string) => {
-      updatingWorkload(workload);
+  function updateStartedWorkloads(): void {
+    getWorkloads().then((response: any) => {
+      selectedWorkloads.value = [];
+      Object.values(response.data).forEach((workloadData: any) => {
+        if (workloadData.running) {
+          selectedWorkloads.value.push(
+            getWorkloadName(
+              workloadData.workload_type,
+              workloadData.scale_factor
+            )
+          );
+        }
+      });
     });
   }
   function handleFrequencyChange(index: number, frequency: number): void {
     frequencies.value[index] = frequency;
     if (selectedWorkloads.value.includes(availableWorkloads.value[index])) {
-      updatingWorkload(availableWorkloads.value[index]);
+      startingWorkload(availableWorkloads.value[index]);
     }
   }
   function handleWorkloadChange(workload: string): void {
     const index = selectedWorkloads.value.indexOf(workload);
     if (!selectedWorkloads.value.includes(workload)) {
       selectedWorkloads.value.push(workload);
-      updatingWorkload(workload);
+      startingWorkload(workload);
     } else {
       selectedWorkloads.value.splice(index, 1);
       weights.value.splice(index, 1);
@@ -337,7 +349,7 @@ function useWorkloadActions(context: SetupContext): WorkloadActions {
     changedWeight[key] = weight;
     weights.value.splice(index, 1);
     weights.value.splice(index, 0, changedWeight);
-    updatingWorkload(workload);
+    startingWorkload(workload);
   }
   function handleWeightsChange(
     index: number,
