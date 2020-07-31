@@ -21,14 +21,20 @@
           >
         </v-list-item-content>
         <div class="mt-6">
-          <v-icon
-            size="18"
-            dense
-            color="secondary"
-            data-id="selection-list-button"
-            @click="$emit('toggleSelection')"
-            >mdi-cog-outline</v-icon
-          >
+          <v-tooltip right>
+            <template v-slot:activator="{ on }">
+              <v-icon
+                v-on="on"
+                size="18"
+                dense
+                color="secondary"
+                data-id="selection-list-button"
+                @click="$emit('toggleSelection')"
+                >mdi-cog-outline</v-icon
+              >
+            </template>
+            <span>Monitoring Settings</span>
+          </v-tooltip>
         </div>
       </v-list-item>
       <v-list-item
