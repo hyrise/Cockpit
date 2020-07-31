@@ -32,14 +32,18 @@ export function useModifiedChartData<T>(
   const metricMeta = getMetricMetadata(props.metric);
 
   // modify data on base data change
-  watch(data, () => {
-    if (Object.keys(data.value).length) {
-      modifiedData.value = metricMeta.transformationService(
-        data.value,
-        props.selectedDatabases[0]
-      );
-    }
-  });
+  watch(
+    data,
+    () => {
+      if (Object.keys(data.value).length) {
+        modifiedData.value = metricMeta.transformationService(
+          data.value,
+          props.selectedDatabases[0]
+        );
+      }
+    },
+    { immediate: true }
+  );
 
   return {
     data: modifiedData,
