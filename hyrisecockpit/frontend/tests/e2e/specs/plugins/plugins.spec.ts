@@ -9,6 +9,7 @@ import {
   pluginButton,
   getPluginsByState,
 } from "./helpers";
+import { getGetAlias } from "../../setup/helpers";
 
 const backend = useBackendMock();
 
@@ -19,7 +20,7 @@ let databasesPluginLogs: any = [];
 
 // test plugins overview
 describe("When opening the plugins overview", () => {
-  before(() => {
+  beforeEach(() => {
     cy.setupAppState(backend).then((xhr: any) => {
       databases = xhr.response.body;
       cy.setupData("available_plugins").then((xhr: any) => {
@@ -58,6 +59,7 @@ describe("When opening the plugins overview", () => {
       databases.forEach((database: any, idx: number) => {
         cy.get(selectors.databaseHeader).eq(idx).click();
         cy.get(selectors.pluginLog).eq(idx).click({ force: true });
+        cy.wait("@" + getGetAlias("plugin_log"));
         cy.get(selectors.pluginLogArea)
           .eq(idx)
           .then((textarea: any) => {

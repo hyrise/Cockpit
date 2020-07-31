@@ -17,7 +17,9 @@
         height="45"
       >
         <v-tabs-slider color="primary"></v-tabs-slider>
-        <v-tab class="body-2 font-weight-regular">Databases and Metrics</v-tab>
+        <v-tab class="body-2 font-weight-regular ml-2"
+          >Databases and Metrics</v-tab
+        >
         <v-tab class="body-2 font-weight-regular">Time Range</v-tab>
       </v-tabs>
       <v-divider />
@@ -42,129 +44,99 @@
           </v-container>
         </v-tab-item>
         <v-tab-item>
-          <v-window v-model="window">
-            <v-window-item :value="1">
-              <v-subheader class="mt-2">
-                Continuous Range
-                <v-badge
-                  class="ml-2 mt-1"
-                  :color="!staticRange ? 'green' : 'red'"
-                  dot
-                />
-              </v-subheader>
-              <v-sheet height="350">
-                <v-container class="white container flex">
-                  <v-row class="top-row" no gutters>
-                    <v-col class="flex-item select">
-                      <range-selection :disabled="staticRange" />
-                    </v-col>
-                    <v-col class="flex-item select">
-                      <precision-selection
-                        :available-precisions="availablePrecisions"
-                        :disabled="staticRange"
-                      />
-                    </v-col>
-                  </v-row>
-                </v-container>
-                <v-btn
-                  data-id="reset-time-range"
-                  class="button body-2 font-weight-regular"
-                  color="primary"
-                  block
-                  :disabled="!staticRange"
-                  @click="resetTimeRange"
-                  >Set Continuous Time Range</v-btn
-                >
-              </v-sheet>
-            </v-window-item>
-            <v-window-item :value="2">
-              <v-subheader class="mt-2">
-                Static Range
-                <v-badge
-                  class="ml-2 mt-1"
-                  :color="staticRange ? 'green' : 'red'"
-                  dot
-                />
-              </v-subheader>
-              <v-sheet height="350">
-                <v-container class="white container flex">
-                  <v-row no gutters>
-                    <v-col class="flex-item select remove-margin">
-                      <timestamp-selection
-                        label="Start"
-                        @dateChanged="(newDate) => (startDate = newDate)"
-                        @timeChanged="(newTime) => (startTime = newTime)"
-                      />
-                    </v-col>
-                    <v-col class="flex-item select remove-margin">
-                      <timestamp-selection
-                        label="End"
-                        :min-date="startDate"
-                        :min-time="startTime"
-                        @dateChanged="(newDate) => (endDate = newDate)"
-                        @timeChanged="(newTime) => (endTime = newTime)"
-                      />
-                    </v-col>
-                  </v-row>
-                </v-container>
-                <v-container class="white container flex">
-                  <v-row no gutters class="remove-margin-low">
-                    <v-col class="flex-item select">
-                      <precision-selection
-                        :available-precisions="availableStaticPrecisions"
-                        :global="false"
-                        :max-precision="maxPrecision"
-                        @precisionChanged="
-                          (newPrecision) => (staticPrecision = newPrecision)
-                        "
-                      />
-                    </v-col>
-                  </v-row>
-                </v-container>
-                <v-alert
-                  v-if="!!errorMessage"
-                  type="error"
-                  class="remove-margin-low"
-                >
-                  {{ errorMessage }}
-                </v-alert>
-                <v-btn
-                  data-id="set-static-time-range"
-                  class="body-2 font-weight-regular"
-                  color="primary"
-                  block
-                  :disabled="invalidDates"
-                  @click="setStaticTimeRange"
-                  >Set Static Time Range</v-btn
-                >
-              </v-sheet>
-            </v-window-item>
-          </v-window>
-          <v-divider class="my-2" />
-          <v-card flat>
-            <v-card-actions>
-              <v-spacer v-show="window === 1" />
-              <v-tooltip top>
-                <template v-slot:activator="{ on }">
+          <v-subheader class="subtitle-2 mt-2 ml-1">
+            Continuous Range
+            <v-badge
+              class="ml-2 mt-1"
+              :color="!staticRange ? 'green' : 'red'"
+              dot
+            />
+          </v-subheader>
+          <v-sheet height="100" class="ml-4 mt-n3">
+            <v-container class="white container flex">
+              <v-row class="top-row" no gutters>
+                <v-col class="flex-item select">
+                  <range-selection :disabled="staticRange" />
+                </v-col>
+                <v-col class="flex-item select">
+                  <precision-selection
+                    :available-precisions="availablePrecisions"
+                    :disabled="staticRange"
+                  />
+                </v-col>
+                <v-col>
                   <v-btn
-                    v-on="on"
-                    color="white"
-                    depressed
-                    data-id="change-range-type"
-                    @click="window = window == 1 ? 2 : 1"
+                    data-id="reset-time-range"
+                    class="button body-2 font-weight-regular"
+                    color="primary"
+                    :disabled="!staticRange"
+                    @click="resetTimeRange"
+                    >Apply</v-btn
                   >
-                    <v-icon v-if="window === 2" left>mdi-chevron-left</v-icon>
-                    {{ window == 1 ? "Static" : "Continuous" }}
-                    <v-icon v-if="window === 1" right>mdi-chevron-right</v-icon>
-                  </v-btn>
-                </template>
-                <span
-                  >Select {{ window == 1 ? "Static" : "Continuous" }} Range
-                  Type</span
-                >
-              </v-tooltip>
-            </v-card-actions>
-          </v-card>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-sheet>
+
+          <v-subheader class="subtitle-2 mt-2 ml-1 mt-n3">
+            Static Range
+            <v-badge
+              class="ml-2 mt-1"
+              :color="staticRange ? 'green' : 'red'"
+              dot
+            />
+          </v-subheader>
+          <v-alert
+            v-if="!!errorMessage"
+            type="error"
+            class="mt-n3 ml-3"
+            max-width="510"
+            dense
+            text
+            >{{ errorMessage }}</v-alert
+          >
+          <v-sheet height="200" width="700" class="ml-5 mt-n1">
+            <v-container class="white container flex">
+              <v-row no gutters>
+                <v-col class="flex-item select remove-margin">
+                  <timestamp-selection
+                    label="Start"
+                    @dateChanged="(newDate) => (startDate = newDate)"
+                    @timeChanged="(newTime) => (startTime = newTime)"
+                  />
+                </v-col>
+                <v-col class="flex-item select remove-margin">
+                  <timestamp-selection
+                    label="End"
+                    :min-date="startDate"
+                    :min-time="startTime"
+                    @dateChanged="(newDate) => (endDate = newDate)"
+                    @timeChanged="(newTime) => (endTime = newTime)"
+                  />
+                </v-col>
+                <v-col class="flex-item select">
+                  <precision-selection
+                    :available-precisions="availableStaticPrecisions"
+                    :global="false"
+                    :max-precision="maxPrecision"
+                    @precisionChanged="
+                      (newPrecision) => (staticPrecision = newPrecision)
+                    "
+                  />
+                </v-col>
+                <v-col>
+                  <v-btn
+                    data-id="set-static-time-range"
+                    class="button body-2 font-weight-regular"
+                    color="primary"
+                    :disabled="invalidDates"
+                    @click="setStaticTimeRange"
+                    >Apply</v-btn
+                  >
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-sheet>
         </v-tab-item>
       </v-tabs-items>
     </v-card-text>
@@ -183,7 +155,6 @@ import {
   onMounted,
   watchEffect,
 } from "@vue/composition-api";
-
 import { Database } from "@/types/database";
 import DatabaseSelection from "@/components/selection/DatabaseSelection.vue";
 import MetricSelection from "@/components/selection/MetricSelection.vue";
@@ -199,11 +170,9 @@ import { PageName } from "@/types/views";
 import { Metric } from "@/types/metrics";
 import { useFormatting } from "@/meta/formatting";
 import { isInvalidDateTimeString, isInFuture } from "@/utils/methods";
-
 interface Props {
   open: boolean;
 }
-
 interface Data
   extends UseGlobalInstances,
     UseDataChangeHandling,
@@ -212,7 +181,6 @@ interface Data
   tab: Ref<number>;
   window: Ref<number>;
 }
-
 export default defineComponent({
   components: {
     DatabaseSelection,
@@ -228,8 +196,11 @@ export default defineComponent({
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const page = computed(() => context.root.$route.name! as PageName);
-
+    const page = computed(() => {
+      const pageName = context.root.$route.name!;
+      if (pageName === "home") return "overview";
+      return pageName as PageName;
+    });
     return {
       pageName: computed(
         () => page.value[0].toUpperCase() + page.value.substring(1)
@@ -242,14 +213,12 @@ export default defineComponent({
     };
   },
 });
-
 interface UseGlobalInstances {
   availableMetrics: Ref<readonly Metric[]>;
   availablePrecisions: { text: string; value: number }[];
   selectedDatabases: Ref<readonly string[]>;
   selectedMetrics: Ref<readonly Metric[]>;
 }
-
 function useGlobalInstances(
   context: SetupContext,
   page: Ref<PageName>
@@ -271,12 +240,10 @@ function useGlobalInstances(
     selectedMetrics: context.root.$selectionController.selectedMetrics,
   };
 }
-
 interface UseDataChangeHandling {
   handleDatabaseChange: (databaseId: string, value: boolean) => void;
   handleMetricChange: (metric: Metric, value: boolean) => void;
 }
-
 function useDataChangeHandling(
   context: SetupContext,
   page: Ref<PageName>
@@ -284,23 +251,19 @@ function useDataChangeHandling(
   const { emitSelectedDatabasesChangedWithinEvent } = useDatabaseEvents();
   const { emitSelectedMetricsChangedWithinEvent } = useMetricEvents();
   const { emitPageChangedEvent } = useWindowEvents();
-
   // update page
   watchEffect(() => emitPageChangedEvent(page.value));
-
   function handleDatabaseChange(databaseId: string, value: boolean): void {
     emitSelectedDatabasesChangedWithinEvent(page.value, databaseId, value);
   }
   function handleMetricChange(metric: Metric, value: boolean): void {
     emitSelectedMetricsChangedWithinEvent(page.value, metric, value);
   }
-
   return {
     handleDatabaseChange,
     handleMetricChange,
   };
 }
-
 interface UseStaticRangeSelection {
   // variables
   availableStaticPrecisions: { text: string; value: number }[];
@@ -318,26 +281,22 @@ interface UseStaticRangeSelection {
   setStaticTimeRange: () => void;
   staticRange: Ref<boolean>;
 }
-
 function useStaticRangeSelection(
   context: SetupContext
 ): UseStaticRangeSelection {
   const { formatMinutesToSeconds, formatStringsToDate } = useFormatting();
   const { emitStaticRangeChangedEvent } = useWindowEvents();
-
   /* variables */
   const startDate = ref("");
   const startTime = ref("");
   const endDate = ref("");
   const endTime = ref("");
   const staticPrecision = ref(0);
-
   const invalidInput = computed(() =>
     [startDate.value, startTime.value, endDate.value, endTime.value].some(
       (value) => ["", null].includes(value) || isInvalidDateTimeString(value)
     )
   );
-
   /* set max selectable precision, depending on start and end date */
   const maxPrecision = computed(() =>
     !invalidInput.value
@@ -346,7 +305,6 @@ function useStaticRangeSelection(
         Math.pow(10, 3)
       : 60
   );
-
   /* error handling of invalid dates and times */
   const errorMessage = ref("");
   const invalidDates = computed(() => {
@@ -354,7 +312,6 @@ function useStaticRangeSelection(
     // case: input is invalid
     if (invalidInput.value)
       errorMessage.value = "The selected dates or times are invalid.";
-
     // case: precision is invalid
     if (
       formatStringsToDate(endDate.value, endTime.value).getTime() -
@@ -363,21 +320,17 @@ function useStaticRangeSelection(
     )
       errorMessage.value =
         "The selected range is too small for the selected precision.";
-
     // case: selected dates are in the future
     if (
       isInFuture(formatStringsToDate(startDate.value, startTime.value), 3) ||
       isInFuture(formatStringsToDate(endDate.value, endTime.value), 3)
     )
       errorMessage.value = "The selected dates and times are in the future.";
-
     return !!errorMessage.value;
   });
-
   const staticRange = computed(
     () => !!context.root.$selectionController.selectedStaticRange.value
   );
-
   /* range handlers */
   function setStaticTimeRange(): void {
     emitStaticRangeChangedEvent(
@@ -386,11 +339,9 @@ function useStaticRangeSelection(
       staticPrecision.value
     );
   }
-
   function resetTimeRange(): void {
     emitStaticRangeChangedEvent();
   }
-
   return {
     startDate,
     startTime,

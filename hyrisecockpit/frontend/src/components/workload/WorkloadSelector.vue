@@ -1,17 +1,24 @@
 <template>
   <div>
-    <v-checkbox
-      v-for="workload in availableWorkloads"
-      v-model="workloads"
-      class="mt-0 pt-0"
-      :key="workload"
-      :label="workload"
-      :value="workload"
-      :disabled="!loadedWorkloads.includes(workload) || disabled"
-      data-id="select-workload"
-      @change="$emit('change', workload)"
-    >
-    </v-checkbox>
+    <v-tooltip v-for="workload in availableWorkloads" :key="workload" left>
+      <template v-slot:activator="{ on }">
+        <v-checkbox
+          v-on="on"
+          v-model="workloads"
+          class="mt-0 pt-0"
+          :label="workload"
+          :value="workload"
+          :disabled="!loadedWorkloads.includes(workload) || disabled"
+          data-id="select-workload"
+          @change="$emit('change', workload)"
+          :color="colorValueDefinition.hyriselogo"
+        >
+        </v-checkbox>
+      </template>
+      <span>
+        {{ selectedWorkloads.includes(workload) ? "Stop" : "Start" }}
+      </span>
+    </v-tooltip>
   </div>
 </template>
 <script lang="ts">
@@ -22,6 +29,7 @@ import {
   ref,
   watch,
 } from "@vue/composition-api";
+import { colorValueDefinition } from "../../meta/colors";
 
 interface Props {
   availableWorkloads: string[];
@@ -31,6 +39,7 @@ interface Props {
 }
 interface Data {
   workloads: Ref<string[]>;
+  colorValueDefinition: Record<string, string>;
 }
 
 export default defineComponent({
@@ -64,6 +73,7 @@ export default defineComponent({
     );
     return {
       workloads,
+      colorValueDefinition,
     };
   },
 });

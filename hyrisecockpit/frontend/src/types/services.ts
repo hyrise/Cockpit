@@ -40,8 +40,8 @@ export interface WorkloadService {
   getAllAvailableWorkloads: () => Promise<void>;
   loadWorkload: (workload: string) => Promise<void>;
   deleteWorkload: (workload: string) => Promise<void>;
-  startWorker: () => Promise<void>;
-  stopWorker: () => Promise<void>;
+  startWorkers: () => Promise<void>;
+  stopWorkers: () => Promise<void>;
   getWorkload: (workload: string) => Promise<void>;
   getWorkloads: () => Promise<void>;
   startWorkload: (
