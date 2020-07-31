@@ -85,7 +85,7 @@ class MetricService:
                     DetailedQueryEntry(
                         benchmark=tags["benchmark"],
                         query_number=tags["query_no"],
-                        throughput=list(result[table, tags])[0]["throughput"],
+                        throughput=list(result[table, tags])[0]["throughput"] / 5.0,
                         latency=list(result[table, tags])[0]["latency"],
                     )
                     for table, tags in list(result.keys())

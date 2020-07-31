@@ -141,7 +141,7 @@ class DetailedQueryInformationEntrySchema(Schema):
         required=True,
         example=5,
     )
-    throughput = Integer(
+    throughput = Float(
         title="throughput",
         description="Number of successfully executed queries in given time interval.",
         required=True,
