@@ -83,15 +83,38 @@ class CockpitBackend:
         url = f"http://{self._backend_host}:{self._backend_port}/control/database/"
         return delete(url, json=body, timeout=REQUEST_TIMEOUT)
 
-    def start_workload(self, workload_folder: str, frequency: int):
+    def load_tables(self, workload_type: str, scalefactor: float):
+        """Load tables for the benchmark."""
+        body = {"scale_factor": scalefactor, "workload_type": workload_type}
+        url = f"http://{self._backend_host}:{self._backend_port}/control/database/workload_tables"
+        return post(url, json=body, timeout=REQUEST_TIMEOUT)
+
+    def delete_tables(self, workload_type: str, scalefactor: float):
+        """Delete tables for the benchmark."""
+        body = {"scale_factor": scalefactor, "workload_type": workload_type}
+        url = f"http://{self._backend_host}:{self._backend_port}/control/database/workload_tables"
+        return delete(url, json=body, timeout=REQUEST_TIMEOUT)
+
+    def start_workload(
+        self, workload_type: str, scalefactor: float, frequency: int, weights=None
+    ):
         """Start workload execution."""
-        body = {"folder_name": workload_folder, "frequency": frequency}
+        if not weights:
+            weights = {}
+        body = {
+            "scale_factor": scalefactor,
+            "workload_type": workload_type,
+            "weights": weights,
+            "frequency": frequency,
+        }
         url = f"http://{self._backend_host}:{self._backend_port}/workload/"
         return post(url, json=body, timeout=REQUEST_TIMEOUT)
 
-    def stop_workload(self, workload_folder: str):
+    def stop_workload(self, workload_type: str):
         """Stop workload execution."""
-        url = f"http://{self._backend_host}:{self._backend_port}/workload/{workload_folder}"
+        url = (
+            f"http://{self._backend_host}:{self._backend_port}/workload/{workload_type}"
+        )
         return delete(url, timeout=REQUEST_TIMEOUT)
 
     def start_workers(self):
