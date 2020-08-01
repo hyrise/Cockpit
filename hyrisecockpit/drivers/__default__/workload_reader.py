@@ -20,10 +20,7 @@ class WorkloadReader:
     @classmethod
     def get(cls, query_path: str) -> Optional[Dict[str, List[str]]]:
         """Get a workload from the workload folder. Returns the query names and a list of all queries."""
-        queries = {}
-        for file_name in listdir(query_path):
-            query_type = file_name.split(".sql")[0]
-            query_file_path = f"{query_path}/{file_name}"
-            queries[query_type] = cls._read_query(query_file_path)
-
-        return queries
+        return {
+            file_name.split(".sql")[0]: cls._read_query(f"{query_path}/{file_name}")
+            for file_name in listdir(query_path)
+        }
