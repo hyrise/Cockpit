@@ -671,7 +671,7 @@ class TestDatabaseManager:
         assert response["body"]["database_status"][0]["hyrise_active"]
         assert response["header"]["status"] == 200
 
-    def test_calls_workoad_tables_status(
+    def test_calls_workload_tables_status(
         self, database_manager: DatabaseManager
     ) -> None:
         """Test calls workload status."""
@@ -684,15 +684,15 @@ class TestDatabaseManager:
             "completely_loaded": False,
             "database_representation": {"Gary": "gary_rock_1", "Clark": "clark_rock_1"},
         }
-        fake_database.get_workoad_tables_status.return_value = (
+        fake_database.get_workload_tables_status.return_value = (
             fake_status_workload_tables
         )
         database_manager._databases = {"fake_db_id": fake_database}
 
-        response = database_manager._call_workoad_tables_status({})
-        assert response["body"]["workoad_tables"][0]["id"] == "fake_db_id"
+        response = database_manager._call_workload_tables_status({})
+        assert response["body"]["workload_tables"][0]["id"] == "fake_db_id"
         assert (
-            response["body"]["workoad_tables"][0]["workoad_tables_status"]
+            response["body"]["workload_tables"][0]["workload_tables_status"]
             == fake_status_workload_tables
         )
         assert response["header"]["status"] == 200

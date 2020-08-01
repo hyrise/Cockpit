@@ -426,7 +426,7 @@ class TestDatabase(object):
             },
         ]
 
-        results: List = database._workoad_tables_status(fake_loaded_tables)
+        results: List = database._workload_tables_status(fake_loaded_tables)
         assert results == expected
 
     def test_gets_worker_pool_status(self, database: Database) -> None:
@@ -925,10 +925,10 @@ class TestDatabase(object):
         ]
         database.get_loaded_tables_in_database = MagicMock()  # type: ignore
         database.get_loaded_tables_in_database.return_value = ["table1", "table2"]
-        database._workoad_tables_status = MagicMock()  # type: ignore
-        database._workoad_tables_status.return_value = fake_status_of_workload
-        loaded_workloads = database.get_workoad_tables_status()
+        database._workload_tables_status = MagicMock()  # type: ignore
+        database._workload_tables_status.return_value = fake_status_of_workload
+        loaded_workloads = database.get_workload_tables_status()
 
         database.get_loaded_tables_in_database.assert_called_once()
-        database._workoad_tables_status.assert_called_once_with(["table1", "table2"])
+        database._workload_tables_status.assert_called_once_with(["table1", "table2"])
         assert loaded_workloads == fake_status_of_workload
