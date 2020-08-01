@@ -88,8 +88,10 @@ class TpccDriver:
                 cursor, transaction_type, scalefactor, parameters
             )
         except SerializationFailure:
+            endts = time_ns()
             commited = False
             cursor.reset()
-        endts = time_ns()
+        else:
+            endts = time_ns()
         latency = endts - startts
         return endts, latency, scalefactor, task["transaction_type"], commited
