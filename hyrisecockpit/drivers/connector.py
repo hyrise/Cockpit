@@ -40,7 +40,9 @@ class Connector:
     @classmethod
     def get_workload(cls):
         """Return a dictionary with workload objects."""
-        return {key: Workload(value) for key, value in get_workload_drivers().items()}
+        return {
+            key: Workload(value) for key, value in cls.get_workload_drivers().items()
+        }
 
     @classmethod
     def get_workload_drivers(cls):
