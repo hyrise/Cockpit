@@ -21,5 +21,5 @@ class DetailedWorkloadInterface(BaseWorkloadInterface):
     """Detailed interface of a Workload."""
 
     running: bool
-    supported_scale_factors: List
-    default_weights: Dict
+    supported_scale_factors: List[float]
+    default_weights: Dict[str, float]
