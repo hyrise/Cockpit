@@ -29,7 +29,7 @@ class TablesStatus:
         loaded_tables: List[str],
         missing_tables: List[str],
         completely_loaded: bool,
-        database_representation: Dict,
+        database_representation: Dict[str, str],
     ):
         """Initialize a tables status model."""
         self.workload_type: str = workload_type
