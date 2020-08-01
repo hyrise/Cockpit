@@ -21,7 +21,9 @@ export function assertBenchmarks(statusData: any[]): void {
     cy.get(selectors.selectWorkloadData)
       .eq(idx)
       .should(
-        statusData[0].loaded_benchmarks.includes(benchmark)
+        !!statusData[0].workload_tables_status.find(
+          (workload: any) => workload.workload_type === benchmark
+        )
           ? "be.checked"
           : "not.be.checked"
       );
@@ -29,7 +31,9 @@ export function assertBenchmarks(statusData: any[]): void {
     cy.get(selectors.selectWorkload)
       .eq(idx)
       .should(
-        statusData[0].loaded_benchmarks.includes(benchmark)
+        !!statusData[0].workload_tables_status.find(
+          (workload: any) => workload.workload_type === benchmark
+        )
           ? "not.be.disabled"
           : "be.disabled"
       );
@@ -42,7 +46,7 @@ export function assertWorkloadChange(
   frequency: number = 200,
   weights?: Object
 ): void {
-  expect(requestData.folder_name).to.eq(benchmark);
+  expect(requestData.workload_type).to.eq(benchmark);
   expect(requestData.frequency).to.eq(frequency);
   if (weights) expect(requestData.weights).to.eq(weights);
 }
@@ -51,7 +55,7 @@ export function assertWorkloadDataChange(
   requestData: any,
   benchmark: string
 ): void {
-  expect(requestData.folder_name).to.eq(benchmark);
+  expect(requestData.workload_type).to.eq(benchmark);
 }
 
 export function assertWorkloadEqualizer(benchmark: string): void {

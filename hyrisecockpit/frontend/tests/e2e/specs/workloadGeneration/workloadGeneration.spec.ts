@@ -6,7 +6,6 @@ import {
   getDeleteAlias,
   getGetAlias,
   benchmarks,
-  getPutAlias,
 } from "../../setup/helpers";
 import {
   assertBenchmarks,
@@ -26,7 +25,7 @@ let databaseStatus: any[] = [];
 describe("opening workload generation", () => {
   beforeEach(() => {
     cy.setupAppState(backend).then(() => {
-      cy.setupData("status_benchmarks").then((xhr: any) => {
+      cy.setupData("status_workloads").then((xhr: any) => {
         benchmarkStatus = xhr.response.body;
         cy.setupData("status_database").then((xhr: any) => {
           databaseStatus = xhr.response.body;
@@ -44,7 +43,8 @@ describe("opening workload generation", () => {
   // test start and stop workload
   describe("when clicking the start and stop buttons", () => {
     it("will start and stop workload", () => {
-      const activeBenchmark = benchmarkStatus[0].loaded_benchmarks[0];
+      const activeBenchmark =
+        benchmarkStatus[0].workload_tables_status[0].workload_type;
 
       cy.get(viewSelectors.workloadGenerationButton).click();
       cy.wait(1000);
@@ -58,7 +58,6 @@ describe("opening workload generation", () => {
       cy.get("@" + getPostAlias("workload")).should((xhr: any) => {
         assertWorkloadChange(xhr.request.body, activeBenchmark);
       });
-      cy.wait("@" + getPutAlias("workload"));
 
       cy.get(selectors.startWorkload).click();
       cy.wait("@" + getPostAlias("worker"));
@@ -86,8 +85,6 @@ describe("opening workload generation", () => {
       cy.numberOfRequests(getDeleteAlias("worker")).should("eq", 1);
       cy.numberOfRequests(getDeleteAlias("workload")).should("eq", 1);
 
-      cy.numberOfRequests(getPutAlias("workload")).should("eq", 1);
-
       // update tmp state
       cy.updateAppState(backend, {
         request: "workload",
@@ -103,7 +100,10 @@ describe("opening workload generation", () => {
   describe("when loading tables via button", () => {
     it("will load the correct tables", () => {
       const deactiveBenchmarks = benchmarks.filter(
-        (type) => !benchmarkStatus[0].loaded_benchmarks.includes(type)
+        (type) =>
+          !benchmarkStatus[0].workload_tables_status.find(
+            (workload: any) => workload.workload_type === type
+          )
       );
       const index = generateRandomInt(0, deactiveBenchmarks.length);
 
@@ -114,20 +114,20 @@ describe("opening workload generation", () => {
         .eq(getBenchmarkIndex(deactiveBenchmarks[index]))
         .check({ force: true });
 
-      cy.wait("@" + getPostAlias("benchmark_tables"));
-      cy.get("@" + getPostAlias("benchmark_tables")).then((xhr: any) => {
+      cy.wait("@" + getPostAlias("workload_tables"));
+      cy.get("@" + getPostAlias("workload_tables")).then((xhr: any) => {
         assertWorkloadDataChange(xhr.request.body, deactiveBenchmarks[index]);
       });
-      cy.numberOfRequests(getPostAlias("benchmark_tables")).should("eq", 1);
+      cy.numberOfRequests(getPostAlias("workload_tables")).should("eq", 1);
 
       // update tmp state
       cy.updateAppState(backend, {
-        request: "benchmark_tables",
+        request: "workload_tables",
         id: deactiveBenchmarks[index],
         method: "POST",
       });
 
-      cy.setupData("status_benchmarks").then((xhr: any) => {
+      cy.setupData("status_workloads").then((xhr: any) => {
         benchmarkStatus = xhr.response.body;
         cy.setupData("status_database").then((xhr: any) => {
           assertBenchmarks(benchmarkStatus);
@@ -136,7 +136,7 @@ describe("opening workload generation", () => {
 
       // clean tmp state
       cy.cleanAppState(backend, {
-        request: "benchmark_tables",
+        request: "workload_tables",
         id: deactiveBenchmarks[index],
         method: "DELETE",
       });
@@ -146,7 +146,8 @@ describe("opening workload generation", () => {
   // test unload tables
   describe("when unloading tables via button", () => {
     it("will unload the correct tables", () => {
-      const activeBenchmark = benchmarkStatus[0].loaded_benchmarks[0];
+      const activeBenchmark =
+        benchmarkStatus[0].workload_tables_status[0].workload_type;
       cy.get(viewSelectors.workloadGenerationButton).click();
 
       // test unload table
@@ -154,20 +155,20 @@ describe("opening workload generation", () => {
         .eq(getBenchmarkIndex(activeBenchmark))
         .uncheck({ force: true });
 
-      cy.wait("@" + getDeleteAlias("benchmark_tables"));
-      cy.get("@" + getDeleteAlias("benchmark_tables")).then((xhr: any) => {
+      cy.wait("@" + getDeleteAlias("workload_tables"));
+      cy.get("@" + getDeleteAlias("workload_tables")).then((xhr: any) => {
         assertWorkloadDataChange(xhr.request.body, activeBenchmark);
       });
-      cy.numberOfRequests(getDeleteAlias("benchmark_tables")).should("eq", 1);
+      cy.numberOfRequests(getDeleteAlias("workload_tables")).should("eq", 1);
 
       // update tmp state
       cy.updateAppState(backend, {
-        request: "benchmark_tables",
+        request: "workload_tables",
         id: activeBenchmark,
         method: "DELETE",
       });
 
-      cy.setupData("status_benchmarks").then((xhr: any) => {
+      cy.setupData("status_workloads").then((xhr: any) => {
         benchmarkStatus = xhr.response.body;
         cy.setupData("status_database").then((xhr: any) => {
           assertBenchmarks(benchmarkStatus);
@@ -176,7 +177,7 @@ describe("opening workload generation", () => {
 
       // clean tmp state
       cy.cleanAppState(backend, {
-        request: "benchmark_tables",
+        request: "workload_tables",
         id: activeBenchmark,
         method: "POST",
       });
@@ -186,7 +187,8 @@ describe("opening workload generation", () => {
   // test equalizer
   describe("when opening the equalizer", () => {
     it("will show equalizers for every selected workload", () => {
-      const activeBenchmark = benchmarkStatus[0].loaded_benchmarks[0];
+      const activeBenchmark =
+        benchmarkStatus[0].workload_tables_status[0].workload_type;
       cy.get(viewSelectors.workloadGenerationButton).click();
       cy.wait(1000);
 
