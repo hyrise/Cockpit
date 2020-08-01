@@ -217,9 +217,9 @@ class Database(object):
         else:
             return [row[0] for row in rows] if rows else []
 
-    def _workoad_tables_status(self, tables_in_database) -> List:
+    def _workload_tables_status(self, tables_in_database) -> List:
         """Get list of all benchmarks which are completely loaded."""
-        workoad_tables_status = []
+        workload_tables_status = []
         for workload_type, driver in self._workload_drivers.items():
             for scale_factor in driver.get_scalefactors():
                 loaded_tables = []
@@ -240,14 +240,14 @@ class Database(object):
                     "completely_loaded": loaded,
                     "database_representation": workload_tables,
                 }
-                workoad_tables_status.append(table)
-        return workoad_tables_status
+                workload_tables_status.append(table)
+        return workload_tables_status
 
-    def get_workoad_tables_status(self) -> List:
+    def get_workload_tables_status(self) -> List:
         """Get loaded benchmark data."""
         tables_in_database: List = self.get_loaded_tables_in_database()
-        workoad_tables_status = self._workoad_tables_status(tables_in_database)
-        return workoad_tables_status
+        workload_tables_status = self._workload_tables_status(tables_in_database)
+        return workload_tables_status
 
     def start_worker(self) -> bool:
         """Start worker."""

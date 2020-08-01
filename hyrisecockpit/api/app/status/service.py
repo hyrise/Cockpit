@@ -47,9 +47,9 @@ class StatusService:
             Request(header=Header(message="workload tables status"), body={})
         )
         workload_tables: List[WorkloadTablesStatus] = []
-        for database in response["body"]["workoad_tables"]:
+        for database in response["body"]["workload_tables"]:
             workload_tables_status = [
-                TablesStatus(**status) for status in database["workoad_tables_status"]
+                TablesStatus(**status) for status in database["workload_tables_status"]
             ]
             workload_tables.append(
                 WorkloadTablesStatus(database["id"], workload_tables_status)

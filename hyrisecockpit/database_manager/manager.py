@@ -87,7 +87,7 @@ class DatabaseManager(object):
             "set plugin setting": (self._call_plugin_setting, None),
             "execute sql query": (self._call_execute_sql_query, None),
             "database status": (self._call_database_status, None),
-            "workload tables status": (self._call_workoad_tables_status, None),
+            "workload tables status": (self._call_workload_tables_status, None),
         }
 
     def _call_add_database(self, body: Body) -> Response:
@@ -266,15 +266,15 @@ class DatabaseManager(object):
         response["body"]["database_status"] = status
         return response
 
-    def _call_workoad_tables_status(self, body: Body) -> Response:
+    def _call_workload_tables_status(self, body: Body) -> Response:
         status = []
         for database_id, database in self._databases.items():
-            workoad_tables_status = database.get_workoad_tables_status()
+            workload_tables_status = database.get_workload_tables_status()
             status.append(
-                {"id": database_id, "workoad_tables_status": workoad_tables_status}
+                {"id": database_id, "workload_tables_status": workload_tables_status}
             )
         response = get_response(200)
-        response["body"]["workoad_tables"] = status
+        response["body"]["workload_tables"] = status
         return response
 
     def start(self) -> None:
