@@ -12,10 +12,7 @@ def get_loaded_tables(tables: List[str], connection_factory) -> List[str]:
             cur.execute("select * from meta_tables;", None)
             results = cur.fetchall()
             all_loaded_tables = [row[0] for row in results] if results else []
-            for table in tables:
-                if table in all_loaded_tables:
-                    loaded_tables.append(table)
-
+            loaded_tables = [table for table in tables if table in all_loaded_tables]
     except (DatabaseError, InterfaceError):
         return []
     else:
