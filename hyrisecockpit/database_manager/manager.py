@@ -267,12 +267,13 @@ class DatabaseManager(object):
         return response
 
     def _call_workload_tables_status(self, body: Body) -> Response:
-        status = []
-        for database_id, database in self._databases.items():
-            workload_tables_status = database.get_workload_tables_status()
-            status.append(
-                {"id": database_id, "workload_tables_status": workload_tables_status}
-            )
+        status = [
+            {
+                "id": database_id,
+                "workload_tables_status": database.get_workload_tables_status(),
+            }
+            for database_id, database in self._databases.items()
+        ]
         response = get_response(200)
         response["body"]["workload_tables"] = status
         return response
