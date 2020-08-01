@@ -208,7 +208,6 @@ class Database(object):
 
     def get_loaded_tables_in_database(self) -> List[Dict[str, str]]:
         """Return already loaded tables."""
-        # TODO Adjust
         try:
             with self._connection_factory.create_cursor() as cur:
                 cur.execute("select * from meta_tables;", None)
