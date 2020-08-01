@@ -91,7 +91,7 @@ def detailed_workload(
     weights: Dict[str, float],
     running: bool,
     supported_scale_factors: List[float],
-    default_weights: Dict[str, int],
+    default_weights: Dict[str, float],
 ) -> DetailedWorkload:
     """Return a DetailedWorkload model."""
     return DetailedWorkload(
