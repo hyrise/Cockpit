@@ -246,8 +246,7 @@ class Database(object):
     def get_workload_tables_status(self) -> List:
         """Get loaded benchmark data."""
         tables_in_database: List = self.get_loaded_tables_in_database()
-        workload_tables_status = self._workload_tables_status(tables_in_database)
-        return workload_tables_status
+        return self._workload_tables_status(tables_in_database)
 
     def start_worker(self) -> bool:
         """Start worker."""
