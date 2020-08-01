@@ -170,7 +170,7 @@ class Database(object):
         """Delete tables."""
         workload_type = workload["workload_type"]
         scale_factor = workload["scale_factor"]
-        if workload_type not in list(self._workload_drivers.keys()):
+        if workload_type not in self._workload_drivers:
             return False
         elif (
             scale_factor not in self._workload_drivers[workload_type].get_scalefactors()
