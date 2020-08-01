@@ -37,7 +37,7 @@ class TablesStatus:
         self.loaded_tables: List[str] = loaded_tables
         self.missing_tables: List[str] = missing_tables
         self.completely_loaded: bool = completely_loaded
-        self.database_representation: Dict = database_representation
+        self.database_representation: Dict[str, str] = database_representation
 
 
 class WorkloadTablesStatus:
