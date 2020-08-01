@@ -91,8 +91,8 @@ class TestStatusService:
         }
         fake_response = {
             "body": {
-                "workoad_tables": [
-                    {"id": "fake_id", "workoad_tables_status": [fake_workload_table]}
+                "workload_tables": [
+                    {"id": "fake_id", "workload_tables_status": [fake_workload_table]}
                 ]
             }
         }
