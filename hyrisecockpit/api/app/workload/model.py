@@ -45,8 +45,8 @@ class DetailedWorkload(BaseWorkload):
         scale_factor: float,
         weights: Dict[str, float],
         running: bool,
-        supported_scale_factors: List,
-        default_weights: Dict,
+        supported_scale_factors: List[float],
+        default_weights: Dict[str, float],
     ):
         """Initialize a detailed Workload model."""
         self.running: bool = running
