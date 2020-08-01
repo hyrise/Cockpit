@@ -66,7 +66,7 @@ class TestWorkload:
         worklaod.frequency = 200
         worklaod.weights = {"01": 99, "02": 99}
 
-        worklaod.resert()
+        worklaod.reset()
 
         assert worklaod.weights == {"01": 2, "02": 1}
         assert worklaod.frequency == 0
