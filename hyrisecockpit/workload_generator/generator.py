@@ -106,7 +106,7 @@ class WorkloadGenerator(object):
         if workload is None:
             return get_response(404)
         workload.running = False
-        workload.resert()
+        workload.reset()
         response = get_response(200)
         response["body"]["workload"] = workload_type
         return response

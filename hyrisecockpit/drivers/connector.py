@@ -27,7 +27,7 @@ class Workload:
         self.scale_factor = scale_factor
         self.frequency = frequency
 
-    def resert(self):
+    def reset(self):
         """Reset attributes."""
         self.scale_factor = 0
         self.weights = self.driver.get_default_weights()
