@@ -59,8 +59,7 @@ class TpccDriver:
     def generate(self, scalefactor, frequency, weights) -> List[DefaultTask]:
         """Generate tpch tasks."""
         self._parameter_generator.apply_scalefactor(scalefactor)
-        tasks = self._parameter_generator.generate_transactions(frequency, weights)
-        return tasks
+        return self._parameter_generator.generate_transactions(frequency, weights)
 
     def get_table_names(self, scalefactor):
         """Return table name and representation in database."""
