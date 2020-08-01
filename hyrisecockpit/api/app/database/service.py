@@ -66,15 +66,13 @@ class DatabaseService:
     def get_available_workload_tables(cls) -> AvailableWorkloadTables:
         """Return all available workloads."""
         drivers = Connector.get_workload_drivers()
-        workload_tables = []
-        for workload_type, driver in drivers.items():
-            for scale_factor in driver.scale_factors:
-                workload_tables.append(
-                    WorkloadTables(
-                        workload_type=workload_type, scale_factor=scale_factor
-                    )
-                )
-        return AvailableWorkloadTables(workload_tables=workload_tables)
+        return AvailableWorkloadTables(
+            workload_tables=[
+                WorkloadTables(workload_type=workload_type, scale_factor=scale_factor)
+                for workload_type, driver in drivers.items()
+                for scale_factor in driver.scale_factors
+            ]
+        )
 
     @classmethod
     def load_workload_tables(cls, interface: WorkloadTablesInterface) -> int:
