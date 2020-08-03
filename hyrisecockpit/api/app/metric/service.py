@@ -69,7 +69,7 @@ class MetricService:
         """Return detailed throughput and latency information from the stored queries."""
         currentts = time_ns()
         offset = 3_000_000_000
-        interval_length = 1_000_000_000
+        interval_length = 5_000_000_000
         startts = currentts - offset - interval_length
         endts = currentts - offset
         response: List[DetailedQueryInformation] = []

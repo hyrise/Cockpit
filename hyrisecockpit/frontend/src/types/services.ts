@@ -40,8 +40,8 @@ export interface WorkloadService {
   getDatabaseStatus: () => Promise<string[]>;
   loadWorkloadData: (workload: Workload) => Promise<void>;
   deleteWorkloadData: (workload: Workload) => Promise<void>;
-  startWorker: () => Promise<void>;
-  stopWorker: () => Promise<void>;
+  startWorkers: () => Promise<void>;
+  stopWorkers: () => Promise<void>;
   getWorkload: (workload: Workload) => Promise<void>;
   getWorkloads: () => Promise<void>;
   startWorkload: (workload: Workload, frequency: number) => Promise<void>;
@@ -54,13 +54,3 @@ export interface WorkloadService {
 }
 
 export type FetchType = "read" | "modify";
-
-export type Base =
-  | "system_data"
-  | "throughput"
-  | "storage"
-  | "chunks_data"
-  | "latency"
-  | "queue_length"
-  | "workload_statement_information"
-  | "workload_operator_information";
