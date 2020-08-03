@@ -87,7 +87,7 @@ class MetricService:
                         query_number=tags["query_no"],
                         throughput=list(result[table, tags])[0]["throughput"],
                         latency=list(result[table, tags])[0]["latency"],
-                        scalefactor=tags["scalefactor"],
+                        scale_factor=tags["scalefactor"],
                     )
                     for table, tags in list(result.keys())
                 ]

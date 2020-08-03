@@ -11,12 +11,12 @@ class DetailedQueryEntry:
         query_number: str,
         throughput: float,
         latency: float,
-        scalefactor: float,
+        scale_factor: float,
     ):
         """Initialize a DetailedQueryEntry model."""
         self.benchmark: str = benchmark
         self.query_number: str = query_number
-        self.scalefactor: float = scalefactor
+        self.scale_factor: float = scale_factor
         self.throughput: float = throughput
         self.latency: float = latency
 

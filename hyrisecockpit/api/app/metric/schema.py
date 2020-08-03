@@ -141,8 +141,8 @@ class DetailedQueryInformationEntrySchema(Schema):
         required=True,
         example=5,
     )
-    scalefactor = Float(
-        title="scalefactor",
+    scale_factor = Float(
+        title="Scale factor",
         description="Scalefactor of the benachmark.",
         required=True,
         example=1.0,
