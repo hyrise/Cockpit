@@ -44,7 +44,7 @@ function getQueryInformationData(data: any, primaryKey: string = ""): any {
   return entry.detailed_query_information.map((query: any) => {
     return {
       queryNumber: query.query_number,
-      workloadType: getWorkloadName(query.benchmark, query.scalefactor),
+      workloadType: getWorkloadName(query.benchmark, query.scale_factor),
       latency: roundNumber(query.latency, Math.pow(10, 6)),
       throughput: query.throughput,
     };
