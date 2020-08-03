@@ -23,7 +23,7 @@ class TestMetricModel:
             query_number="query_number",
             throughput=42.2,
             latency=2.2,
-            scalefactor=1.0,
+            scale_factor=1.0,
         )
 
     def test_creates_detailed_query_information(self) -> None:
@@ -33,7 +33,7 @@ class TestMetricModel:
             query_number="query_number",
             throughput=42.2,
             latency=2.2,
-            scalefactor=1.0,
+            scale_factor=1.0,
         )
         assert DetailedQueryInformation(
             id="What", detailed_query_information=[detailed_query_entry]
