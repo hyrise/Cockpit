@@ -83,9 +83,9 @@ const requestToId: Partial<Record<
   { id: string; idInUrl?: boolean }
 >> = {
   database: { id: "id" },
-  benchmark_tables: { id: "folder_name" },
+  workload_tables: { id: "workload_type" },
   plugin: { id: "name" },
-  workload: { id: "folder_name", idInUrl: true },
+  workload: { id: "workload_type", idInUrl: true },
 };
 
 /** Map request data to entity ID */

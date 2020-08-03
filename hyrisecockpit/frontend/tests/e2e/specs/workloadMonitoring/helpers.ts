@@ -8,12 +8,8 @@ export const selectors = {
 };
 
 export function assertQueryData(rowData: string, data: any): void {
-  expect(rowData.includes(data.query_number)).to.eq(true);
-  expect(rowData.includes(data.throughput.toString())).to.eq(true);
-  expect(
-    rowData.includes(roundNumber(data.latency, Math.pow(10, 6)).toString())
-  ).to.eq(true);
-  expect(rowData.includes((displayedBenchmark as any)[data.benchmark])).to.eq(
-    true
-  );
+  expect(rowData).to.include(data.query_number);
+  expect(rowData).to.include(data.throughput.toString());
+  expect(rowData).to.include(roundNumber(data.latency, Math.pow(10, 6)));
+  expect(rowData).to.include((displayedBenchmark as any)[data.benchmark]);
 }
