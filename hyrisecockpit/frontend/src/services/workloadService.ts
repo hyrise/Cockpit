@@ -24,10 +24,10 @@ export function useWorkloadService(): WorkloadService {
     });
   }
 
-  async function startWorker(): Promise<void> {
+  async function startWorkers(): Promise<void> {
     return axios.post(`${controlBackend}database/worker`);
   }
-  async function stopWorker(): Promise<void> {
+  async function stopWorkers(): Promise<void> {
     return axios.delete(`${controlBackend}database/worker`);
   }
 
@@ -68,8 +68,8 @@ export function useWorkloadService(): WorkloadService {
     getDatabaseStatus,
     loadWorkloadData,
     deleteWorkloadData,
-    startWorker,
-    stopWorker,
+    startWorkers,
+    stopWorkers,
     getWorkload,
     getWorkloads,
     startWorkload,

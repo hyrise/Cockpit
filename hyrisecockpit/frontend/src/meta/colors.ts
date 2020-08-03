@@ -42,9 +42,9 @@ export const colorTreemapDefinition = {
 };
 
 export const multiColors = Object.entries({
-  ...colorValueDefinition,
-  ...colorDatabaseDefinition,
   ...colorTreemapDefinition,
 })
-  .filter(([id, _]) => ["grey", "white"].every((key) => !id.includes(key)))
+  .filter(([id, _]) =>
+    ["grey", "white", "background"].every((key) => !id.includes(key))
+  )
   .map(([_, value]) => value);
