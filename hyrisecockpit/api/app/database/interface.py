@@ -29,4 +29,4 @@ class WorkloadTablesInterface(TypedDict):
 class AvailableWorkloadTablesInterface(TypedDict):
     """Interface of available benchmark tables interface."""
 
-    workload_tables: List[WorkloadTablesInterface]
+    workload_tables: List
