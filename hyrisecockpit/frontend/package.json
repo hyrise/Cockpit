@@ -15,7 +15,7 @@
         "start:dev": "cd devServer/ ; npm run start",
         "start:dev:quiet": "cd devServer/ ; npm run start:quiet",
         "start:dev:ci": "cd devServer/ ; npm run start:ci",
-        "reset:config": "cd scripts/ ; ./read-url.sh"
+        "reset:config": "cd scripts/ ; ./reset-config.sh"
     },
     "dependencies": {
         "@types/faker": "^4.1.12",
