@@ -273,6 +273,45 @@ class Chunks(Resource):
         return response
 
 
+@api.route("/segment_configuration")
+class SegmentConfiguration(Resource):
+    """Segment Configuration data information of all databases."""
+
+    def get(self) -> Union[int, Response]:
+        """Return storage configuration information for every database."""
+        segment_configuration: Dict[str, Dict[str, Dict]] = {}
+        active_databases = _get_active_databases()
+        for database in active_databases:
+            segment_configuration[database] = {}
+            encodings = storage_connection.query(
+                'SELECT LAST("segment_configuration_encoding_type") FROM segment_configuration',
+                database=database,
+            )
+            orders = storage_connection.query(
+                'SELECT LAST("segment_configuration_order_mode") FROM segment_configuration',
+                database=database,
+            )
+            segment_configuration_encodings = list(
+                encodings["segment_configuration", None]
+            )
+            segment_configuration_orders = list(orders["segment_configuration", None])
+            if len(segment_configuration_encodings) > 0:
+                segment_configuration[database]["encoding_type"] = loads(
+                    segment_configuration_encodings[0]["last"]
+                )
+            else:
+                segment_configuration[database]["encoding_type"] = {}
+            if len(segment_configuration_orders) > 0:
+                segment_configuration[database]["order_mode"] = loads(
+                    segment_configuration_orders[0]["last"]
+                )
+            else:
+                segment_configuration[database]["order_mode"] = {}
+        response = get_response(200)
+        response["body"]["segment_configuration"] = segment_configuration
+        return response
+
+
 @api.route("/storage")
 class Storage(Resource):
     """Storage information of all databases."""
