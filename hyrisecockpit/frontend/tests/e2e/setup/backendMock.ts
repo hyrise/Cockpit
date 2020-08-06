@@ -83,8 +83,8 @@ export function useBackendMock(
     );
     cy.route("GET", getRequestRoute("plugin", "get")).as(getGetAlias("plugin"));
 
-    cy.route("GET", getRequestRoute("plugin_log", "get")).as(
-      getGetAlias("plugin_log")
+    cy.route("GET", getRequestRoute("plugin/log", "get")).as(
+      getGetAlias("plugin/log")
     );
     cy.route("GET", getRequestRoute("workload", "get")).as(
       getGetAlias("workload")
@@ -268,9 +268,9 @@ export function mockBackend(
       getMockedResponse("plugin")
     );
     mock(
-      getRequestRoute("plugin_log", "get"),
-      getGetAlias("plugin_log"),
-      getMockedResponse("plugin_log")
+      getRequestRoute("plugin/log", "get"),
+      getGetAlias("plugin/log"),
+      getMockedResponse("plugin/log")
     );
     mock(
       getRequestRoute("workload", "get"),

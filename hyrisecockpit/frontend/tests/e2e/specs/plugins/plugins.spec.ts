@@ -27,7 +27,7 @@ describe("When opening the plugins overview", () => {
         availablePlugins = xhr.response.body.map((plugin: any) => plugin.name);
         cy.setupData("plugin").then((xhr: any) => {
           databasesActivePluginData = xhr.response.body;
-          cy.setupData("plugin_log").then((xhr: any) => {
+          cy.setupData("plugin/log").then((xhr: any) => {
             databasesPluginLogs = xhr.response.body;
           });
         });
@@ -59,7 +59,7 @@ describe("When opening the plugins overview", () => {
       databases.forEach((database: any, idx: number) => {
         cy.get(selectors.databaseHeader).eq(idx).click();
         cy.get(selectors.pluginLog).eq(idx).click({ force: true });
-        cy.wait("@" + getGetAlias("plugin_log"));
+        cy.wait("@" + getGetAlias("plugin/log"));
         cy.get(selectors.pluginLogArea)
           .eq(idx)
           .then((textarea: any) => {
