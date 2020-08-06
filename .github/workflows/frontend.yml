@@ -12,7 +12,7 @@ jobs:
         with:
           node-version: "12.x"
       - name: Install dependencies
-        run: npm init & npm install
+        run: npm install
         working-directory: ./hyrisecockpit/frontend
       - name: Run e2e tests
         run: npm run start:dev:ci & npm run test:e2e:headless:stubless
