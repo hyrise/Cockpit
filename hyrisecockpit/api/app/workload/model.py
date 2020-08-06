@@ -35,7 +35,7 @@ class Workload(BaseWorkload):
         super().__init__(workload_type, frequency, scale_factor, weights)
 
 
-class DetailedWorkload(BaseWorkload):
+class DetailedWorkload(Workload):
     """Model of a detailed Workload."""
 
     def __init__(
@@ -49,8 +49,7 @@ class DetailedWorkload(BaseWorkload):
         default_weights: Dict[str, float],
     ):
         """Initialize a detailed Workload model."""
-        self.running: bool = running
         self.supported_scale_factors: List[float] = supported_scale_factors
         self.default_weights: Dict[str, float] = default_weights
 
-        super().__init__(workload_type, frequency, scale_factor, weights)
+        super().__init__(workload_type, frequency, scale_factor, weights, running)
