@@ -23,6 +23,7 @@ interface Props extends ChartProps {
   maxValue: number;
   timestamps: Date[];
   pluginEventData: any;
+  activatePluginEventClick: (graphId: string, database: any) => void;
 }
 
 export default defineComponent({
@@ -37,6 +38,10 @@ export default defineComponent({
     },
     pluginEventData: {
       type: Object,
+      default: null,
+    },
+    activatePluginEventClick: {
+      type: Function,
       default: null,
     },
     ...ChartPropsValidation,
@@ -81,6 +86,13 @@ export default defineComponent({
           updatePluginEventData();
         }
       );
+      if (props.activatePluginEventClick) {
+        const { databases } = useUpdatingDatabases(props, context);
+        const database = databases.value.find(
+          (database) => database.id === props.selectedDatabases[0]
+        );
+        props.activatePluginEventClick(props.graphId, database);
+      }
     });
 
     function updatePluginEventData(): void {
@@ -97,7 +109,7 @@ export default defineComponent({
               x: [currentPluginEventData.timestamps],
               text: [currentPluginEventData.events],
               width: 100,
-              hoverinfo: "text",
+              hoverinfo: "none",
             },
             [1]
           );

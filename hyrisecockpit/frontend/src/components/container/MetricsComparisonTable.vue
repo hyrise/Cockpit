@@ -30,6 +30,8 @@
           :show-details="showDetails"
           :graph-id="`${metric}-${database.id}`"
           :max-chart-width="maxChartWidth"
+          show-plugin-popup
+          :popup-color="database.color"
         />
       </div>
       <v-card class="column-bottom-border" :color="database.color">
@@ -51,6 +53,7 @@ import {
   computed,
   provide,
 } from "@vue/composition-api";
+
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
 import { useDatabaseFlex } from "../../meta/components";
 import MetricTile from "@/components/container/MetricTile.vue";
