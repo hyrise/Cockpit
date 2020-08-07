@@ -2,6 +2,8 @@
 from hyrisecockpit.api.app.plugin.model import (
     DetailedPlugin,
     DetailedPluginID,
+    LogEntry,
+    LogID,
     Plugin,
     PluginSetting,
     PluginSettingBase,
@@ -55,3 +57,19 @@ class TestDetailedPluginID:
     def test_creates(self, detailed_plugin_id: DetailedPluginID):
         """A detailed PluginID model can be created."""
         assert detailed_plugin_id
+
+
+class TestLogEntry:
+    """Tests for the Plugin Log Entry model."""
+
+    def test_creates(self, log_entry: LogEntry):
+        """A Plugin Log Entry model can be created."""
+        assert log_entry
+
+
+class TestLogID:
+    """Tests for the Plugin Log per database model."""
+
+    def test_creates(self, log_id: LogID):
+        """A Plugin Log per database model can be created."""
+        assert log_id
