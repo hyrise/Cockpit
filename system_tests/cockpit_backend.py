@@ -158,5 +158,5 @@ class CockpitBackend:
 
     def get_plugin_log(self):
         """Get plugin log."""
-        url = f"http://{self._backend_host}:{self._backend_port}/control/plugin_log"
+        url = f"http://{self._backend_host}:{self._backend_port}/control/plugin/log"
         return get(url, timeout=REQUEST_TIMEOUT)

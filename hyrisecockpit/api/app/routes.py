@@ -5,7 +5,6 @@ from flask_restx import Api
 
 def register_routes(api: Api, app: Flask, root: str = "/api") -> None:
     """Register all sub-routes."""
-    from .control import register_routes as attach_control
     from .database import register_routes as attach_database
     from .metric import register_routes as attach_metric
     from .monitor import register_routes as attach_monitor
@@ -14,7 +13,6 @@ def register_routes(api: Api, app: Flask, root: str = "/api") -> None:
     from .status import register_routes as attach_status
     from .workload import register_routes as attach_workload
 
-    attach_control(api, app, root)
     attach_database(api, app, root)
     attach_monitor(api, app, root)
     attach_plugin(api, app, root)

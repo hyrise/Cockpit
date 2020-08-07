@@ -290,11 +290,9 @@ class TestSystem:
         response = self.backend.get_plugin_log()
 
         assert response.json()[0]["id"] == "test_database1"  # nosec
-        assert response.json()[0]["plugin_log"] != []  # nosec
-        assert (  # nosec
-            response.json()[0]["plugin_log"][0]["reporter"] == "CompressionPlugin"
-        )
-        assert response.json()[0]["plugin_log"][0]["message"] == "Initialized!"  # nosec
+        assert response.json()[0]["log"] != []  # nosec
+        assert response.json()[0]["log"][0]["reporter"] == "CompressionPlugin"  # nosec
+        assert response.json()[0]["log"][0]["message"] == "Initialized!"  # nosec
 
     def test_deactivates_plugin(self):
         """Test deactivation of the plugin."""
