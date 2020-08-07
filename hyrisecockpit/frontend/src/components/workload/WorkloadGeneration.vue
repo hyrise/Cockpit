@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="open" persistent max-width="900px">
+  <v-dialog v-model="open" persistent max-width="1100">
     <v-card data-id="workload-generation">
       <v-system-bar :height="50" color="secondary">
         <v-tabs v-model="tab" background-color="grey lighten-1">

@@ -54,10 +54,10 @@
             </div>
             <div v-if="isEndOfLine(workload, idx)">
               <div class="text-col">
-                <div class="query-numbers-text">
+                <div class="query-numbers-text font-weight-medium">
                   Query ID
                 </div>
-                <div class="query-weights-text">
+                <div class="query-weights-text font-weight-medium">
                   Query weight
                 </div>
               </div>
@@ -238,12 +238,12 @@ export default defineComponent({
 }
 .query-slider {
   padding: 0px 24px 0px 24px;
+  margin-top: -25px;
 }
 .top-line {
   border-top: 2px solid #dfdfdf;
   width: 100%;
-  margin-top: 50%;
-  margin-bottom: -13px;
+  margin-bottom: 12px;
 }
 .middle-line {
   border-top: 2px solid #dfdfdf;
@@ -254,7 +254,7 @@ export default defineComponent({
   border-top: 2px solid #dfdfdf;
   width: 100%;
   margin-top: 73px;
-  margin-bottom: 50%;
+  margin-bottom: 30px;
 }
 .value-col {
   display: flex;
@@ -281,16 +281,13 @@ export default defineComponent({
   width: 44px;
   margin: -22px 3px 0px 3px;
 }
-.query-name {
-  margin-bottom: -22px;
-}
 .break {
   flex-basis: 100%;
   height: 0;
 }
 .query-weights-row {
   display: flex;
-  margin-bottom: 10px;
+  margin-right: 10px;
 }
 .text-col {
   margin-left: 2px;
