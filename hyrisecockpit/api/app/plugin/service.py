@@ -1,17 +1,33 @@
 """Services used by the Plugin controller."""
-from typing import List, Union
+from typing import Dict, List, Optional, Union
 
 from hyrisecockpit.api.app.connection_manager import ManagerSocket
+from hyrisecockpit.api.app.shared import _get_active_databases, storage_connection
 from hyrisecockpit.plugins import available_plugins
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
 from .interface import PluginInterface, UpdatePluginSettingInterface
-from .model import DetailedPlugin, DetailedPluginID, Plugin, PluginSetting
+from .model import (
+    DetailedPlugin,
+    DetailedPluginID,
+    LogEntry,
+    LogID,
+    Plugin,
+    PluginSetting,
+)
 
 
 class PluginService:
     """Services of the Plugin Controller."""
+
+    @staticmethod
+    def _query_storage_connection(
+        query: str, database: str, bind_params: Optional[Dict[str, str]]
+    ):
+        return storage_connection.query(
+            query, database=database, bind_params=bind_params
+        )
 
     @staticmethod
     def _send_message_to_dbm(message: Request) -> Response:
@@ -88,3 +104,31 @@ class PluginService:
     def get_available_plugins(cls) -> List[Plugin]:
         """Get all available Plugins."""
         return [Plugin(name=name) for name in available_plugins]
+
+    @classmethod
+    def get_all_plugin_logs(cls, level: Optional[str] = None) -> List[LogID]:
+        """Get the Plugin Log of all databases."""
+        query = "SELECT timestamp, reporter, message, level from plugin_log;"
+        bind_params = None
+        if level:
+            query = "SELECT timestamp, reporter, message, level from plugin_log where level = $level;"
+            bind_params = {"level": level}
+        return [
+            LogID(
+                id=database,
+                log=[
+                    LogEntry(
+                        timestamp=int(row["timestamp"]),
+                        reporter=row["reporter"],
+                        message=row["message"],
+                        level=row["level"],
+                    )
+                    for row in list(
+                        cls._query_storage_connection(query, database, bind_params)[
+                            "plugin_log", None
+                        ]
+                    )
+                ],
+            )
+            for database in _get_active_databases()
+        ]
