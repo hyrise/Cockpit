@@ -1,5 +1,4 @@
 import { Ref } from "@vue/composition-api";
-import { Workload } from "./workloads";
 import { Metric } from "./metrics";
 
 export interface MetricService {
@@ -38,19 +37,19 @@ export interface PluginService {
 export interface WorkloadService {
   getLoadedWorkloads: () => Promise<string[]>;
   getDatabaseStatus: () => Promise<string[]>;
-  loadWorkloadData: (workload: Workload) => Promise<void>;
-  deleteWorkloadData: (workload: Workload) => Promise<void>;
+  getAllAvailableWorkloads: () => Promise<void>;
+  loadWorkload: (workload: string) => Promise<void>;
+  deleteWorkload: (workload: string) => Promise<void>;
   startWorkers: () => Promise<void>;
   stopWorkers: () => Promise<void>;
-  getWorkload: (workload: Workload) => Promise<void>;
+  getWorkload: (workload: string) => Promise<void>;
   getWorkloads: () => Promise<void>;
-  startWorkload: (workload: Workload, frequency: number) => Promise<void>;
-  updateWorkload: (
-    workload: Workload,
+  startWorkload: (
+    workload: string,
     frequency: number,
     weights: Object
   ) => Promise<void>;
-  stopWorkload: (workload: Workload) => Promise<void>;
+  stopWorkload: (workload: string) => Promise<void>;
 }
 
 export type FetchType = "read" | "modify";

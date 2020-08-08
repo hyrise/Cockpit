@@ -96,7 +96,7 @@ export function assertPluginLog(
   const databasePluginLog = pluginLogs.find(
     (data: any) => data.id === database
   );
-  databasePluginLog.plugin_log.forEach((plugin: any) => {
+  databasePluginLog.log.forEach((plugin: any) => {
     expect(content).to.includes(plugin.reporter);
     expect(content).to.includes(plugin.message);
     expect(content).to.includes(

@@ -8,7 +8,7 @@ import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
 import { colorValueDefinition, multiColors } from "@/meta/colors";
 import { useDataEvents } from "@/meta/events";
-import { getDisplayedFromTransferred, getTableName } from "@/meta/workloads";
+import { getWorkloadName, getTableName } from "@/meta/workloads";
 
 const { roundNumber, formatPercentage, formatTimeUnit } = useFormatting();
 const {
@@ -40,11 +40,12 @@ export function useDataTransformation(metric: Metric): TransformationService {
 
 /** transform query information data to table structure */
 function getQueryInformationData(data: any, primaryKey: string = ""): any {
+  if (!data) return [];
   const entry = data.find((dbEntry: any) => dbEntry.id === primaryKey);
   return entry.detailed_query_information.map((query: any) => {
     return {
       queryNumber: query.query_number,
-      workloadType: getDisplayedFromTransferred(query.benchmark),
+      workloadType: getWorkloadName(query.benchmark, query.scale_factor),
       latency: roundNumber(query.latency, Math.pow(10, 6)),
       throughput: query.throughput,
     };
@@ -271,6 +272,9 @@ function getAccessData(
   const descriptions: string[][] = [];
 
   const availableColumns: string[] = [];
+
+  if (!data || !data[primaryKey] || !Object.keys(data[primaryKey]).length)
+    return { chunks, columns, dataByChunks, descriptions };
 
   if (!secondaryKey) {
     /** detect most accessed table and initialize it if no table selected */
