@@ -327,7 +327,7 @@ export function fakeDatabasePluginLogs(
 ): Object {
   return {
     id: databaseId,
-    plugin_log: pluginIds.map((id) => fakePluginLog(id)),
+    log: pluginIds.map((id) => fakePluginLog(id)),
   };
 }
 

@@ -88,7 +88,7 @@ export function usePluginService(): PluginService {
 
   function getPluginLogsData(data: any): any {
     return data.reduce((result: any, currentDatabase: any) => {
-      result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
+      result[currentDatabase.id] = currentDatabase.log.reduce(
         (databaseLog: string, currentLog: any) => {
           return (
             databaseLog +
@@ -132,7 +132,7 @@ export function usePluginService(): PluginService {
         Vue.prototype.$selectionController.selectedPrecision.value
     );
     return data.reduce((result: any, currentDatabase: any) => {
-      result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
+      result[currentDatabase.id] = currentDatabase.log.reduce(
         (databaseEvents: any, currentLog: any) => {
           if (currentLog.timestamp > relevantTime) {
             return {

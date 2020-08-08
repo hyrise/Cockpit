@@ -67,9 +67,10 @@ class MetricService:
     @classmethod
     def get_detailed_query_information(cls) -> List[DetailedQueryInformation]:
         """Return detailed throughput and latency information from the stored queries."""
+        interval_length_sec = 5
         currentts = time_ns()
         offset = 3_000_000_000
-        interval_length = 5_000_000_000
+        interval_length = interval_length_sec * 1_000_000_000
         startts = currentts - offset - interval_length
         endts = currentts - offset
         response: List[DetailedQueryInformation] = []
@@ -85,7 +86,8 @@ class MetricService:
                     DetailedQueryEntry(
                         benchmark=tags["benchmark"],
                         query_number=tags["query_no"],
-                        throughput=list(result[table, tags])[0]["throughput"],
+                        throughput=list(result[table, tags])[0]["throughput"]
+                        / interval_length_sec,
                         latency=list(result[table, tags])[0]["latency"],
                         scale_factor=tags["scalefactor"],
                     )
