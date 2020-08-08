@@ -75,9 +75,6 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     requestTime: 1000,
     dataType: "interval",
     historic: true,
-    staticAxesRange: {
-      y: { max: 100 },
-    },
   },
   operatorProportion: {
     fetchType: "read",
@@ -173,7 +170,7 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
   negativeThroughput: {
     title: "Aborted Transactions", // cancelled transactions
     xaxis: timeLabel,
-    yaxis: "Proportion in %",
+    yaxis: "Number of aborted transactions / s",
   },
   queryTypeProportion: {
     title: "Statement Proportion",
@@ -228,7 +225,7 @@ const metricDetailsConfiguration: Partial<Record<
     stateOrder: getMetricValueStateOrder("asc"),
   },
   latency: {
-    border: 100,
+    border: 200,
     unit: "ms",
     stateOrder: getMetricValueStateOrder("asc"),
   },
@@ -238,12 +235,12 @@ const metricDetailsConfiguration: Partial<Record<
     stateOrder: getMetricValueStateOrder("desc"),
   },
   negativeThroughput: {
-    border: 100,
-    unit: "%",
+    border: 21,
+    unit: "q",
     stateOrder: getMetricValueStateOrder("asc"),
   },
   queueLength: {
-    border: 20000,
+    border: 1000,
     unit: "q",
     stateOrder: getMetricValueStateOrder("asc"),
   },
@@ -253,7 +250,7 @@ const metricDetailsConfiguration: Partial<Record<
     stateOrder: getMetricValueStateOrder("asc"),
   },
   throughput: {
-    border: 10000,
+    border: 75,
     unit: "q/s",
     stateOrder: getMetricValueStateOrder("desc"),
   },
