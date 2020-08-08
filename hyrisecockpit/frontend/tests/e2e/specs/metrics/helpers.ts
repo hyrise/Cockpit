@@ -123,7 +123,6 @@ export function assertHeatMapData(chartDatasets: any, requestData?: any): void {
         data.forEach((chunks: any, secondIdx: number) => {
           expect(chartDatasets.z[secondIdx][idx]).to.eq(chunks);
         });
-        expect(chartDatasets.y[idx]).to.eq("Nr. " + idx);
       }
     );
   }
