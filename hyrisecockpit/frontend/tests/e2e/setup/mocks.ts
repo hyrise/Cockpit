@@ -159,7 +159,7 @@ export function useMocks(
       fakeDatabasePluginsData(id, mockedIds.activated_plugins)
     );
     // NOTE: currently all databases have exactly one log entry
-    responseMocks["plugin/log"] = mockedIds.databases.map((id) =>
+    responseMocks.plugin_log = mockedIds.databases.map((id) =>
       fakeDatabasePluginLogs(id, mockedIds.plugins)
     );
     responseMocks.workload = mockedIds.workloads.map((idx) =>

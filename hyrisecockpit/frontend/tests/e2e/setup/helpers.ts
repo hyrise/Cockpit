@@ -25,7 +25,7 @@ export type Request =
   | "benchmark_tables"
   | "available_plugins"
   | "plugin"
-  | "plugin/log"
+  | "plugin_log"
   | "workload"
   | "sql"
   | "worker"
@@ -103,7 +103,7 @@ const requestRoutes: Record<
     delete: "**/control/plugin/**",
     put: "**/control/plugin/**",
   },
-  "plugin/log": { get: "**/control/plugin/log" },
+  plugin_log: { get: "**/control/plugin/log" },
   workload: {
     get: "**/workload/",
     post: "**/workload/",
@@ -142,7 +142,7 @@ const getAliases: Partial<Record<Request, string>> = {
   benchmark_tables: "getBenchmarks",
   available_plugins: "getAvailablePLugins",
   plugin: "getPlugin",
-  "plugin/log": "getPluginLog",
+  plugin_log: "getPluginLog",
   workload: "getWorkloads",
   workload_operator_information: "getOperatorData",
   status_benchmarks: "getBenchmarkStatus",

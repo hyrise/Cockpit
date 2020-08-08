@@ -44,7 +44,7 @@ mockGetRoute("database");
 mockGetRoute("benchmark_tables");
 mockGetRoute("available_plugins");
 mockGetRoute("plugin");
-mockGetRoute("plugin/log");
+mockGetRoute("plugin_log");
 
 mockPostRoute("database");
 mockPostRoute("benchmark_tables");
