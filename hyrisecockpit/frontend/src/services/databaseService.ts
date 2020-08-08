@@ -111,10 +111,12 @@ export function useDatabaseService(): DatabaseService {
 
   /* update database data */
 
-  function addDatabase(databaseConnection: any): void {
-    axios.post(controlBackend + "database/", databaseConnection).then(() => {
-      emitDatabaseAddedEvent();
-    });
+  async function addDatabase(databaseConnection: any): Promise<void> {
+    return axios
+      .post(controlBackend + "database/", databaseConnection)
+      .then(() => {
+        emitDatabaseAddedEvent();
+      });
   }
 
   function removeDatabase(databaseId: string): void {

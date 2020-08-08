@@ -58,29 +58,32 @@ class TestSystem:
         cls.influx_client.drop_database("test_database1")
 
     @classmethod
-    def check_loading_default_tables(cls, database_id: str) -> None:
-        """Check if database has successfully load default tables."""
-        expected_status = {
-            "id": database_id,
-            "loaded_benchmarks": ["tpch_0_1", "no-ops_0_1", "no-ops_1"],
-            "loaded_tables": [
-                "orders_tpch_0_1",
-                "partsupp_tpch_0_1",
-                "lineitem_tpch_0_1",
-                "part_tpch_0_1",
-                "nation_tpch_0_1",
-                "supplier_tpch_0_1",
-                "customer_tpch_0_1",
-                "region_tpch_0_1",
-            ],
-        }
-
-        response = cls.backend.get_property("status/benchmark")  # type: ignore
-        status = response.json()[0]
+    def check_tables_loading(
+        cls, database_id: str, workload_type: str, scalefactor: float
+    ) -> None:
+        """Check if database has successfully load tables."""
+        response = cls.backend.get_property("status/workload_tables")  # type: ignore
         assert response.status_code == 200  # nosec
 
-        for prop in ["loaded_benchmarks", "loaded_tables"]:
-            assert set(expected_status[prop]) == set(status[prop])  # nosec
+        status = None
+        for entry in response.json():
+            if entry["id"] == database_id:
+                status = entry["workload_tables_status"]
+                break
+        assert status  # nosec
+
+        benchmark_status = None
+        for benchmark_entry in status:
+            if (
+                benchmark_entry["workload_type"] == workload_type
+                and benchmark_entry["scale_factor"] == scalefactor
+            ):
+                benchmark_status = benchmark_entry
+                break
+        assert benchmark_status  # nosec
+
+        assert benchmark_status["missing_tables"] == []  # nosec
+        assert benchmark_status["completely_loaded"]  # nosec
 
     def test_initializes_backend(self):
         """Test backend initializes without errors."""
@@ -130,11 +133,17 @@ class TestSystem:
 
     def test_returns_available_datasets(self):
         """Test available datasets."""
-        response = self.backend.get_property("control/database/benchmark_tables")
+        response = self.backend.get_property("control/database/workload_tables")
 
         assert response.status_code == 200  # nosec
         assert response.json() == {  # nosec
-            "folder_names": ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
+            "workload_tables": [
+                {"workload_type": "tpch", "scale_factor": 0.1},
+                {"workload_type": "tpch", "scale_factor": 1},
+                {"workload_type": "tpcc", "scale_factor": 5},
+                {"workload_type": "tpcds", "scale_factor": 1},
+                {"workload_type": "job", "scale_factor": 1},
+            ]
         }
 
     def test_initialization_calls(self):
@@ -165,9 +174,13 @@ class TestSystem:
 
     def test_loads_default_tables(self):
         """Test loading default tables."""
-        sleep(5.0)  # wait until default tables are loaded
+        response = self.backend.load_tables("tpch", 0.1)
+        assert response.status_code == 200  # nosec
 
-        self.check_loading_default_tables("test_database1")
+    def test_loading_completed(self):
+        """Test complete loading of the default tables."""
+        sleep(5.0)  # wait until default tables are loaded
+        self.check_tables_loading("test_database1", "tpch", 0.1)
 
     def test_creates_influx_database(self):
         """Test the corresponding influx database is created."""
@@ -180,7 +193,7 @@ class TestSystem:
 
     def test_starts_workload_generator(self):
         """Test starting of the workload generator."""
-        response = self.backend.start_workload("tpch_0_1", 300)
+        response = self.backend.start_workload("tpch", 0.1, 300)
         assert response.status_code == 200  # nosec
 
     def test_starts_worker_pool(self):
@@ -277,11 +290,9 @@ class TestSystem:
         response = self.backend.get_plugin_log()
 
         assert response.json()[0]["id"] == "test_database1"  # nosec
-        assert response.json()[0]["plugin_log"] != []  # nosec
-        assert (  # nosec
-            response.json()[0]["plugin_log"][0]["reporter"] == "CompressionPlugin"
-        )
-        assert response.json()[0]["plugin_log"][0]["message"] == "Initialized!"  # nosec
+        assert response.json()[0]["log"] != []  # nosec
+        assert response.json()[0]["log"][0]["reporter"] == "CompressionPlugin"  # nosec
+        assert response.json()[0]["log"][0]["message"] == "Initialized!"  # nosec
 
     def test_deactivates_plugin(self):
         """Test deactivation of the plugin."""
@@ -319,7 +330,7 @@ class TestSystem:
 
     def test_stops_workload_generator(self):
         """Test stopping of the workload generator."""
-        response = self.backend.stop_workload("tpch_0_1")
+        response = self.backend.stop_workload("tpch")
         assert response.status_code == 200  # nosec
 
     def test_stops_worker_pool(self):

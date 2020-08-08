@@ -11,17 +11,64 @@
           @click="
             closeDialog();
             showAdvanced = false;
+            databaseAdded = null;
           "
           >mdi-close</v-icon
         >
       </v-system-bar>
       <v-card-text class="pb-0">
+        <v-alert
+          v-if="databaseAdded"
+          class="mt-4 mb-0"
+          type="success"
+          dismissible
+          dense
+        >
+          Database was successfully added.
+        </v-alert>
+        <v-alert
+          v-if="databaseAdded === false"
+          class="mt-4 mb-0"
+          type="error"
+          dismissible
+          dense
+        >
+          Database was not added.
+        </v-alert>
+        <v-alert
+          v-if="workersRunning"
+          class="mt-4 mb-0"
+          type="error"
+          dismissible
+          dense
+        >
+          <v-row>
+            <v-col class="grow pr-0 py-0"
+              >Stop workers before adding databases.</v-col
+            >
+            <v-col class="shrink mr-2 pl-0 py-0">
+              <v-tooltip right>
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    v-on="on"
+                    class="white primary--text"
+                    x-small
+                    @click="stop()"
+                  >
+                    Stop
+                  </v-btn>
+                </template>
+                <span>Stops workers</span>
+              </v-tooltip>
+            </v-col>
+          </v-row>
+        </v-alert>
         <v-row>
           <v-col class="pb-0" cols="6">
             <v-text-field
               v-model="host"
               label="Host"
-              :error-messages="host.length < 4 ? 'Required' : ''"
+              :error-messages="!host.length ? 'Required' : ''"
               data-id="host-input"
             ></v-text-field>
           </v-col>
@@ -56,22 +103,29 @@
         </v-row>
       </v-card-text>
       <v-card-actions class="justify-center pt-0">
-        <v-btn
-          class="secondary primary--text my-2"
-          @click="
-            createNewDatabase();
-            closeDialog();
-          "
-          :disabled="
-            !!idError.length ||
-            !host.length ||
-            !id.length ||
-            !port.length ||
-            number_workers.length === 0
-          "
-          data-id="save-database-button"
-          >Save</v-btn
-        >
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              v-on="on"
+              class="secondary primary--text my-2"
+              @click="
+                databaseAdded = null;
+                createNewDatabase();
+              "
+              :disabled="
+                !!idError.length ||
+                !host.length ||
+                !id.length ||
+                !port.length ||
+                number_workers.length === 0 ||
+                workersRunning
+              "
+              data-id="save-database-button"
+              >Save</v-btn
+            >
+          </template>
+          <span>Add new database</span>
+        </v-tooltip>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -88,9 +142,15 @@ import {
   watch,
 } from "@vue/composition-api";
 import { useDatabaseService } from "@/services/databaseService";
+import { useWorkloadService } from "../../services/workloadService";
 
 interface Props {
   open: boolean;
+  workersRunning: boolean;
+}
+
+interface Data extends DatabaseCreationData {
+  stop: () => void;
 }
 
 export default defineComponent({
@@ -99,9 +159,19 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    workersRunning: {
+      type: Boolean,
+      default: false,
+    },
   },
-  setup(props: Props, context: SetupContext): DatabaseCreationData {
+  setup(props: Props, context: SetupContext): Data {
+    const { stopWorkers } = useWorkloadService();
+    function stop(): void {
+      context.emit("stop");
+      stopWorkers();
+    }
     return {
+      stop,
       ...useDatabaseCreation(context),
     };
   },
@@ -116,6 +186,7 @@ interface DatabaseCreationData {
   port: Ref<string>;
   dbname: Ref<string>;
   idError: Ref<string>;
+  databaseAdded: Ref<boolean | null>;
   createNewDatabase: () => void;
   closeDialog: () => void;
 }
@@ -131,6 +202,7 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
   const port = ref<string>("5432");
   const dbname = ref<string>("postgres");
   const idError = ref<string>("");
+  const databaseAdded = ref<boolean | null>(null);
 
   watch(host, (host, prevHost) => {
     if (!id.value.length || id.value === prevHost) id.value = host;
@@ -165,7 +237,14 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
       host: host.value,
       port: port.value,
       dbname: dbname.value,
-    });
+    }).then(
+      () => {
+        databaseAdded.value = true;
+      },
+      () => {
+        databaseAdded.value = false;
+      }
+    );
     resetValues();
   }
 
@@ -184,6 +263,7 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
     createNewDatabase,
     closeDialog,
     idError,
+    databaseAdded,
   };
 }
 </script>

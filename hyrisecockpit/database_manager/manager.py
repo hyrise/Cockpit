@@ -14,7 +14,7 @@ from hyrisecockpit.request import Body
 from hyrisecockpit.response import Response, get_error_response, get_response
 from hyrisecockpit.server import Server
 
-from .cursor import PoolCursor
+from .cursor import HyriseCursor
 from .database import Database, Plugins
 
 DatabaseActivatedPlugins = TypedDict(
@@ -87,7 +87,7 @@ class DatabaseManager(object):
             "set plugin setting": (self._call_plugin_setting, None),
             "execute sql query": (self._call_execute_sql_query, None),
             "database status": (self._call_database_status, None),
-            "benchmark status": (self._call_benchmark_status, None),
+            "workload tables status": (self._call_workload_tables_status, None),
         }
 
     def _call_add_database(self, body: Body) -> Response:
@@ -98,7 +98,7 @@ class DatabaseManager(object):
         port = body["port"]
         dbname = body["dbname"]
         number_workers = body["number_workers"]
-        if not PoolCursor.validate_connection(
+        if not HyriseCursor.validate_connection(
             user, password, host, port, dbname
         ):  # TODO move to Database
             return get_response(400)
@@ -162,20 +162,18 @@ class DatabaseManager(object):
             return get_response(404)
 
     def _call_load_data(self, body: Body) -> Response:
-        folder_name: str = body["folder_name"]
         if self._check_if_database_blocked():
             return get_error_response(400, "Already loading data")
         for database in list(self._databases.values()):
-            if not database.load_data(folder_name):
+            if not database.load_data(body):
                 return get_response(400)  # TODO return which DB couldn't import
         return get_response(200)
 
     def _call_delete_data(self, body: Body) -> Response:
-        folder_name: str = body["folder_name"]
         if self._check_if_database_blocked():
             return get_error_response(400, "Already loading data")
         for database in list(self._databases.values()):
-            if not database.delete_data(folder_name):
+            if not database.delete_data(body):
                 return get_response(400)
         return get_response(200)
 
@@ -268,19 +266,16 @@ class DatabaseManager(object):
         response["body"]["database_status"] = status
         return response
 
-    def _call_benchmark_status(self, body: Body) -> Response:
-        status = []
-        for database_id, database in self._databases.items():
-            loaded_tables, loaded_benchmarks = database.get_loaded_benchmark_data()
-            status.append(
-                {
-                    "id": database_id,
-                    "loaded_benchmarks": loaded_benchmarks,
-                    "loaded_tables": loaded_tables,
-                }
-            )
+    def _call_workload_tables_status(self, body: Body) -> Response:
+        status = [
+            {
+                "id": database_id,
+                "workload_tables_status": database.get_workload_tables_status(),
+            }
+            for database_id, database in self._databases.items()
+        ]
         response = get_response(200)
-        response["body"]["benchmark_status"] = status
+        response["body"]["workload_tables"] = status
         return response
 
     def start(self) -> None:

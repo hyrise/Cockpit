@@ -1,17 +1,24 @@
 <template>
   <div>
-    <v-checkbox
-      v-for="workload in availableWorkloads"
-      v-model="workloads"
-      class="mt-0 pt-0"
-      :key="workload"
-      :label="getDisplayedWorkload(workload)"
-      :value="workload"
-      :disabled="!loadedWorkloads.includes(workload) || disabled"
-      data-id="select-workload"
-      @change="$emit('change', workload)"
-    >
-    </v-checkbox>
+    <v-tooltip v-for="workload in availableWorkloads" :key="workload" left>
+      <template v-slot:activator="{ on }">
+        <v-checkbox
+          v-on="on"
+          v-model="workloads"
+          class="mt-0 pt-0"
+          :label="workload"
+          :value="workload"
+          :disabled="!loadedWorkloads.includes(workload) || disabled"
+          data-id="select-workload"
+          @change="$emit('change', workload)"
+          :color="colorValueDefinition.hyriselogo"
+        >
+        </v-checkbox>
+      </template>
+      <span>
+        {{ selectedWorkloads.includes(workload) ? "Stop" : "Start" }}
+      </span>
+    </v-tooltip>
   </div>
 </template>
 <script lang="ts">
@@ -22,23 +29,26 @@ import {
   ref,
   watch,
 } from "@vue/composition-api";
-import { Workload, availableWorkloads } from "../../types/workloads";
-import { getDisplayedWorkload } from "../../meta/workloads";
+import { colorValueDefinition } from "../../meta/colors";
 
 interface Props {
-  selectedWorkloads: Workload[];
-  loadedWorkloads: Workload[];
+  availableWorkloads: string[];
+  selectedWorkloads: string[];
+  loadedWorkloads: string[];
   disabled: boolean;
 }
 interface Data {
-  workloads: Ref<Workload[]>;
-  availableWorkloads: string[];
-  getDisplayedWorkload: (workload: Workload) => string;
+  workloads: Ref<string[]>;
+  colorValueDefinition: Record<string, string>;
 }
 
 export default defineComponent({
   name: "WorkloadSelector",
   props: {
+    availableWorkloads: {
+      type: Array,
+      default: () => [],
+    },
     selectedWorkloads: {
       type: Array,
       default: () => [],
@@ -53,7 +63,7 @@ export default defineComponent({
     },
   },
   setup(props: Props, context: SetupContext): Data {
-    const workloads = ref<Workload[]>([]);
+    const workloads = ref<string[]>([]);
     watch(
       () => props.selectedWorkloads,
       () => {
@@ -63,8 +73,7 @@ export default defineComponent({
     );
     return {
       workloads,
-      availableWorkloads,
-      getDisplayedWorkload,
+      colorValueDefinition,
     };
   },
 });

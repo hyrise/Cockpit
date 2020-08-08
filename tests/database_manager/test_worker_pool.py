@@ -17,6 +17,7 @@ database_blocked_value: Value = Value("b", False)
 number_worker: int = 42
 database_id: str = "Proformance"
 workload_publisher_url: str = "Lother_du_altes_haus"
+mock_drivers = MagicMock()
 
 
 def get_fake_background_scheduler() -> MagicMock:
@@ -42,6 +43,7 @@ class TestWorkerPool(object):
             database_id=database_id,
             workload_publisher_url=workload_publisher_url,
             database_blocked=database_blocked_value,
+            workload_drivers=mock_drivers,
         )
 
     def test_initializes_worker_pool(self, worker_pool: WorkerPool) -> None:
@@ -52,6 +54,7 @@ class TestWorkerPool(object):
         assert isinstance(worker_pool._database_blocked, ValueType)
         assert worker_pool._workload_publisher_url == workload_publisher_url
         assert worker_pool._status == "closed"
+        assert worker_pool._workload_drivers == mock_drivers
         assert isinstance(worker_pool._continue_execution_flag, ValueType)
         assert worker_pool._continue_execution_flag.value
         assert isinstance(worker_pool._execute_task_workers, list)
@@ -89,6 +92,7 @@ class TestWorkerPool(object):
         worker_pool._database_id = "database_id"
         worker_pool._continue_execution_flag = "Flag"  # type: ignore
         worker_pool._worker_wait_for_exit_event = "wait for exit event"  # type: ignore
+        worker_pool._workload_drivers = "workload_drivers"
 
         worker_pool._execute_task_worker_done_event = [
             "fake_execute_queries_worker" for _ in range(number_worker)  # type: ignore
@@ -107,10 +111,11 @@ class TestWorkerPool(object):
                     "database_id",
                     "fake_execute_queries_worker",
                     "wait for exit event",
+                    "workload_drivers",
                 ),
             )
 
-        mock_connection_factory.create_cursor.assert_called()
+        mock_connection_factory.create_cursor.assert_called_with(autocommit=False)
 
     @patch(
         "hyrisecockpit.database_manager.worker_pool.execute_queries",
@@ -149,7 +154,7 @@ class TestWorkerPool(object):
         worker_pool._execute_task_workers = [MagicMock() for _ in range(number_worker)]
         worker_pool._terminate_worker()
 
-        assert worker_pool._fill_task_worker is None
+        # assert worker_pool._fill_task_worker is None  # makes the below unreachable
         assert type(worker_pool._execute_task_workers) is list
         assert len(worker_pool._execute_task_workers) == 0
         assert type(worker_pool._worker_wait_for_exit_event) is EventType
@@ -176,7 +181,7 @@ class TestWorkerPool(object):
         worker_pool._continue_execution_flag.value = False
         mocked_fill_worker_process: MagicMock = MagicMock()
         mocked_fill_worker_process.start.return_value = None
-        mocked_processes: MagicMock = []
+        mocked_processes: List = []
         for _ in range(number_worker):
             mocked_execute_task_worker_process = MagicMock()
             mocked_execute_task_worker_process.start.return_value = None

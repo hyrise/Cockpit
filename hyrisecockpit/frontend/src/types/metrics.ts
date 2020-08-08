@@ -14,7 +14,8 @@ export type Metric =
   | "queryTypeProportion"
   | "memoryFootprint"
   | "operatorProportion"
-  | "negativeThroughput";
+  | "negativeThroughput"
+  | "queryInformation";
 
 export const availableMetrics: Metric[] = [
   "access",
@@ -28,6 +29,7 @@ export const availableMetrics: Metric[] = [
   "memoryFootprint",
   "operatorProportion",
   "negativeThroughput",
+  "queryInformation",
 ];
 
 export const comparisonMetrics: Metric[] = [
@@ -53,6 +55,7 @@ export const overviewMetrics: Metric[] = [
 ];
 
 export const workloadMetrics: Metric[] = [
+  "queryInformation",
   "queryTypeProportion",
   "operatorProportion",
 ];
@@ -102,6 +105,7 @@ export interface MetricProps {
   showDetails: boolean;
   maxChartWidth: number;
   totalNumberOfDatabases: number;
+  activatePluginEventClick: (graphId: string, database: any) => void;
 }
 
 export const MetricPropsValidation = {
@@ -128,6 +132,10 @@ export const MetricPropsValidation = {
   totalNumberOfDatabases: {
     type: Number,
     default: null,
+  },
+  activatePluginEventClick: {
+    type: Function,
+    default: () => {},
   },
 };
 

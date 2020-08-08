@@ -31,7 +31,7 @@ export function usePluginService(): PluginService {
 
   async function fetchPluginLogs(): Promise<Object> {
     const pluginMeta: any = { logs: {}, events: {} };
-    await axios.get(controlBackend + "plugin_log").then((response) => {
+    await axios.get(controlBackend + "plugin/log").then((response) => {
       pluginMeta.logs = getPluginLogsData(response.data);
       pluginMeta.events = getPluginEventData(response.data);
     });
@@ -88,7 +88,7 @@ export function usePluginService(): PluginService {
 
   function getPluginLogsData(data: any): any {
     return data.reduce((result: any, currentDatabase: any) => {
-      result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
+      result[currentDatabase.id] = currentDatabase.log.reduce(
         (databaseLog: string, currentLog: any) => {
           return (
             databaseLog +
@@ -122,7 +122,7 @@ export function usePluginService(): PluginService {
   function producePluginLogString(currentLog: any) {
     return `${currentLog.reporter} [${formatDateToHHMMSS(
       new Date(parseInt(currentLog.timestamp))
-    )}]: ${currentLog.message}`;
+    )}]: `;
   }
 
   function getPluginEventData(data: any): any {
@@ -132,7 +132,7 @@ export function usePluginService(): PluginService {
         Vue.prototype.$selectionController.selectedPrecision.value
     );
     return data.reduce((result: any, currentDatabase: any) => {
-      result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
+      result[currentDatabase.id] = currentDatabase.log.reduce(
         (databaseEvents: any, currentLog: any) => {
           if (currentLog.timestamp > relevantTime) {
             return {
@@ -142,7 +142,7 @@ export function usePluginService(): PluginService {
               ],
               events: [
                 ...databaseEvents.events,
-                trimString(producePluginLogString(currentLog), 50),
+                { ...currentLog, header: producePluginLogString(currentLog) },
               ],
             };
           } else {

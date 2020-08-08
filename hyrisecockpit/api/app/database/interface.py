@@ -19,13 +19,14 @@ class DetailedDatabaseInterface(DatabaseInterface):
     password: str
 
 
-class BenchmarkTablesInterface(TypedDict):
+class WorkloadTablesInterface(TypedDict):
     """Interface of benchmark tables to load."""
 
-    folder_name: str
+    workload_type: str
+    scale_factor: float
 
 
-class AvailableBenchmarkTablesInterface(TypedDict):
+class AvailableWorkloadTablesInterface(TypedDict):
     """Interface of available benchmark tables interface."""
 
-    folder_names: List[str]
+    workload_tables: List

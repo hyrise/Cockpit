@@ -1,5 +1,5 @@
 <template>
-  <v-card :id="`${tileDatabase}-${metric}-tile`" class="card mt-2 mx-2">
+  <v-card :id="`${tileDatabase}-${metric}-tile`" class="card mt-2 mx-2 pb-1">
     <v-card-title
       class="card subtitle-1 font-weight-regular mb-n7"
       :ref="`${tileDatabase}-${metric}-title`"
@@ -22,6 +22,13 @@
         </v-row>
       </v-container>
     </v-card-title>
+    <plugin-log-popup
+      v-if="showPluginPopup"
+      :current-plugin-log="currentPluginLog"
+      :database-color="popupColor"
+      :metric-id="tileDatabase + metric"
+      @close="onLogPopupClose"
+    />
     <component
       :is="getMetricComponent(metric)"
       :selected-databases="selectedDatabases"
@@ -30,12 +37,19 @@
       :show-details="showDetails"
       :max-chart-width="maxChartWidth"
       :total-number-of-databases="totalNumberOfDatabases"
+      :activate-plugin-event-click="activatePluginEventOnClick"
     />
   </v-card>
 </template>
 
 <script lang="ts">
-import { defineComponent, SetupContext, onMounted } from "@vue/composition-api";
+import {
+  defineComponent,
+  SetupContext,
+  onMounted,
+  ref,
+  Ref,
+} from "@vue/composition-api";
 import Throughput from "@/components/metrics/Throughput.vue";
 import CPU from "@/components/metrics/CPU.vue";
 import Latency from "@/components/metrics/Latency.vue";
@@ -47,19 +61,27 @@ import Access from "@/components/metrics/Access.vue";
 import MemoryFootprint from "@/components/metrics/MemoryFootprint.vue";
 import OperatorProportion from "@/components/metrics/OperatorProportion.vue";
 import NegativeThroughput from "@/components/metrics/NegativeThroughput.vue";
+import QueryInformation from "@/components/metrics/QueryInformation.vue";
 import { getMetricTitle, getMetricComponent } from "@/meta/metrics";
 import { Metric, MetricProps, MetricPropsValidation } from "@/types/metrics";
 import { Database } from "@/types/database";
 import DatabaseChip from "@/components/details/DatabaseChip.vue";
 import TimeInterval from "@/components/details/TimeInterval.vue";
+import { PlotlyHTMLElement, PlotMouseEvent } from "plotly.js";
+import PluginLogPopup from "@/components/plugins/PluginLogPopup.vue";
 
 interface Props extends MetricProps {
   tileDatabase: string;
+  showPluginPopup: boolean;
+  popupColor: string;
 }
 
 interface Data {
   getMetricTitle: (metric: Metric) => string;
   getMetricComponent: (metric: Metric) => string;
+  activatePluginEventOnClick: (graphId: string, database: any) => void;
+  currentPluginLog: Ref<any>;
+  onLogPopupClose: () => void;
 }
 
 export default defineComponent({
@@ -77,9 +99,19 @@ export default defineComponent({
     OperatorProportion,
     NegativeThroughput,
     TimeInterval,
+    PluginLogPopup,
+    QueryInformation,
   },
   props: {
     tileDatabase: {
+      type: String,
+      default: null,
+    },
+    showPluginPopup: {
+      type: Boolean,
+      default: false,
+    },
+    popupColor: {
       type: String,
       default: null,
     },
@@ -87,9 +119,32 @@ export default defineComponent({
   },
   setup(props: Props, context: SetupContext): Data {
     const { getDatabasesByIds } = context.root.$databaseController;
+
+    const currentPluginLog: Ref<any> = ref(null);
+
+    function activatePluginEventOnClick(graphId: string, database: Database) {
+      const graphElement = document.getElementById(
+        graphId
+      ) as PlotlyHTMLElement;
+      graphElement.on("plotly_click", (data: PlotMouseEvent) => {
+        data.points.forEach((point: any) => {
+          if (point.curveNumber === 1) {
+            currentPluginLog.value = point.fullData.text[point.pointIndex];
+          }
+        });
+      });
+    }
+
+    function onLogPopupClose() {
+      currentPluginLog.value = null;
+    }
+
     return {
       getMetricTitle,
       getMetricComponent,
+      activatePluginEventOnClick,
+      currentPluginLog,
+      onLogPopupClose,
     };
   },
 });
@@ -97,7 +152,7 @@ export default defineComponent({
 
 <style scoped>
 .card {
-  max-width: 97.5%;
+  max-width: 99%;
 }
 .card-title {
   padding-bottom: 0 !important;

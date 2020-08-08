@@ -41,19 +41,19 @@ server.get("/", (_, res) => {
 
 /* control */
 mockGetRoute("database");
-mockGetRoute("benchmark_tables");
+mockGetRoute("workload_tables");
 mockGetRoute("available_plugins");
 mockGetRoute("plugin");
 mockGetRoute("plugin_log");
 
 mockPostRoute("database");
-mockPostRoute("benchmark_tables");
+mockPostRoute("workload_tables");
 mockPostRoute("plugin");
 mockPostRoute("sql");
 mockPostRoute("worker");
 
 mockDeleteRoute("database");
-mockDeleteRoute("benchmark_tables");
+mockDeleteRoute("workload_tables");
 mockDeleteRoute("plugin");
 mockDeleteRoute("worker");
 
@@ -74,7 +74,7 @@ mockGetRoute("detailed_query_information");
 mockGetRoute("negative_throughput");
 
 /* status */
-mockGetRoute("status_benchmarks");
+mockGetRoute("status_workloads");
 mockGetRoute("status_database");
 
 /* workload */
@@ -83,8 +83,6 @@ mockGetRoute("workload");
 mockPostRoute("workload");
 
 mockDeleteRoute("workload");
-
-mockPutRoute("workload");
 
 /* route for manual state cleaning */
 server.post("/clean/", (req, res) => {

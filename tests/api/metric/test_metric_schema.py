@@ -114,6 +114,7 @@ class TestMetricSchema:
             "query_number": "100",
             "throughput": 42,
             "latency": 24,
+            "scale_factor": 1.0,
         }
         deserialized = DetailedQueryInformationEntrySchema().load(interface)
         assert deserialized["benchmark"] == "tpppp"
@@ -128,6 +129,7 @@ class TestMetricSchema:
             "query_number": "100",
             "throughput": 42,
             "latency": 24,
+            "scale_factor": 1.0,
         }
         interface = {
             "id": "ha!",
@@ -138,6 +140,7 @@ class TestMetricSchema:
         assert deserialized["detailed_query_information"][0]["query_number"] == "100"
         assert deserialized["detailed_query_information"][0]["throughput"] == 42
         assert deserialized["detailed_query_information"][0]["latency"] == 24
+        assert deserialized["detailed_query_information"][0]["scale_factor"] == 1.0
         assert deserialized["id"] == "ha!"
 
     def test_serializes_detailed_query_information_entry_schema(self) -> None:
@@ -147,6 +150,7 @@ class TestMetricSchema:
             "query_number": "100",
             "throughput": 42,
             "latency": 24,
+            "scale_factor": 1.0,
         }
         detailed_query_entry = DetailedQueryEntry(**interface)  # type: ignore
         serialized = DetailedQueryInformationEntrySchema().dump(detailed_query_entry)
@@ -160,6 +164,7 @@ class TestMetricSchema:
             "query_number": "100",
             "throughput": 42,
             "latency": 24,
+            "scale_factor": 1.0,
         }
         interface = {"id": "ha!", "detailed_query_information": [interface]}
 

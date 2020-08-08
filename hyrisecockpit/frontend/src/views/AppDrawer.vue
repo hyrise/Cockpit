@@ -20,16 +20,22 @@
             >Monitoring</v-list-item-title
           >
         </v-list-item-content>
-        <v-list-item-btn class="mr-0 mt-6">
-          <v-icon
-            size="18"
-            dense
-            color="secondary"
-            data-id="selection-list-button"
-            @click="$emit('toggleSelection')"
-            >mdi-cog-outline</v-icon
-          >
-        </v-list-item-btn>
+        <div class="mt-6">
+          <v-tooltip right>
+            <template v-slot:activator="{ on }">
+              <v-icon
+                v-on="on"
+                size="18"
+                dense
+                color="secondary"
+                data-id="selection-list-button"
+                @click="$emit('toggleSelection')"
+                >mdi-cog-outline</v-icon
+              >
+            </template>
+            <span>Monitoring Settings</span>
+          </v-tooltip>
+        </div>
       </v-list-item>
       <v-list-item
         :to="{ name: 'overview' }"
@@ -77,9 +83,16 @@
 
       <workload-generation
         :open="showWorkloadDialog"
+        :workers-stopped="!workersRunning"
         @close="showWorkloadDialog = false"
-        @start="changeWorkloadIndicator('start')"
-        @stop="changeWorkloadIndicator('stop')"
+        @start="
+          changeWorkloadIndicator('start');
+          workersRunning = true;
+        "
+        @stop="
+          changeWorkloadIndicator('stop');
+          workersRunning = false;
+        "
       />
 
       <v-list-item
@@ -112,7 +125,12 @@
 
       <add-database
         :open="showAddDatabaseDialog"
+        :workers-running="workersRunning"
         @close="showAddDatabaseDialog = false"
+        @stop="
+          changeWorkloadIndicator('stop');
+          workersRunning = false;
+        "
       />
       <remove-database
         :open="showRemoveDatabaseDialog"
@@ -181,6 +199,7 @@ interface Data {
   showAddDatabaseDialog: Ref<boolean>;
   showRemoveDatabaseDialog: Ref<boolean>;
   databaseCount: Ref<string>;
+  workersRunning: Ref<boolean>;
   handleDatabaseDeletion: (database: Database) => void;
   changeWorkloadIndicator: (action: string) => void;
   removedDatabaseId: Ref<string>;
@@ -223,6 +242,7 @@ export default defineComponent({
       databaseCount: computed(() =>
         context.root.$databaseController.availableDatabasesById.value.length.toString()
       ),
+      workersRunning: ref(false),
       handleDatabaseDeletion,
       changeWorkloadIndicator,
       removedDatabaseId,

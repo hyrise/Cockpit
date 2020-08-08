@@ -209,6 +209,7 @@ export function fakeDatabaseChunksData(
 function fakeQueryInformationData(latency: number): Object {
   return {
     benchmark: benchmarks[generateRandomInt(0, benchmarks.length)],
+    scale_factor: 1,
     query_number: latency / Math.pow(10, 3),
     throughput: generateRandomInt(0, 100),
     latency: latency,
@@ -226,7 +227,9 @@ export function fakeDatabaseQueryInformationData(
   ).map((latency: any) => latency + Math.pow(10, 2));
   return {
     id: databaseId,
-    query_information: [...Array(numberOfQueries).keys()].map((idx: number) =>
+    detailed_query_information: [
+      ...Array(numberOfQueries).keys(),
+    ].map((idx: number) =>
       fakeQueryInformationData(latencyData[idx] * Math.pow(10, 6))
     ),
   };
@@ -288,7 +291,7 @@ export function fakeDatabasePluginLogs(
 ): Object {
   return {
     id: databaseId,
-    plugin_log: pluginIds.map((id) => fakePluginLog(id)),
+    log: pluginIds.map((id) => fakePluginLog(id)),
   };
 }
 
@@ -302,7 +305,7 @@ export function fakeDatabaseStatusData(
     id: databaseId,
     hyrise_active: true,
     database_blocked_status: false,
-    worker_pool_status: state ? "running" : "",
+    worker_pool_status: state ? "running" : "closed",
   };
 }
 
@@ -312,15 +315,21 @@ export function fakeBenchmarkStatusData(
 ): Object {
   return {
     id: databaseId,
-    loaded_benchmarks: loadedBenchmarks,
+    workload_tables_status: loadedBenchmarks.map((workload) => ({
+      workload_type: workload,
+      scale_factor: 1,
+      completely_loaded: true,
+    })),
     loaded_tables: [],
   };
 }
 
-export function fakeWorkloadData(benchmark: string): Object {
+export function fakeWorkloadData(benchmark: string, state: boolean): Object {
   return {
     weights: {},
     frequency: faker.random.number(),
-    folder_name: benchmark,
+    workload_type: benchmark,
+    scale_factor: 1,
+    running: state,
   };
 }

@@ -83,7 +83,7 @@ class TestDatabase(object):
         )
 
     def test_inintializes_database(self, database: Database) -> None:
-        """Test initialization of worker pool attributes."""
+        """Test initialization of database attributes."""
         assert database._id == database_id
         assert database.number_workers == number_workers
         assert database._default_tables == default_tables
@@ -92,9 +92,6 @@ class TestDatabase(object):
         assert database._hyrise_active.value
         assert not database._database_blocked.value
         database._background_scheduler.start.assert_called_once()  # type: ignore
-        database._background_scheduler.load_tables.assert_called_once_with(  # type: ignore
-            default_tables
-        )
 
     def test_gets_worker_pool_queue_length(self, database: Database) -> None:
         """Test return of queue length from worker pool."""
@@ -115,14 +112,14 @@ class TestDatabase(object):
         mocked_worker_pool.get_status.return_value = "closed"
         mocked_background_scheduler: MagicMock = MagicMock()
         mocked_background_scheduler.load_tables.return_value = True
-
+        fake_workload = {"workload_type": "tpch", "scale_factor": 1.0}
         database._worker_pool = mocked_worker_pool
         database._background_scheduler = mocked_background_scheduler
 
-        result: bool = database.load_data(default_tables)
+        result: bool = database.load_data(fake_workload)
 
         mocked_worker_pool.get_status.assert_called_once()
-        mocked_background_scheduler.load_tables.assert_called_once_with(default_tables)
+        mocked_background_scheduler.load_tables.assert_called_once_with("tpch", 1.0)
         assert type(result) is bool
         assert result
 
@@ -132,13 +129,47 @@ class TestDatabase(object):
         mocked_worker_pool.get_status.return_value = "running"
         mocked_background_scheduler: MagicMock = MagicMock()
         mocked_background_scheduler.load_tables.return_value = True
-
+        fake_workload = {"workload_type": "tpch", "scale_factor": 1.0}
         database._worker_pool = mocked_worker_pool
         database._background_scheduler = mocked_background_scheduler
 
-        result: bool = database.load_data(default_tables)
+        result: bool = database.load_data(fake_workload)
 
         mocked_worker_pool.get_status.assert_called_once()
+        mocked_background_scheduler.load_tables.assert_not_called()
+        assert type(result) is bool
+        assert not result
+
+    def test_loads_data_with_no_valid_workload_type(self, database: Database) -> None:
+        """Test load data with no valid workload type."""
+        mocked_worker_pool: MagicMock = MagicMock()
+        mocked_worker_pool.get_status.return_value = "running"
+        mocked_background_scheduler: MagicMock = MagicMock()
+        mocked_background_scheduler.load_tables.return_value = True
+        fake_workload = {"workload_type": "tpcc_not_valid", "scale_factor": 1.0}
+        database._worker_pool = mocked_worker_pool
+        database._background_scheduler = mocked_background_scheduler
+        result: bool = database.load_data(fake_workload)
+
+        mocked_background_scheduler.load_tables.assert_not_called()
+        assert type(result) is bool
+        assert not result
+
+    def test_loads_data_with_no_valid_scalefactor(self, database: Database) -> None:
+        """Test load data with no valid scalefactor."""
+        mocked_worker_pool: MagicMock = MagicMock()
+        mocked_worker_pool.get_status.return_value = "running"
+        mocked_background_scheduler: MagicMock = MagicMock()
+        mocked_background_scheduler.load_tables.return_value = True
+        fake_workload = {"workload_type": "tpcc", "scale_factor": 1.0}
+        database._worker_pool = mocked_worker_pool
+        database._background_scheduler = mocked_background_scheduler
+        mock_driver = MagicMock()
+        mock_driver.get_scalefactors.return_value = [5.0]
+        database._workload_drivers = {"tpcc": mock_driver}
+
+        result: bool = database.load_data(fake_workload)
+
         mocked_background_scheduler.load_tables.assert_not_called()
         assert type(result) is bool
         assert not result
@@ -151,14 +182,14 @@ class TestDatabase(object):
         mocked_worker_pool.get_status.return_value = "closed"
         mocked_background_scheduler: MagicMock = MagicMock()
         mocked_background_scheduler.load_tables.return_value = False
-
+        fake_workload = {"workload_type": "tpch", "scale_factor": 1.0}
         database._worker_pool = mocked_worker_pool
         database._background_scheduler = mocked_background_scheduler
 
-        result: bool = database.load_data(default_tables)
+        result: bool = database.load_data(fake_workload)
 
         mocked_worker_pool.get_status.assert_called_once()
-        mocked_background_scheduler.load_tables.assert_called_once_with(default_tables)
+        mocked_background_scheduler.load_tables.assert_called_once_with("tpch", 1.0)
         assert type(result) is bool
         assert not result
 
@@ -170,16 +201,14 @@ class TestDatabase(object):
         mocked_worker_pool.get_status.return_value = "closed"
         mocked_background_scheduler: MagicMock = MagicMock()
         mocked_background_scheduler.delete_tables.return_value = True
-
+        fake_workload = {"workload_type": "tpch", "scale_factor": 1.0}
         database._worker_pool = mocked_worker_pool
         database._background_scheduler = mocked_background_scheduler
 
-        result: bool = database.delete_data(default_tables)
+        result: bool = database.delete_data(fake_workload)
 
         mocked_worker_pool.get_status.assert_called_once()
-        mocked_background_scheduler.delete_tables.assert_called_once_with(
-            default_tables
-        )
+        mocked_background_scheduler.delete_tables.assert_called_once_with("tpch", 1.0)
         assert type(result) is bool
         assert result
 
@@ -191,13 +220,48 @@ class TestDatabase(object):
         mocked_worker_pool.get_status.return_value = "running"
         mocked_background_scheduler: MagicMock = MagicMock()
         mocked_background_scheduler.delete_tables.return_value = True
-
+        fake_workload = {"workload_type": "tpch", "scale_factor": 1.0}
         database._worker_pool = mocked_worker_pool
         database._background_scheduler = mocked_background_scheduler
 
-        result: bool = database.delete_data(default_tables)
+        result: bool = database.delete_data(fake_workload)
 
         mocked_worker_pool.get_status.assert_called_once()
+        mocked_background_scheduler.delete_tables.assert_not_called()
+        assert type(result) is bool
+        assert not result
+
+    def test_delete_data_with_no_valid_workload_type(self, database: Database) -> None:
+        """Test delete data with no valid workload type."""
+        mocked_worker_pool: MagicMock = MagicMock()
+        mocked_worker_pool.get_status.return_value = "running"
+        mocked_background_scheduler: MagicMock = MagicMock()
+        mocked_background_scheduler.load_tables.return_value = True
+        fake_workload = {"workload_type": "tpcc_not_valid", "scale_factor": 1.0}
+        database._worker_pool = mocked_worker_pool
+        database._background_scheduler = mocked_background_scheduler
+
+        result: bool = database.delete_data(fake_workload)
+
+        mocked_background_scheduler.delete_tables.assert_not_called()
+        assert type(result) is bool
+        assert not result
+
+    def test_delete_data_with_no_valid_scalefactor(self, database: Database) -> None:
+        """Test delete data with no valid scalefactor."""
+        mocked_worker_pool: MagicMock = MagicMock()
+        mocked_worker_pool.get_status.return_value = "running"
+        mocked_background_scheduler: MagicMock = MagicMock()
+        mocked_background_scheduler.load_tables.return_value = True
+        fake_workload = {"workload_type": "tpcc", "scale_factor": 1.0}
+        database._worker_pool = mocked_worker_pool
+        database._background_scheduler = mocked_background_scheduler
+        mock_driver = MagicMock()
+        mock_driver.get_scalefactors.return_value = [5.0]
+        database._workload_drivers = {"tpcc": mock_driver}
+
+        result: bool = database.delete_data(fake_workload)
+
         mocked_background_scheduler.delete_tables.assert_not_called()
         assert type(result) is bool
         assert not result
@@ -210,16 +274,14 @@ class TestDatabase(object):
         mocked_worker_pool.get_status.return_value = "closed"
         mocked_background_scheduler: MagicMock = MagicMock()
         mocked_background_scheduler.delete_tables.return_value = False
-
+        fake_workload = {"workload_type": "tpch", "scale_factor": 1.0}
         database._worker_pool = mocked_worker_pool
         database._background_scheduler = mocked_background_scheduler
 
-        result: bool = database.delete_data(default_tables)
+        result: bool = database.delete_data(fake_workload)
 
         mocked_worker_pool.get_status.assert_called_once()
-        mocked_background_scheduler.delete_tables.assert_called_once_with(
-            default_tables
-        )
+        mocked_background_scheduler.delete_tables.assert_called_once_with("tpch", 1.0)
         assert type(result) is bool
         assert not result
 
@@ -319,21 +381,52 @@ class TestDatabase(object):
         assert type(result) is bool
         assert result
 
-    @patch("hyrisecockpit.database_manager.database._table_names", get_fake_tables())
-    def test_gets_loaded_benchmarks_for_present_benchmarks(
-        self, database: Database
-    ) -> None:
+    def test_gets_loaded_workloads_and_tables(self, database: Database) -> None:
         """Test get loaded benchmark for present benchmarks."""
-        fake_loaded_tables = [
-            "Gary Clark Jr._Rock_1",
-            "Greta Van Fleet_Rock_1",
-            "Tenacious D_Rock_1",
-            "Jack White_alternative_1",
+        mock_driver_all_tables_loaded = MagicMock()
+        mock_driver_all_tables_loaded.get_table_names.return_value = {
+            "customer": "customer_tpch_1",
+            "item": "item_tpch_1",
+        }
+        mock_driver_all_tables_loaded.get_scalefactors.return_value = [1.0]
+        mock_driver_not_all_tables_loaded = MagicMock()
+        mock_driver_not_all_tables_loaded.get_table_names.return_value = {
+            "Gary": "gary_rock_1",
+            "Clark": "clark_rock_1",
+        }
+        mock_driver_not_all_tables_loaded.get_scalefactors.return_value = [1.0]
+        database._workload_drivers = {
+            "tpch": mock_driver_all_tables_loaded,
+            "rock": mock_driver_not_all_tables_loaded,
+        }
+        fake_loaded_tables = ["customer_tpch_1", "item_tpch_1", "gary_rock_1"]
+
+        expected = [
+            {
+                "workload_type": "tpch",
+                "scale_factor": 1.0,
+                "loaded_tables": ["customer", "item"],
+                "missing_tables": [],
+                "completely_loaded": True,
+                "database_representation": {
+                    "customer": "customer_tpch_1",
+                    "item": "item_tpch_1",
+                },
+            },
+            {
+                "workload_type": "rock",
+                "scale_factor": 1.0,
+                "loaded_tables": ["Gary"],
+                "missing_tables": ["Clark"],
+                "completely_loaded": False,
+                "database_representation": {
+                    "Gary": "gary_rock_1",
+                    "Clark": "clark_rock_1",
+                },
+            },
         ]
 
-        expected: List[str] = ["Rock_1"]
-
-        results: List[str] = database.get_loaded_benchmarks(fake_loaded_tables)
+        results: List = database._workload_tables_status(fake_loaded_tables)
         assert results == expected
 
     def test_gets_worker_pool_status(self, database: Database) -> None:
@@ -357,7 +450,7 @@ class TestDatabase(object):
         mock_cursor.fetchall.return_value = [("hallo", "type",), ("world", "boring",)]
         database._connection_factory = mock_connection_factory
 
-        results = database.get_loaded_tables()
+        results = database.get_loaded_tables_in_database()
 
         mock_cursor.execute.assert_called_once_with("select * from meta_tables;", None)
         assert results == ["hallo", "world"]  # type: ignore
@@ -382,7 +475,7 @@ class TestDatabase(object):
         )
         database._connection_factory = mock_connection_factory
 
-        results = database.get_loaded_tables()
+        results = database.get_loaded_tables_in_database()
 
         mock_cursor.execute.assert_called_once_with("select * from meta_tables;", None)
         assert results == []
@@ -804,16 +897,38 @@ class TestDatabase(object):
             "latency_calculation", latency_query, resample_options
         )
 
-    def test_get_loaded_benchmark_data(self, database: Database):
+    def test_get_status_of_workload_tables(self, database: Database):
         """Test get loaded benchmark data."""
-        database.get_loaded_tables = MagicMock()  # type: ignore
-        database.get_loaded_tables.return_value = ["table1", "table2"]  # type: ignore
-        database.get_loaded_benchmarks = MagicMock()  # type: ignore
-        database.get_loaded_benchmarks.return_value = ["benchmark"]  # type: ignore
+        fake_status_of_workload = [
+            {
+                "workload_type": "tpch",
+                "scale_factor": 1.0,
+                "loaded_tables": ["customer", "item"],
+                "missing_tables": [],
+                "completely_loaded": True,
+                "database_representation": {
+                    "customer": "customer_tpch_1",
+                    "item": "item_tpch_1",
+                },
+            },
+            {
+                "workload_type": "rock",
+                "scale_factor": 1.0,
+                "loaded_tables": ["Gary"],
+                "missing_tables": ["Clark"],
+                "completely_loaded": False,
+                "database_representation": {
+                    "Gary": "gary_rock_1",
+                    "Clark": "clark_rock_1",
+                },
+            },
+        ]
+        database.get_loaded_tables_in_database = MagicMock()  # type: ignore
+        database.get_loaded_tables_in_database.return_value = ["table1", "table2"]
+        database._workload_tables_status = MagicMock()  # type: ignore
+        database._workload_tables_status.return_value = fake_status_of_workload
+        loaded_workloads = database.get_workload_tables_status()
 
-        (loaded_tables, loaded_benchmarks) = database.get_loaded_benchmark_data()
-
-        database.get_loaded_tables.assert_called_once()  # type: ignore
-        database.get_loaded_benchmarks.assert_called_once_with(["table1", "table2"])  # type: ignore
-        assert loaded_tables == ["table1", "table2"]
-        assert loaded_benchmarks == ["benchmark"]
+        database.get_loaded_tables_in_database.assert_called_once()
+        database._workload_tables_status.assert_called_once_with(["table1", "table2"])
+        assert loaded_workloads == fake_status_of_workload

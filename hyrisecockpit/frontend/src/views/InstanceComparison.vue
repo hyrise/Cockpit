@@ -43,7 +43,6 @@ export default defineComponent({
   },
   setup(props: {}, context: SetupContext): MetricViewData {
     return {
-      watchedMetrics: comparisonMetrics,
       ...useSelectionHandling(context, "comparison"),
     };
   },

@@ -7,16 +7,16 @@ from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 
 from .interface import (
-    BenchmarkTablesInterface,
     DatabaseInterface,
     DetailedDatabaseInterface,
+    WorkloadTablesInterface,
 )
-from .model import AvailableBenchmarkTables, DetailedDatabase
+from .model import AvailableWorkloadTables, DetailedDatabase
 from .schema import (
-    AvailableBenchmarkTablesSchema,
-    BenchmarkTablesSchema,
+    AvailableWorkloadTablesSchema,
     DatabaseSchema,
     DetailedDatabaseSchema,
+    WorkloadTablesSchema,
 )
 from .service import DatabaseService
 
@@ -41,13 +41,13 @@ class Databases(Resource):
     def post(self) -> Response:
         """Register new database."""
         interface: DetailedDatabaseInterface = DetailedDatabaseInterface(
-            id=request.parsed_obj.id,
-            host=request.parsed_obj.host,
-            port=request.parsed_obj.port,
-            number_workers=request.parsed_obj.number_workers,
-            dbname=request.parsed_obj.dbname,
-            user=request.parsed_obj.user,
-            password=request.parsed_obj.password,
+            id=request.parsed_obj.id,  # type: ignore
+            host=request.parsed_obj.host,  # type: ignore
+            port=request.parsed_obj.port,  # type: ignore
+            number_workers=request.parsed_obj.number_workers,  # type: ignore
+            dbname=request.parsed_obj.dbname,  # type: ignore
+            user=request.parsed_obj.user,  # type: ignore
+            password=request.parsed_obj.password,  # type: ignore
         )
         status_code = DatabaseService.register_database(interface)
         return Response(status=status_code)
@@ -55,36 +55,38 @@ class Databases(Resource):
     @accepts(schema=DatabaseSchema, api=api)
     def delete(self) -> Response:
         """De-register database."""
-        interface: DatabaseInterface = DatabaseInterface(id=request.parsed_obj.id)
+        interface: DatabaseInterface = DatabaseInterface(id=request.parsed_obj.id)  # type: ignore
         status_code = DatabaseService.deregister_database(interface)
         return Response(status=status_code)
 
 
-@api.route("/benchmark_tables")
-class BenchmarkTables(Resource):
+@api.route("/workload_tables")
+class WorkloadTables(Resource):
     """Manage data in databases."""
 
-    @responds(schema=AvailableBenchmarkTablesSchema, api=api)
-    def get(self) -> AvailableBenchmarkTables:
-        """Return all pre-generated tables that can be loaded."""
-        return DatabaseService.get_available_benchmark_tables()
+    @responds(schema=AvailableWorkloadTablesSchema, api=api)
+    def get(self) -> AvailableWorkloadTables:
+        """Return all available workloads."""
+        return DatabaseService.get_available_workload_tables()
 
-    @accepts(schema=BenchmarkTablesSchema, api=api)
+    @accepts(schema=WorkloadTablesSchema, api=api)
     def post(self) -> Response:
-        """Load benchmark tables."""
-        interface: BenchmarkTablesInterface = BenchmarkTablesInterface(
-            folder_name=request.parsed_obj.folder_name
+        """Load workload tables."""
+        interface: WorkloadTablesInterface = WorkloadTablesInterface(
+            workload_type=request.parsed_obj.workload_type,  # type: ignore
+            scale_factor=request.parsed_obj.scale_factor,  # type: ignore
         )
-        status_code = DatabaseService.load_benchmark_tables(interface)
+        status_code = DatabaseService.load_workload_tables(interface)
         return Response(status=status_code)
 
-    @accepts(schema=BenchmarkTablesSchema, api=api)
+    @accepts(schema=WorkloadTablesSchema, api=api)
     def delete(self) -> Response:
-        """Delete benchmark tables."""
-        interface: BenchmarkTablesInterface = BenchmarkTablesInterface(
-            folder_name=request.parsed_obj.folder_name
+        """Delete workload tables."""
+        interface: WorkloadTablesInterface = WorkloadTablesInterface(
+            workload_type=request.parsed_obj.workload_type,  # type: ignore
+            scale_factor=request.parsed_obj.scale_factor,  # type: ignore
         )
-        status_code = DatabaseService.delete_benchmark_tables(interface)
+        status_code = DatabaseService.delete_workload_tables(interface)
         return Response(status=status_code)
 
 

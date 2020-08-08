@@ -1,14 +1,15 @@
 """The database object represents the instance of a database."""
 
 from multiprocessing import Value
-from typing import Dict, List, Optional, Tuple, TypedDict
+from typing import Dict, List, Optional, TypedDict
 
 from psycopg2 import DatabaseError, Error, InterfaceError
+
+from hyrisecockpit.drivers.connector import Connector
 
 from .background_scheduler import BackgroundJobManager
 from .cursor import ConnectionFactory, StorageConnectionFactory
 from .interfaces import SqlResultInterface
-from .table_names import table_names as _table_names
 from .worker_pool import WorkerPool
 
 PluginSetting = TypedDict(
@@ -59,12 +60,14 @@ class Database(object):
 
         self._database_blocked: Value = Value("b", False)
         self._hyrise_active: Value = Value("b", True)
+        self._workload_drivers: Dict = Connector.get_workload_drivers()
         self._worker_pool: WorkerPool = WorkerPool(
             self._connection_factory,
             self.number_workers,
             self._id,
             workload_publisher_url,
             self._database_blocked,
+            self._workload_drivers,
         )
         self._background_scheduler: BackgroundJobManager = BackgroundJobManager(
             self._id,
@@ -73,10 +76,10 @@ class Database(object):
             self._hyrise_active,
             self._worker_pool,
             self._storage_connection_factory,
+            self._workload_drivers,
         )
         self._initialize_influx()
         self._background_scheduler.start()
-        self._background_scheduler.load_tables(self._default_tables)
 
     def _initialize_influx(self) -> None:
         """Initialize Influx database."""
@@ -104,26 +107,81 @@ class Database(object):
                 latency_continuous_query,
                 latency_resample_options,
             )
+            queue_length_continuous_query = """SELECT mean("queue_length") AS "queue_length"
+                INTO "queue_length"
+                FROM "raw_queue_length"
+                GROUP BY time(1s)
+                FILL(linear)"""
+            queue_length_resample_options = "EVERY 1s FOR 5s"
+            cursor.create_continuous_query(
+                "queue_length_calculation",
+                queue_length_continuous_query,
+                queue_length_resample_options,
+            )
+            system_data_metrics = [
+                "available_memory",
+                "cpu_count",
+                "cpu_process_usage",
+                "cpu_system_usage",
+                "database_threads",
+                "free_memory",
+                "total_memory",
+            ]
+            system_data_select_clause = ", ".join(
+                [
+                    f"""mean("{metric}") AS "{metric}" """
+                    for metric in system_data_metrics
+                ]
+            )
+            system_data_continuous_query = f"""SELECT {system_data_select_clause}
+                INTO "system_data"
+                FROM "raw_system_data"
+                GROUP BY time(1s)
+                FILL(linear)"""
+            system_data_resample_options = "EVERY 1s FOR 5s"
+            cursor.create_continuous_query(
+                "system_data_calculation",
+                system_data_continuous_query,
+                system_data_resample_options,
+            )
 
     def get_queue_length(self) -> int:
         """Return queue length."""
         return self._worker_pool.get_queue_length()
 
-    def load_data(self, folder_name: str) -> bool:
+    def load_data(self, workload: Dict) -> bool:
         """Load pre-generated tables."""
-        return (
-            False
-            if self._worker_pool.get_status() != "closed"
-            else self._background_scheduler.load_tables(folder_name)
-        )
+        workload_type = workload["workload_type"]
+        scale_factor = workload["scale_factor"]
+        if workload_type not in self._workload_drivers:
+            return False
+        elif (
+            scale_factor not in self._workload_drivers[workload_type].get_scalefactors()
+        ):
+            return False
+        elif self._worker_pool.get_status() != "closed":
+            return False
+        else:
+            return self._background_scheduler.load_tables(
+                workload_type, float(scale_factor)
+            )
 
-    def delete_data(self, folder_name: str) -> bool:
+    def delete_data(self, workload: Dict) -> bool:
         """Delete tables."""
-        return (
-            False
-            if self._worker_pool.get_status() != "closed"
-            else self._background_scheduler.delete_tables(folder_name)
-        )
+        workload_type = workload["workload_type"]
+        scale_factor = workload["scale_factor"]
+        if workload_type not in self._workload_drivers:
+            return False
+        elif (
+            scale_factor not in self._workload_drivers[workload_type].get_scalefactors()
+        ):
+            return False
+        elif self._worker_pool.get_status() != "closed":
+            return False
+        else:
+            return self._background_scheduler.delete_tables(
+                workload_type, float(scale_factor)
+            )
 
     def activate_plugin(self, plugin: str) -> bool:
         """Activate plugin."""
@@ -148,7 +206,7 @@ class Database(object):
         """Return status of hyrise."""
         return bool(self._hyrise_active.value)
 
-    def get_loaded_tables(self) -> List[Dict[str, str]]:
+    def get_loaded_tables_in_database(self) -> List[Dict[str, str]]:
         """Return already loaded tables."""
         try:
             with self._connection_factory.create_cursor() as cur:
@@ -159,34 +217,36 @@ class Database(object):
         else:
             return [row[0] for row in rows] if rows else []
 
-    def get_loaded_benchmarks(self, loaded_tables) -> List[str]:
+    def _workload_tables_status(self, tables_in_database) -> List:
         """Get list of all benchmarks which are completely loaded."""
-        loaded_benchmarks: List = []
-        benchmark_names = _table_names.keys()
-        scale_factors = ["0_1", "1"]
-
-        for benchmark_name in benchmark_names:
-            for scale_factor in scale_factors:
-                required_tables = _table_names[benchmark_name]
+        workload_tables_status = []
+        for workload_type, driver in self._workload_drivers.items():
+            for scale_factor in driver.get_scalefactors():
+                loaded_tables = []
+                missing_tables = []
+                workload_tables = driver.get_table_names(scale_factor)
                 loaded = True
-                for table_name in required_tables:
-                    loaded = loaded and (
-                        f"{table_name}_{benchmark_name}_{scale_factor}" in loaded_tables
-                    )
+                for table_name, database_representation in workload_tables.items():
+                    if database_representation not in tables_in_database:
+                        loaded = False
+                        missing_tables.append(table_name)
+                    else:
+                        loaded_tables.append(table_name)
+                table = {
+                    "workload_type": workload_type,
+                    "scale_factor": scale_factor,
+                    "loaded_tables": loaded_tables,
+                    "missing_tables": missing_tables,
+                    "completely_loaded": loaded,
+                    "database_representation": workload_tables,
+                }
+                workload_tables_status.append(table)
+        return workload_tables_status
 
-                if loaded:
-                    loaded_benchmarks.append(f"{benchmark_name}_{scale_factor}")
-
-        return loaded_benchmarks
-
-    def get_loaded_benchmark_data(self) -> Tuple:
+    def get_workload_tables_status(self) -> List:
         """Get loaded benchmark data."""
-        loaded_tables: List = self.get_loaded_tables()
-        loaded_benchmarks: List = self.get_loaded_benchmarks(loaded_tables)
-        return (
-            loaded_tables,
-            loaded_benchmarks,
-        )
+        tables_in_database: List = self.get_loaded_tables_in_database()
+        return self._workload_tables_status(tables_in_database)
 
     def start_worker(self) -> bool:
         """Start worker."""

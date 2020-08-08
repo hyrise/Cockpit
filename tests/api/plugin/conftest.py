@@ -7,6 +7,8 @@ from hyrisecockpit.api.app import create_app
 from hyrisecockpit.api.app.plugin.interface import (
     DetailedPluginIDInterface,
     DetailedPluginInterface,
+    LogEntryInterface,
+    LogIDInterface,
     PluginInterface,
     PluginSettingBaseInterface,
     PluginSettingInterface,
@@ -15,6 +17,8 @@ from hyrisecockpit.api.app.plugin.interface import (
 from hyrisecockpit.api.app.plugin.model import (
     DetailedPlugin,
     DetailedPluginID,
+    LogEntry,
+    LogID,
     Plugin,
     PluginSetting,
     PluginSettingBase,
@@ -23,6 +27,8 @@ from hyrisecockpit.api.app.plugin.model import (
 from hyrisecockpit.api.app.plugin.schema import (
     DetailedPluginIDSchema,
     DetailedPluginSchema,
+    LogEntrySchema,
+    LogIDSchema,
     PluginSchema,
     PluginSettingBaseSchema,
     PluginSettingSchema,
@@ -57,6 +63,30 @@ def setting_value(request) -> str:
 @fixture(params=["A description of the setting.", ""])
 def setting_description(request) -> str:
     """Return a setting description."""
+    return request.param
+
+
+@fixture(params=[0, 1583847966784])
+def timestamp(request) -> int:
+    """Return a timestamp."""
+    return request.param
+
+
+@fixture
+def reporter(name: str) -> str:
+    """Return a Plugin Log Reporter."""
+    return name
+
+
+@fixture(params=["No optimization possible with given parameters!"])
+def message(request) -> str:
+    """Return a Plugin Log message."""
+    return request.param
+
+
+@fixture(params=["Warning"])
+def level(request) -> str:
+    """Return a Plugin Log Entry Level."""
     return request.param
 
 
@@ -96,6 +126,18 @@ def detailed_plugin(name: str, plugin_setting: PluginSetting) -> DetailedPlugin:
 def detailed_plugin_id(id: str, detailed_plugin: DetailedPlugin) -> DetailedPluginID:
     """Return a PluginID model."""
     return DetailedPluginID(id=id, plugins=[detailed_plugin])
+
+
+@fixture
+def log_entry(timestamp: int, reporter: str, message: str, level: str) -> LogEntry:
+    """Return a Plugin Log Entry Model."""
+    return LogEntry(timestamp, reporter, message, level)
+
+
+@fixture
+def log_id(id: str, log_entry: LogEntry) -> LogID:
+    """Return a Plugin Log per database model."""
+    return LogID(id, [log_entry])
 
 
 @fixture
@@ -147,6 +189,22 @@ def interface_detailed_plugin_id(
 
 
 @fixture
+def interface_log_entry(
+    timestamp: int, reporter: str, message: str, level: str
+) -> LogEntryInterface:
+    """Return a Plugin Log Entry interface."""
+    return LogEntryInterface(
+        timestamp=timestamp, reporter=reporter, message=message, level=level
+    )
+
+
+@fixture
+def interface_log_id(id: str, interface_log_entry: LogEntryInterface) -> LogIDInterface:
+    """Return a Plugin Log per database interface."""
+    return LogIDInterface(id=id, log=[interface_log_entry])
+
+
+@fixture
 def schema() -> PluginSchema:
     """Return a Plugin schema."""
     return PluginSchema()
@@ -180,6 +238,18 @@ def schema_detailed_plugin() -> DetailedPluginSchema:
 def schema_detailed_plugin_id() -> DetailedPluginIDSchema:
     """Return a PluginID schema."""
     return DetailedPluginIDSchema()
+
+
+@fixture
+def schema_log_entry() -> LogEntrySchema:
+    """Return a Plugin Log Entry schema."""
+    return LogEntrySchema()
+
+
+@fixture
+def schema_log_id() -> LogIDSchema:
+    """Return a Plugin Log per database schema."""
+    return LogIDSchema()
 
 
 @fixture

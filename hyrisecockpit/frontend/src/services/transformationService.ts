@@ -3,11 +3,12 @@ import {
   StorageData,
   TreemapDescription,
   AccessData,
-} from "../types/metrics";
+} from "@/types/metrics";
 import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
 import { colorValueDefinition, multiColors } from "@/meta/colors";
 import { useDataEvents } from "@/meta/events";
+import { getWorkloadName, getTableName } from "@/meta/workloads";
 
 const { roundNumber, formatPercentage, formatTimeUnit } = useFormatting();
 const {
@@ -28,6 +29,7 @@ const transformationServiceMap: Record<Metric, TransformationService> = {
   storage: getStorageData,
   throughput: getReadOnlyData,
   negativeThroughput: getReadOnlyData,
+  queryInformation: getQueryInformationData,
 };
 
 /** export appropriate transformation function of given metric */
@@ -36,6 +38,20 @@ export function useDataTransformation(metric: Metric): TransformationService {
 }
 
 // TRANSFORM FUNCTION POOL
+
+/** transform query information data to table structure */
+function getQueryInformationData(data: any, primaryKey: string = ""): any {
+  if (!data) return [];
+  const entry = data.find((dbEntry: any) => dbEntry.id === primaryKey);
+  return entry.detailed_query_information.map((query: any) => {
+    return {
+      queryNumber: query.query_number,
+      workloadType: getWorkloadName(query.benchmark, query.scale_factor),
+      latency: roundNumber(query.latency, Math.pow(10, 6)),
+      throughput: query.throughput,
+    };
+  });
+}
 
 /** transform query type data to barchart structure */
 function getQueryTypeProportionData(data: any, primaryKey: string = ""): any {
@@ -198,6 +214,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
 
   Object.entries(data[primaryKey]).forEach(
     ([table, tableData]: [string, any]) => {
+      table = getTableName(table);
       labels.push(table);
       parents.push(primaryKey);
       sizes.push(0);
@@ -256,6 +273,9 @@ function getAccessData(
   const descriptions: string[][] = [];
 
   const availableColumns: string[] = [];
+
+  if (!data || !data[primaryKey] || !Object.keys(data[primaryKey]).length)
+    return { chunks, columns, dataByChunks, descriptions };
 
   if (!secondaryKey) {
     /** detect most accessed table and initialize it if no table selected */
@@ -406,7 +426,18 @@ export function useMaxValueHelper(
 ): ((data: any) => number) | undefined {
   const maxValueHelper: Partial<Record<Metric, (data: any) => number>> = {
     access: getAccessMaxValue,
+    queryInformation: getNumberOfQueries,
   };
+
+  /* detect max number of queries per db */
+  function getNumberOfQueries(data: any[]): number {
+    const maxNumber = data.reduce(
+      (numberOfQueries, queryData) =>
+        Math.max(numberOfQueries, queryData.detailed_query_information.length),
+      0
+    );
+    return maxNumber > 10 ? 10 : maxNumber;
+  }
 
   /* detect max value of access data */
   function getAccessMaxValue(data: any): number {

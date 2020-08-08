@@ -13,6 +13,7 @@ from .job.ping_hyrise import ping_hyrise
 from .job.update_chunks_data import update_chunks_data
 from .job.update_plugin_log import update_plugin_log
 from .job.update_queue_length import update_queue_length
+from .job.update_segment_configuration import update_segment_configuration
 from .job.update_storage_data import update_storage_data
 from .job.update_system_data import update_system_data
 from .job.update_workload_operator_information import (
@@ -35,6 +36,7 @@ class BackgroundJobManager(object):
         hyrise_active: Value,
         worker_pool: WorkerPool,
         storage_connection_factory: StorageConnectionFactory,
+        workload_drivers,
     ):
         """Initialize BackgroundJobManager object."""
         self._database_id: str = database_id
@@ -42,8 +44,17 @@ class BackgroundJobManager(object):
         self._connection_factory: ConnectionFactory = connection_factory
         self._storage_connection_factory: StorageConnectionFactory = storage_connection_factory
         self._worker_pool: WorkerPool = worker_pool
+        self._workload_drivers = workload_drivers
         self._scheduler: BackgroundScheduler = BackgroundScheduler()
         self._hyrise_active: Value = hyrise_active
+        self._previous_system_data = {
+            "previous_system_usage": None,
+            "previous_process_usage": None,
+        }
+        self._previous_chunk_data = {
+            "value": None,
+        }
+
         self._init_jobs()
 
     def _init_jobs(self) -> None:
@@ -68,6 +79,7 @@ class BackgroundJobManager(object):
                 self._database_blocked,
                 self._connection_factory,
                 self._storage_connection_factory,
+                self._previous_system_data,
             ),
         )
         self._update_storage_data_job = self._scheduler.add_job(
@@ -98,6 +110,7 @@ class BackgroundJobManager(object):
                 self._database_blocked,
                 self._connection_factory,
                 self._storage_connection_factory,
+                self._previous_chunk_data,
             ),
         )
         self._update_workload_statement_information_job = self._scheduler.add_job(
@@ -112,6 +125,16 @@ class BackgroundJobManager(object):
         )
         self._update_workload_operator_information_job = self._scheduler.add_job(
             func=update_workload_operator_information,
+            trigger="interval",
+            seconds=5,
+            args=(
+                self._database_blocked,
+                self._connection_factory,
+                self._storage_connection_factory,
+            ),
+        )
+        self._update_segment_configuration_job = self._scheduler.add_job(
+            func=update_segment_configuration,
             trigger="interval",
             seconds=5,
             args=(
@@ -137,25 +160,37 @@ class BackgroundJobManager(object):
         self._ping_hyrise_job.remove()
         self._scheduler.shutdown()
 
-    def load_tables(self, folder_name: str) -> bool:
+    def load_tables(self, workload_type: str, scalefactor: float) -> bool:
         """Load tables."""
         if not self._database_blocked.value:
             self._database_blocked.value = True
             self._scheduler.add_job(
                 func=load_tables_job,
-                args=(self._database_blocked, folder_name, self._connection_factory),
+                args=(
+                    self._database_blocked,
+                    workload_type,
+                    scalefactor,
+                    self._connection_factory,
+                    self._workload_drivers,
+                ),
             )
             return True
         else:
             return False
 
-    def delete_tables(self, folder_name: str) -> bool:
+    def delete_tables(self, workload_type: str, scalefactor: float) -> bool:
         """Delete tables."""
         if not self._database_blocked.value:
             self._database_blocked.value = True
             self._scheduler.add_job(
                 func=delete_tables_job,
-                args=(self._database_blocked, folder_name, self._connection_factory),
+                args=(
+                    self._database_blocked,
+                    workload_type,
+                    scalefactor,
+                    self._connection_factory,
+                    self._workload_drivers,
+                ),
             )
             return True
         else:

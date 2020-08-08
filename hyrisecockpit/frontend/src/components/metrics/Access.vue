@@ -7,13 +7,12 @@
           <v-select
             :id="'detailed-access-select'"
             v-model="selectedItem"
-            class="select"
+            class="select mt-1 mb-n8"
             :items="selectionItems"
             dense
             label="table"
             outlined
             prepend-icon="mdi-table"
-            width="100"
           />
           <Heatmap
             :graph-id="'detailed-' + graphId || 'access'"
@@ -21,6 +20,7 @@
             :chart-configuration="chartConfiguration"
             :autosize="false"
             :max-value="maxValue"
+            :max-chart-width="1300"
           />
         </template>
       </metric-detailed-view>
@@ -35,7 +35,7 @@
         prepend-icon="mdi-table"
       />
       <Heatmap
-        class="mt-n8"
+        class="mt-n8 mb-5"
         :graph-id="graphId || 'access'"
         :data="data"
         :chart-configuration="chartConfiguration"
@@ -69,6 +69,7 @@ import {
 import { useUpdatingDatabases } from "@/meta/databases";
 import { getMetricChartConfiguration, getMetricMetadata } from "@/meta/metrics";
 import { eventBus } from "@/plugins/eventBus";
+import { getTableName } from "@/meta/workloads";
 
 interface Data
   extends BasicChartComponentData<AccessData>,
@@ -95,7 +96,7 @@ export default defineComponent({
 });
 
 interface UseDataWithSelection {
-  selectionItems: Ref<readonly string[]>;
+  selectionItems: Ref<readonly { text: string; value: string }[]>;
   selectedItem: Ref<string>;
 }
 
@@ -127,7 +128,12 @@ function useDataWithSelection(
 
   return {
     selection: {
-      selectionItems: computed(() => databases.value[0].tables),
+      selectionItems: computed(() =>
+        databases.value[0].tables.map((table) => ({
+          text: getTableName(table),
+          value: table,
+        }))
+      ),
       selectedItem: selectedTable,
     },
     transformedData: accessData,
@@ -149,7 +155,7 @@ function usePreSelect(metric: Metric): Ref<string> {
 <style scoped>
 .select {
   z-index: 2;
-  width: 30%;
+  width: 45%;
   margin: auto;
   margin-top: -90px;
 }
