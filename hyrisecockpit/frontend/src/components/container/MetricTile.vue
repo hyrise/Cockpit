@@ -60,14 +60,11 @@ import Storage from "@/components/metrics/Storage.vue";
 import Access from "@/components/metrics/Access.vue";
 import MemoryFootprint from "@/components/metrics/MemoryFootprint.vue";
 import OperatorProportion from "@/components/metrics/OperatorProportion.vue";
+import NegativeThroughput from "@/components/metrics/NegativeThroughput.vue";
 import QueryInformation from "@/components/metrics/QueryInformation.vue";
-import { getMetricTitle, getMetricComponent } from "../../meta/metrics";
-import {
-  Metric,
-  MetricProps,
-  MetricPropsValidation,
-} from "../../types/metrics";
-import { Database } from "../../types/database";
+import { getMetricTitle, getMetricComponent } from "@/meta/metrics";
+import { Metric, MetricProps, MetricPropsValidation } from "@/types/metrics";
+import { Database } from "@/types/database";
 import DatabaseChip from "@/components/details/DatabaseChip.vue";
 import TimeInterval from "@/components/details/TimeInterval.vue";
 import { PlotlyHTMLElement, PlotMouseEvent } from "plotly.js";
@@ -100,6 +97,7 @@ export default defineComponent({
     Storage,
     MemoryFootprint,
     OperatorProportion,
+    NegativeThroughput,
     TimeInterval,
     PluginLogPopup,
     QueryInformation,
