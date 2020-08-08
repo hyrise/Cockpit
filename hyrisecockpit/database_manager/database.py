@@ -86,15 +86,29 @@ class Database(object):
         with self._storage_connection_factory.create_cursor() as cursor:
             cursor.drop_database()
             cursor.create_database()
+
             throughput_continuous_query = """SELECT count("latency") AS "throughput"
                 INTO "throughput"
                 FROM "successful_queries"
+                WHERE commited='True'
                 GROUP BY time(1s)"""
             throughput_resample_options = "EVERY 1s FOR 5s"
             cursor.create_continuous_query(
                 "throughput_calculation",
                 throughput_continuous_query,
                 throughput_resample_options,
+            )
+
+            negative_throughput_continuous_query = """SELECT count("latency") AS "negative_throughput"
+                INTO "negative_throughput"
+                FROM "successful_queries"
+                WHERE commited='False'
+                GROUP BY time(1s)"""
+            negative_throughput_resample_options = "EVERY 1s FOR 5s"
+            cursor.create_continuous_query(
+                "negative_throughput_calculation",
+                negative_throughput_continuous_query,
+                negative_throughput_resample_options,
             )
 
             latency_continuous_query = """SELECT mean("latency") AS "latency"
@@ -107,6 +121,7 @@ class Database(object):
                 latency_continuous_query,
                 latency_resample_options,
             )
+
             queue_length_continuous_query = """SELECT mean("queue_length") AS "queue_length"
                 INTO "queue_length"
                 FROM "raw_queue_length"
@@ -118,6 +133,7 @@ class Database(object):
                 queue_length_continuous_query,
                 queue_length_resample_options,
             )
+
             system_data_metrics = [
                 "available_memory",
                 "cpu_count",

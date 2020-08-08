@@ -60,6 +60,24 @@ class Throughput:
         self.throughput: List[ThroughputEntry] = throughput
 
 
+class NegativeThroughputEntry:
+    """Model of a negative throughput entry."""
+
+    def __init__(self, timestamp: int, negative_throughput: float):
+        """Initialize a throughput entry model."""
+        self.timestamp: int = timestamp
+        self.negative_throughput: float = negative_throughput
+
+
+class NegativeThroughput:
+    """Model of a negative throughput."""
+
+    def __init__(self, id: str, negative_throughput: List[NegativeThroughputEntry]):
+        """Initialize a negative throughput model."""
+        self.id: str = id
+        self.negative_throughput: List[NegativeThroughputEntry] = negative_throughput
+
+
 class LatencyEntry:
     """Model of a latency entry."""
 

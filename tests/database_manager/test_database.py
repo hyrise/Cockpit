@@ -878,6 +878,7 @@ class TestDatabase(object):
         throughput_query = """SELECT count("latency") AS "throughput"
                 INTO "throughput"
                 FROM "successful_queries"
+                WHERE commited='True'
                 GROUP BY time(1s)"""
         latency_query = """SELECT mean("latency") AS "latency"
                 INTO "latency"
