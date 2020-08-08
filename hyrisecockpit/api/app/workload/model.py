@@ -1,20 +1,55 @@
 """Model of a Workload."""
-from typing import Dict
+from typing import Dict, List
 
 
-class Workload:
+class BaseWorkload:
+    """Model of a base Workload."""
+
+    def __init__(
+        self,
+        workload_type: str,
+        frequency: int,
+        scale_factor: float,
+        weights: Dict[str, float],
+    ):
+        """Initialize a base Workload model."""
+        self.workload_type: str = workload_type
+        self.frequency: int = frequency
+        self.scale_factor: float = scale_factor
+        self.weights: Dict[str, float] = weights
+
+
+class Workload(BaseWorkload):
     """Model of a Workload."""
 
-    def __init__(self, folder_name: str, frequency: int):
+    def __init__(
+        self,
+        workload_type: str,
+        frequency: int,
+        scale_factor: float,
+        weights: Dict[str, float],
+        running: bool,
+    ):
         """Initialize a Workload model."""
-        self.folder_name: str = folder_name
-        self.frequency: int = frequency
+        self.running: bool = running
+        super().__init__(workload_type, frequency, scale_factor, weights)
 
 
 class DetailedWorkload(Workload):
-    """Detailed model of a Workload."""
+    """Model of a detailed Workload."""
 
-    def __init__(self, folder_name: str, frequency: int, weights: Dict[str, float]):
-        """Initialize a Workload model."""
-        self.weights: Dict[str, float] = weights
-        super().__init__(folder_name, frequency)
+    def __init__(
+        self,
+        workload_type: str,
+        frequency: int,
+        scale_factor: float,
+        weights: Dict[str, float],
+        running: bool,
+        supported_scale_factors: List[float],
+        default_weights: Dict[str, float],
+    ):
+        """Initialize a detailed Workload model."""
+        self.supported_scale_factors: List[float] = supported_scale_factors
+        self.default_weights: Dict[str, float] = default_weights
+
+        super().__init__(workload_type, frequency, scale_factor, weights, running)

@@ -22,7 +22,7 @@ export type Request =
   | "queue_length"
   | "chunks"
   | "detailed_query_information"
-  | "benchmark_tables"
+  | "workload_tables"
   | "available_plugins"
   | "plugin"
   | "plugin_log"
@@ -31,20 +31,20 @@ export type Request =
   | "worker"
   | "workload_statement_information"
   | "workload_operator_information"
-  | "status_benchmarks"
+  | "status_workloads"
   | "status_database";
 
 export type BackendState = "up" | "down";
 
 export type DatabaseState = "workloadRunning";
 
-export const benchmarks = ["tpch_0_1", "tpch_1", "tpcds_1", "job_1"];
+export const benchmarks = ["tpch", "tpcds", "job", "tpcc"];
 
 export const displayedBenchmark = {
-  tpch_0_1: "TPC-H SF 0.1",
-  tpch_1: "TPC-H SF 1",
-  tpcds_1: "TPC-DS",
-  job_1: "Join Order Benchmark",
+  tpch: "TPCH SF 1",
+  tpcds: "TPCDS SF 1",
+  tpcc: "TPCC SF 1",
+  job: "JOB SF 1",
 };
 
 export const comparisonRequests: Request[] = [
@@ -91,10 +91,10 @@ const requestRoutes: Record<
   },
   chunks: { get: "**/monitor/chunks**" },
   detailed_query_information: { get: "**/metric/detailed_query_information**" },
-  benchmark_tables: {
-    get: "**/control/database/benchmark_tables",
-    post: "**/control/database/benchmark_tables",
-    delete: "**/control/database/benchmark_tables",
+  workload_tables: {
+    get: "**/control/database/workload_tables",
+    post: "**/control/database/workload_tables",
+    delete: "**/control/database/workload_tables",
   },
   available_plugins: { get: "**/control/plugin/available" },
   plugin: {
@@ -103,12 +103,11 @@ const requestRoutes: Record<
     delete: "**/control/plugin/**",
     put: "**/control/plugin/**",
   },
-  plugin_log: { get: "**/control/plugin_log" },
+  plugin_log: { get: "**/control/plugin/log" },
   workload: {
     get: "**/workload/",
     post: "**/workload/",
     delete: "**/workload/**",
-    put: "**/workload/**",
   },
   sql: { post: "**/control/sql/" },
   worker: {
@@ -118,7 +117,7 @@ const requestRoutes: Record<
   workload_operator_information: {
     get: "**/monitor/workload_operator_information**",
   },
-  status_benchmarks: { get: "**/status/benchmark" },
+  status_workloads: { get: "**/status/workload_tables" },
   status_database: { get: "**/status/database" },
 };
 
@@ -139,19 +138,19 @@ const getAliases: Partial<Record<Request, string>> = {
   workload_statement_information: "getStatementData",
   chunks: "getChunksData",
   detailed_query_information: "getQueryInformation",
-  benchmark_tables: "getBenchmarks",
+  workload_tables: "getBenchmarks",
   available_plugins: "getAvailablePLugins",
   plugin: "getPlugin",
   plugin_log: "getPluginLog",
   workload: "getWorkloads",
   workload_operator_information: "getOperatorData",
-  status_benchmarks: "getBenchmarkStatus",
+  status_workloads: "getBenchmarkStatus",
   status_database: "getDatabaseStatus",
 };
 
 const postAliases: Partial<Record<Request, string>> = {
   database: "addDatabase",
-  benchmark_tables: "loadTables",
+  workload_tables: "loadTables",
   plugin: "activatePlugin",
   workload: "startWorkload",
   sql: "sendSQL",
@@ -160,7 +159,7 @@ const postAliases: Partial<Record<Request, string>> = {
 
 const deleteAliases: Partial<Record<Request, string>> = {
   database: "removeDatabase",
-  benchmark_tables: "removeTables",
+  workload_tables: "removeTables",
   plugin: "deactivatePlugin",
   workload: "stopWorkload",
   worker: "stopWorker",

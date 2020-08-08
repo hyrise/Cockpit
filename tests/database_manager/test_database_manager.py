@@ -66,7 +66,7 @@ def get_server_calls() -> List[str]:
         "set plugin setting",
         "execute sql query",
         "database status",
-        "benchmark status",
+        "workload tables status",
     ]
 
 
@@ -213,7 +213,7 @@ class TestDatabaseManager:
         for call in database_manager._get_server_calls().keys():
             assert call in calls
 
-    @patch("hyrisecockpit.database_manager.manager.PoolCursor.validate_connection")
+    @patch("hyrisecockpit.database_manager.manager.HyriseCursor.validate_connection")
     @patch("hyrisecockpit.database_manager.manager.Database")
     def test_call_add_database(
         self,
@@ -252,7 +252,7 @@ class TestDatabaseManager:
         assert response == get_response(200)
         assert "database_id" in database_manager._databases.keys()
 
-    @patch("hyrisecockpit.database_manager.manager.PoolCursor.validate_connection")
+    @patch("hyrisecockpit.database_manager.manager.HyriseCursor.validate_connection")
     @patch("hyrisecockpit.database_manager.manager.Database")
     def test_call_add_database_with_invalid_connection(
         self,
@@ -277,7 +277,7 @@ class TestDatabaseManager:
         assert response == get_response(400)
         assert "database_id" not in database_manager._databases.keys()
 
-    @patch("hyrisecockpit.database_manager.manager.PoolCursor.validate_connection")
+    @patch("hyrisecockpit.database_manager.manager.HyriseCursor.validate_connection")
     @patch("hyrisecockpit.database_manager.manager.Database")
     def test_call_add_existing_database(
         self,
@@ -357,7 +357,7 @@ class TestDatabaseManager:
         database.load_data.return_value = True
         database_manager._databases["db1"] = database
 
-        body: Dict = {"folder_name": "tpch_0.1"}
+        body: Dict = {"workload_type": "tpch", "scale_factor": 1.0}
         response = database_manager._call_load_data(body)
 
         database.load_data.assert_called()
@@ -377,7 +377,7 @@ class TestDatabaseManager:
         database.load_data.return_value = False
         database_manager._databases["db1"] = database
 
-        body: Dict = {"folder_name": "tpch_0.1"}
+        body: Dict = {"workload_type": "tpch", "scale_factor": 1.0}
         response = database_manager._call_load_data(body)
 
         database.load_data.assert_called()
@@ -396,7 +396,7 @@ class TestDatabaseManager:
         database = fake_database()
         database.delete_data.return_value = True
         database_manager._databases["db1"] = database
-        body: Dict = {"folder_name": "tpch_0.1"}
+        body: Dict = {"workload_type": "tpch", "scale_factor": 1.0}
         response = database_manager._call_load_data(body)
 
         database.delete_data.assert_not_called()
@@ -416,7 +416,7 @@ class TestDatabaseManager:
         database.delete_data.return_value = True
         database_manager._databases["db1"] = database
 
-        body: Dict = {"folder_name": "tpch_0.1"}
+        body: Dict = {"workload_type": "tpch", "scale_factor": 1.0}
         response = database_manager._call_delete_data(body)
 
         database.delete_data.assert_called()
@@ -436,7 +436,7 @@ class TestDatabaseManager:
         database.delete_data.return_value = False
         database_manager._databases["db1"] = database
 
-        body: Dict = {"folder_name": "tpch_0.1"}
+        body: Dict = {"workload_type": "tpch", "scale_factor": 1.0}
         response = database_manager._call_delete_data(body)
 
         database.delete_data.assert_called()
@@ -456,7 +456,7 @@ class TestDatabaseManager:
         database.delete_data.return_value = True
         database_manager._databases["db1"] = database
 
-        body: Dict = {"folder_name": "tpch_0.1"}
+        body: Dict = {"workload_type": "tpch", "scale_factor": 1.0}
         response = database_manager._call_delete_data(body)
 
         database.delete_data.assert_not_called()
@@ -671,25 +671,30 @@ class TestDatabaseManager:
         assert response["body"]["database_status"][0]["hyrise_active"]
         assert response["header"]["status"] == 200
 
-    def test_calls_benchmark_status(self, database_manager: DatabaseManager) -> None:
-        """Test calls benchmark status."""
+    def test_calls_workload_tables_status(
+        self, database_manager: DatabaseManager
+    ) -> None:
+        """Test calls workload status."""
         fake_database = MagicMock()
-        fake_database.get_loaded_benchmark_data.return_value = (
-            ["tables", "more_tables"],
-            ["benchmark", "more-benchmarks"],
+        fake_status_workload_tables = {
+            "workload_type": "rock",
+            "scale_factor": 1.0,
+            "loaded_tables": ["Gary"],
+            "missing_tables": ["Clark"],
+            "completely_loaded": False,
+            "database_representation": {"Gary": "gary_rock_1", "Clark": "clark_rock_1"},
+        }
+        fake_database.get_workload_tables_status.return_value = (
+            fake_status_workload_tables
         )
         database_manager._databases = {"fake_db_id": fake_database}
 
-        response = database_manager._call_benchmark_status({})
-        assert response["body"]["benchmark_status"][0]["id"] == "fake_db_id"
-        assert response["body"]["benchmark_status"][0]["loaded_benchmarks"] == [
-            "benchmark",
-            "more-benchmarks",
-        ]
-        assert response["body"]["benchmark_status"][0]["loaded_tables"] == [
-            "tables",
-            "more_tables",
-        ]
+        response = database_manager._call_workload_tables_status({})
+        assert response["body"]["workload_tables"][0]["id"] == "fake_db_id"
+        assert (
+            response["body"]["workload_tables"][0]["workload_tables_status"]
+            == fake_status_workload_tables
+        )
         assert response["header"]["status"] == 200
 
     def test_start_server(self, database_manager: DatabaseManager):

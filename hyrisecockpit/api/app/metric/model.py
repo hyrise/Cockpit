@@ -6,11 +6,17 @@ class DetailedQueryEntry:
     """Model of a ThroughputEntry."""
 
     def __init__(
-        self, benchmark: str, query_number: str, throughput: float, latency: float
+        self,
+        benchmark: str,
+        query_number: str,
+        throughput: float,
+        latency: float,
+        scale_factor: float,
     ):
         """Initialize a DetailedQueryEntry model."""
         self.benchmark: str = benchmark
         self.query_number: str = query_number
+        self.scale_factor: float = scale_factor
         self.throughput: float = throughput
         self.latency: float = latency
 

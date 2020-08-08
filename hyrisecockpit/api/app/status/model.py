@@ -1,5 +1,5 @@
 """Model for status information namespace."""
-from typing import List
+from typing import Dict, List
 
 
 class DatabaseStatus:
@@ -19,14 +19,36 @@ class DatabaseStatus:
         self.hyrise_active: bool = hyrise_active
 
 
-class BenchmarkStatus:
-    """Model of benchmark status."""
+class TablesStatus:
+    """Model of a tables status."""
 
-    def __init__(self, id: str, loaded_benchmarks: List[str], loaded_tables: List[str]):
-        """Initialize a benchmark status model."""
-        self.id: str = id
-        self.loaded_benchmarks: List[str] = loaded_benchmarks
+    def __init__(
+        self,
+        workload_type: str,
+        scale_factor: float,
+        loaded_tables: List[str],
+        missing_tables: List[str],
+        completely_loaded: bool,
+        database_representation: Dict[str, str],
+    ):
+        """Initialize a tables status model."""
+        self.workload_type: str = workload_type
+        self.scale_factor: float = scale_factor
         self.loaded_tables: List[str] = loaded_tables
+        self.missing_tables: List[str] = missing_tables
+        self.completely_loaded: bool = completely_loaded
+        self.database_representation: Dict[str, str] = database_representation
+
+
+class WorkloadTablesStatus:
+    """Model of workload tables status."""
+
+    def __init__(
+        self, id: str, workload_tables_status: List[TablesStatus],
+    ):
+        """Initialize a Workload tables model."""
+        self.id: str = id
+        self.workload_tables_status: List[TablesStatus] = workload_tables_status
 
 
 class FailedQuery:
