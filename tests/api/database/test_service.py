@@ -5,12 +5,12 @@ from unittest.mock import MagicMock, patch
 from pytest import fixture
 
 from hyrisecockpit.api.app.database.interface import (
-    BenchmarkTablesInterface,
     DatabaseInterface,
     DetailedDatabaseInterface,
+    WorkloadTablesInterface,
 )
 from hyrisecockpit.api.app.database.model import (
-    AvailableBenchmarkTables,
+    AvailableWorkloadTables,
     DetailedDatabase,
 )
 from hyrisecockpit.api.app.database.schema import DetailedDatabaseSchema
@@ -163,26 +163,26 @@ class TestDatabaseService:
         )
         assert response == 42
 
-    def test_gets_available_benchmark_tables(
+    def test_gets_available_workload_tables(
         self, mocked_database_service: DatabaseService
     ) -> None:
-        """A database service returns the available benchmark tables."""
+        """A database service returns the available workload tables."""
         fake_response = {"header": {"status": 42}}
         mocked_database_service._send_message.return_value = fake_response  # type: ignore
 
-        response: AvailableBenchmarkTables = mocked_database_service.get_available_benchmark_tables()
+        response: AvailableWorkloadTables = mocked_database_service.get_available_workload_tables()
 
-        assert response.folder_names == ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
+        assert isinstance(response, AvailableWorkloadTables)
 
-    def test_deletes_benchmark_tables(
+    def test_deletes_workload_tables(
         self, mocked_database_service: DatabaseService
     ) -> None:
-        """A database service deletes benchmark tables."""
-        interface = BenchmarkTablesInterface(folder_name="kong fu",)
+        """A database service deletes workload tables."""
+        interface = WorkloadTablesInterface(workload_type="tpci", scale_factor=0.1)
         fake_response = {"header": {"status": 42}}
         mocked_database_service._send_message.return_value = fake_response  # type: ignore
 
-        response: int = mocked_database_service.delete_benchmark_tables(interface)
+        response: int = mocked_database_service.delete_workload_tables(interface)
 
         mocked_database_service._send_message.assert_called_once_with(  # type: ignore
             Request(header=Header(message="delete data"), body=dict(interface))

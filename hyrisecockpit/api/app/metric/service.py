@@ -78,7 +78,7 @@ class MetricService:
         with StorageConnection() as client:
             for database in _get_active_databases():
                 result = client.query(
-                    'SELECT COUNT("latency") as "throughput", MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
+                    'SELECT COUNT("latency") as "throughput", MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no, scalefactor;',
                     database=database,
                     bind_params={"startts": startts, "endts": endts},
                 )
@@ -89,6 +89,7 @@ class MetricService:
                         throughput=list(result[table, tags])[0]["throughput"]
                         / interval_length_sec,
                         latency=list(result[table, tags])[0]["latency"],
+                        scale_factor=tags["scalefactor"],
                     )
                     for table, tags in list(result.keys())
                 ]

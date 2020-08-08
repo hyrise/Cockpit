@@ -5,16 +5,17 @@ from jsonschema import validate
 
 from hyrisecockpit.api.app.connection_manager import ManagerSocket
 from hyrisecockpit.api.app.shared import _add_active_database, _remove_active_database
+from hyrisecockpit.drivers.connector import Connector
 from hyrisecockpit.message import response_schema
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
 from .interface import (
-    BenchmarkTablesInterface,
     DatabaseInterface,
     DetailedDatabaseInterface,
+    WorkloadTablesInterface,
 )
-from .model import AvailableBenchmarkTables, DetailedDatabase
+from .model import AvailableWorkloadTables, DetailedDatabase, WorkloadTables
 
 
 class DatabaseService:
@@ -62,14 +63,19 @@ class DatabaseService:
         return response["header"]["status"]
 
     @classmethod
-    def get_available_benchmark_tables(cls) -> AvailableBenchmarkTables:
-        """Return all available benchmarks."""
-        return AvailableBenchmarkTables(
-            folder_names=["tpch_0.1", "tpch_1", "tpcds_1", "job"]
+    def get_available_workload_tables(cls) -> AvailableWorkloadTables:
+        """Return all available workloads."""
+        drivers = Connector.get_workload_drivers()
+        return AvailableWorkloadTables(
+            workload_tables=[
+                WorkloadTables(workload_type=workload_type, scale_factor=scale_factor)
+                for workload_type, driver in drivers.items()
+                for scale_factor in driver.scale_factors
+            ]
         )
 
     @classmethod
-    def load_benchmark_tables(cls, interface: BenchmarkTablesInterface) -> int:
+    def load_workload_tables(cls, interface: WorkloadTablesInterface) -> int:
         """Load tables to database."""
         response = cls._send_message(
             Request(header=Header(message="load data"), body=dict(interface))
@@ -77,7 +83,7 @@ class DatabaseService:
         return response["header"]["status"]
 
     @classmethod
-    def delete_benchmark_tables(cls, interface: BenchmarkTablesInterface) -> int:
+    def delete_workload_tables(cls, interface: WorkloadTablesInterface) -> int:
         """Delete tables to database."""
         response = cls._send_message(
             Request(header=Header(message="delete data"), body=dict(interface))
