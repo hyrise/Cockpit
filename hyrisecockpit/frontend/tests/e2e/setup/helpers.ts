@@ -103,7 +103,7 @@ const requestRoutes: Record<
     delete: "**/control/plugin/**",
     put: "**/control/plugin/**",
   },
-  plugin_log: { get: "**/control/plugin_log" },
+  plugin_log: { get: "**/control/plugin/log" },
   workload: {
     get: "**/workload/",
     post: "**/workload/",
