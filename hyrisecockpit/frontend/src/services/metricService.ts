@@ -19,6 +19,8 @@ export function useMetricService(metrics: Metric[]): MetricService {
   const metricInfo = metricsMetaData[0];
   const maxValues = initializeData(0) as Record<Metric, number>;
 
+  const INFLUX_OFFSET = 3;
+
   /* fetching type helpers */
   const historicFetching = ref(false);
   const staticFetching = ref(false);
@@ -35,12 +37,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
       Vue.prototype.$selectionController.selectedStaticRange.value
   );
 
-  const {
-    addSeconds,
-    subSeconds,
-    formatDateToNanoSec,
-    getNanoSeconds,
-  } = useFormatting();
+  const { subSeconds, formatDateToNanoSec, getNanoSeconds } = useFormatting();
 
   /* set reactive data */
   function initializeData(value: any): Object {
@@ -66,7 +63,9 @@ export function useMetricService(metrics: Metric[]): MetricService {
   function getData(): void {
     queryReadyState.value = false;
 
-    const currentTimestamp = subSeconds(new Date(), 3);
+    /* apply influx offset, to not request timestamps which were not even logged */
+    const currentTimestamp = subSeconds(new Date(), INFLUX_OFFSET);
+
     const startTime = formatDateToNanoSec(
       staticFetching.value
         ? staticRange.value!.startDate
@@ -76,11 +75,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
           )
     );
     const endTime = formatDateToNanoSec(
-      staticFetching.value
-        ? staticRange.value!.endDate
-        : historicFetching.value
-        ? addSeconds(currentTimestamp, Math.max(precision.value, 3))
-        : currentTimestamp
+      staticFetching.value ? staticRange.value!.endDate : currentTimestamp
     );
 
     fetchData(startTime, endTime).then((result) => {
@@ -201,7 +196,7 @@ export function useMetricService(metrics: Metric[]): MetricService {
   function handleHistoricDataPoints<T>(newData: T[]): T[] {
     return staticFetching.value
       ? newData
-      : newData.slice(newData.length - range.value, newData.length - 1);
+      : newData.slice(newData.length - range.value, newData.length);
   }
 
   /** fetch data if previous query finished or static/ historic range selected */
