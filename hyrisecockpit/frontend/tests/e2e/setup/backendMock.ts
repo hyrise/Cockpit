@@ -69,14 +69,14 @@ export function useBackendMock(
     cy.route("GET", getRequestRoute("detailed_query_information", "get")).as(
       getGetAlias("detailed_query_information")
     );
-    cy.route("GET", getRequestRoute("status_benchmarks", "get")).as(
-      getGetAlias("status_benchmarks")
+    cy.route("GET", getRequestRoute("status_workloads", "get")).as(
+      getGetAlias("status_workloads")
     );
     cy.route("GET", getRequestRoute("status_database", "get")).as(
       getGetAlias("status_database")
     );
-    cy.route("GET", getRequestRoute("benchmark_tables", "get")).as(
-      getGetAlias("benchmark_tables")
+    cy.route("GET", getRequestRoute("workload_tables", "get")).as(
+      getGetAlias("workload_tables")
     );
     cy.route("GET", getRequestRoute("available_plugins", "get")).as(
       getGetAlias("available_plugins")
@@ -100,8 +100,8 @@ export function useBackendMock(
     cy.route("POST", getRequestRoute("database", "post")).as(
       getPostAlias("database")
     );
-    cy.route("POST", getRequestRoute("benchmark_tables", "post")).as(
-      getPostAlias("benchmark_tables")
+    cy.route("POST", getRequestRoute("workload_tables", "post")).as(
+      getPostAlias("workload_tables")
     );
     cy.route("POST", getRequestRoute("plugin", "post")).as(
       getPostAlias("plugin")
@@ -118,8 +118,8 @@ export function useBackendMock(
     cy.route("DELETE", getRequestRoute("database", "delete")).as(
       getDeleteAlias("database")
     );
-    cy.route("DELETE", getRequestRoute("benchmark_tables", "delete")).as(
-      getDeleteAlias("benchmark_tables")
+    cy.route("DELETE", getRequestRoute("workload_tables", "delete")).as(
+      getDeleteAlias("workload_tables")
     );
     cy.route("DELETE", getRequestRoute("plugin", "delete")).as(
       getDeleteAlias("plugin")
@@ -132,9 +132,6 @@ export function useBackendMock(
     );
 
     /* PUT */
-    cy.route("PUT", getRequestRoute("workload", "put")).as(
-      getPutAlias("workload")
-    );
     cy.route("PUT", getRequestRoute("plugin", "put")).as(getPutAlias("plugin"));
   }
 
@@ -193,7 +190,6 @@ export function mockBackend(
   }
 
   function mockPutRoutes(mock: RouteMockFunction): void {
-    mock(getRequestRoute("workload", "put"), getPutAlias("workload"));
     mock(getRequestRoute("plugin", "put"), getPutAlias("plugin"));
   }
 
@@ -252,9 +248,9 @@ export function mockBackend(
       getMockedResponse("detailed_query_information")
     );
     mock(
-      getRequestRoute("status_benchmarks", "get"),
-      getGetAlias("status_benchmarks"),
-      getMockedResponse("status_benchmarks")
+      getRequestRoute("status_workloads", "get"),
+      getGetAlias("status_workloads"),
+      getMockedResponse("status_workloads")
     );
     mock(
       getRequestRoute("status_database", "get"),
@@ -262,9 +258,9 @@ export function mockBackend(
       getMockedResponse("status_database")
     );
     mock(
-      getRequestRoute("benchmark_tables", "get"),
-      getGetAlias("benchmark_tables"),
-      getMockedResponse("benchmark_tables")
+      getRequestRoute("workload_tables", "get"),
+      getGetAlias("workload_tables"),
+      getMockedResponse("workload_tables")
     );
     mock(
       getRequestRoute("available_plugins", "get"),
@@ -296,8 +292,8 @@ export function mockBackend(
   function mockPostRoutes(mock: RouteMockFunction): void {
     mock(getRequestRoute("database", "post"), getPostAlias("database"));
     mock(
-      getRequestRoute("benchmark_tables", "post"),
-      getPostAlias("benchmark_tables")
+      getRequestRoute("workload_tables", "post"),
+      getPostAlias("workload_tables")
     );
     mock(getRequestRoute("plugin", "post"), getPostAlias("plugin"));
     mock(getRequestRoute("workload", "post"), getPostAlias("workload"));
@@ -308,8 +304,8 @@ export function mockBackend(
   function mockDeleteRoutes(mock: RouteMockFunction): void {
     mock(getRequestRoute("database", "delete"), getDeleteAlias("database"));
     mock(
-      getRequestRoute("benchmark_tables", "delete"),
-      getDeleteAlias("benchmark_tables")
+      getRequestRoute("workload_tables", "delete"),
+      getDeleteAlias("workload_tables")
     );
     mock(getRequestRoute("plugin", "delete"), getDeleteAlias("plugin"));
     mock(getRequestRoute("workload", "delete"), getDeleteAlias("workload"));

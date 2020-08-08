@@ -6,7 +6,7 @@
       data-id="workload-equalizer"
     >
       <v-expansion-panel-header color="grey lighten-1">
-        {{ getDisplayedWorkload(workload) }}
+        {{ workload }}
       </v-expansion-panel-header>
       <v-expansion-panel-content class="mt-4">
         <v-row class="query-weights">
@@ -54,10 +54,10 @@
             </div>
             <div v-if="isEndOfLine(workload, idx)">
               <div class="text-col">
-                <div class="query-numbers-text">
+                <div class="query-numbers-text font-weight-medium">
                   Query ID
                 </div>
-                <div class="query-weights-text">
+                <div class="query-weights-text font-weight-medium">
                   Query weight
                 </div>
               </div>
@@ -91,11 +91,9 @@ import {
   watch,
   reactive,
 } from "@vue/composition-api";
-import { Workload } from "../../types/workloads";
-import { getDisplayedWorkload } from "../../meta/workloads";
 
 interface Props {
-  selectedWorkloads: Workload[];
+  selectedWorkloads: string[];
   initialWeights: Record<string, number>[];
 }
 
@@ -104,14 +102,13 @@ interface Data {
   panels: Ref<number[]>;
   queriesPerRow: Ref<number>;
   queriesPerWorkload: Ref<number[]>;
-  getDisplayedWorkload: (workload: Workload) => void;
   updateWeight: (
     workload: string,
     name: string,
     sliderValueToValue: boolean
   ) => void;
-  resetWeights: (workload: Workload) => void;
-  isEndOfLine: (workload: Workload, index: number) => boolean;
+  resetWeights: (workload: string) => void;
+  isEndOfLine: (workload: string, index: number) => boolean;
 }
 type Weight = { name: string; value: number; sliderValue: number };
 
@@ -130,7 +127,7 @@ export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
     const weights = ref<Record<string, Weight[]>>({});
     const panels = ref<number[]>([]);
-    const queriesPerRow = ref<number>(14);
+    const queriesPerRow = ref<number>(11);
     const queriesPerWorkload = ref<number[]>([]);
 
     /* convert the linear sliderValues with exponential function: f(sliderValue) = value = a * b^sliderValue - a
@@ -159,7 +156,7 @@ export default defineComponent({
       }
       context.emit("change", workload, name, weight.value);
     }
-    function resetWeights(workload: Workload): void {
+    function resetWeights(workload: string): void {
       Object.values(weights.value[workload]).forEach((weight) => {
         if (weight.value !== 1) {
           // set weights to the initial value of 1
@@ -170,7 +167,7 @@ export default defineComponent({
         }
       });
     }
-    function isEndOfLine(workload: Workload, index: number): boolean {
+    function isEndOfLine(workload: string, index: number): boolean {
       return (
         index % queriesPerRow.value === queriesPerRow.value - 1 ||
         index ===
@@ -220,7 +217,6 @@ export default defineComponent({
       panels,
       queriesPerRow,
       queriesPerWorkload,
-      getDisplayedWorkload,
       updateWeight,
       resetWeights,
       isEndOfLine,
@@ -242,12 +238,12 @@ export default defineComponent({
 }
 .query-slider {
   padding: 0px 24px 0px 24px;
+  margin-top: -25px;
 }
 .top-line {
   border-top: 2px solid #dfdfdf;
   width: 100%;
-  margin-top: 50%;
-  margin-bottom: -13px;
+  margin-bottom: 12px;
 }
 .middle-line {
   border-top: 2px solid #dfdfdf;
@@ -258,7 +254,7 @@ export default defineComponent({
   border-top: 2px solid #dfdfdf;
   width: 100%;
   margin-top: 73px;
-  margin-bottom: 50%;
+  margin-bottom: 30px;
 }
 .value-col {
   display: flex;
@@ -285,16 +281,13 @@ export default defineComponent({
   width: 44px;
   margin: -22px 3px 0px 3px;
 }
-.query-name {
-  margin-bottom: -22px;
-}
 .break {
   flex-basis: 100%;
   height: 0;
 }
 .query-weights-row {
   display: flex;
-  margin-bottom: 10px;
+  margin-right: 10px;
 }
 .text-col {
   margin-left: 2px;

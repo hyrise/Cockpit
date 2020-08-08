@@ -145,8 +145,13 @@ export function useMocks(
     responseMocks.detailed_query_information = mockedIds.databases.map((id) =>
       fakeDatabaseQueryInformationData(id, numbers.queries)
     );
-    responseMocks.benchmark_tables = benchmarks;
-    responseMocks.status_benchmarks = mockedIds.databases.map((id) =>
+    responseMocks.workload_tables = {
+      workload_tables: benchmarks.map((workload) => ({
+        workload_type: workload,
+        scale_factor: 1,
+      })),
+    };
+    responseMocks.status_workloads = mockedIds.databases.map((id) =>
       fakeBenchmarkStatusData(id, mockedIds.loaded_benchmarks)
     );
     responseMocks.status_database = mockedIds.databases.map((id) =>
@@ -164,7 +169,7 @@ export function useMocks(
       fakeDatabasePluginLogs(id, mockedIds.plugins)
     );
     responseMocks.workload = mockedIds.workloads.map((idx) =>
-      fakeWorkloadData(idx)
+      fakeWorkloadData(idx, mockedState.workloadRunning)
     );
     responseMocks.workload_operator_information = mockedIds.databases.map(
       (id) => fakeDatabaseOperatorData(id, 7)
@@ -198,7 +203,7 @@ export function useMocks(
       database: callbacks.addDatabase,
       plugin: callbacks.activatePlugin,
       workload: callbacks.startWorkload,
-      benchmark_tables: callbacks.loadTable,
+      workload_tables: callbacks.loadTable,
     };
 
     return postCallbackMocks;
@@ -214,7 +219,7 @@ export function useMocks(
       database: callbacks.removeDatabase,
       plugin: callbacks.deactivatePlugin,
       workload: callbacks.stopWorkload,
-      benchmark_tables: callbacks.removeTable,
+      workload_tables: callbacks.removeTable,
     };
 
     return deleteCallbackMocks;

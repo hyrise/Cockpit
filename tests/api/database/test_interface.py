@@ -4,13 +4,13 @@ from typing import List
 from pytest import mark
 
 from hyrisecockpit.api.app.database.interface import (
-    AvailableBenchmarkTablesInterface,
-    BenchmarkTablesInterface,
+    AvailableWorkloadTablesInterface,
     DatabaseInterface,
     DetailedDatabaseInterface,
+    WorkloadTablesInterface,
 )
 from hyrisecockpit.api.app.database.model import (
-    AvailableBenchmarkTables,
+    AvailableWorkloadTables,
     Database,
     DetailedDatabase,
 )
@@ -55,22 +55,28 @@ class TestDatabaseInterface:
         )
         assert DetailedDatabase(**interface)
 
-    @mark.parametrize("attribute", ["folder", "big_folder"])
-    def test_creates_benchmark_tables_interface(self, attribute: str) -> None:
+    def test_creates_workload_tables_interface(self) -> None:
         """A benchmark tables interface can be created."""
-        assert BenchmarkTablesInterface(folder_name=attribute)
+        assert WorkloadTablesInterface(workload_type="tpch", scale_factor=0.1)
 
-    @mark.parametrize("tables", [["nations", "product"], ["just one table"]])
-    def test_creates_available_benchmark_tables_interface(
-        self, tables: List[str]
-    ) -> None:
+    def test_creates_available_workload_tables_interface(self) -> None:
         """A available benchmark tables interface can be created."""
-        assert AvailableBenchmarkTablesInterface(folder_names=tables)
+        assert AvailableWorkloadTablesInterface(
+            workload_tables=[
+                WorkloadTablesInterface(workload_type="tpch", scale_factor=0.1),
+                WorkloadTablesInterface(workload_type="tpcds", scale_factor=0.1),
+            ]
+        )
 
     @mark.parametrize("tables", [["nations", "product"], ["just one table"]])
-    def test_creates_available_benchmark_tables_interface_works(
+    def test_creates_available_workload_tables_interface_works(
         self, tables: List[str]
     ) -> None:
         """A available benchmark tables interface work."""
-        interface = AvailableBenchmarkTablesInterface(folder_names=tables)
-        assert AvailableBenchmarkTables(**interface)
+        interface = AvailableWorkloadTablesInterface(
+            workload_tables=[
+                WorkloadTablesInterface(workload_type="tpch", scale_factor=0.1),
+                WorkloadTablesInterface(workload_type="tpcds", scale_factor=0.1),
+            ]
+        )
+        assert AvailableWorkloadTables(**interface)

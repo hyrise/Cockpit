@@ -9,7 +9,7 @@ import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
 import { colorValueDefinition, multiColors } from "@/meta/colors";
 import { useDataEvents } from "@/meta/events";
-import { getDisplayedFromTransferred, getTableName } from "@/meta/workloads";
+import { getWorkloadName, getTableName } from "@/meta/workloads";
 
 const { roundNumber, formatPercentage, formatTimeUnit } = useFormatting();
 const {
@@ -112,7 +112,7 @@ function getQueryInformationData(data: any, primaryKey: string = ""): any {
   return entry.detailed_query_information.map((query: any) => {
     return {
       queryNumber: query.query_number,
-      workloadType: getDisplayedFromTransferred(query.benchmark),
+      workloadType: getWorkloadName(query.benchmark, query.scale_factor),
       latency: roundNumber(query.latency, Math.pow(10, 6)),
       throughput: query.throughput,
     };

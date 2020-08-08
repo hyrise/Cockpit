@@ -1,13 +1,13 @@
 """Schema for database name-space."""
 
 from marshmallow import Schema, post_load
-from marshmallow.fields import Integer, List, String
+from marshmallow.fields import Float, Integer, List, Nested, String
 
 from hyrisecockpit.api.app.database.model import (
-    AvailableBenchmarkTables,
-    BenchmarkTables,
+    AvailableWorkloadTables,
     Database,
     DetailedDatabase,
+    WorkloadTables,
 )
 
 
@@ -79,35 +79,34 @@ class DetailedDatabaseSchema(Schema):
         return DetailedDatabase(**data)
 
 
-class AvailableBenchmarkTablesSchema(Schema):
-    """Schema of available benchmark tables."""
+class WorkloadTablesSchema(Schema):
+    """Schema of loading workload tables."""
 
-    folder_names = List(
-        String(
-            title="Folder name",
-            description="Name of the folder containing the pregenerated tables.",
-            required=True,
-            example="tpch_0.1",
-        )
-    )
-
-    @post_load
-    def make_available_benchmark_tables(self, data, **kwargs):
-        """Return available benchmark tables object."""
-        return AvailableBenchmarkTables(**data)
-
-
-class BenchmarkTablesSchema(Schema):
-    """Schema of loading benchmark tables."""
-
-    folder_name = String(
-        title="Folder name",
-        description="Name of the folder that includes all benchmark tables.",
+    workload_type = String(
+        title="Workload type",
+        description="Name of the workload type that includes all needed tables.",
         required=True,
-        example="tpch_0.1",
+        example="tpch",
+    )
+    scale_factor = Float(
+        title="Scale factor of tables",
+        description="Scale factor of tables for workload type.",
+        required=True,
+        example=1.0,
     )
 
     @post_load
     def make_benchmark_tables(self, data, **kwargs):
         """Return available benchmark tables object."""
-        return BenchmarkTables(**data)
+        return WorkloadTables(**data)
+
+
+class AvailableWorkloadTablesSchema(Schema):
+    """Schema of available workload tables."""
+
+    workload_tables = List(Nested(WorkloadTablesSchema))
+
+    @post_load
+    def make_available_benchmark_tables(self, data, **kwargs):
+        """Return available benchmark tables object."""
+        return AvailableWorkloadTables(**data)
