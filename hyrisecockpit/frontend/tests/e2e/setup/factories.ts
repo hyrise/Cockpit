@@ -231,7 +231,7 @@ export function fakeDatabaseSegmentData(
 ): Object {
   const data: any = {};
   ["encoding_type", "order_mode"].forEach((key) => {
-    data[databaseId] = { ...(data[databaseId] ?? {}) };
+    data[databaseId] = { ...(data[databaseId] || {}) };
     data[databaseId][key] = assignFakeData(
       tableIds.map((id) => fakeTableSegmentData(id, columnIds, key))
     );
