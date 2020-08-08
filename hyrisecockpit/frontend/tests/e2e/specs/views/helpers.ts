@@ -56,6 +56,7 @@ export const metrics = {
   comparison: [
     "throughput",
     "latency",
+    "negativeThroughput",
     "queueLength",
     "cpu",
     "ram",
@@ -67,6 +68,7 @@ export const metrics = {
   overview: [
     "throughput",
     "latency",
+    "negativeThroughput",
     "queueLength",
     "cpu",
     "ram",
