@@ -6,9 +6,10 @@ from typing import List, Optional
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from hyrisecockpit.cross_platform_support.multiprocessing_support import Queue
+from hyrisecockpit.database_manager.worker.queue_worker import fill_queue
+from hyrisecockpit.database_manager.worker.task_worker import execute_queries
 
 from .cursor import ConnectionFactory
-from .worker import execute_queries, fill_queue
 
 
 class WorkerPool:
@@ -21,12 +22,14 @@ class WorkerPool:
         database_id: str,
         workload_publisher_url: str,
         database_blocked: Value,
+        workload_drivers,
     ) -> None:
         """Initialize WorkerPool object."""
         self._connection_factory: ConnectionFactory = connection_factory
         self._number_worker: int = number_worker
         self._database_id: str = database_id
         self._database_blocked: Value = database_blocked
+        self._workload_drivers = workload_drivers
         self._workload_publisher_url: str = workload_publisher_url
         self._status: str = "closed"
         self._continue_execution_flag: Value = Value("b", True)
@@ -48,11 +51,12 @@ class WorkerPool:
                 args=(
                     i,
                     self._task_queue,
-                    self._connection_factory.create_cursor(),
+                    self._connection_factory.create_cursor(autocommit=False),
                     self._continue_execution_flag,
                     self._database_id,
                     self._execute_task_worker_done_event[i],
                     self._worker_wait_for_exit_event,
+                    self._workload_drivers,
                 ),
             )
             for i in range(self._number_worker)
