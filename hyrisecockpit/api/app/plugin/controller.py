@@ -7,8 +7,13 @@ from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 
 from .interface import PluginInterface, UpdatePluginSettingInterface
-from .model import DetailedPluginID, Plugin
-from .schema import DetailedPluginIDSchema, PluginSchema, UpdatePluginSettingSchema
+from .model import DetailedPluginID, LogID, Plugin
+from .schema import (
+    DetailedPluginIDSchema,
+    LogIDSchema,
+    PluginSchema,
+    UpdatePluginSettingSchema,
+)
 from .service import PluginService
 
 api = Namespace("Plugin", description="Control Plugins per database.")
@@ -74,3 +79,24 @@ class AvailablePluginController(Resource):
     def get(self) -> List[Plugin]:
         """Get all available Plugins."""
         return PluginService.get_available_plugins()
+
+
+@api.route("/log")
+class PluginLogController(Resource):
+    """Controller of Plugin Logs."""
+
+    @responds(schema=LogIDSchema(many=True), api=api)
+    def get(self) -> List[LogID]:
+        """Get the Plugin Log of all databases."""
+        return PluginService.get_all_plugin_logs()
+
+
+@api.route("/log/<string:level>")
+@api.param("level", "Log Level")
+class PluginLogLevelController(Resource):
+    """Controller of Plugin Logs by Level."""
+
+    @responds(schema=LogIDSchema(many=True), api=api)
+    def get(self, level: str) -> List[LogID]:
+        """Get the Plugin Log with a given log level of all databases."""
+        return PluginService.get_all_plugin_logs(level=level)
