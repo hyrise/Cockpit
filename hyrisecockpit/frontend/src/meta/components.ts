@@ -9,6 +9,7 @@ import { useDataEvents } from "@/meta/events";
 import { getMetricChartConfiguration, getMetricMetadata } from "@/meta/metrics";
 import { useUpdatingDatabases } from "./databases";
 import { eventBus } from "@/plugins/eventBus";
+import { getTableName } from "@/meta/workloads";
 
 /* use line chart specific shared data */
 export function useLineChartComponent(
@@ -34,14 +35,18 @@ export function useModifiedChartData<T>(
   const metricMeta = getMetricMetadata(props.metric);
 
   // modify data on base data change
-  watch(data, () => {
-    if (Object.keys(data.value).length) {
-      modifiedData.value = metricMeta.transformationService(
-        data.value,
-        props.selectedDatabases[0]
-      );
-    }
-  });
+  watch(
+    data,
+    () => {
+      if (Object.keys(data.value).length) {
+        modifiedData.value = metricMeta.transformationService(
+          data.value,
+          props.selectedDatabases[0]
+        );
+      }
+    },
+    { immediate: true }
+  );
 
   return {
     data: modifiedData,
@@ -80,7 +85,7 @@ export function useDatabaseFlex(
 }
 
 export interface UseDataWithSelection {
-  selectionItems: Ref<readonly string[]>;
+  selectionItems: Ref<readonly { text: string; value: string }[]>;
   selectedItem: Ref<string>;
   selectedType: Ref<string>;
 }
@@ -120,7 +125,12 @@ export function useDataWithSelection<T>(
 
   return {
     selection: {
-      selectionItems: computed(() => databases.value[0].tables),
+      selectionItems: computed(() =>
+        databases.value[0].tables.map((table) => ({
+          text: getTableName(table),
+          value: table,
+        }))
+      ),
       selectedItem,
       selectedType,
     },

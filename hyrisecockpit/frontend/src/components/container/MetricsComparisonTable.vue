@@ -14,7 +14,7 @@
         :color="database.color"
         flat
       >
-        <v-card-text class="white--text text-center">
+        <v-card-text class="white--text text-center mt-n3 mb-n4">
           <strong>
             {{ database.id }}
           </strong>
@@ -30,10 +30,12 @@
           :show-details="showDetails"
           :graph-id="`${metric}-${database.id}`"
           :max-chart-width="maxChartWidth"
+          show-plugin-popup
+          :popup-color="database.color"
         />
       </div>
       <v-card class="column-bottom-border" :color="database.color">
-        <v-card-text class="white--text text-center">
+        <v-card-text class="white--text text-center mt-n3 mb-n2">
           {{ database.id }}
         </v-card-text>
       </v-card>
@@ -51,6 +53,7 @@ import {
   computed,
   provide,
 } from "@vue/composition-api";
+
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
 import { useDatabaseFlex } from "../../meta/components";
 import MetricTile from "@/components/container/MetricTile.vue";
@@ -94,6 +97,7 @@ export default defineComponent({
 .metrics-table {
   display: flex;
   flex-direction: row;
+  margin-top: 14px;
 }
 .metrics-column {
   display: flex;

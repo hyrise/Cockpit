@@ -262,7 +262,9 @@ export function fakeDatabaseQueryInformationData(
   ).map((latency: any) => latency + Math.pow(10, 2));
   return {
     id: databaseId,
-    query_information: [...Array(numberOfQueries).keys()].map((idx: number) =>
+    detailed_query_information: [
+      ...Array(numberOfQueries).keys(),
+    ].map((idx: number) =>
       fakeQueryInformationData(latencyData[idx] * Math.pow(10, 6))
     ),
   };
@@ -338,7 +340,7 @@ export function fakeDatabaseStatusData(
     id: databaseId,
     hyrise_active: true,
     database_blocked_status: false,
-    worker_pool_status: state ? "running" : "",
+    worker_pool_status: state ? "running" : "closed",
   };
 }
 

@@ -150,11 +150,7 @@ export function useMocks(
       fakeBenchmarkStatusData(id, mockedIds.loaded_benchmarks)
     );
     responseMocks.status_database = mockedIds.databases.map((id) =>
-      fakeDatabaseStatusData(
-        id,
-
-        mockedState.workloadRunning
-      )
+      fakeDatabaseStatusData(id, mockedState.workloadRunning)
     );
     responseMocks.available_plugins = mockedIds.plugins.map((plugin) =>
       fakeAvailablePlugin(plugin)

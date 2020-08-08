@@ -1,4 +1,4 @@
-import { TransformationService, Base, FetchType } from "./services";
+import { TransformationService, FetchType } from "./services";
 import { Ref } from "@vue/composition-api";
 
 export type MetricValueState = "low" | "average" | "high";
@@ -14,7 +14,8 @@ export type Metric =
   | "queryTypeProportion"
   | "memoryFootprint"
   | "operatorProportion"
-  | "segmentConfiguration";
+  | "segmentConfiguration"
+  | "queryInformation";
 
 export const availableMetrics: Metric[] = [
   "access",
@@ -28,6 +29,7 @@ export const availableMetrics: Metric[] = [
   "memoryFootprint",
   "operatorProportion",
   "segmentConfiguration",
+  "queryInformation",
 ];
 
 export const comparisonMetrics: Metric[] = [
@@ -52,6 +54,7 @@ export const overviewMetrics: Metric[] = [
 ];
 
 export const workloadMetrics: Metric[] = [
+  "queryInformation",
   "queryTypeProportion",
   "operatorProportion",
 ];
@@ -101,6 +104,7 @@ export interface MetricProps {
   showDetails: boolean;
   maxChartWidth: number;
   totalNumberOfDatabases: number;
+  activatePluginEventClick: (graphId: string, database: any) => void;
 }
 
 export const MetricPropsValidation = {
@@ -127,6 +131,10 @@ export const MetricPropsValidation = {
   totalNumberOfDatabases: {
     type: Number,
     default: null,
+  },
+  activatePluginEventClick: {
+    type: Function,
+    default: () => {},
   },
 };
 

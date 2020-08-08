@@ -64,6 +64,7 @@ export const overviewRequests: Request[] = [
   "storage",
 ];
 export const workloadMonitoringRequests: Request[] = [
+  "detailed_query_information",
   "workload_statement_information",
   "workload_operator_information",
 ];
@@ -90,7 +91,7 @@ const requestRoutes: Record<
     get: "**/monitor/workload_statement_information**",
   },
   chunks: { get: "**/monitor/chunks**" },
-  detailed_query_information: { get: "**/metric/detailed_query_information" },
+  detailed_query_information: { get: "**/metric/detailed_query_information**" },
   benchmark_tables: {
     get: "**/control/database/benchmark_tables",
     post: "**/control/database/benchmark_tables",

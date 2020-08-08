@@ -83,6 +83,7 @@ import { getMetricChartConfiguration, getMetricMetadata } from "@/meta/metrics";
 import { eventBus } from "@/plugins/eventBus";
 import { useDataWithSelection, UseDataWithSelection } from "@/meta/components";
 import Row from "@/components/container/Row.vue";
+import { getTableName } from "@/meta/workloads";
 
 interface Data
   extends BasicChartComponentData<AccessData>,
