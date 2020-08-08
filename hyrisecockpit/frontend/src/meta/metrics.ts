@@ -101,7 +101,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
   segmentConfiguration: {
     fetchType: "read",
     transformationService: useDataTransformation("segmentConfiguration"),
-    base: "segment_data",
+    base: "segment_configuration",
     endpoint: monitorBackend + "segment_configuration",
     component: "SegmentConfiguration",
     requestTime: 5000,
@@ -190,8 +190,8 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
   },
   segmentConfiguration: {
     title: "Segment Configuration",
-    xaxis: "Columns",
-    yaxis: "Chunks",
+    xaxis: "Segments",
+    yaxis: "",
   },
   storage: {
     title: "Data Size - Overview", //Storage

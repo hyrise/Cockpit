@@ -44,68 +44,63 @@ function getSegmentData(
   secondaryKey = "",
   tertiaryKey = ""
 ): SegmentData {
-  const dataByColumns: any[][] = [];
+  const dataByColumns: any[] = [];
   const dataByChunks: number[][] = [];
   const chunks: string[] = [];
   const columns: string[] = [];
-  const descriptions: string[][] = [];
+  const descriptions: any[][] = [];
 
   const availableColumns: string[] = [];
 
   /* store all detected values */
-  const valueToId: any = {};
+  const valueToId: string[] = [];
+
+  if (
+    !data ||
+    !data[primaryKey] ||
+    !data[primaryKey][tertiaryKey] ||
+    !Object.keys(data[primaryKey][tertiaryKey]).length
+  )
+    return { dataByChunks, chunks, columns, valueToId, descriptions };
 
   /* map values to int */
   Object.values(data).forEach((dbData: any) => {
     // set secondary key if no key existst
     if (!secondaryKey) {
-      secondaryKey = Object.keys(dbData)[0];
+      secondaryKey = Object.keys(dbData[tertiaryKey])[0];
       emitPreSelectEvent("segmentConfiguration", secondaryKey);
     }
-    Object.values(dbData).forEach((tableData: any) => {
-      Object.values(tableData).forEach((columnData: any) => {
-        columnData.forEach((column: any) => {
-          const id = valueToId[column[tertiaryKey]];
-          if (id) return;
-
-          valueToId[column[tertiaryKey]] = Object.keys(valueToId).length;
-        });
+    Object.values(dbData[tertiaryKey]).forEach((tableData: any) => {
+      Object.values(tableData).forEach((segment: any) => {
+        const id = valueToId.find((v) => v === segment[tertiaryKey]);
+        if (id) return;
+        valueToId.push(segment[tertiaryKey]);
       });
     });
   });
-
-  Object.entries(data[primaryKey][secondaryKey]).forEach(
+  Object.entries(data[primaryKey][tertiaryKey][secondaryKey]).forEach(
     ([column, columnData]: [string, any]) => {
       dataByColumns.push(columnData);
-      columns.push(truncateColumnName(column));
+      columns.push("No. " + (parseInt(column, 10) + 1));
       availableColumns.push(column);
     }
   );
+  const description: any = [];
+  const chunk: any = [];
+  // segments are not per chunk, instead they are for every chunks the same -> so we are working with 1 single chunk only
+  chunks.push("No. " + 1);
 
-  const numberOfChunks = dataByColumns[0].length;
-
-  function truncateColumnName(column: string): string {
-    return column.length > 7 ? column.substring(0, 7) + ".." : column;
-  }
-
-  for (let i = 0; i < numberOfChunks; i++) {
-    chunks.push("Nr. " + i);
-    const description: any = [];
-    availableColumns.forEach((column) => {
-      description.push({ column });
+  dataByColumns.forEach((date, idx) => {
+    description.push({
+      column: "No. " + (idx + 1),
+      value: date[tertiaryKey],
     });
+    const value = valueToId.findIndex((v) => v === date[tertiaryKey]);
+    chunk.push(value);
+  });
 
-    const chunk: number[] = [];
-    dataByColumns.forEach((column, idx) => {
-      chunk.push(valueToId[column[i][tertiaryKey]]);
-      description[idx] = {
-        ...description[idx],
-        value: column[i][tertiaryKey],
-      };
-    });
-    descriptions.push(description);
-    dataByChunks.push(chunk);
-  }
+  descriptions.push(description);
+  dataByChunks.push(chunk);
 
   return { chunks, columns, dataByChunks, descriptions, valueToId };
 }
@@ -378,7 +373,7 @@ function getAccessData(
   }
 
   for (let i = 0; i < numberOfChunks; i++) {
-    chunks.push("Nr. " + i);
+    chunks.push("No. " + i);
     descriptions.push(availableColumns);
 
     const chunk: number[] = [];

@@ -206,28 +206,20 @@ export function fakeDatabaseChunksData(
 
 // SEGMENT CONFIG DATA
 
-function fakeColumnSegmentData(
-  columnId: string,
-  numberOfChunks: number
-): Object {
-  const data: any = {};
-  data[columnId] = generateRandomNumbers(numberOfChunks).map(() => ({
-    encoding_type: faker.random.word(),
-    order_mode: faker.random.word(),
-  }));
-  return data;
+function fakeSegmentData(key: string): Object {
+  return {
+    [key]: faker.random.word(),
+  };
 }
 
 function fakeTableSegmentData(
   tableId: string,
   columnIds: string[],
-  numberOfChunks: number
+  key: string
 ): Object {
   const data: any = {};
   data[tableId] = assignFakeData(
-    columnIds.map((id) =>
-      fakeColumnSegmentData(`${tableId}-${id}`, numberOfChunks)
-    )
+    columnIds.map((_, idx) => ({ [idx]: fakeSegmentData(key) }))
   );
   return data;
 }
@@ -235,13 +227,16 @@ function fakeTableSegmentData(
 export function fakeDatabaseSegmentData(
   databaseId: string,
   tableIds: string[],
-  columnIds: string[],
-  numberOfChunks: number
+  columnIds: string[]
 ): Object {
   const data: any = {};
-  data[databaseId] = assignFakeData(
-    tableIds.map((id) => fakeTableSegmentData(id, columnIds, numberOfChunks))
-  );
+  ["encoding_type", "order_mode"].forEach((key) => {
+    data[databaseId] = { ...(data[databaseId] ?? {}) };
+    data[databaseId][key] = assignFakeData(
+      tableIds.map((id) => fakeTableSegmentData(id, columnIds, key))
+    );
+  });
+
   return data;
 }
 

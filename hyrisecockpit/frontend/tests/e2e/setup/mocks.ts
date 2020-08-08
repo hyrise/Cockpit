@@ -174,14 +174,9 @@ export function useMocks(
       (id) => fakeDatabaseOperatorData(id, 7)
     );
     responseMocks.segment_configuration = {
-      segment_data: assignFakeData(
+      segment_configuration: assignFakeData(
         mockedIds.databases.map((id) =>
-          fakeDatabaseSegmentData(
-            id,
-            mockedIds.tables,
-            mockedIds.columns,
-            numbers.chunks
-          )
+          fakeDatabaseSegmentData(id, mockedIds.tables, mockedIds.columns)
         )
       ),
     };

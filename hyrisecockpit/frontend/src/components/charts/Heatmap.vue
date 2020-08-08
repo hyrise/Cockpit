@@ -16,6 +16,7 @@ interface Props extends ChartProps {
   maxValue: number;
   colorScale: (string | number)[][];
   colorBar: Object;
+  showY: boolean;
 }
 
 export default defineComponent({
@@ -46,6 +47,10 @@ export default defineComponent({
     hoverTemplate: {
       type: String,
       default: "",
+    },
+    showY: {
+      type: Boolean,
+      default: true,
     },
     ...ChartPropsValidation,
   },
@@ -101,6 +106,7 @@ function useHeatMapConfiguration(
             size: 13,
           },
         },
+        visible: props.showY,
         fixedrange: true,
       },
       autosize: props.autosize,
@@ -108,9 +114,9 @@ function useHeatMapConfiguration(
       height: props.autosize ? 0 : 600,
 
       margin: {
-        l: 100,
-        r: 50,
-        b: 50,
+        l: 60,
+        r: 10,
+        b: 60,
         t: 20,
       },
     };

@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer app fixed width="134" color="grey lighten-4">
+  <v-navigation-drawer permanent app fixed width="134" color="grey lighten-4">
     <v-list subheader>
       <v-list-item>
         <v-list-item-avatar tile size="71" class="mt-0 mb-0 mr-0 ml-4">

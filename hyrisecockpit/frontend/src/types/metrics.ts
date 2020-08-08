@@ -155,11 +155,11 @@ export type AccessData = {
   dataByChunks: number[][];
   chunks: string[];
   columns: string[];
-  descriptions: string[][];
+  descriptions: any[][];
 };
 
 export type SegmentData = AccessData & {
-  valueToId: Record<string, number>;
+  valueToId: string[];
 };
 
 export type MetricDetailsConfiguration = {

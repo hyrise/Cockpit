@@ -1,34 +1,40 @@
 <template>
   <div>
-    <v-row class="mt-2 ml-n3" no-gutters align="center" justify="center">
-      <v-col class="text-center">
+    <row>
+      <template #first>
         <metric-detailed-view metric="segmentConfiguration">
           <template #header>Access Frequency</template>
           <template #content>
-            <v-select
-              :id="'detailed-segment-select'"
-              v-model="selectedItem"
-              style="width: 80%;"
-              :items="selectionItems"
-              dense
-              label="table"
-              outlined
-              hide-details
-              prepend-icon="mdi-table"
-              width="100"
-            />
-            <v-btn-toggle v-model="selectedType" mandatory>
-              <v-btn
-                v-for="type in types"
-                :key="type.name"
-                :value="type.name"
-                :color="selectedType === type.name ? 'primary' : 'white'"
-              >
-                <v-icon :color="selectedType === type.name ? 'white' : ''">{{
-                  type.icon
-                }}</v-icon>
-              </v-btn>
-            </v-btn-toggle>
+            <row>
+              <template #second>
+                <v-select
+                  :id="'detailed-segment-select'"
+                  v-model="selectedItem"
+                  style="width: 80%;"
+                  :items="selectionItems"
+                  dense
+                  label="table"
+                  outlined
+                  hide-details
+                  prepend-icon="mdi-table"
+                  width="100"
+                />
+              </template>
+              <template #third>
+                <v-btn-toggle v-model="selectedType" mandatory>
+                  <v-btn
+                    v-for="type in types"
+                    :key="type.name"
+                    :value="type.name"
+                    :color="selectedType === type.name ? 'primary' : 'white'"
+                  >
+                    <v-icon :color="selectedType === type.name ? 'white' : ''">
+                      {{ type.icon }}
+                    </v-icon>
+                  </v-btn>
+                </v-btn-toggle>
+              </template>
+            </row>
             <Heatmap
               :graph-id="'detailed-' + graphId || 'segmentConfiguration'"
               :data="data"
@@ -38,13 +44,14 @@
               :hover-template="hoverTemplate"
               :color-scale="colorScale"
               :color-bar="colorBar"
+              :show-y="false"
             />
           </template>
         </metric-detailed-view>
-      </v-col>
-      <v-col class="text-center">
+      </template>
+      <template #second>
         <v-select
-          :id="'segment-select'"
+          id="segment-select"
           v-model="selectedItem"
           style="width: 80%;"
           :items="selectionItems"
@@ -54,8 +61,8 @@
           prepend-icon="mdi-table"
           hide-details
         />
-      </v-col>
-      <v-col class="text-center">
+      </template>
+      <template #third>
         <v-btn-toggle v-model="selectedType" mandatory>
           <v-btn
             v-for="type in types"
@@ -63,13 +70,13 @@
             :value="type.name"
             :color="selectedType === type.name ? 'primary' : 'white'"
           >
-            <v-icon :color="selectedType === type.name ? 'white' : ''">{{
-              type.icon
-            }}</v-icon>
+            <v-icon :color="selectedType === type.name ? 'white' : ''">
+              {{ type.icon }}
+            </v-icon>
           </v-btn>
         </v-btn-toggle>
-      </v-col>
-    </v-row>
+      </template>
+    </row>
 
     <Heatmap
       :graph-id="graphId || 'segmentConfiguration'"
@@ -81,6 +88,7 @@
       :hover-template="hoverTemplate"
       :color-scale="colorScale"
       :color-bar="colorBar"
+      :show-y="false"
     />
   </div>
 </template>
@@ -107,8 +115,9 @@ import {
 import { useUpdatingDatabases } from "@/meta/databases";
 import { getMetricChartConfiguration, getMetricMetadata } from "@/meta/metrics";
 import { eventBus } from "@/plugins/eventBus";
-import { multiColors } from "@/meta/colors";
+import { colorTreemapDefinition } from "@/meta/colors";
 import { useDataWithSelection, UseDataWithSelection } from "@/meta/components";
+import Row from "@/components/container/Row.vue";
 
 interface Data
   extends BasicChartComponentData<SegmentData>,
@@ -125,6 +134,7 @@ export default defineComponent({
   components: {
     Heatmap,
     MetricDetailedView,
+    Row,
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
@@ -137,23 +147,31 @@ export default defineComponent({
       context,
       "encoding_type",
       (newData) => {
-        const scaleLength = Object.keys(newData.valueToId).length;
+        const scaleLength = newData.valueToId.length;
+        const colorTree = Object.values(colorTreemapDefinition);
 
         /* set static color scale */
-        colorScale.value = Object.values(newData.valueToId).map((id: any) => {
-          return [id / (scaleLength - 1), multiColors[id]];
-        });
+        colorScale.value =
+          newData.valueToId.length <= 1
+            ? [
+                [0, colorTree[0]],
+                [0.5, colorTree[0]],
+                [1, colorTree[0]],
+              ]
+            : newData.valueToId.map((_, idx) => {
+                return [idx / (scaleLength - 1), colorTree[idx]];
+              });
 
         /* set max value of scale */
-        maxValue.value = scaleLength - 1;
+        maxValue.value = Math.max(scaleLength - 1, 0);
 
         /* set color bar config */
         colorBar.value = {
           autotick: false,
           tick0: !0,
           dtick: 1,
-          ticktext: Object.keys(newData.valueToId).map((id) =>
-            id.length > 3 ? id.substring(0, 3) + ".." : id
+          ticktext: newData.valueToId.map((id) =>
+            id.length > 7 ? id.substring(0, 7) + ".." : id
           ),
           tickvals: [...Array(scaleLength).keys()],
         };
@@ -169,7 +187,7 @@ export default defineComponent({
       ...selection,
       hoverTemplate: computed(
         () =>
-          `<b>column: %{text.column}</b> <br><b>chunk: %{y}</b> <br>${selection.selectedType.value}: %{text.value} <extra></extra>`
+          `<b>segment: %{text.column}</b> <br>${selection.selectedType.value}: %{text.value} <extra></extra>`
       ),
       types: [
         { name: "encoding_type", icon: "mdi-barcode" },

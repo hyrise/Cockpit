@@ -1,22 +1,26 @@
 <template>
   <div>
-    <v-row class="mt-2 ml-n3" no-gutters align="center" justify="center">
-      <v-col class="text-center">
+    <row>
+      <template #first>
         <metric-detailed-view metric="access">
           <template #header>Access Frequency</template>
           <template #content>
-            <v-select
-              :id="'detailed-access-select'"
-              v-model="selectedItem"
-              style="width: 80%;"
-              :items="selectionItems"
-              dense
-              label="table"
-              outlined
-              hide-details
-              prepend-icon="mdi-table"
-              width="100"
-            />
+            <row>
+              <template #second>
+                <v-select
+                  :id="'detailed-access-select'"
+                  v-model="selectedItem"
+                  style="width: 80%;"
+                  :items="selectionItems"
+                  dense
+                  label="table"
+                  outlined
+                  hide-details
+                  prepend-icon="mdi-table"
+                  width="100"
+                />
+              </template>
+            </row>
             <Heatmap
               :graph-id="'detailed-' + graphId || 'access'"
               :data="data"
@@ -28,8 +32,8 @@
             />
           </template>
         </metric-detailed-view>
-      </v-col>
-      <v-col class="text-center">
+      </template>
+      <template #second>
         <v-select
           :id="'access-select'"
           v-model="selectedItem"
@@ -41,10 +45,8 @@
           hide-details
           prepend-icon="mdi-table"
         />
-      </v-col>
-      <v-col class="text-center"></v-col>
-    </v-row>
-
+      </template>
+    </row>
     <Heatmap
       :graph-id="graphId || 'access'"
       :data="data"
@@ -80,6 +82,7 @@ import { useUpdatingDatabases } from "@/meta/databases";
 import { getMetricChartConfiguration, getMetricMetadata } from "@/meta/metrics";
 import { eventBus } from "@/plugins/eventBus";
 import { useDataWithSelection, UseDataWithSelection } from "@/meta/components";
+import Row from "@/components/container/Row.vue";
 
 interface Data
   extends BasicChartComponentData<AccessData>,
@@ -92,6 +95,7 @@ export default defineComponent({
   components: {
     Heatmap,
     MetricDetailedView,
+    Row,
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
