@@ -99,7 +99,7 @@ class Database(object):
                 throughput_resample_options,
             )
 
-            negative_throughput_continuous_query = """SELECT count("latency") AS "throughput"
+            negative_throughput_continuous_query = """SELECT count("latency") AS "negative_throughput"
                 INTO "negative_throughput"
                 FROM "successful_queries"
                 WHERE commited='False'

@@ -8,6 +8,7 @@ from flask_restx import Namespace, Resource
 from .model import (
     DetailedQueryInformation,
     Latency,
+    NegativeThroughput,
     QueueLength,
     Throughput,
     TimeInterval,
@@ -15,6 +16,7 @@ from .model import (
 from .schema import (
     DetailedQueryInformationSchema,
     LatencySchema,
+    NegativeThroughputSchema,
     QueueLengthSchema,
     ThroughputSchema,
 )
@@ -42,6 +44,27 @@ class ThroughputController(Resource):
             precision=request.parsed_args["precision"],  # type: ignore
         )
         return MetricService.get_throughput(time_interval)
+
+
+@api.route("/negative_throughput")
+class NegativeThroughputController(Resource):
+    """Controller of negative throughput data."""
+
+    @accepts(
+        dict(name="startts", type=int),  # noqa
+        dict(name="endts", type=int),  # noqa
+        dict(name="precision", type=int),  # noqa
+        api=api,
+    )
+    @responds(schema=NegativeThroughputSchema(many=True), api=api)
+    def get(self) -> List[NegativeThroughput]:
+        """Get throughput data for the requested time interval."""
+        time_interval: TimeInterval = TimeInterval(
+            startts=request.parsed_args["startts"],  # type: ignore
+            endts=request.parsed_args["endts"],  # type: ignore
+            precision=request.parsed_args["precision"],  # type: ignore
+        )
+        return MetricService.get_negative_throughput(time_interval)
 
 
 @api.route("/latency")
