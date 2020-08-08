@@ -41,24 +41,6 @@ class TestServer:
         request = {"header": {"message": "call"}, "body": {"data": "info"}}
         assert get_response(200) == isolated_server._handle_request(request)
 
-    def test_returns_400_on_bad_request(self, isolated_server):
-        """Returns 400 on bad request."""
-        request = {
-            "What's the best thing about Switzerland?": "I don't know, but the flag is a big plus."
-        }
-        assert get_response(400) == isolated_server._handle_request(request)
-
-    def test_returns_400_on_valid_request_with_wrong_schema(self, isolated_server):
-        """Returns 400 for valid request with wrong schema."""
-        specific_request_schema = {
-            "type": "object",
-            "required": ["data"],
-            "properties": {"data": {"type": "string"}},
-        }
-        isolated_server._calls = {"call": (call_function, specific_request_schema)}
-        request = {"header": {"message": "call"}, "body": {"wrong_key": "info"}}
-        assert get_response(400) == isolated_server._handle_request(request)
-
     def test_returns_404_on_call_not_found(self, isolated_server):
         """Returns 404 when call not found."""
         request = {
