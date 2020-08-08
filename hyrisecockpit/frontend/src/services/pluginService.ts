@@ -31,7 +31,7 @@ export function usePluginService(): PluginService {
 
   async function fetchPluginLogs(): Promise<Object> {
     const pluginMeta: any = { logs: {}, events: {} };
-    await axios.get(controlBackend + "plugin_log").then((response) => {
+    await axios.get(controlBackend + "plugin/log").then((response) => {
       pluginMeta.logs = getPluginLogsData(response.data);
       pluginMeta.events = getPluginEventData(response.data);
     });
