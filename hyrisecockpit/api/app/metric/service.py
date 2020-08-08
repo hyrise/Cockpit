@@ -13,11 +13,17 @@ from .model import (
     DetailedQueryEntry,
     DetailedQueryInformation,
     Latency,
+    NegativeThroughput,
     QueueLength,
     Throughput,
     TimeInterval,
 )
-from .schema import LatencySchema, QueueLengthSchema, ThroughputSchema
+from .schema import (
+    LatencySchema,
+    NegativeThroughputSchema,
+    QueueLengthSchema,
+    ThroughputSchema,
+)
 
 
 class MetricService:
@@ -47,6 +53,20 @@ class MetricService:
         throughput_shema = ThroughputSchema()
         results = cls.get_data(time_interval, "throughput", ["throughput"])
         return [throughput_shema.load(database_results) for database_results in results]
+
+    @classmethod
+    def get_negative_throughput(
+        cls, time_interval: TimeInterval
+    ) -> List[NegativeThroughput]:
+        """Get negative throughput data."""
+        negative_throughput_shema = NegativeThroughputSchema()
+        results = cls.get_data(
+            time_interval, "negative_throughput", ["negative_throughput"]
+        )
+        return [
+            negative_throughput_shema.load(database_results)
+            for database_results in results
+        ]
 
     @classmethod
     def get_latency(cls, time_interval: TimeInterval) -> List[Latency]:
