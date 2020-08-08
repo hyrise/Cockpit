@@ -1,16 +1,18 @@
 """Tests for the status schema's."""
 
 from hyrisecockpit.api.app.status.model import (
-    BenchmarkStatus,
     DatabaseStatus,
     FailedQuery,
     FailedTask,
+    TablesStatus,
+    WorkloadTablesStatus,
 )
 from hyrisecockpit.api.app.status.schema import (
-    BenchmarkStatusSchema,
     DatabaseStatusSchema,
     FailedQuerySchema,
     FailedTaskSchema,
+    TablesStatusSchema,
+    WorkloadTablesStatusSchema,
 )
 
 
@@ -18,19 +20,23 @@ class TestStatusSchema:
     """Tests for the status schema's."""
 
     def test_creates_database_status_schema(self) -> None:
-        """A DatabaseStatusSchema schema can be created."""
+        """A DatabaseStatusSchema can be created."""
         assert DatabaseStatusSchema()
 
-    def test_creates_benchmark_status_schema(self) -> None:
-        """A BenchmarkStatusSchema schema can be created."""
-        assert BenchmarkStatusSchema()
+    def test_creates_workload_tables_status_schema(self) -> None:
+        """A WorkloadTablesStatusSchema can be created."""
+        assert WorkloadTablesStatusSchema()
+
+    def test_creates_tables_status_schema(self) -> None:
+        """A TablesStatusSchema can be created."""
+        assert TablesStatusSchema()
 
     def test_creates_failed_query_schema(self) -> None:
-        """A FailedQuerySchema schema can be created."""
+        """A FailedQuerySchema can be created."""
         assert FailedQuerySchema()
 
     def test_creates_failed_task_schema(self) -> None:
-        """A FailedTaskSchema schema can be created."""
+        """A FailedTaskSchema can be created."""
         assert FailedTaskSchema()
 
     def test_serializes_database_status_schema(self) -> None:
@@ -45,16 +51,43 @@ class TestStatusSchema:
         serialized = DatabaseStatusSchema().dump(database_status)
         assert serialized == interface == vars(database_status)
 
-    def test_serializes_benchmark_status_schema(self) -> None:
-        """A BenchmarkStatusSchema schema can be serialized."""
+    def test_serializes_tables_status_schema(self) -> None:
+        """A TablesStatusSchema can be serialized."""
+        interface = {
+            "workload_type": "tpch",
+            "scale_factor": 1.0,
+            "loaded_tables": ["a", "b"],
+            "missing_tables": ["c", "d"],
+            "completely_loaded": False,
+            "database_representation": {"a": "a_1", "b": "b_1", "c": "c_1", "d": "d_1"},
+        }
+        loaded_workload = TablesStatus(**interface)  # type: ignore
+        serialized = TablesStatusSchema().dump(loaded_workload)
+        assert serialized == interface
+
+    def test_serializes_workload_table_status_schema(self) -> None:
+        """A WorkloadTablesSchema can be serialized."""
+        workload_tables_status_interface = {
+            "workload_type": "tpch",
+            "scale_factor": 1.0,
+            "loaded_tables": ["a", "b"],
+            "missing_tables": ["c", "d"],
+            "completely_loaded": False,
+            "database_representation": {"a": "a_1", "b": "b_1", "c": "c_1", "d": "d_1"},
+        }
         interface = {
             "id": "SomeID",
-            "loaded_benchmarks": ["tpch", "hcpt"],
-            "loaded_tables": ["tpch_0_1"],
+            "workload_tables_status": [
+                TablesStatus(**workload_tables_status_interface)  # type: ignore
+            ],
         }
-        benchmark_status = BenchmarkStatus(**interface)  # type: ignore
-        serialized = BenchmarkStatusSchema().dump(benchmark_status)
-        assert serialized == interface == vars(benchmark_status)
+        expected = {
+            "id": "SomeID",
+            "workload_tables_status": [workload_tables_status_interface],
+        }
+        workload_status = WorkloadTablesStatus(**interface)  # type: ignore
+        serialized = WorkloadTablesStatusSchema().dump(workload_status)
+        assert serialized == expected
 
     def test_serializes_failed_query_schema(self) -> None:
         """A FailedQuerySchema schema can be serialized."""

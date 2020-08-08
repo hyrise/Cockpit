@@ -6,9 +6,9 @@ from flask.wrappers import Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 
-from .interface import DetailedWorkloadInterface, WorkloadInterface
-from .model import DetailedWorkload, Workload
-from .schema import DetailedWorkloadSchema, WorkloadSchema
+from .interface import BaseWorkloadInterface
+from .model import BaseWorkload, DetailedWorkload, Workload
+from .schema import BaseWorkloadSchema, DetailedWorkloadSchema, WorkloadSchema
 from .service import WorkloadService
 
 api = Namespace("Workload", description="Control workload execution.")
@@ -18,45 +18,37 @@ api = Namespace("Workload", description="Control workload execution.")
 class WorkloadController(Resource):
     """Controller of Workloads."""
 
-    @responds(schema=WorkloadSchema(many=True), api=api)
-    def get(self) -> List[Workload]:
+    @responds(schema=DetailedWorkloadSchema(many=True), api=api)
+    def get(self) -> List[DetailedWorkload]:
         """Get all Workloads."""
         return WorkloadService.get_all()
 
-    @api.response(409, "A Workload with the given folder name already exists.")
-    @accepts(schema=WorkloadSchema, api=api)
-    @responds(schema=WorkloadSchema, api=api)
-    def post(self) -> Union[Workload, Response]:
-        """Create a Workload."""
-        interface: WorkloadInterface = request.parsed_obj  # type: ignore
-        workload = WorkloadService.create(interface)
-        return Response(status=409) if workload is None else workload
+    @api.response(404, "A Workload with the given type doesn't exist.")
+    @accepts(schema=BaseWorkloadSchema, api=api)
+    @responds(schema=BaseWorkloadSchema, api=api)
+    def post(self) -> Union[BaseWorkload, Response]:
+        """Create/update a Workload."""
+        interface: BaseWorkloadInterface = request.parsed_obj  # type: ignore
+        workload = WorkloadService.update_by_id(interface)
+        return Response(status=404) if workload is None else workload
 
 
 @api.response(404, "A Workload with the given folder name does not exist.")
-@api.route("/<string:folder_name>")
-@api.param("folder_name", "Workload folder name")
+@api.route("/<string:workload_type>")
+@api.param("workload_type", "Workload type")
 class WorkloadIdController(Resource):
     """Controller of a Workload."""
 
-    @responds(schema=DetailedWorkloadSchema, api=api)
-    def get(self, folder_name: str) -> Union[DetailedWorkload, Response]:
+    @responds(schema=WorkloadSchema, api=api)
+    def get(self, workload_type: str) -> Union[Workload, Response]:
         """Get a Workload."""
-        workload = WorkloadService.get_by_id(folder_name)
+        workload = WorkloadService.get_by_id(workload_type)
         return Response(status=404) if workload is None else workload
 
-    def delete(self, folder_name: str) -> Response:
+    def delete(self, workload_type: str) -> Response:
         """Delete a Workload."""
         return (
             Response(status=200)
-            if WorkloadService.delete_by_id(folder_name)
+            if WorkloadService.delete_by_id(workload_type)
             else Response(status=404)
         )
-
-    @accepts(schema=DetailedWorkloadSchema, api=api)
-    @responds(schema=DetailedWorkloadSchema, api=api)
-    def put(self, folder_name: str) -> Union[DetailedWorkload, Response]:
-        """Update a Workload."""
-        interface: DetailedWorkloadInterface = request.parsed_obj  # type: ignore
-        workload = WorkloadService.update_by_id(folder_name, interface)
-        return Response(status=404) if workload is None else workload

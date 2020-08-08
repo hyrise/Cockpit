@@ -1,7 +1,7 @@
 """Schema's for status module."""
 
 from marshmallow import Schema
-from marshmallow.fields import Boolean, List, Nested, String
+from marshmallow.fields import Boolean, Dict, Float, List, Nested, String
 
 
 class DatabaseStatusSchema(Schema):
@@ -33,8 +33,52 @@ class DatabaseStatusSchema(Schema):
     )
 
 
-class BenchmarkStatusSchema(Schema):
-    """Schema of a benchmark status object."""
+class TablesStatusSchema(Schema):
+    """Schema of a table status object."""
+
+    workload_type = String(
+        title="Workload type",
+        description="Workload type dataset that is completely loaded.",
+        required=True,
+        example="tpch",
+    )
+    scale_factor = Float(
+        title="Scale factor of tables",
+        description="Scale factor of tables for workload type.",
+        required=True,
+        example=1.0,
+    )
+    loaded_tables = List(
+        String(
+            title="Table name",
+            description="Name of loaded table.",
+            required=True,
+            example="orders",
+        )
+    )
+    missing_tables = List(
+        String(
+            title="Table name",
+            description="Name of missing table.",
+            required=True,
+            example="orders",
+        )
+    )
+    completely_loaded = Boolean(
+        title="Completely loaded",
+        description="All tables for workload are completely loaded in database.",
+        required=True,
+        example=True,
+    )
+    database_representation = Dict(
+        keys=String(description="Name of table."),
+        values=String(description="Name of table representation in database."),
+        description="Mapping between table names and their names in database.",
+    )
+
+
+class WorkloadTablesStatusSchema(Schema):
+    """Schema of a workload tables status object."""
 
     id = String(
         title="Database ID",
@@ -42,22 +86,7 @@ class BenchmarkStatusSchema(Schema):
         required=True,
         example="hyrise-1",
     )
-    loaded_benchmarks = List(
-        String(
-            title="Benchmark",
-            description="Benchmark dataset that is completely loaded.",
-            required=True,
-            example="tpch_1",
-        )
-    )
-    loaded_tables = List(
-        String(
-            title="table_name",
-            description="Name of loaded table.",
-            required=True,
-            example="orders_tpch_0_1",
-        )
-    )
+    workload_tables_status = List(Nested(TablesStatusSchema))
 
 
 class FailedQuerySchema(Schema):

@@ -9,7 +9,13 @@ from hyrisecockpit.message import response_schema
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
-from .model import BenchmarkStatus, DatabaseStatus, FailedQuery, FailedTask
+from .model import (
+    DatabaseStatus,
+    FailedQuery,
+    FailedTask,
+    TablesStatus,
+    WorkloadTablesStatus,
+)
 
 
 class StatusService:
@@ -35,15 +41,20 @@ class StatusService:
         ]
 
     @classmethod
-    def get_benchmark_status(cls) -> List[BenchmarkStatus]:
+    def get_workload_tables(cls) -> List[WorkloadTablesStatus]:
         """Get get status for all benchmark data."""
         response = cls._send_message(
-            Request(header=Header(message="benchmark status"), body={})
+            Request(header=Header(message="workload tables status"), body={})
         )
-        return [
-            BenchmarkStatus(**interface)
-            for interface in response["body"]["benchmark_status"]
-        ]
+        workload_tables: List[WorkloadTablesStatus] = []
+        for database in response["body"]["workload_tables"]:
+            workload_tables_status = [
+                TablesStatus(**status) for status in database["workload_tables_status"]
+            ]
+            workload_tables.append(
+                WorkloadTablesStatus(database["id"], workload_tables_status)
+            )
+        return workload_tables
 
     @classmethod
     def get_failed_tasks(cls) -> List[FailedTask]:

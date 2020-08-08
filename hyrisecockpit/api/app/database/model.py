@@ -1,13 +1,6 @@
 """Models of Database name-space."""
 from typing import List
 
-from .interface import (
-    AvailableBenchmarkTablesInterface,
-    BenchmarkTablesInterface,
-    DatabaseInterface,
-    DetailedDatabaseInterface,
-)
-
 
 class Database:
     """Model of a Database."""
@@ -15,12 +8,6 @@ class Database:
     def __init__(self, id: str):
         """Initialize a Database model."""
         self.id: str = id
-
-    def update(self, interface: DatabaseInterface) -> "Database":
-        """Update attributes of a database model."""
-        for key, value in interface.items():
-            setattr(self, key, value)
-        return self
 
 
 class DetailedDatabase:
@@ -45,38 +32,19 @@ class DetailedDatabase:
         self.user: str = user
         self.password: str = password
 
-    def update(self, interface: DetailedDatabaseInterface) -> "DetailedDatabase":
-        """Update attributes of a database model."""
-        for key, value in interface.items():
-            setattr(self, key, value)
-        return self
 
-
-class AvailableBenchmarkTables:
-    """Model for available benchmark tables."""
-
-    def __init__(self, folder_names: List[str]):
-        """Initialize a available benchmark tables model."""
-        self.folder_names: List[str] = folder_names
-
-    def update(
-        self, interface: AvailableBenchmarkTablesInterface
-    ) -> "AvailableBenchmarkTables":
-        """Update attributes of a available benchmark tables model."""
-        for key, value in interface.items():
-            setattr(self, key, value)
-        return self
-
-
-class BenchmarkTables:
+class WorkloadTables:
     """Model for benchmark tables."""
 
-    def __init__(self, folder_name: str):
+    def __init__(self, workload_type: str, scale_factor: float):
         """Initialize a benchmark tables model."""
-        self.folder_name: str = folder_name
+        self.workload_type: str = workload_type
+        self.scale_factor: float = scale_factor
 
-    def update(self, interface: BenchmarkTablesInterface) -> "BenchmarkTables":
-        """Update attributes of a benchmark tables model."""
-        for key, value in interface.items():
-            setattr(self, key, value)
-        return self
+
+class AvailableWorkloadTables:
+    """Model for available benchmark tables."""
+
+    def __init__(self, workload_tables: List[WorkloadTables]):
+        """Initialize a available benchmark tables model."""
+        self.workload_tables: List[WorkloadTables] = workload_tables

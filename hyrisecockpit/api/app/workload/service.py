@@ -5,8 +5,8 @@ from hyrisecockpit.api.app.connection_manager import GeneratorSocket, ManagerSoc
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response
 
-from .interface import DetailedWorkloadInterface, WorkloadInterface
-from .model import DetailedWorkload, Workload
+from .interface import BaseWorkloadInterface
+from .model import BaseWorkload, DetailedWorkload, Workload
 
 
 class WorkloadService:
@@ -25,7 +25,7 @@ class WorkloadService:
             return socket.send_message(message)
 
     @classmethod
-    def get_all(cls) -> List[Workload]:
+    def get_all(cls) -> List[DetailedWorkload]:
         """Get all Workloads.
 
         Returns a list of all Workloads.
@@ -33,26 +33,12 @@ class WorkloadService:
         response = cls._send_message_to_gen(
             Request(header=Header(message="get all workloads"), body={}),
         )
-        return [Workload(**interface) for interface in response["body"]["workloads"]]
+        return [
+            DetailedWorkload(**interface) for interface in response["body"]["workloads"]
+        ]
 
     @classmethod
-    def create(cls, interface: WorkloadInterface) -> Optional[Workload]:
-        """Create a Workload.
-
-        Returns the created Workload.
-        Returns None if a Workload with the given ID already exists.
-        """
-        response = cls._send_message_to_gen(
-            Request(header=Header(message="start workload"), body=dict(interface)),
-        )
-        return (
-            None
-            if response["header"]["status"] != 200
-            else Workload(**response["body"]["workload"])
-        )
-
-    @classmethod
-    def get_by_id(cls, folder_name: str) -> Optional[DetailedWorkload]:
+    def get_by_id(cls, workload_type: str) -> Optional[Workload]:
         """Get a Workload.
 
         Returns the Workload with the given ID.
@@ -60,17 +46,18 @@ class WorkloadService:
         """
         response = cls._send_message_to_gen(
             Request(
-                header=Header(message="get workload"), body={"folder_name": folder_name}
+                header=Header(message="get workload"),
+                body={"workload_type": workload_type},
             ),
         )
         return (
             None
             if response["header"]["status"] == 404
-            else DetailedWorkload(**response["body"]["workload"])
+            else Workload(**response["body"]["workload"])
         )
 
     @classmethod
-    def delete_by_id(cls, folder_name: str) -> Optional[str]:
+    def delete_by_id(cls, workload_type: str) -> Optional[str]:
         """Delete a Workload.
 
         Returns the folder_name of the deleted Workload.
@@ -79,32 +66,27 @@ class WorkloadService:
         response = cls._send_message_to_gen(
             Request(
                 header=Header(message="stop workload"),
-                body={"folder_name": folder_name},
+                body={"workload_type": workload_type},
             ),
         )
         return (
             None
             if response["header"]["status"] == 404
-            else response["body"]["folder_name"]
+            else response["body"]["workload"]
         )
 
     @classmethod
-    def update_by_id(
-        cls, folder_name: str, interface: DetailedWorkloadInterface
-    ) -> Optional[DetailedWorkload]:
+    def update_by_id(cls, interface: BaseWorkloadInterface) -> Optional[BaseWorkload]:
         """Update a Workload by ID.
 
         Returns the updated Workload.
         Returns None if a Workload with the given ID doesn't exist.
         """
         response = cls._send_message_to_gen(
-            Request(
-                header=Header(message="update workload"),
-                body={"folder_name": folder_name, "workload": dict(interface)},
-            ),
+            Request(header=Header(message="update workload"), body=dict(interface),),
         )
         return (
             None
             if response["header"]["status"] == 404
-            else DetailedWorkload(**response["body"]["workload"])
+            else BaseWorkload(**response["body"]["workload"])
         )
