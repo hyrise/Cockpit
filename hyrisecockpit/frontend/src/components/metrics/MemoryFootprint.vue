@@ -16,6 +16,7 @@
       :timestamps="timestamps"
       :max-chart-width="maxChartWidth"
       :pluginEventData="pluginEventData"
+      :activate-plugin-event-click="activatePluginEventClick"
     />
   </div>
 </template>

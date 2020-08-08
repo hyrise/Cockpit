@@ -122,7 +122,7 @@ export function usePluginService(): PluginService {
   function producePluginLogString(currentLog: any) {
     return `${currentLog.reporter} [${formatDateToHHMMSS(
       new Date(parseInt(currentLog.timestamp))
-    )}]: ${currentLog.message}`;
+    )}]: `;
   }
 
   function getPluginEventData(data: any): any {
@@ -142,7 +142,7 @@ export function usePluginService(): PluginService {
               ],
               events: [
                 ...databaseEvents.events,
-                trimString(producePluginLogString(currentLog), 50),
+                { ...currentLog, header: producePluginLogString(currentLog) },
               ],
             };
           } else {
