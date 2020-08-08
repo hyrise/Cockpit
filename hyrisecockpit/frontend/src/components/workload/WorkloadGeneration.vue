@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="open" persistent max-width="1100">
+  <v-dialog v-model="open" persistent max-width="900px">
     <v-card data-id="workload-generation">
       <v-system-bar :height="50" color="secondary">
         <v-tabs v-model="tab" background-color="grey lighten-1">
@@ -309,37 +309,28 @@ function useWorkloadActions(
 
   function startingWorkload(workload: string) {
     const index = selectedWorkloads.value.indexOf(workload);
-    if (weights.value[index] !== undefined) {
-      startWorkload(
-        workload,
-        frequencies.value[availableWorkloads.value.indexOf(workload)],
-        weights.value[index]
-      ).then(() => {
-        updateStartedWorkloads();
-      });
-    } else {
-      startWorkload(
-        workload,
-        frequencies.value[availableWorkloads.value.indexOf(workload)],
-        {}
-      ).then((response: any) => {
-        updateStartedWorkloads();
-        if (response.data.weights)
-          handleWeightsChange(index, response.data.weights);
-      });
-    }
+    if (weights.value[index] === undefined) weights.value[index] = {};
+    startWorkload(
+      workload,
+      frequencies.value[availableWorkloads.value.indexOf(workload)],
+      weights.value[index]
+    ).then(() => {
+      updateStartedWorkloads();
+    });
   }
   function updateStartedWorkloads(): void {
     getWorkloads().then((response: any) => {
       selectedWorkloads.value = [];
+      weights.value = [];
       Object.values(response.data).forEach((workloadData: any) => {
         if (workloadData.running) {
-          selectedWorkloads.value.push(
-            getWorkloadName(
-              workloadData.workload_type,
-              workloadData.scale_factor
-            )
+          const workload = getWorkloadName(
+            workloadData.workload_type,
+            workloadData.scale_factor
           );
+          selectedWorkloads.value.push(workload);
+          const index = selectedWorkloads.value.indexOf(workload);
+          handleWeightsChange(index, workloadData.weights);
         }
       });
     });

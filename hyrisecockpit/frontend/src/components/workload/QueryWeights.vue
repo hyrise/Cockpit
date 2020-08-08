@@ -127,7 +127,7 @@ export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
     const weights = ref<Record<string, Weight[]>>({});
     const panels = ref<number[]>([]);
-    const queriesPerRow = ref<number>(14);
+    const queriesPerRow = ref<number>(11);
     const queriesPerWorkload = ref<number[]>([]);
 
     /* convert the linear sliderValues with exponential function: f(sliderValue) = value = a * b^sliderValue - a
