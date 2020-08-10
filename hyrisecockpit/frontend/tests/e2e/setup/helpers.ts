@@ -33,7 +33,8 @@ export type Request =
   | "workload_operator_information"
   | "segment_configuration"
   | "status_workloads"
-  | "status_database";
+  | "status_database"
+  | "negative_throughput";
 
 export type BackendState = "up" | "down";
 
@@ -55,6 +56,7 @@ export const comparisonRequests: Request[] = [
   "system",
   "storage",
   "workload_operator_information",
+  "negative_throughput",
 ];
 export const overviewRequests: Request[] = [
   "throughput",
@@ -62,6 +64,7 @@ export const overviewRequests: Request[] = [
   "queue_length",
   "system",
   "storage",
+  "negative_throughput",
 ];
 export const workloadMonitoringRequests: Request[] = [
   "detailed_query_information",
@@ -121,6 +124,7 @@ const requestRoutes: Record<
   status_workloads: { get: "**/status/workload_tables" },
   status_database: { get: "**/status/database" },
   segment_configuration: { get: "**/monitor/segment_configuration" },
+  negative_throughput: { get: "**/metric/negative_throughput**" },
 };
 
 export function getRequestRoute(
@@ -149,6 +153,7 @@ const getAliases: Partial<Record<Request, string>> = {
   status_workloads: "getBenchmarkStatus",
   status_database: "getDatabaseStatus",
   segment_configuration: "getSegmentData",
+  negative_throughput: "getNegativeThroughput",
 };
 
 const postAliases: Partial<Record<Request, string>> = {

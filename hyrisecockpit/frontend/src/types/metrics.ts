@@ -15,6 +15,7 @@ export type Metric =
   | "memoryFootprint"
   | "operatorProportion"
   | "segmentConfiguration"
+  | "negativeThroughput"
   | "queryInformation";
 
 export const availableMetrics: Metric[] = [
@@ -29,12 +30,14 @@ export const availableMetrics: Metric[] = [
   "memoryFootprint",
   "operatorProportion",
   "segmentConfiguration",
+  "negativeThroughput",
   "queryInformation",
 ];
 
 export const comparisonMetrics: Metric[] = [
   "throughput",
   "latency",
+  "negativeThroughput",
   "queueLength",
   "cpu",
   "ram",
@@ -47,6 +50,7 @@ export const comparisonMetrics: Metric[] = [
 export const overviewMetrics: Metric[] = [
   "throughput",
   "latency",
+  "negativeThroughput",
   "queueLength",
   "cpu",
   "ram",

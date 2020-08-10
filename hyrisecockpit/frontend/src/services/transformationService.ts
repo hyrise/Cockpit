@@ -30,6 +30,7 @@ const transformationServiceMap: Record<Metric, TransformationService> = {
   segmentConfiguration: getSegmentData,
   storage: getStorageData,
   throughput: getReadOnlyData,
+  negativeThroughput: getReadOnlyData,
   queryInformation: getQueryInformationData,
 };
 

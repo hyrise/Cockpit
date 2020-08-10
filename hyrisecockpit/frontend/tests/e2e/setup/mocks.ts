@@ -26,6 +26,7 @@ import {
   benchmarks,
   DatabaseState,
   empty,
+  generateRandomFloat,
 } from "./helpers";
 import { useCallbacks } from "./callbacks";
 
@@ -181,6 +182,11 @@ export function useMocks(
         )
       ),
     };
+    responseMocks.negative_throughput = fakeDataByIdsWithTimestamps(
+      mockedIds.databases,
+      "negative_throughput",
+      () => generateRandomFloat(0, 100)
+    );
     return responseMocks as Record<Request, any>;
   }
 

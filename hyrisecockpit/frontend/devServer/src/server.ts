@@ -72,6 +72,7 @@ mockGetRoute("throughput");
 mockGetRoute("latency");
 mockGetRoute("queue_length");
 mockGetRoute("detailed_query_information");
+mockGetRoute("negative_throughput");
 
 /* status */
 mockGetRoute("status_workloads");

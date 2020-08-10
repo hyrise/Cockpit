@@ -5,6 +5,8 @@ from marshmallow.fields import Float, Integer, List, Nested, String
 from .model import (
     Latency,
     LatencyEntry,
+    NegativeThroughput,
+    NegativeThroughputEntry,
     QueueLength,
     QueueLengthEntry,
     Throughput,
@@ -49,6 +51,45 @@ class ThroughputSchema(Schema):
     def make_throughput(self, data, **kwargs):
         """Return a throughput object."""
         return Throughput(**data)
+
+
+class NegativeThroughputEntrySchema(Schema):
+    """Schema of a negative throughput entry."""
+
+    timestamp = Integer(
+        title="Timestamp",
+        description="Timestamp in nanoseconds since epoch",
+        required=True,
+        example=1585762457000000000,
+    )
+    negative_throughput = Float(
+        title="Negative throughput",
+        description="Negative throughput value",
+        required=True,
+        example=273.9,
+    )
+
+    @post_load
+    def make_negative_throughput_entry(self, data, **kwargs):
+        """Return a throughput entry object."""
+        return NegativeThroughputEntry(**data)
+
+
+class NegativeThroughputSchema(Schema):
+    """Schema of a negative throughput metric."""
+
+    id = String(
+        title="Database ID",
+        description="Used to identify a database.",
+        required=True,
+        example="hyrise-1",
+    )
+    negative_throughput = List(Nested(NegativeThroughputEntrySchema))
+
+    @post_load
+    def make_negative_throughput(self, data, **kwargs):
+        """Return a negative throughput object."""
+        return NegativeThroughput(**data)
 
 
 class LatencyEntrySchema(Schema):
