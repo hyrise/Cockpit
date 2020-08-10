@@ -3,6 +3,7 @@ import {
   StorageData,
   TreemapDescription,
   AccessData,
+  SegmentData,
 } from "@/types/metrics";
 import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
@@ -26,6 +27,7 @@ const transformationServiceMap: Record<Metric, TransformationService> = {
   operatorProportion: getOperatorData,
   queueLength: getReadOnlyData,
   ram: getRAMData,
+  segmentConfiguration: getSegmentData,
   storage: getStorageData,
   throughput: getReadOnlyData,
   negativeThroughput: getReadOnlyData,
@@ -39,6 +41,72 @@ export function useDataTransformation(metric: Metric): TransformationService {
 
 // TRANSFORM FUNCTION POOL
 
+function getSegmentData(
+  data: any,
+  primaryKey = "",
+  secondaryKey = "",
+  tertiaryKey = ""
+): SegmentData {
+  const dataByColumns: any[] = [];
+  const dataByChunks: number[][] = [];
+  const chunks: string[] = [];
+  const columns: string[] = [];
+  const descriptions: any[][] = [];
+
+  const availableColumns: string[] = [];
+
+  /* store all detected values */
+  const valueToId: string[] = [];
+
+  if (
+    !data ||
+    !data[primaryKey] ||
+    !data[primaryKey][tertiaryKey] ||
+    !Object.keys(data[primaryKey][tertiaryKey]).length
+  )
+    return { dataByChunks, chunks, columns, valueToId, descriptions };
+
+  /* map values to int */
+  Object.values(data).forEach((dbData: any) => {
+    // set secondary key if no key existst
+    if (!secondaryKey) {
+      secondaryKey = Object.keys(dbData[tertiaryKey])[0];
+      emitPreSelectEvent("segmentConfiguration", secondaryKey);
+    }
+    Object.values(dbData[tertiaryKey]).forEach((tableData: any) => {
+      Object.values(tableData).forEach((segment: any) => {
+        const id = valueToId.find((v) => v === segment[tertiaryKey]);
+        if (id) return;
+        valueToId.push(segment[tertiaryKey]);
+      });
+    });
+  });
+  Object.entries(data[primaryKey][tertiaryKey][secondaryKey]).forEach(
+    ([column, columnData]: [string, any]) => {
+      dataByColumns.push(columnData);
+      columns.push("No. " + (parseInt(column, 10) + 1));
+      availableColumns.push(column);
+    }
+  );
+  const description: any = [];
+  const chunk: any = [];
+  // segments are not per chunk, instead they are for every chunks the same -> so we are working with 1 single chunk only
+  chunks.push("No. " + 1);
+
+  dataByColumns.forEach((date, idx) => {
+    description.push({
+      column: "No. " + (idx + 1),
+      value: date[tertiaryKey],
+    });
+    const value = valueToId.findIndex((v) => v === date[tertiaryKey]);
+    chunk.push(value);
+  });
+
+  descriptions.push(description);
+  dataByChunks.push(chunk);
+
+  return { chunks, columns, dataByChunks, descriptions, valueToId };
+}
 /** transform query information data to table structure */
 function getQueryInformationData(data: any, primaryKey: string = ""): any {
   if (!data) return [];
@@ -325,7 +393,7 @@ function getAccessData(
   }
 
   for (let i = 0; i < numberOfChunks; i++) {
-    chunks.push("Nr. " + i);
+    chunks.push("No. " + i);
     descriptions.push(availableColumns);
 
     const chunk: number[] = [];

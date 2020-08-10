@@ -1,19 +1,6 @@
 <template>
   <div>
-    <metric-detailed-view metric="storage">
-      <template #header>Data Size - Overview</template>
-      <template #content>
-        <Treemap
-          :graph-id="'detailed-' + graphId || 'storage'"
-          :data="data"
-          :chart-configuration="chartConfiguration"
-          :selected-databases="selectedDatabases"
-          :max-chart-width="1330"
-        />
-      </template>
-    </metric-detailed-view>
     <metric-details
-      class="mt-n10"
       v-if="showDetails"
       metric="memoryFootprint"
       :databases="selectedDatabases"
@@ -21,6 +8,22 @@
       id-prefix="storage"
       :total-number-of-databases="totalNumberOfDatabases"
     />
+    <row>
+      <template #first>
+        <metric-detailed-view metric="storage">
+          <template #header>Data Size - Overview</template>
+          <template #content>
+            <Treemap
+              :graph-id="'detailed-' + graphId || 'storage'"
+              :data="data"
+              :chart-configuration="chartConfiguration"
+              :selected-databases="selectedDatabases"
+              :max-chart-width="1330"
+            />
+          </template>
+        </metric-detailed-view>
+      </template>
+    </row>
     <Treemap
       :graph-id="graphId || 'storage'"
       :data="data"
@@ -43,13 +46,15 @@ import {
   BasicChartComponentData,
 } from "@/types/metrics";
 import { useModifiedChartData } from "@/meta/components";
+import Row from "@/components/container/Row.vue";
 
 export default defineComponent({
   name: "Storage",
   components: {
-    Treemap,
     MetricDetailedView,
     MetricDetails,
+    Row,
+    Treemap,
   },
   props: MetricPropsValidation,
   setup(

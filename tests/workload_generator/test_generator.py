@@ -76,7 +76,7 @@ class TestWorkloadGenerator:
         fake_driver = MagicMock()
         fake_driver.get_default_weights.return_value = {"01": 5.0, "02": 5.0}
         fake_driver.get_scalefactors.return_value = [1.0, 2.0]
-        fake_running_workoad = Workload(fake_driver)
+        fake_running_workoad = Workload(fake_driver)  # type: ignore
         fake_running_workoad.running = True
         fake_running_workoad.frequency = 42
         fake_running_workoad.scale_factor = 2.0
@@ -105,7 +105,7 @@ class TestWorkloadGenerator:
         fake_body = {"workload_type": "fake_workoad"}
 
         fake_driver = MagicMock()
-        fake_workoad = Workload(fake_driver)
+        fake_workoad = Workload(fake_driver)  # type: ignore
         fake_workoad.running = True
         fake_workoad.frequency = 42
         fake_workoad.scale_factor = 2.0
@@ -140,7 +140,7 @@ class TestWorkloadGenerator:
         """Test stop workload."""
         fake_body = {"workload_type": "fake_workoad"}
         fake_driver = MagicMock()
-        fake_workoad = Workload(fake_driver)
+        fake_workoad = Workload(fake_driver)  # type: ignore
         fake_workoad.running = True
         generator._workloads = {"fake_workoad": fake_workoad}
 
@@ -169,7 +169,7 @@ class TestWorkloadGenerator:
         fake_driver = MagicMock()
         fake_driver.get_default_weights.return_value = {"01": 2, "02": 5}
         fake_driver.get_scalefactors.return_value = [2.0]
-        fake_workoad = Workload(fake_driver)
+        fake_workoad = Workload(fake_driver)  # type: ignore
         fake_workoad.running = True
         generator._workloads = {"fake_workoad": fake_workoad}
 
@@ -202,15 +202,15 @@ class TestWorkloadGenerator:
         """Test get workload queries."""
         fake_driver_a = MagicMock()
         fake_driver_a.generate.return_value = ["Select a", "Select a again"]
-        fake_workoad_a = Workload(fake_driver_a)
+        fake_workoad_a = Workload(fake_driver_a)  # type: ignore
         fake_workoad_a.running = True
         fake_driver_b = MagicMock()
         fake_driver_b.generate.return_value = ["Select b", "Select b again"]
-        fake_workoad_b = Workload(fake_driver_b)
+        fake_workoad_b = Workload(fake_driver_b)  # type: ignore
         fake_workoad_b.running = True
         fake_driver_not_running = MagicMock()
         fake_driver_not_running.generate.return_value = ["not running"]
-        fake_workoad_not_running = Workload(fake_driver_not_running)
+        fake_workoad_not_running = Workload(fake_driver_not_running)  # type: ignore
         fake_workoad_not_running.running = False
         generator._workloads = {
             "fake_workoad_a": fake_workoad_a,

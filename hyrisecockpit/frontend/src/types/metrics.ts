@@ -14,6 +14,7 @@ export type Metric =
   | "queryTypeProportion"
   | "memoryFootprint"
   | "operatorProportion"
+  | "segmentConfiguration"
   | "negativeThroughput"
   | "queryInformation";
 
@@ -28,6 +29,7 @@ export const availableMetrics: Metric[] = [
   "queryTypeProportion",
   "memoryFootprint",
   "operatorProportion",
+  "segmentConfiguration",
   "negativeThroughput",
   "queryInformation",
 ];
@@ -42,6 +44,7 @@ export const comparisonMetrics: Metric[] = [
   "memoryFootprint",
   "storage",
   "access",
+  "segmentConfiguration",
   "operatorProportion",
 ];
 export const overviewMetrics: Metric[] = [
@@ -164,7 +167,11 @@ export type AccessData = {
   dataByChunks: number[][];
   chunks: string[];
   columns: string[];
-  descriptions: string[][];
+  descriptions: any[][];
+};
+
+export type SegmentData = AccessData & {
+  valueToId: string[];
 };
 
 export type MetricDetailsConfiguration = {

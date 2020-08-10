@@ -1,9 +1,8 @@
 <template>
-  <div data-id="metric-detailed-view" class="mx-10 my-10">
+  <div data-id="metric-detailed-view">
     <v-dialog v-model="showDialog" hide-overlay>
       <template v-slot:activator="{ on }">
         <v-btn
-          class="mt-n10 ml-4"
           outlined
           color="secondary"
           elevation="2"
