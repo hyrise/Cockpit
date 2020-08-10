@@ -213,7 +213,7 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
     yaxis: "Memory usage in %",
   },
   segmentConfiguration: {
-    title: "Segment Configuration",
+    title: "Segment Configurations",
     xaxis: "Segments",
     yaxis: "",
   },

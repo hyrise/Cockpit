@@ -28,9 +28,10 @@
                     :value="type.name"
                     :color="selectedType === type.name ? 'primary' : 'white'"
                   >
-                    <v-icon :color="selectedType === type.name ? 'white' : ''">
-                      {{ type.icon }}
-                    </v-icon>
+                    <v-icon
+                      :color="selectedType === type.name ? 'white' : ''"
+                      >{{ type.icon }}</v-icon
+                    >
                   </v-btn>
                 </v-btn-toggle>
               </template>
@@ -70,9 +71,9 @@
             :value="type.name"
             :color="selectedType === type.name ? 'primary' : 'white'"
           >
-            <v-icon :color="selectedType === type.name ? 'white' : ''">
-              {{ type.icon }}
-            </v-icon>
+            <v-icon :color="selectedType === type.name ? 'white' : ''">{{
+              type.icon
+            }}</v-icon>
           </v-btn>
         </v-btn-toggle>
       </template>
@@ -158,9 +159,22 @@ export default defineComponent({
                 [0.5, colorTree[0]],
                 [1, colorTree[0]],
               ]
-            : newData.valueToId.map((_, idx) => {
-                return [idx / (scaleLength - 1), colorTree[idx]];
-              });
+            : newData.valueToId.concat("").reduce((colorScheme, _, idx) => {
+                const percent = idx / scaleLength;
+                if (idx === 0) {
+                  colorScheme.push([percent, colorTree[idx]]);
+                  return colorScheme;
+                }
+                if (idx === newData.valueToId.length) {
+                  colorScheme.push([percent, colorTree[idx - 1]]);
+                  return colorScheme;
+                }
+                /* push inner borders twice to apply discrete color scheme */
+                colorScheme.push([percent, colorTree[idx - 1]]);
+                colorScheme.push([percent, colorTree[idx]]);
+
+                return colorScheme;
+              }, [] as (number | string)[][]);
 
         /* set max value of scale */
         maxValue.value = Math.max(scaleLength - 1, 0);
