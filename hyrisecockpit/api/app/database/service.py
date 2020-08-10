@@ -65,7 +65,7 @@ class DatabaseService:
     @classmethod
     def get_available_workload_tables(cls) -> AvailableWorkloadTables:
         """Return all available workloads."""
-        drivers = Connector.get_workload_drivers()
+        drivers = Connector.get_workload_drivers()  # type: ignore
         return AvailableWorkloadTables(
             workload_tables=[
                 WorkloadTables(workload_type=workload_type, scale_factor=scale_factor)

@@ -11,7 +11,7 @@ class TestWorkload:
         """Test initialization of workload attributes."""
         mock_driver = MagicMock()
         mock_driver.get_default_weights.return_value = {"01": 2, "02": 1}
-        worklaod = Workload(mock_driver)
+        worklaod = Workload(mock_driver)  # type: ignore
 
         assert not worklaod.running
         assert worklaod.scale_factor == 0
@@ -23,7 +23,7 @@ class TestWorkload:
         """Test get default weights workload."""
         mock_driver = MagicMock()
         mock_driver.get_default_weights.return_value = {"01": 2, "02": 1}
-        worklaod = Workload(mock_driver)
+        worklaod = Workload(mock_driver)  # type: ignore
         results = worklaod.get_default_weights()
         assert results == {"01": 2, "02": 1}
 
@@ -31,7 +31,7 @@ class TestWorkload:
         """Test update workload with weights."""
         mock_driver = MagicMock()
         mock_driver.get_default_weights.return_value = {"01": 2, "02": 1}
-        worklaod = Workload(mock_driver)
+        worklaod = Workload(mock_driver)  # type: ignore
         scale_factor = 1.0
         frequency = 200
         weights = {"01": 99, "02": 99}
@@ -46,7 +46,7 @@ class TestWorkload:
         """Test update workload with weights."""
         mock_driver = MagicMock()
         mock_driver.get_default_weights.return_value = {"01": 2, "02": 1}
-        worklaod = Workload(mock_driver)
+        worklaod = Workload(mock_driver)  # type: ignore
         scale_factor = 1.0
         frequency = 200
         weights = {}  # type: ignore
@@ -61,7 +61,7 @@ class TestWorkload:
         """Test reset workload."""
         mock_driver = MagicMock()
         mock_driver.get_default_weights.return_value = {"01": 2, "02": 1}
-        worklaod = Workload(mock_driver)
+        worklaod = Workload(mock_driver)  # type: ignore
         worklaod.scale_factor = 1.0
         worklaod.frequency = 200
         worklaod.weights = {"01": 99, "02": 99}
