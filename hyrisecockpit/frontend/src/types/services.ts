@@ -14,7 +14,8 @@ export interface MetricService {
 export type TransformationService = (
   data: any,
   primaryKey?: string,
-  secondaryKey?: string
+  secondaryKey?: string,
+  tertiaryKey?: string
 ) => any;
 
 export interface PluginService {
