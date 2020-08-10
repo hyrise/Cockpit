@@ -18,7 +18,7 @@ class TestTpccDriver:
     @patch("hyrisecockpit.drivers.tpcc.tpcc_driver.getcwd", MagicMock())
     def tpcc_driver(self) -> TpccDriver:
         """Get a new tpcc driver."""
-        return TpccDriver()
+        return TpccDriver()  # type: ignore
 
     @patch("hyrisecockpit.drivers.tpcc.tpcc_driver.TPCCParameterGenerator")
     @patch("hyrisecockpit.drivers.tpcc.tpcc_driver.TPCCTransactionHandler")
@@ -37,7 +37,7 @@ class TestTpccDriver:
         mock_tpcc_parameter_generator_obj = MagicMock()
         mock_tpcc_parameter_generator.return_value = mock_tpcc_parameter_generator_obj
         mock_abspath.return_value = "/abspath"
-        tpcc_driver = TpccDriver()
+        tpcc_driver = TpccDriver()  # type: ignore
         assert tpcc_driver._query_path == "/abspath/workload_generator/workloads"
         assert tpcc_driver._benchmark_type == "tpcc"
         assert tpcc_driver._table_names == [

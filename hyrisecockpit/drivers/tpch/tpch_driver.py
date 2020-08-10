@@ -46,7 +46,7 @@ class TpchDriver:
 
     def generate(self, scalefactor, frequency, weights) -> List[DefaultTask]:
         """Generate tpch tasks."""
-        return self._default_driver.generate(scalefactor, frequency, weights)
+        return self._default_driver.generate(scalefactor, frequency, weights)  # type: ignore
 
     def get_table_names(self, scalefactor):
         """Return table name and representation in database."""
@@ -54,11 +54,11 @@ class TpchDriver:
 
     def get_load_queries(self, scalefactor) -> Dict[str, Tuple]:
         """Generate load tables queries."""
-        return self._default_driver.get_load_queries(scalefactor)
+        return self._default_driver.get_load_queries(scalefactor)  # type: ignore
 
     def get_delete_queries(self, scalefactor) -> Dict[str, Tuple]:
         """Generate delete table queries."""
-        return self._default_driver.get_delete_queries(scalefactor)
+        return self._default_driver.get_delete_queries(scalefactor)  # type: ignore
 
     def execute_task(
         self, task, cursor, worker_id

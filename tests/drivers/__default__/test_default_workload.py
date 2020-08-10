@@ -31,7 +31,7 @@ class TestDefaultWorkload:
         query_path = "query_path"
 
         default_workload = DefaultWorkload(benchmark, scalefactor, query_path)
-        default_workload._queries = {"q1": ["query 1"]}
+        default_workload._queries = {"q1": ["query 1"]}  # type: ignore
 
         weights = {
             "q1": 1.0,

@@ -14,7 +14,7 @@ class TestTpchDriver:
     @patch("hyrisecockpit.drivers.tpch.tpch_driver.DefaultDriver", MagicMock())
     def tpch_driver(self) -> TpchDriver:
         """Get a new tpch driver."""
-        return TpchDriver()
+        return TpchDriver()  # type: ignore
 
     @patch("hyrisecockpit.drivers.tpch.tpch_driver.DefaultDriver")
     @patch("hyrisecockpit.drivers.tpch.tpch_driver.Path")
@@ -29,7 +29,7 @@ class TestTpchDriver:
         mock_file_path.parent.parent.parent = "/abspath"
         mock_path.return_value = mock_file_path
 
-        tpch_driver = TpchDriver()
+        tpch_driver = TpchDriver()  # type: ignore
         assert tpch_driver._query_path == "/abspath/workload_generator/workloads"
         assert tpch_driver._benchmark_type == "tpch"
         assert tpch_driver._table_names == [
