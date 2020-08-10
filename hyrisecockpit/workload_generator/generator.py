@@ -37,7 +37,7 @@ class WorkloadGenerator(object):
         }
         self._server = Server(generator_listening, generator_port, server_calls)
 
-        self._workloads: Dict = Connector.get_workload()
+        self._workloads: Dict = Connector.get_workload()  # type: ignore
         self._init_server()
         self._init_scheduler()
 

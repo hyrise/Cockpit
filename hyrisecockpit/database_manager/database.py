@@ -60,7 +60,7 @@ class Database(object):
 
         self._database_blocked: Value = Value("b", False)
         self._hyrise_active: Value = Value("b", True)
-        self._workload_drivers: Dict = Connector.get_workload_drivers()
+        self._workload_drivers: Dict = Connector.get_workload_drivers()  # type: ignore
         self._worker_pool: WorkerPool = WorkerPool(
             self._connection_factory,
             self.number_workers,
