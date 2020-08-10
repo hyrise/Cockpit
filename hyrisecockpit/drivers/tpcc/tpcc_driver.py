@@ -8,8 +8,12 @@ from psycopg2.errors import SerializationFailure
 
 from hyrisecockpit.drivers.__default__.driver import DefaultDriver
 from hyrisecockpit.drivers.__default__.task_types import DefaultTask
-from hyrisecockpit.drivers.tpcc.parameter_generator import TPCCParameterGenerator
-from hyrisecockpit.drivers.tpcc.transaction_handler import TPCCTransactionHandler
+from hyrisecockpit.drivers.tpcc.parameter_generator import (  # type: ignore
+    TPCCParameterGenerator,
+)
+from hyrisecockpit.drivers.tpcc.transaction_handler import (  # type: ignore
+    TPCCTransactionHandler,
+)
 
 
 class TpccDriver:
@@ -67,11 +71,11 @@ class TpccDriver:
 
     def get_load_queries(self, scalefactor) -> Dict[str, Tuple[str, Tuple]]:
         """Generate load tables queries."""
-        return self._default_driver.get_load_queries(scalefactor)
+        return self._default_driver.get_load_queries(scalefactor)  # type: ignore
 
     def get_delete_queries(self, scalefactor) -> Dict[str, Tuple]:
         """Generate delete table queries."""
-        return self._default_driver.get_delete_queries(scalefactor)
+        return self._default_driver.get_delete_queries(scalefactor)  # type: ignore
 
     def execute_task(
         self, task, cursor, worker_id
