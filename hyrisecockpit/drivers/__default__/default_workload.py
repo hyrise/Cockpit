@@ -14,7 +14,7 @@ class DefaultWorkload:
         """Initialize a Workload."""
         self._benchmark = benchmark
         self._scalefactor = scalefactor
-        self._queries = OrderedDict(WorkloadReader.get(query_path))
+        self._queries = OrderedDict(WorkloadReader.get(query_path))  # type: ignore
 
     def get(self, frequency, weights) -> List[DefaultTask]:
         """Get a list of queries with the frequency and weights."""

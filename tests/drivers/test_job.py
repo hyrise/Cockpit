@@ -15,7 +15,7 @@ class TestJobDriver:
     @patch("hyrisecockpit.drivers.job.job_driver.DefaultDriver", MagicMock())
     def job_driver(self) -> JobDriver:
         """Get a new job driver."""
-        return JobDriver()
+        return JobDriver()  # type: ignore
 
     @patch("hyrisecockpit.drivers.job.job_driver.DefaultDriver")
     @patch("hyrisecockpit.drivers.job.job_driver.Path")
@@ -30,7 +30,7 @@ class TestJobDriver:
         mock_file_path.parent.parent.parent = "/abspath"
         mock_path.return_value = mock_file_path
 
-        job_driver = JobDriver()
+        job_driver = JobDriver()  # type: ignore
         assert job_driver._query_path == "/abspath/workload_generator/workloads"
         assert job_driver._benchmark_type == "job"
         assert job_driver._table_names == tables
