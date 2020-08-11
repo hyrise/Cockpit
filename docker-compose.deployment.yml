@@ -42,6 +42,8 @@ services:
 
   hyrise:
     image: udopigorsch/hyrise:bp1920
+    healthcheck:
+      test: bash -c [ -f ./cached_tables ]
     volumes:
       - ./cached_tables:/usr/local/hyrise/cached_tables
     ports:
