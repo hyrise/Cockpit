@@ -37,7 +37,6 @@ class LogPipe(Thread):
         """Run the thread, logging everything."""
         for line in iter(self.pipeReader.readline, ""):
             self.logger.log(self.level, line.strip("\n"))
-
         self.pipeReader.close()
 
     def close(self):
@@ -86,7 +85,7 @@ def shutdown_component(component, sub_process):
         if sub_process.poll() is None:
             kill_process(sub_process, "still alive")
     except TimeoutExpired:
-        kill_process(sub_process, "timeout expired")
+        kill_process(sub_process, f"timeout expired {TIME_OUT}s")
 
 
 def shutdown(components, loggers_pipes):
