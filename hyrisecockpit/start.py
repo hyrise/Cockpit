@@ -44,20 +44,26 @@ class LogPipe(Thread):
         close(self.fdWrite)
 
 
-def run_components(logpipe):
+def run_components(logpipe_stdout, logpipe_stderr):
     """Start components in subprocesses."""
     components = {}
     logging.info("start cockpit-backend")
     components["cockpit-backend"] = Popen(
-        ["pipenv", "run", "cockpit-backend"], stdout=logpipe, stderr=logpipe
+        ["pipenv", "run", "cockpit-backend"],
+        stdout=logpipe_stdout,
+        stderr=logpipe_stderr,
     )
     logging.info("start cockpit-manager")
     components["cockpit-manager"] = Popen(
-        ["pipenv", "run", "cockpit-manager"], stdout=logpipe, stderr=logpipe
+        ["pipenv", "run", "cockpit-manager"],
+        stdout=logpipe_stdout,
+        stderr=logpipe_stderr,
     )
     logging.info("start cockpit-manager")
     components["cockpit-generator"] = Popen(
-        ["pipenv", "run", "cockpit-generator"], stdout=logpipe, stderr=logpipe
+        ["pipenv", "run", "cockpit-generator"],
+        stdout=logpipe_stdout,
+        stderr=logpipe_stderr,
     )
     return components
 
@@ -83,12 +89,13 @@ def shutdown_component(component, sub_process):
         kill_process(sub_process, "timeout expired")
 
 
-def shutdown(components, logpipe):
+def shutdown(components, logpipe_stdout, logpipe_stderr):
     """Shutdown components."""
     for component, sub_process in components.items():
         logging.info(f"shutdown {component}")
         shutdown_component(component, sub_process)
-    logpipe.close()
+    logpipe_stdout.close()
+    logpipe_stderr.close()
 
 
 def main():
@@ -96,9 +103,10 @@ def main():
     logging.basicConfig(
         level=logging.INFO, format="%(asctime)s :: %(levelname)s :: %(message)s"
     )
-    logpipe = LogPipe(logging.INFO)
+    logpipe_stdout = LogPipe(logging.INFO)
+    logpipe_stderr = LogPipe(logging.WARNING)
     try:
-        components = run_components(logpipe)
+        components = run_components(logpipe_stdout, logpipe_stderr)
         Event().wait()
     except KeyboardInterrupt:
-        shutdown(components, logpipe)
+        shutdown(components, logpipe_stdout, logpipe_stderr)
