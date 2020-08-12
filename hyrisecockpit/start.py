@@ -75,8 +75,7 @@ def kill_process(component, messege):
     if platform.startswith("linux"):  # noqa
         run(["fuser", "-k", f"{PORTS[component]}/tpc"])
     elif platform.startswith("darwin"):
-        pid = run(["lsof", "-i", f":{PORTS[component]}"], capture_output=True).stdout
-        run(["kill", "-9", f"{pid}"])
+        run(["lsof", "-t", "-i", f"tcp:{PORTS[component]}", "|", "xargs", "kill"])
 
 
 def shutdown_component(component, sub_process):
