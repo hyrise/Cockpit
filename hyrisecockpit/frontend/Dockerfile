@@ -4,6 +4,7 @@ LABEL maintainer="upigorsch@me.com"
 
 WORKDIR /usr/local/Cockpit/hyrisecockpit/frontend
 COPY hyrisecockpit/frontend .
+RUN cp .env.example.docker .env
 RUN npm set progress=false \
 	&& npm install --no-optional \
 	&& npm run build:min
