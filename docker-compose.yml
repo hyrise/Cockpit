@@ -5,26 +5,9 @@ services:
     image: cockpit-backend:3.8.5
     build: 
       context: .
-      dockerfile: ./hyrisecockpit/api/Dockerfile
+      dockerfile: ./hyrisecockpit/Dockerfile
     ports:
       - "8000:8000"
-
-  manager:
-    image: cockpit-manager:3.8.5
-    build: 
-      context: .
-      dockerfile: ./hyrisecockpit/database_manager/Dockerfile
-    ports:
-      - "8001:8001"
-    
-  generator:
-    image: cockpit-generator:3.8.5
-    build: 
-      context: .
-      dockerfile: ./hyrisecockpit/workload_generator/Dockerfile
-    ports:
-      - "8002:8002"
-      - "8003:8003"
     
   influxdb:
     image: influxdb:alpine
