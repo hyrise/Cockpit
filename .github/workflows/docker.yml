@@ -10,18 +10,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Copy environment file
-      run: cp .env.example .env
-    - name: Build the docker-compose stack
-      run: docker-compose -f docker-compose.ci.yml up --build --quiet-pull -d backend generator manager
+    - name: Build backend container
+      run: docker-compose up --build --quiet-pull -d backend
     - name: Check running containers
       run: docker ps -a
     - name: Check logs Backend
-      run: docker logs cockpit_backend_1
-    - name: Check logs Generator
-      run: docker logs cockpit_generator_1
-    - name: Check logs Manager
-      run: docker logs cockpit_manager_1
+      run: docker logs backend_1
 
   frontend_build:
 
@@ -35,60 +29,4 @@ jobs:
       run: docker ps -a
     - name: Check logs Frontend
       run: docker logs cockpit_frontend_1
-
-  backend_push:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: docker/build-push-action@v1
-      with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_TOKEN }}
-        repository: udopigorsch/cockpit-backend
-        tag_with_ref: true
-        dockerfile: ./hyrisecockpit/api/Dockerfile
-
-  generator_push:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: docker/build-push-action@v1
-      with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_TOKEN }}
-        repository: udopigorsch/cockpit-generator
-        tag_with_ref: true
-        dockerfile: ./hyrisecockpit/workload_generator/Dockerfile
-        
-  manager_push:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: docker/build-push-action@v1
-      with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_TOKEN }}
-        repository: udopigorsch/cockpit-manager
-        tag_with_ref: true
-        dockerfile: ./hyrisecockpit/database_manager/Dockerfile
-
-  frontend_push:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: docker/build-push-action@v1
-      with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_TOKEN }}
-        repository: udopigorsch/cockpit-frontend
-        tag_with_ref: true
-        dockerfile: ./hyrisecockpit/frontend/Dockerfile
   

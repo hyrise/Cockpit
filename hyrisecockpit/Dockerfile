@@ -4,6 +4,6 @@ WORKDIR /usr/local/Cockpit
 COPY . .    
 RUN pip3.8 install -r requirements.txt \
     && pip3.8 install .
-RUN cp .env.example.docker .env
+RUN cp .env.docker .env
 EXPOSE 8000
 ENTRYPOINT cockpit
