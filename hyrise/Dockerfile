@@ -1,6 +1,5 @@
 # https://github.com/hyrise/hyrise/wiki/Docker-Image
 FROM hyrise/opossum-ci:20.04
-LABEL maintainer="upigorsch@me.com"
 ENV OPOSSUM_HEADLESS_SETUP=true
 
 # From now on, we're doing additional stuff that would be done manually otherwise
@@ -14,9 +13,9 @@ RUN cd /usr/local/ \
     && mkdir /usr/local/hyrise-git/cmake-build-release \
     && cd /usr/local/hyrise-git/cmake-build-release \
     && CXXFLAGS=-fdiagnostics-color=always cmake -DENABLE_NUMA_SUPPORT=Off -DCMAKE_BUILD_TYPE=Release .. \
-    && make hyriseConsole hyriseServer \
+    && make hyriseServer \
     && mkdir -p /usr/local/hyrise/lib \
-    && cp hyriseServer hyriseConsole /usr/local/hyrise/
+    && cp hyriseServer /usr/local/hyrise/
 RUN cd /usr/local/hyrise-git/cmake-build-release \
     && make CompressionPlugin ClusteringPlugin IndexSelectionPlugin \
     && cp lib/libClusteringPlugin.so lib/libCompressionPlugin.so lib/libIndexSelectionPlugin.so /usr/local/hyrise/lib/ 

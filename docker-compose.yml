@@ -22,10 +22,18 @@ services:
     ports:
       - "5000:5000"
 
-  # hyrise:
+  hyrise_a:
+    image: hyrise:bp1920
+    build: 
+      context: .
+      dockerfile: ./hyrise/Dockerfile
+    ports:
+      - "5432:5432"
+
+  # hyrise_b:
   #   image: hyrise:bp1920
   #   build: 
   #     context: .
   #     dockerfile: ./hyrise/Dockerfile
   #   ports:
-  #     - "5432:5432"
+  #     - "6432:5432"
