@@ -22,16 +22,12 @@ services:
     build: 
       context: .
       dockerfile: ./hyrisecockpit/workload_generator/Dockerfile
-    volumes:
-        - ./hyrisecockpit/workload_generator/workloads:/usr/local/lib/python3.8/site-packages/hyrisecockpit/workload_generator/workloads
     ports:
       - "8002:8002"
       - "8003:8003"
     
   influxdb:
     image: influxdb:alpine
-    volumes:
-      - ./influxdb:/var/lib/influxdb
     ports:
       - "8086:8086"
 
@@ -48,7 +44,5 @@ services:
     build: 
       context: .
       dockerfile: ./hyrise/Dockerfile
-    volumes:
-      - ./cached_tables:/usr/local/hyrise/cached_tables
     ports:
       - "5432:5432"
