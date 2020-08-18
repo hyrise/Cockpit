@@ -6,6 +6,8 @@ services:
     build: 
       context: .
       dockerfile: ./hyrisecockpit/Dockerfile
+    env_file:
+      - .env.docker
     ports:
       - "8000:8000"
     
@@ -19,10 +21,12 @@ services:
     build:
         context: .
         dockerfile: ./hyrisecockpit/frontend/Dockerfile
+    env_file:
+      - .env.docker
     ports:
       - "5000:5000"
 
-  hyrise_a:
+  hyrise_1:
     image: hyrise:bp1920
     build: 
       context: .
@@ -30,10 +34,10 @@ services:
     ports:
       - "5432:5432"
 
-  # hyrise_b:
-  #   image: hyrise:bp1920
-  #   build: 
-  #     context: .
-  #     dockerfile: ./hyrise/Dockerfile
-  #   ports:
-  #     - "6432:5432"
+  hyrise_2:
+    image: hyrise:bp1920
+    build: 
+      context: .
+      dockerfile: ./hyrise/Dockerfile
+    ports:
+      - "6432:5432"

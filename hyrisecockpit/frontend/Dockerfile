@@ -1,10 +1,8 @@
 # https://github.com/hyrise/hyrise/wiki/Docker-Image
 FROM node:alpine
-LABEL maintainer="upigorsch@me.com"
 
 WORKDIR /usr/local/Cockpit/hyrisecockpit/frontend
 COPY hyrisecockpit/frontend .
-RUN cp .env.docker .env
 RUN npm set progress=false \
 	&& npm install --no-optional \
 	&& npm run build:min
