@@ -1,0 +1,38 @@
+name: Docker Deployment CI
+
+on:
+  push:
+    branches:
+      - master
+      - dev
+jobs:
+
+  backend_push:
+
+    runs-on: ubuntu-latest
+
+    step: 
+    - uses: actions/checkout@v2
+    - uses: docker/build-push-action@v1
+    with:
+      # Change rep ans secrets 
+      username: ${{ secrets.DOCKER_HUB_USERNAME }}
+      password: ${{ secrets.DOCKER_HUB_TOKEN }}
+      repository: udopigorsch/cockpit-backend
+      tag_with_ref: true
+      dockerfile: ./hyrisecockpit/Dockerfile
+
+  frontend_push:
+
+    runs-on: ubuntu-latest
+
+    step: 
+    - uses: actions/checkout@v2
+    - uses: docker/build-push-action@v1
+    with:
+      # Change rep ans secrets 
+      username: ${{ secrets.DOCKER_HUB_USERNAME }}
+      password: ${{ secrets.DOCKER_HUB_TOKEN }}
+      repository: udopigorsch/cockpit-frontend
+      tag_with_ref: true
+      dockerfile: ./hyrisecockpit/frontend/Dockerfile
