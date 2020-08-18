@@ -4,6 +4,12 @@ ENV OPOSSUM_HEADLESS_SETUP=true
 
 # From now on, we're doing additional stuff that would be done manually otherwise
 RUN apt-get update
+RUN  apt-get -y install unzip \
+    wget
+RUN cd /usr/local/hyrise \
+    && wget -O cached_tables.zip "https://www.dropbox.com/sh/gshfx1q52gr7q63/AABfnmI-KMYld9FLcA5hxO8fa\?dl\=0" \
+    && unzip cached_tables.zip \
+    && rm -r cached_tables.zip
 RUN cd /usr/local/ \
     && git clone https://github.com/hyrise/hyrise.git hyrise-git \ 
     && cd hyrise-git \
