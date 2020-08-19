@@ -3,6 +3,9 @@ version: "3.5"
 services:
   backend:
     image: hyrise/bp1920:cockpit-backend
+    build:
+        context: .
+        dockerfile: ./hyrisecockpit/Dockerfile
     environment:
       - STORAGE_HOST=influxdb
     ports:
@@ -15,8 +18,11 @@ services:
 
   frontend:
     image: hyrise/bp1920:cockpit-frontent
-    environment:
-      - VUE_APP_BACKEND_HOST="127.0.0.1"
+    build:
+        context: .
+        dockerfile: ./hyrisecockpit/frontend/Dockerfile
+        args:
+            VUE_APP_BACKEND_HOST: 127.0.0.1
     ports:
       - "5000:5000"
 
@@ -28,13 +34,4 @@ services:
   hyrise_2:
     image: hyrise/bp1920:hyrise
     ports:
-      - "6432:5432"
-
-  watchtower:
-    environment:
-      - WATCHTOWER_CLEANUP=1
-      - WATCHTOWER_POLL_INTERVAL=1800
-    image: containrrr/watchtower
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /root/.docker/config.json:/config.json
+      - "5432:6432"

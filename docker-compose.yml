@@ -3,9 +3,6 @@ version: "3.5"
 services:
   backend:
     image: hyrise/bp1920:cockpit-backend
-    build: 
-      context: .
-      dockerfile: ./hyrisecockpit/Dockerfile
     environment:
       - STORAGE_HOST=influxdb
     ports:
@@ -18,26 +15,15 @@ services:
 
   frontend:
     image: hyrise/bp1920:cockpit-frontent
-    build:
-        context: .
-        dockerfile: ./hyrisecockpit/frontend/Dockerfile
-    environment:
-      - VUE_APP_BACKEND_HOST="127.0.0.1"
     ports:
       - "5000:5000"
 
   hyrise_1:
     image: hyrise/bp1920:hyrise
-    build: 
-      context: .
-      dockerfile: ./hyrise/Dockerfile
     ports:
       - "5432:5432"
 
   hyrise_2:
     image: hyrise/bp1920:hyrise
-    build: 
-      context: .
-      dockerfile: ./hyrise/Dockerfile
     ports:
-      - "6432:5432"
+      - "5432:6432"
