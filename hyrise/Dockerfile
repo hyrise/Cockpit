@@ -4,14 +4,13 @@ ENV OPOSSUM_HEADLESS_SETUP=true
 
 # From now on, we're doing additional stuff that would be done manually otherwise
 RUN apt-get update
-RUN apt-get -y install p7zip \
-    p7zip-full \
-    wget
+RUN apt-get -y install wget
 RUN mkdir /usr/local/hyrise \
     && cd /usr/local/hyrise \
-    && wget -O cached_tables.zip https://www.dropbox.com/sh/gshfx1q52gr7q63/AABfnmI-KMYld9FLcA5hxO8fa\?dl\=0
-RUN 7z x -o/usr/local/hyrise/cached_tables /usr/local/hyrise/cached_tables.zip \
-    && rm -r /usr/local/hyrise/cached_tables.zip
+    && wget -O cached_tables.tar.xz https://www.dropbox.com/s/sseekrbu1i6o96n/cached_tables.tar.xz?dl=0
+RUN cd /usr/local/hyrise \
+    && tar -xf cached_tables.tar.xz \
+    && rm cached_tables.tar.xz
 RUN cd /usr/local/ \
     && git clone https://github.com/hyrise/hyrise.git hyrise-git \
     && cd hyrise-git \
@@ -21,7 +20,7 @@ RUN cd /usr/local/ \
     && mkdir /usr/local/hyrise-git/cmake-build-release \
     && cd /usr/local/hyrise-git/cmake-build-release \
     && CXXFLAGS=-fdiagnostics-color=always cmake -DENABLE_NUMA_SUPPORT=Off -DCMAKE_BUILD_TYPE=Release .. \
-    && make hyriseServer \
+    && make hyriseServer -j 4 \
     && mkdir -p /usr/local/hyrise/lib \
     && cp hyriseServer /usr/local/hyrise/
 RUN cd /usr/local/hyrise-git/cmake-build-release \
