@@ -15,7 +15,7 @@ jobs:
     - name: Check running containers
       run: docker ps -a
     - name: Check logs Backend
-      run: docker logs backend_1
+      run: docker logs cockpit_backend_1
 
   frontend_build:
 
