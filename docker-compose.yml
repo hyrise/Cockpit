@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   backend:
-    image: cockpit-backend:3.8.5
+    image: hyrise/bp1920:cockpit-backend
     build: 
       context: .
       dockerfile: ./hyrisecockpit/Dockerfile
@@ -17,7 +17,7 @@ services:
       - "8086:8086"
 
   frontend:
-    image: frontend:buster
+    image: hyrise/bp1920:cockpit-frontent
     build:
         context: .
         dockerfile: ./hyrisecockpit/frontend/Dockerfile
@@ -27,7 +27,7 @@ services:
       - "5000:5000"
 
   hyrise_1:
-    image: hyrise:bp1920
+    image: hyrise/bp1920:hyrise
     build: 
       context: .
       dockerfile: ./hyrise/Dockerfile
@@ -35,9 +35,18 @@ services:
       - "5432:5432"
 
   hyrise_2:
-    image: hyrise:bp1920
+    image: hyrise/bp1920:hyrise
     build: 
       context: .
       dockerfile: ./hyrise/Dockerfile
     ports:
       - "6432:5432"
+
+  watchtower:
+    environment:
+      - WATCHTOWER_CLEANUP=1
+      - WATCHTOWER_POLL_INTERVAL=1800
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /root/.docker/config.json:/config.json

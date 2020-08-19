@@ -18,8 +18,8 @@ jobs:
       # Change rep ans secrets 
       username: ${{ secrets.DOCKER_HUB_USERNAME }}
       password: ${{ secrets.DOCKER_HUB_TOKEN }}
-      repository: udopigorsch/cockpit-backend
-      tag_with_ref: true
+      repository: hyrise/bp1920
+      tags: cockpit-backend
       dockerfile: ./hyrisecockpit/Dockerfile
 
   frontend_push:
@@ -33,6 +33,6 @@ jobs:
       # Change rep ans secrets 
       username: ${{ secrets.DOCKER_HUB_USERNAME }}
       password: ${{ secrets.DOCKER_HUB_TOKEN }}
-      repository: udopigorsch/cockpit-frontend
-      tag_with_ref: true
+      repository: hyrise/bp1920
+      tags: cockpit-frontent
       dockerfile: ./hyrisecockpit/frontend/Dockerfile
