@@ -1,4 +1,4 @@
-"""Setup script for the starting of the cockpit."""
+"""Script to start all back-end components."""
 import logging
 from os import close, fdopen, pipe
 from signal import SIGINT
