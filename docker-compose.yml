@@ -6,8 +6,8 @@ services:
     build: 
       context: .
       dockerfile: ./hyrisecockpit/Dockerfile
-    env_file:
-      - .env.docker
+    environment:
+      - STORAGE_HOST=influxdb
     ports:
       - "8000:8000"
     
@@ -21,8 +21,8 @@ services:
     build:
         context: .
         dockerfile: ./hyrisecockpit/frontend/Dockerfile
-    env_file:
-      - .env.docker
+    environment:
+      - VUE_APP_BACKEND_HOST="127.0.0.1"
     ports:
       - "5000:5000"
 

@@ -15,7 +15,6 @@ jobs:
     - uses: actions/checkout@v2
     - uses: docker/build-push-action@v1
     with:
-      # Change rep ans secrets 
       username: ${{ secrets.DOCKER_HUB_USERNAME }}
       password: ${{ secrets.DOCKER_HUB_TOKEN }}
       repository: hyrise/bp1920
@@ -30,7 +29,6 @@ jobs:
     - uses: actions/checkout@v2
     - uses: docker/build-push-action@v1
     with:
-      # Change rep ans secrets 
       username: ${{ secrets.DOCKER_HUB_USERNAME }}
       password: ${{ secrets.DOCKER_HUB_TOKEN }}
       repository: hyrise/bp1920
