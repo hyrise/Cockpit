@@ -26,4 +26,4 @@ services:
   hyrise_2:
     image: hyrise/bp1920:hyrise
     ports:
-      - "5432:6432"
+      - "6432:5432"
