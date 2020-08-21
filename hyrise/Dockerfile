@@ -5,7 +5,7 @@ FROM hyrise/opossum-ci:20.04
 ENV OPOSSUM_HEADLESS_SETUP=true
 ENV HYRISE_BRANCH bp1920
 ENV THREADS 4
-ENV BINARY_TABLES_URL https://www.dropbox.com/s/sseekrbu1i6o96n/cached_tables.tar.xz?dl=0
+ENV BINARY_TABLES_URL https://www.dropbox.com/s/yqw3f7ranl79swf/cached_tables.tar.xz?dl=0
 
 # You can change the architecture for which the hyrise is optimized
 # https://gcc.gnu.org/onlinedocs/gcc/x86-Options.html
@@ -37,7 +37,7 @@ RUN cd /usr/local/ \
     && CXXFLAGS=-fdiagnostics-color=always cmake -DENABLE_NUMA_SUPPORT=Off -DCMAKE_BUILD_TYPE=Release .. \
     && make hyriseServer -j ${THREADS} \
     && mkdir -p /usr/local/hyrise/lib \
-    && cp hyriseServer /usr/local/hyrise/
+    && mv hyriseServer /usr/local/hyrise/
 
 # Install plug-ins
 RUN cd /usr/local/hyrise-git/cmake-build-release \
