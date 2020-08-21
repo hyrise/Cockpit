@@ -27,7 +27,7 @@ RUN cd /usr/local/hyrise \
 
 # Install hyrise
 RUN cd /usr/local/ \
-    && git clone --recursive https://github.com/hyrise/hyrise.git hyrise-git\
+    && git clone https://github.com/hyrise/hyrise.git hyrise-git \
     && cd hyrise-git \
     && git checkout ${HYRISE_BRANCH} \
     && sed -i "s/-march=native/-march=${ARCHITECTURE}/g" CMakeLists.txt \
@@ -36,16 +36,13 @@ RUN cd /usr/local/ \
     && cd /usr/local/hyrise-git/cmake-build-release \
     && CXXFLAGS=-fdiagnostics-color=always cmake -DENABLE_NUMA_SUPPORT=Off -DCMAKE_BUILD_TYPE=Release .. \
     && make hyriseServer -j ${THREADS} \
+    && mkdir -p /usr/local/hyrise/lib \
     && cp hyriseServer /usr/local/hyrise/
 
 # Install plug-ins
 RUN cd /usr/local/hyrise-git/cmake-build-release \
     && make CompressionPlugin ClusteringPlugin IndexSelectionPlugin \
-    && mv -r /usr/local/hyrise-git/cmake-build-release/lib /usr/local/hyrise/lib
-
-# Remove install files
-RUN cd /usr/local/ \
-    && rm -r hyrise-git
+    && cp lib/libClusteringPlugin.so lib/libCompressionPlugin.so lib/libIndexSelectionPlugin.so /usr/local/hyrise/lib/ 
 
 ENTRYPOINT ["/usr/local/hyrise/hyriseServer"]
 EXPOSE 5432
