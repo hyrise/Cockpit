@@ -1,6 +1,0 @@
-#!/bin/bash
-
-echo BRANCH=$BRANCH
-echo ARCHITECTURE=$ARCHITECTURE
-
-docker build --build-arg ARCHITECTURE=$ARCHITECTURE --build-arg BRANCH=$BRANCH -t $IMAGE_NAME .
