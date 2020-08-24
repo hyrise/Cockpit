@@ -1,4 +1,7 @@
+#!/usr/bin/env python3
+
 """Script to start all back-end components."""
+
 import logging
 from os import close, fdopen, pipe
 from signal import SIGINT
