@@ -40,4 +40,4 @@ STORAGE_USER: str = getenv("STORAGE_USER", "root")
 STORAGE_PASSWORD: str = getenv("STORAGE_PASSWORD", "root")
 
 FLASK_ENV: str = getenv("FLASK_ENV", "development")
-FLASK_DEBUG: bool = bool(getenv("FLASK_DEBUG", True))
+FLASK_DEBUG: bool = bool(getenv("FLASK_DEBUG", False))
