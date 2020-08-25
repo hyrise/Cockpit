@@ -4,17 +4,11 @@ FROM hyrise/opossum-ci:20.04
 # Set environment variables
 ENV OPOSSUM_HEADLESS_SETUP=true
 ENV HYRISE_BRANCH bp1920
-ENV THREADS 4
+ENV THREADS 8
 
 # You can change the architecture for which the hyrise is optimized
 # https://gcc.gnu.org/onlinedocs/gcc/x86-Options.html
 ENV ARCHITECTURE native
-
-# Install packages
-RUN apt-get update
-RUN apt-get -y install wget
-
-# Download binary tables
 
 # Install hyrise
 RUN cd /usr/local/ \
@@ -33,7 +27,7 @@ RUN cd /usr/local/ \
 # Install plug-ins
 RUN cd /usr/local/hyrise-git/cmake-build-release \
     && make CompressionPlugin ClusteringPlugin IndexSelectionPlugin \
-    && cp lib/libClusteringPlugin.so lib/libCompressionPlugin.so lib/libIndexSelectionPlugin.so /usr/local/hyrise/lib/ 
+    && cp lib/libClusteringPlugin.so lib/libCompressionPlugin.so lib/libIndexSelectionPlugin.so /usr/local/hyrise/lib/
 
 # Create binary tables
 RUN cd /usr/local/hyrise-git/ \
@@ -45,25 +39,27 @@ RUN cd /usr/local/hyrise-git/ \
 # Clean up job
 RUN cd /usr/local/hyrise-git/imdb_data \
  && rm -r *.csv \
- && rm -r * .csv.json
+ && rm -r *.csv.json
 
 # Move binary tables
 RUN mkdir /usr/local/hyrise/cached_tables \
     && mv /usr/local/hyrise-git/tpch_cached_tables/sf-1.000000 /usr/local/hyrise/cached_tables/tpch_1 \
     && mv /usr/local/hyrise-git/tpch_cached_tables/sf-0.100000 /usr/local/hyrise/cached_tables/tpch_0.1 \
     && mv /usr/local/hyrise-git/tpcds_cached_tables/sf-1 /usr/local/hyrise/cached_tables/tpcds_1 \
-    && mv /usr/local/hyrise-git/imdb_data /usr/local/hyrise/cached_tables/job_1 
+    && mv /usr/local/hyrise-git/imdb_data /usr/local/hyrise/cached_tables/job_1
 
-# Build TPCC tables 
-COPY ./hyrise/tpcc_table_generatio_sf_1.sql /usr/local/hyrise-git/cmake-build-release/tpcc_table_generatio_sf_1.sql \
-    && ./hyrise/tpcc_table_generatio_sf_5.sql /usr/local/hyrise-git/cmake-build-release/tpcc_table_generatio_sf_5.sql
-RUN mkdir /usr/local/hyrise/cached_tables/tpcc_1 \
-    && /usr/local/hyrise/cached_tables/tpcc_5
-RUN cd /usr/local/hyrise-git/cmake-build-release \
-    && ./hyriseConsole tpcc_table_generatio_sf_1 \
-    && ./hyriseConsole tpcc_table_generatio_sf_5
+# Build TPCC tables
+COPY tpcc_table_generation_sf_1.sql .
+COPY tpcc_table_generation_sf_5.sql .
+RUN mv tpcc_table_generation_sf_1.sql /usr/local/hyrise-git/cmake-build-release \
+    && mv tpcc_table_generation_sf_5.sql /usr/local/hyrise-git/cmake-build-release \
+    && mkdir /usr/local/hyrise/cached_tables/tpcc_1 \
+    && mkdir /usr/local/hyrise/cached_tables/tpcc_5 \
+    && cd /usr/local/hyrise-git/cmake-build-release  \
+    && ./hyriseConsole tpcc_table_generation_sf_1.sql \
+    && ./hyriseConsole tpcc_table_generation_sf_5.sql
 
-# Clean up 
+# Clean up
 RUN rm /usr/local/hyrise-git/cmake-build-release/hyriseBenchmarkTPCH \
     && rm /usr/local/hyrise-git/cmake-build-release/hyriseBenchmarkJoinOrder \
     && rm /usr/local/hyrise-git/cmake-build-release/hyriseBenchmarkTPCC \
