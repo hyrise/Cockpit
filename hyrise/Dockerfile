@@ -29,38 +29,31 @@ RUN cd /usr/local/hyrise-git/cmake-build-release \
     && make CompressionPlugin ClusteringPlugin IndexSelectionPlugin \
     && cp lib/libClusteringPlugin.so lib/libCompressionPlugin.so lib/libIndexSelectionPlugin.so /usr/local/hyrise/lib/
 
+COPY tpcc_table_generation_sf_1.sql .
+COPY tpcc_table_generation_sf_5.sql .
+
 # Create binary tables
 RUN cd /usr/local/hyrise-git/ \
     && ./cmake-build-release/hyriseBenchmarkTPCH --scale 1  --runs 0 \
     && ./cmake-build-release/hyriseBenchmarkTPCH --scale 0.1  --runs 0 \
     && ./cmake-build-release/hyriseBenchmarkTPCDS --scale 1  --runs 0 \
-    && ./cmake-build-release/hyriseBenchmarkJoinOrder  --runs 0
-
-# Clean up job
-RUN cd /usr/local/hyrise-git/imdb_data \
- && rm -r *.csv \
- && rm -r *.csv.json
-
-# Move binary tables
-RUN mkdir /usr/local/hyrise/cached_tables \
+    && ./cmake-build-release/hyriseBenchmarkJoinOrder  --runs 0 \
+    && cd /usr/local/hyrise-git/imdb_data \
+    && rm -r *.csv \
+    && rm -r *.csv.json \
+    && mkdir /usr/local/hyrise/cached_tables \
     && mv /usr/local/hyrise-git/tpch_cached_tables/sf-1.000000 /usr/local/hyrise/cached_tables/tpch_1 \
     && mv /usr/local/hyrise-git/tpch_cached_tables/sf-0.100000 /usr/local/hyrise/cached_tables/tpch_0.1 \
     && mv /usr/local/hyrise-git/tpcds_cached_tables/sf-1 /usr/local/hyrise/cached_tables/tpcds_1 \
-    && mv /usr/local/hyrise-git/imdb_data /usr/local/hyrise/cached_tables/job_1
-
-# Build TPCC tables
-COPY tpcc_table_generation_sf_1.sql .
-COPY tpcc_table_generation_sf_5.sql .
-RUN mv tpcc_table_generation_sf_1.sql /usr/local/hyrise-git/cmake-build-release \
+    && mv /usr/local/hyrise-git/imdb_data /usr/local/hyrise/cached_tables/job_1 \
+    && mv tpcc_table_generation_sf_1.sql /usr/local/hyrise-git/cmake-build-release \
     && mv tpcc_table_generation_sf_5.sql /usr/local/hyrise-git/cmake-build-release \
     && mkdir /usr/local/hyrise/cached_tables/tpcc_1 \
     && mkdir /usr/local/hyrise/cached_tables/tpcc_5 \
     && cd /usr/local/hyrise-git/cmake-build-release  \
     && ./hyriseConsole tpcc_table_generation_sf_1.sql \
-    && ./hyriseConsole tpcc_table_generation_sf_5.sql
-
-# Clean up
-RUN rm /usr/local/hyrise-git/cmake-build-release/hyriseBenchmarkTPCH \
+    && ./hyriseConsole tpcc_table_generation_sf_5.sql \
+    && rm /usr/local/hyrise-git/cmake-build-release/hyriseBenchmarkTPCH \
     && rm /usr/local/hyrise-git/cmake-build-release/hyriseBenchmarkJoinOrder \
     && rm /usr/local/hyrise-git/cmake-build-release/hyriseBenchmarkTPCC \
     && rm /usr/local/hyrise-git/cmake-build-release/hyriseConsole
