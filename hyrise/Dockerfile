@@ -29,10 +29,10 @@ RUN cd /usr/local/hyrise-git/cmake-build-release \
     && make CompressionPlugin ClusteringPlugin IndexSelectionPlugin \
     && cp lib/libClusteringPlugin.so lib/libCompressionPlugin.so lib/libIndexSelectionPlugin.so /usr/local/hyrise/lib/
 
+# Create binary tables
 COPY tpcc_table_generation_sf_1.sql .
 COPY tpcc_table_generation_sf_5.sql .
 
-# Create binary tables
 RUN cd /usr/local/hyrise-git/ \
     && ./cmake-build-release/hyriseBenchmarkTPCH --scale 1  --runs 0 \
     && ./cmake-build-release/hyriseBenchmarkTPCH --scale 0.1  --runs 0 \
@@ -46,6 +46,7 @@ RUN cd /usr/local/hyrise-git/ \
     && mv /usr/local/hyrise-git/tpch_cached_tables/sf-0.100000 /usr/local/hyrise/cached_tables/tpch_0.1 \
     && mv /usr/local/hyrise-git/tpcds_cached_tables/sf-1 /usr/local/hyrise/cached_tables/tpcds_1 \
     && mv /usr/local/hyrise-git/imdb_data /usr/local/hyrise/cached_tables/job_1 \
+    && cd && cd .. \
     && mv tpcc_table_generation_sf_1.sql /usr/local/hyrise-git/cmake-build-release \
     && mv tpcc_table_generation_sf_5.sql /usr/local/hyrise-git/cmake-build-release \
     && mkdir /usr/local/hyrise/cached_tables/tpcc_1 \
