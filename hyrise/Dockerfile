@@ -4,7 +4,7 @@ FROM hyrise/opossum-ci:20.04
 # Set environment variables
 ENV OPOSSUM_HEADLESS_SETUP=true
 ENV HYRISE_BRANCH bp1920
-ENV THREADS 8
+ENV THREADS 4
 
 # You can change the architecture for which the hyrise is optimized
 # https://gcc.gnu.org/onlinedocs/gcc/x86-Options.html
@@ -43,7 +43,7 @@ RUN cd /usr/local/hyrise-git/ \
     && rm -r *.csv.json \
     && mkdir /usr/local/hyrise/cached_tables \
     && mv /usr/local/hyrise-git/tpch_cached_tables/sf-1.000000 /usr/local/hyrise/cached_tables/tpch_1 \
-    && mv /usr/local/hyrise-git/tpch_cached_tables/sf-0.100000 /usr/local/hyrise/cached_tables/tpch_0.1 \
+    && mv /usr/local/hyrise-git/tpch_cached_tables/sf-0.100000 /usr/local/hyrise/cached_tables/tpch_0_1 \
     && mv /usr/local/hyrise-git/tpcds_cached_tables/sf-1 /usr/local/hyrise/cached_tables/tpcds_1 \
     && mv /usr/local/hyrise-git/imdb_data /usr/local/hyrise/cached_tables/job_1 \
     && cd && cd .. \
