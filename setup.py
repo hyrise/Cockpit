@@ -4,6 +4,7 @@ from setuptools import find_packages, setup
 setup(
     name="hyrisecockpit",
     packages=find_packages(),
+    include_package_data=True,
     entry_points={
         "console_scripts": [
             "cockpit-backend=hyrisecockpit.api.wsgi:main",
