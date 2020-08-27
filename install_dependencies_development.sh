@@ -3,7 +3,7 @@
 unamestr=$(uname)
 if [[ "$unamestr" == 'Darwin' ]]; then
     echo "Installing dependencies (this may take a while)..."
-    for formula in pyenv libpq postgresql node; do
+    for formula in pyenv libpq postgresql influxdb node; do
         if brew ls --versions $formula > /dev/null; then
             echo "$formula already installed"
             continue
@@ -56,12 +56,18 @@ elif [[ "$unamestr" == 'Linux' ]]; then
 
     PYENV_ROOT=$HOME/.pyenv
     PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
-    pyenv install -y  3.8.5
+    pyenv install -s 3.8.5
 
     pip install --upgrade pip
     pip install pipenv
     pipenv sync --dev
     pipenv run pre-commit install
+
+    wget -qO- https://repos.influxdata.com/influxdb.key | sudo apt-key add -
+    source /etc/lsb-release
+    echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
+    sudo apt-get update && sudo apt-get install -y influxdb
+    sudo service influxdb start
 
     curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
     sudo apt-get install -y nodejs
