@@ -54,3 +54,7 @@ You can also use a native Hyrise with a running Cockpit in docker.
 If you want to contribute to this project you can setup the development environment described like in the following guide: 
 
 https://github.com/hyrise/Cockpit/wiki/Development-Environment-Setup
+
+# Using the Cockpit 
+
+You can find a detailed guide on how to use the cockpit under https://github.com/hyrise/Cockpit/wiki/Nutzeranleitung .
