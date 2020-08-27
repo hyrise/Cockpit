@@ -1,0 +1,2 @@
+# Include the workload sql files
+recursive-include hyrisecockpit/workload_generator/workloads/ *
