@@ -54,11 +54,11 @@ elif [[ "$unamestr" == 'Linux' ]]; then
     eval \"\$(pyenv init -)\"
     eval \"\$(pyenv virtualenv-init -)\"\n" >> .bashrc
 
-    PYENV_ROOT=$HOME/.pyenv
-    PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
+    echo 'PYENV_ROOT=$HOME/.pyenv' >> ~/.bashrc
+    echo 'PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH' >> ~/.bashrc
     pyenv install -s 3.8.5
     pyenv local 3.8.5
-    
+
     pip install --upgrade pip
     pip install pipenv
     pipenv sync --dev
