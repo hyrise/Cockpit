@@ -50,24 +50,13 @@ class LogPipe(Thread):
 def run_components(loggers_pipes):
     """Start components in subprocesses."""
     components = {}
-    logging.info("start cockpit-backend")
-    components["cockpit-backend"] = Popen(
-        ["cockpit-backend"],
-        stdout=loggers_pipes["cockpit-backend"]["logpipe_stdout"],
-        stderr=loggers_pipes["cockpit-backend"]["logpipe_stderr"],
-    )
-    logging.info("start cockpit-manager")
-    components["cockpit-manager"] = Popen(
-        ["cockpit-manager"],
-        stdout=loggers_pipes["cockpit-manager"]["logpipe_stdout"],
-        stderr=loggers_pipes["cockpit-manager"]["logpipe_stderr"],
-    )
-    logging.info("start cockpit-manager")
-    components["cockpit-generator"] = Popen(
-        ["cockpit-generator"],
-        stdout=loggers_pipes["cockpit-generator"]["logpipe_stdout"],
-        stderr=loggers_pipes["cockpit-generator"]["logpipe_stderr"],
-    )
+    for component, logger_pipe in loggers_pipes.items():
+        logging.info(f"start {component}")
+        components[component] = Popen(
+            [component],
+            stdout=logger_pipe["logpipe_stdout"],
+            stderr=logger_pipe["logpipe_stderr"],
+        )
     return components
 
 
