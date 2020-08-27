@@ -52,10 +52,12 @@ elif [[ "$unamestr" == 'Linux' ]]; then
     curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
     echo -e "export PATH=\"/home/\$USER/.pyenv/bin:\$PATH\"
     eval \"\$(pyenv init -)\"
-    eval \"\$(pyenv virtualenv-init -)\"\n" >> .bashrc
-
+    eval \"\$(pyenv virtualenv-init -)\"\n" >> ~/.bashrc
     echo 'PYENV_ROOT=$HOME/.pyenv' >> ~/.bashrc
     echo 'PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH' >> ~/.bashrc
+
+    PYENV_ROOT=$HOME/.pyenv
+    PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
     pyenv install -s 3.8.5
     pyenv local 3.8.5
 
