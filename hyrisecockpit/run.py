@@ -129,15 +129,12 @@ class ProcessManager:
         """Create log pipes for requested components."""
         loggers_pipes = {}
         if self._cockpit_components["backend"]:
-            loggers_pipes["cockpit-backend"] = self._create_logger_pipes(
-                "cockpit-backend"
-            )
-            loggers_pipes["cockpit-manager"] = self._create_logger_pipes(
-                "cockpit-manager"
-            )
-            loggers_pipes["cockpit-generator"] = self._create_logger_pipes(
-                "cockpit-generator"
-            )
+            for component in [
+                "cockpit-backend",
+                "cockpit-manager",
+                "cockpit-generator",
+            ]:
+                loggers_pipes[component] = self._create_logger_pipes(component)
         if self._cockpit_components["frontend"]:
             loggers_pipes["cockpit-frontend"] = self._create_logger_pipes(
                 "cockpit-frontend"
