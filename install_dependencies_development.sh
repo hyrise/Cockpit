@@ -20,11 +20,10 @@ if [[ "$unamestr" == 'Darwin' ]]; then
 
     pyenv local 3.8.5
     python -m pip install pipenv
-    exec "$SHELL"
     pipenv --three --python=`python --version`
     pipenv sync --dev
     pipenv run pre-commit install
-    cd hyrisecockpit/frontend && npm install
+    cd hyrisecockpit/frontend && npm install && npm audit fix
 
 elif [[ "$unamestr" == 'Linux' ]]; then
     echo "Installing dependencies (this may take a while)..."
@@ -72,7 +71,7 @@ elif [[ "$unamestr" == 'Linux' ]]; then
     sudo apt-get update && sudo apt-get install -y influxdb
     sudo service influxdb start
 
-    curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+    curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash -
     sudo apt-get install -y nodejs
-    cd hyrisecockpit/frontend && npm install
+    cd hyrisecockpit/frontend && npm install && npm audit fix
 fi
