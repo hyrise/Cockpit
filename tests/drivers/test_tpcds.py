@@ -20,7 +20,9 @@ class TestTpcdsDriver:
     @patch("hyrisecockpit.drivers.tpcds.tpcds_driver.DefaultDriver")
     @patch("hyrisecockpit.drivers.tpcds.tpcds_driver.Path")
     def test_inintializes_tpcds_driver(
-        self, mock_path: MagicMock, mock_default_driver: MagicMock,
+        self,
+        mock_path: MagicMock,
+        mock_default_driver: MagicMock,
     ) -> None:
         """Test initialization of tpcds driver attributes."""
         mock_default_driver_obj = MagicMock()

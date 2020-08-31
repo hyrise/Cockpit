@@ -44,7 +44,9 @@ class WorkloadGenerator(object):
     def _init_scheduler(self) -> None:
         self._scheduler = BackgroundScheduler()
         self._generate_workload_job = self._scheduler.add_job(
-            func=self._generate_workload, trigger="interval", seconds=1,
+            func=self._generate_workload,
+            trigger="interval",
+            seconds=1,
         )
         self._scheduler.start()
 

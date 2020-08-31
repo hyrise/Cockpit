@@ -42,7 +42,9 @@ class BackgroundJobManager(object):
         self._database_id: str = database_id
         self._database_blocked: Value = database_blocked
         self._connection_factory: ConnectionFactory = connection_factory
-        self._storage_connection_factory: StorageConnectionFactory = storage_connection_factory
+        self._storage_connection_factory: StorageConnectionFactory = (
+            storage_connection_factory
+        )
         self._worker_pool: WorkerPool = worker_pool
         self._workload_drivers = workload_drivers
         self._scheduler: BackgroundScheduler = BackgroundScheduler()
@@ -200,7 +202,11 @@ class BackgroundJobManager(object):
         """Activate plugin."""
         if not self._database_blocked.value:
             self._scheduler.add_job(
-                func=activate_plugin_job, args=(self._connection_factory, plugin,)
+                func=activate_plugin_job,
+                args=(
+                    self._connection_factory,
+                    plugin,
+                ),
             )
             return True
         else:
@@ -210,7 +216,11 @@ class BackgroundJobManager(object):
         """Dectivate plugin."""
         if not self._database_blocked.value:
             self._scheduler.add_job(
-                func=deactivate_plugin_job, args=(self._connection_factory, plugin,)
+                func=deactivate_plugin_job,
+                args=(
+                    self._connection_factory,
+                    plugin,
+                ),
             )
             return True
         else:

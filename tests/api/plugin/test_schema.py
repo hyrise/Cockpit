@@ -293,7 +293,9 @@ class TestLogEntry:
         assert isinstance(schema_log_entry, LogEntrySchema)
 
     def test_deserializes(
-        self, schema_log_entry: LogEntrySchema, interface_log_entry: LogEntryInterface,
+        self,
+        schema_log_entry: LogEntrySchema,
+        interface_log_entry: LogEntryInterface,
     ):
         """A LogEntry schema can create a LogEntry model."""
         deserialized: LogEntryInterface = schema_log_entry.load(interface_log_entry)
@@ -318,7 +320,9 @@ class TestLogEntry:
         assert interface_log_entry["level"] == deserialized["level"] == log_entry.level
 
     def test_serializes(
-        self, schema_log_entry: LogEntrySchema, interface_log_entry: LogEntryInterface,
+        self,
+        schema_log_entry: LogEntrySchema,
+        interface_log_entry: LogEntryInterface,
     ):
         """A LogEntry model can be serialized with a LogEntry schema."""
         log_entry = LogEntry(**interface_log_entry)
@@ -348,7 +352,9 @@ class TestLogID:
         assert isinstance(schema_log_id, LogIDSchema)
 
     def test_deserializes(
-        self, schema_log_id: LogIDSchema, interface_log_id: LogIDInterface,
+        self,
+        schema_log_id: LogIDSchema,
+        interface_log_id: LogIDInterface,
     ):
         """A LogID schema can create a LogID model."""
         deserialized: LogIDInterface = schema_log_id.load(interface_log_id)
@@ -357,20 +363,18 @@ class TestLogID:
         assert log_id
         assert interface_log_id["id"] == deserialized["id"] == log_id.id
         assert (
-            interface_log_id["log"]  # type: ignore
-            == deserialized["log"]
-            == log_id.log
+            interface_log_id["log"] == deserialized["log"] == log_id.log  # type: ignore
         )
 
     def test_serializes(
-        self, schema_log_id: LogIDSchema, interface_log_id: LogIDInterface,
+        self,
+        schema_log_id: LogIDSchema,
+        interface_log_id: LogIDInterface,
     ):
         """A LogID model can be serialized with a LogID schema."""
         log_id = LogID(**interface_log_id)  # type: ignore
         serialized: LogIDInterface = schema_log_id.dump(log_id)
         assert interface_log_id["id"] == log_id.id == serialized["id"]
         assert (
-            interface_log_id["log"]  # type: ignore
-            == log_id.log
-            == serialized["log"]
+            interface_log_id["log"] == log_id.log == serialized["log"]  # type: ignore
         )
