@@ -35,6 +35,18 @@ The current plugins are supported at the moment:
 
 # Getting started 
 
+There are three different set ups available: 
+
+* Native installation
+* Docker set up
+* Developer set up
+
+## Install Cockpit 
+
+To install the Cockpit natively, please have a look at:  
+
+https://github.com/hyrise/Cockpit/wiki/Installation-(Native-Setup) 
+
 ## Using Docker
 
 It is possible to run the cockpit completely in docker. The docker setup also includes a Hyrise for the cockpit with all necessary dependencies (benchmark tables, plugins). This setup is at the moment the easiest to setup. Please checkout the following guide for the setup: 
