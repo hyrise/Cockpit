@@ -28,6 +28,9 @@ elif [[ "$unamestr" == 'Linux' ]]; then
     sudo service influxdb start
 fi
 
+# Adjust path to frontend (the file will be copied to the python module (at the installation))
+sed -i "s:hyrisecockpit/frontend:$PWD/hyrisecockpit/frontend:g" hyrisecockpit/run.py 
+
 echo "Create virtual environment"
 python3 -m venv venv
 . venv/bin/activate
@@ -39,6 +42,9 @@ echo "Install Modules"
 pip3 install .
 
 deactivate
+
+# Reset path to frontend to default
+sed -i "s:$PWD/hyrisecockpit/frontend:hyrisecockpit/frontend:g" hyrisecockpit/run.py 
 
 echo "Install Frontend"
 cd hyrisecockpit/frontend
