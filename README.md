@@ -5,7 +5,7 @@
 ![Docker Image CI](https://github.com/hyrise/Cockpit/workflows/Docker%20Image%20CI/badge.svg)
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 
-This is the repository for the Hyrise Cockpit. The goal of the Cockpit is to visualise the runtime behaviour of multiple Hyrise instances. For that the cockpit can generate a mix of workloads to set the Hyrise instances under pressure. It is also possible to activate different plugins on different Hyrise instances and compare the impact of them.  
+This is the repository for the Hyrise Cockpit. The goal of the Cockpit is to visualise the runtime behaviour of multiple Hyrise instances. For that the Cockpit can generate a mix of workloads to set the Hyrise instances under pressure. It is also possible to activate different plugins on different Hyrise instances and compare the impact of them.  
 For more information related to the Hyrise database, please refer to https://github.com/hyrise/hyrise. 
 
 ## Supported Systems 
@@ -49,7 +49,7 @@ https://github.com/hyrise/Cockpit/wiki/Installation-(Native-Setup)
 
 ## Using Docker
 
-It is possible to run the cockpit completely in docker. The docker setup also includes a Hyrise for the cockpit with all necessary dependencies (benchmark tables, plugins). This setup is at the moment the easiest to setup. Please checkout the following guide for the setup: 
+It is possible to run the Cockpit completely in docker. The docker setup also includes a Hyrise for the Cockpit with all necessary dependencies (benchmark tables, plugins). This setup is at the moment the easiest to setup. Please checkout the following guide for the setup: 
 
 https://github.com/hyrise/Cockpit/wiki/Docker-Setup
 
@@ -69,4 +69,4 @@ https://github.com/hyrise/Cockpit/wiki/Development-Environment-Setup
 
 # Using the Cockpit 
 
-You can find a detailed guide on how to use the cockpit under https://github.com/hyrise/Cockpit/wiki/User-guide.
+You can find a detailed guide on how to use the Cockpit under https://github.com/hyrise/Cockpit/wiki/User-guide.
