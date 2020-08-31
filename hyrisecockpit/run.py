@@ -90,109 +90,114 @@ class LogPipe(Thread):
         close(self.fdWrite)
 
 
-def run_components(loggers_pipes, start_commands):
-    """Start components in subprocesses."""
-    components = {}
-    for component, logger_pipe in loggers_pipes.items():
-        logging.info(f"start {component}")
-        components[component] = Popen(
-            start_commands[component],
-            stdout=logger_pipe["logpipe_stdout"],
-            stderr=logger_pipe["logpipe_stderr"],
-        )
-    return components
+class ProcessManager:
+    """Manage processes from sub components."""
 
+    def __init__(self, cockpit_components):
+        """Initialize the process manager."""
+        self._cockpit_components = cockpit_components
+        self._running_processes = {}
+        self._set_logging()
+        self._start_commands = self._init_start_commands()
+        self._logger_pipes = self._init_logger_pipes()
 
-def kill_process(component, messege):
-    """Kill subprocess ungracefully."""
-    logging.warning(f"shutdown {component} ungracefully [{messege}]")
-    if platform.startswith("linux"):  # noqa
-        run(["fuser", "-k", f"{PORTS[component]}/tpc"])
-    elif platform.startswith("darwin"):
-        run(
-            [
-                "lsof",
-                "-t",
-                "-i",
-                f"tcp:{PORTS[component]}",
-                "|",
-                "xcomand_line_arguments",
-                "kill",
-            ]
+    def _set_logging(self):
+        """Set the logger."""
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(asctime)s :: %(name)s :: %(levelname)s :: %(message)s",
         )
 
+    def _init_start_commands(self):
+        """Return start commands."""
+        return {
+            "cockpit-backend": ["cockpit-backend"],
+            "cockpit-manager": ["cockpit-manager"],
+            "cockpit-generator": ["cockpit-generator"],
+            "cockpit-frontend": ["npm", "run", "deploy", "--prefix", FRONTEND_PATH],
+        }
 
-def shutdown_component(component, sub_process):
-    """Shutdown component."""
-    try:
-        sub_process.send_signal(SIGINT)
-        sub_process.wait(timeout=TIME_OUT)
-        if sub_process.poll() is None:
-            kill_process(sub_process, "still alive")
-    except TimeoutExpired:
-        kill_process(sub_process, f"timeout expired {TIME_OUT}s")
+    def _create_logger_pipes(self, component):
+        """Create logger for a component and needed pipes."""
+        logger = logging.getLogger(component)
+        logger.setLevel(logging.INFO)
+        logpipe_stdout = LogPipe(logging.INFO, logger)
+        logpipe_stderr = LogPipe(logging.WARNING, logger)
+        return {"logpipe_stdout": logpipe_stdout, "logpipe_stderr": logpipe_stderr}
 
+    def _init_logger_pipes(self):
+        """Create log pipes for requested components."""
+        loggers_pipes = {}
+        if self._cockpit_components["backend"]:
+            loggers_pipes["cockpit-backend"] = self._create_logger_pipes(
+                "cockpit-backend"
+            )
+            loggers_pipes["cockpit-manager"] = self._create_logger_pipes(
+                "cockpit-manager"
+            )
+            loggers_pipes["cockpit-generator"] = self._create_logger_pipes(
+                "cockpit-generator"
+            )
+        if self._cockpit_components["frontend"]:
+            loggers_pipes["cockpit-frontend"] = self._create_logger_pipes(
+                "cockpit-frontend"
+            )
+        return loggers_pipes
 
-def shutdown(components, loggers_pipes):
-    """Shutdown components."""
-    for component, sub_process in components.items():
-        logging.info(f"shutdown {component}")
-        shutdown_component(component, sub_process)
-        loggers_pipes[component]["logpipe_stdout"].close()
-        loggers_pipes[component]["logpipe_stderr"].close()
+    def _kill_process(self, component, messege):
+        """Kill subprocess ungracefully."""
+        logging.warning(f"shutdown {component} ungracefully [{messege}]")
+        if platform.startswith("linux"):  # noqa
+            run(["fuser", "-k", f"{PORTS[component]}/tpc"])
+        elif platform.startswith("darwin"):
+            run(
+                [
+                    "lsof",
+                    "-t",
+                    "-i",
+                    f"tcp:{PORTS[component]}",
+                    "|",
+                    "xcomand_line_arguments",
+                    "kill",
+                ]
+            )
 
+    def _shutdown_component(self, component, sub_process):
+        """Shutdown component."""
+        try:
+            sub_process.send_signal(SIGINT)
+            sub_process.wait(timeout=TIME_OUT)
+            if sub_process.poll() is None:
+                self._kill_process(sub_process, "still alive")
+        except TimeoutExpired:
+            self._kill_process(sub_process, f"timeout expired {TIME_OUT}s")
 
-def create_logger_pipes(component):
-    """Create logger for a component and needed pipes."""
-    logger = logging.getLogger(component)
-    logger.setLevel(logging.INFO)
-    logpipe_stdout = LogPipe(logging.INFO, logger)
-    logpipe_stderr = LogPipe(logging.WARNING, logger)
-    return {"logpipe_stdout": logpipe_stdout, "logpipe_stderr": logpipe_stderr}
+    def close(self):
+        """Close components."""
+        for component, sub_process in self._running_processes.items():
+            logging.info(f"shutdown {component}")
+            self._shutdown_component(component, sub_process)
+            self._logger_pipes[component]["logpipe_stdout"].close()
+            self._logger_pipes[component]["logpipe_stderr"].close()
 
-
-def get_looger_pipes(comand_line_arguments):
-    """Create log pipes for requested components."""
-    loggers_pipes = {}
-    if comand_line_arguments["backend"]:
-        loggers_pipes["cockpit-backend"] = create_logger_pipes("cockpit-backend")
-        loggers_pipes["cockpit-manager"] = create_logger_pipes("cockpit-manager")
-        loggers_pipes["cockpit-generator"] = create_logger_pipes("cockpit-generator")
-    if comand_line_arguments["frontend"]:
-        loggers_pipes["cockpit-frontend"] = create_logger_pipes("cockpit-frontend")
-    return loggers_pipes
-
-
-def get_start_commands(comand_line_arguments):
-    """Return shell commands for requested components."""
-    start_commands = {}
-    if comand_line_arguments["backend"]:
-        start_commands["cockpit-backend"] = ["cockpit-backend"]
-        start_commands["cockpit-manager"] = ["cockpit-manager"]
-        start_commands["cockpit-generator"] = ["cockpit-generator"]
-    if comand_line_arguments["frontend"]:
-        start_commands["cockpit-frontend"] = [
-            "npm",
-            "run",
-            "deploy",
-            "--prefix",
-            FRONTEND_PATH,
-        ]
-    return start_commands
+    def run(self):
+        """Start components in subprocesses."""
+        for component, logger_pipe in self._logger_pipes.items():
+            logging.info(f"start {component}")
+            self._running_processes[component] = Popen(
+                self._start_commands[component],
+                stdout=logger_pipe["logpipe_stdout"],
+                stderr=logger_pipe["logpipe_stderr"],
+            )
 
 
 def main():
     """Start components and handle interrupt."""
     argp = ArgumentParser()
-    comand_line_arguments = argp.get_components()
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s :: %(name)s :: %(levelname)s :: %(message)s",
-    )
-    loggers_pipes = get_looger_pipes(comand_line_arguments)
-    start_commands = get_start_commands(comand_line_arguments)
+    command_line_arguments = argp.get_components()
+    process_manager = ProcessManager(command_line_arguments)
     try:
-        components = run_components(loggers_pipes, start_commands)
+        process_manager.run()
         Event().wait()
     except KeyboardInterrupt:
-        shutdown(components, loggers_pipes)
+        process_manager.close()
