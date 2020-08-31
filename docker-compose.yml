@@ -2,53 +2,40 @@ version: "3.5"
 
 services:
   backend:
-    image: cockpit-backend:3.8.3
-    build: 
-      context: .
-      dockerfile: ./hyrisecockpit/api/Dockerfile
+    image: hyrise/bp1920:cockpit-backend
+    build:
+        context: .
+        dockerfile: ./hyrisecockpit/Dockerfile
+    environment:
+      - STORAGE_HOST=influxdb
+      - DB_MANAGER_HOST=127.0.0.1
+      - GENERATOR_HOST=127.0.0.1
+      - WORKLOAD_SUB_HOST=127.0.0.1
+      - BACKEND_LISTENING=0.0.0.0
     ports:
       - "8000:8000"
-
-  manager:
-    image: cockpit-manager:3.8.3
-    build: 
-      context: .
-      dockerfile: ./hyrisecockpit/database_manager/Dockerfile
-    ports:
-      - "8001:8001"
-    
-  generator:
-    image: cockpit-generator:3.8.3
-    build: 
-      context: .
-      dockerfile: ./hyrisecockpit/workload_generator/Dockerfile
-    volumes:
-        - ./hyrisecockpit/workload_generator/workloads:/usr/local/lib/python3.8/site-packages/hyrisecockpit/workload_generator/workloads
-    ports:
-      - "8002:8002"
-      - "8003:8003"
     
   influxdb:
     image: influxdb:alpine
-    volumes:
-      - ./influxdb:/var/lib/influxdb
     ports:
-      - "8086:8086"
+      - "9086:8086"
 
   frontend:
-    image: frontend:buster
+    image: hyrise/bp1920:cockpit-frontent
     build:
         context: .
         dockerfile: ./hyrisecockpit/frontend/Dockerfile
+        args:
+            VUE_APP_BACKEND_HOST: 127.0.0.1
     ports:
       - "5000:5000"
 
-  hyrise:
-    image: hyrise:bp1920
-    build: 
-      context: .
-      dockerfile: ./hyrise/Dockerfile
-    volumes:
-      - ./cached_tables:/usr/local/hyrise/cached_tables
+  hyrise_1:
+    image: hyrise/bp1920:hyrise
     ports:
       - "5432:5432"
+
+  hyrise_2:
+    image: hyrise/bp1920:hyrise
+    ports:
+      - "6432:5432"
