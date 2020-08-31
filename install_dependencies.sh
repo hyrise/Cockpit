@@ -36,6 +36,7 @@ python3 -m venv venv
 . venv/bin/activate
 
 echo "Install packages"
+pip3 install wheel
 pip3 install -r requirements.txt
 
 echo "Install Modules"
@@ -48,5 +49,5 @@ sed -i "s:$PWD/hyrisecockpit/frontend:hyrisecockpit/frontend:g" hyrisecockpit/ru
 
 echo "Install Frontend"
 cd hyrisecockpit/frontend
-npm install --no-optional
+npm install --no-optional && npm audit fix
 npm run build:min
