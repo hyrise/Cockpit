@@ -5,6 +5,7 @@ setup(
     name="hyrisecockpit",
     packages=find_packages(),
     include_package_data=True,
+    setup_requires=["wheel"],
     entry_points={
         "console_scripts": [
             "cockpit-backend=hyrisecockpit.api.wsgi:main",
