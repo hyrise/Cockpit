@@ -99,7 +99,7 @@ class TestBackgroundJobManager:
         mock_background_scheduler.assert_called_once()
         mock_asynchronous_job_handler.assert_called_once_with(
             background_job_manager._database_blocked,
-            background_job_manager._storage_connection_factory,
+            background_job_manager._connection_factory,
             background_job_manager._workload_drivers,
         )
 
