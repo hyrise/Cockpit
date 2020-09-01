@@ -18,7 +18,7 @@ elif [[ "$unamestr" == 'Linux' ]]; then
     sudo apt-get install -y nodejs
     sudo apt-get update
     sudo apt-get install -y python3.8
-    sudo apt install -y python3.8-pip
+    sudo apt install -y python3-pip
     sudo apt-get install -y python3.8-venv
 
     wget -qO- https://repos.influxdata.com/influxdb.key | sudo apt-key add -
@@ -28,7 +28,13 @@ elif [[ "$unamestr" == 'Linux' ]]; then
     sudo service influxdb start
 fi
 
-# Adjust path to frontend (the file will be copied to the python module (at the installation))
+# The python hyrisecockpit module will be installed at the location Cockpit/venv/lib/python3.8/site-packages/hyrisecockpit
+# In the installation process all python files will be copied to this location. If we run the installed cockpit (hyrisecockpit module)
+# the copied files are used. Because the process manager is part of the hyrisecockpit python module it needs to have a absolute path 
+# to the frontend. The frontend is not part of the hyrisecockpit python module.
+# So the process manager can't use a relative path hyrisecockpit/frontend because it runs in Cockpit/venv/lib/python3.8/site-packages/hyrisecockpit
+# and the frontend lies in Cockpit/hyrisecockpit/frontend.
+# Thats the reason why we need to adjust the frontend relative path variable for the process manager in an absolute path variable.
 sed -i "s:hyrisecockpit/frontend:$PWD/hyrisecockpit/frontend:g" hyrisecockpit/run.py 
 
 echo "Create virtual environment"
@@ -44,7 +50,8 @@ pip3.8 install .
 
 deactivate
 
-# Reset path to frontend to default
+# Reset the frontend absolute path to a relative path. The absolute path in Cockpit/venv/lib/python3.8/site-packages/hyrisecockpit/run.py
+# where the module is installed stays untouched. 
 sed -i "s:$PWD/hyrisecockpit/frontend:hyrisecockpit/frontend:g" hyrisecockpit/run.py 
 
 echo "Install Frontend"
