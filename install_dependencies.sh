@@ -17,9 +17,9 @@ elif [[ "$unamestr" == 'Linux' ]]; then
     curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
     sudo apt-get install -y nodejs
     sudo apt-get update
-    sudo apt-get install -y python3
-    sudo apt install -y python3-pip
-    sudo apt-get install -y python3-venv
+    sudo apt-get install -y python3.8
+    sudo apt install -y python3.8-pip
+    sudo apt-get install -y python3.8-venv
 
     wget -qO- https://repos.influxdata.com/influxdb.key | sudo apt-key add -
     source /etc/lsb-release
@@ -36,11 +36,11 @@ python3 -m venv venv
 . venv/bin/activate
 
 echo "Install packages"
-pip3 install wheel
-pip3 install -r requirements.txt
+pip3.8 install wheel
+pip3.8 install -r requirements.txt
 
 echo "Install Modules"
-pip3 install .
+pip3.8 install .
 
 deactivate
 
