@@ -28,13 +28,12 @@ elif [[ "$unamestr" == 'Linux' ]]; then
     sudo service influxdb start
 fi
 
-# The python hyrisecockpit module will be installed at the location Cockpit/venv/lib/python3.8/site-packages/hyrisecockpit
-# In the installation process all python files will be copied to this location. If we run the installed cockpit (hyrisecockpit module)
-# the copied files are used. Because the process manager is part of the hyrisecockpit python module it needs to have a absolute path 
-# to the frontend. The frontend is not part of the hyrisecockpit python module.
-# So the process manager can't use a relative path hyrisecockpit/frontend because it runs in Cockpit/venv/lib/python3.8/site-packages/hyrisecockpit
-# and the frontend lies in Cockpit/hyrisecockpit/frontend.
-# Thats the reason why we need to adjust the frontend relative path variable for the process manager in an absolute path variable.
+# The python hyrisecockpit module will be installed at the location Cockpit/venv/lib/python3.8/site-packages/hyrisecockpit. 
+# In the installation process, all python files will be copied to this location. If we run the installed cockpit (hyrisecockpit module)
+# the copied files are used. Because the process manager is part of the hyrisecockpit python module it needs to have an absolute path to the frontend. 
+# The frontend is not part of the hyrisecockpit python module. So the process manager can't use a relative path hyrisecockpit/frontend because it runs 
+# in Cockpit/venv/lib/python3.8/site-packages/hyrisecockpit and the frontend lies in Cockpit/hyrisecockpit/frontend. 
+# That's the reason why we need to adjust the frontend relative path variable for the process manager in an absolute path variable.
 sed -i "s:hyrisecockpit/frontend:$PWD/hyrisecockpit/frontend:g" hyrisecockpit/run.py 
 
 echo "Create virtual environment"
