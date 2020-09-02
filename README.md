@@ -69,4 +69,25 @@ https://github.com/hyrise/Cockpit/wiki/Development-Environment-Setup
 
 # Using the Cockpit 
 
-You can find a detailed guide on how to use the Cockpit under https://github.com/hyrise/Cockpit/wiki/User-guide.
+You can find a detailed guide on how to use the Cockpit under https://github.com/hyrise/Cockpit/wiki/User-guide. 
+
+# Maintainers
+
+* @Alexander-Dubrawski
+* @Bensk1
+* @Bouncner 
+
+# Contributors
+
+* @Alexander-Dubrawski
+* @Bensk1
+* @Bouncner 
+* @caterinamandel98
+* @cH3n7i
+* @fabianhe
+* @kathwill
+* @MaxSchneider1337
+* @monasobh 
+* @PeterTsayun
+* @schTi
+
