@@ -56,7 +56,16 @@ class TestAsynchronousJobHandler:
     def test_successfully_start_loading_tables(
         self, mock_thread: MagicMock, asynchronous_job_handler: AsynchronousJobHandler
     ) -> None:
-        """Test successfully start loading tables job."""
+        """Test successfully start loading tables job.
+
+        This test will mock the Thread class from the python threading library.
+        It will check if the load_tables method is working as expected  by
+        creating a thread.
+
+        Args:
+            mock_thread: mock for the Thread class
+            asynchronous_job_handler: A AsynchronousJobHandler object
+        """
         asynchronous_job_handler._database_blocked.value = False
         asynchronous_job_handler._connection_factory = MagicMock()
         mock_job_thread = MagicMock()
@@ -85,7 +94,17 @@ class TestAsynchronousJobHandler:
     def test_start_loading_tables_while_database_is_blocked(
         self, mock_thread: MagicMock, asynchronous_job_handler: AsynchronousJobHandler
     ) -> None:
-        """Test start loading tables job while database is blocked."""
+        """Test start loading tables job while database is blocked.
+
+        This test will mock the Thread class from the python threading library.
+        It will check if the load_tables method is working as expected. If the
+        database is blocked the Thread constructor (in the test it is mocked
+        with mock_thread) shouldn't be called.
+
+        Args:
+            mock_thread: mock for the Thread class
+            asynchronous_job_handler: A AsynchronousJobHandler object
+        """
         asynchronous_job_handler._database_blocked.value = True
         asynchronous_job_handler._connection_factory = MagicMock()
         mock_job_thread = MagicMock()
@@ -105,7 +124,16 @@ class TestAsynchronousJobHandler:
     def test_successfully_start_delete_tables(
         self, mock_thread: MagicMock, asynchronous_job_handler: AsynchronousJobHandler
     ) -> None:
-        """Test successfully start loading tables job."""
+        """Test successfully delete loading tables job.
+
+        This test will mock the Thread class from the python threading library.
+        It will check if the delete_tables method is working as expected by
+        creating a thread.
+
+        Args:
+            mock_thread: mock for the Thread class
+            asynchronous_job_handler: A AsynchronousJobHandler object
+        """
         asynchronous_job_handler._database_blocked.value = False
         asynchronous_job_handler._connection_factory = MagicMock()
         mock_job_thread = MagicMock()
@@ -134,7 +162,17 @@ class TestAsynchronousJobHandler:
     def test_start_delete_tables_while_database_is_blocked(
         self, mock_thread: MagicMock, asynchronous_job_handler: AsynchronousJobHandler
     ) -> None:
-        """Test start loading tables job while database is blocked."""
+        """Test start delete tables job while database is blocked.
+
+        This test will mock the Thread class from the python threading library.
+        It will check if the delete_tables method is working as expected. If the
+        database is blocked the Thread constructor (in the test it is mocked
+        with mock_thread) shouldn't be called.
+
+        Args:
+            mock_thread: mock for the Thread class
+            asynchronous_job_handler: A AsynchronousJobHandler object
+        """
         asynchronous_job_handler._database_blocked.value = True
         asynchronous_job_handler._connection_factory = MagicMock()
         mock_job_thread = MagicMock()
@@ -154,7 +192,16 @@ class TestAsynchronousJobHandler:
     def test_successfully_activate_plugin(
         self, mock_thread: MagicMock, asynchronous_job_handler: AsynchronousJobHandler
     ) -> None:
-        """Test successfully start activate plug-in job."""
+        """Test successfully start activate plug-in job.
+
+        This test will mock the Thread class from the python threading library.
+        It will check if the activate_plugin method is working as expected by
+        creating a thread.
+
+        Args:
+            mock_thread: mock for the Thread class
+            asynchronous_job_handler: A AsynchronousJobHandler object
+        """
         asynchronous_job_handler._database_blocked.value = False
         asynchronous_job_handler._connection_factory = MagicMock()
         mock_job_thread = MagicMock()
@@ -174,7 +221,17 @@ class TestAsynchronousJobHandler:
     def test_start_activate_plugin_while_database_is_blocked(
         self, mock_thread: MagicMock, asynchronous_job_handler: AsynchronousJobHandler
     ) -> None:
-        """Test start activate plug-in job while database is blocked."""
+        """Test start activate plug-in job while database is blocked.
+
+        This test will mock the Thread class from the python threading library.
+        It will check if the activate_plugin method is working as expected. If the
+        database is blocked the Thread constructor (in the test it is mocked
+        with mock_thread) shouldn't be called.
+
+        Args:
+            mock_thread: mock for the Thread class
+            asynchronous_job_handler: A AsynchronousJobHandler object
+        """
         asynchronous_job_handler._database_blocked.value = True
         asynchronous_job_handler._connection_factory = MagicMock()
         mock_job_thread = MagicMock()
@@ -191,7 +248,16 @@ class TestAsynchronousJobHandler:
     def test_successfully_deactivate_plugin(
         self, mock_thread: MagicMock, asynchronous_job_handler: AsynchronousJobHandler
     ) -> None:
-        """Test successfully start deactivate plug-in job."""
+        """Test successfully start deactivate plug-in job.
+
+        This test will mock the Thread class from the python threading library.
+        It will check if the deactivate_plugin method is working as expected by
+        creating a thread.
+
+        Args:
+            mock_thread: mock for the Thread class
+            asynchronous_job_handler: A AsynchronousJobHandler object
+        """
         asynchronous_job_handler._database_blocked.value = False
         asynchronous_job_handler._connection_factory = MagicMock()
         mock_job_thread = MagicMock()
@@ -211,7 +277,17 @@ class TestAsynchronousJobHandler:
     def test_start_deactivate_plugin_while_database_is_blocked(
         self, mock_thread: MagicMock, asynchronous_job_handler: AsynchronousJobHandler
     ) -> None:
-        """Test start deactivate plug-in job while database is blocked."""
+        """Test start deactivate plug-in job while database is blocked.
+
+        This test will mock the Thread class from the python threading library.
+        It will check if the deactivate_plugin method is working as expected. If the
+        database is blocked the Thread constructor (in the test it is mocked
+        with mock_thread) shouldn't be called.
+
+        Args:
+            mock_thread: mock for the Thread class
+            asynchronous_job_handler: A AsynchronousJobHandler object
+        """
         asynchronous_job_handler._database_blocked.value = True
         asynchronous_job_handler._connection_factory = MagicMock()
         mock_job_thread = MagicMock()

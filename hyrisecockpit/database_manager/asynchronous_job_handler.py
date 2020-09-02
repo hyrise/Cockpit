@@ -13,7 +13,13 @@ from .job.load_tables import load_tables as load_tables_job
 
 
 class AsynchronousJobHandler:
-    """Handles asynchronous jobs."""
+    """Handles asynchronous jobs.
+
+    All jobs in this class are executed with python threads in the background.
+    If a method from this class is called it will only response if the job
+    was started successfully or not. All jobs in this class do not need to return a
+    result.
+    """
 
     def __init__(
         self,
@@ -21,13 +27,30 @@ class AsynchronousJobHandler:
         connection_factory: ConnectionFactory,
         workload_drivers: Dict,
     ):
-        """Initialize asynchronous job manager object."""
+        """Initialize asynchronous job handler object.
+
+        Args:
+            database_blocked: Flag stored in a shared memory map. This flag
+                saves if the Hyrise database is blocked or not.
+            connection_factory: A object to create a connection to the Hyrise
+                database. All connection relevant information (port, host) is
+                saved in this object.
+            workload_drivers: A dictionary containing all workload drivers (TPCC,...)
+        """
         self._database_blocked: Value = database_blocked
         self._connection_factory: ConnectionFactory = connection_factory
         self._workload_drivers: Dict = workload_drivers
 
     def load_tables(self, workload_type: str, scalefactor: float) -> bool:
-        """Load tables."""
+        """Start load tabled job.
+
+        This function will check if the database is blocked. If not it will
+        create a thread that is executing the job that will load the tables.
+
+        Returns:
+            bool: True if job was successful started, False if database was
+                blocked and job couldn't be started.
+        """
         if not self._database_blocked.value:
             self._database_blocked.value = True
             job_thread = Thread(
@@ -46,7 +69,15 @@ class AsynchronousJobHandler:
             return False
 
     def delete_tables(self, workload_type: str, scalefactor: float) -> bool:
-        """Delete tables."""
+        """Start delete tabled job.
+
+        This function will check if the database is blocked. If not it will
+        create a thread that is executing the job that will delete the tables.
+
+        Returns:
+            bool: True if job was successful started, False if database was
+                blocked and job couldn't be started.
+        """
         if not self._database_blocked.value:
             self._database_blocked.value = True
             job_thread = Thread(
@@ -65,7 +96,15 @@ class AsynchronousJobHandler:
             return False
 
     def activate_plugin(self, plugin: str) -> bool:
-        """Activate plugin."""
+        """Start activate plug-in job.
+
+        This function will check if the database is blocked. If not it will
+        create a thread that is executing the job that will activate the plug-in.
+
+        Returns:
+            bool: True if job was successful started, False if database was
+                blocked and job couldn't be started.
+        """
         if not self._database_blocked.value:
             job_thread = Thread(
                 target=activate_plugin_job, args=(self._connection_factory, plugin,)
@@ -76,7 +115,15 @@ class AsynchronousJobHandler:
             return False
 
     def deactivate_plugin(self, plugin: str) -> bool:
-        """Dectivate plugin."""
+        """Start deactivate plug-in job.
+
+        This function will check if the database is blocked. If not it will
+        create a thread that is executing the job that will deactivate the plug-in.
+
+        Returns:
+            bool: True if job was successful started, False if database was
+                blocked and job couldn't be started.
+        """
         if not self._database_blocked.value:
             job_thread = Thread(
                 target=deactivate_plugin_job, args=(self._connection_factory, plugin,)
