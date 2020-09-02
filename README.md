@@ -10,11 +10,11 @@ For more information related to the Hyrise database, please refer to https://git
 
 ## Supported Systems 
 
-The Hyrise Cockpit is mainly developed for Linux (preferrably the most current Ubuntu 20.04 LTS version). It also supports Mac to facilitate the local development of the Cockpit.
+The Hyrise Cockpit is mainly developed for Linux (preferrably Ubuntu 20.04 LTS version). It also supports Mac to facilitate the local development of the Cockpit.
 
 ## Supported Benchmarks 
 
-The Cockpit supports a number of benchmarks. 
+The Cockpit supports a number of benchmarks (the benchmarks are meant to facilitate research, not for TPC-compliant benchmarking; e.g., the TPC-H benchmark does not include the refresh stream). 
 
 | Benchmark  | Scale factors|
 | ------------- | ------------- |
@@ -49,13 +49,13 @@ https://github.com/hyrise/Cockpit/wiki/Installation-(Native-Setup)
 
 ## Using Docker
 
-It is possible to run the Cockpit completely in docker. The docker setup also includes a Hyrise for the Cockpit with all necessary dependencies (benchmark tables, plugins). This setup is at the moment the easiest to setup. Please checkout the following guide for the setup: 
+It is possible to run the Cockpit completely in docker. The docker setup also includes two Hyrise instances for the Cockpit with all necessary dependencies (benchmark tables, plugins). This setup is at the moment the easiest to setup. Please checkout the following guide for the setup: 
 
 https://github.com/hyrise/Cockpit/wiki/Docker-Setup
 
 ## Setting up native Hyrise Database
 
-To use a native Hyrise Database (not in docker) it is very important that you set it up correctly to work with the Cockpit. You find a detailed guide under: 
+To use a native Hyrise database (not in docker) it is very important that you set it up correctly to work with the Cockpit. You find a detailed guide under: 
 
 https://github.com/hyrise/Cockpit/wiki/Hyrise-Things
 
