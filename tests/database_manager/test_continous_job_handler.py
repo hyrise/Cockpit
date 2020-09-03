@@ -167,3 +167,36 @@ class TestContinuousJobHandler:
         continuous_job_handler._init_jobs()
 
         mock_scheduler.mock_calls == expected
+
+    def test_background_scheduler_closes(self) -> None:
+        """Test close of background scheduler object."""
+        continuous_job_handler = ContinuousJobHandler(
+            "connection_factory",
+            "hyrise_active",
+            "worker_pool",
+            "storage_connection_factory",
+            "database_blocked",
+        )
+        mock_scheduler: MagicMock = MagicMock()
+        mock_scheduler.shutdown.return_value = None
+        continuous_job_handler._scheduler = mock_scheduler
+        continuous_job_handler._update_workload_statement_information_job = MagicMock()
+        continuous_job_handler._update_system_data_job = MagicMock()
+        continuous_job_handler._update_chunks_data_job = MagicMock()
+        continuous_job_handler._update_storage_data_job = MagicMock()
+        continuous_job_handler._update_plugin_log_job = MagicMock()
+        continuous_job_handler._ping_hyrise_job = MagicMock()
+        continuous_job_handler._update_queue_length_job = MagicMock()
+        continuous_job_handler._update_workload_operator_information_job = MagicMock()
+
+        continuous_job_handler.close()
+
+        continuous_job_handler._update_workload_statement_information_job.remove.assert_called_once()
+        continuous_job_handler._update_system_data_job.remove.assert_called_once()
+        continuous_job_handler._update_chunks_data_job.remove.assert_called_once()
+        continuous_job_handler._update_storage_data_job.remove.assert_called_once()
+        continuous_job_handler._update_plugin_log_job.remove.assert_called_once()
+        continuous_job_handler._ping_hyrise_job.remove.assert_called_once()
+        continuous_job_handler._update_queue_length_job.remove.assert_called_once()
+        continuous_job_handler._update_workload_operator_information_job.remove.assert_called_once()
+        mock_scheduler.shutdown.assert_called_once()

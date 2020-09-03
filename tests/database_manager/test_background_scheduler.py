@@ -1,7 +1,6 @@
 """Tests for the background_scheduler module."""
 from multiprocessing import Value
-from typing import Any, Callable, Tuple
-from unittest.mock import call, patch
+from unittest.mock import patch
 
 from pytest import fixture
 
@@ -18,18 +17,6 @@ from hyrisecockpit.database_manager.job.delete_tables import (
 )
 from hyrisecockpit.database_manager.job.load_tables import (
     load_tables as load_tables_job,
-)
-from hyrisecockpit.database_manager.job.ping_hyrise import ping_hyrise
-from hyrisecockpit.database_manager.job.update_chunks_data import update_chunks_data
-from hyrisecockpit.database_manager.job.update_plugin_log import update_plugin_log
-from hyrisecockpit.database_manager.job.update_queue_length import update_queue_length
-from hyrisecockpit.database_manager.job.update_storage_data import update_storage_data
-from hyrisecockpit.database_manager.job.update_system_data import update_system_data
-from hyrisecockpit.database_manager.job.update_workload_operator_information import (
-    update_workload_operator_information,
-)
-from hyrisecockpit.database_manager.job.update_workload_statement_information import (
-    update_workload_statement_information,
 )
 
 database_id: str = "MongoDB"
@@ -50,7 +37,7 @@ class TestBackgroundJobManager:
         MagicMock(),
     )
     @patch(
-        "hyrisecockpit.database_manager.background_scheduler.BackgroundJobManager._init_jobs",
+        "hyrisecockpit.database_manager.background_scheduler.ContinuousJobHandler",
         MagicMock(),
     )
     def background_job_manager(self) -> BackgroundJobManager:
@@ -70,12 +57,7 @@ class TestBackgroundJobManager:
         assert background_job_manager
 
     @patch("hyrisecockpit.database_manager.background_scheduler.BackgroundScheduler")
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler.BackgroundJobManager._init_jobs"
-    )
-    def test_initializes_correctly(
-        self, mock_init_jobs: MagicMock, mock_background_scheduler: MagicMock
-    ) -> None:
+    def test_initializes_correctly(self, mock_background_scheduler: MagicMock) -> None:
         """A BackgroundJobManager initializes correctly."""
         background_job_manager = BackgroundJobManager(
             database_id,
@@ -97,104 +79,7 @@ class TestBackgroundJobManager:
             == storage_connection_factory
         )
         assert background_job_manager._hyrise_active == hyrise_active
-        mock_init_jobs.assert_called_once()
         mock_background_scheduler.assert_called_once()
-
-    def test_initializes_background_scheduler_job(
-        self, background_job_manager: BackgroundJobManager
-    ) -> None:
-        """Test initialization of background scheduler job."""
-        mock_scheduler: MagicMock = MagicMock()
-        mock_scheduler.add_job.return_value = None
-        background_job_manager._scheduler = mock_scheduler
-
-        jobs: Tuple[Callable[..., Any], str, int] = [
-            (
-                update_queue_length,
-                "interval",
-                1,
-                (
-                    background_job_manager._worker_pool,
-                    background_job_manager._hyrise_active,
-                ),
-            ),
-            (
-                update_workload_statement_information,
-                "interval",
-                5,
-                (background_job_manager._storage_connection_factory,),
-            ),
-            (
-                update_chunks_data,
-                "interval",
-                5,
-                (
-                    background_job_manager._database_blocked,
-                    background_job_manager._connection_factory,
-                    background_job_manager._storage_connection_factory,
-                ),
-            ),
-            (
-                update_system_data,
-                "interval",
-                1,
-                (
-                    background_job_manager._database_blocked,
-                    background_job_manager._connection_factory,
-                    background_job_manager._storage_connection_factory,
-                ),
-            ),
-            (
-                update_storage_data,
-                "interval",
-                5,
-                (
-                    background_job_manager._database_blocked,
-                    background_job_manager._connection_factory,
-                    background_job_manager._storage_connection_factory,
-                ),
-            ),
-            (
-                update_plugin_log,
-                "interval",
-                1,
-                (
-                    background_job_manager._database_blocked,
-                    background_job_manager._connection_factory,
-                    background_job_manager._storage_connection_factory,
-                ),
-            ),
-            (
-                update_workload_statement_information,
-                "interval",
-                1,
-                (
-                    background_job_manager._database_blocked,
-                    background_job_manager._connection_factory,
-                    background_job_manager._storage_connection_factory,
-                ),
-            ),
-            (
-                update_workload_operator_information,
-                "interval",
-                1,
-                (
-                    background_job_manager._database_blocked,
-                    background_job_manager._connection_factory,
-                    background_job_manager._storage_connection_factory,
-                ),
-            ),
-            (ping_hyrise, "interval", 0.5, (background_job_manager._connection_factory, background_job_manager._hyrise_active)),  # type: ignore
-        ]
-
-        expected = [
-            call.add_job(func=job[0], trigger=job[1], seconds=job[2], args=job[3])  # type: ignore
-            for job in jobs
-        ]
-
-        background_job_manager._init_jobs()
-
-        mock_scheduler.mock_calls == expected
 
     def test_background_scheduler_starts(
         self, background_job_manager: BackgroundJobManager
@@ -211,29 +96,13 @@ class TestBackgroundJobManager:
     def test_background_scheduler_closes(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
-        """Test close of background scheduler object."""
+        """Test close of background scheduler."""
         mock_scheduler: MagicMock = MagicMock()
-        mock_scheduler.shutdown.return_value = None
+        mock_scheduler.close.return_value = None
         background_job_manager._scheduler = mock_scheduler
-        background_job_manager._update_workload_statement_information_job = MagicMock()
-        background_job_manager._update_system_data_job = MagicMock()
-        background_job_manager._update_chunks_data_job = MagicMock()
-        background_job_manager._update_storage_data_job = MagicMock()
-        background_job_manager._update_plugin_log_job = MagicMock()
-        background_job_manager._ping_hyrise_job = MagicMock()
-        background_job_manager._update_queue_length_job = MagicMock()
-        background_job_manager._update_workload_operator_information_job = MagicMock()
 
         background_job_manager.close()
 
-        background_job_manager._update_workload_statement_information_job.remove.assert_called_once()
-        background_job_manager._update_system_data_job.remove.assert_called_once()
-        background_job_manager._update_chunks_data_job.remove.assert_called_once()
-        background_job_manager._update_storage_data_job.remove.assert_called_once()
-        background_job_manager._update_plugin_log_job.remove.assert_called_once()
-        background_job_manager._ping_hyrise_job.remove.assert_called_once()
-        background_job_manager._update_queue_length_job.remove.assert_called_once()
-        background_job_manager._update_workload_operator_information_job.remove.assert_called_once()
         mock_scheduler.shutdown.assert_called_once()
 
     def test_successfully_start_loading_tables(
