@@ -7,7 +7,7 @@ from hyrisecockpit.drivers.connector import Connector
 
 from .background_scheduler import BackgroundJobManager
 from .cursor import ConnectionFactory, StorageConnectionFactory
-from .jobs.get_detailed_plugins import _get_plugins
+from .job.get_detailed_plugins import _get_plugins
 from .synchronous_job_handler import SynchronousJobHandler
 from .worker_pool import WorkerPool
 
@@ -217,7 +217,7 @@ class Database(object):
     def activate_plugin(self, plugin: str) -> bool:
         """Activate plugin."""
         # TODO Move in background refactoring to scheduler
-        active_plugins = _get_plugins()
+        active_plugins = _get_plugins(self._connection_factory)
         if active_plugins is None or plugin in active_plugins:
             return False
         return self._background_scheduler.activate_plugin(plugin)

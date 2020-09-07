@@ -302,14 +302,15 @@ class TestDatabase(object):
         assert type(result) is bool
         assert result
 
-    def test_activates_plugin_with_no_success(self, database: Database) -> None:
+    @patch("hyrisecockpit.database_manager.database._get_plugins")
+    def test_activates_plugin_with_no_success(
+        self, mock_get_plugins: MagicMock, database: Database
+    ) -> None:
         """Test entry point for plug-in activation with no success."""
         mock_background_scheduler: MagicMock = MagicMock()
         mock_background_scheduler.activate_plugin.return_value = False
-        mock_get_plugins = MagicMock()
         mock_get_plugins.return_value = []
         database._background_scheduler = mock_background_scheduler
-        database._get_plugins = mock_get_plugins  # type: ignore
         fake_plugin: str = "Coolputer"
 
         result: bool = database.activate_plugin(fake_plugin)
@@ -318,16 +319,15 @@ class TestDatabase(object):
         assert type(result) is bool
         assert not result
 
+    @patch("hyrisecockpit.database_manager.database._get_plugins")
     def test_activates_already_loaded_plugin_with_no_success(
-        self, database: Database
+        self, mock_get_plugins: MagicMock, database: Database
     ) -> None:
         """Test entry point for plug-in activation of the already loaded plugin with no success."""
         mock_background_scheduler: MagicMock = MagicMock()
         mock_background_scheduler.activate_plugin.return_value = False
-        mock_get_plugins = MagicMock()
         mock_get_plugins.return_value = ["Coolputer"]
         database._background_scheduler = mock_background_scheduler
-        database._get_plugins = mock_get_plugins  # type: ignore
         fake_plugin: str = "Coolputer"
 
         result: bool = database.activate_plugin(fake_plugin)
