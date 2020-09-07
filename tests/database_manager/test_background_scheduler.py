@@ -6,18 +6,6 @@ from pytest import fixture
 
 from hyrisecockpit.cross_platform_support.testing_support import MagicMock
 from hyrisecockpit.database_manager.background_scheduler import BackgroundJobManager
-from hyrisecockpit.database_manager.job.activate_plugin import (
-    activate_plugin as activate_plugin_job,
-)
-from hyrisecockpit.database_manager.job.deactivate_plugin import (
-    deactivate_plugin as deactivate_plugin_job,
-)
-from hyrisecockpit.database_manager.job.delete_tables import (
-    delete_tables as delete_tables_job,
-)
-from hyrisecockpit.database_manager.job.load_tables import (
-    load_tables as load_tables_job,
-)
 
 database_id: str = "MongoDB"
 database_blocked: Value = Value("b", False)
@@ -33,11 +21,11 @@ class TestBackgroundJobManager:
 
     @fixture
     @patch(
-        "hyrisecockpit.database_manager.background_scheduler.BackgroundScheduler",
+        "hyrisecockpit.database_manager.background_scheduler.ContinuousJobHandler",
         MagicMock(),
     )
     @patch(
-        "hyrisecockpit.database_manager.background_scheduler.ContinuousJobHandler",
+        "hyrisecockpit.database_manager.background_scheduler.AsynchronousJobHandler",
         MagicMock(),
     )
     def background_job_manager(self) -> BackgroundJobManager:
@@ -56,8 +44,15 @@ class TestBackgroundJobManager:
         """A BackgroundJobManager can be created."""
         assert background_job_manager
 
-    @patch("hyrisecockpit.database_manager.background_scheduler.BackgroundScheduler")
-    def test_initializes_correctly(self, mock_background_scheduler: MagicMock) -> None:
+    @patch("hyrisecockpit.database_manager.background_scheduler.ContinuousJobHandler")
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.AsynchronousJobHandler",
+    )
+    def test_initializes_correctly(
+        self,
+        mock_asynchronous_job_handler: MagicMock,
+        mock_continuous_job_handler: MagicMock,
+    ) -> None:
         """A BackgroundJobManager initializes correctly."""
         background_job_manager = BackgroundJobManager(
             database_id,
@@ -79,7 +74,18 @@ class TestBackgroundJobManager:
             == storage_connection_factory
         )
         assert background_job_manager._hyrise_active == hyrise_active
-        mock_background_scheduler.assert_called_once()
+        mock_asynchronous_job_handler.assert_called_once_with(
+            background_job_manager._database_blocked,
+            background_job_manager._connection_factory,
+            background_job_manager._workload_drivers,
+        )
+        mock_continuous_job_handler.assert_called_once_with(
+            background_job_manager._connection_factory,
+            background_job_manager._hyrise_active,
+            background_job_manager._worker_pool,
+            background_job_manager._storage_connection_factory,
+            background_job_manager._database_blocked,
+        )
 
     def test_background_scheduler_starts(
         self, background_job_manager: BackgroundJobManager
@@ -87,7 +93,7 @@ class TestBackgroundJobManager:
         """Test start of background scheduler."""
         mock_scheduler: MagicMock = MagicMock()
         mock_scheduler.start.return_value = None
-        background_job_manager._scheduler = mock_scheduler
+        background_job_manager._continuous_job_handler = mock_scheduler
 
         background_job_manager.start()
 
@@ -99,156 +105,68 @@ class TestBackgroundJobManager:
         """Test close of background scheduler."""
         mock_scheduler: MagicMock = MagicMock()
         mock_scheduler.close.return_value = None
-        background_job_manager._scheduler = mock_scheduler
+        background_job_manager._continuous_job_handler = mock_scheduler
 
         background_job_manager.close()
 
-        mock_scheduler.shutdown.assert_called_once()
+        mock_scheduler.close.assert_called_once()
 
-    def test_successfully_start_loading_tables(
+    def test_start_loading_tables(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully start loading tables job."""
-        background_job_manager._database_blocked.value = False
-        background_job_manager._scheduler = MagicMock()
-        background_job_manager._connection_factory = MagicMock()
-        fake_workload_type = "tpch"
-        fake_scale_factor = 1.0
+        mock_asynchronous_job_handler = MagicMock()
+        mock_asynchronous_job_handler.return_value = True
+        background_job_manager._asynchronous_job_handler = mock_asynchronous_job_handler
+        workload_type = "TPC-C"
+        scalefactor = 5.0
 
-        result: bool = background_job_manager.load_tables(
-            fake_workload_type, fake_scale_factor
-        )
+        result = background_job_manager.load_tables(workload_type, scalefactor)
 
-        background_job_manager._scheduler.add_job.assert_called_once_with(
-            func=load_tables_job,
-            args=(
-                background_job_manager._database_blocked,
-                fake_workload_type,
-                fake_scale_factor,
-                background_job_manager._connection_factory,
-                workload_drivers,
-            ),
+        mock_asynchronous_job_handler.load_tables.assert_called_once_with(
+            workload_type, scalefactor
         )
         assert result
 
-    def test_start_loading_tables_while_database_is_blocked(
-        self, background_job_manager: BackgroundJobManager
-    ) -> None:
-        """Test start loading tables job while database is blocked."""
-        background_job_manager._database_blocked.value = True
-        background_job_manager._scheduler = MagicMock()
-        background_job_manager._connection_factory = MagicMock()
-        fake_workload_type = "tpch"
-        fake_scale_factor = 1.0
-
-        result: bool = background_job_manager.load_tables(
-            fake_workload_type, fake_scale_factor
-        )
-
-        background_job_manager._scheduler.add_job.assert_not_called()
-        assert not result
-
-    def test_successfully_delete_tables_tables(
-        self, background_job_manager: BackgroundJobManager
-    ) -> None:
+    def test_delete_tables(self, background_job_manager: BackgroundJobManager) -> None:
         """Test successfully delete loading tables job."""
-        background_job_manager._database_blocked.value = False
-        background_job_manager._scheduler = MagicMock()
-        background_job_manager._connection_factory = MagicMock()
-        fake_workload_type = "tpch"
-        fake_scale_factor = 1.0
+        mock_asynchronous_job_handler = MagicMock()
+        mock_asynchronous_job_handler.return_value = True
+        background_job_manager._asynchronous_job_handler = mock_asynchronous_job_handler
+        workload_type = "TPC-C"
+        scalefactor = 5.0
 
-        result: bool = background_job_manager.delete_tables(
-            fake_workload_type, fake_scale_factor
-        )
+        result = background_job_manager.delete_tables(workload_type, scalefactor)
 
-        background_job_manager._scheduler.add_job.assert_called_once_with(
-            func=delete_tables_job,
-            args=(
-                background_job_manager._database_blocked,
-                fake_workload_type,
-                fake_scale_factor,
-                background_job_manager._connection_factory,
-                workload_drivers,
-            ),
+        mock_asynchronous_job_handler.delete_tables.assert_called_once_with(
+            workload_type, scalefactor
         )
         assert result
 
-    def test_start_delete_tables_while_database_is_blocked(
-        self, background_job_manager: BackgroundJobManager
-    ) -> None:
-        """Test start delete tables job while database is blocked."""
-        background_job_manager._database_blocked.value = True
-        background_job_manager._scheduler = MagicMock()
-        background_job_manager._connection_factory = MagicMock()
-        fake_workload_type = "tpch"
-        fake_scale_factor = 1.0
-
-        result: bool = background_job_manager.delete_tables(
-            fake_workload_type, fake_scale_factor
-        )
-
-        background_job_manager._scheduler.add_job.assert_not_called()
-        assert not result
-
-    def test_successfully_activate_plugin(
+    def test_activate_plugin(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully start activate plug-in job."""
-        background_job_manager._database_blocked.value = False
-        background_job_manager._scheduler = MagicMock()
-        background_job_manager._connection_factory = MagicMock()
-        fake_plugin = "plugin"
+        mock_asynchronous_job_handler = MagicMock()
+        mock_asynchronous_job_handler.return_value = True
+        background_job_manager._asynchronous_job_handler = mock_asynchronous_job_handler
+        plugin = "compression"
 
-        result: bool = background_job_manager.activate_plugin(fake_plugin)
+        result = background_job_manager.activate_plugin(plugin)
 
-        background_job_manager._scheduler.add_job.assert_called_once_with(
-            func=activate_plugin_job,
-            args=(background_job_manager._connection_factory, fake_plugin),
-        )
+        mock_asynchronous_job_handler.activate_plugin.assert_called_once_with(plugin)
         assert result
-
-    def test_start_activate_plugin_while_database_is_blocked(
-        self, background_job_manager: BackgroundJobManager
-    ) -> None:
-        """Test start activate plug-in job while database is blocked."""
-        background_job_manager._database_blocked.value = True
-        background_job_manager._scheduler = MagicMock()
-        background_job_manager._connection_factory = MagicMock()
-        fake_plugin = "plugin"
-
-        result: bool = background_job_manager.activate_plugin(fake_plugin)
-
-        background_job_manager._scheduler.add_job.assert_not_called()
-        assert not result
 
     def test_successfully_deactivate_plugin(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully start deactivate plug-in job."""
-        background_job_manager._database_blocked.value = False
-        background_job_manager._scheduler = MagicMock()
-        background_job_manager._connection_factory = MagicMock()
-        fake_plugin = "plugin"
+        mock_asynchronous_job_handler = MagicMock()
+        mock_asynchronous_job_handler.return_value = True
+        background_job_manager._asynchronous_job_handler = mock_asynchronous_job_handler
+        plugin = "compression"
 
-        result: bool = background_job_manager.deactivate_plugin(fake_plugin)
+        result = background_job_manager.deactivate_plugin(plugin)
 
-        background_job_manager._scheduler.add_job.assert_called_once_with(
-            func=deactivate_plugin_job,
-            args=(background_job_manager._connection_factory, fake_plugin),
-        )
+        mock_asynchronous_job_handler.deactivate_plugin.assert_called_once_with(plugin)
         assert result
-
-    def test_start_deactivate_plugin_while_database_is_blocked(
-        self, background_job_manager: BackgroundJobManager
-    ) -> None:
-        """Test start deactivate plug-in job while database is blocked."""
-        background_job_manager._database_blocked.value = True
-        background_job_manager._scheduler = MagicMock()
-        background_job_manager._connection_factory = MagicMock()
-        fake_plugin = "plugin"
-
-        result: bool = background_job_manager.deactivate_plugin(fake_plugin)
-
-        background_job_manager._scheduler.add_job.assert_not_called()
-        assert not result

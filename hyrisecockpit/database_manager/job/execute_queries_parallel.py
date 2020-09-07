@@ -1,5 +1,5 @@
 """This job execute queries parallel in separate processes."""
-from multiprocessing import Process
+from threading import Thread
 from typing import Any, List, Optional, Tuple
 
 from psycopg2 import DatabaseError, InterfaceError, ProgrammingError
@@ -36,12 +36,11 @@ def _execute_table_query(
 
 def execute_queries_parallel(queries, connection_factory: ConnectionFactory) -> None:
     """Start processes for query execution."""
-    processes: List[Process] = [
-        Process(target=_execute_table_query, args=(query, connection_factory),)
+    threads: List[Thread] = [
+        Thread(target=_execute_table_query, args=(query, connection_factory),)
         for query in queries
     ]
-    for process in processes:
-        process.start()
-    for process in processes:
-        process.join()
-        process.terminate()
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
