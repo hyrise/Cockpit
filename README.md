@@ -5,152 +5,89 @@
 ![Docker Image CI](https://github.com/hyrise/Cockpit/workflows/Docker%20Image%20CI/badge.svg)
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 
-## Quick Setup (Docker)
+This is the repository for the Hyrise Cockpit. The goal of the Cockpit is to visualise the runtime behaviour of multiple Hyrise instances. For that the Cockpit can generate a mix of workloads to set the Hyrise instances under pressure. It is also possible to activate different plugins on different Hyrise instances and compare the impact of them.  
+For more information related to the Hyrise database, please refer to https://github.com/hyrise/hyrise. 
 
-https://github.com/hyrise/Cockpit/wiki/Quick-Setup
+## Supported Systems 
 
-## Full Setup (pipenv)
+The Hyrise Cockpit is mainly developed for Linux (preferrably Ubuntu 20.04 LTS version). It also supports Mac to facilitate the local development of the Cockpit.
 
-You may need to install a different python version (`3.8.5`, e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
-Installing pyenv can be done with the following commands:
+## Supported Benchmarks 
 
+The Cockpit supports a number of benchmarks (the benchmarks are meant to facilitate research, not for TPC-compliant benchmarking; e.g., the TPC-H benchmark does not include the refresh stream). 
 
-<details>
-<summary>macOS</summary>
+| Benchmark  | Scale factors|
+| ------------- | ------------- |
+| TPC-C  | 1, 5 *(warehouses)*  |
+| TPC-DS  | 1  |
+| TPC-H  | 0.1, 1  |
+| JoinOrder  | 1  |
 
-```bash
-brew install pyenv
-```
+It is possible to combine different benchmarks. A benchmark/workload is defined via a driver. If you want to implement your own benchmark/workload please have a look at https://github.com/hyrise/Cockpit/wiki/Implementing-a-Driver .
 
-</details>
+## Supported Plugins 
 
-<details>
-<summary>Ubuntu</summary>
+The current plugins are supported at the moment: 
 
-```bash
-# Update package list
-sudo apt-get update
+* Compression
+* Clustering
+* IndexSelection
 
-# Dependencies commonly missing, causing issues with pyenv
-sudo apt-get install -y python-pip make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+# Getting started 
 
-# Pyenv install script
-curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-```
+There are three different set ups available: 
 
-Put the following in your `.bashrc` (or `.zshrc`, etc.):
+* Native installation
+* Docker set up
+* Developer set up
 
-```bash
-export PATH="/home/$USER/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-```
+## Install Cockpit 
 
-Restart your shell:
+To install the Cockpit natively, please have a look at:  
 
-```bash
-exec "$SHELL"
-```
+https://github.com/hyrise/Cockpit/wiki/Installation-(Native-Setup) 
 
-</details>
+## Using Docker
 
-Subsequently, the required version of Python can be installed and set with:
+It is possible to run the Cockpit completely in docker. The docker setup also includes two Hyrise instances for the Cockpit with all necessary dependencies (benchmark tables, plugins). This setup is at the moment the easiest to setup. Please checkout the following guide for the setup: 
 
-```bash
-# Install Python 3.8.5
-pyenv install 3.8.5
+https://github.com/hyrise/Cockpit/wiki/Docker-Setup
 
-# Set the local (directory) Python version to 3.8.5
-cd Cockpit
-pyenv local 3.8.5
-```
-Since there is a dependency for [`psycopg2`](http://initd.org/psycopg/docs/install.html), you may need to run the following commands:
+## Setting up native Hyrise Database
 
-<details>
-<summary>macOS</summary>
+To use a native Hyrise database (not in docker) it is very important that you set it up correctly to work with the Cockpit. You find a detailed guide under: 
 
-```bash
-brew install libpq postgresql
-```
+https://github.com/hyrise/Cockpit/wiki/Hyrise-Things
 
-</details>
+You can also use a native Hyrise with a running Cockpit in docker. 
 
-<details>
-<summary>Ubuntu</summary>
+## Setting up development environment 
 
-```bash
-sudo apt-get install libpq-dev
-```
+If you want to contribute to this project you can setup the development environment described like in the following guide: 
 
-</details>
+https://github.com/hyrise/Cockpit/wiki/Development-Environment-Setup
 
-Now, initialize and sync your virtual environment:
+# Using the Cockpit 
 
-```bash
-python -m pip install pipenv
-exec "$SHELL"
-pipenv --three --python=`python --version`
-pipenv sync
-```
+You can find a detailed guide on how to use the Cockpit under https://github.com/hyrise/Cockpit/wiki/User-guide. 
 
-### Developer setup
+# Maintainers
 
-Run the following commands to bootstrap your developer environment.
+* @Alexander-Dubrawski
+* @Bensk1
+* @Bouncner 
 
-```bash
-pipenv sync --dev
+# Contributors
 
-# Please make sure you enable the pre-commit hooks:
-pipenv run pre-commit install
-```
+* @Alexander-Dubrawski
+* @Bensk1
+* @Bouncner 
+* @caterinamandel98
+* @cH3n7i
+* @fabianhe
+* @kathwill
+* @MaxSchneider1337
+* @monasobh 
+* @PeterTsayun
+* @schTi
 
-#### [`pre-commit`](https://github.com/pre-commit/pre-commit) hooks
-
-If you want to run the pre-commit hooks manually without commiting, simply run:
-
-```bash
-pipenv run pre-commit
-```
-
-This will trigger all configured pre-commit hooks, most notably:
-
-- Python utility [`isort`](https://github.com/timothycrosley/isort), to sort imports alphabetically, and automatically separated into sections.
-- Python code formatter [`black`](https://github.com/psf/black).
-  Blackened code looks the same regardless of the project you're reading.
-  Formatting becomes transparent after a while and you can focus on the content instead.
-- Python utility [`flake8`](https://github.com/PyCQA/flake8), with plugins [`pep8-naming`](https://github.com/PyCQA/pep8-naming) and [`flake8-bugbear`](https://github.com/PyCQA/flake8-bugbear).
-- Python utility [`pydocstyle`](https://github.com/PyCQA/pydocstyle), a static analysis tool for checking compliance with Python docstring conventions.
-- Python utility [`bandit`](https://github.com/PyCQA/bandit), a tool designed to find common security issues in Python code.
-
-##### Failing hooks
-
-If some hooks fail, you will not be able to commit.
-You may bypass this by using the `git commit --no-verify`, but it's a good practice to avoid bypassing it.
-Instead, add the edits made by e.g. `isort` or `black` to the staging area, and commit with the pre-commit hooks passing.
-Some hooks, however, require you to change files manually, e.g. `flake8` warning you of an unused variable.
-
-##### Running a specific hook
-
-You can run a single hook by running:
-
-```bash
-pipenv run pre-commit hook-id
-```
-
-The id of the hook can be found in the [`.pre-commit-config.yaml`](.pre-commit-config.yaml) file.
-
-##### Running hooks on all files
-
-You can run all the pre-commit hooks on all files by running:
-
-```bash
-pipenv run pre-commit run --all-files
-```
-
-### Tests
-
-You can run all tests with:
-
-```bash
-pipenv run pytest
-```
