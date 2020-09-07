@@ -31,8 +31,8 @@ class AsynchronousJobHandler:
 
         Args:
             database_blocked: Flag stored in a shared memory map. This flag
-                saves if the Hyrise database is blocked or not.
-            connection_factory: A object to create a connection to the Hyrise
+                stores if the Hyrise instance is blocked or not.
+            connection_factory: An object to create a connection to the Hyrise
                 database. All connection relevant information (port, host) is
                 saved in this object.
             workload_drivers: A dictionary containing all workload drivers (TPCC,...)
@@ -44,7 +44,7 @@ class AsynchronousJobHandler:
     def load_tables(self, workload_type: str, scalefactor: float) -> bool:
         """Start load tabled job.
 
-        This function will check if the database is blocked. If not it will
+        This function will check if the database is blocked, if not it will
         create a thread that is executing the job that will load the tables.
 
         Returns:
