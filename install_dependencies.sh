@@ -41,6 +41,7 @@ python3 -m venv venv
 . venv/bin/activate
 
 echo "Install packages"
+# We use pip to install the cockpit. Pip will use the setup.py for it. Pip also require wheel for the installation process. 
 pip3.8 install wheel
 pip3.8 install -r requirements.txt
 
