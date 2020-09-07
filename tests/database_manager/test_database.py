@@ -1,12 +1,10 @@
 """Tests for the database module."""
 
-from collections import Counter
 from multiprocessing.sharedctypes import Synchronized as ValueType
-from typing import Dict, List, Optional
+from typing import Dict, List
 from unittest.mock import MagicMock, patch
 
-from psycopg2 import DatabaseError, Error, InterfaceError
-from pytest import fixture, mark
+from pytest import fixture
 
 from hyrisecockpit.database_manager.database import Database
 
@@ -63,6 +61,9 @@ class TestDatabase(object):
     @patch(
         "hyrisecockpit.database_manager.database.Database._initialize_influx",
         MagicMock(),
+    )
+    @patch(
+        "hyrisecockpit.database_manager.database.SynchronousJobHandler", MagicMock(),
     )
     def database(self) -> Database:
         """Get a new Database."""
@@ -381,53 +382,54 @@ class TestDatabase(object):
         assert type(result) is bool
         assert result
 
-    def test_gets_loaded_workloads_and_tables(self, database: Database) -> None:
-        """Test get loaded benchmark for present benchmarks."""
-        mock_driver_all_tables_loaded = MagicMock()
-        mock_driver_all_tables_loaded.get_table_names.return_value = {
-            "customer": "customer_tpch_1",
-            "item": "item_tpch_1",
-        }
-        mock_driver_all_tables_loaded.get_scalefactors.return_value = [1.0]
-        mock_driver_not_all_tables_loaded = MagicMock()
-        mock_driver_not_all_tables_loaded.get_table_names.return_value = {
-            "Gary": "gary_rock_1",
-            "Clark": "clark_rock_1",
-        }
-        mock_driver_not_all_tables_loaded.get_scalefactors.return_value = [1.0]
-        database._workload_drivers = {
-            "tpch": mock_driver_all_tables_loaded,
-            "rock": mock_driver_not_all_tables_loaded,
-        }
-        fake_loaded_tables = ["customer_tpch_1", "item_tpch_1", "gary_rock_1"]
+    def test_gets_hyrise_active(self, database: Database) -> None:
+        """Test get hyrise active status."""
+        database._hyrise_active.value = True
+        result: bool = database.get_hyrise_active()
 
-        expected = [
-            {
-                "workload_type": "tpch",
-                "scale_factor": 1.0,
-                "loaded_tables": ["customer", "item"],
-                "missing_tables": [],
-                "completely_loaded": True,
-                "database_representation": {
-                    "customer": "customer_tpch_1",
-                    "item": "item_tpch_1",
-                },
-            },
-            {
-                "workload_type": "rock",
-                "scale_factor": 1.0,
-                "loaded_tables": ["Gary"],
-                "missing_tables": ["Clark"],
-                "completely_loaded": False,
-                "database_representation": {
-                    "Gary": "gary_rock_1",
-                    "Clark": "clark_rock_1",
-                },
-            },
-        ]
+        assert type(result) is bool
+        assert result
 
-        results: List = database._workload_tables_status(fake_loaded_tables)
-        assert results == expected
+    def test_gets_loaded_tables(self, database: Database) -> None:
+        """Test get loaded tables."""
+        mock_synchronous_job_handler = MagicMock()
+        database._synchronous_job_handler = mock_synchronous_job_handler
+        database.get_loaded_tables_in_database()
+        mock_synchronous_job_handler.get_loaded_tables_in_database.assert_called_once()
+
+    def test_gets_workload_tables_status(self, database: Database) -> None:
+        """Test get workload tables status."""
+        mock_synchronous_job_handler = MagicMock()
+        database._synchronous_job_handler = mock_synchronous_job_handler
+        database.get_workload_tables_status()
+        mock_synchronous_job_handler.get_workload_tables_status.assert_called_once()
+
+    def test_gets_detailed_plugins(self, database: Database) -> None:
+        """Test get detailed plug-ins."""
+        mock_synchronous_job_handler = MagicMock()
+        database._synchronous_job_handler = mock_synchronous_job_handler
+        database.get_detailed_plugins()
+        mock_synchronous_job_handler.get_detailed_plugins.assert_called_once()
+
+    def test_sets_plugin_settings(self, database: Database) -> None:
+        """Test set plug-in settings."""
+        plugin_name = "compression"
+        setting_name = "compression_rate"
+        setting_value = "10"
+        mock_synchronous_job_handler = MagicMock()
+        database._synchronous_job_handler = mock_synchronous_job_handler
+        database.set_plugin_setting(plugin_name, setting_name, setting_value)
+        mock_synchronous_job_handler.set_plugin_setting.assert_called_once_with(
+            plugin_name, setting_name, setting_value
+        )
+
+    def test_executes_sql_query(self, database: Database) -> None:
+        """Test execute SQL query."""
+        query = "SELECT bla bla"
+        mock_synchronous_job_handler = MagicMock()
+        database._synchronous_job_handler = mock_synchronous_job_handler
+        database.execute_sql_query(query)
+        mock_synchronous_job_handler.execute_sql_query.assert_called_once_with(query)
 
     def test_gets_worker_pool_status(self, database: Database) -> None:
         """Test return of worker pool status."""
@@ -439,54 +441,6 @@ class TestDatabase(object):
 
         assert type(result) is str
         assert result == "running"
-
-    def test_gets_loaded_tables(self, database: Database) -> None:
-        """Test get loaded tables."""
-        mock_cursor = MagicMock()
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        mock_cursor.fetchall.return_value = [("hallo", "type",), ("world", "boring",)]
-        database._connection_factory = mock_connection_factory
-
-        results = database.get_loaded_tables_in_database()
-
-        mock_cursor.execute.assert_called_once_with("select * from meta_tables;", None)
-        assert results == ["hallo", "world"]  # type: ignore
-
-    @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
-    )
-    def test_gets_loaded_tables_with_exception(
-        self, database: Database, exceptions
-    ) -> None:
-        """Test get loaded tables with exception."""
-
-        def raise_exception(*args):
-            """Throw exception."""
-            raise exceptions
-
-        mock_cursor = MagicMock()
-        mock_cursor.execute.side_effect = raise_exception
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        database._connection_factory = mock_connection_factory
-
-        results = database.get_loaded_tables_in_database()
-
-        mock_cursor.execute.assert_called_once_with("select * from meta_tables;", None)
-        assert results == []
-
-    def test_gets_hyrise_active(self, database: Database) -> None:
-        """Test get hyrise active status."""
-        database._hyrise_active.value = True
-        result: bool = database.get_hyrise_active()
-
-        assert type(result) is bool
-        assert result
 
     def test_starts_successful_worker(self, database: Database) -> None:
         """Test start of successful worker."""
@@ -531,323 +485,6 @@ class TestDatabase(object):
         mocked_worker_pool.close.assert_called_once()
         assert type(result) is bool
         assert not result
-
-    def test_gets_plugins_when_database_unblocked_and_no_plugins_exists(
-        self, database: Database
-    ) -> None:
-        """Test get not existing plug-ins."""
-        mock_cursor = MagicMock()
-        mock_cursor.fetchall.return_value = []
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        database._connection_factory = mock_connection_factory
-        database._database_blocked.value = False
-
-        result: Optional[List] = database._get_plugins()
-
-        mock_cursor.execute.assert_called_once_with(
-            ("SELECT name FROM meta_plugins;"), None
-        )
-        assert type(result) is list
-        assert result == []
-
-    def test_gets_plugins_when_database_unblocked_and_plugins_exists(
-        self, database: Database
-    ) -> None:
-        """Test get existing plug-ins."""
-        mock_cursor = MagicMock()
-        mock_cursor.fetchall.return_value = [
-            ("Hildegunst von Mythenmetz", "Lindwurm", "sprachliche Begabung",),
-            (
-                "Rumo von Zamonien",
-                "Wolpertinger",
-                "gute Schachspieler und gute Kämpfer",
-            ),
-        ]
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        database._connection_factory = mock_connection_factory
-        database._database_blocked.value = False
-
-        expected: List[str] = ["Hildegunst von Mythenmetz", "Rumo von Zamonien"]
-        result: Optional[List] = database._get_plugins()
-
-        assert type(result) is list
-        assert Counter(result) == Counter(expected)
-
-    @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
-    )
-    def test_gets_plugins_when_database_throws_exception(
-        self, database: Database, exceptions
-    ) -> None:
-        """Test get existing plug-ins when database throws exception."""
-
-        def raise_exception(*args):
-            """Throw exception."""
-            raise exceptions
-
-        mock_cursor = MagicMock()
-        mock_cursor.execute.side_effect = raise_exception
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        database._connection_factory = mock_connection_factory
-        database._database_blocked.value = False
-
-        result: Optional[List] = database._get_plugins()
-
-        assert result is None
-
-    def test_sets_plugin_setting_when_database_is_unblocked(
-        self, database: Database
-    ) -> None:
-        """Test set plug-in setting while the database is not blocked."""
-        mock_cursor = MagicMock()
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        database._connection_factory = mock_connection_factory
-        database._database_blocked.value = False
-
-        result: bool = database.set_plugin_setting(
-            "Compression", "MemoryBudget", "55555"
-        )
-
-        mock_cursor.execute.assert_called_once_with(
-            "UPDATE meta_settings SET value=%s WHERE name=%s;",
-            ("55555", "Plugin::Compression::MemoryBudget",),
-        )
-
-        assert type(result) is bool
-        assert result
-
-    def test_set_plugin_settings_when_database_blocked(
-        self, database: Database
-    ) -> None:
-        """Test set plug-in setting while the database is blocked."""
-        mock_cursor = MagicMock()
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        database._connection_factory = mock_connection_factory
-        database._database_blocked.value = True
-
-        result: bool = database.set_plugin_setting(
-            "Compression", "MemoryBudget", "55555"
-        )
-
-        mock_cursor.execute.assert_not_called()
-
-        assert type(result) is bool
-        assert not result
-
-    @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
-    )
-    def test_sets_plugin_settings_when_database_throws_exception(
-        self, database: Database, exceptions
-    ) -> None:
-        """Test sets plug-in settings when database throws exception."""
-
-        def raise_exception(*args):
-            """Throw exception."""
-            raise exceptions
-
-        mock_cursor = MagicMock()
-        mock_cursor.side_effect = raise_exception
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        database._connection_factory = mock_connection_factory
-        database._database_blocked.value = True
-
-        mock_cursor.execute.side_effect = raise_exception
-        database._database_blocked.value = False
-        result: bool = database.set_plugin_setting(
-            "Compression", "MemoryBudget", "55555"
-        )
-
-        assert not result
-
-    def test_gets_plugins_settings_when_database_unblocked_and_no_plugins_exist(
-        self, database: Database
-    ) -> None:
-        """Test get not existing plug-ins settings."""
-        mock_cursor = MagicMock()
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        database._connection_factory = mock_connection_factory
-        database._database_blocked.value = False
-
-        result = database._get_plugin_setting()
-
-        mock_cursor.execute.assert_called_once_with(
-            "SELECT name, value, description FROM meta_settings WHERE name LIKE 'Plugin::%';",
-            None,
-        )
-
-        assert isinstance(result, dict)
-        assert result == {}
-
-    def test_gets_plugins_settings_when_database_unblocked_and_plugins_exist(
-        self, database: Database
-    ) -> None:
-        """Test get existing plug-ins settings."""
-        mock_cursor = MagicMock()
-        mock_cursor.fetchall.return_value = [
-            ("Plugin::Compression::MemoryBudget", "55555", "..."),
-            ("Plugin::Something::SomeSetting", "true", "this should show up"),
-        ]
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        database._connection_factory = mock_connection_factory
-        database._database_blocked.value = False
-
-        expected = {
-            "Compression": [
-                {"name": "MemoryBudget", "value": "55555", "description": "..."}
-            ],
-            "Something": [
-                {
-                    "name": "SomeSetting",
-                    "value": "true",
-                    "description": "this should show up",
-                }
-            ],
-        }
-
-        result = database._get_plugin_setting()
-
-        assert isinstance(result, dict)
-        assert result == expected
-
-    @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
-    )
-    def test_gets_plugin_settings_when_database_throws_exception(
-        self, database: Database, exceptions
-    ) -> None:
-        """Test gets plugin settings when database throws exception."""
-
-        def raise_exception(*args):
-            """Throw exception."""
-            raise exceptions
-
-        mock_cursor = MagicMock()
-        mock_cursor.execute.side_effect = raise_exception
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        database._connection_factory = mock_connection_factory
-        database._database_blocked.value = False
-
-        result = database._get_plugin_setting()
-
-        assert result is None
-
-    def test_executes_sql_query(self, database: Database) -> None:
-        """Test execute sql query."""
-        mock_cursor = MagicMock()
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        database._connection_factory = mock_connection_factory
-        database._database_blocked.value = False
-
-        database._id = "Identification?"
-        mock_cursor.fetchall.return_value = [
-            (
-                "I'm planning to make a film series on databases",
-                "I've got the first part ready, but I can't think of a SQL.",
-                None,
-                42,
-            )
-        ]
-        mock_cursor.fetch_column_names.return_value = ["bad", "joke"]
-
-        expected = {
-            "id": "Identification?",
-            "successful": True,
-            "results": [
-                [
-                    "I'm planning to make a film series on databases",
-                    "I've got the first part ready, but I can't think of a SQL.",
-                    "None",
-                    "42",
-                ]
-            ],
-            "col_names": ["bad", "joke"],
-            "error_message": "",
-        }
-
-        result = database.execute_sql_query("SELECT funny FROM not_funny")
-
-        assert expected == result
-
-    def test_executes_sql_query_with_throwing_exception(
-        self, database: Database
-    ) -> None:
-        """Test execute sql query with throwing exception."""
-
-        def raise_exception(*args) -> Exception:
-            """Throw exception."""
-            raise Error
-
-        mock_cursor = MagicMock()
-        mock_cursor.side_effect = raise_exception
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        database._connection_factory = mock_connection_factory
-        database._database_blocked.value = False
-
-        database._id = "Identification?"
-        mock_cursor.execute.side_effect = raise_exception
-
-        expected = {
-            "id": "Identification?",
-            "successful": False,
-            "results": [],
-            "col_names": [],
-            "error_message": "",
-        }
-
-        result = database.execute_sql_query("SELECT funny FROM not_funny")
-
-        assert expected == result
-
-    def test_executes_sql_query_while_database_is_blocked(
-        self, database: Database
-    ) -> None:
-        """Test execute sql query while database is blocked."""
-        mock_cursor = MagicMock()
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        database._connection_factory = mock_connection_factory
-        database._database_blocked.value = True
-
-        result = database.execute_sql_query("SELECT funny FROM not_funny")
-
-        assert result is None
-        mock_cursor.execute.assert_not_called()
 
     def test_closes_database(self, database: Database) -> None:
         """Test closing of database."""
@@ -897,39 +534,3 @@ class TestDatabase(object):
         mock_storage_cursor.create_continuous_query.assert_any_call(
             "latency_calculation", latency_query, resample_options
         )
-
-    def test_get_status_of_workload_tables(self, database: Database):
-        """Test get loaded benchmark data."""
-        fake_status_of_workload = [
-            {
-                "workload_type": "tpch",
-                "scale_factor": 1.0,
-                "loaded_tables": ["customer", "item"],
-                "missing_tables": [],
-                "completely_loaded": True,
-                "database_representation": {
-                    "customer": "customer_tpch_1",
-                    "item": "item_tpch_1",
-                },
-            },
-            {
-                "workload_type": "rock",
-                "scale_factor": 1.0,
-                "loaded_tables": ["Gary"],
-                "missing_tables": ["Clark"],
-                "completely_loaded": False,
-                "database_representation": {
-                    "Gary": "gary_rock_1",
-                    "Clark": "clark_rock_1",
-                },
-            },
-        ]
-        database.get_loaded_tables_in_database = MagicMock()  # type: ignore
-        database.get_loaded_tables_in_database.return_value = ["table1", "table2"]
-        database._workload_tables_status = MagicMock()  # type: ignore
-        database._workload_tables_status.return_value = fake_status_of_workload
-        loaded_workloads = database.get_workload_tables_status()
-
-        database.get_loaded_tables_in_database.assert_called_once()
-        database._workload_tables_status.assert_called_once_with(["table1", "table2"])
-        assert loaded_workloads == fake_status_of_workload
