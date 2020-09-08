@@ -3,7 +3,6 @@ from hyrisecockpit.database_manager.manager import DatabaseManager
 from system_tests.settings import (
     DB_MANAGER_HOST,
     DB_MANAGER_PORT,
-    DEFAULT_TABLES,
     STORAGE_HOST,
     STORAGE_PASSWORD,
     STORAGE_PORT,
@@ -21,7 +20,6 @@ def main() -> None:
             DB_MANAGER_PORT,
             WORKLOAD_SUB_HOST,
             WORKLOAD_PUBSUB_PORT,
-            DEFAULT_TABLES,
             STORAGE_HOST,
             STORAGE_PASSWORD,
             STORAGE_PORT,
