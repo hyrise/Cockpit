@@ -7,7 +7,8 @@ from psycopg2 import DatabaseError, Error, InterfaceError
 
 from hyrisecockpit.drivers.connector import Connector
 
-from .background_scheduler import BackgroundJobManager
+from .asynchronous_job_handler import AsynchronousJobHandler
+from .continuous_job_handler import ContinuousJobHandler
 from .cursor import ConnectionFactory, StorageConnectionFactory
 from .interfaces import SqlResultInterface
 from .worker_pool import WorkerPool
@@ -69,17 +70,18 @@ class Database(object):
             self._database_blocked,
             self._workload_drivers,
         )
-        self._background_scheduler: BackgroundJobManager = BackgroundJobManager(
-            self._id,
-            self._database_blocked,
+        self._continuous_job_handler = ContinuousJobHandler(
             self._connection_factory,
             self._hyrise_active,
             self._worker_pool,
             self._storage_connection_factory,
-            self._workload_drivers,
+            self._database_blocked,
+        )
+        self._asynchronous_job_handler = AsynchronousJobHandler(
+            self._database_blocked, self._connection_factory, self._workload_drivers,
         )
         self._initialize_influx()
-        self._background_scheduler.start()
+        self._continuous_job_handler.start()
 
     def _initialize_influx(self) -> None:
         """Initialize Influx database."""
@@ -178,7 +180,7 @@ class Database(object):
         elif self._worker_pool.get_status() != "closed":
             return False
         else:
-            return self._background_scheduler.load_tables(
+            return self._asynchronous_job_handler.load_tables(
                 workload_type, float(scale_factor)
             )
 
@@ -195,7 +197,7 @@ class Database(object):
         elif self._worker_pool.get_status() != "closed":
             return False
         else:
-            return self._background_scheduler.delete_tables(
+            return self._asynchronous_job_handler.delete_tables(
                 workload_type, float(scale_factor)
             )
 
@@ -204,11 +206,11 @@ class Database(object):
         active_plugins = self._get_plugins()
         if active_plugins is None or plugin in active_plugins:
             return False
-        return self._background_scheduler.activate_plugin(plugin)
+        return self._asynchronous_job_handler.activate_plugin(plugin)
 
     def deactivate_plugin(self, plugin: str) -> bool:
         """Deactivate plugin."""
-        return self._background_scheduler.deactivate_plugin(plugin)
+        return self._asynchronous_job_handler.deactivate_plugin(plugin)
 
     def get_database_blocked(self) -> bool:
         """Return tables loading flag."""
@@ -367,4 +369,4 @@ class Database(object):
     def close(self) -> None:
         """Close the database."""
         self._worker_pool.terminate()
-        self._background_scheduler.close()
+        self._continuous_job_handler.close()
