@@ -20,7 +20,14 @@ Plugins = Optional[Dict[str, List[PluginSetting]]]
 
 
 class Database(object):
-    """Represents database."""
+    """Represents database.
+
+    The database class is a representation of a registered Hyrise instance.
+    All the communication with the Hyrise is managed by this class and its API.
+    A worker pool object that manages the queue and task/queue workers to put the
+    Hyrise under pressure is part of this class. This class also initializes the
+    influx database for the Hyrise instance.
+    """
 
     def __init__(
         self,
@@ -32,16 +39,40 @@ class Database(object):
         dbname: str,
         number_workers: int,
         workload_publisher_url: str,
-        default_tables: str,
         storage_host: str,
         storage_password: str,
         storage_port: str,
         storage_user: str,
     ) -> None:
-        """Initialize database object."""
+        """Initialize database object.
+
+        Args:
+            id: A name representation of the Hyrise instance.
+            user: The user that connects to the Hyrise instance.
+            password: The password needed to connects to the Hyrise instance.
+            host: The address of the host machine where the Hyrise instance is running.
+            port: The port on which the Hyrise instance is running.
+            dbname: The database name of the Hyrise instance.
+            number_workers: Number of task workers to put the Hyrise instance under
+                pressure. Every worker is running in its own process.
+            workload_publisher_url: URL which is publishing the workload to the workers.
+                This URL is used by the queue worker to connect to the workload
+                generator via zeromq.
+            storage_host: Address in which the influx database is running.
+            storage_password: Password to connect to the influx database.
+            storage_port: Port of the influx database.
+            storage_user: User of the influx database.
+
+        Note:
+            The attributes user, password, host, port and dbname are the same attributes
+            that you would use to create a connection to the Hyrise instance with psql.
+
+        Attributes:
+            _connection_factory: This factory builds a Hyrise connection.
+            _storage_connection_factory: This factory builds a influx connection.
+        """
         self._id = id
         self.number_workers: int = number_workers
-        self._default_tables: str = default_tables
 
         self.connection_information: Dict[str, str] = {
             "host": host,
@@ -84,7 +115,15 @@ class Database(object):
         self._continuous_job_handler.start()
 
     def _initialize_influx(self) -> None:
-        """Initialize Influx database."""
+        """Initialize Influx database.
+
+        We drop the database inside influx that has the same name like the
+        database id (Hyrise). We do that to remove all the data from previous
+        runs. Than we create a new database inside influx with the database id
+        (Hyrise). After that we create continuous query that the influx is running
+        every x seconds. For example it will so automatically calculate the throughput
+        per second.
+        """
         with self._storage_connection_factory.create_cursor() as cursor:
             cursor.drop_database()
             cursor.create_database()
@@ -164,11 +203,23 @@ class Database(object):
             )
 
     def get_queue_length(self) -> int:
-        """Return queue length."""
+        """Return queue length.
+
+        We return the number of task that still need to be send to the
+        Hyrise instance.
+        """
         return self._worker_pool.get_queue_length()
 
     def load_data(self, workload: Dict) -> bool:
-        """Load pre-generated tables."""
+        """Load pre-generated tables.
+
+        First we check if the workload and scale factor is valid.
+        For that workload need to have an equivalent driver and the
+        driver needs to support the scale factor. Moreover the worker pool
+        needs to be closed. If one of this requirements is not met the function
+        will return false. Otherwise the tables will be loaded via the
+        asynchronous job handler.
+        """
         workload_type = workload["workload_type"]
         scale_factor = workload["scale_factor"]
         if workload_type not in self._workload_drivers:
@@ -185,7 +236,15 @@ class Database(object):
             )
 
     def delete_data(self, workload: Dict) -> bool:
-        """Delete tables."""
+        """Delete tables.
+
+        First we check if the workload and scale factor is valid.
+        For that workload need to have an equivalent driver and the
+        driver needs to support the scale factor. Moreover the worker pool
+        needs to be closed. If one of this requirements is not met the function
+        will return false. Otherwise the tables will be deleted via the
+        asynchronous job handler.
+        """
         workload_type = workload["workload_type"]
         scale_factor = workload["scale_factor"]
         if workload_type not in self._workload_drivers:
@@ -213,15 +272,24 @@ class Database(object):
         return self._asynchronous_job_handler.deactivate_plugin(plugin)
 
     def get_database_blocked(self) -> bool:
-        """Return tables loading flag."""
+        """Return database blocked flag.
+
+        The database is blocked if we load/delete tables.
+        """
         return bool(self._database_blocked.value)
 
     def get_worker_pool_status(self) -> str:
-        """Return worker pool status."""
+        """Return worker pool status.
+
+        A worker poll can have the status running and closed.
+        """
         return self._worker_pool.get_status()
 
     def get_hyrise_active(self) -> bool:
-        """Return status of hyrise."""
+        """Return status of Hyrise.
+
+        This flag defines if the Hyrise instance is responsive or not.
+        """
         return bool(self._hyrise_active.value)
 
     def get_loaded_tables_in_database(self) -> List[Dict[str, str]]:

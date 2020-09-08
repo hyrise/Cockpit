@@ -22,7 +22,12 @@ from .worker_pool import WorkerPool
 
 
 class ContinuousJobHandler:
-    """Continuous Job Handler."""
+    """Continuous Job Handler.
+
+    This class manage all jobs that are executed continuously in the background.
+    The jobs are executed via a background scheduler
+    (https://apscheduler.readthedocs.io/en/stable/).
+    """
 
     def __init__(
         self,
@@ -32,7 +37,22 @@ class ContinuousJobHandler:
         storage_connection_factory: StorageConnectionFactory,
         database_blocked: Value,
     ):
-        """Initialize continuous Job Handler."""
+        """Initialize continuous Job Handler.
+
+        Args:
+            connection_factory: An object to create a connection to the Hyrise
+                database. All connection relevant information (port, host) is
+                saved in this object.
+            hyrise_active: Flag stored in a shared memory map. This flag
+                stores if the Hyrise instance is responsive or not.
+            worker_pool: An object that manages the queue and task/queue workers. Its
+                api is used to get the queue length.
+            storage_connection_factory: An object to create a connection to the Influx
+                database. All connection relevant information (port, host) is
+                saved in this object.
+            database_blocked: Flag stored in a shared memory map. This flag
+                stores if the Hyrise instance is blocked or not.
+        """
         self._connection_factory = connection_factory
         self._hyrise_active = hyrise_active
         self._worker_pool = worker_pool
@@ -49,7 +69,11 @@ class ContinuousJobHandler:
         self._init_jobs()
 
     def _init_jobs(self) -> None:
-        """Initialize basic background jobs."""
+        """Initialize basic background jobs.
+
+        This function registers all continuous jobs in the background
+        scheduler.
+        """
         self._ping_hyrise_job = self._scheduler.add_job(
             func=ping_hyrise,
             trigger="interval",
@@ -140,7 +164,11 @@ class ContinuousJobHandler:
         self._scheduler.start()
 
     def close(self) -> None:
-        """Close background scheduler."""
+        """Close background scheduler.
+
+        Here we remove all jobs from the background scheduler and
+        shutting it down.
+        """
         self._update_workload_statement_information_job.remove()
         self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()

@@ -18,7 +18,6 @@ database_port: str = "666"
 database_name: str = "MongoDB"
 number_workers: int = 42
 workload_publisher_url: str = "lothar matthäus"
-default_tables: str = "Watt_ihr_Volt"
 storage_host: str = "xulfni"
 storage_password: str = "1234"
 storage_port: str = "42"
@@ -55,7 +54,6 @@ class TestDatabase(object):
             database_name,
             number_workers,
             workload_publisher_url,
-            default_tables,
             storage_host,
             storage_password,
             storage_port,
@@ -89,7 +87,6 @@ class TestDatabase(object):
             database_name,
             number_workers,
             workload_publisher_url,
-            default_tables,
             storage_host,
             storage_password,
             storage_port,
@@ -127,7 +124,6 @@ class TestDatabase(object):
 
         assert database._id == database_id
         assert database.number_workers == number_workers
-        assert database._default_tables == default_tables
         assert type(database._database_blocked) is ValueType
         assert type(database._hyrise_active) is ValueType
         assert database._hyrise_active.value

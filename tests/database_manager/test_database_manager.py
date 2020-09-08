@@ -10,7 +10,6 @@ from hyrisecockpit.response import get_error_response, get_response
 
 DB_MANAGER_LISTENING = "listening_host"
 DB_MANAGER_PORT = "listening_port"
-DEFAULT_TABLES = "default_tables"
 STORAGE_HOST = "storage_host"
 STORAGE_PASSWORD = "storage_password"
 STORAGE_PORT = "storage_port"
@@ -84,7 +83,6 @@ class TestDatabaseManager:
             DB_MANAGER_PORT,
             WORKLOAD_SUB_HOST,
             WORKLOAD_PUBSUB_PORT,
-            DEFAULT_TABLES,
             STORAGE_HOST,
             STORAGE_PASSWORD,
             STORAGE_PORT,
@@ -119,7 +117,6 @@ class TestDatabaseManager:
         assert isinstance(database_manager, DatabaseManager)
         assert database_manager._workload_sub_host == WORKLOAD_SUB_HOST
         assert database_manager._workload_pubsub_port == WORKLOAD_PUBSUB_PORT
-        assert database_manager._default_tables == DEFAULT_TABLES
         assert database_manager._storage_host == STORAGE_HOST
         assert database_manager._storage_port == STORAGE_PORT
         assert database_manager._storage_user == STORAGE_USER
@@ -243,7 +240,6 @@ class TestDatabaseManager:
             "database_name",
             8,
             "tcp://{:s}:{:s}".format(WORKLOAD_SUB_HOST, WORKLOAD_PUBSUB_PORT,),
-            DEFAULT_TABLES,
             STORAGE_HOST,
             STORAGE_PASSWORD,
             STORAGE_PORT,
