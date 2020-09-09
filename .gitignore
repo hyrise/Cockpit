@@ -116,3 +116,10 @@ cached_tables/
 # Mac
 .DS_STORE
 influxdb/
+
+# System tests
+
+system_tests/backend_docker_log.txt
+system_tests/frontend_docker_log.txt
+system_tests/influxdb_docker_log.txt
+system_tests/hyrise_1_docker_log.txt

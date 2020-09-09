@@ -25,6 +25,15 @@ def start_container():
     run(["docker-compose", "up", "-d", "backend", "influxdb", "hyrise_1"])  # nosec
 
 
+def log_container_output():
+    """Save container output to files."""
+    for component in ["backend", "frontend", "influxdb", "hyrise_1"]:
+        run(  # nosec
+            f"docker-compose logs --no-color {component} > {component}_docker_log.txt",
+            shell=True,
+        )
+
+
 def shutdown_container():
     """Stop and shutdown docker container."""
     run(["docker-compose", "down"])  # nosec
@@ -48,4 +57,5 @@ class TestDocker(TestSystem):
     @classmethod
     def teardown_class(cls):
         """Run after every test."""
+        log_container_output()
         shutdown_container()
