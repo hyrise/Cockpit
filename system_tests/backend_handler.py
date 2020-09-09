@@ -7,7 +7,7 @@ from system_tests.settings import REQUEST_TIMEOUT
 REQUEST_TIMEOUT = int(REQUEST_TIMEOUT)
 
 
-class CockpitBackend:
+class BackendHandler:
     """Wrapper for backend."""
 
     def __init__(self, backend_host, backend_port):
