@@ -23,6 +23,7 @@ pipenv-to-requirements = "*"
 flake8-eradicate = "*"
 flake8-comprehensions = "*"
 sqlparse = "*"
+pytest-env = "*"
 
 [packages]
 pandas = "*"
