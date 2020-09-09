@@ -9,7 +9,7 @@ STORAGE_PORT: str = getenv("STORAGE_PORT", "8086")
 STORAGE_USER: str = getenv("STORAGE_USER", "root")
 STORAGE_PASSWORD: str = getenv("STORAGE_PASSWORD", "root")
 
-DATABASE_HOST: str = getenv("DATABASE_HOST", "hyrise")
+DATABASE_HOST: str = getenv("DATABASE_HOST", "localhost")
 DATABASE_PORT: str = getenv("DATABASE_PORT", "5432")
 
 SETUP_TIMEOUT: int = getenv("SETUP_TIMEOUT", 10)  # type: ignore
