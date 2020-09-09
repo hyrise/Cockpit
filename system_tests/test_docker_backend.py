@@ -27,7 +27,7 @@ def start_container():
 
 def log_container_output():
     """Save container output to files."""
-    for component in ["backend", "frontend", "influxdb", "hyrise_1"]:
+    for component in ["backend", "influxdb", "hyrise_1"]:
         run(  # nosec
             f"docker-compose logs --no-color {component} > {component}_docker_log.txt",
             shell=True,

@@ -144,7 +144,6 @@ class TestSystem:
     def test_returns_historical_metric_values_during_workload_execution(self):
         """Test responses of the historical metrics."""
         sleep(DEFAULT_TIME_OUT)  # wait for query executions
-        # "metric/queue_length", "queue_length"
         metrics = ["metric/throughput", "metric/latency", "metric/queue_length"]
         attributes = ["throughput", "latency", "queue_length"]
         for metric, attribute in zip(metrics, attributes):
