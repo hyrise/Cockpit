@@ -21,9 +21,11 @@ SETUP_TIMEOUT = int(SETUP_TIMEOUT)
 TestSystem.__test__ = False  # type: ignore
 
 
-def start_backend():
+def start_backend(output_file, error_file):
     """Start cockpit natively."""
-    return Popen(["cockpit", "--backend"])  # nosec
+    return Popen(
+        ["cockpit", "--backend"], stderr=error_file, stdout=output_file
+    )  # nosec
 
 
 def shutdown_backend(subprocess):
@@ -40,7 +42,9 @@ class TestNative(TestSystem):
     @classmethod
     def setup_class(cls):
         """Start backend."""
-        cls.subprocess = start_backend()
+        cls.error_file = open("cockpit_stderr.txt", "w")
+        cls.output_file = open("cockpit_stdout.txt", "w")
+        cls.subprocess = start_backend(cls.error_file, cls.output_file)
         sleep(SETUP_TIMEOUT)
         cls.influx_client = InfluxDBClient(
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD
@@ -51,3 +55,5 @@ class TestNative(TestSystem):
     def teardown_class(cls):
         """Run after every test."""
         shutdown_backend(cls.subprocess)
+        cls.error_file.close()
+        cls.output_file.close()
