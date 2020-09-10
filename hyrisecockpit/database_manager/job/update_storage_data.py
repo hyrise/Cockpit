@@ -12,9 +12,7 @@ from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_fra
 
 def _create_storage_data_dataframe(meta_segments: DataFrame) -> DataFrame:
     meta_segments.set_index(
-        ["table_name", "column_name", "chunk_id"],
-        inplace=True,
-        verify_integrity=True,
+        ["table_name", "column_name", "chunk_id"], inplace=True, verify_integrity=True,
     )
     size: DataFrame = DataFrame(
         meta_segments["estimated_size_in_bytes"]

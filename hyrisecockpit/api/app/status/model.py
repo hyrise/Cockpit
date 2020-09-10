@@ -44,9 +44,7 @@ class WorkloadTablesStatus:
     """Model of workload tables status."""
 
     def __init__(
-        self,
-        id: str,
-        workload_tables_status: List[TablesStatus],
+        self, id: str, workload_tables_status: List[TablesStatus],
     ):
         """Initialize a Workload tables model."""
         self.id: str = id

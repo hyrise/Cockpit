@@ -83,10 +83,7 @@ class WorkloadService:
         Returns None if a Workload with the given ID doesn't exist.
         """
         response = cls._send_message_to_gen(
-            Request(
-                header=Header(message="update workload"),
-                body=dict(interface),
-            ),
+            Request(header=Header(message="update workload"), body=dict(interface),),
         )
         return (
             None

@@ -169,8 +169,7 @@ class FailedTasks(Resource):
                 "id": database,
                 "failed_queries": list(
                     storage_connection.query(
-                        "SELECT * FROM failed_queries LIMIT 100;",
-                        database=database,
+                        "SELECT * FROM failed_queries LIMIT 100;", database=database,
                     )["failed_queries", None]
                 ),
             }

@@ -20,8 +20,7 @@ class TestUpdateStorageDataJob:
     @patch("hyrisecockpit.database_manager.job.update_storage_data.sql_to_data_frame")
     @patch("hyrisecockpit.database_manager.job.update_storage_data.time_ns", lambda: 42)
     def test_successfully_logs_storage_data(
-        self,
-        mock_sql_to_data_frame: MagicMock,
+        self, mock_sql_to_data_frame: MagicMock,
     ) -> None:
         """Test successfully logs storage data."""
         mock_cursor = MagicMock()
@@ -109,10 +108,7 @@ class TestUpdateStorageDataJob:
 
     @patch("hyrisecockpit.database_manager.job.update_storage_data.sql_to_data_frame")
     @patch("hyrisecockpit.database_manager.job.update_storage_data.time_ns", lambda: 42)
-    def test_logs_empty_storage_data(
-        self,
-        mock_sql_to_data_frame: MagicMock,
-    ) -> None:
+    def test_logs_empty_storage_data(self, mock_sql_to_data_frame: MagicMock,) -> None:
         """Test doesn't log storage data when it's empty."""
         mock_cursor = MagicMock()
         mock_storage_connection_factory = MagicMock()

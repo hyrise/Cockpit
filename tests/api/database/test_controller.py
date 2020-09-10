@@ -195,9 +195,7 @@ class TestController:
         """A database controller routes post worker  correctly."""
         mocked_database_service.start_worker_pool.return_value = 200
         response = client.post(
-            worker_url,
-            follow_redirects=True,
-            content_type="application/json",
+            worker_url, follow_redirects=True, content_type="application/json",
         )
         mocked_database_service.start_worker_pool.assert_called_once()
         assert 200 == response.status_code
@@ -209,9 +207,7 @@ class TestController:
         """A database controller routes post worker  correctly."""
         mocked_database_service.close_worker_pool.return_value = 200
         response = client.delete(
-            worker_url,
-            follow_redirects=True,
-            content_type="application/json",
+            worker_url, follow_redirects=True, content_type="application/json",
         )
         mocked_database_service.close_worker_pool.assert_called_once()
         assert 200 == response.status_code

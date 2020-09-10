@@ -54,9 +54,7 @@ class BackgroundJobManager(object):
             "value": None,
         }
         self._asynchronous_job_handler = AsynchronousJobHandler(
-            self._database_blocked,
-            self._connection_factory,
-            self._workload_drivers,
+            self._database_blocked, self._connection_factory, self._workload_drivers,
         )
 
         self._init_jobs()

@@ -18,9 +18,6 @@ jobs:
     - name: Install pipenv virtual environment with dev dependencies
       run: |
         pipenv sync --dev
-    - name: check isort python-version
-      run: |
-        pipenv run isort --verbose
     - name: Run all pre-commit hooks
       uses: pre-commit/action@v2.0.0
     - name: Run all python tests

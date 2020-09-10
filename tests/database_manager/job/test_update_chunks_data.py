@@ -59,9 +59,7 @@ class TestUpdateChunksData:
 
         assert fake_chunks_dict == expected_dict
 
-    @patch(
-        "hyrisecockpit.database_manager.job.update_chunks_data.sql_to_data_frame",
-    )
+    @patch("hyrisecockpit.database_manager.job.update_chunks_data.sql_to_data_frame",)
     @patch(
         "hyrisecockpit.database_manager.job.update_chunks_data._create_chunks_dictionary",
     )
@@ -103,18 +101,14 @@ class TestUpdateChunksData:
             "chunks_data", {"chunks_data_meta_information": "{}"}, 42
         )
 
-    @patch(
-        "hyrisecockpit.database_manager.job.update_chunks_data.sql_to_data_frame",
-    )
+    @patch("hyrisecockpit.database_manager.job.update_chunks_data.sql_to_data_frame",)
     @patch(
         "hyrisecockpit.database_manager.job.update_chunks_data._create_chunks_dictionary",
     )
     @patch(
         "hyrisecockpit.database_manager.job.update_chunks_data._calculate_chunks_difference",
     )
-    @patch(
-        "hyrisecockpit.database_manager.job.update_chunks_data.deepcopy",
-    )
+    @patch("hyrisecockpit.database_manager.job.update_chunks_data.deepcopy",)
     @patch("hyrisecockpit.database_manager.job.update_chunks_data.time_ns", lambda: 42)
     def test_logs_updated_chunks_data_with_meta_chunks(
         self,

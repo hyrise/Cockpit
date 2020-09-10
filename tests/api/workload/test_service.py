@@ -58,8 +58,7 @@ class TestWorkloadService:
         ).dump(result)
 
     def test_gets_the_correct_workload(
-        self,
-        service: WorkloadService,
+        self, service: WorkloadService,
     ):
         """A Workload service gets all workloads."""
         workoad = WorkloadInterface(
@@ -110,15 +109,13 @@ class TestWorkloadService:
 
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
-                header=Header(message="stop workload"),
-                body={"workload_type": "tpch"},
+                header=Header(message="stop workload"), body={"workload_type": "tpch"},
             )
         )
         assert "tpch" == result
 
     def test_deletes_no_workload_if_it_cannot_be_found(
-        self,
-        service: WorkloadService,
+        self, service: WorkloadService,
     ):
         """A Workload service gets all workloads."""
         service._send_message_to_gen.return_value = get_response(404)  # type: ignore
@@ -127,15 +124,13 @@ class TestWorkloadService:
 
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
             Request(
-                header=Header(message="stop workload"),
-                body={"workload_type": "tpch"},
+                header=Header(message="stop workload"), body={"workload_type": "tpch"},
             )
         )
         assert result is None
 
     def test_updates_the_correct_workload(
-        self,
-        service: WorkloadService,
+        self, service: WorkloadService,
     ):
         """A Workload service gets all workloads."""
         base_workload = BaseWorkloadInterface(
@@ -149,10 +144,7 @@ class TestWorkloadService:
         service._send_message_to_gen.return_value = response  # type: ignore
         result = service.update_by_id(base_workload)
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
-            Request(
-                header=Header(message="update workload"),
-                body=dict(base_workload),
-            )
+            Request(header=Header(message="update workload"), body=dict(base_workload),)
         )
         assert base_workload == DetailedWorkloadSchema().dump(result)
 
@@ -167,9 +159,6 @@ class TestWorkloadService:
         service._send_message_to_gen.return_value = get_response(404)  # type: ignore
         result = service.update_by_id(base_workload)
         service._send_message_to_gen.assert_called_once_with(  # type: ignore
-            Request(
-                header=Header(message="update workload"),
-                body=dict(base_workload),
-            )
+            Request(header=Header(message="update workload"), body=dict(base_workload),)
         )
         assert result is None

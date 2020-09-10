@@ -30,8 +30,7 @@ class TestGetLoadedTablesJob:
         assert result == expected
 
     @mark.parametrize(
-        "exceptions",
-        [DatabaseError(), InterfaceError()],
+        "exceptions", [DatabaseError(), InterfaceError()],
     )
     def test_get_existing_tables_with_exception_from_database(self, exceptions) -> None:
         """Test gets existing tables with exception from database."""
@@ -50,8 +49,7 @@ class TestGetLoadedTablesJob:
         fake_tables = ["table_name_one", "table_name_two"]
 
         result: List[str] = get_loaded_tables(
-            fake_tables,
-            mock_connection_factory,
+            fake_tables, mock_connection_factory,
         )
 
         expected: List = []

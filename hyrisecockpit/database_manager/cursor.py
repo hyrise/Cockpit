@@ -110,11 +110,7 @@ class HyriseCursor:
         """Validate whether a connection can be established."""
         try:
             connect(
-                user=user,
-                password=password,
-                host=host,
-                port=port,
-                dbname=dbname,
+                user=user, password=password, host=host, port=port, dbname=dbname,
             ).close()
         except Error:
             return False
@@ -187,10 +183,7 @@ class StorageCursor:
         self._connection.drop_database(self._database_id)
 
     def create_continuous_query(
-        self,
-        query_name: str,
-        query: str,
-        resample_options: Optional[str] = None,
+        self, query_name: str, query: str, resample_options: Optional[str] = None,
     ) -> None:
         """Create continuous query."""
         self._connection.create_continuous_query(
@@ -254,12 +247,7 @@ class StorageConnectionFactory:
     """Factory for creating storage cursors."""
 
     def __init__(
-        self,
-        user: str,
-        password: str,
-        host: str,
-        port: str,
-        database_id: str,
+        self, user: str, password: str, host: str, port: str, database_id: str,
     ):
         """Initialize the connection attributes."""
         self._host: str = host

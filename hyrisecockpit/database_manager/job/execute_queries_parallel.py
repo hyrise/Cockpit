@@ -37,10 +37,7 @@ def _execute_table_query(
 def execute_queries_parallel(queries, connection_factory: ConnectionFactory) -> None:
     """Start processes for query execution."""
     threads: List[Thread] = [
-        Thread(
-            target=_execute_table_query,
-            args=(query, connection_factory),
-        )
+        Thread(target=_execute_table_query, args=(query, connection_factory),)
         for query in queries
     ]
     for thread in threads:

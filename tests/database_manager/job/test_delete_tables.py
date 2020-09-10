@@ -45,6 +45,5 @@ class TestDeleteTablesJob:
             ["customer_1", "warehouse_1"], mock_connection_factory
         )
         mock_execute_queries_parallel.assert_called_once_with(
-            ["delete customer_1"],
-            mock_connection_factory,
+            ["delete customer_1"], mock_connection_factory,
         )

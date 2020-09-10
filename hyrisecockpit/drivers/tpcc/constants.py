@@ -140,9 +140,5 @@ def enum(*sequential, **named):  # noqa
 
 
 TransactionTypes = enum(
-    "DELIVERY",
-    "NEW_ORDER",
-    "ORDER_STATUS",
-    "PAYMENT",
-    "STOCK_LEVEL",
+    "DELIVERY", "NEW_ORDER", "ORDER_STATUS", "PAYMENT", "STOCK_LEVEL",
 )

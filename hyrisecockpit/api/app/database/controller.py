@@ -29,14 +29,7 @@ class Databases(Resource):
 
     @responds(
         schema=DetailedDatabaseSchema(
-            many=True,
-            only=(
-                "id",
-                "host",
-                "port",
-                "number_workers",
-                "dbname",
-            ),
+            many=True, only=("id", "host", "port", "number_workers", "dbname",),
         ),
         api=api,
     )

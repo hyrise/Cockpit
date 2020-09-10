@@ -102,10 +102,7 @@ class LatencyEntrySchema(Schema):
         example=1585762457000000000,
     )
     latency = Float(
-        title="Latency",
-        description="Latency value",
-        required=True,
-        example=273.9,
+        title="Latency", description="Latency value", required=True, example=273.9,
     )
 
     @post_load

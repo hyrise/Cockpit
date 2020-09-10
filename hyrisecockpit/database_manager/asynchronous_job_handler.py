@@ -107,11 +107,7 @@ class AsynchronousJobHandler:
         """
         if not self._database_blocked.value:
             job_thread = Thread(
-                target=activate_plugin_job,
-                args=(
-                    self._connection_factory,
-                    plugin,
-                ),
+                target=activate_plugin_job, args=(self._connection_factory, plugin,),
             )
             job_thread.start()
             return True
@@ -130,11 +126,7 @@ class AsynchronousJobHandler:
         """
         if not self._database_blocked.value:
             job_thread = Thread(
-                target=deactivate_plugin_job,
-                args=(
-                    self._connection_factory,
-                    plugin,
-                ),
+                target=deactivate_plugin_job, args=(self._connection_factory, plugin,),
             )
             job_thread.start()
             return True

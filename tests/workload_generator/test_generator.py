@@ -35,28 +35,20 @@ def workload_pub_port() -> str:
 
 @fixture
 @patch.object(
-    WorkloadGenerator,
-    "_init_server",
-    lambda *args: None,
+    WorkloadGenerator, "_init_server", lambda *args: None,
 )
 @patch.object(
-    WorkloadGenerator,
-    "_init_scheduler",
-    lambda *args: None,
+    WorkloadGenerator, "_init_scheduler", lambda *args: None,
 )
 @patch(
-    "hyrisecockpit.workload_generator.generator.Server",
-    lambda *args: None,
+    "hyrisecockpit.workload_generator.generator.Server", lambda *args: None,
 )
 def generator(
     generator_listening, generator_port, workload_listening, workload_pub_port
 ) -> WorkloadGenerator:
     """Instance of WorkloadGenerator without binding of sockets."""
     return WorkloadGenerator(
-        generator_listening,
-        generator_port,
-        workload_listening,
-        workload_pub_port,
+        generator_listening, generator_port, workload_listening, workload_pub_port,
     )
 
 
@@ -204,8 +196,7 @@ class TestWorkloadGenerator:
         assert response["header"] == get_response(404)["header"]
 
     @patch(
-        "hyrisecockpit.workload_generator.generator.shuffle",
-        lambda x: x,
+        "hyrisecockpit.workload_generator.generator.shuffle", lambda x: x,
     )
     def test_get_workload_queries(self, generator: WorkloadGenerator):
         """Test get workload queries."""

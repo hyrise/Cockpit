@@ -126,19 +126,11 @@ class TestDefaultDriver:
         assert load_table_queies == {
             "table1_benchmark_0_5": (
                 "DROP TABLE %s_%s_%s;",
-                (
-                    ("table1", "as_is"),
-                    ("benchmark", "as_is"),
-                    ("0_5", "as_is"),
-                ),
+                (("table1", "as_is"), ("benchmark", "as_is"), ("0_5", "as_is"),),
             ),
             "table2_benchmark_0_5": (
                 "DROP TABLE %s_%s_%s;",
-                (
-                    ("table2", "as_is"),
-                    ("benchmark", "as_is"),
-                    ("0_5", "as_is"),
-                ),
+                (("table2", "as_is"), ("benchmark", "as_is"), ("0_5", "as_is"),),
             ),
         }
 

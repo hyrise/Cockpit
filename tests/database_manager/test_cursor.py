@@ -137,16 +137,13 @@ class TestCursor:
         )
 
     @mark.parametrize(
-        "measurement",
-        ["storage_something", "some_chunks"],
+        "measurement", ["storage_something", "some_chunks"],
     )
     @mark.parametrize(
-        "fields",
-        [{"field1": "some_value"}, {"field1": "some_value", "field2": 9000}],
+        "fields", [{"field1": "some_value"}, {"field1": "some_value", "field2": 9000}],
     )
     @mark.parametrize(
-        "time_stamp",
-        [123, 456789],
+        "time_stamp", [123, 456789],
     )
     def test_logs_meta_information(
         self, measurement: str, fields: Dict[str, Any], time_stamp: int
@@ -263,23 +260,15 @@ class TestCursor:
         """Test fetches column names (in case you're not sure)."""
         hyrise_cursor._cur = MagicMock()
         hyrise_cursor._cur.description = [
-            (
-                "hallo",
-                "encoding",
-            ),
-            (
-                "world",
-                "encoding",
-            ),
+            ("hallo", "encoding",),
+            ("world", "encoding",),
         ]
 
         results: List[str] = hyrise_cursor.fetch_column_names()
 
         assert results == ["hallo", "world"]
 
-    @patch(
-        "hyrisecockpit.database_manager.cursor.read_sql_query_pandas",
-    )
+    @patch("hyrisecockpit.database_manager.cursor.read_sql_query_pandas",)
     def test_reads_sql_query_pandas(
         self, mocked_read_sql_query_pandas, hyrise_cursor
     ) -> None:
@@ -316,9 +305,7 @@ class TestCursor:
         assert factory._port == "port"
         assert factory._dbname == "dbname"
 
-    @patch(
-        "hyrisecockpit.database_manager.cursor.HyriseCursor",
-    )
+    @patch("hyrisecockpit.database_manager.cursor.HyriseCursor",)
     def test_create_cursor(self, mock_hyrise_cursor_constructor: MagicMock) -> None:
         """Test creation of HyriseCursor."""
         fake_user: str = "user"
@@ -339,9 +326,7 @@ class TestCursor:
             "host", "port", "user", "password", "dbname", True
         )
 
-    @patch(
-        "hyrisecockpit.database_manager.cursor.HyriseCursor",
-    )
+    @patch("hyrisecockpit.database_manager.cursor.HyriseCursor",)
     def test_create_cursor_with_autocommit_off(
         self, mock_hyrise_cursor_constructor: MagicMock
     ) -> None:
@@ -382,9 +367,7 @@ class TestCursor:
         assert factory._port == "port"
         assert factory._database_id == "database_id"
 
-    @patch(
-        "hyrisecockpit.database_manager.cursor.StorageCursor",
-    )
+    @patch("hyrisecockpit.database_manager.cursor.StorageCursor",)
     def test_create_storage_cursor(
         self, mock_storage_cursor_constructor: MagicMock
     ) -> None:

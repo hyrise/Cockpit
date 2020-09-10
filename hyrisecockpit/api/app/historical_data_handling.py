@@ -87,13 +87,7 @@ def get_historical_metric(
     result: List = []
     for database in _get_active_databases():
         metric_points: List[Dict[str, Union[int, float]]] = _get_historical_data(
-            startts,
-            endts,
-            precision_ns,
-            table_name,
-            metrics,
-            database,
-            client,
+            startts, endts, precision_ns, table_name, metrics, database, client,
         )
         metric: List[Dict[str, float]] = _fill_missing_points(
             startts, endts, precision_ns, table_name, metrics, metric_points

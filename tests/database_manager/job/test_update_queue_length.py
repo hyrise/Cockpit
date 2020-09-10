@@ -20,8 +20,7 @@ class TestUpdateQueueLength:
         mock_worker_pool.get_queue_length.return_value = 100
 
         update_queue_length(
-            mock_worker_pool,
-            mock_storage_connection_factory,
+            mock_worker_pool, mock_storage_connection_factory,
         )
 
         mock_cursor.log_meta_information.assert_called_once_with(
