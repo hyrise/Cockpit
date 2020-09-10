@@ -19,8 +19,7 @@ jobs:
       run: |
         pipenv sync --dev
     - name: Run all pre-commit hooks
-      run: |
-        pipenv run pre-commit run --all-files
+      uses: pre-commit/action@v2.0.0
     - name: Run all python tests
       run: |
         pipenv run pytest tests/ --cov=hyrisecockpit --cov-fail-under=75
