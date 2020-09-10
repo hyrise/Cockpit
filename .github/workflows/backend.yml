@@ -11,8 +11,6 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.8.5
-    - name: Run all pre-commit hooks
-      uses: pre-commit/action@v2.0.0
     - name: Install libpq PostgreSQL client
       run: sudo apt-get -yqq install libpq-dev
     - name: Install pipenv
@@ -20,6 +18,8 @@ jobs:
     - name: Install pipenv virtual environment with dev dependencies
       run: |
         pipenv sync --dev
+    - name: Run all pre-commit hooks
+      uses: pre-commit/action@v2.0.0
     - name: Run all python tests
       run: |
         pipenv run pytest tests/ --cov=hyrisecockpit --cov-fail-under=75
