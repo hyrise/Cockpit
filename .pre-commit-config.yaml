@@ -31,12 +31,6 @@ repos:
       args: [--autofix, --indent=4, --no-sort-keys]
   - repo: local
     hooks:
-    - id: isort
-      name: Running isort on python files
-      description: 'isort is a Python utility / library to sort imports alphabetically, and automatically separated into sections.'
-      language: system
-      entry: pipenv run isort
-      types: [python]
     - id: black
       name: Running black on python files
       description: 'Black: The uncompromising Python code formatter'
