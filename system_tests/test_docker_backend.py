@@ -1,6 +1,11 @@
-"""Module to test backend running in docker.
+"""Module to test back-end running in docker.
 
-isort:skip_file
+This test will start the following components in docker:
+1. back-end
+2. influxdb
+3. hyrise_1
+After the containers are running the test will execute the user scenario
+defined in test_backend.
 """
 from subprocess import run  # nosec
 from time import sleep
@@ -23,13 +28,24 @@ TestSystem.__test__ = False  # type: ignore
 
 
 def start_container():
-    """Build and start docker container."""
+    """Build and start docker container.
+
+    To make sure that the changes in the back-end code are taking into account,
+    the back-end docker container is always build new.
+
+    Note:
+        If the Hyrise image doesn't exist it will be pulled from docker Hub.
+    """
     run(["docker-compose", "build", "--no-cache", "backend"])  # nosec
     run(["docker-compose", "up", "-d", "backend", "influxdb", "hyrise_1"])  # nosec
 
 
 def log_container_output():
-    """Save container output to files."""
+    """Save container output to files.
+
+    At the end of the system test we save the logs of the container into files.
+    This can come in handy for debugging purposes.
+    """
     for component in ["backend", "influxdb", "hyrise_1"]:
         run(  # nosec
             f"docker-compose logs --no-color {component} > {component}_docker_log.txt",
@@ -43,13 +59,26 @@ def shutdown_container():
 
 
 class TestDocker(TestSystem):
-    """Test for the backend running in docker."""
+    """Back-end system tests for docker setup.
 
-    __test__ = True
+    This class inherits from the TestSystem class. The TestSystem call defines
+    the user scenario. The TestDocker class implements the method setup_class and
+    teardown_class. The setup_class method is called before the System test (user scenario)
+    starts. The teardown_class at the end of the System test. The TestDocker class needs to
+    implement these methods to execute the system test with the docker environment.
+    """
+
+    __test__ = True  # Tell pytest to use TestDocker as the test starting point.
 
     @classmethod
     def setup_class(cls):
-        """Start backend."""
+        """Start docker environment and handler.
+
+        This method starts the docker containers. After a wait time it will initialize
+        the Influx Client so that the System test defined in (TestSystem) can check the
+        Influx. A BackendHandler is also initialized so that the System test can interact with the
+        back-end. The BackendHandler simply interacts with the API of the back-end.
+        """
         start_container()
         sleep(SETUP_TIMEOUT)
         cls.influx_client = InfluxDBClient(
@@ -59,6 +88,6 @@ class TestDocker(TestSystem):
 
     @classmethod
     def teardown_class(cls):
-        """Run after every test."""
+        """Tear-down docker containers and log output."""
         log_container_output()
         shutdown_container()

@@ -1,4 +1,19 @@
-"""Module for system tests."""
+"""Module for backend system tests.
+
+The system test is defined through the following user scenario:
+1. Add a database
+2. Load TPC-H sf 0.1 tables
+3. Start workload generation for TPC-H sf 0.1
+4. Start workers
+5. Activate compression plug-in
+6. Change compression plug-in settings
+7. Get plug-in log
+8. deactivate plug-in
+9. Stop workload generation
+10. Stop workers
+11. Remove database
+"""
+
 from time import sleep, time_ns
 
 from system_tests.settings import DATABASE_HOST, DATABASE_PORT, DEFAULT_TIME_OUT
@@ -7,7 +22,7 @@ DEFAULT_TIME_OUT = int(DEFAULT_TIME_OUT)
 
 
 class TestSystem:
-    """Tests for the whole cockpit system."""
+    """This class tests every step of the user scenario."""
 
     @classmethod
     def check_tables_loading(
@@ -73,7 +88,7 @@ class TestSystem:
             assert response.json() == []  # nosec
 
     def test_returns_available_databases(self):
-        """Ensure a new backend has no databases."""
+        """Ensure a new started backend has no databases."""
         response = self.backend.get_property("control/database")
 
         assert response.status_code == 200  # nosec
@@ -95,7 +110,10 @@ class TestSystem:
         }
 
     def test_adds_database(self):
-        """Test adding a database."""
+        """Test adding a database.
+
+        This test is adding a database with the id test_database1.
+        """
         response = self.backend.add_database(
             "test_database1", DATABASE_HOST, DATABASE_PORT
         )
@@ -107,7 +125,11 @@ class TestSystem:
         assert {"name": "test_database1"} in influx_databases  # nosec
 
     def test_added_database_is_in_available_databases(self):
-        """Test added database is in available databases."""
+        """Test added database is in available databases.
+
+        Here we test that the database we added before is returned
+        from the control/database endpoint.
+        """
         response = self.backend.get_property("control/database")
 
         assert response.status_code == 200  # nosec
@@ -122,27 +144,44 @@ class TestSystem:
         ]
 
     def test_loads_tpch_sf_0_1_tables(self):
-        """Test loading default tables."""
+        """Test loading TPC-H tables with scale factor 0_1."""
         response = self.backend.load_tables("tpch", 0.1)
         assert response.status_code == 200  # nosec
 
     def test_loading_tpch_sf_0_1_tables_completed(self):
-        """Test complete loading of the default tables."""
-        sleep(5.0)  # wait until default tables are loaded
+        """Test complete loading of the default tables.
+
+        After a wait we check if the tables are completely loaded in the back-end.
+        """
+        sleep(DEFAULT_TIME_OUT)
         self.check_tables_loading("test_database1", "tpch", 0.1)
 
     def test_starts_workload_generator(self):
-        """Test starting of the workload generator."""
+        """Test starting of the workload generator.
+
+        We start the workload generator. It will generate a TPC-H
+        workload with the scale factor 0_1. It will publish 10 tasks
+        per second.
+        """
         response = self.backend.start_workload("tpch", 0.1, 10)
         assert response.status_code == 200  # nosec
 
     def test_starts_worker_pool(self):
-        """Test starting of the worker pool."""
+        """Test starting of the worker pool.
+
+        This tests starts the worker. As a result the Hyrise instance is
+        now under pressure.
+        """
         response = self.backend.start_workers()
         assert response.status_code == 200  # nosec
 
     def test_returns_historical_metric_values_during_workload_execution(self):
-        """Test responses of the historical metrics."""
+        """Test responses of the historical metrics.
+
+        After a wait we check the metric data for throughput, latency
+        and queue_length. With only 10 task per second it is possible that
+        the queue_length value is 0.
+        """
         sleep(DEFAULT_TIME_OUT)  # wait for query executions
         metrics = ["metric/throughput", "metric/latency", "metric/queue_length"]
         attributes = ["throughput", "latency", "queue_length"]
@@ -162,20 +201,30 @@ class TestSystem:
                 assert response.json()[0][attribute][0][attribute] > 0.0  # nosec
 
     def test_activates_plugin(self):
-        """Test activation of the plugin."""
+        """Test activation of the plug-in.
+
+        This tests activates the Compression plug-in.
+        """
         response = self.backend.activate_plugin("test_database1", "Compression")
 
         assert response.status_code == 200  # nosec
 
     def test_do_not_activates_already_activated_plugin(self):
-        """Test activation of the already activated plugin."""
+        """Test activation of the already activated plug-in.
+
+        This test checks that the Compression plug-in can't be activated twice.
+        """
         sleep(DEFAULT_TIME_OUT)
         response = self.backend.activate_plugin("test_database1", "Compression")
 
         assert response.status_code == 423  # nosec
 
     def test_returns_activated_plugins(self):
-        """Test activation of the plugin."""
+        """Test activation of the plug-in.
+
+        THis tests checks if the Compression plug-in is returned correctly
+        inside all activated plug-ins.
+        """
         response = self.backend.get_activated_plugins()
         assert response.status_code == 200  # nosec
         assert response.json() == [  # nosec
@@ -197,14 +246,21 @@ class TestSystem:
         ]
 
     def test_sets_plugin_settings(self):
-        """Test set plugin settings."""
+        """Test set plug-in settings.
+
+        This test sets the plug-in settings for the Compression plug-in.
+        """
         response = self.backend.set_plugin_settings(
             "test_database1", "Compression", "MemoryBudget", "50000"
         )
         assert response.status_code == 200  # nosec
 
     def test_returns_new_plugin_settings(self):
-        """Test new plugin settings."""
+        """Test new plugin settings.
+
+        This test checks if the settings from the Compression plug-in
+        was set correctly.
+        """
         sleep(DEFAULT_TIME_OUT)
         response = self.backend.get_activated_plugins()
         assert response.status_code == 200  # nosec
@@ -227,7 +283,11 @@ class TestSystem:
         ]
 
     def test_returns_plugin_log(self):
-        """Test plugin log."""
+        """Test plugin log.
+
+        This test checks if there is a plug-in log for the Compression plug-in
+        that is activated on test_database1.
+        """
         sleep(DEFAULT_TIME_OUT)
         response = self.backend.get_plugin_log()
 
@@ -237,7 +297,10 @@ class TestSystem:
         assert response.json()[0]["log"][0]["message"] == "Initialized!"  # nosec
 
     def test_deactivates_plugin(self):
-        """Test deactivation of the plugin."""
+        """Test deactivation of the plugin.
+
+        This test deactivates the Compression plug-in.
+        """
         response = self.backend.deactivate_plugin("test_database1", "Compression")
 
         assert response.status_code == 200  # nosec
