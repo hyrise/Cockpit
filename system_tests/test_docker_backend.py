@@ -1,4 +1,7 @@
-"""Module to test backend running in docker."""
+"""Module to test backend running in docker.
+
+isort:skip_file
+"""
 from subprocess import run  # nosec
 from time import sleep
 
