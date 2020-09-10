@@ -8,7 +8,6 @@ hyrisecockpit = {editable = true,path = "."}
 pre-commit = "*"
 black = "*"
 flake8 = "*"
-isort = "*"
 pep8-naming = "*"
 rope = "*"
 bandit = "*"
