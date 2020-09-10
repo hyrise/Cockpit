@@ -18,7 +18,8 @@ class TestServer:
 
     @fixture
     @patch(
-        "hyrisecockpit.server.Server._init_server", lambda *args: None,
+        "hyrisecockpit.server.Server._init_server",
+        lambda *args: None,
     )
     def isolated_server(self):
         """Instance of Server without binding of sockets."""

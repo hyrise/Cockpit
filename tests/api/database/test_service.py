@@ -152,7 +152,9 @@ class TestDatabaseService:
     ) -> None:
         """A database service deregisters a database."""
         _add_active_database("lowrise")
-        interface = DatabaseInterface(id="lowrise",)
+        interface = DatabaseInterface(
+            id="lowrise",
+        )
         fake_response = {"header": {"status": 42}}
         mocked_database_service._send_message.return_value = fake_response  # type: ignore
 

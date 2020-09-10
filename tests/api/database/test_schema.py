@@ -115,7 +115,8 @@ class TestDatabaseSchema:
         assert vars(detailed_database) == detailed_database_interface
 
     def test_deserializes_available_workload_tables_schema(
-        self, available_workload_tables_schema: AvailableWorkloadTablesSchema,
+        self,
+        available_workload_tables_schema: AvailableWorkloadTablesSchema,
     ) -> None:
         """A available benchmark tables schema can create a database model."""
         available_workload_tables_interface = {
@@ -138,7 +139,8 @@ class TestDatabaseSchema:
         )
 
     def test_deserializes_workload_tables_schema(
-        self, workload_tables_schema: WorkloadTablesSchema,
+        self,
+        workload_tables_schema: WorkloadTablesSchema,
     ) -> None:
         """A benchmark tables schema can create a database model."""
         workload_tables_interface = {"workload_type": "tpch", "scale_factor": 1.0}
@@ -171,7 +173,8 @@ class TestDatabaseSchema:
         assert vars(detailed_database) == serialized == detailed_database_interface
 
     def test_serializes_available_workload_tables(
-        self, available_workload_tables_schema: AvailableWorkloadTablesSchema,
+        self,
+        available_workload_tables_schema: AvailableWorkloadTablesSchema,
     ) -> None:
         """A available benchmark tables model can be serialized with a available benchmark tables schema."""
         available_workload_tables_interface = {
@@ -187,7 +190,8 @@ class TestDatabaseSchema:
         assert serialized == available_workload_tables_interface
 
     def test_serializes_workload_tables(
-        self, workload_tables_schema: WorkloadTablesSchema,
+        self,
+        workload_tables_schema: WorkloadTablesSchema,
     ) -> None:
         """A benchmark_tables dictionary can be serialized with a benchmark tables schema."""
         workload_tables_interface = {"workload_type": "tpch", "scale_factor": 1.0}

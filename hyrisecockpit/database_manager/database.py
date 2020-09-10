@@ -56,7 +56,11 @@ class Database(object):
 
         self._storage_connection_factory: StorageConnectionFactory = (
             StorageConnectionFactory(
-                storage_user, storage_password, storage_host, storage_port, id,
+                storage_user,
+                storage_password,
+                storage_host,
+                storage_port,
+                id,
             )
         )
 

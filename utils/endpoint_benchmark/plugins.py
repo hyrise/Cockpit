@@ -18,7 +18,8 @@ paramater_endpoints = ["queue_length", "throughput", "latency", "system"]
 def wrk_background_process(url, duration):
     """Background process to execute wrk."""
     sub_process = subprocess.run(  # nosec
-        ["wrk", "-t1", "-c1", f"-d{duration}s", f"{url}"], capture_output=True,
+        ["wrk", "-t1", "-c1", f"-d{duration}s", f"{url}"],
+        capture_output=True,
     )
     print(sub_process.stdout.decode("utf-8"))
     print(sub_process.stderr.decode("utf-8"))
