@@ -3,7 +3,6 @@
 from threading import RLock
 from typing import List
 
-from influxdb import InfluxDBClient
 from jsonschema import validate
 from zmq import REQ, Context, Socket
 
@@ -20,6 +19,7 @@ from hyrisecockpit.settings import (
     STORAGE_PORT,
     STORAGE_USER,
 )
+from influxdb import InfluxDBClient
 
 context = Context(io_threads=1)
 multiprocess_lock = RLock()

@@ -31,7 +31,8 @@ class TestSqlService:
 
     @patch("hyrisecockpit.api.app.sql.service.validate")
     @patch(
-        "hyrisecockpit.api.app.sql.service.ManagerSocket", get_mocked_socket_manager,
+        "hyrisecockpit.api.app.sql.service.ManagerSocket",
+        get_mocked_socket_manager,
     )
     def test_sends_message(
         self, mocked_validate: MagicMock, sql_service: SqlService

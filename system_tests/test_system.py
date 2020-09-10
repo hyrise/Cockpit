@@ -2,7 +2,6 @@
 from time import sleep, time_ns
 
 from influxdb import InfluxDBClient
-
 from system_tests.cockpit_backend import CockpitBackend
 from system_tests.cockpit_generator import CockpitGenerator
 from system_tests.cockpit_manager import CockpitManager

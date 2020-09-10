@@ -23,9 +23,18 @@ class TestExecuteQueriesParallel:
     def test_successfully_formats_query_parameters(self) -> None:
         """Test successfully formats query parameters."""
         parameters = (
-            ("keep", "as_is",),
-            ("hyriseDown", None,),
-            ("keep", None,),
+            (
+                "keep",
+                "as_is",
+            ),
+            (
+                "hyriseDown",
+                None,
+            ),
+            (
+                "keep",
+                None,
+            ),
         )
         received = _format_query_parameters(parameters)
         assert received == ("AsIs(keep)", "hyriseDown", "keep")
@@ -55,21 +64,30 @@ class TestExecuteQueriesParallel:
 
         query_tuple: Tuple[str, Tuple[str, str, str]] = (
             "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-            ("keep", "hyriseDown", "keep",),
+            (
+                "keep",
+                "hyriseDown",
+                "keep",
+            ),
         )
 
         _execute_table_query(query_tuple, mock_connection_factory)
 
         mock_cursor.execute.assert_called_once_with(
             "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-            ("keep", "hyriseDown", "keep",),
+            (
+                "keep",
+                "hyriseDown",
+                "keep",
+            ),
         )
 
     @patch(
         "hyrisecockpit.database_manager.job.execute_queries_parallel._format_query_parameters"
     )
     @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
+        "exceptions",
+        [DatabaseError(), InterfaceError()],
     )
     def test_successfully_executes_table_query_with_exception_from_database(
         self, mock_format_query_parameters: MagicMock, exceptions
@@ -95,14 +113,22 @@ class TestExecuteQueriesParallel:
 
         query_tuple: Tuple[str, Tuple[str, str, str]] = (
             "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-            ("keep", "hyriseDown", "keep",),
+            (
+                "keep",
+                "hyriseDown",
+                "keep",
+            ),
         )
 
         _execute_table_query(query_tuple, mock_connection_factory)
 
         mock_cursor.execute.assert_called_once_with(
             "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-            ("keep", "hyriseDown", "keep",),
+            (
+                "keep",
+                "hyriseDown",
+                "keep",
+            ),
         )
 
     @patch("hyrisecockpit.database_manager.job.execute_queries_parallel.Thread")

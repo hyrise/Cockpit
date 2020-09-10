@@ -20,7 +20,9 @@ class TestJobDriver:
     @patch("hyrisecockpit.drivers.job.job_driver.DefaultDriver")
     @patch("hyrisecockpit.drivers.job.job_driver.Path")
     def test_inintializes_job_driver(
-        self, mock_path: MagicMock, mock_default_driver: MagicMock,
+        self,
+        mock_path: MagicMock,
+        mock_default_driver: MagicMock,
     ) -> None:
         """Test initialization of job driver attributes."""
         mock_default_driver_obj = MagicMock()
