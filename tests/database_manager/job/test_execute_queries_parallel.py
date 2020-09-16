@@ -105,16 +105,16 @@ class TestExecuteQueriesParallel:
             ("keep", "hyriseDown", "keep",),
         )
 
-    @patch("hyrisecockpit.database_manager.job.execute_queries_parallel.Process")
+    @patch("hyrisecockpit.database_manager.job.execute_queries_parallel.Thread")
     @patch(
         "hyrisecockpit.database_manager.job.execute_queries_parallel._execute_table_query"
     )
     def test_execute_queries_parallel(
-        self, mock_execute_table_query: MagicMock, mock_process_constructor: MagicMock
+        self, mock_execute_table_query: MagicMock, mock_thread_constructor: MagicMock
     ) -> None:
         """Test start processes for table loading queries in parallel."""
         mock_process: MagicMock = MagicMock()
-        mock_process_constructor.return_value = mock_process
+        mock_thread_constructor.return_value = mock_process
         mock_cursor = MagicMock()
         mock_connection_factory = MagicMock()
         mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
@@ -126,7 +126,7 @@ class TestExecuteQueriesParallel:
 
         execute_queries_parallel(queries, mock_connection_factory)
 
-        mock_process_constructor.assert_called_once_with(
+        mock_thread_constructor.assert_called_once_with(
             target=mock_execute_table_query,
             args=(
                 "Why does dragons like the sun? Because they are scared of (k)nights.",
@@ -135,4 +135,3 @@ class TestExecuteQueriesParallel:
         )
         mock_process.start.assert_called_once()
         mock_process.join.assert_called_once()
-        mock_process.terminate.assert_called_once()
