@@ -27,23 +27,9 @@ elif [[ "$unamestr" == 'Linux' ]]; then
             python3.8-dev \
             python3.8-distutils \
             python3-pip \
-            make \
-            build-essential \
-            libssl-dev \
-            zlib1g-dev \
-            libbz2-dev \
-            libreadline-dev \
-            libsqlite3-dev \
+            libpq-dev \
             wget \
             curl \
-            llvm \
-            libncurses5-dev \
-            libncursesw5-dev \
-            xz-utils \
-            tk-dev \
-            libffi-dev \
-            liblzma-dev \
-            python-openssl \
             git 
 
     python3.8 -m pip install --upgrade pip
