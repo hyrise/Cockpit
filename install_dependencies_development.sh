@@ -3,7 +3,7 @@
 unamestr=$(uname)
 if [[ "$unamestr" == 'Darwin' ]]; then
     echo "Installing dependencies (this may take a while)..."
-    for formula in pyenv libpq postgresql influxdb node; do
+    for formula in python3.8 libpq postgresql influxdb node; do
         if brew ls --versions $formula > /dev/null; then
             echo "$formula already installed"
             continue
@@ -13,14 +13,8 @@ if [[ "$unamestr" == 'Darwin' ]]; then
         fi
     done
 
-    if ! pyenv versions | grep '3.8.5'; then
-        echo "Install Python 3.8.5 for pyenv."
-        pyenv install 3.8.5
-    fi
-
-    pyenv local 3.8.5
-    python -m pip install pipenv
-    pipenv --three --python=`python --version`
+    python3.8 -m pip install pipenv
+    pipenv install --python 3.8
     pipenv sync --dev
     pipenv run pre-commit install
     cd hyrisecockpit/frontend && npm install && npm audit fix
@@ -29,6 +23,9 @@ elif [[ "$unamestr" == 'Linux' ]]; then
     echo "Installing dependencies (this may take a while)..."
     sudo apt-get update
     sudo apt-get install -y \
+            python3.8 \
+            python3.8-dev \
+            python3.8-distutils \
             python3-pip \
             make \
             build-essential \
@@ -48,20 +45,10 @@ elif [[ "$unamestr" == 'Linux' ]]; then
             liblzma-dev \
             python-openssl \
             git 
-    curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-    echo -e "export PATH=\"/home/\$USER/.pyenv/bin:\$PATH\"
-    eval \"\$(pyenv init -)\"
-    eval \"\$(pyenv virtualenv-init -)\"\n" >> ~/.bashrc
-    echo 'PYENV_ROOT=$HOME/.pyenv' >> ~/.bashrc
-    echo 'PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH' >> ~/.bashrc
 
-    PYENV_ROOT=$HOME/.pyenv
-    PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
-    pyenv install -s 3.8.5
-    pyenv local 3.8.5
-
-    pip install --upgrade pip
-    pip install pipenv
+    python3.8 -m pip install --upgrade pip
+    python3.8 -m pip install pipenv
+    pipenv install --python 3.8
     pipenv sync --dev
     pipenv run pre-commit install
 
