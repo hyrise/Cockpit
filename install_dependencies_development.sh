@@ -13,12 +13,6 @@ if [[ "$unamestr" == 'Darwin' ]]; then
         fi
     done
 
-    python3.8 -m pip install pipenv
-    pipenv install --python 3.8
-    pipenv sync --dev
-    pipenv run pre-commit install
-    cd hyrisecockpit/frontend && npm install && npm audit fix
-
 elif [[ "$unamestr" == 'Linux' ]]; then
     echo "Installing dependencies (this may take a while)..."
     sudo apt-get update
@@ -32,12 +26,6 @@ elif [[ "$unamestr" == 'Linux' ]]; then
             curl \
             git 
 
-    python3.8 -m pip install --upgrade pip
-    python3.8 -m pip install pipenv
-    pipenv install --python 3.8
-    pipenv sync --dev
-    pipenv run pre-commit install
-
     wget -qO- https://repos.influxdata.com/influxdb.key | sudo apt-key add -
     source /etc/lsb-release
     echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
@@ -46,5 +34,11 @@ elif [[ "$unamestr" == 'Linux' ]]; then
 
     curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash -
     sudo apt-get install -y nodejs
-    cd hyrisecockpit/frontend && npm install && npm audit fix
 fi
+    
+python3.8 -m pip install --upgrade pip
+python3.8 -m pip install pipenv
+pipenv install --python 3.8
+pipenv sync --dev
+pipenv run pre-commit install
+cd hyrisecockpit/frontend && npm install && npm audit fix
