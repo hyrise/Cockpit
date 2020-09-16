@@ -41,3 +41,5 @@ STORAGE_PASSWORD: str = getenv("STORAGE_PASSWORD", "root")
 
 FLASK_ENV: str = getenv("FLASK_ENV", "development")
 FLASK_DEBUG: bool = bool(getenv("FLASK_DEBUG", False))
+
+FRONTEND_PORT: str = getenv("FRONTEND_PORT", "5000")
