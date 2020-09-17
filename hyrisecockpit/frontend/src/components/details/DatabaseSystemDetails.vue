@@ -10,10 +10,10 @@
         <v-row class="detailsRow">
           <v-col col="2" class="mr-1" data-id="database-host">
             <v-card-title class="font-weight-bold white--text noPadding">{{
-              database.systemDetails.host
+              database.id
             }}</v-card-title>
             <v-card-text class="font-weight-bold white--text noPadding"
-              >Host</v-card-text
+              >{{ database.systemDetails.host }}</v-card-text
             >
           </v-col>
           <v-col col="2" class="mr-1" data-id="database-memory-capacity">

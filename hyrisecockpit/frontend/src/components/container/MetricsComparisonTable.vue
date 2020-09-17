@@ -18,6 +18,9 @@
           <strong>
             {{ database.id }}
           </strong>
+          <div>
+            {{ database.systemDetails.host }}
+          </div>
         </v-card-text>
       </v-card>
       <div v-for="metric in selectedMetrics" :key="metric">
@@ -36,7 +39,12 @@
       </div>
       <v-card class="column-bottom-border" :color="database.color">
         <v-card-text class="white--text text-center mt-n3 mb-n2">
-          {{ database.id }}
+          <strong>
+            {{ database.id }}
+          </strong>
+          <div>
+            {{ database.systemDetails.host }}
+          </div>
         </v-card-text>
       </v-card>
     </v-card>
