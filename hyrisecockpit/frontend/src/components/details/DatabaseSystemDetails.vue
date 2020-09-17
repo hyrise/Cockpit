@@ -12,9 +12,9 @@
             <v-card-title class="font-weight-bold white--text noPadding">{{
               database.id
             }}</v-card-title>
-            <v-card-text class="font-weight-bold white--text noPadding"
-              >{{ database.systemDetails.host }}</v-card-text
-            >
+            <v-card-text class="font-weight-bold white--text noPadding">{{
+              database.systemDetails.host
+            }}</v-card-text>
           </v-col>
           <v-col col="2" class="mr-1" data-id="database-memory-capacity">
             <v-card-title class="font-weight-light white--text noPadding"
