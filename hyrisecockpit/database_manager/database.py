@@ -335,6 +335,8 @@ class Database(object):
         if not self._database_blocked.value:
             try:
                 with self._connection_factory.create_cursor() as cur:
+                    if setting_name == "Memory Budget (MB)":
+                        setting_name = "MemoryBudget"
                     cur.execute(
                         "UPDATE meta_settings SET value=%s WHERE name=%s;",
                         (
