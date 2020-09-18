@@ -286,11 +286,11 @@ class Database(object):
     def _get_plugin_setting(self) -> Plugins:
         """Return currently set plug-in settings.
 
-        The plug-in settings are obtained from the meta_settings tables in the hyrise instance.
+        The plug-in settings are obtained from the meta_settings table in the hyrise instance.
         Inside the hyrise instance not just plug-ins have settings. As a result we need to differentiate
         the plug-in settings from the other settings. Thats why we use the SQL Statement WHERE name LIKE 'Plugin::%';.
         To get the plug-in name with which we communicate in the cockpit we need to extract it from the name column with
-        row[0].split("::")[1]. So for example from Plugin::Compression::MemomrySetting we get Compression.
+        row[0].split("::")[1]. So for example from Plugin::Compression::MemorySetting we get Compression.
         """
         try:
             with self._connection_factory.create_cursor() as cur:
