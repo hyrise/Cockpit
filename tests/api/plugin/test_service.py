@@ -34,7 +34,12 @@ class TestPluginService:
                 "id": "york",
                 "plugins": {
                     "Compression": [
-                        {"name": "MemoryBudget", "value": "5000", "description": "..."}
+                        {
+                            "name": "MemoryBudget",
+                            "display_name": "Memory Budget (MB)",
+                            "value": "5000",
+                            "description": "...",
+                        }
                     ]
                 },
             },
@@ -42,7 +47,12 @@ class TestPluginService:
                 "id": "citadelle",
                 "plugins": {
                     "Compression": [
-                        {"name": "MemoryBudget", "value": "5000", "description": "..."}
+                        {
+                            "name": "MemoryBudget",
+                            "display_name": "Memory Budget (MB)",
+                            "value": "5000",
+                            "description": "...",
+                        }
                     ],
                     "Clustering": [],
                 },
@@ -57,6 +67,7 @@ class TestPluginService:
                         "settings": [
                             {
                                 "name": "MemoryBudget",
+                                "display_name": "Memory Budget (MB)",
                                 "value": "5000",
                                 "description": "...",
                             }
@@ -72,6 +83,7 @@ class TestPluginService:
                         "settings": [
                             {
                                 "name": "MemoryBudget",
+                                "display_name": "Memory Budget (MB)",
                                 "value": "5000",
                                 "description": "...",
                             }

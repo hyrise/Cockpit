@@ -723,11 +723,17 @@ class TestDatabase(object):
 
         expected = {
             "Compression": [
-                {"name": "Memory Budget (MB)", "value": "55555", "description": "..."}
+                {
+                    "name": "MemoryBudget",
+                    "display_name": "Memory Budget (MB)",
+                    "value": "55555",
+                    "description": "...",
+                }
             ],
             "Something": [
                 {
-                    "name": "Some Setting (KB)",
+                    "name": "SomeSetting",
+                    "display_name": "Some Setting (KB)",
                     "value": "true",
                     "description": "this should show up",
                 }

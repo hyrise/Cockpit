@@ -36,40 +36,46 @@ from hyrisecockpit.api.app.plugin.schema import (
 )
 
 
-@fixture(params=["Clustering", "Compression"])
-def name(request) -> str:
+@fixture()
+def name() -> str:
     """Return a Plugin name."""
-    return request.param
+    return "Clustering"
 
 
-@fixture(params=["york", "citadelle"])
-def id(request) -> str:
+@fixture()
+def id() -> str:
     """Return a database id."""
-    return request.param
+    return "york"
 
 
-@fixture(params=["MemoryBudget", "MyImaginarySetting"])
-def setting_name(request) -> str:
+@fixture()
+def setting_name() -> str:
     """Return a setting name."""
-    return request.param
+    return "MemoryBudget"
 
 
-@fixture(params=["5000", "true"])
-def setting_value(request) -> str:
+@fixture()
+def setting_display_name() -> str:
+    """Return a setting name."""
+    return "Memory Budget (MB)"
+
+
+@fixture()
+def setting_value() -> str:
     """Return a setting value."""
-    return request.param
+    return "5000"
 
 
-@fixture(params=["A description of the setting.", ""])
-def setting_description(request) -> str:
+@fixture()
+def setting_description() -> str:
     """Return a setting description."""
-    return request.param
+    return "A description of the setting."
 
 
-@fixture(params=[0, 1583847966784])
-def timestamp(request) -> int:
+@fixture()
+def timestamp() -> int:
     """Return a timestamp."""
-    return request.param
+    return 42
 
 
 @fixture
@@ -78,16 +84,16 @@ def reporter(name: str) -> str:
     return name
 
 
-@fixture(params=["No optimization possible with given parameters!"])
-def message(request) -> str:
+@fixture()
+def message() -> str:
     """Return a Plugin Log message."""
-    return request.param
+    return "No optimization possible with given parameters!"
 
 
-@fixture(params=["Warning"])
-def level(request) -> str:
+@fixture()
+def level() -> str:
     """Return a Plugin Log Entry Level."""
-    return request.param
+    return "Warning"
 
 
 @fixture
@@ -97,17 +103,22 @@ def plugin(name: str) -> Plugin:
 
 
 @fixture
-def plugin_setting_base(setting_name: str, setting_value: str) -> PluginSettingBase:
+def plugin_setting_base(setting_name: str, setting_value: str,) -> PluginSettingBase:
     """Return a PluginSettingBase model."""
     return PluginSettingBase(setting_name, setting_value)
 
 
 @fixture
 def plugin_setting(
-    setting_name: str, setting_value: str, setting_description: str
+    setting_name: str,
+    setting_display_name: str,
+    setting_value: str,
+    setting_description: str,
 ) -> PluginSetting:
     """Return a PluginSetting model."""
-    return PluginSetting(setting_name, setting_value, setting_description)
+    return PluginSetting(
+        setting_name, setting_display_name, setting_value, setting_description
+    )
 
 
 @fixture
@@ -156,11 +167,17 @@ def interface_setting_base(
 
 @fixture
 def interface_setting(
-    setting_name: str, setting_value: str, setting_description: str
+    setting_name: str,
+    setting_display_name: str,
+    setting_value: str,
+    setting_description: str,
 ) -> PluginSettingInterface:
     """Return a PluginSetting interface."""
     return PluginSettingInterface(
-        name=setting_name, value=setting_value, description=setting_description
+        name=setting_name,
+        display_name=setting_display_name,
+        value=setting_value,
+        description=setting_description,
     )
 
 
