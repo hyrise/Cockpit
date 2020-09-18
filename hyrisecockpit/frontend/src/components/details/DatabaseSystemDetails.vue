@@ -9,12 +9,14 @@
       <v-card class="card" :color="database.color">
         <v-row class="detailsRow">
           <v-col col="2" class="mr-1" data-id="database-host">
-            <v-card-title class="font-weight-bold white--text noPadding">{{
-              database.id
-            }}</v-card-title>
-            <v-card-text class="font-weight-bold white--text noPadding">{{
-              database.systemDetails.host
-            }}</v-card-text>
+            <v-card-title
+              class="font-weight-bold white--text noPadding database-id"
+              v-bind:title="database.systemDetails.host"
+              >{{ database.id }}</v-card-title
+            >
+            <v-card-text class="font-weight-bold white--text noPadding">
+              Database ID
+            </v-card-text>
           </v-col>
           <v-col col="2" class="mr-1" data-id="database-memory-capacity">
             <v-card-title class="font-weight-light white--text noPadding"
@@ -116,6 +118,9 @@ export default defineComponent({
 .v-card__title {
   margin-bottom: 6px;
   white-space: nowrap;
+}
+.database-id {
+  cursor: help;
 }
 
 @media only screen and (max-width: 1600px) {
