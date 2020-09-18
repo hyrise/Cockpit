@@ -34,7 +34,8 @@ class PluginController(Resource):
 
 
 @api.response(404, "A database with the given ID does not exist.")
-@api.response(423, "The Plugin can't be activated because the database is blocked.")
+@api.response(406, "Plug-in name not valid.")
+@api.response(423, "The Plug-in can't be activated because the database is blocked.")
 @api.route("/<string:database_id>")
 @api.param("database_id", "Database ID")
 class PluginIdController(Resource):
@@ -45,7 +46,7 @@ class PluginIdController(Resource):
         """Activate a Plugin in a database."""
         interface: PluginInterface = request.parsed_obj  # type: ignore
         status = PluginService.activate_by_id(database_id, interface)
-        if status in {200, 404, 423}:
+        if status in {200, 404, 406, 423}:
             return Response(status=status)
         api.logger.error(f"Response status code: {status}.")
         return Response(status=500)

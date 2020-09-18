@@ -142,7 +142,7 @@ class TestPluginService:
             assert isinstance(result, int)
             assert result == status
 
-    @mark.parametrize("status", [200, 404, 423])
+    @mark.parametrize("status", [200, 404, 406, 423])
     def test_activates_a_plugin(
         self, service: PluginService, id: str, interface: PluginInterface, status: int
     ):

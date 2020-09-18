@@ -33,7 +33,10 @@ class TestPluginController:
                         name="Compression",
                         settings=[
                             PluginSettingInterface(
-                                name="MemoryBudget", value="5000", description="..."
+                                name="MemoryBudget",
+                                display_name="Memory Budget (MB)",
+                                value="5000",
+                                description="...",
                             )
                         ],
                     ),
@@ -41,7 +44,10 @@ class TestPluginController:
                         name="Clustering",
                         settings=[
                             PluginSettingInterface(
-                                name="SomeOtherSetting", value="true", description="..."
+                                name="SomeOtherSetting",
+                                display_name="Some Other Setting (MB)",
+                                value="true",
+                                description="...",
                             )
                         ],
                     ),
@@ -60,7 +66,7 @@ class TestPluginController:
 class TestDetailedPluginIDController:
     """Tests for the DetailedPluginIDController."""
 
-    @mark.parametrize("status", [200, 404, 423])
+    @mark.parametrize("status", [200, 404, 406, 423])
     def test_activates_a_plugin(
         self, client: FlaskClient, id: str, interface: PluginInterface, status: int
     ):

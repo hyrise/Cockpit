@@ -209,6 +209,9 @@ class Database(object):
 
     def deactivate_plugin(self, plugin: str) -> bool:
         """Deactivate plugin."""
+        active_plugins = self._get_plugins()
+        if active_plugins is None or plugin not in active_plugins:
+            return False
         return self._background_scheduler.deactivate_plugin(plugin)
 
     def get_database_blocked(self) -> bool:

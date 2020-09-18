@@ -339,6 +339,9 @@ class TestDatabase(object):
         """Test entry point for plug-in deactivation with success."""
         mocked_background_scheduler: MagicMock = MagicMock()
         mocked_background_scheduler.deactivate_plugin.return_value = True
+        mock_get_plugins = MagicMock()
+        mock_get_plugins.return_value = ["Coolputer"]
+        database._get_plugins = mock_get_plugins  # type: ignore
         fake_plugin: str = "Coolputer"
         database._background_scheduler = mocked_background_scheduler
 
@@ -354,6 +357,9 @@ class TestDatabase(object):
         """Test entry point for plug-in deactivation with no success."""
         mocked_background_scheduler: MagicMock = MagicMock()
         mocked_background_scheduler.deactivate_plugin.return_value = False
+        mock_get_plugins = MagicMock()
+        mock_get_plugins.return_value = ["Coolputer"]
+        database._get_plugins = mock_get_plugins  # type: ignore
         fake_plugin: str = "Coolputer"
         database._background_scheduler = mocked_background_scheduler
 
@@ -362,6 +368,22 @@ class TestDatabase(object):
         mocked_background_scheduler.deactivate_plugin.assert_called_once_with(
             fake_plugin
         )
+        assert type(result) is bool
+        assert not result
+
+    def test_deactivats_plugin_if_plugin_not_exists(self, database: Database) -> None:
+        """Test entry point for plug-in deactivation with no success."""
+        mocked_background_scheduler: MagicMock = MagicMock()
+        mocked_background_scheduler.deactivate_plugin.return_value = False
+        mock_get_plugins = MagicMock()
+        mock_get_plugins.return_value = ["Coolputer"]
+        database._get_plugins = mock_get_plugins  # type: ignore
+        fake_plugin: str = "NotExistingPlugin"
+        database._background_scheduler = mocked_background_scheduler
+
+        result: bool = database.deactivate_plugin(fake_plugin)
+
+        mocked_background_scheduler.deactivate_plugin.assert_not_called()
         assert type(result) is bool
         assert not result
 
