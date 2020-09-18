@@ -693,7 +693,7 @@ class TestDatabase(object):
         result = database._get_plugin_setting()
 
         mock_cursor.execute.assert_called_once_with(
-            "SELECT name, value, description FROM meta_settings WHERE name LIKE 'Plugin::%';",
+            "SELECT name, value, description, display_name FROM meta_settings WHERE name LIKE 'Plugin::%';",
             None,
         )
 
@@ -706,8 +706,13 @@ class TestDatabase(object):
         """Test get existing plug-ins settings."""
         mock_cursor = MagicMock()
         mock_cursor.fetchall.return_value = [
-            ("Plugin::Compression::MemoryBudget", "55555", "..."),
-            ("Plugin::Something::SomeSetting", "true", "this should show up"),
+            ("Plugin::Compression::MemoryBudget", "55555", "...", "Memory Budget (MB)"),
+            (
+                "Plugin::Something::SomeSetting",
+                "true",
+                "this should show up",
+                "Some Setting (KB)",
+            ),
         ]
         mock_connection_factory = MagicMock()
         mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
@@ -718,11 +723,11 @@ class TestDatabase(object):
 
         expected = {
             "Compression": [
-                {"name": "MemoryBudget", "value": "55555", "description": "..."}
+                {"name": "Memory Budget (MB)", "value": "55555", "description": "..."}
             ],
             "Something": [
                 {
-                    "name": "SomeSetting",
+                    "name": "Some Setting (KB)",
                     "value": "true",
                     "description": "this should show up",
                 }
