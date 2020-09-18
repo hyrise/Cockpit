@@ -288,7 +288,7 @@ class Database(object):
 
         The plug-in settings are obtained from the meta_settings table in the hyrise instance.
         Inside the hyrise instance not just plug-ins have settings. As a result we need to differentiate
-        the plug-in settings from the other settings. Thats why we use the SQL Statement WHERE name LIKE 'Plugin::%';.
+        the plug-in settings from the other settings. That's why we use the SQL Statement WHERE name LIKE 'Plugin::%';.
         To get the plug-in name with which we communicate in the cockpit we need to extract it from the name column with
         row[0].split("::")[1]. So for example from Plugin::Compression::MemorySetting we get Compression.
         """
