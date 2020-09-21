@@ -54,8 +54,14 @@ class Database(object):
             **self.connection_information
         )
 
-        self._storage_connection_factory: StorageConnectionFactory = StorageConnectionFactory(
-            storage_user, storage_password, storage_host, storage_port, id,
+        self._storage_connection_factory: StorageConnectionFactory = (
+            StorageConnectionFactory(
+                storage_user,
+                storage_password,
+                storage_host,
+                storage_port,
+                id,
+            )
         )
 
         self._database_blocked: Value = Value("b", False)
@@ -284,11 +290,18 @@ class Database(object):
             return [row[0].split("Plugin")[0] for row in rows]
 
     def _get_plugin_setting(self) -> Plugins:
-        """Return currently set plugin settings."""
+        """Return currently set plug-in settings.
+
+        The plug-in settings are obtained from the meta_settings table in the hyrise instance.
+        Inside the hyrise instance not just plug-ins have settings. As a result we need to differentiate
+        the plug-in settings from the other settings. That's why we use the SQL Statement WHERE name LIKE 'Plugin::%';.
+        To get the plug-in name with which we communicate in the cockpit we need to extract it from the name column with
+        row[0].split("::")[1]. So for example from Plugin::Compression::MemorySetting we get Compression.
+        """
         try:
             with self._connection_factory.create_cursor() as cur:
                 cur.execute(
-                    "SELECT name, value, description FROM meta_settings WHERE name LIKE 'Plugin::%';",
+                    "SELECT name, value, description, display_name FROM meta_settings WHERE name LIKE 'Plugin::%';",
                     None,
                 )
                 rows = cur.fetchall()
@@ -297,13 +310,13 @@ class Database(object):
         else:
             plugins: Dict[str, List[PluginSetting]] = {}
             for row in rows:
-                plugin_name, setting_name = row[0].split("::")[1:]
-                value, description = row[1], row[2]
+                plugin_name = row[0].split("::")[1]
+                value, description, display_name = row[1:]
                 if plugins.get(plugin_name) is None:
                     plugins[plugin_name] = []
                 plugins[plugin_name].append(
                     PluginSetting(
-                        name=setting_name, value=value, description=description
+                        name=display_name, value=value, description=description
                     )
                 )
             return plugins

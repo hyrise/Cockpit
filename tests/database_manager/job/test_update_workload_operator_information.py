@@ -21,7 +21,8 @@ class TestUpdateWorkloadOperatorInformation:
         lambda: 42,
     )
     def test_logs_workload_operator_information(
-        self, mock_sql_to_data_frame: MagicMock,
+        self,
+        mock_sql_to_data_frame: MagicMock,
     ) -> None:
         """Test logging of the workload operator information."""
         fake_storage_df: DataFrame = DataFrame(

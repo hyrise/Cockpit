@@ -302,7 +302,6 @@ class TestSystem:
         This test deactivates the Compression plug-in.
         """
         response = self.backend.deactivate_plugin("test_database1", "Compression")
-
         assert response.status_code == 200  # nosec
 
     def test_deactivated_plugin_is_not_in_active_plugins(self):

@@ -76,8 +76,12 @@ class TestWorkerPool(object):
         assert len(events) == number_worker
         assert all(type(event) is EventType for event in events)
 
-    @patch("hyrisecockpit.database_manager.worker_pool.Process",)
-    @patch("hyrisecockpit.database_manager.worker_pool.execute_queries",)
+    @patch(
+        "hyrisecockpit.database_manager.worker_pool.Process",
+    )
+    @patch(
+        "hyrisecockpit.database_manager.worker_pool.execute_queries",
+    )
     def test_generates_execute_task_worker(
         self,
         mock_execute_queries,
