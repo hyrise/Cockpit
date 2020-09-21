@@ -72,7 +72,9 @@ class LogEntrySchema(Schema):
     """Schema of a Plugin Log Entry."""
 
     timestamp = Integer(
-        description="Timestamp in nanoseconds.", required=True, default=1583847966784,
+        description="Timestamp in nanoseconds.",
+        required=True,
+        default=1583847966784,
     )
     reporter = String(
         description="Plugin reporting to the log.",

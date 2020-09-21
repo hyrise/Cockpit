@@ -30,7 +30,8 @@ class TestDatabase(object):
     @fixture
     @patch("hyrisecockpit.database_manager.database.WorkerPool", MagicMock())
     @patch(
-        "hyrisecockpit.database_manager.database.ContinuousJobHandler", MagicMock(),
+        "hyrisecockpit.database_manager.database.ContinuousJobHandler",
+        MagicMock(),
     )
     @patch(
         "hyrisecockpit.database_manager.database.AsynchronousJobHandler", MagicMock()
@@ -62,7 +63,9 @@ class TestDatabase(object):
 
     @patch("hyrisecockpit.database_manager.database.Connector")
     @patch("hyrisecockpit.database_manager.database.WorkerPool")
-    @patch("hyrisecockpit.database_manager.database.ContinuousJobHandler",)
+    @patch(
+        "hyrisecockpit.database_manager.database.ContinuousJobHandler",
+    )
     @patch("hyrisecockpit.database_manager.database.AsynchronousJobHandler")
     @patch("hyrisecockpit.database_manager.database.ConnectionFactory")
     @patch("hyrisecockpit.database_manager.database.StorageConnectionFactory")
@@ -487,7 +490,16 @@ class TestDatabase(object):
         mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
             mock_cursor
         )
-        mock_cursor.fetchall.return_value = [("hallo", "type",), ("world", "boring",)]
+        mock_cursor.fetchall.return_value = [
+            (
+                "hallo",
+                "type",
+            ),
+            (
+                "world",
+                "boring",
+            ),
+        ]
         database._connection_factory = mock_connection_factory
 
         results = database.get_loaded_tables_in_database()
@@ -496,7 +508,8 @@ class TestDatabase(object):
         assert results == ["hallo", "world"]  # type: ignore
 
     @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
+        "exceptions",
+        [DatabaseError(), InterfaceError()],
     )
     def test_gets_loaded_tables_with_exception(
         self, database: Database, exceptions
@@ -599,7 +612,11 @@ class TestDatabase(object):
         """Test get existing plug-ins."""
         mock_cursor = MagicMock()
         mock_cursor.fetchall.return_value = [
-            ("Hildegunst von Mythenmetz", "Lindwurm", "sprachliche Begabung",),
+            (
+                "Hildegunst von Mythenmetz",
+                "Lindwurm",
+                "sprachliche Begabung",
+            ),
             (
                 "Rumo von Zamonien",
                 "Wolpertinger",
@@ -620,7 +637,8 @@ class TestDatabase(object):
         assert Counter(result) == Counter(expected)
 
     @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
+        "exceptions",
+        [DatabaseError(), InterfaceError()],
     )
     def test_gets_plugins_when_database_throws_exception(
         self, database: Database, exceptions
@@ -662,7 +680,10 @@ class TestDatabase(object):
 
         mock_cursor.execute.assert_called_once_with(
             "UPDATE meta_settings SET value=%s WHERE name=%s;",
-            ("55555", "Plugin::Compression::MemoryBudget",),
+            (
+                "55555",
+                "Plugin::Compression::MemoryBudget",
+            ),
         )
 
         assert type(result) is bool
@@ -690,7 +711,8 @@ class TestDatabase(object):
         assert not result
 
     @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
+        "exceptions",
+        [DatabaseError(), InterfaceError()],
     )
     def test_sets_plugin_settings_when_database_throws_exception(
         self, database: Database, exceptions
@@ -733,7 +755,7 @@ class TestDatabase(object):
         result = database._get_plugin_setting()
 
         mock_cursor.execute.assert_called_once_with(
-            "SELECT name, value, description FROM meta_settings WHERE name LIKE 'Plugin::%';",
+            "SELECT name, value, description, display_name FROM meta_settings WHERE name LIKE 'Plugin::%';",
             None,
         )
 
@@ -746,8 +768,13 @@ class TestDatabase(object):
         """Test get existing plug-ins settings."""
         mock_cursor = MagicMock()
         mock_cursor.fetchall.return_value = [
-            ("Plugin::Compression::MemoryBudget", "55555", "..."),
-            ("Plugin::Something::SomeSetting", "true", "this should show up"),
+            ("Plugin::Compression::MemoryBudget", "55555", "...", "Memory Budget (MB)"),
+            (
+                "Plugin::Something::SomeSetting",
+                "true",
+                "this should show up",
+                "Some Setting (KB)",
+            ),
         ]
         mock_connection_factory = MagicMock()
         mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
@@ -758,11 +785,11 @@ class TestDatabase(object):
 
         expected = {
             "Compression": [
-                {"name": "MemoryBudget", "value": "55555", "description": "..."}
+                {"name": "Memory Budget (MB)", "value": "55555", "description": "..."}
             ],
             "Something": [
                 {
-                    "name": "SomeSetting",
+                    "name": "Some Setting (KB)",
                     "value": "true",
                     "description": "this should show up",
                 }
@@ -775,7 +802,8 @@ class TestDatabase(object):
         assert result == expected
 
     @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
+        "exceptions",
+        [DatabaseError(), InterfaceError()],
     )
     def test_gets_plugin_settings_when_database_throws_exception(
         self, database: Database, exceptions

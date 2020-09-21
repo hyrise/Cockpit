@@ -74,7 +74,8 @@ class TestDatabaseManager:
 
     @fixture
     @patch(
-        "hyrisecockpit.database_manager.manager.Server", fake_server_constructor,
+        "hyrisecockpit.database_manager.manager.Server",
+        fake_server_constructor,
     )
     def database_manager(self) -> DatabaseManager:
         """Get a new DatabaseManager."""
@@ -194,7 +195,8 @@ class TestDatabaseManager:
         self.convenience_data_call(database_manager, mock_database, call, mock_data)
 
     @mark.parametrize(
-        "call", get_server_calls(),
+        "call",
+        get_server_calls(),
     )
     def test_has_server_call(
         self, database_manager: DatabaseManager, call: str
@@ -239,7 +241,10 @@ class TestDatabaseManager:
             5432,
             "database_name",
             8,
-            "tcp://{:s}:{:s}".format(WORKLOAD_SUB_HOST, WORKLOAD_PUBSUB_PORT,),
+            "tcp://{:s}:{:s}".format(
+                WORKLOAD_SUB_HOST,
+                WORKLOAD_PUBSUB_PORT,
+            ),
             STORAGE_HOST,
             STORAGE_PASSWORD,
             STORAGE_PORT,
