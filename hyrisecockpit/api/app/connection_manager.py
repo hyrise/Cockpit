@@ -3,7 +3,6 @@
 from types import TracebackType
 from typing import Optional, Type
 
-from influxdb import InfluxDBClient
 from zmq import REQ, Context, Socket
 
 from hyrisecockpit.request import Request
@@ -18,6 +17,7 @@ from hyrisecockpit.settings import (
     STORAGE_PORT,
     STORAGE_USER,
 )
+from influxdb import InfluxDBClient
 
 
 class BaseSocket:

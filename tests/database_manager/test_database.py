@@ -469,7 +469,16 @@ class TestDatabase(object):
         mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
             mock_cursor
         )
-        mock_cursor.fetchall.return_value = [("hallo", "type",), ("world", "boring",)]
+        mock_cursor.fetchall.return_value = [
+            (
+                "hallo",
+                "type",
+            ),
+            (
+                "world",
+                "boring",
+            ),
+        ]
         database._connection_factory = mock_connection_factory
 
         results = database.get_loaded_tables_in_database()
@@ -478,7 +487,8 @@ class TestDatabase(object):
         assert results == ["hallo", "world"]  # type: ignore
 
     @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
+        "exceptions",
+        [DatabaseError(), InterfaceError()],
     )
     def test_gets_loaded_tables_with_exception(
         self, database: Database, exceptions
@@ -581,7 +591,11 @@ class TestDatabase(object):
         """Test get existing plug-ins."""
         mock_cursor = MagicMock()
         mock_cursor.fetchall.return_value = [
-            ("Hildegunst von Mythenmetz", "Lindwurm", "sprachliche Begabung",),
+            (
+                "Hildegunst von Mythenmetz",
+                "Lindwurm",
+                "sprachliche Begabung",
+            ),
             (
                 "Rumo von Zamonien",
                 "Wolpertinger",
@@ -602,7 +616,8 @@ class TestDatabase(object):
         assert Counter(result) == Counter(expected)
 
     @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
+        "exceptions",
+        [DatabaseError(), InterfaceError()],
     )
     def test_gets_plugins_when_database_throws_exception(
         self, database: Database, exceptions
@@ -644,7 +659,10 @@ class TestDatabase(object):
 
         mock_cursor.execute.assert_called_once_with(
             "UPDATE meta_settings SET value=%s WHERE name=%s;",
-            ("55555", "Plugin::Compression::MemoryBudget",),
+            (
+                "55555",
+                "Plugin::Compression::MemoryBudget",
+            ),
         )
 
         assert type(result) is bool
@@ -672,7 +690,8 @@ class TestDatabase(object):
         assert not result
 
     @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
+        "exceptions",
+        [DatabaseError(), InterfaceError()],
     )
     def test_sets_plugin_settings_when_database_throws_exception(
         self, database: Database, exceptions
@@ -768,7 +787,8 @@ class TestDatabase(object):
         assert result == expected
 
     @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
+        "exceptions",
+        [DatabaseError(), InterfaceError()],
     )
     def test_gets_plugin_settings_when_database_throws_exception(
         self, database: Database, exceptions

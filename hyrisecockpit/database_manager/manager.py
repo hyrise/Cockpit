@@ -19,7 +19,8 @@ from .cursor import HyriseCursor
 from .database import Database, Plugins
 
 DatabaseActivatedPlugins = TypedDict(
-    "DatabaseActivatedPlugins", {"id": str, "plugins": Plugins},
+    "DatabaseActivatedPlugins",
+    {"id": str, "plugins": Plugins},
 )
 
 
@@ -115,7 +116,8 @@ class DatabaseManager(object):
             dbname,
             number_workers,
             "tcp://{:s}:{:s}".format(
-                self._workload_sub_host, self._workload_pubsub_port,
+                self._workload_sub_host,
+                self._workload_pubsub_port,
             ),
             self._default_tables,
             self._storage_host,
