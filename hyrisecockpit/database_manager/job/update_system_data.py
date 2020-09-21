@@ -74,5 +74,7 @@ def update_system_data(
 
     with storage_connection_factory.create_cursor() as log:
         log.log_meta_information(
-            "raw_system_data", system_data, time_stamp,
+            "raw_system_data",
+            system_data,
+            time_stamp,
         )

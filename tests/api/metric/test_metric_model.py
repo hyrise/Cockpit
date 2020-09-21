@@ -41,7 +41,11 @@ class TestMetricModel:
 
     def test_creates_time_interval(self) -> None:
         """A TimeInterval model can be created."""
-        assert TimeInterval(startts=1, endts=2, precision=1,)
+        assert TimeInterval(
+            startts=1,
+            endts=2,
+            precision=1,
+        )
 
     def test_creates_throughput_entry_model(self) -> None:
         """A throughput entry model can be created."""
