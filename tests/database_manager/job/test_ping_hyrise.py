@@ -24,7 +24,8 @@ class TestPingHyriseJob:
         assert mock_hyrise_active_value.value
 
     @mark.parametrize(
-        "exception", [DatabaseError(), InterfaceError()],
+        "exception",
+        [DatabaseError(), InterfaceError()],
     )
     def test_pings_hyrise_if_hyrise_dead(self, exception) -> None:
         """Test handling of not valid connection."""

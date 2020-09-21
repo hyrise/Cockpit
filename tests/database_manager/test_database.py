@@ -63,7 +63,8 @@ class TestDatabase(object):
         MagicMock(),
     )
     @patch(
-        "hyrisecockpit.database_manager.database.SynchronousJobHandler", MagicMock(),
+        "hyrisecockpit.database_manager.database.SynchronousJobHandler",
+        MagicMock(),
     )
     def database(self) -> Database:
         """Get a new Database."""

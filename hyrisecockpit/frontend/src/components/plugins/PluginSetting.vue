@@ -7,7 +7,7 @@
           v-on="on"
           data-id="setting-help-icon"
           @click="togglePluginEditor()"
-          >mdi-help-circle</v-icon
+          >mdi-information</v-icon
         >
       </template>
       <span data-id="setting-description">{{ setting.description }}</span>

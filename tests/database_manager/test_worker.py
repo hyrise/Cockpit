@@ -229,7 +229,8 @@ class TestTaskWorker:
         )
 
     @mark.parametrize(
-        "exception", [ProgrammingError(), ValueError()],
+        "exception",
+        [ProgrammingError(), ValueError()],
     )
     @patch("hyrisecockpit.database_manager.worker.task_worker.StorageCursor")
     @patch("hyrisecockpit.database_manager.worker.task_worker.Thread")

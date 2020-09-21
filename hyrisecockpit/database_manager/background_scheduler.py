@@ -4,11 +4,8 @@ from multiprocessing import Value
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
+from .asynchronous_job_handler import AsynchronousJobHandler
 from .cursor import ConnectionFactory, StorageConnectionFactory
-from .job.activate_plugin import activate_plugin as activate_plugin_job
-from .job.deactivate_plugin import deactivate_plugin as deactivate_plugin_job
-from .job.delete_tables import delete_tables as delete_tables_job
-from .job.load_tables import load_tables as load_tables_job
 from .job.ping_hyrise import ping_hyrise
 from .job.update_chunks_data import update_chunks_data
 from .job.update_plugin_log import update_plugin_log
@@ -42,7 +39,9 @@ class BackgroundJobManager(object):
         self._database_id: str = database_id
         self._database_blocked: Value = database_blocked
         self._connection_factory: ConnectionFactory = connection_factory
-        self._storage_connection_factory: StorageConnectionFactory = storage_connection_factory
+        self._storage_connection_factory: StorageConnectionFactory = (
+            storage_connection_factory
+        )
         self._worker_pool: WorkerPool = worker_pool
         self._workload_drivers = workload_drivers
         self._scheduler: BackgroundScheduler = BackgroundScheduler()
@@ -54,6 +53,11 @@ class BackgroundJobManager(object):
         self._previous_chunk_data = {
             "value": None,
         }
+        self._asynchronous_job_handler = AsynchronousJobHandler(
+            self._database_blocked,
+            self._connection_factory,
+            self._workload_drivers,
+        )
 
         self._init_jobs()
 
@@ -162,56 +166,16 @@ class BackgroundJobManager(object):
 
     def load_tables(self, workload_type: str, scalefactor: float) -> bool:
         """Load tables."""
-        if not self._database_blocked.value:
-            self._database_blocked.value = True
-            self._scheduler.add_job(
-                func=load_tables_job,
-                args=(
-                    self._database_blocked,
-                    workload_type,
-                    scalefactor,
-                    self._connection_factory,
-                    self._workload_drivers,
-                ),
-            )
-            return True
-        else:
-            return False
+        return self._asynchronous_job_handler.load_tables(workload_type, scalefactor)
 
     def delete_tables(self, workload_type: str, scalefactor: float) -> bool:
         """Delete tables."""
-        if not self._database_blocked.value:
-            self._database_blocked.value = True
-            self._scheduler.add_job(
-                func=delete_tables_job,
-                args=(
-                    self._database_blocked,
-                    workload_type,
-                    scalefactor,
-                    self._connection_factory,
-                    self._workload_drivers,
-                ),
-            )
-            return True
-        else:
-            return False
+        return self._asynchronous_job_handler.delete_tables(workload_type, scalefactor)
 
     def activate_plugin(self, plugin: str) -> bool:
         """Activate plugin."""
-        if not self._database_blocked.value:
-            self._scheduler.add_job(
-                func=activate_plugin_job, args=(self._connection_factory, plugin,)
-            )
-            return True
-        else:
-            return False
+        return self._asynchronous_job_handler.activate_plugin(plugin)
 
     def deactivate_plugin(self, plugin: str) -> bool:
         """Dectivate plugin."""
-        if not self._database_blocked.value:
-            self._scheduler.add_job(
-                func=deactivate_plugin_job, args=(self._connection_factory, plugin,)
-            )
-            return True
-        else:
-            return False
+        return self._asynchronous_job_handler.deactivate_plugin(plugin)
