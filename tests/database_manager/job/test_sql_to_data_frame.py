@@ -30,7 +30,8 @@ class TestSqlToDataframeJob:
         mock_cursor.read_sql_query.assert_called_once_with("select ...", None)
 
     @mark.parametrize(
-        "exception", [DatabaseError(), InterfaceError()],
+        "exception",
+        [DatabaseError(), InterfaceError()],
     )
     def test_converts_sql_to_data_frame_if_database_throws_exception(
         self, exception
