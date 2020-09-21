@@ -39,7 +39,9 @@ class BackgroundJobManager(object):
         self._database_id: str = database_id
         self._database_blocked: Value = database_blocked
         self._connection_factory: ConnectionFactory = connection_factory
-        self._storage_connection_factory: StorageConnectionFactory = storage_connection_factory
+        self._storage_connection_factory: StorageConnectionFactory = (
+            storage_connection_factory
+        )
         self._worker_pool: WorkerPool = worker_pool
         self._workload_drivers = workload_drivers
         self._scheduler: BackgroundScheduler = BackgroundScheduler()
@@ -52,7 +54,9 @@ class BackgroundJobManager(object):
             "value": None,
         }
         self._asynchronous_job_handler = AsynchronousJobHandler(
-            self._database_blocked, self._connection_factory, self._workload_drivers,
+            self._database_blocked,
+            self._connection_factory,
+            self._workload_drivers,
         )
 
         self._init_jobs()

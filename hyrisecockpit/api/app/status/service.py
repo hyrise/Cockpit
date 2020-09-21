@@ -64,7 +64,8 @@ class StatusService:
             for database in _get_active_databases():
                 failed_queries = list(
                     client.query(
-                        "SELECT * FROM failed_queries LIMIT 100;", database=database,
+                        "SELECT * FROM failed_queries LIMIT 100;",
+                        database=database,
                     )["failed_queries", None]
                 )
                 serialized_failed_queries = [
