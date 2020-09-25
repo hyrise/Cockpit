@@ -1,14 +1,12 @@
 import { isInTestMode } from "../../config";
 
-function getDisplayWorkloadName(
-  workloadType: string
-): string {
+function getDisplayWorkloadName(workloadType: string): string {
   const workload_type_map: Record<string, string> = {
-    "tpch": "TPC-H",
-    "tpcds": "TPC-DS",
-    "tpcc": "TPC-C",
-    "job": "Join Order Benchmark"
-  }
+    tpch: "TPC-H",
+    tpcds: "TPC-DS",
+    tpcc: "TPC-C",
+    job: "Join Order Benchmark",
+  };
   return workload_type_map[workloadType];
 }
 
@@ -29,17 +27,17 @@ export function getWorkloadType(workloadName: string): string {
     "TPC-H": "tpch",
     "TPC-DS": "tpcds",
     "TPC-C": "tpcc",
-    "Join Order Benchmark": "job"
-  }
-  const workload: string =  workloadName.split(" (")[0];
-  return workload_type_map[workload]
+    "Join Order Benchmark": "job",
+  };
+  const workload: string = workloadName.split(" (")[0];
+  return workload_type_map[workload];
 }
 
 export function getScaleFactor(workloadName: string): string {
   const regExp = /\(([^)]+)\)/;
-  const matches = regExp.exec(workloadName)
+  const matches = regExp.exec(workloadName);
   // @ts-ignore
-  return matches[1].split(" ")[1]
+  return matches[1].split(" ")[1];
 }
 
 export function getTableName(table: string): string {
