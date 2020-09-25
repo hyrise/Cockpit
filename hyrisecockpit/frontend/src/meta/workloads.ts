@@ -17,11 +17,11 @@ export function getWorkloadName(
   return `${getDisplayWorkloadName(workloadType)} (SF ${scaleFactor})`;
 }
 
-// The following code is pretty ugly. The workload selector component is working somehow
+// The following code is pretty complex. The workload selector component is working somehow
 // with the workload name. So every time a workload is selected from the workload name (displayed name)
 // the name and scale factor needs to be retrieved. If for example the *name: job, scalefactor: 1* is transformed to
 // *Join Order Benchmark (SF 1)* we need to extract job *name: job, scalefactor: 1*. For that we are using regex.
-
+// TODO: Re-factor display workload settings component to use objects (name, sf) instead of a string.
 export function getWorkloadType(workloadName: string): string {
   const workload_type_map: Record<string, string> = {
     "TPC-H": "tpch",
