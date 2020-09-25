@@ -119,6 +119,6 @@ export default defineComponent({
   margin: 0px 6px 6px 6px;
 }
 .database-id {
-  cursor: help;
+  cursor: default;
 }
 </style>

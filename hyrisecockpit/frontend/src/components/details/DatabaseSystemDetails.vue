@@ -120,7 +120,7 @@ export default defineComponent({
   white-space: nowrap;
 }
 .database-id {
-  cursor: help;
+  cursor: default;
 }
 
 @media only screen and (max-width: 1600px) {
