@@ -224,7 +224,7 @@ class Database(object):
         First, we check if the workload and scale factor is valid.
         The workload needs to have an equivalent driver and the
         driver needs to support the scale factor. Moreover the worker pool
-        needs to be closed. If one of this requirements is not met the function
+        needs to be closed. If one of this requirements is not met, the function
         will return false. Otherwise the tables will be loaded via the
         asynchronous job handler.
         """
