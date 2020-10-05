@@ -22,7 +22,7 @@ from hyrisecockpit.database_manager.job.update_workload_statement_information im
 
 
 class TestContinuousJobHandler:
-    """This class test the continuous job handler."""
+    """This class tests the continuous job handler."""
 
     @patch("hyrisecockpit.database_manager.continuous_job_handler.BackgroundScheduler")
     def test_inintializes_continuous_job_handler(

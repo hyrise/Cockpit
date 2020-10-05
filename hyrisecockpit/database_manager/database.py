@@ -25,8 +25,8 @@ class Database(object):
     The database class is a representation of a registered Hyrise instance.
     All the communication with the Hyrise is managed by this class and its API.
     A worker pool object that manages the queue and task/queue workers to put the
-    Hyrise under pressure is part of this class. This class also initializes the
-    influx database for the Hyrise instance.
+    Hyrise under pressure is part of this class. This class also initializes an
+    influx database for this Hyrise instance.
     """
 
     def __init__(
@@ -47,18 +47,18 @@ class Database(object):
         """Initialize database object.
 
         Args:
-            id: A name representation of the Hyrise instance.
+            id: A string identifying the Hyrise instance. For example hyrise_1.
             user: The user that connects to the Hyrise instance.
-            password: The password needed to connects to the Hyrise instance.
+            password: The password needed to connect to the Hyrise instance.
             host: The address of the host machine where the Hyrise instance is running.
             port: The port on which the Hyrise instance is running.
-            dbname: The database name of the Hyrise instance.
+            dbname: The database name of the Hyrise instance. For example psql.
             number_workers: Number of task workers to put the Hyrise instance under
-                pressure. Every worker is running in its own process.
+                load. Every worker is running in its own process.
             workload_publisher_url: URL which is publishing the workload to the workers.
                 This URL is used by the queue worker to connect to the workload
                 generator via zeromq.
-            storage_host: Address in which the influx database is running.
+            storage_host: Address of the influx database instance.
             storage_password: Password to connect to the influx database.
             storage_port: Port of the influx database.
             storage_user: User of the influx database.
@@ -127,9 +127,9 @@ class Database(object):
 
         We drop the database inside influx that has the same name like the
         database id (Hyrise). We do that to remove all the data from previous
-        runs. Than we create a new database inside influx with the database id
-        (Hyrise). After that we create continuous query that the influx is running
-        every x seconds. For example it will so automatically calculate the throughput
+        runs. Then we create a new database inside influx with the database id
+        (Hyrise). After that we create a continuous query that the influx is running
+        every x seconds. For example, to automatically calculate the throughput
         per second.
         """
         with self._storage_connection_factory.create_cursor() as cursor:
@@ -221,8 +221,8 @@ class Database(object):
     def load_data(self, workload: Dict) -> bool:
         """Load pre-generated tables.
 
-        First we check if the workload and scale factor is valid.
-        For that workload need to have an equivalent driver and the
+        First, we check if the workload and scale factor is valid.
+        The workload needs to have an equivalent driver and the
         driver needs to support the scale factor. Moreover the worker pool
         needs to be closed. If one of this requirements is not met the function
         will return false. Otherwise the tables will be loaded via the
@@ -246,12 +246,7 @@ class Database(object):
     def delete_data(self, workload: Dict) -> bool:
         """Delete tables.
 
-        First we check if the workload and scale factor is valid.
-        For that workload need to have an equivalent driver and the
-        driver needs to support the scale factor. Moreover the worker pool
-        needs to be closed. If one of this requirements is not met the function
-        will return false. Otherwise the tables will be deleted via the
-        asynchronous job handler.
+        Same procedure like in load_data.
         """
         workload_type = workload["workload_type"]
         scale_factor = workload["scale_factor"]
