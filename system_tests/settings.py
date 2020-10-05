@@ -12,6 +12,6 @@ STORAGE_PASSWORD: str = getenv("STORAGE_PASSWORD", "root")
 DATABASE_HOST: str = getenv("DATABASE_HOST", "localhost")
 DATABASE_PORT: str = getenv("DATABASE_PORT", "5432")
 
-SETUP_TIMEOUT: int = getenv("SETUP_TIMEOUT", 10)  # type: ignore
-DEFAULT_TIME_OUT: int = getenv("DEFAULT_TIME_OUT", 4)  # type: ignore
-REQUEST_TIMEOUT: int = getenv("REQUEST_TIMEOUT", 5)  # type: ignore
+SETUP_TIMEOUT: int = int(getenv("SETUP_TIMEOUT", 10))
+DEFAULT_TIME_OUT: int = int(getenv("DEFAULT_TIME_OUT", 4))
+REQUEST_TIMEOUT: int = int(getenv("REQUEST_TIMEOUT", 5))

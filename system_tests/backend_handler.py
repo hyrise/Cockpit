@@ -1,17 +1,19 @@
-"""Handler to interact with back-end API."""
+"""This module interacts directly with the back-end API.
+
+This model provides the system tests a API to interact with the
+back-end.
+"""
 
 from requests import delete, get, post, put
 
 from system_tests.settings import REQUEST_TIMEOUT
 
-REQUEST_TIMEOUT = int(REQUEST_TIMEOUT)
-
 
 class BackendHandler:
     """Interacts directly with back-end API.
 
-    All requests to the back_end have a time out set. If it
-    fails the test that called the method with the request fails.
+    All requests to the back_end have a time out set. If the timeout is
+    exceeded, the test that called the method with the request fails.
     """
 
     def __init__(self, backend_host, backend_port):
@@ -34,8 +36,8 @@ class BackendHandler:
         """Get historical property.
 
         Sends a get request to a endpoint that returns historical data.
-        The URL needs to be adjusted with the start time stamp, end times stamp,
-        and the precession.
+        The URL needs to be adjusted with the start time stamp, end time stamp,
+        and the precision.
         """
         url = f"http://{self._backend_host}:{self._backend_port}/{property}?startts={startts}&endts={endts}&precision={precision}"
         return get(url, timeout=REQUEST_TIMEOUT)
@@ -166,7 +168,7 @@ class BackendHandler:
         """Set plug-in settings.
 
         This method sends a put request to set the settings for a plug-in that
-        is activated on the database.
+        is activated for a specific database.
         """
         body = {"name": plugin_name, "setting": {"name": setting_name, "value": value}}
         url = f"http://{self._backend_host}:{self._backend_port}/control/plugin/{database_id}"

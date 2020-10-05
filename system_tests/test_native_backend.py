@@ -22,7 +22,6 @@ from system_tests.settings import (
 from system_tests.test_backend import TestSystem
 
 TIME_OUT = 10
-SETUP_TIMEOUT = int(SETUP_TIMEOUT)
 TestSystem.__test__ = False  # type: ignore
 
 
@@ -49,14 +48,7 @@ def shutdown_backend(subprocess):
 
 
 class TestNative(TestSystem):
-    """Back-end system tests for a back-end running natively.
-
-    This class inherits from the TestSystem class. The TestSystem call defines
-    the user scenario. The TestNative class implements the method setup_class and
-    teardown_class. The setup_class method is called before the System test (user scenario)
-    starts. The teardown_class at the end of the System test. The TestNative class needs to
-    implement these methods to execute the system test with the a natively running back-end.
-    """
+    """Back-end system tests for a back-end running natively."""
 
     __test__ = True  # Tell pytest to use TestNative as the test starting point.
 
@@ -64,7 +56,7 @@ class TestNative(TestSystem):
     def setup_class(cls):
         """Start back-end running natively.
 
-        This method starts back-end. After a wait time it will initialize
+        This method starts the back-end. After a wait time it will initialize
         the Influx Client so that the System test defined in (TestSystem) can check the
         Influx. A BackendHandler is also initialized so that the System test can interact with the
         back-end. The BackendHandler simply interacts with the API of the back-end. The output

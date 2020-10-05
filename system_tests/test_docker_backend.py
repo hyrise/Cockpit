@@ -23,15 +23,14 @@ from system_tests.settings import (
 )
 from system_tests.test_backend import TestSystem
 
-SETUP_TIMEOUT = int(SETUP_TIMEOUT)
 TestSystem.__test__ = False  # type: ignore
 
 
 def start_container():
     """Build and start docker container.
 
-    To make sure that the changes in the back-end code are taking into account,
-    the back-end docker container is always build new.
+    To ensure that the changes of the back-end are taken into account,
+    the back-end's docker container is always rebuilt from scratch.
 
     Note:
         If the Hyrise image doesn't exist it will be pulled from docker Hub.
@@ -59,14 +58,7 @@ def shutdown_container():
 
 
 class TestDocker(TestSystem):
-    """Back-end system tests for docker setup.
-
-    This class inherits from the TestSystem class. The TestSystem call defines
-    the user scenario. The TestDocker class implements the method setup_class and
-    teardown_class. The setup_class method is called before the System test (user scenario)
-    starts. The teardown_class at the end of the System test. The TestDocker class needs to
-    implement these methods to execute the system test with the docker environment.
-    """
+    """Back-end system tests for docker setup."""
 
     __test__ = True  # Tell pytest to use TestDocker as the test starting point.
 
