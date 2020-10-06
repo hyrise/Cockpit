@@ -103,7 +103,10 @@ def plugin(name: str) -> Plugin:
 
 
 @fixture
-def plugin_setting_base(setting_name: str, setting_value: str,) -> PluginSettingBase:
+def plugin_setting_base(
+    setting_name: str,
+    setting_value: str,
+) -> PluginSettingBase:
     """Return a PluginSettingBase model."""
     return PluginSettingBase(setting_name, setting_value)
 

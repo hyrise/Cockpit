@@ -11,7 +11,9 @@ class PluginSchema(Schema):
     """Schema of a Plugin."""
 
     name = String(
-        description="Identifier of the Plugin.", required=True, default="Compression",
+        description="Identifier of the Plugin.",
+        required=True,
+        default="Compression",
     )
 
 
