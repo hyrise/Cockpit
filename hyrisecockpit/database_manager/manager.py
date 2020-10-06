@@ -33,7 +33,6 @@ class DatabaseManager(object):
         db_manager_port: str,
         workload_sub_host: str,
         workload_pubsub_port: str,
-        default_tables: str,
         storage_host: str,
         storage_password: str,
         storage_port: str,
@@ -42,7 +41,6 @@ class DatabaseManager(object):
         """Initialize a DatabaseManager."""
         self._workload_sub_host = workload_sub_host
         self._workload_pubsub_port = workload_pubsub_port
-        self._default_tables = default_tables
         self._storage_host = storage_host
         self._storage_password = storage_password
         self._storage_port = storage_port
@@ -119,7 +117,6 @@ class DatabaseManager(object):
                 self._workload_sub_host,
                 self._workload_pubsub_port,
             ),
-            self._default_tables,
             self._storage_host,
             self._storage_password,
             self._storage_port,
