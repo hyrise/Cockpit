@@ -382,6 +382,10 @@ class TestDatabase(object):
         """Test entry point for plug-in deactivation with success."""
         mock_asynchronous_job_handler: MagicMock = MagicMock()
         mock_asynchronous_job_handler.deactivate_plugin.return_value = True
+        mock_get_plugins = MagicMock()
+        mock_get_plugins.return_value = ["Coolputer"]
+        database._get_plugins = mock_get_plugins  # type: ignore
+
         fake_plugin: str = "Coolputer"
         database._asynchronous_job_handler = mock_asynchronous_job_handler
 
@@ -397,6 +401,9 @@ class TestDatabase(object):
         """Test entry point for plug-in deactivation with no success."""
         mock_asynchronous_job_handler: MagicMock = MagicMock()
         mock_asynchronous_job_handler.deactivate_plugin.return_value = False
+        mock_get_plugins = MagicMock()
+        mock_get_plugins.return_value = ["Coolputer"]
+        database._get_plugins = mock_get_plugins  # type: ignore
         fake_plugin: str = "Coolputer"
         database._asynchronous_job_handler = mock_asynchronous_job_handler
 
@@ -405,6 +412,22 @@ class TestDatabase(object):
         mock_asynchronous_job_handler.deactivate_plugin.assert_called_once_with(
             fake_plugin
         )
+        assert type(result) is bool
+        assert not result
+
+    def test_deactivats_plugin_if_plugin_not_exists(self, database: Database) -> None:
+        """Test entry point for plug-in deactivation with no success."""
+        mock_asynchronous_job_handler: MagicMock = MagicMock()
+        mock_asynchronous_job_handler.deactivate_plugin.return_value = False
+        mock_get_plugins = MagicMock()
+        mock_get_plugins.return_value = ["Coolputer"]
+        database._get_plugins = mock_get_plugins  # type: ignore
+        fake_plugin: str = "NotExistingPlugin"
+        database._asynchronous_job_handler = mock_asynchronous_job_handler
+
+        result: bool = database.deactivate_plugin(fake_plugin)
+
+        mock_asynchronous_job_handler.deactivate_plugin.assert_not_called()
         assert type(result) is bool
         assert not result
 
@@ -785,11 +808,17 @@ class TestDatabase(object):
 
         expected = {
             "Compression": [
-                {"name": "Memory Budget (MB)", "value": "55555", "description": "..."}
+                {
+                    "name": "MemoryBudget",
+                    "display_name": "Memory Budget (MB)",
+                    "value": "55555",
+                    "description": "...",
+                }
             ],
             "Something": [
                 {
-                    "name": "Some Setting (KB)",
+                    "name": "SomeSetting",
+                    "display_name": "Some Setting (KB)",
                     "value": "true",
                     "description": "this should show up",
                 }

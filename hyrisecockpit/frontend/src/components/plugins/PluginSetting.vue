@@ -12,7 +12,9 @@
       </template>
       <span data-id="setting-description">{{ setting.description }}</span>
     </v-tooltip>
-    <div class="setting-name" data-id="setting-name">{{ setting.name }}:</div>
+    <div class="setting-name" data-id="setting-name">
+      {{ setting.display_name }}:
+    </div>
     <v-text-field
       class="setting-text"
       v-model="value"

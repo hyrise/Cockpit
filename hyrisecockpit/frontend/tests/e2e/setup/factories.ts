@@ -293,6 +293,7 @@ type PluginSetting = {
   name: string;
   value: number;
   description: string;
+  display_name: string;
 };
 
 function fakePluginSetting(plugin: string): PluginSetting {
@@ -300,6 +301,7 @@ function fakePluginSetting(plugin: string): PluginSetting {
     name: plugin + "_" + faker.random.word(),
     value: faker.random.number(),
     description: faker.random.words(),
+    display_name: plugin + "Setting",
   };
 }
 

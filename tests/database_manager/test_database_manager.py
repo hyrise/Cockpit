@@ -496,6 +496,7 @@ class TestDatabaseManager:
 
         assert expected_response == response
 
+    @patch("hyrisecockpit.database_manager.manager.available_plugins", ["pluginName"])
     def test_call_activate_plugin(self, database_manager: DatabaseManager) -> None:
         """Call activate plugin."""
         database = fake_database()
@@ -507,6 +508,21 @@ class TestDatabaseManager:
 
         assert get_response(200) == response
 
+    @patch("hyrisecockpit.database_manager.manager.available_plugins", ["pluginName"])
+    def test_call_activate_plugin_with_not_valid_plugin_name(
+        self, database_manager: DatabaseManager
+    ) -> None:
+        """Call activate plugin unsuccessful."""
+        database = fake_database()
+        database.activate_plugin.return_value = False
+        database_manager._databases["db1"] = database
+
+        body: Dict = {"id": "db1", "plugin": "notValidPluginName"}
+        response = database_manager._call_activate_plugin(body)
+
+        assert get_response(406) == response
+
+    @patch("hyrisecockpit.database_manager.manager.available_plugins", ["pluginName"])
     def test_call_activate_plugin_unsuccessful(
         self, database_manager: DatabaseManager
     ) -> None:
@@ -520,6 +536,7 @@ class TestDatabaseManager:
 
         assert get_response(423) == response
 
+    @patch("hyrisecockpit.database_manager.manager.available_plugins", ["pluginName"])
     def test_call_activate_plugin_on_not_existing_database(
         self, database_manager: DatabaseManager
     ) -> None:

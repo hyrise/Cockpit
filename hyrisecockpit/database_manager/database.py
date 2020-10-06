@@ -14,7 +14,8 @@ from .interfaces import SqlResultInterface
 from .worker_pool import WorkerPool
 
 PluginSetting = TypedDict(
-    "PluginSetting", {"name": str, "value": str, "description": str}
+    "PluginSetting",
+    {"name": str, "display_name": str, "value": str, "description": str},
 )
 Plugins = Optional[Dict[str, List[PluginSetting]]]
 
@@ -272,6 +273,9 @@ class Database(object):
 
     def deactivate_plugin(self, plugin: str) -> bool:
         """Deactivate plugin."""
+        active_plugins = self._get_plugins()
+        if active_plugins is None or plugin not in active_plugins:
+            return False
         return self._asynchronous_job_handler.deactivate_plugin(plugin)
 
     def get_database_blocked(self) -> bool:
@@ -377,13 +381,16 @@ class Database(object):
         else:
             plugins: Dict[str, List[PluginSetting]] = {}
             for row in rows:
-                plugin_name = row[0].split("::")[1]
+                plugin_name, setting_name = row[0].split("::")[1:]
                 value, description, display_name = row[1:]
                 if plugins.get(plugin_name) is None:
                     plugins[plugin_name] = []
                 plugins[plugin_name].append(
                     PluginSetting(
-                        name=display_name, value=value, description=description
+                        name=setting_name,
+                        display_name=display_name,
+                        value=value,
+                        description=description,
                     )
                 )
             return plugins

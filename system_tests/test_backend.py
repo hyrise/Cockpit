@@ -242,8 +242,9 @@ class TestSystem:
                         "settings": [
                             {
                                 "name": "MemoryBudget",
-                                "description": "The memory budget to target for the CompressionPlugin.",
-                                "value": "9999999999",
+                                "description": "The memory budget (MB) to target for the CompressionPlugin.",
+                                "value": "10000",
+                                "display_name": "Memory Budget (MB)",
                             }
                         ],
                     }
@@ -279,8 +280,9 @@ class TestSystem:
                         "settings": [
                             {
                                 "name": "MemoryBudget",
-                                "description": "The memory budget to target for the CompressionPlugin.",
+                                "description": "The memory budget (MB) to target for the CompressionPlugin.",
                                 "value": "50000",
+                                "display_name": "Memory Budget (MB)",
                             }
                         ],
                     }

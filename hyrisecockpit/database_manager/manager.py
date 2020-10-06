@@ -10,6 +10,7 @@ from hyrisecockpit.message import (
     delete_database_request_schema,
     load_data_request_schema,
 )
+from hyrisecockpit.plugins import available_plugins
 from hyrisecockpit.request import Body
 from hyrisecockpit.response import Response, get_error_response, get_response
 from hyrisecockpit.server import Server
@@ -189,6 +190,8 @@ class DatabaseManager(object):
         plugin: str = body["plugin"]
         if id not in self._databases.keys():
             response = get_response(400)
+        elif plugin not in available_plugins:
+            response = get_response(406)
         elif self._databases[id].activate_plugin(plugin):
             response = get_response(200)
         else:
