@@ -7,7 +7,8 @@ from psycopg2 import DatabaseError, Error, InterfaceError
 
 from hyrisecockpit.drivers.connector import Connector
 
-from .background_scheduler import BackgroundJobManager
+from .asynchronous_job_handler import AsynchronousJobHandler
+from .continuous_job_handler import ContinuousJobHandler
 from .cursor import ConnectionFactory, StorageConnectionFactory
 from .interfaces import SqlResultInterface
 from .worker_pool import WorkerPool
@@ -19,7 +20,14 @@ Plugins = Optional[Dict[str, List[PluginSetting]]]
 
 
 class Database(object):
-    """Represents database."""
+    """Represents database.
+
+    The database class is a representation of a registered Hyrise instance.
+    All the communication with the Hyrise is managed by this class and its API.
+    A worker pool object that manages the queue and task/queue workers to put the
+    Hyrise under pressure is part of this class. This class also initializes an
+    influx database for this Hyrise instance.
+    """
 
     def __init__(
         self,
@@ -31,16 +39,40 @@ class Database(object):
         dbname: str,
         number_workers: int,
         workload_publisher_url: str,
-        default_tables: str,
         storage_host: str,
         storage_password: str,
         storage_port: str,
         storage_user: str,
     ) -> None:
-        """Initialize database object."""
+        """Initialize database object.
+
+        Args:
+            id: A string identifying the Hyrise instance. For example hyrise_1.
+            user: The user that connects to the Hyrise instance.
+            password: The password needed to connect to the Hyrise instance.
+            host: The address of the host machine where the Hyrise instance is running.
+            port: The port on which the Hyrise instance is running.
+            dbname: The database name of the Hyrise instance. For example psql.
+            number_workers: Number of task workers to put the Hyrise instance under
+                load. Every worker is running in its own process.
+            workload_publisher_url: URL which is publishing the workload to the workers.
+                This URL is used by the queue worker to connect to the workload
+                generator via zeromq.
+            storage_host: Address of the influx database instance.
+            storage_password: Password to connect to the influx database.
+            storage_port: Port of the influx database.
+            storage_user: User of the influx database.
+
+        Note:
+            The attributes user, password, host, port and dbname are the same attributes
+            that you would use to create a connection to the Hyrise instance with psql.
+
+        Attributes:
+            _connection_factory: This factory builds a Hyrise connection.
+            _storage_connection_factory: This factory builds a influx connection.
+        """
         self._id = id
         self.number_workers: int = number_workers
-        self._default_tables: str = default_tables
 
         self.connection_information: Dict[str, str] = {
             "host": host,
@@ -75,20 +107,31 @@ class Database(object):
             self._database_blocked,
             self._workload_drivers,
         )
-        self._background_scheduler: BackgroundJobManager = BackgroundJobManager(
-            self._id,
-            self._database_blocked,
+        self._continuous_job_handler = ContinuousJobHandler(
             self._connection_factory,
             self._hyrise_active,
             self._worker_pool,
             self._storage_connection_factory,
+            self._database_blocked,
+        )
+        self._asynchronous_job_handler = AsynchronousJobHandler(
+            self._database_blocked,
+            self._connection_factory,
             self._workload_drivers,
         )
         self._initialize_influx()
-        self._background_scheduler.start()
+        self._continuous_job_handler.start()
 
     def _initialize_influx(self) -> None:
-        """Initialize Influx database."""
+        """Initialize Influx database.
+
+        We drop the database inside influx that has the same name like the
+        database id (Hyrise). We do that to remove all the data from previous
+        runs. Then we create a new database inside influx with the database id
+        (Hyrise). After that we create a continuous query that the influx is running
+        every x seconds. For example, to automatically calculate the throughput
+        per second.
+        """
         with self._storage_connection_factory.create_cursor() as cursor:
             cursor.drop_database()
             cursor.create_database()
@@ -168,11 +211,23 @@ class Database(object):
             )
 
     def get_queue_length(self) -> int:
-        """Return queue length."""
+        """Return queue length.
+
+        We return the number of task that still need to be send to the
+        Hyrise instance.
+        """
         return self._worker_pool.get_queue_length()
 
     def load_data(self, workload: Dict) -> bool:
-        """Load pre-generated tables."""
+        """Load pre-generated tables.
+
+        First, we check if the workload and scale factor is valid.
+        The workload needs to have an equivalent driver and the
+        driver needs to support the scale factor. Moreover the worker pool
+        needs to be closed. If one of this requirements is not met, the function
+        will return false. Otherwise the tables will be loaded via the
+        asynchronous job handler.
+        """
         workload_type = workload["workload_type"]
         scale_factor = workload["scale_factor"]
         if workload_type not in self._workload_drivers:
@@ -184,12 +239,15 @@ class Database(object):
         elif self._worker_pool.get_status() != "closed":
             return False
         else:
-            return self._background_scheduler.load_tables(
+            return self._asynchronous_job_handler.load_tables(
                 workload_type, float(scale_factor)
             )
 
     def delete_data(self, workload: Dict) -> bool:
-        """Delete tables."""
+        """Delete tables.
+
+        Same procedure like in load_data.
+        """
         workload_type = workload["workload_type"]
         scale_factor = workload["scale_factor"]
         if workload_type not in self._workload_drivers:
@@ -201,7 +259,7 @@ class Database(object):
         elif self._worker_pool.get_status() != "closed":
             return False
         else:
-            return self._background_scheduler.delete_tables(
+            return self._asynchronous_job_handler.delete_tables(
                 workload_type, float(scale_factor)
             )
 
@@ -210,22 +268,31 @@ class Database(object):
         active_plugins = self._get_plugins()
         if active_plugins is None or plugin in active_plugins:
             return False
-        return self._background_scheduler.activate_plugin(plugin)
+        return self._asynchronous_job_handler.activate_plugin(plugin)
 
     def deactivate_plugin(self, plugin: str) -> bool:
         """Deactivate plugin."""
-        return self._background_scheduler.deactivate_plugin(plugin)
+        return self._asynchronous_job_handler.deactivate_plugin(plugin)
 
     def get_database_blocked(self) -> bool:
-        """Return tables loading flag."""
+        """Return database blocked flag.
+
+        The database is blocked if we load/delete tables.
+        """
         return bool(self._database_blocked.value)
 
     def get_worker_pool_status(self) -> str:
-        """Return worker pool status."""
+        """Return worker pool status.
+
+        A worker poll can have the status running and closed.
+        """
         return self._worker_pool.get_status()
 
     def get_hyrise_active(self) -> bool:
-        """Return status of hyrise."""
+        """Return status of Hyrise.
+
+        This flag defines if the Hyrise instance is responsive or not.
+        """
         return bool(self._hyrise_active.value)
 
     def get_loaded_tables_in_database(self) -> List[Dict[str, str]]:
@@ -380,4 +447,4 @@ class Database(object):
     def close(self) -> None:
         """Close the database."""
         self._worker_pool.terminate()
-        self._background_scheduler.close()
+        self._continuous_job_handler.close()

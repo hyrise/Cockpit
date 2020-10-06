@@ -1,10 +1,9 @@
-"""The BackgroundJobManager is managing the background jobs for the apscheduler."""
+"""This module handles the continuous jobs."""
 
 from multiprocessing import Value
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
-from .asynchronous_job_handler import AsynchronousJobHandler
 from .cursor import ConnectionFactory, StorageConnectionFactory
 from .job.ping_hyrise import ping_hyrise
 from .job.update_chunks_data import update_chunks_data
@@ -22,30 +21,43 @@ from .job.update_workload_statement_information import (
 from .worker_pool import WorkerPool
 
 
-class BackgroundJobManager(object):
-    """Manage background scheduling jobs."""
+class ContinuousJobHandler:
+    """Continuous Job Handler.
+
+    This class manage all jobs that are executed continuously in the background.
+    The jobs are executed via a background scheduler
+    (https://apscheduler.readthedocs.io/en/stable/).
+    """
 
     def __init__(
         self,
-        database_id: str,
-        database_blocked: Value,
         connection_factory: ConnectionFactory,
         hyrise_active: Value,
         worker_pool: WorkerPool,
         storage_connection_factory: StorageConnectionFactory,
-        workload_drivers,
+        database_blocked: Value,
     ):
-        """Initialize BackgroundJobManager object."""
-        self._database_id: str = database_id
+        """Initialize continuous Job Handler.
+
+        Args:
+            connection_factory: An object to create a connection to the Hyrise
+                database. All information relevant for the connection (port, host) is
+                saved in this object.
+            hyrise_active: Flag stored in a shared memory map. This flag
+                stores if the Hyrise instance is active or not.
+            worker_pool: An object that manages the queue and task/queue workers. Its
+                api is used to get the queue length.
+            storage_connection_factory: An object to create a connection to the Influx
+                database. All information relevant for the connection (port, host) is
+                saved in this object.
+            database_blocked: Flag stored in a shared memory map. This flag
+                stores if the Hyrise instance is blocked or not.
+        """
+        self._connection_factory = connection_factory
+        self._hyrise_active = hyrise_active
+        self._worker_pool = worker_pool
+        self._storage_connection_factory = storage_connection_factory
         self._database_blocked: Value = database_blocked
-        self._connection_factory: ConnectionFactory = connection_factory
-        self._storage_connection_factory: StorageConnectionFactory = (
-            storage_connection_factory
-        )
-        self._worker_pool: WorkerPool = worker_pool
-        self._workload_drivers = workload_drivers
-        self._scheduler: BackgroundScheduler = BackgroundScheduler()
-        self._hyrise_active: Value = hyrise_active
         self._previous_system_data = {
             "previous_system_usage": None,
             "previous_process_usage": None,
@@ -53,16 +65,15 @@ class BackgroundJobManager(object):
         self._previous_chunk_data = {
             "value": None,
         }
-        self._asynchronous_job_handler = AsynchronousJobHandler(
-            self._database_blocked,
-            self._connection_factory,
-            self._workload_drivers,
-        )
-
+        self._scheduler: BackgroundScheduler = BackgroundScheduler()
         self._init_jobs()
 
     def _init_jobs(self) -> None:
-        """Initialize basic background jobs."""
+        """Initialize basic background jobs.
+
+        This function registers all continuous jobs in the background
+        scheduler.
+        """
         self._ping_hyrise_job = self._scheduler.add_job(
             func=ping_hyrise,
             trigger="interval",
@@ -153,7 +164,11 @@ class BackgroundJobManager(object):
         self._scheduler.start()
 
     def close(self) -> None:
-        """Close background scheduler."""
+        """Close background scheduler.
+
+        Here we remove all jobs from the background scheduler and
+        shut it down.
+        """
         self._update_workload_statement_information_job.remove()
         self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()
@@ -163,19 +178,3 @@ class BackgroundJobManager(object):
         self._update_workload_operator_information_job.remove()
         self._ping_hyrise_job.remove()
         self._scheduler.shutdown()
-
-    def load_tables(self, workload_type: str, scalefactor: float) -> bool:
-        """Load tables."""
-        return self._asynchronous_job_handler.load_tables(workload_type, scalefactor)
-
-    def delete_tables(self, workload_type: str, scalefactor: float) -> bool:
-        """Delete tables."""
-        return self._asynchronous_job_handler.delete_tables(workload_type, scalefactor)
-
-    def activate_plugin(self, plugin: str) -> bool:
-        """Activate plugin."""
-        return self._asynchronous_job_handler.activate_plugin(plugin)
-
-    def deactivate_plugin(self, plugin: str) -> bool:
-        """Dectivate plugin."""
-        return self._asynchronous_job_handler.deactivate_plugin(plugin)
