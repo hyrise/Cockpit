@@ -10,6 +10,7 @@ from hyrisecockpit.message import (
     delete_database_request_schema,
     load_data_request_schema,
 )
+from hyrisecockpit.plugins import available_plugins
 from hyrisecockpit.request import Body
 from hyrisecockpit.response import Response, get_error_response, get_response
 from hyrisecockpit.server import Server
@@ -32,7 +33,6 @@ class DatabaseManager(object):
         db_manager_port: str,
         workload_sub_host: str,
         workload_pubsub_port: str,
-        default_tables: str,
         storage_host: str,
         storage_password: str,
         storage_port: str,
@@ -41,7 +41,6 @@ class DatabaseManager(object):
         """Initialize a DatabaseManager."""
         self._workload_sub_host = workload_sub_host
         self._workload_pubsub_port = workload_pubsub_port
-        self._default_tables = default_tables
         self._storage_host = storage_host
         self._storage_password = storage_password
         self._storage_port = storage_port
@@ -118,7 +117,6 @@ class DatabaseManager(object):
                 self._workload_sub_host,
                 self._workload_pubsub_port,
             ),
-            self._default_tables,
             self._storage_host,
             self._storage_password,
             self._storage_port,
@@ -192,6 +190,8 @@ class DatabaseManager(object):
         plugin: str = body["plugin"]
         if id not in self._databases.keys():
             response = get_response(400)
+        elif plugin not in available_plugins:
+            response = get_response(406)
         elif self._databases[id].activate_plugin(plugin):
             response = get_response(200)
         else:

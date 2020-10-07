@@ -9,7 +9,7 @@ from pytest import mark
 from hyrisecockpit.cross_platform_support.testing_support import MagicMock
 from hyrisecockpit.database_manager.job.get_detailed_plugins import (
     _get_plugin_setting,
-    _get_plugins,
+    get_plugins,
     get_detailed_plugins,
 )
 
@@ -26,7 +26,7 @@ class TestGetPluginsJob:
             mock_cursor
         )
 
-        result: Optional[List] = _get_plugins(mock_connection_factory)
+        result: Optional[List] = get_plugins(mock_connection_factory)
 
         mock_cursor.execute.assert_called_once_with(
             ("SELECT name FROM meta_plugins;"), None
@@ -38,7 +38,11 @@ class TestGetPluginsJob:
         """Test get existing plug-ins."""
         mock_cursor = MagicMock()
         mock_cursor.fetchall.return_value = [
-            ("Hildegunst von Mythenmetz", "Lindwurm", "sprachliche Begabung",),
+            (
+                "Hildegunst von Mythenmetz",
+                "Lindwurm",
+                "sprachliche Begabung",
+            ),
             (
                 "Rumo von Zamonien",
                 "Wolpertinger",
@@ -51,13 +55,14 @@ class TestGetPluginsJob:
         )
 
         expected: List[str] = ["Hildegunst von Mythenmetz", "Rumo von Zamonien"]
-        result: Optional[List] = _get_plugins(mock_connection_factory)
+        result: Optional[List] = get_plugins(mock_connection_factory)
 
         assert type(result) is list
         assert Counter(result) == Counter(expected)
 
     @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
+        "exceptions",
+        [DatabaseError(), InterfaceError()],
     )
     def test_gets_plugins_when_database_throws_exception(self, exceptions) -> None:
         """Test get existing plug-ins when database throws exception."""
@@ -72,7 +77,7 @@ class TestGetPluginsJob:
         mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
             mock_cursor
         )
-        result: Optional[List] = _get_plugins(mock_connection_factory)
+        result: Optional[List] = get_plugins(mock_connection_factory)
 
         assert result is None
 
@@ -87,7 +92,7 @@ class TestGetPluginsJob:
         result = _get_plugin_setting(mock_connection_factory)
 
         mock_cursor.execute.assert_called_once_with(
-            "SELECT name, value, description FROM meta_settings WHERE name LIKE 'Plugin::%';",
+            "SELECT name, value, description, display_name FROM meta_settings WHERE name LIKE 'Plugin::%';",
             None,
         )
 
@@ -98,8 +103,13 @@ class TestGetPluginsJob:
         """Test get existing plug-ins settings."""
         mock_cursor = MagicMock()
         mock_cursor.fetchall.return_value = [
-            ("Plugin::Compression::MemoryBudget", "55555", "..."),
-            ("Plugin::Something::SomeSetting", "true", "this should show up"),
+            ("Plugin::Compression::MemoryBudget", "55555", "...", "Memory Budget (MB)"),
+            (
+                "Plugin::Something::SomeSetting",
+                "true",
+                "this should show up",
+                "Some Setting (KB)",
+            ),
         ]
         mock_connection_factory = MagicMock()
         mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
@@ -108,11 +118,17 @@ class TestGetPluginsJob:
 
         expected = {
             "Compression": [
-                {"name": "MemoryBudget", "value": "55555", "description": "..."}
+                {
+                    "name": "MemoryBudget",
+                    "display_name": "Memory Budget (MB)",
+                    "value": "55555",
+                    "description": "...",
+                }
             ],
             "Something": [
                 {
                     "name": "SomeSetting",
+                    "display_name": "Some Setting (KB)",
                     "value": "true",
                     "description": "this should show up",
                 }
@@ -125,7 +141,8 @@ class TestGetPluginsJob:
         assert result == expected
 
     @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
+        "exceptions",
+        [DatabaseError(), InterfaceError()],
     )
     def test_gets_plugin_settings_when_database_throws_exception(
         self, exceptions
@@ -147,7 +164,7 @@ class TestGetPluginsJob:
 
         assert result is None
 
-    @patch("hyrisecockpit.database_manager.job.get_detailed_plugins._get_plugins")
+    @patch("hyrisecockpit.database_manager.job.get_detailed_plugins.get_plugins")
     @patch(
         "hyrisecockpit.database_manager.job.get_detailed_plugins._get_plugin_setting"
     )
@@ -165,7 +182,7 @@ class TestGetPluginsJob:
 
         assert result is None
 
-    @patch("hyrisecockpit.database_manager.job.get_detailed_plugins._get_plugins")
+    @patch("hyrisecockpit.database_manager.job.get_detailed_plugins.get_plugins")
     @patch(
         "hyrisecockpit.database_manager.job.get_detailed_plugins._get_plugin_setting"
     )
@@ -183,7 +200,7 @@ class TestGetPluginsJob:
 
         assert result is None
 
-    @patch("hyrisecockpit.database_manager.job.get_detailed_plugins._get_plugins")
+    @patch("hyrisecockpit.database_manager.job.get_detailed_plugins.get_plugins")
     @patch(
         "hyrisecockpit.database_manager.job.get_detailed_plugins._get_plugin_setting"
     )

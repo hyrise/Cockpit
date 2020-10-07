@@ -116,7 +116,7 @@ export function assertPluginSettings(
   databasePluginSetings.plugins.forEach((plugin: any) => {
     plugin.settings.forEach((setting: any) => {
       cy.get(selectors.settingName).within(() => {
-        cy.contains(setting.name);
+        cy.contains(setting.display_name);
       });
       cy.get(selectors.settingValue)
         .eq(idx)

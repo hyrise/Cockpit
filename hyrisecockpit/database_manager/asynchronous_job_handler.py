@@ -10,6 +10,7 @@ from .job.activate_plugin import activate_plugin as activate_plugin_job
 from .job.deactivate_plugin import deactivate_plugin as deactivate_plugin_job
 from .job.delete_tables import delete_tables as delete_tables_job
 from .job.load_tables import load_tables as load_tables_job
+from .job.get_detailed_plugins import get_plugins as get_plugins_job
 
 
 class AsynchronousJobHandler:
@@ -105,6 +106,9 @@ class AsynchronousJobHandler:
             bool: True if job was successful started, False if database was
                 blocked and job couldn't be started.
         """
+        active_plugins = get_plugins_job(self._connection_factory)
+        if active_plugins is None or plugin in active_plugins:
+            return False
         if not self._database_blocked.value:
             job_thread = Thread(
                 target=activate_plugin_job,
@@ -128,6 +132,9 @@ class AsynchronousJobHandler:
             bool: True if job was successful started, False if database was
                 blocked and job couldn't be started.
         """
+        active_plugins = get_plugins_job(self._connection_factory)
+        if active_plugins is None or plugin not in active_plugins:
+            return False
         if not self._database_blocked.value:
             job_thread = Thread(
                 target=deactivate_plugin_job,

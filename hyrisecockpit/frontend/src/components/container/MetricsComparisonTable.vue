@@ -15,9 +15,15 @@
         flat
       >
         <v-card-text class="white--text text-center mt-n3 mb-n4">
-          <strong>
+          <strong
+            class="database-id"
+            v-bind:title="database.systemDetails.host"
+          >
             {{ database.id }}
           </strong>
+          <div>
+            Database ID
+          </div>
         </v-card-text>
       </v-card>
       <div v-for="metric in selectedMetrics" :key="metric">
@@ -36,7 +42,15 @@
       </div>
       <v-card class="column-bottom-border" :color="database.color">
         <v-card-text class="white--text text-center mt-n3 mb-n2">
-          {{ database.id }}
+          <strong
+            class="database-id"
+            v-bind:title="database.systemDetails.host"
+          >
+            {{ database.id }}
+          </strong>
+          <div>
+            Database ID
+          </div>
         </v-card-text>
       </v-card>
     </v-card>
@@ -103,5 +117,8 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   margin: 0px 6px 6px 6px;
+}
+.database-id {
+  cursor: default;
 }
 </style>

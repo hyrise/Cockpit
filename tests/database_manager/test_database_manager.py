@@ -10,7 +10,6 @@ from hyrisecockpit.response import get_error_response, get_response
 
 DB_MANAGER_LISTENING = "listening_host"
 DB_MANAGER_PORT = "listening_port"
-DEFAULT_TABLES = "default_tables"
 STORAGE_HOST = "storage_host"
 STORAGE_PASSWORD = "storage_password"
 STORAGE_PORT = "storage_port"
@@ -85,7 +84,6 @@ class TestDatabaseManager:
             DB_MANAGER_PORT,
             WORKLOAD_SUB_HOST,
             WORKLOAD_PUBSUB_PORT,
-            DEFAULT_TABLES,
             STORAGE_HOST,
             STORAGE_PASSWORD,
             STORAGE_PORT,
@@ -120,7 +118,6 @@ class TestDatabaseManager:
         assert isinstance(database_manager, DatabaseManager)
         assert database_manager._workload_sub_host == WORKLOAD_SUB_HOST
         assert database_manager._workload_pubsub_port == WORKLOAD_PUBSUB_PORT
-        assert database_manager._default_tables == DEFAULT_TABLES
         assert database_manager._storage_host == STORAGE_HOST
         assert database_manager._storage_port == STORAGE_PORT
         assert database_manager._storage_user == STORAGE_USER
@@ -248,7 +245,6 @@ class TestDatabaseManager:
                 WORKLOAD_SUB_HOST,
                 WORKLOAD_PUBSUB_PORT,
             ),
-            DEFAULT_TABLES,
             STORAGE_HOST,
             STORAGE_PASSWORD,
             STORAGE_PORT,
@@ -500,6 +496,7 @@ class TestDatabaseManager:
 
         assert expected_response == response
 
+    @patch("hyrisecockpit.database_manager.manager.available_plugins", ["pluginName"])
     def test_call_activate_plugin(self, database_manager: DatabaseManager) -> None:
         """Call activate plugin."""
         database = fake_database()
@@ -511,6 +508,21 @@ class TestDatabaseManager:
 
         assert get_response(200) == response
 
+    @patch("hyrisecockpit.database_manager.manager.available_plugins", ["pluginName"])
+    def test_call_activate_plugin_with_not_valid_plugin_name(
+        self, database_manager: DatabaseManager
+    ) -> None:
+        """Call activate plugin unsuccessful."""
+        database = fake_database()
+        database.activate_plugin.return_value = False
+        database_manager._databases["db1"] = database
+
+        body: Dict = {"id": "db1", "plugin": "notValidPluginName"}
+        response = database_manager._call_activate_plugin(body)
+
+        assert get_response(406) == response
+
+    @patch("hyrisecockpit.database_manager.manager.available_plugins", ["pluginName"])
     def test_call_activate_plugin_unsuccessful(
         self, database_manager: DatabaseManager
     ) -> None:
@@ -524,6 +536,7 @@ class TestDatabaseManager:
 
         assert get_response(423) == response
 
+    @patch("hyrisecockpit.database_manager.manager.available_plugins", ["pluginName"])
     def test_call_activate_plugin_on_not_existing_database(
         self, database_manager: DatabaseManager
     ) -> None:

@@ -188,9 +188,13 @@ class TestAsynchronousJobHandler:
         mock_job_thread.start.assert_not_called()
         assert not result
 
+    @patch("hyrisecockpit.database_manager.asynchronous_job_handler.get_plugins_job")
     @patch("hyrisecockpit.database_manager.asynchronous_job_handler.Thread")
     def test_successfully_activate_plugin(
-        self, mock_thread: MagicMock, asynchronous_job_handler: AsynchronousJobHandler
+        self,
+        mock_thread: MagicMock,
+        mock_get_plugins_job: MagicMock,
+        asynchronous_job_handler: AsynchronousJobHandler,
     ) -> None:
         """Test successfully start activate plug-in job.
 
@@ -200,13 +204,15 @@ class TestAsynchronousJobHandler:
 
         Args:
             mock_thread: mock for the Thread class
+            mock_get_plugins_job: mock for the get_plugins_job
             asynchronous_job_handler: A AsynchronousJobHandler object
         """
+        fake_plugin = "plugin"
+        mock_get_plugins_job.return_value = ["some other plugin"]
         asynchronous_job_handler._database_blocked.value = False
         asynchronous_job_handler._connection_factory = MagicMock()
         mock_job_thread = MagicMock()
         mock_thread.return_value = mock_job_thread
-        fake_plugin = "plugin"
 
         result: bool = asynchronous_job_handler.activate_plugin(fake_plugin)
 
@@ -217,9 +223,45 @@ class TestAsynchronousJobHandler:
         mock_job_thread.start.assert_called_once()
         assert result
 
+    @patch("hyrisecockpit.database_manager.asynchronous_job_handler.get_plugins_job")
+    @patch("hyrisecockpit.database_manager.asynchronous_job_handler.Thread")
+    def test_try_to_activate_already_activated_plugin(
+        self,
+        mock_thread: MagicMock,
+        mock_get_plugins_job: MagicMock,
+        asynchronous_job_handler: AsynchronousJobHandler,
+    ) -> None:
+        """Test try to activate already activated plug-in.
+
+        This test will mock the Thread class from the python threading library.
+        It will check if the activate_plugin method is working as expected by
+        returning False if the plug-in is already activated.
+
+        Args:
+            mock_thread: mock for the Thread class
+            mock_get_plugins_job: mock for the get_plugins_job
+            asynchronous_job_handler: A AsynchronousJobHandler object
+        """
+        fake_plugin = "plugin"
+        mock_get_plugins_job.return_value = [fake_plugin]
+        asynchronous_job_handler._database_blocked.value = False
+        asynchronous_job_handler._connection_factory = MagicMock()
+        mock_job_thread = MagicMock()
+        mock_thread.return_value = mock_job_thread
+
+        result: bool = asynchronous_job_handler.activate_plugin(fake_plugin)
+
+        mock_thread.assert_not_called()
+        mock_job_thread.start.assert_not_called()
+        assert not result
+
+    @patch("hyrisecockpit.database_manager.asynchronous_job_handler.get_plugins_job")
     @patch("hyrisecockpit.database_manager.asynchronous_job_handler.Thread")
     def test_start_activate_plugin_while_database_is_blocked(
-        self, mock_thread: MagicMock, asynchronous_job_handler: AsynchronousJobHandler
+        self,
+        mock_thread: MagicMock,
+        mock_get_plugins_job: MagicMock,
+        asynchronous_job_handler: AsynchronousJobHandler,
     ) -> None:
         """Test start activate plug-in job while database is blocked.
 
@@ -230,8 +272,11 @@ class TestAsynchronousJobHandler:
 
         Args:
             mock_thread: mock for the Thread class
+            mock_get_plugins_job: mock for the get_plugins_job
             asynchronous_job_handler: A AsynchronousJobHandler object
         """
+        fake_plugin = "plugin"
+        mock_get_plugins_job.return_value = ["some other plugin"]
         asynchronous_job_handler._database_blocked.value = True
         asynchronous_job_handler._connection_factory = MagicMock()
         mock_job_thread = MagicMock()
@@ -244,9 +289,13 @@ class TestAsynchronousJobHandler:
         mock_job_thread.start.assert_not_called()
         assert not result
 
+    @patch("hyrisecockpit.database_manager.asynchronous_job_handler.get_plugins_job")
     @patch("hyrisecockpit.database_manager.asynchronous_job_handler.Thread")
     def test_successfully_deactivate_plugin(
-        self, mock_thread: MagicMock, asynchronous_job_handler: AsynchronousJobHandler
+        self,
+        mock_thread: MagicMock,
+        mock_get_plugins_job: MagicMock,
+        asynchronous_job_handler: AsynchronousJobHandler,
     ) -> None:
         """Test successfully start deactivate plug-in job.
 
@@ -256,8 +305,11 @@ class TestAsynchronousJobHandler:
 
         Args:
             mock_thread: mock for the Thread class
+            mock_get_plugins_job: mock for the get_plugins_job
             asynchronous_job_handler: A AsynchronousJobHandler object
         """
+        fake_plugin = "plugin"
+        mock_get_plugins_job.return_value = [fake_plugin]
         asynchronous_job_handler._database_blocked.value = False
         asynchronous_job_handler._connection_factory = MagicMock()
         mock_job_thread = MagicMock()
@@ -273,9 +325,45 @@ class TestAsynchronousJobHandler:
         mock_job_thread.start.assert_called_once()
         assert result
 
+    @patch("hyrisecockpit.database_manager.asynchronous_job_handler.get_plugins_job")
+    @patch("hyrisecockpit.database_manager.asynchronous_job_handler.Thread")
+    def test_try_to_deactivate_not_existing_activated_plugin(
+        self,
+        mock_thread: MagicMock,
+        mock_get_plugins_job: MagicMock,
+        asynchronous_job_handler: AsynchronousJobHandler,
+    ) -> None:
+        """Test try to activate already activated plug-in.
+
+        This test will mock the Thread class from the python threading library.
+        It will check if the deactivate_plugin method is working as expected by
+        returning False if the plug-in is not existing.
+
+        Args:
+            mock_thread: mock for the Thread class
+            mock_get_plugins_job: mock for the get_plugins_job
+            asynchronous_job_handler: A AsynchronousJobHandler object
+        """
+        fake_plugin = "plugin"
+        mock_get_plugins_job.return_value = []
+        asynchronous_job_handler._database_blocked.value = False
+        asynchronous_job_handler._connection_factory = MagicMock()
+        mock_job_thread = MagicMock()
+        mock_thread.return_value = mock_job_thread
+
+        result: bool = asynchronous_job_handler.deactivate_plugin(fake_plugin)
+
+        mock_thread.assert_not_called()
+        mock_job_thread.start.assert_not_called()
+        assert not result
+
+    @patch("hyrisecockpit.database_manager.asynchronous_job_handler.get_plugins_job")
     @patch("hyrisecockpit.database_manager.asynchronous_job_handler.Thread")
     def test_start_deactivate_plugin_while_database_is_blocked(
-        self, mock_thread: MagicMock, asynchronous_job_handler: AsynchronousJobHandler
+        self,
+        mock_thread: MagicMock,
+        mock_get_plugins_job: MagicMock,
+        asynchronous_job_handler: AsynchronousJobHandler,
     ) -> None:
         """Test start deactivate plug-in job while database is blocked.
 
@@ -286,13 +374,15 @@ class TestAsynchronousJobHandler:
 
         Args:
             mock_thread: mock for the Thread class
+            mock_get_plugins_job: mock for the get_plugins_job
             asynchronous_job_handler: A AsynchronousJobHandler object
         """
+        fake_plugin = "plugin"
+        mock_get_plugins_job.return_value = [fake_plugin]
         asynchronous_job_handler._database_blocked.value = True
         asynchronous_job_handler._connection_factory = MagicMock()
         mock_job_thread = MagicMock()
         mock_thread.return_value = mock_job_thread
-        fake_plugin = "plugin"
 
         result: bool = asynchronous_job_handler.deactivate_plugin(fake_plugin)
 

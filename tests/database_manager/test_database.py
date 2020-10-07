@@ -1,7 +1,6 @@
 """Tests for the database module."""
 
 from multiprocessing.sharedctypes import Synchronized as ValueType
-from typing import Dict, List
 from unittest.mock import MagicMock, patch
 
 from pytest import fixture
@@ -16,48 +15,28 @@ database_port: str = "666"
 database_name: str = "MongoDB"
 number_workers: int = 42
 workload_publisher_url: str = "lothar matthäus"
-default_tables: str = "Watt_ihr_Volt"
 storage_host: str = "xulfni"
 storage_password: str = "1234"
 storage_port: str = "42"
 storage_user: str = "Käptin Blaubär"
-
-mocked_pool_cur: MagicMock = MagicMock()
-mocked_pool_cur.fetchall.return_value = []
-
-
-def get_fake_tables() -> Dict:
-    """Return fake table dictionary."""
-    fake_dict: Dict[str, List[str]] = {
-        "alternative": [
-            "The Dough Rollers",
-            "Broken Witt Rebels",
-            "Bonny Doon",
-            "Jack White",
-        ],
-        "Rock": ["Gary Clark Jr.", "Greta Van Fleet", "Tenacious D"],
-    }
-    return fake_dict
-
-
-def get_fake_background_job_manager(*args) -> MagicMock:
-    """Return fake  BackgroundJobManager."""
-    mocked_job_manager: MagicMock = MagicMock()
-    mocked_job_manager.start.side_effect = None
-    mocked_job_manager.load_tables.side_effect = None
-    return mocked_job_manager
 
 
 class TestDatabase(object):
     """Tests for the Database class."""
 
     @fixture
-    @patch(
-        "hyrisecockpit.database_manager.database.BackgroundJobManager",
-        get_fake_background_job_manager,
-    )
     @patch("hyrisecockpit.database_manager.database.WorkerPool", MagicMock())
+    @patch(
+        "hyrisecockpit.database_manager.database.ContinuousJobHandler",
+        MagicMock(),
+    )
+    @patch(
+        "hyrisecockpit.database_manager.database.AsynchronousJobHandler", MagicMock()
+    )
     @patch("hyrisecockpit.database_manager.database.ConnectionFactory", MagicMock())
+    @patch(
+        "hyrisecockpit.database_manager.database.StorageConnectionFactory", MagicMock()
+    )
     @patch(
         "hyrisecockpit.database_manager.database.Database._initialize_influx",
         MagicMock(),
@@ -77,23 +56,82 @@ class TestDatabase(object):
             database_name,
             number_workers,
             workload_publisher_url,
-            default_tables,
             storage_host,
             storage_password,
             storage_port,
             storage_user,
         )
 
-    def test_inintializes_database(self, database: Database) -> None:
+    @patch("hyrisecockpit.database_manager.database.Connector")
+    @patch("hyrisecockpit.database_manager.database.WorkerPool")
+    @patch(
+        "hyrisecockpit.database_manager.database.ContinuousJobHandler",
+    )
+    @patch("hyrisecockpit.database_manager.database.AsynchronousJobHandler")
+    @patch("hyrisecockpit.database_manager.database.ConnectionFactory")
+    @patch("hyrisecockpit.database_manager.database.StorageConnectionFactory")
+    @patch("hyrisecockpit.database_manager.database.Database._initialize_influx")
+    def test_inintializes_database(
+        self,
+        mock_initialize_influx: MagicMock,
+        mock_storage_connection_factory: MagicMock,
+        mock_connection_factory: MagicMock,
+        mock_asynchronous_job_handler: MagicMock,
+        mock_continuous_job_handler: MagicMock,
+        mock_worker_pool: MagicMock,
+        mock_connector: MagicMock,
+    ) -> None:
         """Test initialization of database attributes."""
+        database = Database(
+            database_id,
+            database_user,
+            database_password,
+            database_host,
+            database_port,
+            database_name,
+            number_workers,
+            workload_publisher_url,
+            storage_host,
+            storage_password,
+            storage_port,
+            storage_user,
+        )
+        mock_connection_factory.assert_called_once_with(
+            **database.connection_information
+        )
+        mock_storage_connection_factory.assert_called_once_with(
+            storage_user, storage_password, storage_host, storage_port, database_id
+        )
+        mock_connector.get_workload_drivers.assert_called_once()
+        mock_worker_pool.assert_called_once_with(
+            database._connection_factory,
+            number_workers,
+            database_id,
+            workload_publisher_url,
+            database._database_blocked,
+            database._workload_drivers,
+        )
+        mock_continuous_job_handler.assert_called_once_with(
+            database._connection_factory,
+            database._hyrise_active,
+            database._worker_pool,
+            database._storage_connection_factory,
+            database._database_blocked,
+        )
+        mock_asynchronous_job_handler.assert_called_once_with(
+            database._database_blocked,
+            database._connection_factory,
+            database._workload_drivers,
+        )
+        database._continuous_job_handler.start.assert_called_once()  # type: ignore
+        mock_initialize_influx.assert_called_once()
+
         assert database._id == database_id
         assert database.number_workers == number_workers
-        assert database._default_tables == default_tables
         assert type(database._database_blocked) is ValueType
         assert type(database._hyrise_active) is ValueType
         assert database._hyrise_active.value
         assert not database._database_blocked.value
-        database._background_scheduler.start.assert_called_once()  # type: ignore
 
     def test_gets_worker_pool_queue_length(self, database: Database) -> None:
         """Test return of queue length from worker pool."""
@@ -110,69 +148,69 @@ class TestDatabase(object):
         self, database: Database
     ) -> None:
         """Test loading data while worker pool is closed and background scheduler is returning true."""
-        mocked_worker_pool: MagicMock = MagicMock()
-        mocked_worker_pool.get_status.return_value = "closed"
-        mocked_background_scheduler: MagicMock = MagicMock()
-        mocked_background_scheduler.load_tables.return_value = True
+        mock_worker_pool: MagicMock = MagicMock()
+        mock_worker_pool.get_status.return_value = "closed"
+        mock_asynchronous_job_handler: MagicMock = MagicMock()
+        mock_asynchronous_job_handler.load_tables.return_value = True
         fake_workload = {"workload_type": "tpch", "scale_factor": 1.0}
-        database._worker_pool = mocked_worker_pool
-        database._background_scheduler = mocked_background_scheduler
+        database._worker_pool = mock_worker_pool
+        database._asynchronous_job_handler = mock_asynchronous_job_handler
 
         result: bool = database.load_data(fake_workload)
 
-        mocked_worker_pool.get_status.assert_called_once()
-        mocked_background_scheduler.load_tables.assert_called_once_with("tpch", 1.0)
+        mock_worker_pool.get_status.assert_called_once()
+        mock_asynchronous_job_handler.load_tables.assert_called_once_with("tpch", 1.0)
         assert type(result) is bool
         assert result
 
     def test_loads_data_while_worker_pool_is_running(self, database: Database) -> None:
         """Test loading data while worker pool is running."""
-        mocked_worker_pool: MagicMock = MagicMock()
-        mocked_worker_pool.get_status.return_value = "running"
-        mocked_background_scheduler: MagicMock = MagicMock()
-        mocked_background_scheduler.load_tables.return_value = True
+        mock_worker_pool: MagicMock = MagicMock()
+        mock_worker_pool.get_status.return_value = "running"
+        mock_asynchronous_job_handler: MagicMock = MagicMock()
+        mock_asynchronous_job_handler.load_tables.return_value = True
         fake_workload = {"workload_type": "tpch", "scale_factor": 1.0}
-        database._worker_pool = mocked_worker_pool
-        database._background_scheduler = mocked_background_scheduler
+        database._worker_pool = mock_worker_pool
+        database._asynchronous_job_handler = mock_asynchronous_job_handler
 
         result: bool = database.load_data(fake_workload)
 
-        mocked_worker_pool.get_status.assert_called_once()
-        mocked_background_scheduler.load_tables.assert_not_called()
+        mock_worker_pool.get_status.assert_called_once()
+        mock_asynchronous_job_handler.load_tables.assert_not_called()
         assert type(result) is bool
         assert not result
 
     def test_loads_data_with_no_valid_workload_type(self, database: Database) -> None:
         """Test load data with no valid workload type."""
-        mocked_worker_pool: MagicMock = MagicMock()
-        mocked_worker_pool.get_status.return_value = "running"
-        mocked_background_scheduler: MagicMock = MagicMock()
-        mocked_background_scheduler.load_tables.return_value = True
+        mock_worker_pool: MagicMock = MagicMock()
+        mock_worker_pool.get_status.return_value = "running"
+        mock_asynchronous_job_handler: MagicMock = MagicMock()
+        mock_asynchronous_job_handler.load_tables.return_value = True
         fake_workload = {"workload_type": "tpcc_not_valid", "scale_factor": 1.0}
-        database._worker_pool = mocked_worker_pool
-        database._background_scheduler = mocked_background_scheduler
+        database._worker_pool = mock_worker_pool
+        database._asynchronous_job_handler = mock_asynchronous_job_handler
         result: bool = database.load_data(fake_workload)
 
-        mocked_background_scheduler.load_tables.assert_not_called()
+        mock_asynchronous_job_handler.load_tables.assert_not_called()
         assert type(result) is bool
         assert not result
 
     def test_loads_data_with_no_valid_scalefactor(self, database: Database) -> None:
         """Test load data with no valid scalefactor."""
-        mocked_worker_pool: MagicMock = MagicMock()
-        mocked_worker_pool.get_status.return_value = "running"
-        mocked_background_scheduler: MagicMock = MagicMock()
-        mocked_background_scheduler.load_tables.return_value = True
+        mock_worker_pool: MagicMock = MagicMock()
+        mock_worker_pool.get_status.return_value = "running"
+        mock_asynchronous_job_handler: MagicMock = MagicMock()
+        mock_asynchronous_job_handler.load_tables.return_value = True
         fake_workload = {"workload_type": "tpcc", "scale_factor": 1.0}
-        database._worker_pool = mocked_worker_pool
-        database._background_scheduler = mocked_background_scheduler
+        database._worker_pool = mock_worker_pool
+        database._asynchronous_job_handler = mock_asynchronous_job_handler
         mock_driver = MagicMock()
         mock_driver.get_scalefactors.return_value = [5.0]
         database._workload_drivers = {"tpcc": mock_driver}
 
         result: bool = database.load_data(fake_workload)
 
-        mocked_background_scheduler.load_tables.assert_not_called()
+        mock_asynchronous_job_handler.load_tables.assert_not_called()
         assert type(result) is bool
         assert not result
 
@@ -180,18 +218,18 @@ class TestDatabase(object):
         self, database: Database
     ) -> None:
         """Test loading data while worker pool is running."""
-        mocked_worker_pool: MagicMock = MagicMock()
-        mocked_worker_pool.get_status.return_value = "closed"
-        mocked_background_scheduler: MagicMock = MagicMock()
-        mocked_background_scheduler.load_tables.return_value = False
+        mock_worker_pool: MagicMock = MagicMock()
+        mock_worker_pool.get_status.return_value = "closed"
+        mock_asynchronous_job_handler: MagicMock = MagicMock()
+        mock_asynchronous_job_handler.load_tables.return_value = False
         fake_workload = {"workload_type": "tpch", "scale_factor": 1.0}
-        database._worker_pool = mocked_worker_pool
-        database._background_scheduler = mocked_background_scheduler
+        database._worker_pool = mock_worker_pool
+        database._asynchronous_job_handler = mock_asynchronous_job_handler
 
         result: bool = database.load_data(fake_workload)
 
-        mocked_worker_pool.get_status.assert_called_once()
-        mocked_background_scheduler.load_tables.assert_called_once_with("tpch", 1.0)
+        mock_worker_pool.get_status.assert_called_once()
+        mock_asynchronous_job_handler.load_tables.assert_called_once_with("tpch", 1.0)
         assert type(result) is bool
         assert not result
 
@@ -199,18 +237,18 @@ class TestDatabase(object):
         self, database: Database
     ) -> None:
         """Test delete of data while worker pool is closed and background scheduler is returning true."""
-        mocked_worker_pool: MagicMock = MagicMock()
-        mocked_worker_pool.get_status.return_value = "closed"
-        mocked_background_scheduler: MagicMock = MagicMock()
-        mocked_background_scheduler.delete_tables.return_value = True
+        mock_worker_pool: MagicMock = MagicMock()
+        mock_worker_pool.get_status.return_value = "closed"
+        mock_asynchronous_job_handler: MagicMock = MagicMock()
+        mock_asynchronous_job_handler.delete_tables.return_value = True
         fake_workload = {"workload_type": "tpch", "scale_factor": 1.0}
-        database._worker_pool = mocked_worker_pool
-        database._background_scheduler = mocked_background_scheduler
+        database._worker_pool = mock_worker_pool
+        database._asynchronous_job_handler = mock_asynchronous_job_handler
 
         result: bool = database.delete_data(fake_workload)
 
-        mocked_worker_pool.get_status.assert_called_once()
-        mocked_background_scheduler.delete_tables.assert_called_once_with("tpch", 1.0)
+        mock_worker_pool.get_status.assert_called_once()
+        mock_asynchronous_job_handler.delete_tables.assert_called_once_with("tpch", 1.0)
         assert type(result) is bool
         assert result
 
@@ -218,53 +256,53 @@ class TestDatabase(object):
         self, database: Database
     ) -> None:
         """Test delete of  data while worker pool is running."""
-        mocked_worker_pool: MagicMock = MagicMock()
-        mocked_worker_pool.get_status.return_value = "running"
-        mocked_background_scheduler: MagicMock = MagicMock()
-        mocked_background_scheduler.delete_tables.return_value = True
+        mock_worker_pool: MagicMock = MagicMock()
+        mock_worker_pool.get_status.return_value = "running"
+        mock_asynchronous_job_handler: MagicMock = MagicMock()
+        mock_asynchronous_job_handler.delete_tables.return_value = True
         fake_workload = {"workload_type": "tpch", "scale_factor": 1.0}
-        database._worker_pool = mocked_worker_pool
-        database._background_scheduler = mocked_background_scheduler
+        database._worker_pool = mock_worker_pool
+        database._asynchronous_job_handler = mock_asynchronous_job_handler
 
         result: bool = database.delete_data(fake_workload)
 
-        mocked_worker_pool.get_status.assert_called_once()
-        mocked_background_scheduler.delete_tables.assert_not_called()
+        mock_worker_pool.get_status.assert_called_once()
+        mock_asynchronous_job_handler.delete_tables.assert_not_called()
         assert type(result) is bool
         assert not result
 
     def test_delete_data_with_no_valid_workload_type(self, database: Database) -> None:
         """Test delete data with no valid workload type."""
-        mocked_worker_pool: MagicMock = MagicMock()
-        mocked_worker_pool.get_status.return_value = "running"
-        mocked_background_scheduler: MagicMock = MagicMock()
-        mocked_background_scheduler.load_tables.return_value = True
+        mock_worker_pool: MagicMock = MagicMock()
+        mock_worker_pool.get_status.return_value = "running"
+        mock_asynchronous_job_handler: MagicMock = MagicMock()
+        mock_asynchronous_job_handler.load_tables.return_value = True
         fake_workload = {"workload_type": "tpcc_not_valid", "scale_factor": 1.0}
-        database._worker_pool = mocked_worker_pool
-        database._background_scheduler = mocked_background_scheduler
+        database._worker_pool = mock_worker_pool
+        database._asynchronous_job_handler = mock_asynchronous_job_handler
 
         result: bool = database.delete_data(fake_workload)
 
-        mocked_background_scheduler.delete_tables.assert_not_called()
+        mock_asynchronous_job_handler.delete_tables.assert_not_called()
         assert type(result) is bool
         assert not result
 
     def test_delete_data_with_no_valid_scalefactor(self, database: Database) -> None:
         """Test delete data with no valid scalefactor."""
-        mocked_worker_pool: MagicMock = MagicMock()
-        mocked_worker_pool.get_status.return_value = "running"
-        mocked_background_scheduler: MagicMock = MagicMock()
-        mocked_background_scheduler.load_tables.return_value = True
+        mock_worker_pool: MagicMock = MagicMock()
+        mock_worker_pool.get_status.return_value = "running"
+        mock_asynchronous_job_handler: MagicMock = MagicMock()
+        mock_asynchronous_job_handler.load_tables.return_value = True
         fake_workload = {"workload_type": "tpcc", "scale_factor": 1.0}
-        database._worker_pool = mocked_worker_pool
-        database._background_scheduler = mocked_background_scheduler
+        database._worker_pool = mock_worker_pool
+        database._asynchronous_job_handler = mock_asynchronous_job_handler
         mock_driver = MagicMock()
         mock_driver.get_scalefactors.return_value = [5.0]
         database._workload_drivers = {"tpcc": mock_driver}
 
         result: bool = database.delete_data(fake_workload)
 
-        mocked_background_scheduler.delete_tables.assert_not_called()
+        mock_asynchronous_job_handler.delete_tables.assert_not_called()
         assert type(result) is bool
         assert not result
 
@@ -272,81 +310,62 @@ class TestDatabase(object):
         self, database: Database
     ) -> None:
         """Test delete of  data while worker pool is running."""
-        mocked_worker_pool: MagicMock = MagicMock()
-        mocked_worker_pool.get_status.return_value = "closed"
-        mocked_background_scheduler: MagicMock = MagicMock()
-        mocked_background_scheduler.delete_tables.return_value = False
+        mock_worker_pool: MagicMock = MagicMock()
+        mock_worker_pool.get_status.return_value = "closed"
+        mock_asynchronous_job_handler: MagicMock = MagicMock()
+        mock_asynchronous_job_handler.delete_tables.return_value = False
         fake_workload = {"workload_type": "tpch", "scale_factor": 1.0}
-        database._worker_pool = mocked_worker_pool
-        database._background_scheduler = mocked_background_scheduler
+        database._worker_pool = mock_worker_pool
+        database._asynchronous_job_handler = mock_asynchronous_job_handler
 
         result: bool = database.delete_data(fake_workload)
 
-        mocked_worker_pool.get_status.assert_called_once()
-        mocked_background_scheduler.delete_tables.assert_called_once_with("tpch", 1.0)
+        mock_worker_pool.get_status.assert_called_once()
+        mock_asynchronous_job_handler.delete_tables.assert_called_once_with("tpch", 1.0)
         assert type(result) is bool
         assert not result
 
     def test_activates_plugin_with_success(self, database: Database) -> None:
         """Test entry point for plug-in activation with success."""
-        mock_background_scheduler: MagicMock = MagicMock()
-        mock_background_scheduler.activate_plugin.return_value = True
-        mock_get_plugins = MagicMock()
-        mock_get_plugins.return_value = []
-        database._background_scheduler = mock_background_scheduler
-        database._get_plugins = mock_get_plugins  # type: ignore
+        mock_asynchronous_job_handler: MagicMock = MagicMock()
+        mock_asynchronous_job_handler.activate_plugin.return_value = True
+        database._asynchronous_job_handler = mock_asynchronous_job_handler
         fake_plugin: str = "Coolputer"
 
         result: bool = database.activate_plugin(fake_plugin)
 
-        mock_background_scheduler.activate_plugin.assert_called_once_with(fake_plugin)
+        mock_asynchronous_job_handler.activate_plugin.assert_called_once_with(
+            fake_plugin
+        )
         assert type(result) is bool
         assert result
 
-    @patch("hyrisecockpit.database_manager.database._get_plugins")
-    def test_activates_plugin_with_no_success(
-        self, mock_get_plugins: MagicMock, database: Database
-    ) -> None:
+    def test_activates_plugin_with_no_success(self, database: Database) -> None:
         """Test entry point for plug-in activation with no success."""
-        mock_background_scheduler: MagicMock = MagicMock()
-        mock_background_scheduler.activate_plugin.return_value = False
-        mock_get_plugins.return_value = []
-        database._background_scheduler = mock_background_scheduler
+        mock_asynchronous_job_handler: MagicMock = MagicMock()
+        mock_asynchronous_job_handler.activate_plugin.return_value = False
+        database._asynchronous_job_handler = mock_asynchronous_job_handler
         fake_plugin: str = "Coolputer"
 
         result: bool = database.activate_plugin(fake_plugin)
 
-        mock_background_scheduler.activate_plugin.assert_called_once_with(fake_plugin)
-        assert type(result) is bool
-        assert not result
-
-    @patch("hyrisecockpit.database_manager.database._get_plugins")
-    def test_activates_already_loaded_plugin_with_no_success(
-        self, mock_get_plugins: MagicMock, database: Database
-    ) -> None:
-        """Test entry point for plug-in activation of the already loaded plugin with no success."""
-        mock_background_scheduler: MagicMock = MagicMock()
-        mock_background_scheduler.activate_plugin.return_value = False
-        mock_get_plugins.return_value = ["Coolputer"]
-        database._background_scheduler = mock_background_scheduler
-        fake_plugin: str = "Coolputer"
-
-        result: bool = database.activate_plugin(fake_plugin)
-
-        mock_background_scheduler.activate_plugin.assert_not_called()
+        mock_asynchronous_job_handler.activate_plugin.assert_called_once_with(
+            fake_plugin
+        )
         assert type(result) is bool
         assert not result
 
     def test_deactivats_plugin_with_success(self, database: Database) -> None:
         """Test entry point for plug-in deactivation with success."""
-        mocked_background_scheduler: MagicMock = MagicMock()
-        mocked_background_scheduler.deactivate_plugin.return_value = True
+        mock_asynchronous_job_handler: MagicMock = MagicMock()
+        mock_asynchronous_job_handler.deactivate_plugin.return_value = True
+
         fake_plugin: str = "Coolputer"
-        database._background_scheduler = mocked_background_scheduler
+        database._asynchronous_job_handler = mock_asynchronous_job_handler
 
         result: bool = database.deactivate_plugin(fake_plugin)
 
-        mocked_background_scheduler.deactivate_plugin.assert_called_once_with(
+        mock_asynchronous_job_handler.deactivate_plugin.assert_called_once_with(
             fake_plugin
         )
         assert type(result) is bool
@@ -354,14 +373,14 @@ class TestDatabase(object):
 
     def test_deactivats_plugin_with_no_success(self, database: Database) -> None:
         """Test entry point for plug-in deactivation with no success."""
-        mocked_background_scheduler: MagicMock = MagicMock()
-        mocked_background_scheduler.deactivate_plugin.return_value = False
+        mock_asynchronous_job_handler: MagicMock = MagicMock()
+        mock_asynchronous_job_handler.deactivate_plugin.return_value = False
         fake_plugin: str = "Coolputer"
-        database._background_scheduler = mocked_background_scheduler
+        database._asynchronous_job_handler = mock_asynchronous_job_handler
 
         result: bool = database.deactivate_plugin(fake_plugin)
 
-        mocked_background_scheduler.deactivate_plugin.assert_called_once_with(
+        mock_asynchronous_job_handler.deactivate_plugin.assert_called_once_with(
             fake_plugin
         )
         assert type(result) is bool
@@ -489,17 +508,17 @@ class TestDatabase(object):
 
     def test_closes_database(self, database: Database) -> None:
         """Test closing of database."""
-        mocked_worker_pool: MagicMock = MagicMock()
-        mocked_worker_pool.terminate.return_value = None
-        mocked_background_scheduler: MagicMock = MagicMock()
-        mocked_background_scheduler.close.return_value = None
+        mock_worker_pool: MagicMock = MagicMock()
+        mock_worker_pool.terminate.return_value = None
+        mock_continuous_job_handler: MagicMock = MagicMock()
+        mock_continuous_job_handler.close.return_value = None
 
-        database._worker_pool = mocked_worker_pool
-        database._background_scheduler = mocked_background_scheduler
+        database._worker_pool = mock_worker_pool
+        database._continuous_job_handler = mock_continuous_job_handler
         database.close()
 
-        mocked_worker_pool.terminate.assert_called_once()
-        mocked_background_scheduler.close.assert_called_once()
+        mock_worker_pool.terminate.assert_called_once()
+        mock_continuous_job_handler.close.assert_called_once()
 
     def test_initializes_influx(self, database: Database) -> None:
         """Test intialization of the corresponding influx database."""

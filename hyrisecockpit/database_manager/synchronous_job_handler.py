@@ -18,7 +18,8 @@ from hyrisecockpit.database_manager.job.set_plugin_setting import (
 )
 
 PluginSetting = TypedDict(
-    "PluginSetting", {"name": str, "value": str, "description": str}
+    "PluginSetting",
+    {"name": str, "value": str, "description": str, "display_name": str},
 )
 Plugins = Optional[Dict[str, List[PluginSetting]]]
 

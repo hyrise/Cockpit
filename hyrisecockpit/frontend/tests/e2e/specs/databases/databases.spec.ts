@@ -62,7 +62,7 @@ describe("when observing the database data and details", () => {
   it("will show the correct system details for every database", () => {
     // test correct data existence
     databases.forEach((database: any, idx: number) => {
-      cy.get(selectors.hostDetails).eq(idx).contains(database.host);
+      cy.get(selectors.hostDetails).eq(idx).contains(database.id);
       cy.get(selectors.workerDetails).eq(idx).contains(database.number_workers);
       cy.get(selectors.cpuDetails)
         .eq(idx)
