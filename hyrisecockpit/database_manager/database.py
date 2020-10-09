@@ -3,14 +3,12 @@
 from multiprocessing import Value
 from typing import Dict, List, Optional, TypedDict
 
-from psycopg2 import DatabaseError, Error, InterfaceError
-
 from hyrisecockpit.drivers.connector import Connector
 
 from .asynchronous_job_handler import AsynchronousJobHandler
 from .continuous_job_handler import ContinuousJobHandler
 from .cursor import ConnectionFactory, StorageConnectionFactory
-from .interfaces import SqlResultInterface
+from .synchronous_job_handler import SynchronousJobHandler
 from .worker_pool import WorkerPool
 
 PluginSetting = TypedDict(
@@ -18,6 +16,16 @@ PluginSetting = TypedDict(
     {"name": str, "display_name": str, "value": str, "description": str},
 )
 Plugins = Optional[Dict[str, List[PluginSetting]]]
+
+
+class SqlResultInterface(TypedDict):
+    """Interface of a SQL result."""
+
+    id: str
+    successful: bool
+    results: List[List[str]]
+    col_names: List[str]
+    error_message: str
 
 
 class Database(object):
@@ -118,6 +126,12 @@ class Database(object):
         self._asynchronous_job_handler = AsynchronousJobHandler(
             self._database_blocked,
             self._connection_factory,
+            self._workload_drivers,
+        )
+        self._synchronous_job_handler = SynchronousJobHandler(  # type: ignore
+            self._connection_factory,
+            self._database_blocked,
+            self._id,
             self._workload_drivers,
         )
         self._initialize_influx()
@@ -266,16 +280,11 @@ class Database(object):
 
     def activate_plugin(self, plugin: str) -> bool:
         """Activate plugin."""
-        active_plugins = self._get_plugins()
-        if active_plugins is None or plugin in active_plugins:
-            return False
+        # TODO Move in background refactoring to scheduler
         return self._asynchronous_job_handler.activate_plugin(plugin)
 
     def deactivate_plugin(self, plugin: str) -> bool:
         """Deactivate plugin."""
-        active_plugins = self._get_plugins()
-        if active_plugins is None or plugin not in active_plugins:
-            return False
         return self._asynchronous_job_handler.deactivate_plugin(plugin)
 
     def get_database_blocked(self) -> bool:
@@ -301,45 +310,11 @@ class Database(object):
 
     def get_loaded_tables_in_database(self) -> List[Dict[str, str]]:
         """Return already loaded tables."""
-        try:
-            with self._connection_factory.create_cursor() as cur:
-                cur.execute("select * from meta_tables;", None)
-                rows = cur.fetchall()
-        except (DatabaseError, InterfaceError):
-            return []
-        else:
-            return [row[0] for row in rows] if rows else []
-
-    def _workload_tables_status(self, tables_in_database) -> List:
-        """Get list of all benchmarks which are completely loaded."""
-        workload_tables_status = []
-        for workload_type, driver in self._workload_drivers.items():
-            for scale_factor in driver.get_scalefactors():
-                loaded_tables = []
-                missing_tables = []
-                workload_tables = driver.get_table_names(scale_factor)
-                loaded = True
-                for table_name, database_representation in workload_tables.items():
-                    if database_representation not in tables_in_database:
-                        loaded = False
-                        missing_tables.append(table_name)
-                    else:
-                        loaded_tables.append(table_name)
-                table = {
-                    "workload_type": workload_type,
-                    "scale_factor": scale_factor,
-                    "loaded_tables": loaded_tables,
-                    "missing_tables": missing_tables,
-                    "completely_loaded": loaded,
-                    "database_representation": workload_tables,
-                }
-                workload_tables_status.append(table)
-        return workload_tables_status
+        return self._synchronous_job_handler.get_loaded_tables_in_database()
 
     def get_workload_tables_status(self) -> List:
         """Get loaded benchmark data."""
-        tables_in_database: List = self.get_loaded_tables_in_database()
-        return self._workload_tables_status(tables_in_database)
+        return self._synchronous_job_handler.get_workload_tables_status()
 
     def start_worker(self) -> bool:
         """Start worker."""
@@ -349,107 +324,21 @@ class Database(object):
         """Close worker."""
         return self._worker_pool.close()
 
-    def _get_plugins(self) -> Optional[List[str]]:
-        """Return all currently activated plugins."""
-        try:
-            with self._connection_factory.create_cursor() as cur:
-                cur.execute(("SELECT name FROM meta_plugins;"), None)
-                rows = cur.fetchall()
-        except (DatabaseError, InterfaceError):
-            return None
-        else:
-            return [row[0].split("Plugin")[0] for row in rows]
-
-    def _get_plugin_setting(self) -> Plugins:
-        """Return currently set plug-in settings.
-
-        The plug-in settings are obtained from the meta_settings table in the hyrise instance.
-        Inside the hyrise instance not just plug-ins have settings. As a result we need to differentiate
-        the plug-in settings from the other settings. That's why we use the SQL Statement WHERE name LIKE 'Plugin::%';.
-        To get the plug-in name with which we communicate in the cockpit we need to extract it from the name column with
-        row[0].split("::")[1]. So for example from Plugin::Compression::MemorySetting we get Compression.
-        """
-        try:
-            with self._connection_factory.create_cursor() as cur:
-                cur.execute(
-                    "SELECT name, value, description, display_name FROM meta_settings WHERE name LIKE 'Plugin::%';",
-                    None,
-                )
-                rows = cur.fetchall()
-        except (DatabaseError, InterfaceError):
-            return None
-        else:
-            plugins: Dict[str, List[PluginSetting]] = {}
-            for row in rows:
-                plugin_name, setting_name = row[0].split("::")[1:]
-                value, description, display_name = row[1:]
-                if plugins.get(plugin_name) is None:
-                    plugins[plugin_name] = []
-                plugins[plugin_name].append(
-                    PluginSetting(
-                        name=setting_name,
-                        display_name=display_name,
-                        value=value,
-                        description=description,
-                    )
-                )
-            return plugins
-
     def get_detailed_plugins(self) -> Plugins:
         """Get all activated plugins with their settings."""
-        if (plugins := self._get_plugins()) is None:
-            return None
-        if (settings := self._get_plugin_setting()) is None:
-            return None
-        return {
-            plugin_name: (
-                settings[plugin_name] if plugin_name in settings.keys() else []
-            )
-            for plugin_name in plugins
-        }
+        return self._synchronous_job_handler.get_detailed_plugins()
 
     def set_plugin_setting(
         self, plugin_name: str, setting_name: str, setting_value: str
     ) -> bool:
         """Adjust setting for given plugin."""
-        if not self._database_blocked.value:
-            try:
-                with self._connection_factory.create_cursor() as cur:
-                    cur.execute(
-                        "UPDATE meta_settings SET value=%s WHERE name=%s;",
-                        (
-                            setting_value,
-                            "::".join(["Plugin", plugin_name, setting_name]),
-                        ),
-                    )
-                return True
-            except (DatabaseError, InterfaceError):
-                return False
-        return False
+        return self._synchronous_job_handler.set_plugin_setting(
+            plugin_name, setting_name, setting_value
+        )
 
     def execute_sql_query(self, query) -> Optional[SqlResultInterface]:
         """Execute sql query on database."""
-        if not self._database_blocked.value:
-            try:
-                with self._connection_factory.create_cursor() as cur:
-                    cur.execute(query, None)
-                    col_names = cur.fetch_column_names()
-                    return SqlResultInterface(
-                        id=self._id,
-                        successful=True,
-                        results=[[str(col) for col in row] for row in cur.fetchall()],
-                        col_names=col_names,
-                        error_message="",
-                    )
-            except Error as e:
-                return SqlResultInterface(
-                    id=self._id,
-                    successful=False,
-                    results=[],
-                    col_names=[],
-                    error_message=str(e),
-                )
-        return None
+        return self._synchronous_job_handler.execute_sql_query(query)
 
     def close(self) -> None:
         """Close the database."""
