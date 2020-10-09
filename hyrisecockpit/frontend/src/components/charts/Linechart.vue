@@ -161,7 +161,7 @@ export default defineComponent({
         x: Object.values(props.selectedDatabases).map(() => timestamps),
       };
       const maxSelectedLength = getMaxDatasetLength();
-
+      console.log(newData);
       Plotly.update(
         props.graphId,
         newData,
@@ -186,7 +186,8 @@ function useLineChartConfiguration(
   const { selectedStaticRange } = context.root.$selectionController;
 
   function getLayout(yMax: number, xMin: number = 1): Object {
-    const currentTime = formatDateWithoutMilliSec(new Date()).getTime();
+    // The data from the front end is time shifted by four seconds, so we need to subtract these four seconds.
+    const currentTime = formatDateWithoutMilliSec(new Date()).getTime() - 4000;
     return {
       height: multipleDatabasesAllowed ? 300 : 225,
       xaxis: {
