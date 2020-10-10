@@ -1,5 +1,5 @@
 from hyrisecockpit.api.app.monitor.service import MonitorService
-
+from hyrisecockpit.api.app.monitor.model import TimeInterval
 from unittest.mock import MagicMock
 from typing import Type
 from pytest import fixture
@@ -11,8 +11,41 @@ class TestMonitorService:
 
     @fixture
     def monitor_service(self) -> Type[MonitorService]:
-        """Get a WorkloadService class without IPC."""
+        """Get a MonitorService class without IPC."""
         return MonitorService
+
+    @patch("hyrisecockpit.api.app.monitor.service.get_interval_limits")
+    @patch("hyrisecockpit.api.app.monitor.service.get_historical_metric")
+    @patch("hyrisecockpit.api.app.monitor.service.StorageConnection")
+    def test_get_data_for_time_intervall(
+        self,
+        mock_storage_connection: MagicMock,
+        mock_get_historical_metric: MagicMock,
+        mock_get_interval_limits: MagicMock,
+        monitor_service: MonitorService,
+    ) -> None:
+        """Test get data."""
+        fake_time_interval = TimeInterval(startts=42, endts=100, precision=1)
+        fake_table_name = "table_name"
+        fake_column_names = ["column_one", "column_two"]
+        mock_get_interval_limits.return_value = (
+            50,
+            100,
+        )
+        mock_get_historical_metric.return_value = "response"
+
+        mock_client: MagicMock = MagicMock()
+        mock_storage_connection.return_value.__enter__.return_value = mock_client
+
+        response = monitor_service.get_data(
+            fake_time_interval, fake_table_name, fake_column_names
+        )
+
+        mock_get_interval_limits.assert_called_once_with(42, 100, 1)
+        mock_get_historical_metric.assert_called_once_with(
+            50, 100, 1, fake_table_name, fake_column_names, mock_client
+        )
+        assert response == "response"  # type: ignore
 
     @patch("hyrisecockpit.api.app.monitor.service._get_active_databases")
     @patch("hyrisecockpit.api.app.monitor.service.StorageConnection")

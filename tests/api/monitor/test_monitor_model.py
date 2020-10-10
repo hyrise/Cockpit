@@ -1,4 +1,8 @@
-from hyrisecockpit.api.app.monitor.model import FailedTaskEntry, FailedTasks
+from hyrisecockpit.api.app.monitor.model import (
+    FailedTaskEntry,
+    FailedTasks,
+    TimeInterval,
+)
 
 
 class TestFailedTasksModel:
@@ -49,3 +53,13 @@ class TestFailedTasksModel:
             failed_task_model_one,
             failed_task_model_two,
         ] == failed_task_model.failed_task_entries
+
+
+class TestTimeIntervalModel:
+    def test_creates_time_interval(self) -> None:
+        """A TimeInterval model can be created."""
+        assert TimeInterval(
+            startts=1,
+            endts=2,
+            precision=1,
+        )
