@@ -1,7 +1,7 @@
 from hyrisecockpit.api.app.monitor.service import MonitorService
-from hyrisecockpit.api.app.monitor.model import TimeInterval
+from hyrisecockpit.api.app.monitor.model import TimeInterval, SystemEntry
 from unittest.mock import MagicMock
-from typing import Type
+from typing import Type, Dict, List
 from pytest import fixture
 from unittest.mock import patch
 
@@ -89,3 +89,86 @@ class TestMonitorService:
             "task": "select * from haha",
             "worker_id": "worker_2",
         }
+
+    def test_gets_system_data(self, monitor_service: MonitorService) -> None:
+        entry_point: Dict = {
+            "timestamp": 1234,
+            "cpu_system_usage": 4.2,
+            "cpu_process_usage": 4.5,
+            "cpu_count": 16,
+            "free_memory": 30,
+            "available_memory": 100,
+            "total_memory": 50,
+            "database_threads": 16,
+        }
+        system_entry: Dict = {"id": "hallo_world", "system_data": [entry_point]}
+        system_data: List[Dict] = [system_entry]
+        mock_get_data: MagicMock = MagicMock()
+        mock_get_data.return_value = system_data
+        monitor_service.get_data = mock_get_data  # type: ignore
+        time_interval = TimeInterval(startts=42, endts=100, precision=1)
+
+        expected_cpu_model: Dict = {
+            "cpu_system_usage": 4.2,
+            "cpu_process_usage": 4.5,
+            "cpu_count": 16,
+        }
+        expected_memory_model: Dict = {
+            "free": 30,
+            "available": 100,
+            "total": 50,
+            "percent": 2.0,
+        }
+        response: List[SystemEntry] = monitor_service.get_system_data(time_interval)
+
+        assert response[0].database_id == "hallo_world"
+        assert response[0].system_data[0].timestamp == 1234
+        assert vars(response[0].system_data[0].system_data.cpu) == expected_cpu_model
+        assert (
+            vars(response[0].system_data[0].system_data.memory) == expected_memory_model
+        )
+        assert response[0].system_data[0].system_data.database_threads == 16
+
+    def test_gets_system_data_if_total_memory_is_zero(
+        self, monitor_service: MonitorService
+    ) -> None:
+        entry_point: Dict = {
+            "timestamp": 1234,
+            "cpu_system_usage": 4.2,
+            "cpu_process_usage": 4.5,
+            "cpu_count": 16,
+            "free_memory": 30,
+            "available_memory": 100,
+            "total_memory": 0.0,
+            "database_threads": 16,
+        }
+        system_entry: Dict = {
+            "id": "hallo_world",
+            "system_data": [entry_point],
+        }
+        system_data: List[Dict] = [system_entry]
+        mock_get_data: MagicMock = MagicMock()
+        mock_get_data.return_value = system_data
+        monitor_service.get_data = mock_get_data  # type: ignore
+        time_interval = TimeInterval(startts=42, endts=100, precision=1)
+
+        expected_cpu_model: Dict = {
+            "cpu_system_usage": 4.2,
+            "cpu_process_usage": 4.5,
+            "cpu_count": 16,
+        }
+        expected_memory_model: Dict = {
+            "free": 30,
+            "available": 100,
+            "total": 0.0,
+            "percent": 0.0,
+        }
+        response: List[SystemEntry] = monitor_service.get_system_data(time_interval)
+
+        assert response[0].database_id == "hallo_world"
+        assert response[0].system_data[0].timestamp == 1234
+        assert vars(response[0].system_data[0].system_data.cpu) == expected_cpu_model
+        assert (
+            vars(response[0].system_data[0].system_data.memory) == expected_memory_model
+        )
+        assert response[0].system_data[0].system_data.database_threads == 16

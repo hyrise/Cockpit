@@ -5,7 +5,16 @@ from hyrisecockpit.api.app.historical_data_handling import (
     get_interval_limits,
 )
 from hyrisecockpit.api.app.shared import _get_active_databases
-from .model import FailedTasks, FailedTaskEntry, TimeInterval
+from .model import (
+    FailedTasks,
+    FailedTaskEntry,
+    TimeInterval,
+    Cpu,
+    Memory,
+    SystemDataEntry,
+    SystemData,
+    SystemEntry,
+)
 
 
 class MonitorService:
@@ -26,6 +35,56 @@ class MonitorService:
             return get_historical_metric(
                 startts, endts, precision_ns, table_name, column_names, client
             )
+
+    @classmethod
+    def get_system_data(cls, time_interval: TimeInterval) -> List[SystemEntry]:
+        historical_system_data: List[Dict] = cls.get_data(
+            time_interval,
+            "system_data",
+            [
+                "cpu_count",
+                "cpu_process_usage",
+                "cpu_system_usage",
+                "database_threads",
+                "free_memory",
+                "total_memory",
+                "available_memory",
+            ],
+        )
+        system_entries: List[SystemEntry] = []
+        for database_data in historical_system_data:
+            system_data: List[SystemData] = []
+            for point in database_data["system_data"]:
+                cpu_entry = Cpu(
+                    cpu_system_usage=point["cpu_system_usage"],
+                    cpu_process_usage=point["cpu_process_usage"],
+                    cpu_count=point["cpu_count"],
+                )
+                memory_entry = Memory(
+                    free=point["free_memory"],
+                    available=point["available_memory"],
+                    total=point["total_memory"],
+                    percent=(
+                        point["available_memory"] / point["total_memory"]
+                        if point["total_memory"] != 0.0
+                        else 0.0
+                    ),
+                )
+                system_data_entry = SystemDataEntry(
+                    cpu=cpu_entry,
+                    memory=memory_entry,
+                    database_threads=point["database_threads"],
+                )
+                system_data.append(
+                    SystemData(
+                        timestamp=point["timestamp"],
+                        system_data_entry=system_data_entry,
+                    )
+                )
+            system_entries.append(
+                SystemEntry(database_id=database_data["id"], system_data=system_data)
+            )
+        return system_entries
 
     @classmethod
     def get_failed_tasks(cls) -> List[FailedTasks]:
