@@ -274,6 +274,30 @@ class Chunks(Resource):
         return response
 
 
+@api.route("/storage")
+class Storage(Resource):
+    """Storage information of all databases."""
+
+    # @control.doc(body=[model_storage]) # noqa
+    def get(self) -> Union[int, Response]:
+        """Return storage metadata from database manager."""
+        storage: Dict[str, Dict] = {}
+        active_databases = _get_active_databases()
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT LAST("storage_meta_information") FROM storage',
+                database=database,
+            )
+            storage_value = list(result["storage", None])
+            if len(storage_value) > 0:
+                storage[database] = loads(storage_value[0]["last"])
+            else:
+                storage[database] = {}
+        response = get_response(200)
+        response["body"]["storage"] = storage
+        return response
+
+
 @api.route("/segment_configuration")
 class SegmentConfiguration(Resource):
     """Segment Configuration data information of all databases."""
@@ -310,30 +334,6 @@ class SegmentConfiguration(Resource):
                 segment_configuration[database]["order_mode"] = {}
         response = get_response(200)
         response["body"]["segment_configuration"] = segment_configuration
-        return response
-
-
-@api.route("/storage")
-class Storage(Resource):
-    """Storage information of all databases."""
-
-    # @control.doc(body=[model_storage]) # noqa
-    def get(self) -> Union[int, Response]:
-        """Return storage metadata from database manager."""
-        storage: Dict[str, Dict] = {}
-        active_databases = _get_active_databases()
-        for database in active_databases:
-            result = storage_connection.query(
-                'SELECT LAST("storage_meta_information") FROM storage',
-                database=database,
-            )
-            storage_value = list(result["storage", None])
-            if len(storage_value) > 0:
-                storage[database] = loads(storage_value[0]["last"])
-            else:
-                storage[database] = {}
-        response = get_response(200)
-        response["body"]["storage"] = storage
         return response
 
 

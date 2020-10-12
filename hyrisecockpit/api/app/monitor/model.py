@@ -67,3 +67,36 @@ class ChunksEntry:
     def __init__(self, database_id: str, chunks_data: Dict):
         self.id: str = database_id
         self.chunks_data = chunks_data
+
+
+class EncodingEntry:
+    def __init__(self, name: str, amount: int, compression: List[str]):
+        self.name: str = name
+        self.amount: int = amount
+        self.compression: List[str] = compression
+
+
+class ColumnEntry:
+    def __init__(self, size: int, data_type: str, encoding: List[EncodingEntry]):
+        self.size: int = size
+        self.data_type: str = data_type
+        self.encoding: List[EncodingEntry] = encoding
+
+
+class TableData:
+    def __init__(self, size: int, number_columns: int, data: Dict[str, ColumnEntry]):
+        self.size: int = size
+        self.number_columns: int = number_columns
+        self.data: Dict[str, ColumnEntry] = data
+
+
+class StorageDataEntry:
+    def __init__(self, timestamp: int, table_data: TableData):
+        self.timestamp: int = timestamp
+        self.table_data: TableData = table_data
+
+
+class StorageData:
+    def __init__(self, database_id: str, storage: List[StorageDataEntry]):
+        self.id: str = database_id
+        self.storage: List[StorageDataEntry] = storage

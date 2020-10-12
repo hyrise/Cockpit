@@ -143,3 +143,67 @@ class ChunksEntrySchema(Schema):
         required=True,
         example="{ 'customer_tpch_1': { 'c_acctbal': [0, 0, 0] } }",
     )
+
+
+class EncodingEntrySchema(Schema):
+    name = String(
+        title="Encoding name",
+        required=True,
+        example="Dictionary",
+    )
+    amount = Integer(
+        title="Amount of compressions",
+        required=True,
+        example=1,
+    )
+    compression = List(
+        String(title="Compression type", required=True, example="FixedSize2ByteAligned")
+    )
+
+
+class ColumnEntrySchema(Schema):
+    size = Integer(
+        title="Column size in bytes",
+        required=True,
+        example=975528,
+    )
+    data_type = String(
+        title="Data type of column",
+        required=True,
+        example="string",
+    )
+    encoding = List(Nested(EncodingEntrySchema))
+
+
+class TableDataSchema(Schema):
+    size = Integer(
+        title="Data size",
+        required=True,
+        example=4374976,
+    )
+    number_columns = Integer(
+        title="Column number",
+        required=True,
+        example=10,
+    )
+    data = Dict(String(title="Data storage information"), Nested(ColumnEntrySchema))
+
+
+class StorageDataEntrySchema(Schema):
+    timestamp = Integer(
+        title="Timestamp",
+        description="Timestamp in nanoseconds since epoch",
+        required=True,
+        example=1585762457000000000,
+    )
+    table_data = Nested(TableDataSchema)
+
+
+class StorageDataSchema(Schema):
+    id = String(
+        title="Database ID",
+        description="Used to identify a database.",
+        required=True,
+        example="hyrise-1",
+    )
+    storage = List(Nested(StorageDataEntrySchema))

@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 from hyrisecockpit.api.app.monitor.schema import (
     FailedTaskEntrySchema,
     CpuSchema,
@@ -7,6 +7,11 @@ from hyrisecockpit.api.app.monitor.schema import (
     SystemDataSchema,
     SystemEntrySchema,
     ChunksEntrySchema,
+    EncodingEntrySchema,
+    ColumnEntrySchema,
+    TableDataSchema,
+    StorageDataEntrySchema,
+    StorageDataSchema,
 )
 from hyrisecockpit.api.app.monitor.model import (
     FailedTaskEntry,
@@ -16,6 +21,11 @@ from hyrisecockpit.api.app.monitor.model import (
     SystemData,
     SystemEntry,
     ChunksEntry,
+    EncodingEntry,
+    ColumnEntry,
+    TableData,
+    StorageDataEntry,
+    StorageData,
 )
 
 
@@ -151,20 +161,136 @@ class TestSystemSchema:
 
 
 class TestChunksSchema:
-    database_id: str = "database_one"
-    chunks_data: Dict = {
-        "part_tpch_1": {
-            "p_brand": [0, 0, 0, 0],
-            "p_comment": [0, 0, 0, 0],
-            "p_container": [0, 0, 0, 0],
+    def test_serializes_chunks_schema(self):
+        database_id: str = "database_one"
+        chunks_data: Dict = {
+            "part_tpch_1": {
+                "p_brand": [0, 0, 0, 0],
+                "p_comment": [0, 0, 0, 0],
+                "p_container": [0, 0, 0, 0],
+            }
         }
-    }
 
-    chunks_entry_model: ChunksEntry = ChunksEntry(
-        database_id=database_id, chunks_data=chunks_data
-    )
+        chunks_entry_model: ChunksEntry = ChunksEntry(
+            database_id=database_id, chunks_data=chunks_data
+        )
 
-    serialized = ChunksEntrySchema().dump(chunks_entry_model)
+        serialized = ChunksEntrySchema().dump(chunks_entry_model)
 
-    assert database_id == serialized["id"]
-    assert chunks_data == serialized["chunks_data"]
+        assert database_id == serialized["id"]
+        assert chunks_data == serialized["chunks_data"]
+
+
+class TestStorageSchema:
+    def test_serializes_encoding_entry_schema(self):
+        name: str = "Dictionary"
+        amount: str = 1
+        compression: List[str] = ["FixedSize2ByteAligned"]
+        encoding_entry_model: EncodingEntry = EncodingEntry(
+            name=name, amount=amount, compression=compression
+        )
+
+        serialized = EncodingEntrySchema().dump(encoding_entry_model)
+
+        assert name == serialized["name"]
+        assert amount == serialized["amount"]
+        assert compression == serialized["compression"]
+
+    def test_serializes_column_entry_schema(self):
+        size: int = 89644
+        data_type: str = "float"
+        encoding: List[EncodingEntry] = [
+            EncodingEntry(
+                name="Dictionary", amount=1, compression=["FixedSize2ByteAligned"]
+            )
+        ]
+        colums_entry_model: ColumnEntry = ColumnEntry(
+            size=size, data_type=data_type, encoding=encoding
+        )
+
+        serialized = ColumnEntrySchema().dump(colums_entry_model)
+
+        assert size == serialized["size"]
+        assert data_type == serialized["data_type"]
+        assert vars(encoding[0]) == serialized["encoding"][0]
+
+    def test_serializes_table_data_schema(self):
+        size: int = 4374976
+        number_columns: int = 1
+        encoding: List[EncodingEntry] = [
+            EncodingEntry(
+                name="Dictionary", amount=1, compression=["FixedSize2ByteAligned"]
+            )
+        ]
+        colums_entry_model: ColumnEntry = ColumnEntry(
+            size=89644, data_type="float", encoding=encoding
+        )
+        data: Dict[str, ColumnEntry] = {"c_acctbal": colums_entry_model}
+        table_data_model: TableData = TableData(
+            size=size, number_columns=number_columns, data=data
+        )
+
+        serialized = TableDataSchema().dump(table_data_model)
+
+        assert size == serialized["size"]
+        assert number_columns == serialized["number_columns"]
+        assert vars(encoding[0]) == serialized["data"]["c_acctbal"]["encoding"][0]
+
+    def test_serializes_storage_data_entry_schema(self):
+        timestamp: str = 42
+        encoding: List[EncodingEntry] = [
+            EncodingEntry(
+                name="Dictionary", amount=1, compression=["FixedSize2ByteAligned"]
+            )
+        ]
+        colums_entry_model: ColumnEntry = ColumnEntry(
+            size=89644, data_type="float", encoding=encoding
+        )
+        data: Dict[str, ColumnEntry] = {"c_acctbal": colums_entry_model}
+        table_data_model: TableData = TableData(
+            size=4374976, number_columns=1, data=data
+        )
+        storage_data_entry_model: StorageData = StorageDataEntry(
+            timestamp=timestamp, table_data=table_data_model
+        )
+
+        serialized = StorageDataEntrySchema().dump(storage_data_entry_model)
+
+        assert timestamp == serialized["timestamp"]
+        assert (
+            vars(encoding[0])
+            == serialized["table_data"]["data"]["c_acctbal"]["encoding"][0]
+        )
+
+    def test_serializes_storage_data_schema(self):
+        timestamp: int = 42
+        database_id: str = "some_db_id"
+        encoding: List[EncodingEntry] = [
+            EncodingEntry(
+                name="Dictionary", amount=1, compression=["FixedSize2ByteAligned"]
+            )
+        ]
+        colums_entry_model: ColumnEntry = ColumnEntry(
+            size=89644, data_type="float", encoding=encoding
+        )
+        data: Dict[str, ColumnEntry] = {"c_acctbal": colums_entry_model}
+        table_data_model: TableData = TableData(
+            size=4374976, number_columns=1, data=data
+        )
+        storage_data_entry_model: StorageData = StorageDataEntry(
+            timestamp=timestamp, table_data=table_data_model
+        )
+        storage_data_model: StorageData = StorageData(
+            database_id=database_id, storage=[storage_data_entry_model]
+        )
+
+        serialized = StorageDataSchema().dump(storage_data_model)
+
+        assert database_id == serialized["id"]
+        assert timestamp == serialized["storage"][0]["timestamp"]
+        assert (
+            vars(encoding[0])
+            == serialized["storage"][0]["table_data"]["data"]["c_acctbal"]["encoding"][
+                0
+            ]
+        )
