@@ -251,7 +251,7 @@ class TestStorageSchema:
             size=4374976, number_columns=1, data=data
         )
         storage_data_entry_model: StorageData = StorageDataEntry(
-            timestamp=timestamp, table_data=table_data_model
+            timestamp=timestamp, table_data={"customer_tpch_0_1": table_data_model}
         )
 
         serialized = StorageDataEntrySchema().dump(storage_data_entry_model)
@@ -259,7 +259,9 @@ class TestStorageSchema:
         assert timestamp == serialized["timestamp"]
         assert (
             vars(encoding[0])
-            == serialized["table_data"]["data"]["c_acctbal"]["encoding"][0]
+            == serialized["table_data"]["customer_tpch_0_1"]["data"]["c_acctbal"][
+                "encoding"
+            ][0]
         )
 
     def test_serializes_storage_data_schema(self):
@@ -278,7 +280,7 @@ class TestStorageSchema:
             size=4374976, number_columns=1, data=data
         )
         storage_data_entry_model: StorageData = StorageDataEntry(
-            timestamp=timestamp, table_data=table_data_model
+            timestamp=timestamp, table_data={"customer_tpch_0_1": table_data_model}
         )
         storage_data_model: StorageData = StorageData(
             database_id=database_id, storage=[storage_data_entry_model]
@@ -290,7 +292,109 @@ class TestStorageSchema:
         assert timestamp == serialized["storage"][0]["timestamp"]
         assert (
             vars(encoding[0])
-            == serialized["storage"][0]["table_data"]["data"]["c_acctbal"]["encoding"][
-                0
-            ]
+            == serialized["storage"][0]["table_data"]["customer_tpch_0_1"]["data"][
+                "c_acctbal"
+            ]["encoding"][0]
         )
+
+    def test_deserializes_encoding_entry_schema(self):
+        name: str = "Dictionary"
+        amount: str = 1
+        compression: List[str] = ["FixedSize2ByteAligned"]
+        encoding_entry_data = {
+            "name": name,
+            "amount": amount,
+            "compression": compression,
+        }
+
+        deserialized = EncodingEntrySchema().load(encoding_entry_data)
+
+        assert isinstance(deserialized, EncodingEntry)
+        assert name == deserialized.name
+        assert amount == deserialized.amount
+        assert compression == deserialized.compression
+
+    def test_deserializes_column_entry_schema(self):
+        size: int = 89644
+        data_type: str = "float"
+        encoding_entry_data = {
+            "name": "Dictionary",
+            "amount": 1,
+            "compression": ["FixedSize2ByteAligned"],
+        }
+        colums_entry_data = {
+            "size": size,
+            "data_type": data_type,
+            "encoding": [encoding_entry_data],
+        }
+
+        deserialized = ColumnEntrySchema().load(colums_entry_data)
+
+        assert isinstance(deserialized, ColumnEntry)
+        assert isinstance(deserialized.encoding[0], EncodingEntry)
+        assert size == deserialized.size
+        assert data_type == deserialized.data_type
+
+    def test_deserializes_table_data_schema(self):
+        size: int = 4374976
+        number_columns: int = 1
+        encoding_entry_data = {
+            "name": "Dictionary",
+            "amount": 1,
+            "compression": ["FixedSize2ByteAligned"],
+        }
+        colums_entry_data = {
+            "size": 89644,
+            "data_type": "float",
+            "encoding": [encoding_entry_data],
+        }
+        data = {"c_acctbal": colums_entry_data}
+        table_data = {
+            "size": size,
+            "number_columns": number_columns,
+            "data": data,
+        }
+
+        deserialized = TableDataSchema().load(table_data)
+
+        assert isinstance(deserialized, TableData)
+        assert isinstance(deserialized.data["c_acctbal"], ColumnEntry)
+        assert isinstance(deserialized.data["c_acctbal"].encoding[0], EncodingEntry)
+        assert size == deserialized.size
+        assert number_columns == deserialized.number_columns
+
+    def test_deserializes_storage_data_entry_schema(self):
+        timestamp: int = 42
+        encoding_entry_data = {
+            "name": "Dictionary",
+            "amount": 1,
+            "compression": ["FixedSize2ByteAligned"],
+        }
+        colums_entry_data = {
+            "size": 89644,
+            "data_type": "float",
+            "encoding": [encoding_entry_data],
+        }
+        data = {"c_acctbal": colums_entry_data}
+        table_data = {
+            "size": 4374976,
+            "number_columns": 1,
+            "data": data,
+        }
+        storage_data_entry_data = {
+            "timestamp": timestamp,
+            "table_data": {"customer_tpch_0_1": table_data},
+        }
+
+        deserialized = StorageDataEntrySchema().load(storage_data_entry_data)
+
+        assert isinstance(deserialized, StorageDataEntry)
+        assert isinstance(deserialized.table_data["customer_tpch_0_1"], TableData)
+        assert isinstance(
+            deserialized.table_data["customer_tpch_0_1"].data["c_acctbal"], ColumnEntry
+        )
+        assert isinstance(
+            deserialized.table_data["customer_tpch_0_1"].data["c_acctbal"].encoding[0],
+            EncodingEntry,
+        )
+        assert timestamp == deserialized.timestamp

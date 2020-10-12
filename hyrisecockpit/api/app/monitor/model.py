@@ -91,9 +91,9 @@ class TableData:
 
 
 class StorageDataEntry:
-    def __init__(self, timestamp: int, table_data: TableData):
+    def __init__(self, timestamp: int, table_data: Dict[str, TableData]):
         self.timestamp: int = timestamp
-        self.table_data: TableData = table_data
+        self.table_data: Dict[str, TableData] = table_data
 
 
 class StorageData:

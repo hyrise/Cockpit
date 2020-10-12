@@ -1,5 +1,13 @@
 from hyrisecockpit.api.app.monitor.service import MonitorService
-from hyrisecockpit.api.app.monitor.model import TimeInterval, SystemEntry, ChunksEntry
+from hyrisecockpit.api.app.monitor.model import (
+    TimeInterval,
+    SystemEntry,
+    ChunksEntry,
+    EncodingEntry,
+    ColumnEntry,
+    TableData,
+    StorageData,
+)
 from unittest.mock import MagicMock
 from typing import Type, Dict, List
 from pytest import fixture
@@ -225,3 +233,71 @@ class TestMonitorService:
 
         assert results[0].id == database_id
         assert results[0].chunks_data == expected_chunks
+
+    def test_gets_storage_data(self, monitor_service: MonitorService) -> None:
+        database_id = "hallo_world"
+        timestamp = 1234
+        encoding_entry = {
+            "name": "Dictionary",
+            "amount": 1,
+            "compression": ["FixedSize2ByteAligned"],
+        }
+        data_entry = {
+            "c_acctbal": {
+                "size": 89644,
+                "data_type": "float",
+                "encoding": [encoding_entry],
+            },
+        }
+
+        storage_meta_information = {
+            "customer_tpch_0_1": {
+                "size": 4374976,
+                "number_columns": 8,
+                "data": data_entry,
+            }
+        }
+        entry_point: Dict = {
+            "timestamp": timestamp,
+            "storage_meta_information": storage_meta_information,
+        }
+        storage_data_entry: Dict = {
+            "id": "hallo_world",
+            "storage": [entry_point],
+        }
+        storage_data: List[Dict] = [storage_data_entry]
+        mock_get_data: MagicMock = MagicMock()
+        mock_get_data.return_value = storage_data
+        monitor_service.get_data = mock_get_data  # type: ignore
+        time_interval = TimeInterval(startts=42, endts=100, precision=1)
+
+        response: List[StorageData] = monitor_service.get_storage(time_interval)
+
+        assert isinstance(response[0], StorageData)
+        assert isinstance(
+            response[0].storage[0].table_data["customer_tpch_0_1"], TableData
+        )
+        assert isinstance(
+            response[0].storage[0].table_data["customer_tpch_0_1"].data["c_acctbal"],
+            ColumnEntry,
+        )
+        assert isinstance(
+            response[0]
+            .storage[0]
+            .table_data["customer_tpch_0_1"]
+            .data["c_acctbal"]
+            .encoding[0],
+            EncodingEntry,
+        )
+        assert response[0].id == database_id
+        assert response[0].storage[0].timestamp == timestamp
+        assert (
+            vars(
+                response[0]
+                .storage[0]
+                .table_data["customer_tpch_0_1"]
+                .data["c_acctbal"]
+                .encoding[0]
+            )
+            == encoding_entry
+        )

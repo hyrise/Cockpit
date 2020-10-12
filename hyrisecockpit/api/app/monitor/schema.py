@@ -4,8 +4,9 @@ A schemas represents the serialization/deserialization of entities.
 Entities are defined in models.py .
 """
 
-from marshmallow import Schema
+from marshmallow import Schema, post_load
 from marshmallow.fields import Integer, List, Nested, String, Float, Dict
+from .model import EncodingEntry, ColumnEntry, TableData, StorageDataEntry
 
 
 class FailedTaskEntrySchema(Schema):
@@ -160,6 +161,10 @@ class EncodingEntrySchema(Schema):
         String(title="Compression type", required=True, example="FixedSize2ByteAligned")
     )
 
+    @post_load
+    def make_encoding_entry(self, data, **kwargs):
+        return EncodingEntry(**data)
+
 
 class ColumnEntrySchema(Schema):
     size = Integer(
@@ -173,6 +178,10 @@ class ColumnEntrySchema(Schema):
         example="string",
     )
     encoding = List(Nested(EncodingEntrySchema))
+
+    @post_load
+    def make_column_entry(self, data, **kwargs):
+        return ColumnEntry(**data)
 
 
 class TableDataSchema(Schema):
@@ -188,6 +197,10 @@ class TableDataSchema(Schema):
     )
     data = Dict(String(title="Data storage information"), Nested(ColumnEntrySchema))
 
+    @post_load
+    def make_table_data(self, data, **kwargs):
+        return TableData(**data)
+
 
 class StorageDataEntrySchema(Schema):
     timestamp = Integer(
@@ -196,7 +209,11 @@ class StorageDataEntrySchema(Schema):
         required=True,
         example=1585762457000000000,
     )
-    table_data = Nested(TableDataSchema)
+    table_data = Dict(String(title="Table name"), Nested(TableDataSchema))
+
+    @post_load
+    def make_storage_data_entry(self, data, **kwargs):
+        return StorageDataEntry(**data)
 
 
 class StorageDataSchema(Schema):

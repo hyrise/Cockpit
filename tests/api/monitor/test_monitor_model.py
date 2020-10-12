@@ -245,11 +245,13 @@ class TestStorageModel:
         )
 
         storage_data_entry_model: StorageDataEntry = StorageDataEntry(
-            timestamp=timestamp, table_data=table_data_model
+            timestamp=timestamp, table_data={"customer_tpch_0_1": table_data_model}
         )
 
         assert storage_data_entry_model.timestamp == timestamp
-        assert storage_data_entry_model.table_data == table_data_model
+        assert storage_data_entry_model.table_data == {
+            "customer_tpch_0_1": table_data_model
+        }
 
     def test_creates_storage_data(self) -> None:
         database_id: str = "some_db_id"
@@ -267,7 +269,7 @@ class TestStorageModel:
         )
 
         storage_data_entry_model: StorageDataEntry = StorageDataEntry(
-            timestamp=42, table_data=table_data_model
+            timestamp=42, table_data={"customer_tpch_0_1": table_data_model}
         )
 
         storage_data_model: StorageData = StorageData(

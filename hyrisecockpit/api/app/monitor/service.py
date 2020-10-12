@@ -16,7 +16,10 @@ from .model import (
     SystemData,
     SystemEntry,
     ChunksEntry,
+    StorageData,
+    StorageDataEntry,
 )
+from .schema import StorageDataEntrySchema
 
 
 class MonitorService:
@@ -134,3 +137,27 @@ class MonitorService:
                 else:
                     chunks.append(ChunksEntry(database_id=database, chunks_data={}))
         return chunks
+
+    @classmethod
+    def get_storage(cls, time_interval: TimeInterval) -> List[StorageData]:
+        historical_storage_data: List[Dict] = cls.get_data(
+            time_interval, "storage", ["storage_meta_information"]
+        )
+        storage_data: List[StorageData] = []
+        for database_data in historical_storage_data:
+            storage_data_entries: List[StorageDataEntry] = []
+            for point in database_data["storage"]:
+                storage_data_entries.append(
+                    StorageDataEntrySchema().load(
+                        {
+                            "timestamp": point["timestamp"],
+                            "table_data": point["storage_meta_information"],
+                        }
+                    )
+                )
+            storage_data.append(
+                StorageData(
+                    database_id=database_data["id"], storage=storage_data_entries
+                )
+            )
+        return storage_data
