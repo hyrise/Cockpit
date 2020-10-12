@@ -1,3 +1,4 @@
+from typing import Dict
 from hyrisecockpit.api.app.monitor.model import (
     FailedTaskEntry,
     FailedTasks,
@@ -7,6 +8,7 @@ from hyrisecockpit.api.app.monitor.model import (
     SystemDataEntry,
     SystemData,
     SystemEntry,
+    ChunksEntry,
 )
 
 
@@ -149,3 +151,22 @@ class TestSystemModel:
 
         assert system_entry_model.id == database_id
         assert system_entry_model.system_data[0] == sytem_data_model
+
+
+class TestChunksModel:
+    def test_creates_chunks_entry(self) -> None:
+        database_id: str = "database_one"
+        chunks_data: Dict = {
+            "part_tpch_1": {
+                "p_brand": [0, 0, 0, 0],
+                "p_comment": [0, 0, 0, 0],
+                "p_container": [0, 0, 0, 0],
+            }
+        }
+
+        chunks_entry_model: ChunksEntry = ChunksEntry(
+            database_id=database_id, chunks_data=chunks_data
+        )
+
+        assert chunks_entry_model.id == database_id
+        assert chunks_entry_model.chunks_data == chunks_data

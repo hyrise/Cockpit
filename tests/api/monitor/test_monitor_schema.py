@@ -1,3 +1,4 @@
+from typing import Dict
 from hyrisecockpit.api.app.monitor.schema import (
     FailedTaskEntrySchema,
     CpuSchema,
@@ -5,6 +6,7 @@ from hyrisecockpit.api.app.monitor.schema import (
     SystemDataEntrySchema,
     SystemDataSchema,
     SystemEntrySchema,
+    ChunksEntrySchema,
 )
 from hyrisecockpit.api.app.monitor.model import (
     FailedTaskEntry,
@@ -13,6 +15,7 @@ from hyrisecockpit.api.app.monitor.model import (
     SystemDataEntry,
     SystemData,
     SystemEntry,
+    ChunksEntry,
 )
 
 
@@ -145,3 +148,23 @@ class TestSystemSchema:
         assert (
             vars(memory_model) == serialized["system_data"][0]["system_data"]["memory"]
         )
+
+
+class TestChunksSchema:
+    database_id: str = "database_one"
+    chunks_data: Dict = {
+        "part_tpch_1": {
+            "p_brand": [0, 0, 0, 0],
+            "p_comment": [0, 0, 0, 0],
+            "p_container": [0, 0, 0, 0],
+        }
+    }
+
+    chunks_entry_model: ChunksEntry = ChunksEntry(
+        database_id=database_id, chunks_data=chunks_data
+    )
+
+    serialized = ChunksEntrySchema().dump(chunks_entry_model)
+
+    assert database_id == serialized["id"]
+    assert chunks_data == serialized["chunks_data"]

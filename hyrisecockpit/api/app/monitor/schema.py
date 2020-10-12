@@ -5,7 +5,7 @@ Entities are defined in models.py .
 """
 
 from marshmallow import Schema
-from marshmallow.fields import Integer, List, Nested, String, Float
+from marshmallow.fields import Integer, List, Nested, String, Float, Dict
 
 
 class FailedTaskEntrySchema(Schema):
@@ -126,3 +126,20 @@ class SystemEntrySchema(Schema):
         example="hyrise-1",
     )
     system_data = List(Nested(SystemDataSchema))
+
+
+class ChunksEntrySchema(Schema):
+    id = String(
+        title="Database ID",
+        description="Used to identify a database.",
+        required=True,
+        example="hyrise-1",
+    )
+    chunks_data = Dict(
+        title="Chunks",
+        description="Used to see chunk information.",
+        key="Name of the Table.",
+        value="Dictionary with chunks value for every column.",
+        required=True,
+        example="{ 'customer_tpch_1': { 'c_acctbal': [0, 0, 0] } }",
+    )

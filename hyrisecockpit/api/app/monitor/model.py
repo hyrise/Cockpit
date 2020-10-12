@@ -3,7 +3,7 @@
 Models are python representation of entities.
 """
 
-from typing import List
+from typing import List, Dict
 
 
 class FailedTaskEntry:
@@ -61,3 +61,9 @@ class SystemEntry:
     def __init__(self, database_id: str, system_data: List[SystemData]):
         self.id: str = database_id
         self.system_data: List[SystemData] = system_data
+
+
+class ChunksEntry:
+    def __init__(self, database_id: str, chunks_data: Dict):
+        self.id: str = database_id
+        self.chunks_data = chunks_data
