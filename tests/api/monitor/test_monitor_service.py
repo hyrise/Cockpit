@@ -1,5 +1,5 @@
 from hyrisecockpit.api.app.monitor.service import MonitorService
-from hyrisecockpit.api.app.monitor.model import TimeInterval, SystemEntry
+from hyrisecockpit.api.app.monitor.model import TimeInterval, SystemEntry, ChunksEntry
 from unittest.mock import MagicMock
 from typing import Type, Dict, List
 from pytest import fixture
@@ -172,3 +172,56 @@ class TestMonitorService:
             vars(response[0].system_data[0].system_data.memory) == expected_memory_model
         )
         assert response[0].system_data[0].system_data.database_threads == 16
+
+    @patch("hyrisecockpit.api.app.monitor.service._get_active_databases")
+    @patch("hyrisecockpit.api.app.monitor.service.StorageConnection")
+    def test_gets_chunks(
+        self,
+        mock_storage_connection: MagicMock,
+        mock_get_active_databases: MagicMock,
+        monitor_service: MonitorService,
+    ) -> None:
+        mock_client = MagicMock()
+        mock_client.query.return_value = {
+            ("chunks_data", None): [
+                {
+                    "time": "2020-10-12T10:22:11.027898Z",
+                    "last": '{ "part_tpch_1": { "p_brand": [0, 0, 0, 0], "p_comment": [0, 0, 0, 0],"p_container": [0, 0, 0, 0]} }',
+                }
+            ]
+        }
+        mock_storage_connection.return_value.__enter__.return_value = mock_client
+        database_id: str = "database_id"
+        mock_get_active_databases.return_value = [database_id]
+        expected_chunks: Dict = {
+            "part_tpch_1": {
+                "p_brand": [0, 0, 0, 0],
+                "p_comment": [0, 0, 0, 0],
+                "p_container": [0, 0, 0, 0],
+            }
+        }
+
+        results: List[ChunksEntry] = monitor_service.get_chunks()
+
+        assert results[0].id == database_id
+        assert results[0].chunks_data == expected_chunks
+
+    @patch("hyrisecockpit.api.app.monitor.service._get_active_databases")
+    @patch("hyrisecockpit.api.app.monitor.service.StorageConnection")
+    def test_gets_empty_chunks(
+        self,
+        mock_storage_connection: MagicMock,
+        mock_get_active_databases: MagicMock,
+        monitor_service: MonitorService,
+    ) -> None:
+        mock_client = MagicMock()
+        mock_client.query.return_value = {("chunks_data", None): []}
+        mock_storage_connection.return_value.__enter__.return_value = mock_client
+        database_id: str = "database_id"
+        mock_get_active_databases.return_value = [database_id]
+        expected_chunks: Dict = {}
+
+        results: List[ChunksEntry] = monitor_service.get_chunks()
+
+        assert results[0].id == database_id
+        assert results[0].chunks_data == expected_chunks

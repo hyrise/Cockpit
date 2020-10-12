@@ -1,3 +1,4 @@
+from json import loads
 from typing import List, Dict, Union
 from hyrisecockpit.api.app.connection_manager import StorageConnection
 from hyrisecockpit.api.app.historical_data_handling import (
@@ -14,6 +15,7 @@ from .model import (
     SystemDataEntry,
     SystemData,
     SystemEntry,
+    ChunksEntry,
 )
 
 
@@ -111,3 +113,24 @@ class MonitorService:
                 )
             )
         return failed_tasks
+
+    @classmethod
+    def get_chunks(cls) -> List[ChunksEntry]:
+        chunks: List[ChunksEntry] = []
+        with StorageConnection() as client:
+            for database in _get_active_databases():
+                result = client.query(
+                    'SELECT LAST("chunks_data_meta_information") FROM chunks_data',
+                    database=database,
+                )
+                chunks_value = list(result["chunks_data", None])
+                if len(chunks_value) > 0:
+                    chunks.append(
+                        ChunksEntry(
+                            database_id=database,
+                            chunks_data=loads(chunks_value[0]["last"]),
+                        )
+                    )
+                else:
+                    chunks.append(ChunksEntry(database_id=database, chunks_data={}))
+        return chunks
