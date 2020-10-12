@@ -147,5 +147,5 @@ class TestSystemModel:
             database_id=database_id, system_data=[sytem_data_model]
         )
 
-        assert system_entry_model.database_id == database_id
+        assert system_entry_model.id == database_id
         assert system_entry_model.system_data[0] == sytem_data_model

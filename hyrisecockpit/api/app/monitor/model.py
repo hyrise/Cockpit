@@ -59,5 +59,5 @@ class SystemData:
 
 class SystemEntry:
     def __init__(self, database_id: str, system_data: List[SystemData]):
-        self.database_id: str = database_id
+        self.id: str = database_id
         self.system_data: List[SystemData] = system_data

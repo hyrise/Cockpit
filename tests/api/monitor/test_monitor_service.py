@@ -121,7 +121,7 @@ class TestMonitorService:
         }
         response: List[SystemEntry] = monitor_service.get_system_data(time_interval)
 
-        assert response[0].database_id == "hallo_world"
+        assert response[0].id == "hallo_world"
         assert response[0].system_data[0].timestamp == 1234
         assert vars(response[0].system_data[0].system_data.cpu) == expected_cpu_model
         assert (
@@ -165,7 +165,7 @@ class TestMonitorService:
         }
         response: List[SystemEntry] = monitor_service.get_system_data(time_interval)
 
-        assert response[0].database_id == "hallo_world"
+        assert response[0].id == "hallo_world"
         assert response[0].system_data[0].timestamp == 1234
         assert vars(response[0].system_data[0].system_data.cpu) == expected_cpu_model
         assert (
