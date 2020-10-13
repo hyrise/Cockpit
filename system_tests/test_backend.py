@@ -20,7 +20,7 @@ from system_tests.settings import DATABASE_HOST, DATABASE_PORT, DEFAULT_TIME_OUT
 
 
 class TestSystem:
-    """This class tests every step of the user scenario."""
+    """TestSystem class tests every step of the user scenario."""
 
     @classmethod
     def check_tables_loaded(
@@ -50,21 +50,11 @@ class TestSystem:
         assert benchmark_status["missing_tables"] == []  # nosec
         assert benchmark_status["completely_loaded"]  # nosec
 
-    def test_returns_metric_values(self):
+    def test_returns_metric_values_with_no_database_registered(self):
         """Test static metric endpoints return correct values."""
-        metrics = [
-            "monitor/chunks",
-            "monitor/storage",
-        ]
-        metrics_attributes = [
-            "chunks_data",
-            "storage",
-        ]
-
-        for i in range(len(metrics)):
-            response = self.backend.get_property(metrics[i])
-            assert response.status_code == 200  # nosec
-            assert response.json()["body"][metrics_attributes[i]] == {}  # nosec
+        response = self.backend.get_property("monitor/chunks")
+        assert response.status_code == 200  # nosec
+        assert response.json() == []  # nosec
 
     def test_returns_historical_metric_values_with_no_database_registered(self):
         """Test historical metric endpoints return correct values."""
@@ -73,6 +63,7 @@ class TestSystem:
             "metric/latency",
             "metric/queue_length",
             "monitor/system",
+            "monitor/storage",
         ]
         for metric in historical_metrics:
             timestamp: int = time_ns()
