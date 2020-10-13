@@ -122,3 +122,22 @@ class SegmentConfigurationEntry:
         self.id: str = id
         self.encoding_type: Dict[str, Dict[str, EncodingTypeEntry]] = encoding_type
         self.order_mode: Dict[str, Dict[str, OrderModeEntry]] = order_mode
+
+
+class WorkloadStatementInformationEntry:
+    def __init__(self, query_type: str, total_latency: int, total_frequency: int):
+        self.query_type: str = query_type
+        self.total_latency: int = total_latency
+        self.total_frequency: int = total_frequency
+
+
+class WorkloadStatementInformation:
+    def __init__(
+        self,
+        id: str,
+        workload_statement_information_entries: List[WorkloadStatementInformationEntry],
+    ):
+        self.id: str = id
+        self.workload_statement_information_entries: List[
+            WorkloadStatementInformationEntry
+        ] = workload_statement_information_entries

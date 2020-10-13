@@ -17,6 +17,8 @@ from hyrisecockpit.api.app.monitor.model import (
     EncodingTypeEntry,
     OrderModeEntry,
     SegmentConfigurationEntry,
+    WorkloadStatementInformationEntry,
+    WorkloadStatementInformation,
 )
 
 
@@ -329,4 +331,47 @@ class TestSegmentConfigurationModel:
         assert (
             segment_configuration_entry.order_mode["customer_tpch_1"]["0"]
             == order_mode_entry_model
+        )
+
+
+class TestWorkloadStatementInformation:
+    def test_creates_workload_statement_information_entry(self) -> None:
+        query_type: str = "SELECT"
+        total_latency: int = 9568298895
+        total_frequency: int = 1504
+
+        workload_statement_information_entry_model: WorkloadStatementInformationEntry = WorkloadStatementInformationEntry(
+            query_type=query_type,
+            total_latency=total_latency,
+            total_frequency=total_frequency,
+        )
+
+        assert workload_statement_information_entry_model.query_type == query_type
+        assert workload_statement_information_entry_model.total_latency == total_latency
+        assert (
+            workload_statement_information_entry_model.total_frequency
+            == total_frequency
+        )
+
+    def test_creates_workload_statement_information(self) -> None:
+        database_id: str = "some_db_id"
+        workload_statement_information_entry_model: WorkloadStatementInformationEntry = WorkloadStatementInformationEntry(
+            query_type="SELECT", total_latency=9568298895, total_frequency=1504
+        )
+
+        workload_statement_information_model: WorkloadStatementInformation = (
+            WorkloadStatementInformation(
+                id=database_id,
+                workload_statement_information_entries=[
+                    workload_statement_information_entry_model
+                ],
+            )
+        )
+
+        assert workload_statement_information_model.id == database_id
+        assert (
+            workload_statement_information_model.workload_statement_information_entries[
+                0
+            ]
+            == workload_statement_information_entry_model
         )

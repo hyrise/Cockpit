@@ -14,6 +14,8 @@ from .model import (
     EncodingTypeEntry,
     OrderModeEntry,
     SegmentConfigurationEntry,
+    WorkloadStatementInformationEntry,
+    WorkloadStatementInformation,
 )
 
 
@@ -279,3 +281,41 @@ class SegmentConfigurationEntrySchema(Schema):
     @post_load
     def make_segment_configuration_enty(self, data, **kwargs):
         return SegmentConfigurationEntry(**data)
+
+
+class WorkloadStatementInformationEntrySchema(Schema):
+    query_type = String(
+        title="Query type",
+        required=True,
+        example="SELECT",
+    )
+    total_latency = Integer(
+        title="Total latency",
+        required=True,
+        example=123456,
+    )
+    total_frequency = Integer(
+        title="Total frequency",
+        required=True,
+        example=4321,
+    )
+
+    @post_load
+    def make_workload_statement_information_enty(self, data, **kwargs):
+        return WorkloadStatementInformationEntry(**data)
+
+
+class WorkloadStatementInformationSchema(Schema):
+    id = String(
+        title="Database ID",
+        description="Used to identify a database.",
+        required=True,
+        example="hyrise-1",
+    )
+    workload_statement_information_entries = List(
+        Nested(WorkloadStatementInformationEntrySchema)
+    )
+
+    @post_load
+    def make_workload_statement_information(self, data, **kwargs):
+        return WorkloadStatementInformation(**data)

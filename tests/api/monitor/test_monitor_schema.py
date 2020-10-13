@@ -15,6 +15,8 @@ from hyrisecockpit.api.app.monitor.schema import (
     EncodingTypeEntrySchema,
     OrderModeEntrySchema,
     SegmentConfigurationEntrySchema,
+    WorkloadStatementInformationEntrySchema,
+    WorkloadStatementInformationSchema,
 )
 from hyrisecockpit.api.app.monitor.model import (
     FailedTaskEntry,
@@ -32,6 +34,8 @@ from hyrisecockpit.api.app.monitor.model import (
     EncodingTypeEntry,
     OrderModeEntry,
     SegmentConfigurationEntry,
+    WorkloadStatementInformationEntry,
+    WorkloadStatementInformation,
 )
 
 
@@ -456,3 +460,93 @@ class TestSegmentConfigurationSchema:
             vars(order_mode_entry_model)
             == serialized["order_mode"]["customer_tpch_1"]["0"]
         )
+
+
+class TestWorkloadStatementInformationSchema:
+    def test_serializes_workload_statement_information_enty(self) -> None:
+        query_type: str = "SELECT"
+        total_latency: int = 9568298895
+        total_frequency: int = 1504
+        workload_statement_information_entry_model: WorkloadStatementInformationEntry = WorkloadStatementInformationEntry(
+            query_type=query_type,
+            total_latency=total_latency,
+            total_frequency=total_frequency,
+        )
+
+        serialized = WorkloadStatementInformationEntrySchema().dump(
+            workload_statement_information_entry_model
+        )
+
+        assert query_type == serialized["query_type"]
+        assert total_latency == serialized["total_latency"]
+        assert total_frequency == serialized["total_frequency"]
+
+    def test_serializes_workload_statement_information(self) -> None:
+        database_id: str = "some_db_id"
+        workload_statement_information_entry_model: WorkloadStatementInformationEntry = WorkloadStatementInformationEntry(
+            query_type="SELECT", total_latency=9568298895, total_frequency=1504
+        )
+        workload_statement_information_model: WorkloadStatementInformation = (
+            WorkloadStatementInformation(
+                id=database_id,
+                workload_statement_information_entries=[
+                    workload_statement_information_entry_model
+                ],
+            )
+        )
+        serialized = WorkloadStatementInformationSchema().dump(
+            workload_statement_information_model
+        )
+
+        assert database_id == serialized["id"]
+        assert (
+            vars(workload_statement_information_entry_model)
+            == serialized["workload_statement_information_entries"][0]
+        )
+
+    def test_deserializes_workload_statement_information_enty(self) -> None:
+        query_type: str = "SELECT"
+        total_latency: int = 9568298895
+        total_frequency: int = 1504
+        workload_statement_information_entry_data: Dict = {
+            "query_type": query_type,
+            "total_latency": total_latency,
+            "total_frequency": total_frequency,
+        }
+
+        deserialized = WorkloadStatementInformationEntrySchema().load(
+            workload_statement_information_entry_data
+        )
+
+        assert isinstance(deserialized, WorkloadStatementInformationEntry)
+        assert query_type == deserialized.query_type
+        assert total_latency == deserialized.total_latency
+        assert total_frequency == deserialized.total_frequency
+
+    def test_deserializes_workload_statement_information(self) -> None:
+        database_id: str = "some_db_id"
+        query_type: str = "SELECT"
+        total_latency: int = 9568298895
+        total_frequency: int = 1504
+        workload_statement_information_entry_data: Dict = {
+            "query_type": query_type,
+            "total_latency": total_latency,
+            "total_frequency": total_frequency,
+        }
+        workload_statement_information_data = {
+            "id": database_id,
+            "workload_statement_information_entries": [
+                workload_statement_information_entry_data
+            ],
+        }
+
+        deserialized = WorkloadStatementInformationSchema().load(
+            workload_statement_information_data
+        )
+
+        assert isinstance(deserialized, WorkloadStatementInformation)
+        assert isinstance(
+            deserialized.workload_statement_information_entries[0],
+            WorkloadStatementInformationEntry,
+        )
+        assert database_id == deserialized.id
