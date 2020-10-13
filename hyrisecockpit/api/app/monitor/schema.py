@@ -16,6 +16,8 @@ from .model import (
     SegmentConfigurationEntry,
     WorkloadStatementInformationEntry,
     WorkloadStatementInformation,
+    WorkloadOperatorInformationEntry,
+    WorkloadOperatorInformation,
 )
 
 
@@ -319,3 +321,36 @@ class WorkloadStatementInformationSchema(Schema):
     @post_load
     def make_workload_statement_information(self, data, **kwargs):
         return WorkloadStatementInformation(**data)
+
+
+class WorkloadOperatorInformationEntrySchema(Schema):
+    operator = String(
+        title="Operator",
+        required=True,
+        example="Alias",
+    )
+    total_time_ns = Integer(
+        title="Total time ns",
+        required=True,
+        example=123456,
+    )
+
+    @post_load
+    def make_workload_operator_information_enty(self, data, **kwargs):
+        return WorkloadOperatorInformationEntry(**data)
+
+
+class WorkloadOperatorInformationSchema(Schema):
+    id = String(
+        title="Database ID",
+        description="Used to identify a database.",
+        required=True,
+        example="hyrise-1",
+    )
+    workload_operator_information_entries = List(
+        Nested(WorkloadOperatorInformationEntrySchema)
+    )
+
+    @post_load
+    def make_workload_operator_information(self, data, **kwargs):
+        return WorkloadOperatorInformation(**data)

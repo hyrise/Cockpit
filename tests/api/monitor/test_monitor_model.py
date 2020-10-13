@@ -19,6 +19,8 @@ from hyrisecockpit.api.app.monitor.model import (
     SegmentConfigurationEntry,
     WorkloadStatementInformationEntry,
     WorkloadStatementInformation,
+    WorkloadOperatorInformationEntry,
+    WorkloadOperatorInformation,
 )
 
 
@@ -374,4 +376,41 @@ class TestWorkloadStatementInformation:
                 0
             ]
             == workload_statement_information_entry_model
+        )
+
+
+class TestWorkloadOperatorInformation:
+    def test_creates_workload_operator_information_entry(self) -> None:
+        operator: str = "Alias"
+        total_time_ns: int = 9568298895
+
+        workload_operator_information_entry_model: WorkloadOperatorInformationEntry = (
+            WorkloadOperatorInformationEntry(
+                operator=operator,
+                total_time_ns=total_time_ns,
+            )
+        )
+
+        assert workload_operator_information_entry_model.operator == operator
+        assert workload_operator_information_entry_model.total_time_ns == total_time_ns
+
+    def test_creates_workload_operator_information(self) -> None:
+        database_id: str = "some_db_id"
+        workload_operator_information_entry_model: WorkloadOperatorInformationEntry = (
+            WorkloadOperatorInformationEntry(operator="Alias", total_time_ns=9568298895)
+        )
+
+        workload_operator_information_model: WorkloadOperatorInformation = (
+            WorkloadOperatorInformation(
+                id=database_id,
+                workload_operator_information_entries=[
+                    workload_operator_information_entry_model
+                ],
+            )
+        )
+
+        assert workload_operator_information_model.id == database_id
+        assert (
+            workload_operator_information_model.workload_operator_information_entries[0]
+            == workload_operator_information_entry_model
         )

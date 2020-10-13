@@ -141,3 +141,21 @@ class WorkloadStatementInformation:
         self.workload_statement_information_entries: List[
             WorkloadStatementInformationEntry
         ] = workload_statement_information_entries
+
+
+class WorkloadOperatorInformationEntry:
+    def __init__(self, operator: str, total_time_ns: int):
+        self.operator: str = operator
+        self.total_time_ns: int = total_time_ns
+
+
+class WorkloadOperatorInformation:
+    def __init__(
+        self,
+        id: str,
+        workload_operator_information_entries: List[WorkloadOperatorInformationEntry],
+    ):
+        self.id: str = id
+        self.workload_operator_information_entries: List[
+            WorkloadOperatorInformationEntry
+        ] = workload_operator_information_entries

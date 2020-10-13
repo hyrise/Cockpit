@@ -17,6 +17,8 @@ from hyrisecockpit.api.app.monitor.schema import (
     SegmentConfigurationEntrySchema,
     WorkloadStatementInformationEntrySchema,
     WorkloadStatementInformationSchema,
+    WorkloadOperatorInformationEntrySchema,
+    WorkloadOperatorInformationSchema,
 )
 from hyrisecockpit.api.app.monitor.model import (
     FailedTaskEntry,
@@ -36,6 +38,8 @@ from hyrisecockpit.api.app.monitor.model import (
     SegmentConfigurationEntry,
     WorkloadStatementInformationEntry,
     WorkloadStatementInformation,
+    WorkloadOperatorInformationEntry,
+    WorkloadOperatorInformation,
 )
 
 
@@ -548,5 +552,91 @@ class TestWorkloadStatementInformationSchema:
         assert isinstance(
             deserialized.workload_statement_information_entries[0],
             WorkloadStatementInformationEntry,
+        )
+        assert database_id == deserialized.id
+
+
+class TestWorkloadOperatorInformation:
+    def test_serializes_workload_operator_information_enty(self) -> None:
+        operator: str = "Alias"
+        total_time_ns: int = 9568298895
+
+        workload_operator_information_entry_model: WorkloadOperatorInformationEntry = (
+            WorkloadOperatorInformationEntry(
+                operator=operator,
+                total_time_ns=total_time_ns,
+            )
+        )
+
+        serialized = WorkloadOperatorInformationEntrySchema().dump(
+            workload_operator_information_entry_model
+        )
+
+        assert operator == serialized["operator"]
+        assert total_time_ns == serialized["total_time_ns"]
+
+    def test_serializes_workload_operator_information(self) -> None:
+        database_id: str = "some_db_id"
+        workload_operator_information_entry_model: WorkloadOperatorInformationEntry = (
+            WorkloadOperatorInformationEntry(operator="Alias", total_time_ns=9568298895)
+        )
+
+        workload_operator_information_model: WorkloadOperatorInformation = (
+            WorkloadOperatorInformation(
+                id=database_id,
+                workload_operator_information_entries=[
+                    workload_operator_information_entry_model
+                ],
+            )
+        )
+        serialized = WorkloadOperatorInformationSchema().dump(
+            workload_operator_information_model
+        )
+
+        assert database_id == serialized["id"]
+        assert (
+            vars(workload_operator_information_entry_model)
+            == serialized["workload_operator_information_entries"][0]
+        )
+
+    def test_deserializes_workload_statement_information_enty(self) -> None:
+        operator: str = "Alias"
+        total_time_ns: int = 9568298895
+        workload_operator_information_entry_data: Dict = {
+            "operator": operator,
+            "total_time_ns": total_time_ns,
+        }
+
+        deserialized = WorkloadOperatorInformationEntrySchema().load(
+            workload_operator_information_entry_data
+        )
+
+        assert isinstance(deserialized, WorkloadOperatorInformationEntry)
+        assert operator == deserialized.operator
+        assert total_time_ns == deserialized.total_time_ns
+
+    def test_deserializes_workload_operator_information(self) -> None:
+        database_id: str = "some_db_id"
+        operator: str = "Alias"
+        total_time_ns: int = 9568298895
+        workload_operator_information_entry_data: Dict = {
+            "operator": operator,
+            "total_time_ns": total_time_ns,
+        }
+        workload_operator_information_data = {
+            "id": database_id,
+            "workload_operator_information_entries": [
+                workload_operator_information_entry_data
+            ],
+        }
+
+        deserialized = WorkloadOperatorInformationSchema().load(
+            workload_operator_information_data
+        )
+
+        assert isinstance(deserialized, WorkloadOperatorInformation)
+        assert isinstance(
+            deserialized.workload_operator_information_entries[0],
+            WorkloadOperatorInformationEntry,
         )
         assert database_id == deserialized.id
