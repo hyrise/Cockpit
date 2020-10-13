@@ -18,8 +18,9 @@ from .model import (
     ChunksEntry,
     StorageData,
     StorageDataEntry,
+    SegmentConfigurationEntry,
 )
-from .schema import StorageDataEntrySchema
+from .schema import StorageDataEntrySchema, SegmentConfigurationEntrySchema
 
 
 class MonitorService:
@@ -161,3 +162,39 @@ class MonitorService:
                 )
             )
         return storage_data
+
+    @classmethod
+    def _get_segment_configuration_type(
+        cls, client, database: str, segment_configuration_type: str
+    ) -> Dict:
+        configuration = client.query(
+            f'SELECT LAST("{segment_configuration_type}") FROM segment_configuration',
+            database=database,
+        )
+        segment_configuration = list(configuration["segment_configuration", None])
+        if len(segment_configuration) > 0:
+            return loads(segment_configuration[0]["last"])
+        else:
+            return {}
+
+    @classmethod
+    def get_segment_configuration(cls) -> List[SegmentConfigurationEntry]:
+        segment_configurations: List[SegmentConfigurationEntry] = []
+        with StorageConnection() as client:
+            for database in _get_active_databases():
+                encoding_type = cls._get_segment_configuration_type(
+                    client, database, "segment_configuration_encoding_type"
+                )
+                order_mode = cls._get_segment_configuration_type(
+                    client, database, "segment_configuration_order_mode"
+                )
+                segment_configurations.append(
+                    SegmentConfigurationEntrySchema().load(
+                        {
+                            "id": database,
+                            "encoding_type": encoding_type,
+                            "order_mode": order_mode,
+                        }
+                    )
+                )
+        return segment_configurations

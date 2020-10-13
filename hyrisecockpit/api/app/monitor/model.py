@@ -115,10 +115,10 @@ class OrderModeEntry:
 class SegmentConfigurationEntry:
     def __init__(
         self,
-        database_id: str,
+        id: str,
         encoding_type: Dict[str, Dict[str, EncodingTypeEntry]],
         order_mode: Dict[str, Dict[str, OrderModeEntry]],
     ):
-        self.id: str = database_id
+        self.id: str = id
         self.encoding_type: Dict[str, Dict[str, EncodingTypeEntry]] = encoding_type
         self.order_mode: Dict[str, Dict[str, OrderModeEntry]] = order_mode

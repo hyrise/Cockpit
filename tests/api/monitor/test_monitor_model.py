@@ -315,7 +315,7 @@ class TestSegmentConfigurationModel:
 
         segment_configuration_entry: SegmentConfigurationEntry = (
             SegmentConfigurationEntry(
-                database_id=database_id,
+                id=database_id,
                 encoding_type=encoding_type,
                 order_mode=order_mode,
             )
