@@ -100,3 +100,25 @@ class StorageData:
     def __init__(self, database_id: str, storage: List[StorageDataEntry]):
         self.id: str = database_id
         self.storage: List[StorageDataEntry] = storage
+
+
+class EncodingTypeEntry:
+    def __init__(self, encoding_type: str):
+        self.encoding_type: str = encoding_type
+
+
+class OrderModeEntry:
+    def __init__(self, order_mode: str):
+        self.order_mode: str = order_mode
+
+
+class SegmentConfigurationEntry:
+    def __init__(
+        self,
+        database_id: str,
+        encoding_type: Dict[str, Dict[str, EncodingTypeEntry]],
+        order_mode: Dict[str, Dict[str, OrderModeEntry]],
+    ):
+        self.id: str = database_id
+        self.encoding_type: Dict[str, Dict[str, EncodingTypeEntry]] = encoding_type
+        self.order_mode: Dict[str, Dict[str, OrderModeEntry]] = order_mode

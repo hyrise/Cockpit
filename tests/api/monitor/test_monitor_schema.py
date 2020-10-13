@@ -12,6 +12,9 @@ from hyrisecockpit.api.app.monitor.schema import (
     TableDataSchema,
     StorageDataEntrySchema,
     StorageDataSchema,
+    EncodingTypeEntrySchema,
+    OrderModeEntrySchema,
+    SegmentConfigurationEntrySchema,
 )
 from hyrisecockpit.api.app.monitor.model import (
     FailedTaskEntry,
@@ -26,6 +29,9 @@ from hyrisecockpit.api.app.monitor.model import (
     TableData,
     StorageDataEntry,
     StorageData,
+    EncodingTypeEntry,
+    OrderModeEntry,
+    SegmentConfigurationEntry,
 )
 
 
@@ -398,3 +404,55 @@ class TestStorageSchema:
             EncodingEntry,
         )
         assert timestamp == deserialized.timestamp
+
+
+class TestSegmentConfigurationSchema:
+    def test_serializes_encoding_type_entry_schema(self):
+        encoding_type: str = "Dictionary"
+        encoding_type_entry_model: EncodingTypeEntry = EncodingTypeEntry(
+            encoding_type=encoding_type
+        )
+
+        serialized = EncodingTypeEntrySchema().dump(encoding_type_entry_model)
+
+        assert encoding_type == serialized["encoding_type"]
+
+    def test_serializes_order_mode_entry_schema(self):
+        order_mode: str = "Ascending"
+        order_mode_entry_model: OrderModeEntry = OrderModeEntry(order_mode=order_mode)
+
+        serialized = OrderModeEntrySchema().dump(order_mode_entry_model)
+
+        assert order_mode == serialized["order_mode"]
+
+    def test_serializes_segment_configuration_enty(self):
+        database_id: str = "some_db_id"
+        encoding_entry_model: EncodingTypeEntry = EncodingTypeEntry(
+            encoding_type="Dictionary"
+        )
+        order_mode_entry_model: OrderModeEntry = OrderModeEntry(order_mode="Ascending")
+        encoding_type: Dict[str, Dict[str, EncodingEntry]] = {
+            "customer_tpch_1": {"0": encoding_entry_model}
+        }
+        order_mode: Dict[str, Dict[str, OrderModeEntry]] = {
+            "customer_tpch_1": {"0": order_mode_entry_model}
+        }
+        segment_configuration_entry: SegmentConfigurationEntry = (
+            SegmentConfigurationEntry(
+                database_id=database_id,
+                encoding_type=encoding_type,
+                order_mode=order_mode,
+            )
+        )
+
+        serialized = SegmentConfigurationEntrySchema().dump(segment_configuration_entry)
+
+        assert database_id == serialized["id"]
+        assert (
+            vars(encoding_entry_model)
+            == serialized["encoding_type"]["customer_tpch_1"]["0"]
+        )
+        assert (
+            vars(order_mode_entry_model)
+            == serialized["order_mode"]["customer_tpch_1"]["0"]
+        )

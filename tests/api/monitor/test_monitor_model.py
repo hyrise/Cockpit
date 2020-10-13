@@ -14,6 +14,9 @@ from hyrisecockpit.api.app.monitor.model import (
     TableData,
     StorageDataEntry,
     StorageData,
+    EncodingTypeEntry,
+    OrderModeEntry,
+    SegmentConfigurationEntry,
 )
 
 
@@ -278,3 +281,52 @@ class TestStorageModel:
 
         assert storage_data_model.id == database_id
         assert storage_data_model.storage == [storage_data_entry_model]
+
+
+class TestSegmentConfigurationModel:
+    def test_creates_encoding_entry(self) -> None:
+        encoding_type: str = "Dictionary"
+
+        encoding_entry_model: EncodingTypeEntry = EncodingTypeEntry(
+            encoding_type=encoding_type
+        )
+
+        assert encoding_entry_model.encoding_type == encoding_type
+
+    def test_creates_order_mode_entry(self) -> None:
+        order_mode: str = "Ascending"
+
+        order_mode_entry_model: OrderModeEntry = OrderModeEntry(order_mode=order_mode)
+
+        assert order_mode_entry_model.order_mode == order_mode
+
+    def test_creates_segment_configuration_entry(self) -> None:
+        database_id: str = "some_db_id"
+        encoding_entry_model: EncodingTypeEntry = EncodingTypeEntry(
+            encoding_type="Dictionary"
+        )
+        order_mode_entry_model: OrderModeEntry = OrderModeEntry(order_mode="Ascending")
+        encoding_type: Dict[str, Dict[str, EncodingTypeEntry]] = {
+            "customer_tpch_1": {"0": encoding_entry_model}
+        }
+        order_mode: Dict[str, Dict[str, OrderModeEntry]] = {
+            "customer_tpch_1": {"0": order_mode_entry_model}
+        }
+
+        segment_configuration_entry: SegmentConfigurationEntry = (
+            SegmentConfigurationEntry(
+                database_id=database_id,
+                encoding_type=encoding_type,
+                order_mode=order_mode,
+            )
+        )
+
+        assert segment_configuration_entry.id == database_id
+        assert (
+            segment_configuration_entry.encoding_type["customer_tpch_1"]["0"]
+            == encoding_entry_model
+        )
+        assert (
+            segment_configuration_entry.order_mode["customer_tpch_1"]["0"]
+            == order_mode_entry_model
+        )

@@ -6,7 +6,15 @@ Entities are defined in models.py .
 
 from marshmallow import Schema, post_load
 from marshmallow.fields import Integer, List, Nested, String, Float, Dict
-from .model import EncodingEntry, ColumnEntry, TableData, StorageDataEntry
+from .model import (
+    EncodingEntry,
+    ColumnEntry,
+    TableData,
+    StorageDataEntry,
+    EncodingTypeEntry,
+    OrderModeEntry,
+    SegmentConfigurationEntry,
+)
 
 
 class FailedTaskEntrySchema(Schema):
@@ -224,3 +232,50 @@ class StorageDataSchema(Schema):
         example="hyrise-1",
     )
     storage = List(Nested(StorageDataEntrySchema))
+
+
+class EncodingTypeEntrySchema(Schema):
+    encoding_type = String(
+        title="Encoding type",
+        description="Encoding type of chunk",
+        required=True,
+        example="Dictionary",
+    )
+
+    @post_load
+    def make_encoding_type_entry(self, data, **kwargs):
+        return EncodingTypeEntry(**data)
+
+
+class OrderModeEntrySchema(Schema):
+    order_mode = String(
+        title="Order mode",
+        description="Order mode of chunk",
+        required=True,
+        example="Ascending",
+    )
+
+    @post_load
+    def make_order_mode_entry(self, data, **kwargs):
+        return OrderModeEntry(**data)
+
+
+class SegmentConfigurationEntrySchema(Schema):
+    id = String(
+        title="Database ID",
+        description="Used to identify a database.",
+        required=True,
+        example="hyrise-1",
+    )
+    encoding_type = Dict(
+        String(title="Table name"),
+        Dict(String(title="Chunk ID"), Nested(EncodingTypeEntrySchema)),
+    )
+    order_mode = Dict(
+        String(title="Table name"),
+        Dict(String(title="Chunk ID"), Nested(OrderModeEntrySchema)),
+    )
+
+    @post_load
+    def make_segment_configuration_enty(self, data, **kwargs):
+        return SegmentConfigurationEntry(**data)
