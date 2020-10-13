@@ -119,9 +119,7 @@ class MonitorService:
                     )
                 ]
             failed_tasks.append(
-                FailedTasks(
-                    database_id=database, failed_task_entries=failed_task_entries
-                )
+                FailedTasks(database_id=database, failed_queries=failed_task_entries)
             )
         return failed_tasks
 
@@ -228,7 +226,7 @@ class MonitorService:
                     WorkloadStatementInformationSchema().load(
                         {
                             "id": database,
-                            "workload_statement_information_entries": workload_statement_information_entries,
+                            "workload_statement_information": workload_statement_information_entries,
                         }
                     )
                 )

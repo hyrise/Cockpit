@@ -65,13 +65,13 @@ class TestFailedTasksModel:
         )
         failed_task_model: FailedTasks = FailedTasks(
             database_id=database_id,
-            failed_task_entries=[failed_task_model_one, failed_task_model_two],
+            failed_queries=[failed_task_model_one, failed_task_model_two],
         )
         assert database_id == failed_task_model.id
         assert [
             failed_task_model_one,
             failed_task_model_two,
-        ] == failed_task_model.failed_task_entries
+        ] == failed_task_model.failed_queries
 
 
 class TestTimeIntervalModel:
@@ -364,7 +364,7 @@ class TestWorkloadStatementInformation:
         workload_statement_information_model: WorkloadStatementInformation = (
             WorkloadStatementInformation(
                 id=database_id,
-                workload_statement_information_entries=[
+                workload_statement_information=[
                     workload_statement_information_entry_model
                 ],
             )
@@ -372,9 +372,7 @@ class TestWorkloadStatementInformation:
 
         assert workload_statement_information_model.id == database_id
         assert (
-            workload_statement_information_model.workload_statement_information_entries[
-                0
-            ]
+            workload_statement_information_model.workload_statement_information[0]
             == workload_statement_information_entry_model
         )
 

@@ -92,13 +92,13 @@ class TestMonitorService:
         result = monitor_service.get_failed_tasks()
 
         assert result[0].id == "database_id"
-        assert vars(result[0].failed_task_entries[0]) == {
+        assert vars(result[0].failed_queries[0]) == {
             "timestamp": "2042-10-10T00:00:00Z",
             "error": "some_error",
             "task": "select * from foo",
             "worker_id": "worker_1",
         }
-        assert vars(result[0].failed_task_entries[1]) == {
+        assert vars(result[0].failed_queries[1]) == {
             "timestamp": "2050-10-10T00:00:00Z",
             "error": "some_extra_error",
             "task": "select * from haha",
@@ -464,12 +464,12 @@ class TestMonitorService:
 
         assert isinstance(results[0], WorkloadStatementInformation)
         assert isinstance(
-            results[0].workload_statement_information_entries[0],
+            results[0].workload_statement_information[0],
             WorkloadStatementInformationEntry,
         )
         assert results[0].id == database_id
         assert (
-            vars(results[0].workload_statement_information_entries[0])
+            vars(results[0].workload_statement_information[0])
             == expected_workload_statement_information_entry
         )
 

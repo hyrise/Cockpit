@@ -314,7 +314,7 @@ class WorkloadStatementInformationSchema(Schema):
         required=True,
         example="hyrise-1",
     )
-    workload_statement_information_entries = List(
+    workload_statement_information = List(
         Nested(WorkloadStatementInformationEntrySchema)
     )
 

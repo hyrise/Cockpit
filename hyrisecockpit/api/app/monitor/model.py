@@ -15,9 +15,9 @@ class FailedTaskEntry:
 
 
 class FailedTasks:
-    def __init__(self, database_id: str, failed_task_entries: List[FailedTaskEntry]):
+    def __init__(self, database_id: str, failed_queries: List[FailedTaskEntry]):
         self.id: str = database_id
-        self.failed_task_entries: List[FailedTaskEntry] = failed_task_entries
+        self.failed_queries: List[FailedTaskEntry] = failed_queries
 
 
 class TimeInterval:
@@ -135,12 +135,12 @@ class WorkloadStatementInformation:
     def __init__(
         self,
         id: str,
-        workload_statement_information_entries: List[WorkloadStatementInformationEntry],
+        workload_statement_information: List[WorkloadStatementInformationEntry],
     ):
         self.id: str = id
-        self.workload_statement_information_entries: List[
+        self.workload_statement_information: List[
             WorkloadStatementInformationEntry
-        ] = workload_statement_information_entries
+        ] = workload_statement_information
 
 
 class WorkloadOperatorInformationEntry:

@@ -493,7 +493,7 @@ class TestWorkloadStatementInformationSchema:
         workload_statement_information_model: WorkloadStatementInformation = (
             WorkloadStatementInformation(
                 id=database_id,
-                workload_statement_information_entries=[
+                workload_statement_information=[
                     workload_statement_information_entry_model
                 ],
             )
@@ -505,7 +505,7 @@ class TestWorkloadStatementInformationSchema:
         assert database_id == serialized["id"]
         assert (
             vars(workload_statement_information_entry_model)
-            == serialized["workload_statement_information_entries"][0]
+            == serialized["workload_statement_information"][0]
         )
 
     def test_deserializes_workload_statement_information_enty(self) -> None:
@@ -539,7 +539,7 @@ class TestWorkloadStatementInformationSchema:
         }
         workload_statement_information_data = {
             "id": database_id,
-            "workload_statement_information_entries": [
+            "workload_statement_information": [
                 workload_statement_information_entry_data
             ],
         }
@@ -550,7 +550,7 @@ class TestWorkloadStatementInformationSchema:
 
         assert isinstance(deserialized, WorkloadStatementInformation)
         assert isinstance(
-            deserialized.workload_statement_information_entries[0],
+            deserialized.workload_statement_information[0],
             WorkloadStatementInformationEntry,
         )
         assert database_id == deserialized.id
