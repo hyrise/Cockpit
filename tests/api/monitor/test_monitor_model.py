@@ -12,7 +12,6 @@ from hyrisecockpit.api.app.monitor.model import (
     EncodingEntry,
     ColumnEntry,
     TableData,
-    StorageDataEntry,
     StorageData,
     EncodingTypeEntry,
     OrderModeEntry,
@@ -237,30 +236,6 @@ class TestStorageModel:
         assert table_data_model.data == data
 
     def test_creates_storage_data_entry(self) -> None:
-        timestamp: int = 42
-        encoding: List[EncodingEntry] = [
-            EncodingEntry(
-                name="Dictionary", amount=1, compression=["FixedSize2ByteAligned"]
-            )
-        ]
-        colums_entry_model: ColumnEntry = ColumnEntry(
-            size=89644, data_type="float", encoding=encoding
-        )
-        data: Dict[str, ColumnEntry] = {"c_acctbal": colums_entry_model}
-        table_data_model: TableData = TableData(
-            size=4374976, number_columns=1, data=data
-        )
-
-        storage_data_entry_model: StorageDataEntry = StorageDataEntry(
-            timestamp=timestamp, table_data={"customer_tpch_0_1": table_data_model}
-        )
-
-        assert storage_data_entry_model.timestamp == timestamp
-        assert storage_data_entry_model.table_data == {
-            "customer_tpch_0_1": table_data_model
-        }
-
-    def test_creates_storage_data(self) -> None:
         database_id: str = "some_db_id"
         encoding: List[EncodingEntry] = [
             EncodingEntry(
@@ -275,16 +250,12 @@ class TestStorageModel:
             size=4374976, number_columns=1, data=data
         )
 
-        storage_data_entry_model: StorageDataEntry = StorageDataEntry(
-            timestamp=42, table_data={"customer_tpch_0_1": table_data_model}
-        )
-
         storage_data_model: StorageData = StorageData(
-            database_id=database_id, storage=[storage_data_entry_model]
+            id=database_id, storage={"customer_tpch_0_1": table_data_model}
         )
 
         assert storage_data_model.id == database_id
-        assert storage_data_model.storage == [storage_data_entry_model]
+        assert storage_data_model.storage == {"customer_tpch_0_1": table_data_model}
 
 
 class TestSegmentConfigurationModel:

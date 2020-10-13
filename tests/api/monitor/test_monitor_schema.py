@@ -10,7 +10,6 @@ from hyrisecockpit.api.app.monitor.schema import (
     EncodingEntrySchema,
     ColumnEntrySchema,
     TableDataSchema,
-    StorageDataEntrySchema,
     StorageDataSchema,
     EncodingTypeEntrySchema,
     OrderModeEntrySchema,
@@ -31,7 +30,6 @@ from hyrisecockpit.api.app.monitor.model import (
     EncodingEntry,
     ColumnEntry,
     TableData,
-    StorageDataEntry,
     StorageData,
     EncodingTypeEntry,
     OrderModeEntry,
@@ -250,36 +248,7 @@ class TestStorageSchema:
         assert number_columns == serialized["number_columns"]
         assert vars(encoding[0]) == serialized["data"]["c_acctbal"]["encoding"][0]
 
-    def test_serializes_storage_data_entry_schema(self):
-        timestamp: str = 42
-        encoding: List[EncodingEntry] = [
-            EncodingEntry(
-                name="Dictionary", amount=1, compression=["FixedSize2ByteAligned"]
-            )
-        ]
-        colums_entry_model: ColumnEntry = ColumnEntry(
-            size=89644, data_type="float", encoding=encoding
-        )
-        data: Dict[str, ColumnEntry] = {"c_acctbal": colums_entry_model}
-        table_data_model: TableData = TableData(
-            size=4374976, number_columns=1, data=data
-        )
-        storage_data_entry_model: StorageData = StorageDataEntry(
-            timestamp=timestamp, table_data={"customer_tpch_0_1": table_data_model}
-        )
-
-        serialized = StorageDataEntrySchema().dump(storage_data_entry_model)
-
-        assert timestamp == serialized["timestamp"]
-        assert (
-            vars(encoding[0])
-            == serialized["table_data"]["customer_tpch_0_1"]["data"]["c_acctbal"][
-                "encoding"
-            ][0]
-        )
-
     def test_serializes_storage_data_schema(self):
-        timestamp: int = 42
         database_id: str = "some_db_id"
         encoding: List[EncodingEntry] = [
             EncodingEntry(
@@ -293,22 +262,18 @@ class TestStorageSchema:
         table_data_model: TableData = TableData(
             size=4374976, number_columns=1, data=data
         )
-        storage_data_entry_model: StorageData = StorageDataEntry(
-            timestamp=timestamp, table_data={"customer_tpch_0_1": table_data_model}
-        )
         storage_data_model: StorageData = StorageData(
-            database_id=database_id, storage=[storage_data_entry_model]
+            id=database_id, storage={"customer_tpch_0_1": table_data_model}
         )
 
         serialized = StorageDataSchema().dump(storage_data_model)
 
         assert database_id == serialized["id"]
-        assert timestamp == serialized["storage"][0]["timestamp"]
         assert (
             vars(encoding[0])
-            == serialized["storage"][0]["table_data"]["customer_tpch_0_1"]["data"][
-                "c_acctbal"
-            ]["encoding"][0]
+            == serialized["storage"]["customer_tpch_0_1"]["data"]["c_acctbal"][
+                "encoding"
+            ][0]
         )
 
     def test_deserializes_encoding_entry_schema(self):
@@ -378,7 +343,7 @@ class TestStorageSchema:
         assert number_columns == deserialized.number_columns
 
     def test_deserializes_storage_data_entry_schema(self):
-        timestamp: int = 42
+        database_id: str = "some_db_id"
         encoding_entry_data = {
             "name": "Dictionary",
             "amount": 1,
@@ -395,23 +360,23 @@ class TestStorageSchema:
             "number_columns": 1,
             "data": data,
         }
-        storage_data_entry_data = {
-            "timestamp": timestamp,
-            "table_data": {"customer_tpch_0_1": table_data},
+        storage_data_data = {
+            "id": database_id,
+            "storage": {"customer_tpch_0_1": table_data},
         }
 
-        deserialized = StorageDataEntrySchema().load(storage_data_entry_data)
+        deserialized = StorageDataSchema().load(storage_data_data)
 
-        assert isinstance(deserialized, StorageDataEntry)
-        assert isinstance(deserialized.table_data["customer_tpch_0_1"], TableData)
+        assert isinstance(deserialized, StorageData)
+        assert isinstance(deserialized.storage["customer_tpch_0_1"], TableData)
         assert isinstance(
-            deserialized.table_data["customer_tpch_0_1"].data["c_acctbal"], ColumnEntry
+            deserialized.storage["customer_tpch_0_1"].data["c_acctbal"], ColumnEntry
         )
         assert isinstance(
-            deserialized.table_data["customer_tpch_0_1"].data["c_acctbal"].encoding[0],
+            deserialized.storage["customer_tpch_0_1"].data["c_acctbal"].encoding[0],
             EncodingEntry,
         )
-        assert timestamp == deserialized.timestamp
+        assert database_id == deserialized.id
 
 
 class TestSegmentConfigurationSchema:

@@ -90,16 +90,10 @@ class TableData:
         self.data: Dict[str, ColumnEntry] = data
 
 
-class StorageDataEntry:
-    def __init__(self, timestamp: int, table_data: Dict[str, TableData]):
-        self.timestamp: int = timestamp
-        self.table_data: Dict[str, TableData] = table_data
-
-
 class StorageData:
-    def __init__(self, database_id: str, storage: List[StorageDataEntry]):
-        self.id: str = database_id
-        self.storage: List[StorageDataEntry] = storage
+    def __init__(self, id: str, storage: Dict[str, TableData]):
+        self.id: str = id
+        self.storage: Dict[str, TableData] = storage
 
 
 class EncodingTypeEntry:

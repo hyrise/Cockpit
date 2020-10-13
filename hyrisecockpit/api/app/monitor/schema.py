@@ -10,7 +10,7 @@ from .model import (
     EncodingEntry,
     ColumnEntry,
     TableData,
-    StorageDataEntry,
+    StorageData,
     EncodingTypeEntry,
     OrderModeEntry,
     SegmentConfigurationEntry,
@@ -214,20 +214,6 @@ class TableDataSchema(Schema):
         return TableData(**data)
 
 
-class StorageDataEntrySchema(Schema):
-    timestamp = Integer(
-        title="Timestamp",
-        description="Timestamp in nanoseconds since epoch",
-        required=True,
-        example=1585762457000000000,
-    )
-    table_data = Dict(String(title="Table name"), Nested(TableDataSchema))
-
-    @post_load
-    def make_storage_data_entry(self, data, **kwargs):
-        return StorageDataEntry(**data)
-
-
 class StorageDataSchema(Schema):
     id = String(
         title="Database ID",
@@ -235,7 +221,11 @@ class StorageDataSchema(Schema):
         required=True,
         example="hyrise-1",
     )
-    storage = List(Nested(StorageDataEntrySchema))
+    storage = Dict(String(title="Table name"), Nested(TableDataSchema))
+
+    @post_load
+    def make_storage_data_entry(self, data, **kwargs):
+        return StorageData(**data)
 
 
 class EncodingTypeEntrySchema(Schema):

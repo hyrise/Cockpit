@@ -17,14 +17,13 @@ from .model import (
     SystemEntry,
     ChunksEntry,
     StorageData,
-    StorageDataEntry,
     SegmentConfigurationEntry,
     WorkloadStatementInformation,
     WorkloadOperatorInformation,
 )
 from .schema import (
-    StorageDataEntrySchema,
     SegmentConfigurationEntrySchema,
+    StorageDataSchema,
     WorkloadStatementInformationSchema,
     WorkloadOperatorInformationSchema,
 )
@@ -145,27 +144,26 @@ class MonitorService:
         return chunks
 
     @classmethod
-    def get_storage(cls, time_interval: TimeInterval) -> List[StorageData]:
-        historical_storage_data: List[Dict] = cls.get_data(
-            time_interval, "storage", ["storage_meta_information"]
-        )
+    def get_storage(cls) -> List[StorageData]:
         storage_data: List[StorageData] = []
-        for database_data in historical_storage_data:
-            storage_data_entries: List[StorageDataEntry] = []
-            for point in database_data["storage"]:
-                storage_data_entries.append(
-                    StorageDataEntrySchema().load(
-                        {
-                            "timestamp": point["timestamp"],
-                            "table_data": point["storage_meta_information"],
-                        }
+        with StorageConnection() as client:
+            for database in _get_active_databases():
+                result = client.query(
+                    'SELECT LAST("storage_meta_information") FROM storage',
+                    database=database,
+                )
+                storage_value = list(result["storage", None])
+                if len(storage_value) > 0:
+                    storage_data.append(
+                        StorageDataSchema().load(
+                            {
+                                "id": database,
+                                "storage": loads(storage_value[0]["last"]),
+                            }
+                        )
                     )
-                )
-            storage_data.append(
-                StorageData(
-                    database_id=database_data["id"], storage=storage_data_entries
-                )
-            )
+                else:
+                    storage_data.append(StorageData(id=database, storage={}))
         return storage_data
 
     @classmethod

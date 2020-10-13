@@ -52,9 +52,14 @@ class TestSystem:
 
     def test_returns_metric_values_with_no_database_registered(self):
         """Test static metric endpoints return correct values."""
-        response = self.backend.get_property("monitor/chunks")
-        assert response.status_code == 200  # nosec
-        assert response.json() == []  # nosec
+        metrics = [
+            "monitor/chunks",
+            "monitor/storage",
+        ]
+        for i in range(len(metrics)):
+            response = self.backend.get_property(metrics[i])
+            assert response.status_code == 200  # nosec
+            assert response.json() == []  # nosec
 
     def test_returns_historical_metric_values_with_no_database_registered(self):
         """Test historical metric endpoints return correct values."""
@@ -63,7 +68,6 @@ class TestSystem:
             "metric/latency",
             "metric/queue_length",
             "monitor/system",
-            "monitor/storage",
         ]
         for metric in historical_metrics:
             timestamp: int = time_ns()

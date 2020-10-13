@@ -1,3 +1,4 @@
+from json import dumps
 from hyrisecockpit.api.app.monitor.service import MonitorService
 from hyrisecockpit.api.app.monitor.model import (
     TimeInterval,
@@ -241,9 +242,15 @@ class TestMonitorService:
         assert results[0].id == database_id
         assert results[0].chunks_data == expected_chunks
 
-    def test_gets_storage_data(self, monitor_service: MonitorService) -> None:
+    @patch("hyrisecockpit.api.app.monitor.service._get_active_databases")
+    @patch("hyrisecockpit.api.app.monitor.service.StorageConnection")
+    def test_gets_storage_data(
+        self,
+        mock_storage_connection: MagicMock,
+        mock_get_active_databases: MagicMock,
+        monitor_service: MonitorService,
+    ) -> None:
         database_id = "hallo_world"
-        timestamp = 1234
         encoding_entry = {
             "name": "Dictionary",
             "amount": 1,
@@ -264,48 +271,36 @@ class TestMonitorService:
                 "data": data_entry,
             }
         }
-        entry_point: Dict = {
-            "timestamp": timestamp,
-            "storage_meta_information": storage_meta_information,
-        }
-        storage_data_entry: Dict = {
-            "id": "hallo_world",
-            "storage": [entry_point],
-        }
-        storage_data: List[Dict] = [storage_data_entry]
-        mock_get_data: MagicMock = MagicMock()
-        mock_get_data.return_value = storage_data
-        monitor_service.get_data = mock_get_data  # type: ignore
-        time_interval = TimeInterval(startts=42, endts=100, precision=1)
 
-        response: List[StorageData] = monitor_service.get_storage(time_interval)
+        storage_meta_information_json = dumps(storage_meta_information)
+
+        mock_client = MagicMock()
+        mock_client.query.return_value = {
+            ("storage", None): [
+                {
+                    "time": "2020-10-13T10:05:31.470596Z",
+                    "last": storage_meta_information_json,
+                }
+            ]
+        }
+        mock_storage_connection.return_value.__enter__.return_value = mock_client
+        mock_get_active_databases.return_value = [database_id]
+
+        response: List[StorageData] = monitor_service.get_storage()
 
         assert isinstance(response[0], StorageData)
+        assert isinstance(response[0].storage["customer_tpch_0_1"], TableData)
         assert isinstance(
-            response[0].storage[0].table_data["customer_tpch_0_1"], TableData
-        )
-        assert isinstance(
-            response[0].storage[0].table_data["customer_tpch_0_1"].data["c_acctbal"],
+            response[0].storage["customer_tpch_0_1"].data["c_acctbal"],
             ColumnEntry,
         )
         assert isinstance(
-            response[0]
-            .storage[0]
-            .table_data["customer_tpch_0_1"]
-            .data["c_acctbal"]
-            .encoding[0],
+            response[0].storage["customer_tpch_0_1"].data["c_acctbal"].encoding[0],
             EncodingEntry,
         )
         assert response[0].id == database_id
-        assert response[0].storage[0].timestamp == timestamp
         assert (
-            vars(
-                response[0]
-                .storage[0]
-                .table_data["customer_tpch_0_1"]
-                .data["c_acctbal"]
-                .encoding[0]
-            )
+            vars(response[0].storage["customer_tpch_0_1"].data["c_acctbal"].encoding[0])
             == encoding_entry
         )
 

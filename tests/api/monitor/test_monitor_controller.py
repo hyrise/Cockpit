@@ -18,7 +18,6 @@ from hyrisecockpit.api.app.monitor.model import (
     EncodingEntry,
     ColumnEntry,
     TableData,
-    StorageDataEntry,
     StorageData,
     ChunksEntry,
     FailedTasks,
@@ -131,7 +130,6 @@ class TestMonitorController:
         data_type = "float"
         table_size: int = 4374976
         number_columns: int = 1
-        timestamp: int = 42
         encoding_model: List[EncodingEntry] = [
             EncodingEntry(name=encoding_name, amount=amount, compression=compression)
         ]
@@ -143,50 +141,37 @@ class TestMonitorController:
             size=table_size, number_columns=number_columns, data=data
         )
 
-        storage_data_entry_model: StorageDataEntry = StorageDataEntry(
-            timestamp=timestamp, table_data={"customer_tpch_0_1": table_data_model}
-        )
-
         storage_data_model: StorageData = StorageData(
-            database_id=database_id, storage=[storage_data_entry_model]
+            id=database_id, storage={"customer_tpch_0_1": table_data_model}
         )
 
         expected: List[Dict] = [
             {
                 "id": database_id,
-                "storage": [
-                    {
-                        "timestamp": timestamp,
-                        "table_data": {
-                            "customer_tpch_0_1": {
-                                "size": table_size,
-                                "number_columns": number_columns,
-                                "data": {
-                                    "c_acctbal": {
-                                        "size": columns_entry_size,
-                                        "data_type": data_type,
-                                        "encoding": [
-                                            {
-                                                "name": encoding_name,
-                                                "amount": amount,
-                                                "compression": compression,
-                                            }
-                                        ],
+                "storage": {
+                    "customer_tpch_0_1": {
+                        "size": table_size,
+                        "number_columns": number_columns,
+                        "data": {
+                            "c_acctbal": {
+                                "size": columns_entry_size,
+                                "data_type": data_type,
+                                "encoding": [
+                                    {
+                                        "name": encoding_name,
+                                        "amount": amount,
+                                        "compression": compression,
                                     }
-                                },
+                                ],
                             }
                         },
                     }
-                ],
+                },
             }
         ]
         mock_metric_service.get_storage.return_value = [storage_data_model]
-        fake_startts = 1
-        fake_endts = 5
-        fake_precision = 1
-        parameterized_url = f"{url}/storage?startts={fake_startts}&endts={fake_endts}&precision={fake_precision}"
 
-        response = client.get(parameterized_url, follow_redirects=True)
+        response = client.get(f"{url}/storage", follow_redirects=True)
 
         assert 200 == response.status_code
         assert expected == response.get_json()

@@ -51,20 +51,9 @@ class SystemController(Resource):
 
 @api.route("/storage")
 class StorageController(Resource):
-    @accepts(
-        dict(name="startts", type=int),  # noqa
-        dict(name="endts", type=int),  # noqa
-        dict(name="precision", type=int),  # noqa
-        api=api,
-    )
     @responds(schema=StorageDataSchema(many=True), api=api)
     def get(self) -> List[StorageData]:
-        time_interval: TimeInterval = TimeInterval(
-            startts=request.parsed_args["startts"],  # type: ignore
-            endts=request.parsed_args["endts"],  # type: ignore
-            precision=request.parsed_args["precision"],  # type: ignore
-        )
-        return MonitorService.get_storage(time_interval)
+        return MonitorService.get_storage()
 
 
 @api.route("/chunks")
