@@ -19,8 +19,13 @@ from .model import (
     StorageData,
     StorageDataEntry,
     SegmentConfigurationEntry,
+    WorkloadStatementInformation,
 )
-from .schema import StorageDataEntrySchema, SegmentConfigurationEntrySchema
+from .schema import (
+    StorageDataEntrySchema,
+    SegmentConfigurationEntrySchema,
+    WorkloadStatementInformationSchema,
+)
 
 
 class MonitorService:
@@ -198,3 +203,31 @@ class MonitorService:
                     )
                 )
         return segment_configurations
+
+    @classmethod
+    def get_workload_statement_information(cls) -> List[WorkloadStatementInformation]:
+        workload_statement_information: List[WorkloadStatementInformation] = []
+        with StorageConnection() as client:
+            for database in _get_active_databases():
+                result = client.query(
+                    'SELECT LAST("workload_statement_information"), * FROM workload_statement_information',
+                    database=database,
+                )
+                workload_statement_information_values = list(
+                    result["workload_statement_information", None]
+                )
+                workload_statement_information_entries: List[Dict] = []
+                if len(workload_statement_information_values) > 0:
+                    workload_statement_information_entries = loads(
+                        workload_statement_information_values[0]["last"]
+                    )
+
+                workload_statement_information.append(
+                    WorkloadStatementInformationSchema().load(
+                        {
+                            "id": database,
+                            "workload_statement_information_entries": workload_statement_information_entries,
+                        }
+                    )
+                )
+        return workload_statement_information

@@ -10,6 +10,8 @@ from hyrisecockpit.api.app.monitor.model import (
     SegmentConfigurationEntry,
     EncodingTypeEntry,
     OrderModeEntry,
+    WorkloadStatementInformation,
+    WorkloadStatementInformationEntry,
 )
 from unittest.mock import MagicMock
 from typing import Type, Dict, List
@@ -426,3 +428,45 @@ class TestMonitorService:
         assert result[0].id == "database_id"
         assert result[0].encoding_type == {}
         assert result[0].order_mode == {}
+
+    @patch("hyrisecockpit.api.app.monitor.service._get_active_databases")
+    @patch("hyrisecockpit.api.app.monitor.service.StorageConnection")
+    def test_gets_workload_statement_information(
+        self,
+        mock_storage_connection: MagicMock,
+        mock_get_active_databases: MagicMock,
+        monitor_service: MonitorService,
+    ) -> None:
+
+        mock_client = MagicMock()
+        mock_client.query.return_value = {
+            ("workload_statement_information", None): [
+                {
+                    "time": "2020-10-13T10:05:31.470596Z",
+                    "last": '[{"query_type": "SELECT", "total_latency": 9568298895, "total_frequency": 1504} ]',
+                }
+            ]
+        }
+        mock_storage_connection.return_value.__enter__.return_value = mock_client
+        database_id: str = "database_id"
+        mock_get_active_databases.return_value = [database_id]
+        expected_workload_statement_information_entry: Dict = {
+            "query_type": "SELECT",
+            "total_latency": 9568298895,
+            "total_frequency": 1504,
+        }
+
+        results: List[
+            WorkloadStatementInformation
+        ] = monitor_service.get_workload_statement_information()
+
+        assert isinstance(results[0], WorkloadStatementInformation)
+        assert isinstance(
+            results[0].workload_statement_information_entries[0],
+            WorkloadStatementInformationEntry,
+        )
+        assert results[0].id == database_id
+        assert (
+            vars(results[0].workload_statement_information_entries[0])
+            == expected_workload_statement_information_entry
+        )
