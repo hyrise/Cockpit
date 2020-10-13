@@ -403,7 +403,7 @@ class TestWorkloadOperatorInformation:
         workload_operator_information_model: WorkloadOperatorInformation = (
             WorkloadOperatorInformation(
                 id=database_id,
-                workload_operator_information_entries=[
+                workload_operator_information=[
                     workload_operator_information_entry_model
                 ],
             )
@@ -411,6 +411,6 @@ class TestWorkloadOperatorInformation:
 
         assert workload_operator_information_model.id == database_id
         assert (
-            workload_operator_information_model.workload_operator_information_entries[0]
+            workload_operator_information_model.workload_operator_information[0]
             == workload_operator_information_entry_model
         )

@@ -153,9 +153,9 @@ class WorkloadOperatorInformation:
     def __init__(
         self,
         id: str,
-        workload_operator_information_entries: List[WorkloadOperatorInformationEntry],
+        workload_operator_information: List[WorkloadOperatorInformationEntry],
     ):
         self.id: str = id
-        self.workload_operator_information_entries: List[
+        self.workload_operator_information: List[
             WorkloadOperatorInformationEntry
-        ] = workload_operator_information_entries
+        ] = workload_operator_information

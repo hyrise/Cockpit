@@ -12,6 +12,8 @@ from hyrisecockpit.api.app.monitor.model import (
     OrderModeEntry,
     WorkloadStatementInformation,
     WorkloadStatementInformationEntry,
+    WorkloadOperatorInformation,
+    WorkloadOperatorInformationEntry,
 )
 from unittest.mock import MagicMock
 from typing import Type, Dict, List
@@ -469,4 +471,45 @@ class TestMonitorService:
         assert (
             vars(results[0].workload_statement_information_entries[0])
             == expected_workload_statement_information_entry
+        )
+
+    @patch("hyrisecockpit.api.app.monitor.service._get_active_databases")
+    @patch("hyrisecockpit.api.app.monitor.service.StorageConnection")
+    def test_gets_workload_operator_information(
+        self,
+        mock_storage_connection: MagicMock,
+        mock_get_active_databases: MagicMock,
+        monitor_service: MonitorService,
+    ) -> None:
+
+        mock_client = MagicMock()
+        mock_client.query.return_value = {
+            ("workload_operator_information", None): [
+                {
+                    "time": "2020-10-13T10:05:31.470596Z",
+                    "last": '[{"operator": "Alias", "total_time_ns": 25442791} ]',
+                }
+            ]
+        }
+        mock_storage_connection.return_value.__enter__.return_value = mock_client
+        database_id: str = "database_id"
+        mock_get_active_databases.return_value = [database_id]
+        expected_workload_operator_information_entry: Dict = {
+            "operator": "Alias",
+            "total_time_ns": 25442791,
+        }
+
+        results: List[
+            WorkloadOperatorInformation
+        ] = monitor_service.get_workload_operator_information()
+
+        assert isinstance(results[0], WorkloadOperatorInformation)
+        assert isinstance(
+            results[0].workload_operator_information[0],
+            WorkloadOperatorInformationEntry,
+        )
+        assert results[0].id == database_id
+        assert (
+            vars(results[0].workload_operator_information[0])
+            == expected_workload_operator_information_entry
         )

@@ -347,9 +347,7 @@ class WorkloadOperatorInformationSchema(Schema):
         required=True,
         example="hyrise-1",
     )
-    workload_operator_information_entries = List(
-        Nested(WorkloadOperatorInformationEntrySchema)
-    )
+    workload_operator_information = List(Nested(WorkloadOperatorInformationEntrySchema))
 
     @post_load
     def make_workload_operator_information(self, data, **kwargs):
