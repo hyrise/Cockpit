@@ -280,7 +280,6 @@ class Database(object):
 
     def activate_plugin(self, plugin: str) -> bool:
         """Activate plugin."""
-        # TODO Move in background refactoring to scheduler
         return self._asynchronous_job_handler.activate_plugin(plugin)
 
     def deactivate_plugin(self, plugin: str) -> bool:

@@ -1,6 +1,6 @@
 """Job to get detailed plug-in information."""
 
-from typing import Dict, List, Optional, TypedDict
+from typing import Dict, List, Optional, TypedDict, Tuple, Any
 
 from psycopg2 import DatabaseError, InterfaceError
 
@@ -12,25 +12,38 @@ Plugins = Optional[Dict[str, List[PluginSetting]]]
 
 
 def get_plugins(connection_factory) -> Optional[List[str]]:
-    """Return all currently activated plugins."""
+    """Return all currently activated plugins.
+
+    Args:
+        connection_factory (ConnectionFactory): A factory that returns a wrapper object around a psycopg2
+            cursor that is connected to the hyrise database. All the attributes needed
+            to connect to the hyrise are already defined inside the factory.
+    """
     try:
         with connection_factory.create_cursor() as cur:
             cur.execute(("SELECT name FROM meta_plugins;"), None)
-            rows = cur.fetchall()
+            rows: List[Tuple[Any, ...]] = cur.fetchall()
     except (DatabaseError, InterfaceError):
         return None
     else:
+        # >>> print([row[0].split("Plugin")[0] for row in [('ClusteringPlugin',)]])
+        # ['Clustering']
         return [row[0].split("Plugin")[0] for row in rows]
 
 
 def _get_plugin_setting(connection_factory) -> Plugins:
-    """Return currently set plug-in settings.
+    """Return currently set plug-in setting.
 
     The plug-in settings are obtained from the meta_settings table in the hyrise instance.
     Inside the hyrise instance not just plug-ins have settings. As a result we need to differentiate
     the plug-in settings from the other settings. That's why we use the SQL Statement WHERE name LIKE 'Plugin::%';.
     To get the plug-in name with which we communicate in the cockpit we need to extract it from the name column with
     row[0].split("::")[1]. So for example from Plugin::Compression::MemorySetting we get Compression.
+
+    Args:
+        connection_factory (ConnectionFactory): A factory that returns a wrapper object around a psycopg2
+            cursor that is connected to the hyrise database. All the attributes needed
+            to connect to the hyrise are already defined inside the factory.
     """
     try:
         with connection_factory.create_cursor() as cur:
@@ -65,7 +78,10 @@ def get_detailed_plugins(connection_factory) -> Plugins:
         return None
     if (settings := _get_plugin_setting(connection_factory)) is None:
         return None
-    return {
-        plugin_name: (settings[plugin_name] if plugin_name in settings.keys() else [])
-        for plugin_name in plugins
-    }
+    detailed_plugins = {}
+    for plugin_name in plugins:
+        if plugin_name in settings.keys():
+            detailed_plugins[plugin_name] = settings[plugin_name]
+        else:
+            detailed_plugins[plugin_name] = []
+    return detailed_plugins

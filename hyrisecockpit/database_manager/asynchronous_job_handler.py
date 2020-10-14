@@ -104,7 +104,7 @@ class AsynchronousJobHandler:
 
         Returns:
             bool: True if job was successful started, False if database was
-                blocked and job couldn't be started.
+                blocked or plug-in is already active and job couldn't be started.
         """
         active_plugins = get_plugins_job(self._connection_factory)
         if active_plugins is None or plugin in active_plugins:
@@ -130,7 +130,7 @@ class AsynchronousJobHandler:
 
         Returns:
             bool: True if job was successful started, False if database was
-                blocked and job couldn't be started.
+                blocked or plug-in is not active and job couldn't be started.
         """
         active_plugins = get_plugins_job(self._connection_factory)
         if active_plugins is None or plugin not in active_plugins:

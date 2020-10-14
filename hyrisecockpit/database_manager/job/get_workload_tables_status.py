@@ -21,7 +21,7 @@ def workload_tables_status(tables_in_database, workload_drivers) -> List:
                     missing_tables.append(table_name)
                 else:
                     loaded_tables.append(table_name)
-            table = {
+            table_status = {
                 "workload_type": workload_type,
                 "scale_factor": scale_factor,
                 "loaded_tables": loaded_tables,
@@ -29,7 +29,7 @@ def workload_tables_status(tables_in_database, workload_drivers) -> List:
                 "completely_loaded": loaded,
                 "database_representation": workload_tables,
             }
-            workload_tables_status.append(table)
+            workload_tables_status.append(table_status)
     return workload_tables_status
 
 
