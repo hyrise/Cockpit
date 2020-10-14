@@ -1,6 +1,6 @@
 """Model for monitor namespace.
 
-A model is used for type safety and to represent a entity itself as
+A model is used for type safety and to represent an entity itself as
 a Python representation (object). If we for example getting a response
 from the database manager or influxdb we convert this response, which
 is often a json, to a Python objects. These objects are defined by
