@@ -1,7 +1,12 @@
 """Schema for monitor namespace.
 
-A schemas represents the serialization/deserialization of entities.
-Entities are defined in models.py .
+A schema is responsible for the serialization/deserialization of a given entity.
+A entity can be a response from the influxdb or the database manager. This response can
+then be deserialized (load) into a python entity (model). On the oder hand a python entity (model)
+can be serialized (dump) to a JSON-encoded string.
+For the deserialization the post_load decorater is used.
+For the schemas we are using the marshmallow library.
+The schemas are also used by the controller for documentation.
 """
 
 from marshmallow import Schema, post_load
@@ -22,8 +27,6 @@ from .model import (
 
 
 class FailedTaskEntrySchema(Schema):
-    """Schema of a failed Task Entry."""
-
     timestamp = Integer(
         title="Timestamp",
         description="Timestamp in nanoseconds since epoch",
@@ -51,8 +54,6 @@ class FailedTaskEntrySchema(Schema):
 
 
 class FailedTasksSchema(Schema):
-    """Schema of a failed Task Entry."""
-
     id = String(
         title="Database ID",
         description="Used to identify a database.",

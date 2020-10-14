@@ -1,4 +1,12 @@
-"""Controllers for monitor."""
+"""Controllers for monitor.
+
+The controller is responsible for coordinating Flask routes, services and schemas.
+On top the controller is also responsible to provide the documentation for Swagger.
+To provide the documentation for swagger the controller uses the flask_accepts library
+in connection with schemas (also used to serialize and deserialize objects) from marshmallow.
+The controller uses also models (The model is where the entity itself is defined
+in a Python representation)for type safety. All the requests are delegated to the service.
+"""
 from typing import List
 
 from flask import request

@@ -1,6 +1,10 @@
-"""Model for metric namespace.
+"""Model for monitor namespace.
 
-Models are python representation of entities.
+A model is used for type safety and to represent a entity itself as
+a Python representation (object). If we for example getting a response
+from the database manager or influxdb we convert this response, which
+is often a json, to a Python objects. These objects are defined by
+the models. These objects are often composed of other objects.
 """
 
 from typing import List, Dict
@@ -15,6 +19,11 @@ class FailedTaskEntry:
 
 
 class FailedTasks:
+    """Defines a FailedTask entity.
+
+    Consists out of a FailedTaskEntry entity.
+    """
+
     def __init__(self, database_id: str, failed_queries: List[FailedTaskEntry]):
         self.id: str = database_id
         self.failed_queries: List[FailedTaskEntry] = failed_queries
@@ -58,6 +67,12 @@ class SystemData:
 
 
 class SystemEntry:
+    """Defines a SystemEntry entity.
+
+    Consists out of a SystemData entity which consists out of
+    a Memory entity and Cpu entity.
+    """
+
     def __init__(self, database_id: str, system_data: List[SystemData]):
         self.id: str = database_id
         self.system_data: List[SystemData] = system_data
@@ -91,6 +106,12 @@ class TableData:
 
 
 class StorageData:
+    """Defines a StorageData entity.
+
+    Consists out of a TableData entity which consists out of
+    a ColumnEntry entity which consists out of a EncodingEntry entity.
+    """
+
     def __init__(self, id: str, storage: Dict[str, TableData]):
         self.id: str = id
         self.storage: Dict[str, TableData] = storage
@@ -107,6 +128,11 @@ class OrderModeEntry:
 
 
 class SegmentConfigurationEntry:
+    """Defines a SegmentConfigurationEntry entity.
+
+    Consists out of a EncodingTypeEntry entity and OrderModeEntry entity.
+    """
+
     def __init__(
         self,
         id: str,
@@ -126,6 +152,11 @@ class WorkloadStatementInformationEntry:
 
 
 class WorkloadStatementInformation:
+    """Defines a WorkloadStatementInformation entity.
+
+    Consists out of a WorkloadStatementInformationEntry entity.
+    """
+
     def __init__(
         self,
         id: str,
@@ -144,6 +175,11 @@ class WorkloadOperatorInformationEntry:
 
 
 class WorkloadOperatorInformation:
+    """Defines a WorkloadStatementInformation entity.
+
+    Consists out of a WorkloadOperatorInformationEntry entity.
+    """
+
     def __init__(
         self,
         id: str,
