@@ -17,21 +17,13 @@ from hyrisecockpit.database_manager.job.set_plugin_setting import (
     set_plugin_setting as set_plugin_setting_job,
 )
 
+from .interfaces import SqlResultInterface
+
 PluginSetting = TypedDict(
     "PluginSetting",
     {"name": str, "value": str, "description": str, "display_name": str},
 )
 Plugins = Optional[Dict[str, List[PluginSetting]]]
-
-
-class SqlResultInterface(TypedDict):
-    """Interface of a SQL result."""
-
-    id: str
-    successful: bool
-    results: List[List[str]]
-    col_names: List[str]
-    error_message: str
 
 
 class SynchronousJobHandler:

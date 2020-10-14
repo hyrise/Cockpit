@@ -10,22 +10,13 @@ from .continuous_job_handler import ContinuousJobHandler
 from .cursor import ConnectionFactory, StorageConnectionFactory
 from .synchronous_job_handler import SynchronousJobHandler
 from .worker_pool import WorkerPool
+from .interfaces import SqlResultInterface
 
 PluginSetting = TypedDict(
     "PluginSetting",
     {"name": str, "display_name": str, "value": str, "description": str},
 )
 Plugins = Optional[Dict[str, List[PluginSetting]]]
-
-
-class SqlResultInterface(TypedDict):
-    """Interface of a SQL result."""
-
-    id: str
-    successful: bool
-    results: List[List[str]]
-    col_names: List[str]
-    error_message: str
 
 
 class Database(object):

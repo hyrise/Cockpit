@@ -1,17 +1,9 @@
 """Job to execute SQL query."""
-from typing import List, Optional, TypedDict, Tuple, Any
+from typing import List, Optional, Tuple, Any
 
 from psycopg2 import Error as psycopg2Errors
 
-
-class SqlResultInterface(TypedDict):
-    """Interface of a sql result."""
-
-    id: str
-    successful: bool
-    results: List[List[str]]
-    col_names: List[str]
-    error_message: str
+from hyrisecockpit.database_manager.interfaces import SqlResultInterface
 
 
 def execute_sql_query(
