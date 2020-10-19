@@ -6,7 +6,7 @@ from pytest import fixture
 
 
 from hyrisecockpit.api.app import create_app
-from hyrisecockpit.api.app.monitor import BASE_ROUTE
+from hyrisecockpit.api.app.monitor import BASE_ROUTE_NEW
 from hyrisecockpit.cross_platform_support.testing_support import MagicMock
 
 from hyrisecockpit.api.app.monitor.model import (
@@ -31,7 +31,7 @@ from hyrisecockpit.api.app.monitor.model import (
     WorkloadOperatorInformation,
 )
 
-url = f"/{BASE_ROUTE}"
+url = f"/{BASE_ROUTE_NEW}"
 
 
 @fixture
