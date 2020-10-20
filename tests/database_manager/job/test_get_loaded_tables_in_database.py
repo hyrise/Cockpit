@@ -19,15 +19,27 @@ class TestGetLoadedTabledInDatabase:
         mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
             mock_cursor
         )
-        mock_cursor.fetchall.return_value = [("hallo", "type",), ("world", "boring",)]
+        mock_cursor.fetchall.return_value = [
+            (
+                "hallo",
+                "type",
+            ),
+            (
+                "world",
+                "boring",
+            ),
+        ]
 
         results = get_loaded_tables_in_database(mock_connection_factory)
 
-        mock_cursor.execute.assert_called_once_with("select * from meta_tables;", None)
+        mock_cursor.execute.assert_called_once_with(
+            "SELECT table_name from meta_tables;", None
+        )
         assert results == ["hallo", "world"]  # type: ignore
 
     @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
+        "exceptions",
+        [DatabaseError(), InterfaceError()],
     )
     def test_gets_loaded_tables_with_exception(self, exceptions) -> None:
         """Test get loaded tables in database with exception."""
@@ -45,5 +57,7 @@ class TestGetLoadedTabledInDatabase:
 
         results = get_loaded_tables_in_database(mock_connection_factory)
 
-        mock_cursor.execute.assert_called_once_with("select * from meta_tables;", None)
+        mock_cursor.execute.assert_called_once_with(
+            "SELECT table_name from meta_tables;", None
+        )
         assert results == []
