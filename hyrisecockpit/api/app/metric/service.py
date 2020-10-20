@@ -22,12 +22,14 @@ from .model import (
     QueueLength,
     Throughput,
     TimeInterval,
+    MemoryFootprint,
 )
 from .schema import (
     LatencySchema,
     NegativeThroughputSchema,
     QueueLengthSchema,
     ThroughputSchema,
+    MemoryFootprintSchema,
 )
 
 
@@ -87,6 +89,16 @@ class MetricService:
         results = cls.get_data(time_interval, "queue_length", ["queue_length"])
         return [
             queue_length_schema.load(database_results) for database_results in results
+        ]
+
+    @classmethod
+    def get_memory_footprint(cls, time_interval: TimeInterval) -> List[MemoryFootprint]:
+        databases_memory_footprints = cls.get_data(
+            time_interval, "storage", ["memory_footprint"]
+        )
+        return [
+            MemoryFootprintSchema().load(database_memory_footprint)
+            for database_memory_footprint in databases_memory_footprints
         ]
 
     @classmethod

@@ -8,6 +8,8 @@ from hyrisecockpit.api.app.metric.model import TimeInterval
 from hyrisecockpit.api.app.metric.service import MetricService
 from hyrisecockpit.cross_platform_support.testing_support import MagicMock
 
+from hyrisecockpit.api.app.metric.model import MemoryFootprint, MemoryFootprintEntry
+
 
 @fixture
 def metric_service() -> MetricService:
@@ -86,6 +88,29 @@ class TestMetricService:
         mock_get_data.assert_called_once_with(
             fake_time_interval, "queue_length", ["queue_length"]
         )
+
+    def test_get_memory_footprint(self, metric_service: MetricService) -> None:
+        mock_get_data: MagicMock = MagicMock()
+        memory_footprint = {"timestamp": 42, "memory_footprint": 1234.0}
+        mock_get_data.return_value = [
+            {
+                "id": "database_id",
+                "memory_footprint": [memory_footprint],
+            }
+        ]
+        metric_service.get_data = mock_get_data  # type: ignore
+
+        fake_time_interval = "fake_interval"
+
+        results = metric_service.get_memory_footprint(fake_time_interval)  # type: ignore
+
+        mock_get_data.assert_called_once_with(
+            fake_time_interval, "storage", ["memory_footprint"]
+        )
+        assert isinstance(results[0], MemoryFootprint)
+        assert isinstance(results[0].memory_footprint[0], MemoryFootprintEntry)
+        assert vars(results[0].memory_footprint[0]) == memory_footprint
+        assert results[0].id == "database_id"
 
     @patch("hyrisecockpit.api.app.metric.service.StorageConnection")
     @patch("hyrisecockpit.api.app.metric.service._get_active_databases")
