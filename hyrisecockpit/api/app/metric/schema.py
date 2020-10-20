@@ -1,4 +1,13 @@
-"""Schema for metric namespace."""
+"""Schema for metric namespace.
+
+A schema is responsible for the serialization/deserialization of a given entity.
+An entity can be a response from the influxdb or the database manager. This response can
+then be deserialized (load) into a python entity (model). On the other hand a python entity (model)
+can be serialized (dump) to a JSON-encoded string.
+For the deserialization, the post_load decorator is used.
+For the schemas, we are using the marshmallow library.
+The schemas are also used by the controller for documentation.
+"""
 from marshmallow import Schema, post_load
 from marshmallow.fields import Float, Integer, List, Nested, String
 

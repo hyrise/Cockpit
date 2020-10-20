@@ -1,4 +1,9 @@
-"""Services for metrics."""
+"""Service for metric namespace.
+
+The service is responsible for interacting with the entity. This includes
+fetching data from the influx or database manager. The data is then if needed
+deserialized into a Python entity (model) by using the corresponding schemas.
+"""
 from time import time_ns
 from typing import Dict, List, Union
 
