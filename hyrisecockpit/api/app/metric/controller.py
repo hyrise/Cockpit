@@ -20,6 +20,7 @@ from .model import (
     QueueLength,
     Throughput,
     TimeInterval,
+    MemoryFootprint,
 )
 from .schema import (
     DetailedQueryInformationSchema,
@@ -27,6 +28,7 @@ from .schema import (
     NegativeThroughputSchema,
     QueueLengthSchema,
     ThroughputSchema,
+    MemoryFootprintSchema,
 )
 from .service import MetricService
 
@@ -115,6 +117,24 @@ class QueueLengthController(Resource):
             precision=request.parsed_args["precision"],  # type: ignore
         )
         return MetricService.get_queue_length(time_interval)
+
+
+@api.route("/memory_footprint")
+class MemoryFootprintController(Resource):
+    @accepts(
+        dict(name="startts", type=int),  # noqa
+        dict(name="endts", type=int),  # noqa
+        dict(name="precision", type=int),  # noqa
+        api=api,
+    )
+    @responds(schema=MemoryFootprintSchema(many=True), api=api)
+    def get(self) -> List[MemoryFootprint]:
+        time_interval: TimeInterval = TimeInterval(
+            startts=request.parsed_args["startts"],  # type: ignore
+            endts=request.parsed_args["endts"],  # type: ignore
+            precision=request.parsed_args["precision"],  # type: ignore
+        )
+        return MetricService.get_memory_footprint(time_interval)
 
 
 @api.route("/detailed_query_information")
