@@ -129,6 +129,7 @@ class MemoryFootprintController(Resource):
     )
     @responds(schema=MemoryFootprintSchema(many=True), api=api)
     def get(self) -> List[MemoryFootprint]:
+        """Get memory footprint for the requested time interval."""
         time_interval: TimeInterval = TimeInterval(
             startts=request.parsed_args["startts"],  # type: ignore
             endts=request.parsed_args["endts"],  # type: ignore

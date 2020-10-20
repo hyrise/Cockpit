@@ -105,7 +105,7 @@ class TestMetricService:
         results = metric_service.get_memory_footprint(fake_time_interval)  # type: ignore
 
         mock_get_data.assert_called_once_with(
-            fake_time_interval, "storage", ["memory_footprint"]
+            fake_time_interval, "memory_footprint", ["memory_footprint"]
         )
         assert isinstance(results[0], MemoryFootprint)
         assert isinstance(results[0].memory_footprint[0], MemoryFootprintEntry)

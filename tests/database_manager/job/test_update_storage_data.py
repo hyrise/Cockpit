@@ -96,7 +96,6 @@ class TestUpdateStorageDataJob:
                 },
             },
         }
-        expected_memory_footprint = 10400
         update_storage_data(
             fake_database_blocked,
             fake_connection_factory,
@@ -105,10 +104,7 @@ class TestUpdateStorageDataJob:
 
         mock_cursor.log_meta_information.assert_called_with(
             "storage",
-            {
-                "storage_meta_information": dumps(expected_storage_dict),
-                "memory_footprint": expected_memory_footprint,
-            },
+            {"storage_meta_information": dumps(expected_storage_dict)},
             42,
         )
 
@@ -136,6 +132,6 @@ class TestUpdateStorageDataJob:
 
         mock_cursor.log_meta_information.assert_called_with(
             "storage",
-            {"storage_meta_information": dumps({}), "memory_footprint": 0},
+            {"storage_meta_information": dumps({})},
             42,
         )

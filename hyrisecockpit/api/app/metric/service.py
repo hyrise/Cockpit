@@ -94,7 +94,7 @@ class MetricService:
     @classmethod
     def get_memory_footprint(cls, time_interval: TimeInterval) -> List[MemoryFootprint]:
         databases_memory_footprints = cls.get_data(
-            time_interval, "storage", ["memory_footprint"]
+            time_interval, "memory_footprint", ["memory_footprint"]
         )
         return [
             MemoryFootprintSchema().load(database_memory_footprint)

@@ -1,5 +1,3 @@
-"""This job updates the storage data."""
-
 from json import dumps
 from time import time_ns
 
@@ -92,10 +90,6 @@ def _create_storage_data_dictionary(result: DataFrame) -> StorageDataType:
     return output
 
 
-def _get_memory_footprint(result: DataFrame) -> int:
-    return result.sum()["estimated_size_in_bytes"]
-
-
 def update_storage_data(
     database_blocked,
     connection_factory,
@@ -113,16 +107,11 @@ def update_storage_data(
 
     with storage_connection_factory.create_cursor() as log:
         output = {}
-        memory_footprint = 0
         if not meta_segments.empty:
             result = _create_storage_data_dataframe(meta_segments)
-            memory_footprint = _get_memory_footprint(result)
             output = _create_storage_data_dictionary(result)
         log.log_meta_information(
             "storage",
-            {
-                "storage_meta_information": dumps(output),
-                "memory_footprint": memory_footprint,
-            },
+            {"storage_meta_information": dumps(output)},
             time_stamp,
         )
