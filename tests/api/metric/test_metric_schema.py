@@ -8,6 +8,8 @@ from hyrisecockpit.api.app.metric.model import (
     QueueLengthEntry,
     Throughput,
     ThroughputEntry,
+    MemoryFootprint,
+    MemoryFootprintEntry,
 )
 from hyrisecockpit.api.app.metric.schema import (
     DetailedQueryInformationEntrySchema,
@@ -18,6 +20,8 @@ from hyrisecockpit.api.app.metric.schema import (
     QueueLengthSchema,
     ThroughputEntrySchema,
     ThroughputSchema,
+    MemoryFootprintEntrySchema,
+    MemoryFootprintSchema,
 )
 
 
@@ -55,6 +59,12 @@ class TestMetricSchema:
     def test_creates_detailed_query_information_schema(self) -> None:
         """A DetailedQueryInformationSchema schema can be created."""
         assert DetailedQueryInformationSchema()
+
+    def test_creates_memory_footprint_entry_schema(self) -> None:
+        assert MemoryFootprintEntrySchema()
+
+    def test_creates_memory_footprint_schema(self) -> None:
+        assert MemoryFootprintSchema()
 
     def test_deserializes_throughput_entry_schema(self) -> None:
         """A throughput entry schema can be deserialized."""
@@ -105,6 +115,26 @@ class TestMetricSchema:
         assert isinstance(deserialized, QueueLength)
         assert isinstance(deserialized.queue_length[0], QueueLengthEntry)
         assert vars(deserialized.queue_length[0]) == queue_length_entry_interface
+        assert deserialized.id == "ha!"
+
+    def test_deserializes_memory_footprint_entry_schema(self) -> None:
+        interface = {"timestamp": 1, "memory_footprint": 100.0}
+        deserialized = MemoryFootprintEntrySchema().load(interface)
+        assert isinstance(deserialized, MemoryFootprintEntry)
+        assert vars(deserialized) == interface
+
+    def test_deserializes_memory_footprint_schema(self) -> None:
+        memory_footprint_entry_interface = {"timestamp": 1, "memory_footprint": 100.0}
+        interface = {
+            "id": "ha!",
+            "memory_footprint": [memory_footprint_entry_interface],
+        }
+        deserialized = MemoryFootprintSchema().load(interface)
+        assert isinstance(deserialized, MemoryFootprint)
+        assert isinstance(deserialized.memory_footprint[0], MemoryFootprintEntry)
+        assert (
+            vars(deserialized.memory_footprint[0]) == memory_footprint_entry_interface
+        )
         assert deserialized.id == "ha!"
 
     def test_deserializes_detailed_query_information_entry_schema(self) -> None:
@@ -172,3 +202,32 @@ class TestMetricSchema:
         serialized = DetailedQueryInformationSchema().dump(detailed_query)
 
         assert vars(detailed_query) == serialized == interface
+
+    def test_serializes_memory_footprint_entry_schema(self) -> None:
+        timestamp = 1
+        memory_footprint = 100.0
+        memory_footprint_entry_model = MemoryFootprintEntry(
+            timestamp=timestamp, memory_footprint=memory_footprint
+        )
+        expected = {"timestamp": timestamp, "memory_footprint": memory_footprint}
+        serialized = MemoryFootprintEntrySchema().dump(memory_footprint_entry_model)
+        assert serialized == expected
+
+    def test_serializes_memory_footprint_schema(self) -> None:
+        timestamp = 1
+        memory_footprint = 100.0
+        database_id = "ha!"
+        memory_footprint_entry_model = MemoryFootprintEntry(
+            timestamp=timestamp, memory_footprint=memory_footprint
+        )
+        memory_footprint_model = MemoryFootprint(
+            id=database_id, memory_footprint=[memory_footprint_entry_model]
+        )
+        expected = {
+            "id": "ha!",
+            "memory_footprint": [
+                {"timestamp": timestamp, "memory_footprint": memory_footprint}
+            ],
+        }
+        serialized = MemoryFootprintSchema().dump(memory_footprint_model)
+        assert serialized == expected
