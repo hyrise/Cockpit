@@ -96,7 +96,7 @@ class TestUpdateStorageDataJob:
                 },
             },
         }
-
+        expected_memory_footprint = 10400
         update_storage_data(
             fake_database_blocked,
             fake_connection_factory,
@@ -104,7 +104,12 @@ class TestUpdateStorageDataJob:
         )
 
         mock_cursor.log_meta_information.assert_called_with(
-            "storage", {"storage_meta_information": dumps(expected_storage_dict)}, 42
+            "storage",
+            {
+                "storage_meta_information": dumps(expected_storage_dict),
+                "memory_footprint": expected_memory_footprint,
+            },
+            42,
         )
 
     @patch("hyrisecockpit.database_manager.job.update_storage_data.sql_to_data_frame")
@@ -130,5 +135,7 @@ class TestUpdateStorageDataJob:
         )
 
         mock_cursor.log_meta_information.assert_called_with(
-            "storage", {"storage_meta_information": dumps({})}, 42
+            "storage",
+            {"storage_meta_information": dumps({}), "memory_footprint": 0},
+            42,
         )
