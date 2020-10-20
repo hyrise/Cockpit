@@ -30,7 +30,10 @@ class TestSetPluginSettingJob:
 
         mock_cursor.execute.assert_called_once_with(
             "UPDATE meta_settings SET value=%s WHERE name=%s;",
-            ("55555", "Plugin::Compression::MemoryBudget",),
+            (
+                "55555",
+                "Plugin::Compression::MemoryBudget",
+            ),
         )
 
         assert type(result) is bool
@@ -59,7 +62,8 @@ class TestSetPluginSettingJob:
         assert not result
 
     @mark.parametrize(
-        "exceptions", [DatabaseError(), InterfaceError()],
+        "exceptions",
+        [DatabaseError(), InterfaceError()],
     )
     def test_sets_plugin_settings_when_database_throws_exception(
         self, exceptions
