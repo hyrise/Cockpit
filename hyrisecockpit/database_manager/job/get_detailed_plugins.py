@@ -18,6 +18,16 @@ def get_plugins(connection_factory) -> Optional[List[str]]:
         connection_factory (ConnectionFactory): A factory that returns a wrapper object around a psycopg2
             cursor that is connected to the hyrise database. All the attributes needed
             to connect to the hyrise are already defined inside the factory.
+
+    Example:
+        If the meta_plugins table inside the hyrise has the form:
+        |name|
+        -------------------
+        |ClusteringPlugin|
+        |CompressionPlugin|
+        The cur (cursor) would return [('ClusteringPlugin',),('CompressionPlugin',)].
+        Every entire in this list is a row. Afterwards we extract with the string method
+        split("Plugin") ever plug-in name. So the function would return ['Clustering', 'Compression'].
     """
     try:
         with connection_factory.create_cursor() as cur:
@@ -26,8 +36,6 @@ def get_plugins(connection_factory) -> Optional[List[str]]:
     except (DatabaseError, InterfaceError):
         return None
     else:
-        # >>> print([row[0].split("Plugin")[0] for row in [('ClusteringPlugin',)]])
-        # ['Clustering']
         return [row[0].split("Plugin")[0] for row in rows]
 
 
