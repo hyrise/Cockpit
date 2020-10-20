@@ -215,7 +215,7 @@ function getLatencyData(data: any, primaryKey: string = ""): number[] {
 
 /** calculate memory footprint data */
 function getMemoryFootprint(data: any): number[] {
-  return [getDatabaseMemoryFootprint(data)];
+  return data.map((entry: any) => entry["memory_footprint"]);
 }
 
 /** transform storage data for treemap structure consisting of parents, labels, sizes and tooltips */
