@@ -14,8 +14,12 @@ def _get_memory_footprint(connection_factory: ConnectionFactory):
     try:
         with connection_factory.create_cursor() as cur:
             cur.execute(sql, None)
-            res = cur.fetchone()
-            memory_footprint = float(res[0])
+            response = cur.fetchone()
+            # If no tables are loaded the response would be (None,)
+            if response[0]:
+                memory_footprint = float(response[0])
+            else:
+                memory_footprint = 0.0
     except (DatabaseError, InterfaceError):
         memory_footprint = 0.0
     return time_stamp, memory_footprint

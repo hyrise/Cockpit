@@ -26,6 +26,25 @@ class TestUpdateMemoryFootprint:
         assert res == expected
 
     @patch(
+        "hyrisecockpit.database_manager.job.update_memory_footprint.time_ns", lambda: 42
+    )
+    def test_gets_empty_memory_footprint(self) -> None:
+        mock_cursor = MagicMock()
+        mock_connection_factory = MagicMock()
+        # If there are no segments the response would be (None,)
+        memory_footprint = None
+        mock_cursor.fetchone.return_value = (memory_footprint,)
+        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
+            mock_cursor
+        )
+
+        expected = (42, 0.0)
+
+        res = _get_memory_footprint(mock_connection_factory)
+
+        assert res == expected
+
+    @patch(
         "hyrisecockpit.database_manager.job.update_memory_footprint._get_memory_footprint"
     )
     def test_updates_memory_footprints(
