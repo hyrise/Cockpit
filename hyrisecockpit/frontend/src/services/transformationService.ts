@@ -64,7 +64,8 @@ function getSegmentData(
     !data ||
     !data[primaryKey] ||
     !data[primaryKey][tertiaryKey] ||
-    !Object.keys(data[primaryKey][tertiaryKey]).length
+    !Object.keys(data[primaryKey][tertiaryKey]["columns"]).length ||
+    secondaryKey !== "" && !data[primaryKey][tertiaryKey]["columns"][secondaryKey]
   )
     return { dataByChunks, chunks, columns, valueToId, descriptions, text};
 
