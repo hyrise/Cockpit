@@ -57,7 +57,6 @@ function getSegmentData(
 
   /* store all detected values */
   const valueToId: string[] = [];
-
   if (
     !data ||
     !data[primaryKey] ||
@@ -67,6 +66,10 @@ function getSegmentData(
     return { dataByChunks, chunks, columns, valueToId, descriptions };
 
   /* map values to int */
+  console.log("primaryKey: " + primaryKey);
+  console.log("secondaryKey: " + secondaryKey);
+  console.log("tertiaryKey: " + tertiaryKey);
+  console.log(data);
   Object.values(data).forEach((dbData: any) => {
     // set secondary key if no key existst
     if (!secondaryKey) {
@@ -104,7 +107,6 @@ function getSegmentData(
 
   descriptions.push(description);
   dataByChunks.push(chunk);
-
   return { chunks, columns, dataByChunks, descriptions, valueToId };
 }
 /** transform query information data to table structure */
@@ -402,7 +404,6 @@ function getAccessData(
     });
     dataByChunks.push(chunk);
   }
-
   return { chunks, columns, dataByChunks, descriptions };
 }
 

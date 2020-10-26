@@ -1,77 +1,104 @@
-"""This job updates the segment configurations."""
 from json import dumps
 from time import time_ns
-from typing import Dict
-
-from pandas import DataFrame
+from typing import Dict, List, Tuple
 
 from hyrisecockpit.database_manager.cursor import StorageConnectionFactory
-from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_frame
+from hyrisecockpit.database_manager.cursor import ConnectionFactory
+
+from psycopg2 import DatabaseError, InterfaceError
 
 
-def _create_dictionary(
-    segments_configuration: DataFrame, configuration_type: str
-) -> Dict:  # TODO refactoring
-    segment_configuration_data: Dict = {}
-    grouped_tables = segments_configuration.reset_index().groupby("table_name")
+def _execute_sql(sql: str, connection_factory: ConnectionFactory):
+    try:
+        with connection_factory.create_cursor() as cur:
+            cur.execute(sql, None)
+            return cur.fetchall()
+    except (DatabaseError, InterfaceError):
+        return []
 
-    for table_name in grouped_tables.groups:
-        segment_configuration_data[table_name] = {}
-        table = grouped_tables.get_group(table_name)
-        grouped_columns = table.reset_index().groupby("chunk_id")
 
-        for column_name in grouped_columns.groups:
-            segment_configuration_data[table_name][column_name] = {}
-            column = grouped_columns.get_group(column_name)
-            for _, row in column.iterrows():
-                segment_configuration_data[table_name][column_name][
-                    configuration_type
-                ] = row[configuration_type]
-    return segment_configuration_data
+def _format_results(results: List[Tuple]) -> Dict:
+    """Format psycopg2 cursor results.
+
+    This function iterates over each row and creates a dictionary where
+    the keys are the tables names. For every table name the value is a
+    dictionary where the keys are the column names. For every column name
+    the value is a dictionary where the keys are the chunk_id and the value is
+    the mode. In case of the segments encoding the mode is the encoding_type
+    for example 'Dictionary'. In case of the segments order it is the order mode
+    for example 'Ascending'. After the result is formatted the dictionary that
+    maps the mode to the segment is transformed to a list, where the keys are
+    the indices and the values the entries.
+    """
+    formatted_results: Dict = {}
+
+    for row in results:
+        table_name, column_name, chunk_id, mode = row
+        if table_name not in formatted_results:
+            formatted_results[table_name] = {}
+        if column_name not in formatted_results[table_name]:
+            formatted_results[table_name][column_name] = {}
+        formatted_results[table_name][column_name][chunk_id] = mode
+
+    for table_name, column in formatted_results.items():
+        for column_name, mode in column.items():
+            formatted_mode = [mode[key] for key in sorted(mode)]
+            formatted_results[table_name][column_name] = formatted_mode
+
+    return formatted_results
 
 
 def update_segment_configuration(
     database_blocked,
-    connection_factory,
+    connection_factory: ConnectionFactory,
     storage_connection_factory: StorageConnectionFactory,
 ) -> None:
-    """Update segment configuration data for database instance."""
+    """Update segment configuration data for database instance.
+
+    First the needed information is extracted from the Hyrise. After that the raw SQL results
+    are formatted to a dictionary. After that the formatted results are written to the influx.
+    The table meta_chunk_sort_orders only has the columns table_name, chunk_id, column_id and order_mode.
+    To be able to assign the chunks to the column name we need to join the meta_chunk_sort_orders with the
+    meta_segments table.
+    """
+    sql_segments_encoding: str = """SELECT
+                                    table_name,
+                                    column_name,
+                                    chunk_id,
+                                    encoding_type
+                                    FROM meta_segments;"""
+    sql_segments_order: str = """SELECT
+                                meta_chunk_sort_orders.table_name,
+                                meta_segments.column_name,
+                                meta_chunk_sort_orders.chunk_id,
+                                meta_chunk_sort_orders.order_mode
+                                FROM meta_chunk_sort_orders
+                                JOIN meta_segments
+                                    ON meta_segments.table_name == meta_chunk_sort_orders.table_name
+                                    AND meta_segments.chunk_id == meta_chunk_sort_orders.chunk_id;"""
     time_stamp = time_ns()
 
-    segments_encodings = sql_to_data_frame(
-        database_blocked,
-        connection_factory,
-        """SELECT table_name, chunk_id, encoding_type FROM meta_segments;""",
-        None,
+    sql_segments_encoding_results: List[Tuple] = _execute_sql(
+        sql_segments_encoding, connection_factory
     )
-    segments_orders = sql_to_data_frame(
-        database_blocked,
-        connection_factory,
-        """SELECT table_name, chunk_id, order_mode FROM meta_chunk_sort_orders;""",
-        None,
+    sql_segments_order_results: List[Tuple] = _execute_sql(
+        sql_segments_order, connection_factory
     )
 
-    segment_configuration_encoding_type = {}
-    if not (segments_encodings.empty):
-        segment_configuration_encoding_type = _create_dictionary(
-            segments_encodings, "encoding_type"
-        )
-
-    segment_configuration_order_mode = {}
-    if not segments_orders.empty:
-        segment_configuration_order_mode = _create_dictionary(
-            segments_orders, "order_mode"
-        )
+    formatted_sql_segments_encoding_results = _format_results(
+        sql_segments_encoding_results
+    )
+    formatted_sql_segments_order_results = _format_results(sql_segments_order_results)
 
     with storage_connection_factory.create_cursor() as log:
         log.log_meta_information(
             "segment_configuration",
             {
                 "segment_configuration_encoding_type": dumps(
-                    segment_configuration_encoding_type
+                    formatted_sql_segments_encoding_results
                 ),
                 "segment_configuration_order_mode": dumps(
-                    segment_configuration_order_mode
+                    formatted_sql_segments_order_results
                 ),
             },
             time_stamp,
