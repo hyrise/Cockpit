@@ -1,5 +1,5 @@
 [flake8]
-
+ignore = E800
 # extend-ignore
 # E203: https://github.com/psf/black#slices
 # W503: https://github.com/psf/black#line-breaks--binary-operators
