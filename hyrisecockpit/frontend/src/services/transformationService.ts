@@ -52,7 +52,7 @@ function getSegmentData(
   const chunks: string[] = [];
   const columns: string[] = [];
   const descriptions: any[][] = [];
-
+  const text: any[][] = [];
   const availableColumns: string[] = [];
 
   function truncateColumnName(column: string): string {
@@ -66,7 +66,9 @@ function getSegmentData(
     !data[primaryKey][tertiaryKey] ||
     !Object.keys(data[primaryKey][tertiaryKey]).length
   )
-    return { dataByChunks, chunks, columns, valueToId, descriptions };
+    return { dataByChunks, chunks, columns, valueToId, descriptions, text};
+
+  valueToId = data[primaryKey][tertiaryKey]["mode_mapping"];
 
   /* map values to int */
   Object.values(data).forEach((dbData: any) => {
@@ -89,15 +91,14 @@ function getSegmentData(
   for (let i = 0; i < numberOfChunks; i++) {
     chunks.push("No. " + i);
     descriptions.push(availableColumns);
-
     const chunk: number[] = [];
     dataByColumns.forEach((column) => {
       chunk.push(column[i]);
     });
     dataByChunks.push(chunk);
-  }
-  valueToId = data[primaryKey][tertiaryKey]["mode_mapping"];
-  return { chunks, columns, dataByChunks, descriptions, valueToId };
+    text.push(chunk.map((idx: any) => valueToId[idx]));
+  } 
+  return { chunks, columns, dataByChunks, descriptions, valueToId, text};
 }
 /** transform query information data to table structure */
 function getQueryInformationData(data: any, primaryKey: string = ""): any {
@@ -331,11 +332,12 @@ function getAccessData(
   const chunks: string[] = [];
   const columns: string[] = [];
   const descriptions: string[][] = [];
+  let text: string[][] = [];
 
   const availableColumns: string[] = [];
 
   if (!data || !data[primaryKey] || !Object.keys(data[primaryKey]).length)
-    return { chunks, columns, dataByChunks, descriptions };
+    return { chunks, columns, dataByChunks, descriptions, text };
 
   if (!secondaryKey) {
     /** detect most accessed table and initialize it if no table selected */
@@ -394,7 +396,8 @@ function getAccessData(
     });
     dataByChunks.push(chunk);
   }
-  return { chunks, columns, dataByChunks, descriptions };
+  text = descriptions;
+  return { chunks, columns, dataByChunks, descriptions, text};
 }
 
 /** tranform operator data with appropriate tooltip information */

@@ -129,6 +129,7 @@ function useHeatMapConfiguration(
       descriptions: [],
       chunks: [],
       columns: [],
+      text: [],
     }
   ): Object {
     return {
@@ -137,7 +138,7 @@ function useHeatMapConfiguration(
       y: data.chunks,
       zmin: 0,
       zmax: maxValue,
-      text: data.descriptions,
+      text: data.text,
       type: "heatmap",
       colorscale: props.colorScale,
       cauto: false,
