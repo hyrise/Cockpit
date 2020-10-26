@@ -13,7 +13,7 @@ from hyrisecockpit.database_manager.job.update_segment_configuration import (
 class TestUpdateSegmentConfiguration:
     def test_executes_sql(self) -> None:
         mock_cursor = MagicMock()
-        mock_cursor.execute.return_value = [("foo",)]
+        mock_cursor.fetchall.return_value = [("foo",)]
         mock_connection_factory = MagicMock()
         mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
             mock_cursor
@@ -77,14 +77,17 @@ class TestUpdateSegmentConfiguration:
             ),
         ]
         expected = {
-            "lineitem_tpch_0_1": {
-                "l_orderkey": ["Dictionary", "LZ4", "Dictionary"],
-                "l_partkey": ["Dictionary", "Dictionary", "LZ4"],
+            "columns": {
+                "lineitem_tpch_0_1": {
+                    "l_orderkey": [0, 1, 0],
+                    "l_partkey": [0, 0, 1],
+                },
+                "region_tpch_0_1": {
+                    "r_regionkey": [0],
+                    "r_name": [0],
+                },
             },
-            "region_tpch_0_1": {
-                "r_regionkey": ["Dictionary"],
-                "r_name": ["Dictionary"],
-            },
+            "mode_mapping": ["Dictionary", "LZ4"],
         }
 
         results: Dict = _format_results(sql_results)  # type: ignore
@@ -119,10 +122,13 @@ class TestUpdateSegmentConfiguration:
             ),
         ]
         mock_formatted_results = {
-            "lineitem_tpch_0_1": {
-                "l_orderkey": ["Ascending"],
-                "l_partkey": ["Ascending"],
-            }
+            "columns": {
+                "lineitem_tpch_0_1": {
+                    "l_orderkey": [0],
+                    "l_partkey": [0],
+                }
+            },
+            "mode_mapping": ["Ascending"],
         }
         mock_execute_sql.return_value = mock_results
         mock_format_results.return_value = mock_formatted_results
