@@ -215,7 +215,7 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
   segmentConfiguration: {
     title: "Segment Configurations",
     xaxis: "Segments",
-    yaxis: "",
+    yaxis: "Chunks",
   },
   storage: {
     title: "Data Size - Overview", //Storage

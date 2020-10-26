@@ -45,7 +45,7 @@
               :hover-template="hoverTemplate"
               :color-scale="colorScale"
               :color-bar="colorBar"
-              :show-y="false"
+              :show-y="true"
             />
           </template>
         </metric-detailed-view>
@@ -89,7 +89,7 @@
       :hover-template="hoverTemplate"
       :color-scale="colorScale"
       :color-bar="colorBar"
-      :show-y="false"
+      :show-y="true"
     />
   </div>
 </template>
@@ -191,7 +191,6 @@ export default defineComponent({
         };
       }
     );
-
     return {
       chartConfiguration: getMetricChartConfiguration(props.metric),
       maxValue,
@@ -201,7 +200,7 @@ export default defineComponent({
       ...selection,
       hoverTemplate: computed(
         () =>
-          `<b>segment: %{text.column}</b> <br>${selection.selectedType.value}: %{text.value} <extra></extra>`
+          `<b>segment: %{text}</b> <br>${selection.selectedType.value}: %{z} <extra></extra>`
       ),
       types: [
         { name: "encoding_type", icon: "mdi-barcode" },

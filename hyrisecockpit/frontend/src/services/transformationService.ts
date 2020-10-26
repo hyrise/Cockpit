@@ -55,8 +55,11 @@ function getSegmentData(
 
   const availableColumns: string[] = [];
 
+  function truncateColumnName(column: string): string {
+    return column.length > 7 ? column.substring(0, 7) + ".." : column;
+  }
   /* store all detected values */
-  const valueToId: string[] = [];
+  let valueToId: string[] = [];
   if (
     !data ||
     !data[primaryKey] ||
@@ -66,47 +69,34 @@ function getSegmentData(
     return { dataByChunks, chunks, columns, valueToId, descriptions };
 
   /* map values to int */
-  console.log("primaryKey: " + primaryKey);
-  console.log("secondaryKey: " + secondaryKey);
-  console.log("tertiaryKey: " + tertiaryKey);
-  console.log(data);
   Object.values(data).forEach((dbData: any) => {
     // set secondary key if no key existst
     if (!secondaryKey) {
-      secondaryKey = Object.keys(dbData[tertiaryKey])[0];
+      secondaryKey = Object.keys(dbData[tertiaryKey]["columns"])[0];
       emitPreSelectEvent("segmentConfiguration", secondaryKey);
     }
-    Object.values(dbData[tertiaryKey]).forEach((tableData: any) => {
-      Object.values(tableData).forEach((segment: any) => {
-        const id = valueToId.find((v) => v === segment[tertiaryKey]);
-        if (id) return;
-        valueToId.push(segment[tertiaryKey]);
-      });
-    });
   });
-  Object.entries(data[primaryKey][tertiaryKey][secondaryKey]).forEach(
+  Object.entries(data[primaryKey][tertiaryKey]["columns"][secondaryKey]).forEach(
     ([column, columnData]: [string, any]) => {
       dataByColumns.push(columnData);
-      columns.push("No. " + (parseInt(column, 10) + 1));
+      columns.push(truncateColumnName(column));
       availableColumns.push(column);
     }
   );
-  const description: any = [];
-  const chunk: any = [];
-  // segments are not per chunk, instead they are for every chunks the same -> so we are working with 1 single chunk only
-  chunks.push("No. " + 1);
 
-  dataByColumns.forEach((date, idx) => {
-    description.push({
-      column: "No. " + (idx + 1),
-      value: date[tertiaryKey],
+  const numberOfChunks = dataByColumns[0].length;
+
+  for (let i = 0; i < numberOfChunks; i++) {
+    chunks.push("No. " + i);
+    descriptions.push(availableColumns);
+
+    const chunk: number[] = [];
+    dataByColumns.forEach((column) => {
+      chunk.push(column[i]);
     });
-    const value = valueToId.findIndex((v) => v === date[tertiaryKey]);
-    chunk.push(value);
-  });
-
-  descriptions.push(description);
-  dataByChunks.push(chunk);
+    dataByChunks.push(chunk);
+  }
+  valueToId = data[primaryKey][tertiaryKey]["mode_mapping"];
   return { chunks, columns, dataByChunks, descriptions, valueToId };
 }
 /** transform query information data to table structure */
