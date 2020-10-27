@@ -79,8 +79,8 @@ def update_segment_configuration(
                                 meta_chunk_sort_orders.order_mode
                                 FROM meta_chunk_sort_orders
                                 JOIN meta_segments
-                                    ON meta_segments.table_name == meta_chunk_sort_orders.table_name
-                                    AND meta_segments.chunk_id == meta_chunk_sort_orders.chunk_id;"""
+                                    ON meta_segments.table_name = meta_chunk_sort_orders.table_name
+                                    AND meta_segments.chunk_id = meta_chunk_sort_orders.chunk_id;"""
     time_stamp = time_ns()
 
     sql_segments_encoding_results: List[Tuple] = _execute_sql(
