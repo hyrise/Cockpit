@@ -16,7 +16,7 @@ def _get_memory_footprint(connection_factory: ConnectionFactory):
             cur.execute(sql, None)
             response = cur.fetchone()
             # If no tables are loaded the response would be (None,)
-            if response[0]:
+            if response[0] is not None:
                 memory_footprint = float(response[0])
             else:
                 memory_footprint = 0.0

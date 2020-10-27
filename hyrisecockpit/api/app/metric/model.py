@@ -1,10 +1,11 @@
 """Model for metric namespace.
 
 A model is used for type safety and to represent an entity itself as
-a Python representation (object). If we for example getting a response
-from the database manager or influxdb we convert this response, which
-is often a json, to a Python objects. These objects are defined by
-the models. These objects are often composed of other objects.
+a Python representation (object). An entity can be a response from the
+influxdb or the database manager. This response can
+then be deserialized (load) into a python entity (model).
+These objects are defined by the models. These objects are often
+composed of other objects.
 """
 from typing import List
 
