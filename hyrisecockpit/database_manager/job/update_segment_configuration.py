@@ -23,12 +23,11 @@ def _format_results(results: List[Tuple]) -> Dict:
     This function iterates over each row and creates a dictionary where
     the keys are the tables names. For every table name the value is a
     dictionary where the keys are the column names. For every column name
-    the value is a dictionary where the keys are the chunk_id and the value is
-    the mode. The mode is represented by an integer. The integer is the index of
-    the mode in the mode_id_mapping list. We use this list to make it easier in
-    the frontend to build the headmap. After the result is formatted
-    the dictionary that maps the mode to the segment is transformed to a list,
-    where the keys are the indices and the values the entries.
+    the value is a list where the indices are the chunk_id and the value is
+    the mode. We can build this list with a loop since the chunks are
+    in ascending order. The mode is represented by an integer.
+    The integer is the index of the mode in the mode_id_mapping list.
+    We use this list to make it easier in the frontend to build the headmap.
     """
     formatted_results: Dict = {}
     mode_id_mapping: List = []
@@ -38,17 +37,10 @@ def _format_results(results: List[Tuple]) -> Dict:
         if table_name not in formatted_results:
             formatted_results[table_name] = {}
         if column_name not in formatted_results[table_name]:
-            formatted_results[table_name][column_name] = {}
+            formatted_results[table_name][column_name] = []
         if mode not in mode_id_mapping:
             mode_id_mapping.append(mode)
-        formatted_results[table_name][column_name][chunk_id] = mode_id_mapping.index(
-            mode
-        )
-
-    for table_name, column in formatted_results.items():
-        for column_name, mode in column.items():
-            formatted_mode = [mode[key] for key in sorted(mode)]
-            formatted_results[table_name][column_name] = formatted_mode
+        formatted_results[table_name][column_name].append(mode_id_mapping.index(mode))
 
     return {"columns": formatted_results, "mode_mapping": mode_id_mapping}
 
@@ -71,7 +63,8 @@ def update_segment_configuration(
                                     column_name,
                                     chunk_id,
                                     encoding_type
-                                    FROM meta_segments;"""
+                                    FROM meta_segments
+                                    ORDER BY chunk_id ASC;"""
     sql_segments_order: str = """SELECT
                                 meta_chunk_sort_orders.table_name,
                                 meta_segments.column_name,
@@ -80,7 +73,8 @@ def update_segment_configuration(
                                 FROM meta_chunk_sort_orders
                                 JOIN meta_segments
                                     ON meta_segments.table_name = meta_chunk_sort_orders.table_name
-                                    AND meta_segments.chunk_id = meta_chunk_sort_orders.chunk_id;"""
+                                    AND meta_segments.chunk_id = meta_chunk_sort_orders.chunk_id
+                                ORDER BY meta_chunk_sort_orders.chunk_id ASC;"""
     time_stamp = time_ns()
 
     sql_segments_encoding_results: List[Tuple] = _execute_sql(

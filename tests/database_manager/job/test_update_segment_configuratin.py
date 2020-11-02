@@ -42,7 +42,7 @@ class TestUpdateSegmentConfiguration:
             (
                 "lineitem_tpch_0_1",
                 "l_orderkey",
-                2,
+                1,
                 "Dictionary",
             ),
             (
@@ -54,7 +54,7 @@ class TestUpdateSegmentConfiguration:
             (
                 "lineitem_tpch_0_1",
                 "l_orderkey",
-                1,
+                2,
                 "LZ4",
             ),
             (
@@ -79,7 +79,7 @@ class TestUpdateSegmentConfiguration:
         expected = {
             "columns": {
                 "lineitem_tpch_0_1": {
-                    "l_orderkey": [0, 1, 0],
+                    "l_orderkey": [0, 0, 1],
                     "l_partkey": [0, 0, 1],
                 },
                 "region_tpch_0_1": {
