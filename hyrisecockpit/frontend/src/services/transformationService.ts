@@ -215,7 +215,10 @@ function getLatencyData(data: any, primaryKey: string = ""): number[] {
 
 /** transform and convert memory footprint data from bytes to MB  */
 function getMemoryFootprint(data: any): number[] {
-  return data.map((entry: any) => Math.round((entry["memory_footprint"] / 1_000_000) * 1_000) / 1_000);
+  return data.map(
+    (entry: any) =>
+      Math.round((entry["memory_footprint"] / 1_000_000) * 1_000) / 1_000
+  );
 }
 
 /** transform storage data for treemap structure consisting of parents, labels, sizes and tooltips */
