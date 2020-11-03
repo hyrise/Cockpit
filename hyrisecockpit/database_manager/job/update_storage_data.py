@@ -1,93 +1,62 @@
 from json import dumps
 from time import time_ns
 
-from pandas import DataFrame
+from typing import List, Tuple, Dict
 
 from hyrisecockpit.database_manager.cursor import StorageConnectionFactory
-from hyrisecockpit.database_manager.job.interfaces import StorageDataType
-from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_frame
+from psycopg2 import DatabaseError, InterfaceError
 
 
-def _create_storage_data_dataframe(meta_segments: DataFrame) -> DataFrame:
-    """Manipulate the data frame.
+def _add_encoding_entry(encodings: List, new_encoding: Dict) -> None:
+    encoding_exists = False
+    vector_compression_type = new_encoding["compression"][0]
+    for encoding in encodings:
+        if encoding["name"] == new_encoding["name"]:
+            encoding["amount"] += 1
+            if vector_compression_type not in encoding["compression"]:
+                encoding["compression"].append(vector_compression_type)
+            encoding_exists = True
+            break
+    if not encoding_exists:
+        encodings.append(new_encoding)
 
-    Example:
-        The following data frame:
-        table_name | chunk_id | column_name | column_data_type | encoding_type | vector_compression_type | estimated_size_in_bytes
-        -----------+----------+-------------+------------------+---------------+-------------------------+------------------------
-        customer   |        0 |   c_custkey |              int |    Dictionary |   FixedSize2ByteAligned |                   90096
-        customer   |        0 |   c_address |           string |    Dictionary |   FixedSize2ByteAligned |                  975528
-        lineitem   |        0 |  l_orderkey |              int |    Dictionary |   FixedSize2ByteAligned |                  196558
-        would be transformed to the following data-frame:
-        table_name | column_name | estimated_size_in_bytes | encoding_type                                                                 | vector_compression_type  | column_data_type
-        -----------+-------------+-------------------------+-------------------------------------------------------------------------------+--------------------------+-----------------
-        customer   |   c_custkey |                   90096 | [{'name': 'Dictionary', 'amount': 1, 'compression: ["FixedSize2ByteAligned"]} | ["FixedSize2ByteAligned"]| int
-                   |   c_address |                  975528 | [{'name': 'Dictionary', 'amount': 1, 'compression: ["FixedSize2ByteAligned"]} | ["FixedSize2ByteAligned"]| string
-        lineitem   |  l_orderkey |                  196558 | [{'name': 'Dictionary', 'amount': 1, 'compression: ["FixedSize2ByteAligned"]} | ["FixedSize2ByteAligned"]| int
-        It is important to note that the data-frame is grouped by the table_name column.
-    """
-    meta_segments.set_index(
-        ["table_name", "column_name", "chunk_id"],
-        inplace=True,
-        verify_integrity=True,
-    )
-    size: DataFrame = DataFrame(
-        meta_segments["estimated_size_in_bytes"]
-        .groupby(level=["table_name", "column_name"])
-        .sum()
-    )
 
-    vector_compression_type = DataFrame(
-        meta_segments["vector_compression_type"]
-        .groupby(level=["table_name", "column_name"])
-        .apply(set)
-        .apply(list)
-    )
+def _format_results(results: List[Tuple]) -> Dict:
+    formatted_results: Dict = {}
 
-    encoding: DataFrame = DataFrame(
-        meta_segments["encoding_type"]
-        .groupby(level=["table_name", "column_name"])
-        .apply(list)
-    )
-
-    combined_encoding = encoding.join(vector_compression_type)
-
-    for _, row in combined_encoding.iterrows():
-        row["encoding_type"] = [
-            {
-                "name": encoding,
-                "amount": row["encoding_type"].count(encoding),
-                "compression": row["vector_compression_type"],
+    for row in results:
+        (
+            table_name,
+            _,
+            column_name,
+            column_data_type,
+            encoding_type,
+            vector_compression_type,
+            estimated_size_in_bytes,
+        ) = row
+        if table_name not in formatted_results:
+            formatted_results[table_name] = {"size": 0, "number_columns": 0, "data": {}}
+        formatted_results[table_name]["size"] += estimated_size_in_bytes
+        if column_name not in formatted_results[table_name]["data"]:
+            formatted_results[table_name]["number_columns"] += 1
+            formatted_results[table_name]["data"][column_name] = {
+                "size": 0,
+                "data_type": column_data_type,
+                "encoding": [],
             }
-            for encoding in set(row["encoding_type"])
-        ]
+        formatted_results[table_name]["data"][column_name][
+            "size"
+        ] += estimated_size_in_bytes
+        new_encoding = {
+            "name": encoding_type,
+            "amount": 1,
+            "compression": [vector_compression_type],
+        }
+        _add_encoding_entry(
+            formatted_results[table_name]["data"][column_name]["encoding"], new_encoding
+        )
 
-    datatype: DataFrame = meta_segments.reset_index().set_index(
-        ["table_name", "column_name"]
-    )[["column_data_type"]]
-
-    result: DataFrame = size.join(combined_encoding).join(datatype)
-    return result
-
-
-def _create_storage_data_dictionary(result: DataFrame) -> StorageDataType:
-    """Sort storage data-frame to dictionary.
-
-    For a detailed example please refer to the tests for this job.
-    """
-    output: StorageDataType = {}
-    grouped = result.reset_index().groupby("table_name")
-    for column in grouped.groups:
-        output[column] = {"size": 0, "number_columns": 0, "data": {}}
-        for _, row in grouped.get_group(column).iterrows():
-            output[column]["number_columns"] += 1
-            output[column]["size"] += row["estimated_size_in_bytes"]
-            output[column]["data"][row["column_name"]] = {
-                "size": row["estimated_size_in_bytes"],
-                "data_type": row["column_data_type"],
-                "encoding": row["encoding_type"],
-            }
-    return output
+    return formatted_results
 
 
 def update_storage_data(
@@ -95,23 +64,30 @@ def update_storage_data(
     connection_factory,
     storage_connection_factory: StorageConnectionFactory,
 ) -> None:
-    """Get storage data from the database.
 
-    This method gets the meta segment data from the hyrise. It then formats the response
-    from the hyrise via panda data-frames to the desired output.
-    """
+    sql = """SELECT
+                table_name,
+                chunk_id,
+                column_name,
+                column_data_type,
+                encoding_type,
+                vector_compression_type,
+                estimated_size_in_bytes
+            FROM
+                meta_segments;"""
+    try:
+        with connection_factory.create_cursor() as cur:
+            cur.execute(sql)
+            results = cur.fetchall()
+    except (DatabaseError, InterfaceError):
+        results = []
+
     time_stamp = time_ns()
-    meta_segments = sql_to_data_frame(
-        database_blocked, connection_factory, "SELECT * FROM meta_segments;", None
-    )
+    formatted_results = _format_results(results)
 
     with storage_connection_factory.create_cursor() as log:
-        output = {}
-        if not meta_segments.empty:
-            result = _create_storage_data_dataframe(meta_segments)
-            output = _create_storage_data_dictionary(result)
         log.log_meta_information(
             "storage",
-            {"storage_meta_information": dumps(output)},
+            {"storage_meta_information": dumps(formatted_results)},
             time_stamp,
         )
