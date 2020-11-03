@@ -16,6 +16,7 @@ export type Entity =
 export type Request =
   | "database"
   | "system"
+  | "memory_footprint"
   | "storage"
   | "throughput"
   | "latency"
@@ -87,6 +88,9 @@ const requestRoutes: Record<
   storage: {
     get: "**/monitor/storage**",
   },
+  memory_footprint: {
+    get: "**/metric/memory_footprint**",
+  },
   throughput: { get: "**/metric/throughput**" },
   latency: { get: "**/metric/latency**" },
   queue_length: { get: "**/metric/queue_length**" },
@@ -138,6 +142,7 @@ const getAliases: Partial<Record<Request, string>> = {
   database: "getDatabases",
   system: "getSystemData",
   storage: "getStorageData",
+  memory_footprint: "getMemoryFootprint",
   throughput: "getThroughput",
   latency: "getLatency",
   queue_length: "getQueueLength",
