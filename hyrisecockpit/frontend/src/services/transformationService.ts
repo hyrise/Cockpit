@@ -91,7 +91,7 @@ function getSegmentData(
   const numberOfChunks = dataByColumns[0].length;
 
   for (let i = 0; i < numberOfChunks; i++) {
-    chunks.push("No. " + i);
+    chunks.push(i.toString());
     descriptions.push(availableColumns);
     const chunk: number[] = [];
     dataByColumns.forEach((column) => {
@@ -389,7 +389,7 @@ function getAccessData(
   }
 
   for (let i = 0; i < numberOfChunks; i++) {
-    chunks.push("No. " + i);
+    chunks.push(i.toString());
     descriptions.push(availableColumns);
 
     const chunk: number[] = [];

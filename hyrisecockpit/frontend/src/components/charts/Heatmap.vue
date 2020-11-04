@@ -99,6 +99,8 @@ function useHeatMapConfiguration(
       },
       yaxis: {
         rangemode: "tozero",
+        tickformat: ",d",
+        dtick: 1,
         title: {
           text: props.chartConfiguration.yaxis,
           font: {
