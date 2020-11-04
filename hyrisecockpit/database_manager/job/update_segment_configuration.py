@@ -24,7 +24,8 @@ def _format_results(results: List[Tuple]) -> Dict:
     the keys are the tables names. For every table name the value is a
     dictionary where the keys are the column names. For every column name
     the value is a list where the indices are the chunk_id and the value is
-    the mode. We can build this list with a loop since the chunks are
+    the mode. The mode can be for example "Dictionary",
+    We can build this list with a loop since the chunks are
     in ascending order. The mode is represented by an integer.
     The integer is the index of the mode in the mode_id_mapping list.
     We use this list to make it easier in the frontend to build the headmap.
@@ -53,7 +54,7 @@ def update_segment_configuration(
     """Update segment configuration data for database instance.
 
     First the needed information is extracted from the Hyrise. After that the raw SQL results
-    are formatted to a dictionary. After that the formatted results are written to the influx.
+    are formatted to a dictionary they are written to the influx.
     The table meta_chunk_sort_orders only has the columns table_name, chunk_id, column_id and order_mode.
     To be able to assign the chunks to the column name we need to join the meta_chunk_sort_orders with the
     meta_segments table.
