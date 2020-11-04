@@ -65,9 +65,10 @@ function getSegmentData(
     !data[primaryKey] ||
     !data[primaryKey][tertiaryKey] ||
     !Object.keys(data[primaryKey][tertiaryKey]["columns"]).length ||
-    secondaryKey !== "" && !data[primaryKey][tertiaryKey]["columns"][secondaryKey]
+    (secondaryKey !== "" &&
+      !data[primaryKey][tertiaryKey]["columns"][secondaryKey])
   )
-    return { dataByChunks, chunks, columns, valueToId, descriptions, text};
+    return { dataByChunks, chunks, columns, valueToId, descriptions, text };
 
   valueToId = data[primaryKey][tertiaryKey]["mode_mapping"];
 
@@ -79,13 +80,13 @@ function getSegmentData(
       emitPreSelectEvent("segmentConfiguration", secondaryKey);
     }
   });
-  Object.entries(data[primaryKey][tertiaryKey]["columns"][secondaryKey]).forEach(
-    ([column, columnData]: [string, any]) => {
-      dataByColumns.push(columnData);
-      columns.push(truncateColumnName(column));
-      availableColumns.push(column);
-    }
-  );
+  Object.entries(
+    data[primaryKey][tertiaryKey]["columns"][secondaryKey]
+  ).forEach(([column, columnData]: [string, any]) => {
+    dataByColumns.push(columnData);
+    columns.push(truncateColumnName(column));
+    availableColumns.push(column);
+  });
 
   const numberOfChunks = dataByColumns[0].length;
 
@@ -98,8 +99,8 @@ function getSegmentData(
     });
     dataByChunks.push(chunk);
     text.push(chunk.map((idx: any) => valueToId[idx]));
-  } 
-  return { chunks, columns, dataByChunks, descriptions, valueToId, text};
+  }
+  return { chunks, columns, dataByChunks, descriptions, valueToId, text };
 }
 /** transform query information data to table structure */
 function getQueryInformationData(data: any, primaryKey: string = ""): any {
@@ -398,7 +399,7 @@ function getAccessData(
     dataByChunks.push(chunk);
   }
   text = descriptions;
-  return { chunks, columns, dataByChunks, descriptions, text};
+  return { chunks, columns, dataByChunks, descriptions, text };
 }
 
 /** tranform operator data with appropriate tooltip information */
