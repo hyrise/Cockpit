@@ -53,6 +53,7 @@ class PluginService:
                             settings=[
                                 PluginSetting(
                                     name=plugin_setting["name"],
+                                    display_name=plugin_setting["display_name"],
                                     value=plugin_setting["value"],
                                     description=plugin_setting["description"],
                                 )

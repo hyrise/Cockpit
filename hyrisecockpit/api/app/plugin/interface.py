@@ -25,6 +25,7 @@ class PluginSettingInterface(PluginSettingBaseInterface):
     """Interface of a Plugin Setting."""
 
     description: str
+    display_name: str
 
 
 class DetailedPluginInterface(PluginInterface):

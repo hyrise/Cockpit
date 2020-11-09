@@ -31,9 +31,12 @@ class UpdatePluginSetting(Plugin):
 class PluginSetting(PluginSettingBase):
     """Model of a Plugin Setting."""
 
-    def __init__(self, name: str, value: str, description: str) -> None:
+    def __init__(
+        self, name: str, display_name: str, value: str, description: str
+    ) -> None:
         """Initialize a Plugin Setting model."""
         super().__init__(name, value)
+        self.display_name = display_name
         self.description: str = description
 
 

@@ -13,7 +13,7 @@ class PluginSchema(Schema):
     name = String(
         description="Identifier of the Plugin.",
         required=True,
-        default="CompressionPlugin",
+        default="Compression",
     )
 
 
@@ -45,6 +45,11 @@ class PluginSettingSchema(PluginSettingBaseSchema):
         description="Description of the plugin setting.",
         required=True,
         default="This text describes a setting.",
+    )
+    display_name = String(
+        description="Name of the setting that shall be displayed.",
+        required=True,
+        default="Memory Budget (MB)",
     )
 
 

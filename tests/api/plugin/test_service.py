@@ -34,7 +34,12 @@ class TestPluginService:
                 "id": "york",
                 "plugins": {
                     "Compression": [
-                        {"name": "MemoryBudget", "value": "5000", "description": "..."}
+                        {
+                            "name": "MemoryBudget",
+                            "display_name": "Memory Budget (MB)",
+                            "value": "5000",
+                            "description": "...",
+                        }
                     ]
                 },
             },
@@ -42,7 +47,12 @@ class TestPluginService:
                 "id": "citadelle",
                 "plugins": {
                     "Compression": [
-                        {"name": "MemoryBudget", "value": "5000", "description": "..."}
+                        {
+                            "name": "MemoryBudget",
+                            "display_name": "Memory Budget (MB)",
+                            "value": "5000",
+                            "description": "...",
+                        }
                     ],
                     "Clustering": [],
                 },
@@ -57,6 +67,7 @@ class TestPluginService:
                         "settings": [
                             {
                                 "name": "MemoryBudget",
+                                "display_name": "Memory Budget (MB)",
                                 "value": "5000",
                                 "description": "...",
                             }
@@ -72,6 +83,7 @@ class TestPluginService:
                         "settings": [
                             {
                                 "name": "MemoryBudget",
+                                "display_name": "Memory Budget (MB)",
                                 "value": "5000",
                                 "description": "...",
                             }
@@ -130,7 +142,7 @@ class TestPluginService:
             assert isinstance(result, int)
             assert result == status
 
-    @mark.parametrize("status", [200, 404, 423])
+    @mark.parametrize("status", [200, 404, 406, 423])
     def test_activates_a_plugin(
         self, service: PluginService, id: str, interface: PluginInterface, status: int
     ):

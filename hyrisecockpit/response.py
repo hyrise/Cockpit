@@ -28,6 +28,7 @@ _responses: Dict[int, str] = {
     200: "OK",
     400: "BAD REQUEST",
     404: "NOT FOUND",
+    406: "NOT ACCEPTABLE",
     409: "CONFLICT",
     423: "LOCKED",
     500: "INTERNAL SERVER ERROR",
