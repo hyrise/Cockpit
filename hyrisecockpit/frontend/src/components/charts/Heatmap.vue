@@ -88,6 +88,8 @@ function useHeatMapConfiguration(
     return {
       xaxis: {
         rangemode: "tozero",
+        tickangle: 45,
+        automargin: true,
         title: {
           text: props.chartConfiguration.xaxis,
           font: {

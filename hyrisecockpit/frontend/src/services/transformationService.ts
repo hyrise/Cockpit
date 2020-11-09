@@ -55,9 +55,6 @@ function getSegmentData(
   const text: any[][] = [];
   const availableColumns: string[] = [];
 
-  function truncateColumnName(column: string): string {
-    return column.length > 7 ? column.substring(0, 7) + ".." : column;
-  }
   /* store all detected values */
   let valueToId: string[] = [];
   if (
@@ -84,7 +81,7 @@ function getSegmentData(
     data[primaryKey][tertiaryKey]["columns"][secondaryKey]
   ).forEach(([column, columnData]: [string, any]) => {
     dataByColumns.push(columnData);
-    columns.push(truncateColumnName(column));
+    columns.push(column);
     availableColumns.push(column);
   });
 
@@ -377,16 +374,12 @@ function getAccessData(
   Object.entries(data[primaryKey][secondaryKey]).forEach(
     ([column, columnData]: [string, any]) => {
       dataByColumns.push(columnData);
-      columns.push(truncateColumnName(column));
+      columns.push(column);
       availableColumns.push(column);
     }
   );
 
   const numberOfChunks = dataByColumns[0].length;
-
-  function truncateColumnName(column: string): string {
-    return column.length > 7 ? column.substring(0, 7) + ".." : column;
-  }
 
   for (let i = 0; i < numberOfChunks; i++) {
     chunks.push(i.toString());
