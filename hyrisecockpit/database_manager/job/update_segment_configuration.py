@@ -4,17 +4,7 @@ from typing import Dict, List, Tuple
 
 from hyrisecockpit.database_manager.cursor import StorageConnectionFactory
 from hyrisecockpit.database_manager.cursor import ConnectionFactory
-
-from psycopg2 import DatabaseError, InterfaceError
-
-
-def _execute_sql(sql: str, connection_factory: ConnectionFactory):
-    try:
-        with connection_factory.create_cursor() as cur:
-            cur.execute(sql, None)
-            return cur.fetchall()
-    except (DatabaseError, InterfaceError):
-        return []
+from .execute_sql import execute_sql
 
 
 def _format_results(results: List[Tuple]) -> Dict:
@@ -78,10 +68,10 @@ def update_segment_configuration(
                                 ORDER BY meta_chunk_sort_orders.chunk_id ASC;"""
     time_stamp = time_ns()
 
-    sql_segments_encoding_results: List[Tuple] = _execute_sql(
+    sql_segments_encoding_results: List[Tuple] = execute_sql(
         sql_segments_encoding, connection_factory
     )
-    sql_segments_order_results: List[Tuple] = _execute_sql(
+    sql_segments_order_results: List[Tuple] = execute_sql(
         sql_segments_order, connection_factory
     )
 

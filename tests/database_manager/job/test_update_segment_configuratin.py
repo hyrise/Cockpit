@@ -4,27 +4,12 @@ from typing import Dict
 
 from hyrisecockpit.cross_platform_support.testing_support import MagicMock
 from hyrisecockpit.database_manager.job.update_segment_configuration import (
-    _execute_sql,
     _format_results,
     update_segment_configuration,
 )
 
 
 class TestUpdateSegmentConfiguration:
-    def test_executes_sql(self) -> None:
-        mock_cursor = MagicMock()
-        mock_cursor.fetchall.return_value = [("foo",)]
-        mock_connection_factory = MagicMock()
-        mock_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
-        sql = "SELECT * FROM foo;"
-
-        result = _execute_sql(sql, mock_connection_factory)
-
-        mock_cursor.execute.assert_called_once_with(sql, None)
-        assert result == [("foo",)]
-
     def test_formats_results(self) -> None:
         sql_results = [
             (
@@ -102,7 +87,7 @@ class TestUpdateSegmentConfiguration:
         "hyrisecockpit.database_manager.job.update_segment_configuration._format_results"
     )
     @patch(
-        "hyrisecockpit.database_manager.job.update_segment_configuration._execute_sql"
+        "hyrisecockpit.database_manager.job.update_segment_configuration.execute_sql"
     )
     def test_updates_segment_configuration(
         self, mock_execute_sql: MagicMock, mock_format_results: MagicMock
