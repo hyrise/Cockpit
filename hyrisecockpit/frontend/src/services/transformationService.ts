@@ -217,7 +217,7 @@ function getLatencyData(data: any, primaryKey: string = ""): number[] {
 function getMemoryFootprint(data: any): number[] {
   return data.map(
     (entry: any) =>
-      Math.round((entry["memory_footprint"] / 1_000_000) * 1_000) / 1_000
+      Math.round(entry["memory_footprint"] / 1_000) / 1_000
   );
 }
 
