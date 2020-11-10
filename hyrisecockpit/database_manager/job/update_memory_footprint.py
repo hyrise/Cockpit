@@ -18,8 +18,6 @@ def _get_memory_footprint(connection_factory: ConnectionFactory):
             # If no tables are loaded the response would be (None,)
             if response[0] is not None:
                 memory_footprint = float(response[0])
-            else:
-                memory_footprint = 0.0
     except (DatabaseError, InterfaceError):
         memory_footprint = 0.0
     return time_stamp, memory_footprint
