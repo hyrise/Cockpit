@@ -100,6 +100,7 @@ function useHeatMapConfiguration(
         fixedrange: true,
       },
       yaxis: {
+        zeroline: false,
         rangemode: "tozero",
         // Sets the tick label formatting rule using d3 formatting mini-languages
         // ",d" means comma separated decimal
