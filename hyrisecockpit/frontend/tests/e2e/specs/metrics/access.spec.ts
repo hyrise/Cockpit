@@ -13,7 +13,7 @@ import {
 
 const metric = "access";
 const request = "chunks";
-const layout = { xtitle: "Columns", ytitle: "Chunks ID" };
+const layout = { xtitle: "Columns", ytitle: "Chunk ID" };
 const transform = (xhr: any): any => {
   return xhr.response.body.body.chunks_data;
 };

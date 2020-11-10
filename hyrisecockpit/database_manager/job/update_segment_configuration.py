@@ -11,27 +11,28 @@ def _format_results(results: List[Tuple]) -> Dict:
     """Format psycopg2 cursor results.
 
     This function iterates over each row and creates a dictionary where
-    the keys are the tables names. For every table name the value is a
+    the keys are the table names. For every table name the value is a
     dictionary where the keys are the column names. For every column name
     the value is a list where the indices are the chunk_id and the value is
-    the mode. The mode can be for example "Dictionary",
+    the name of the configuration. The name of the configuration can be for example "Dictionary",
     We can build this list with a loop since the chunks are
-    in ascending order. The mode is represented by an integer.
-    The integer is the index of the mode in the mode_id_mapping list.
-    We use this list to make it easier in the frontend to build the headmap.
+    in ascending order. The name of the configuration is represented by an integer.
+    The integer is the index of the name of the configuration in the mode_id_mapping list.
     """
     formatted_results: Dict = {}
     mode_id_mapping: List = []
 
     for row in results:
-        table_name, column_name, chunk_id, mode = row
+        table_name, column_name, chunk_id, configuration = row
         if table_name not in formatted_results:
             formatted_results[table_name] = {}
         if column_name not in formatted_results[table_name]:
             formatted_results[table_name][column_name] = []
-        if mode not in mode_id_mapping:
-            mode_id_mapping.append(mode)
-        formatted_results[table_name][column_name].append(mode_id_mapping.index(mode))
+        if configuration not in mode_id_mapping:
+            mode_id_mapping.append(configuration)
+        formatted_results[table_name][column_name].append(
+            mode_id_mapping.index(configuration)
+        )
 
     return {"columns": formatted_results, "mode_mapping": mode_id_mapping}
 
@@ -44,10 +45,7 @@ def update_segment_configuration(
     """Update segment configuration data for database instance.
 
     First the needed information is extracted from the Hyrise. After that the raw SQL results
-    are formatted to a dictionary they are written to the influx.
-    The table meta_chunk_sort_orders only has the columns table_name, chunk_id, column_id and order_mode.
-    To be able to assign the chunks to the column name we need to join the meta_chunk_sort_orders with the
-    meta_segments table.
+    are formatted and written to the influx.
     """
     sql_segments_encoding: str = """SELECT
                                     table_name,

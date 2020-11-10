@@ -170,7 +170,7 @@ const metricsChartConfiguration: Record<Metric, any> = {
   access: {
     title: "Segment Access Frequencies", //Access Frequency
     xaxis: "Columns",
-    yaxis: "Chunks ID",
+    yaxis: "Chunk ID",
   },
   cpu: {
     title: "CPU Utilization", //CPU (from hyrise utilization table)
@@ -215,7 +215,7 @@ const metricsChartConfiguration: Record<Metric, any> = {
   segmentConfiguration: {
     title: "Segment Configurations",
     xaxis: "Segments",
-    yaxis: "Chunks ID",
+    yaxis: "Chunk ID",
   },
   storage: {
     title: "Data Size - Overview", //Storage
