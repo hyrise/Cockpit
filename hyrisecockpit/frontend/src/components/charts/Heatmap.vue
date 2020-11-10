@@ -100,6 +100,7 @@ function useHeatMapConfiguration(
         fixedrange: true,
       },
       yaxis: {
+        // Removes the line  which is drawn along the 0 value of the y axis
         zeroline: false,
         rangemode: "tozero",
         // Sets the tick label formatting rule using d3 formatting mini-languages
@@ -157,7 +158,7 @@ function useHeatMapConfiguration(
     };
   }
   function getOptions(): Object {
-    return { displayModeBar: false, ygap: 10, xgap: 10};
+    return { displayModeBar: false, ygap: 10, xgap: 10 };
   }
   return { getDataset, getLayout, getOptions };
 }
