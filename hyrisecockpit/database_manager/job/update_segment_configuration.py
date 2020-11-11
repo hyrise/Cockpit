@@ -15,8 +15,7 @@ def _format_results(results: List[Tuple]) -> Dict:
     dictionary where the keys are the column names. For every column name
     the value is a list where the indices are the chunk_id and the value is
     the name of the configuration. The name of the configuration can be for example "Dictionary",
-    We can build this list with a loop since the chunks are
-    in ascending order. The name of the configuration is represented by an integer.
+    The name of the configuration is represented by an integer.
     The integer is the index of the name of the configuration in the mode_id_mapping list.
     """
     formatted_results: Dict = {}
@@ -30,6 +29,9 @@ def _format_results(results: List[Tuple]) -> Dict:
             formatted_results[table_name][column_name] = []
         if configuration not in mode_id_mapping:
             mode_id_mapping.append(configuration)
+        # We can append the configuration in every iteration
+        # since the chunks are in ascending order and so the indices
+        # of the list is the chunk id with the configuration.
         formatted_results[table_name][column_name].append(
             mode_id_mapping.index(configuration)
         )
