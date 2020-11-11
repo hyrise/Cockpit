@@ -31,7 +31,7 @@ def _format_results(results: List[Tuple]) -> Dict:
             mode_id_mapping.append(configuration)
         # We can append the configuration in every iteration
         # since the chunks are in ascending order and so the indices
-        # of the list is the chunk id with the configuration.
+        # of the list are the chunk id's with the configuration.
         formatted_results[table_name][column_name].append(
             mode_id_mapping.index(configuration)
         )
