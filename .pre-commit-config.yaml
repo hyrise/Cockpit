@@ -51,12 +51,6 @@ repos:
       types: [python]
       require_serial: true
       additional_dependencies: []
-    - id: pydocstyle
-      name: Running pydocstyle on python files
-      description: 'pydocstyle is a static analysis tool for checking compliance with Python docstring conventions.'
-      entry: pipenv run pydocstyle
-      language: system
-      types: [python]
     - id: bandit
       name: Running bandit on python files
       description: 'Bandit is a tool for finding common security issues in Python code'
