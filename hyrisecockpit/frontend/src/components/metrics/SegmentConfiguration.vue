@@ -198,7 +198,7 @@ export default defineComponent({
       ...selection,
       hoverTemplate: computed(
         () =>
-          `<b>segment: %{x}</b> <br>${selection.selectedType.value}: %{text} <extra></extra>`
+          `<b>segment: %{x}</b><br>Chunk ID: %{y}<br>${selection.selectedType.value}: %{text} <extra></extra>`
       ),
       types: [
         { name: "encoding_type", icon: "mdi-barcode" },
