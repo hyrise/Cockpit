@@ -184,9 +184,7 @@ export default defineComponent({
           autotick: false,
           tick0: !0,
           dtick: 1,
-          ticktext: newData.valueToId.map((id) =>
-            id.length > 7 ? id.substring(0, 7) + ".." : id
-          ),
+          ticktext: newData.valueToId,
           tickvals: [...Array(scaleLength).keys()],
         };
       }
