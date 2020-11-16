@@ -168,6 +168,7 @@ export type AccessData = {
   chunks: string[];
   columns: string[];
   descriptions: any[][];
+  text: any[][];
 };
 
 export type SegmentData = AccessData & {

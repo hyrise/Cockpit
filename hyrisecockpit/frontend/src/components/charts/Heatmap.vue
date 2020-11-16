@@ -88,6 +88,8 @@ function useHeatMapConfiguration(
     return {
       xaxis: {
         rangemode: "tozero",
+        tickangle: 45,
+        automargin: true,
         title: {
           text: props.chartConfiguration.xaxis,
           font: {
@@ -98,7 +100,12 @@ function useHeatMapConfiguration(
         fixedrange: true,
       },
       yaxis: {
+        // Removes the line  which is drawn along the 0 value of the y axis
+        zeroline: false,
         rangemode: "tozero",
+        // Sets the tick label formatting rule using d3 formatting mini-languages
+        // ",d" means comma separated decimal
+        tickformat: ",d",
         title: {
           text: props.chartConfiguration.yaxis,
           font: {
@@ -112,7 +119,6 @@ function useHeatMapConfiguration(
       autosize: props.autosize,
       width: props.autosize ? 0 : 1300,
       height: props.autosize ? 0 : 600,
-
       margin: {
         l: 60,
         r: 10,
@@ -129,15 +135,19 @@ function useHeatMapConfiguration(
       descriptions: [],
       chunks: [],
       columns: [],
+      text: [],
     }
   ): Object {
     return {
       z: data.dataByChunks,
       x: data.columns,
       y: data.chunks,
+      // xgap and ygap set the horizontal and vertical gap (in pixels) between bricks.
+      ygap: 1,
+      xgap: 1,
       zmin: 0,
       zmax: maxValue,
-      text: data.descriptions,
+      text: data.text,
       type: "heatmap",
       colorscale: props.colorScale,
       cauto: false,
@@ -147,7 +157,7 @@ function useHeatMapConfiguration(
     };
   }
   function getOptions(): Object {
-    return { displayModeBar: false };
+    return { displayModeBar: false, ygap: 10, xgap: 10 };
   }
   return { getDataset, getLayout, getOptions };
 }
