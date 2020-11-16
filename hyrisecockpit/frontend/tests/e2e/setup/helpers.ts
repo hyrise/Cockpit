@@ -44,10 +44,10 @@ export type DatabaseState = "workloadRunning";
 export const benchmarks = ["tpch", "tpcds", "job", "tpcc"];
 
 export const displayedBenchmark = {
-  tpch: "TPCH SF 1",
-  tpcds: "TPCDS SF 1",
-  tpcc: "TPCC SF 1",
-  job: "JOB SF 1",
+  tpch: "TPC-H (SF 1)",
+  tpcds: "TPC-DS (SF 1)",
+  tpcc: "TPC-C (SF 1)",
+  job: "Join Order Benchmark (SF 1)",
 };
 
 export const comparisonRequests: Request[] = [

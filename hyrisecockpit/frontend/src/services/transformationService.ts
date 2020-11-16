@@ -52,60 +52,52 @@ function getSegmentData(
   const chunks: string[] = [];
   const columns: string[] = [];
   const descriptions: any[][] = [];
-
+  const text: any[][] = [];
   const availableColumns: string[] = [];
 
   /* store all detected values */
-  const valueToId: string[] = [];
-
+  let valueToId: string[] = [];
   if (
     !data ||
     !data[primaryKey] ||
     !data[primaryKey][tertiaryKey] ||
-    !Object.keys(data[primaryKey][tertiaryKey]).length
+    !Object.keys(data[primaryKey][tertiaryKey]["columns"]).length ||
+    (secondaryKey !== "" &&
+      !data[primaryKey][tertiaryKey]["columns"][secondaryKey])
   )
-    return { dataByChunks, chunks, columns, valueToId, descriptions };
+    return { dataByChunks, chunks, columns, valueToId, descriptions, text };
+
+  valueToId = data[primaryKey][tertiaryKey]["mode_mapping"];
 
   /* map values to int */
   Object.values(data).forEach((dbData: any) => {
     // set secondary key if no key existst
     if (!secondaryKey) {
-      secondaryKey = Object.keys(dbData[tertiaryKey])[0];
+      secondaryKey = Object.keys(dbData[tertiaryKey]["columns"])[0];
       emitPreSelectEvent("segmentConfiguration", secondaryKey);
     }
-    Object.values(dbData[tertiaryKey]).forEach((tableData: any) => {
-      Object.values(tableData).forEach((segment: any) => {
-        const id = valueToId.find((v) => v === segment[tertiaryKey]);
-        if (id) return;
-        valueToId.push(segment[tertiaryKey]);
-      });
-    });
   });
-  Object.entries(data[primaryKey][tertiaryKey][secondaryKey]).forEach(
-    ([column, columnData]: [string, any]) => {
-      dataByColumns.push(columnData);
-      columns.push("No. " + (parseInt(column, 10) + 1));
-      availableColumns.push(column);
-    }
-  );
-  const description: any = [];
-  const chunk: any = [];
-  // segments are not per chunk, instead they are for every chunks the same -> so we are working with 1 single chunk only
-  chunks.push("No. " + 1);
-
-  dataByColumns.forEach((date, idx) => {
-    description.push({
-      column: "No. " + (idx + 1),
-      value: date[tertiaryKey],
-    });
-    const value = valueToId.findIndex((v) => v === date[tertiaryKey]);
-    chunk.push(value);
+  Object.entries(
+    data[primaryKey][tertiaryKey]["columns"][secondaryKey]
+  ).forEach(([column, columnData]: [string, any]) => {
+    dataByColumns.push(columnData);
+    columns.push(column);
+    availableColumns.push(column);
   });
 
-  descriptions.push(description);
-  dataByChunks.push(chunk);
+  const numberOfChunks = dataByColumns[0].length;
 
-  return { chunks, columns, dataByChunks, descriptions, valueToId };
+  for (let i = 0; i < numberOfChunks; i++) {
+    chunks.push(i.toString());
+    descriptions.push(availableColumns);
+    const chunk: number[] = [];
+    dataByColumns.forEach((column) => {
+      chunk.push(column[i]);
+    });
+    dataByChunks.push(chunk);
+    text.push(chunk.map((idx: any) => valueToId[idx]));
+  }
+  return { chunks, columns, dataByChunks, descriptions, valueToId, text };
 }
 /** transform query information data to table structure */
 function getQueryInformationData(data: any, primaryKey: string = ""): any {
@@ -341,11 +333,12 @@ function getAccessData(
   const chunks: string[] = [];
   const columns: string[] = [];
   const descriptions: string[][] = [];
+  let text: string[][] = [];
 
   const availableColumns: string[] = [];
 
   if (!data || !data[primaryKey] || !Object.keys(data[primaryKey]).length)
-    return { chunks, columns, dataByChunks, descriptions };
+    return { chunks, columns, dataByChunks, descriptions, text };
 
   if (!secondaryKey) {
     /** detect most accessed table and initialize it if no table selected */
@@ -383,19 +376,15 @@ function getAccessData(
   Object.entries(data[primaryKey][secondaryKey]).forEach(
     ([column, columnData]: [string, any]) => {
       dataByColumns.push(columnData);
-      columns.push(truncateColumnName(column));
+      columns.push(column);
       availableColumns.push(column);
     }
   );
 
   const numberOfChunks = dataByColumns[0].length;
 
-  function truncateColumnName(column: string): string {
-    return column.length > 7 ? column.substring(0, 7) + ".." : column;
-  }
-
   for (let i = 0; i < numberOfChunks; i++) {
-    chunks.push("No. " + i);
+    chunks.push(i.toString());
     descriptions.push(availableColumns);
 
     const chunk: number[] = [];
@@ -404,8 +393,8 @@ function getAccessData(
     });
     dataByChunks.push(chunk);
   }
-
-  return { chunks, columns, dataByChunks, descriptions };
+  text = descriptions;
+  return { chunks, columns, dataByChunks, descriptions, text };
 }
 
 /** tranform operator data with appropriate tooltip information */

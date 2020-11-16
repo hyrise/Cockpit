@@ -45,7 +45,7 @@
               :hover-template="hoverTemplate"
               :color-scale="colorScale"
               :color-bar="colorBar"
-              :show-y="false"
+              :show-y="true"
             />
           </template>
         </metric-detailed-view>
@@ -89,7 +89,7 @@
       :hover-template="hoverTemplate"
       :color-scale="colorScale"
       :color-bar="colorBar"
-      :show-y="false"
+      :show-y="true"
     />
   </div>
 </template>
@@ -184,14 +184,11 @@ export default defineComponent({
           autotick: false,
           tick0: !0,
           dtick: 1,
-          ticktext: newData.valueToId.map((id) =>
-            id.length > 7 ? id.substring(0, 7) + ".." : id
-          ),
+          ticktext: newData.valueToId,
           tickvals: [...Array(scaleLength).keys()],
         };
       }
     );
-
     return {
       chartConfiguration: getMetricChartConfiguration(props.metric),
       maxValue,
@@ -201,7 +198,7 @@ export default defineComponent({
       ...selection,
       hoverTemplate: computed(
         () =>
-          `<b>segment: %{text.column}</b> <br>${selection.selectedType.value}: %{text.value} <extra></extra>`
+          `<b>segment: %{x}</b><br>Chunk ID: %{y}<br>${selection.selectedType.value}: %{text} <extra></extra>`
       ),
       types: [
         { name: "encoding_type", icon: "mdi-barcode" },

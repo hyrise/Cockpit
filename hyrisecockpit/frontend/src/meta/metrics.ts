@@ -166,11 +166,11 @@ const metricValueStateOrder: Record<
 const timeLabel = "Timestamps";
 const queryLabel = "Number of queries";
 
-const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
+const metricsChartConfiguration: Record<Metric, any> = {
   access: {
     title: "Segment Access Frequencies", //Access Frequency
     xaxis: "Columns",
-    yaxis: "Chunks",
+    yaxis: "Chunk ID",
   },
   cpu: {
     title: "CPU Utilization", //CPU (from hyrise utilization table)
@@ -215,7 +215,7 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
   segmentConfiguration: {
     title: "Segment Configurations",
     xaxis: "Segments",
-    yaxis: "",
+    yaxis: "Chunk ID",
   },
   storage: {
     title: "Data Size - Overview", //Storage
