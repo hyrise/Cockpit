@@ -8,7 +8,7 @@ from hyrisecockpit.cross_platform_support.testing_support import MagicMock
 from hyrisecockpit.database_manager.job.update_storage_data import (
     update_storage_data,
     _format_results,
-    _add_encoding_entry,
+    _edit_encoding_entry,
 )
 
 
@@ -22,36 +22,54 @@ class TestUpdateStorageDataJob:
         sql_results: List[Tuple] = [
             (
                 "customer",
-                0,
                 "c_custkey",
                 "int",
                 "Dictionary",
                 "FixedSize2ByteAligned",
+                10,
                 9000,
             ),
             (
                 "customer",
-                0,
+                "c_nationkey",
+                "string",
+                "FixedStringDictionary",
+                "SimdBp128",
+                5,
+                1000,
+            ),
+            (
+                "customer",
                 "c_nationkey",
                 "string",
                 "Dictionary",
-                "FixedSize2ByteAligned",
+                "SimdBp128",
+                25,
                 1000,
             ),
             (
                 "supplier",
-                0,
                 "s_address",
                 "string",
                 "Dictionary",
                 "FixedSize2ByteAligned",
+                10,
+                400,
+            ),
+            (
+                "supplier",
+                "s_address",
+                "string",
+                "Dictionary",
+                "SimdBp128",
+                9,
                 400,
             ),
         ]
 
         expected: Dict = {
             "customer": {
-                "size": 10000,
+                "size": 11000,
                 "number_columns": 2,
                 "data": {
                     "c_custkey": {
@@ -60,36 +78,41 @@ class TestUpdateStorageDataJob:
                         "encoding": [
                             {
                                 "name": "Dictionary",
-                                "amount": 1,
+                                "amount": 10,
                                 "compression": ["FixedSize2ByteAligned"],
                             }
                         ],
                     },
                     "c_nationkey": {
-                        "size": 1000,
+                        "size": 2000,
                         "data_type": "string",
                         "encoding": [
                             {
+                                "name": "FixedStringDictionary",
+                                "amount": 5,
+                                "compression": ["SimdBp128"],
+                            },
+                            {
                                 "name": "Dictionary",
-                                "amount": 1,
-                                "compression": ["FixedSize2ByteAligned"],
-                            }
+                                "amount": 25,
+                                "compression": ["SimdBp128"],
+                            },
                         ],
                     },
                 },
             },
             "supplier": {
-                "size": 400,
+                "size": 800,
                 "number_columns": 1,
                 "data": {
                     "s_address": {
-                        "size": 400,
+                        "size": 800,
                         "data_type": "string",
                         "encoding": [
                             {
                                 "name": "Dictionary",
-                                "amount": 1,
-                                "compression": ["FixedSize2ByteAligned"],
+                                "amount": 19,
+                                "compression": ["FixedSize2ByteAligned", "SimdBp128"],
                             }
                         ],
                     }
@@ -121,13 +144,12 @@ class TestUpdateStorageDataJob:
                 },
             },
         }
-        new_encoding: Dict = {
-            "name": "Dictionary",
-            "amount": 1,
-            "compression": ["FixedSize2ByteAligned"],
-        }
 
-        expected_amount = 2
+        encoding_type = "Dictionary"
+        amount = 10
+        vector_compression_type = "FixedSize2ByteAligned"
+
+        expected_amount = 11
         expected: Dict = {
             "supplier": {
                 "size": 400,
@@ -138,9 +160,9 @@ class TestUpdateStorageDataJob:
                         "data_type": "string",
                         "encoding": [
                             {
-                                "name": "Dictionary",
+                                "name": encoding_type,
                                 "amount": expected_amount,
-                                "compression": ["FixedSize2ByteAligned"],
+                                "compression": [vector_compression_type],
                             }
                         ],
                     }
@@ -149,8 +171,11 @@ class TestUpdateStorageDataJob:
         }
         table_name = "supplier"
         column_name = "s_address"
-        _add_encoding_entry(
-            formatted_results[table_name]["data"][column_name]["encoding"], new_encoding
+        _edit_encoding_entry(
+            formatted_results[table_name]["data"][column_name]["encoding"],
+            encoding_type,
+            amount,
+            vector_compression_type,
         )
 
         assert expected == formatted_results
@@ -175,10 +200,15 @@ class TestUpdateStorageDataJob:
                 },
             },
         }
-        new_encoding: Dict = {
-            "name": "LZ4",
-            "amount": 1,
-            "compression": ["FixedSize2ByteAligned"],
+
+        encoding_type = "LZ4"
+        amount = 1
+        vector_compression_type = "FixedSize2ByteAligned"
+
+        expected_new_encoding: Dict = {
+            "name": encoding_type,
+            "amount": amount,
+            "compression": [vector_compression_type],
         }
         expected: Dict = {
             "supplier": {
@@ -194,7 +224,7 @@ class TestUpdateStorageDataJob:
                                 "amount": 1,
                                 "compression": ["FixedSize2ByteAligned"],
                             },
-                            new_encoding,
+                            expected_new_encoding,
                         ],
                     }
                 },
@@ -202,8 +232,11 @@ class TestUpdateStorageDataJob:
         }
         table_name = "supplier"
         column_name = "s_address"
-        _add_encoding_entry(
-            formatted_results[table_name]["data"][column_name]["encoding"], new_encoding
+        _edit_encoding_entry(
+            formatted_results[table_name]["data"][column_name]["encoding"],
+            encoding_type,
+            amount,
+            vector_compression_type,
         )
 
         assert expected == formatted_results
