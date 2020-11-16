@@ -34,8 +34,8 @@ export function getWorkloadType(workloadName: string): string {
 }
 
 export function getScaleFactor(workloadName: string): string {
-  const regExp = /\(([^)]+)\)/;
-  const matches = regExp.exec(workloadName);
+  const regExtractScaleFactor = /\(([^)]+)\)/;
+  const matches = regExtractScaleFactor.exec(workloadName);
   // @ts-ignore
   return matches[1].split(" ")[1];
 }
