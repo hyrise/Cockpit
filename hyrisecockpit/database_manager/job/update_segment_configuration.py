@@ -14,26 +14,32 @@ def _format_results(results: List[Tuple]) -> Dict:
     the keys are the table names. For every table name the value is a
     dictionary where the keys are the column names. For every column name
     the value is a list where the indices are the chunk_id and the value is
-    the name of the configuration. The name of the configuration can be for example "Dictionary",
-    The name of the configuration is represented by an integer.
-    The integer is the index of the name of the configuration in the mode_id_mapping list.
+    the name of the property. The name of the property can be for example "Dictionary",
+    The name of the property is represented by an integer.
+    The integer is the index of the name of the property in the mode_id_mapping list.
     """
     formatted_results: Dict = {}
     mode_id_mapping: List = []
 
     for row in results:
-        table_name, column_name, chunk_id, configuration = row
+        table_name, column_name, chunk_id, chunk_property = row
         if table_name not in formatted_results:
             formatted_results[table_name] = {}
         if column_name not in formatted_results[table_name]:
             formatted_results[table_name][column_name] = []
-        if configuration not in mode_id_mapping:
-            mode_id_mapping.append(configuration)
-        # We can append the configuration in every iteration
+        if chunk_property not in mode_id_mapping:
+            mode_id_mapping.append(chunk_property)
+        # We need to fill the missing chunks with None
+        if len(formatted_results[table_name][column_name]) < chunk_id:
+            missing_chunks = chunk_id - len(formatted_results[table_name][column_name])
+            formatted_results[table_name][column_name] += [
+                None for _ in range(missing_chunks)
+            ]
+        # We can append the property in every iteration
         # since the chunks are in ascending order and so the indices
-        # of the list are the chunk id's with the configuration.
+        # of the list are the chunk id's with the property.
         formatted_results[table_name][column_name].append(
-            mode_id_mapping.index(configuration)
+            mode_id_mapping.index(chunk_property)
         )
 
     return {"columns": formatted_results, "mode_mapping": mode_id_mapping}
