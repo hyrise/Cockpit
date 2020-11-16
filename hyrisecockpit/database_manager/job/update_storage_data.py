@@ -13,6 +13,9 @@ def _add_encoding_entry(encodings: List, new_encoding: Dict) -> None:
     for encoding in encodings:
         if encoding["name"] == new_encoding["name"]:
             encoding["amount"] += 1
+            # If the encoding exists we need to check if the vector compression type
+            # is in the encoding entry. A encoding entry can have multiple
+            # vector compression types.
             if vector_compression_type not in encoding["compression"]:
                 encoding["compression"].append(vector_compression_type)
             encoding_exists = True
@@ -37,8 +40,13 @@ def _format_results(results: List[Tuple]) -> Dict:
         if table_name not in formatted_results:
             formatted_results[table_name] = {"size": 0, "number_columns": 0, "data": {}}
         formatted_results[table_name]["size"] += estimated_size_in_bytes
+        # The data entry inside the tables_name entries contains all information
+        # for the columns.
         if column_name not in formatted_results[table_name]["data"]:
             formatted_results[table_name]["number_columns"] += 1
+            # The data entry inside the column entries contains all information
+            # for the column. A column can have multiple encodings. Because every
+            # chunk can have a different encoding.
             formatted_results[table_name]["data"][column_name] = {
                 "size": 0,
                 "data_type": column_data_type,
@@ -52,6 +60,8 @@ def _format_results(results: List[Tuple]) -> Dict:
             "amount": 1,
             "compression": [vector_compression_type],
         }
+        # We need to make sure if the encoding entry already exists or not.
+        # If it is not existing we need to add it.
         _add_encoding_entry(
             formatted_results[table_name]["data"][column_name]["encoding"], new_encoding
         )
@@ -64,6 +74,12 @@ def update_storage_data(
     connection_factory,
     storage_connection_factory: StorageConnectionFactory,
 ) -> None:
+    """Get the storage information from hyrise.
+
+    This function requests the storage information via SQL.
+    It then formats the results for the front-end and logs them
+    to the influx.
+    """
 
     sql = """SELECT
                 table_name,
