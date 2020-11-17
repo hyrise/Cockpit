@@ -118,6 +118,11 @@ export function useMocks(
       "throughput",
       fakeNumberData
     );
+    responseMocks.memory_footprint = fakeDataByIdsWithTimestamps(
+      mockedIds.databases,
+      "memory_footprint",
+      () => 0.0
+    );
     responseMocks.latency = fakeDataByIdsWithTimestamps(
       mockedIds.databases,
       "latency",

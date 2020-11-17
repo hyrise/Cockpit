@@ -2,21 +2,17 @@ import {
   testLinechartOnComparison,
   testLinechartOnOverview,
 } from "./abstractTests";
-import { getDatabaseMemoryFootprint } from "../databases/helpers";
+import { assignToObject } from "../helpers";
 
 const metric = "memoryFootprint";
-const request = "storage";
+const request = "memory_footprint";
 const layout = { title: "Memory Footprint in MB", min: 0 };
 const transform = (xhr: any): any => {
-  const data: any = {};
-  Object.entries(xhr.response.body.body.storage).forEach(([key, entry]) => {
-    data[key] = getDatabaseMemoryFootprint(entry);
-  });
-  return data;
+  return assignToObject(xhr.response.body, "memory_footprint");
 };
 
-/* test cpu on overview */
+/* test on overview */
 testLinechartOnOverview(metric, request, layout, transform);
 
-/* test cpu on comparison */
+/* test on comparison */
 testLinechartOnComparison(metric, request, layout, transform);

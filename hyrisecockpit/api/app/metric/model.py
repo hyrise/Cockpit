@@ -1,4 +1,12 @@
-"""Model for metric namespace."""
+"""Model for metric namespace.
+
+A model is used for type safety and to represent an entity itself as
+a Python representation (object). An entity can be a response from the
+influxdb or the database manager. This response can
+then be deserialized (load) into a python entity (model).
+These objects are defined by the models. These objects are often
+composed of other objects.
+"""
 from typing import List
 
 
@@ -112,3 +120,15 @@ class QueueLength:
         """Initialize a queue length model."""
         self.id: str = id
         self.queue_length: List[QueueLengthEntry] = queue_length
+
+
+class MemoryFootprintEntry:
+    def __init__(self, timestamp: int, memory_footprint: float):
+        self.timestamp: int = timestamp
+        self.memory_footprint: float = memory_footprint
+
+
+class MemoryFootprint:
+    def __init__(self, id: str, memory_footprint: List[MemoryFootprintEntry]):
+        self.id: str = id
+        self.memory_footprint: List[MemoryFootprintEntry] = memory_footprint

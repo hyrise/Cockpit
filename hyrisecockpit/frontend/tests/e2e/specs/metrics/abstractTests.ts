@@ -101,7 +101,7 @@ export function testLinechartOnComparison(
       databases.forEach((database: any) => {
         cy.get(getSelectorWithID(metric, database.id)).should(
           (elements: any) => {
-            assertLineChartData(elements[0].data, data, [database.id]);
+            assertLineChartData(elements[0].data, data, [database.id], metric);
           }
         );
       });

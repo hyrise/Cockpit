@@ -12,6 +12,7 @@ from hyrisecockpit.api.app.metric.schema import (
     LatencySchema,
     QueueLengthSchema,
     ThroughputSchema,
+    MemoryFootprintSchema,
 )
 from hyrisecockpit.cross_platform_support.testing_support import MagicMock
 
@@ -94,6 +95,27 @@ class TestMetricController:
         fake_precision = 1
 
         parameterized_url = f"{url}/queue_length?startts={fake_startts}&endts={fake_endts}&precision={fake_precision}"
+        response = client.get(parameterized_url, follow_redirects=True)
+
+        assert 200 == response.status_code
+        assert expected == response.get_json()
+
+    @patch("hyrisecockpit.api.app.metric.controller.MetricService")
+    def test_get_memory_footprint(
+        self, mock_metric_service: MagicMock, client: FlaskClient
+    ) -> None:
+        memory_footprint = {
+            "id": "db1",
+            "memory_footprint": [{"timestamp": 42, "memory_footprint": 3.3}],
+        }
+        mock_metric_service.get_memory_footprint.return_value = [memory_footprint]
+        expected = MemoryFootprintSchema(many=True).dump([memory_footprint])
+
+        fake_startts = 1
+        fake_endts = 5
+        fake_precision = 1
+
+        parameterized_url = f"{url}/memory_footprint?startts={fake_startts}&endts={fake_endts}&precision={fake_precision}"
         response = client.get(parameterized_url, follow_redirects=True)
 
         assert 200 == response.status_code

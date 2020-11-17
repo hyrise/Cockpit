@@ -59,8 +59,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
   memoryFootprint: {
     fetchType: "modify",
     transformationService: useDataTransformation("memoryFootprint"),
-    base: "storage",
-    endpoint: monitorBackend + "storage",
+    base: "memory_footprint",
+    endpoint: metricBackend + "memory_footprint",
     component: "MemoryFootprint",
     requestTime: 1000,
     dataType: "interval",

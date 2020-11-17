@@ -1,4 +1,14 @@
-"""Schema for metric namespace."""
+"""Schema for metric namespace.
+
+A schema is responsible for the serialization/deserialization
+of a given entity. An entity can be a response from the influxdb
+or the database manager. This response can then be deserialized
+(load) into a Python entity (model). On the other hand a python
+entity (model) can be serialized (dump) to a JSON-encoded string.
+For the deserialization, the post_load decorator is used.
+For the schemas, we are using the marshmallow library.
+The schemas are also used by the controller for documentation.
+"""
 from marshmallow import Schema, post_load
 from marshmallow.fields import Float, Integer, List, Nested, String
 
@@ -11,6 +21,8 @@ from .model import (
     QueueLengthEntry,
     Throughput,
     ThroughputEntry,
+    MemoryFootprint,
+    MemoryFootprintEntry,
 )
 
 
@@ -168,6 +180,41 @@ class QueueLengthSchema(Schema):
     def make_queue_length(self, data, **kwargs):
         """Return a queue length object."""
         return QueueLength(**data)
+
+
+class MemoryFootprintEntrySchema(Schema):
+
+    timestamp = Integer(
+        title="Queue length",
+        description="Timestamp in nanoseconds since epoch",
+        required=True,
+        example=1585762457000000000,
+    )
+    memory_footprint = Float(
+        title="Memory footprint",
+        description="Combined memory size of all tables in database in bytes",
+        required=True,
+        example=1234.0,
+    )
+
+    @post_load
+    def make_memory_footprint_entry(self, data, **kwargs):
+        return MemoryFootprintEntry(**data)
+
+
+class MemoryFootprintSchema(Schema):
+
+    id = String(
+        title="Database ID",
+        description="Used to identify a database.",
+        required=True,
+        example="hyrise-1",
+    )
+    memory_footprint = List(Nested(MemoryFootprintEntrySchema))
+
+    @post_load
+    def make_memory_footprint(self, data, **kwargs):
+        return MemoryFootprint(**data)
 
 
 class DetailedQueryInformationEntrySchema(Schema):

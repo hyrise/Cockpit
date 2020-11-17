@@ -52,6 +52,9 @@ export function useBackendMock(
     cy.route("GET", getRequestRoute("storage", "get")).as(
       getGetAlias("storage")
     );
+    cy.route("GET", getRequestRoute("memory_footprint", "get")).as(
+      getGetAlias("memory_footprint")
+    );
     cy.route("GET", getRequestRoute("throughput", "get")).as(
       getGetAlias("throughput")
     );
@@ -217,6 +220,11 @@ export function mockBackend(
       getRequestRoute("throughput", "get"),
       getGetAlias("throughput"),
       getMockedResponse("throughput")
+    );
+    mock(
+      getRequestRoute("memory_footprint", "get"),
+      getGetAlias("memory_footprint"),
+      getMockedResponse("memory_footprint")
     );
     mock(
       getRequestRoute("negative_throughput", "get"),

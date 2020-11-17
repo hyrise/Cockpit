@@ -205,9 +205,11 @@ function getLatencyData(data: any, primaryKey: string = ""): number[] {
   );
 }
 
-/** calculate memory footprint data */
+/** transform and convert memory footprint data from bytes to MB  */
 function getMemoryFootprint(data: any): number[] {
-  return [getDatabaseMemoryFootprint(data)];
+  return data.map(
+    (entry: any) => Math.round(entry["memory_footprint"] / 1_000) / 1_000
+  );
 }
 
 /** transform storage data for treemap structure consisting of parents, labels, sizes and tooltips */
@@ -235,7 +237,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
   function getEncodingData(rawData: any): string {
     const totalAmount = rawData.reduce(
       (accumulator: number, currentEncoding: any) =>
-        accumulator + currentEncoding.amount,
+        accumulator + currentEncoding.occurrences,
       0
     );
     return rawData.reduce(
@@ -260,7 +262,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
         return (
           encodingText +
           "<br> " +
-          formatPercentage(currentEncoding.amount, totalAmount) +
+          formatPercentage(currentEncoding.occurrences, totalAmount) +
           "%: " +
           currentEncoding.name +
           "<br> (" +

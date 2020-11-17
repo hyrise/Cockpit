@@ -1,4 +1,12 @@
-"""Controllers for metrics."""
+"""Controllers for metric namespace.
+
+The controller is responsible for coordinating Flask routes, services, and schemas.
+On top, the controller is also responsible to provide the documentation for swagger.
+To provide the documentation for swagger the controller uses the flask_accepts library
+in connection with schemas (also used to serialize and deserialize objects) from marshmallow.
+The controller uses also models (The model is where the entity itself is defined
+in the Python representation) for type safety. All the requests are delegated to the service.
+"""
 from typing import List
 
 from flask import request
@@ -12,6 +20,7 @@ from .model import (
     QueueLength,
     Throughput,
     TimeInterval,
+    MemoryFootprint,
 )
 from .schema import (
     DetailedQueryInformationSchema,
@@ -19,6 +28,7 @@ from .schema import (
     NegativeThroughputSchema,
     QueueLengthSchema,
     ThroughputSchema,
+    MemoryFootprintSchema,
 )
 from .service import MetricService
 
@@ -107,6 +117,25 @@ class QueueLengthController(Resource):
             precision=request.parsed_args["precision"],  # type: ignore
         )
         return MetricService.get_queue_length(time_interval)
+
+
+@api.route("/memory_footprint")
+class MemoryFootprintController(Resource):
+    @accepts(
+        dict(name="startts", type=int),  # noqa
+        dict(name="endts", type=int),  # noqa
+        dict(name="precision", type=int),  # noqa
+        api=api,
+    )
+    @responds(schema=MemoryFootprintSchema(many=True), api=api)
+    def get(self) -> List[MemoryFootprint]:
+        """Get memory footprint for the requested time interval."""
+        time_interval: TimeInterval = TimeInterval(
+            startts=request.parsed_args["startts"],  # type: ignore
+            endts=request.parsed_args["endts"],  # type: ignore
+            precision=request.parsed_args["precision"],  # type: ignore
+        )
+        return MetricService.get_memory_footprint(time_interval)
 
 
 @api.route("/detailed_query_information")

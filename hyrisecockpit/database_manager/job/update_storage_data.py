@@ -1,75 +1,80 @@
-"""This job updates the storage data."""
-
 from json import dumps
 from time import time_ns
 
-from pandas import DataFrame
+from typing import List, Tuple, Dict
 
 from hyrisecockpit.database_manager.cursor import StorageConnectionFactory
-from hyrisecockpit.database_manager.job.interfaces import StorageDataType
-from hyrisecockpit.database_manager.job.sql_to_data_frame import sql_to_data_frame
+from psycopg2 import DatabaseError, InterfaceError
 
 
-def _create_storage_data_dataframe(meta_segments: DataFrame) -> DataFrame:
-    meta_segments.set_index(
-        ["table_name", "column_name", "chunk_id"],
-        inplace=True,
-        verify_integrity=True,
+def _edit_encoding_entry(
+    encodings: List, encoding_type, occurrences, vector_compression_type
+) -> None:
+    """
+    This method checks if an encoding entry for this encoding type exists.
+    If so it edits the entry by updating the occurrences and if needed adding
+    a new vector_compression_type to the compression list.
+    """
+    for encoding in encodings:
+        if encoding_type == encoding["name"]:
+            encoding["occurrences"] += occurrences
+            # If the encoding exists, we need to check if the vector compression type
+            # is in the encoding entry. An encoding entry can have multiple
+            # vector compression types.
+            if vector_compression_type not in encoding["compression"]:
+                encoding["compression"].append(vector_compression_type)
+            return
+    encodings.append(
+        {
+            "name": encoding_type,
+            "occurrences": occurrences,
+            "compression": [vector_compression_type],
+        }
     )
-    size: DataFrame = DataFrame(
-        meta_segments["estimated_size_in_bytes"]
-        .groupby(level=["table_name", "column_name"])
-        .sum()
-    )
 
-    vector_compression_type = DataFrame(
-        meta_segments["vector_compression_type"]
-        .groupby(level=["table_name", "column_name"])
-        .apply(set)
-        .apply(list)
-    )
 
-    encoding: DataFrame = DataFrame(
-        meta_segments["encoding_type"]
-        .groupby(level=["table_name", "column_name"])
-        .apply(list)
-    )
+def _format_results(results: List[Tuple]) -> Dict:
+    formatted_results: Dict = {}
 
-    combined_encoding = encoding.join(vector_compression_type)
+    for row in results:
+        (
+            table_name,
+            column_name,
+            column_data_type,
+            encoding_type,
+            vector_compression_type,
+            occurrences,
+            size_in_bytes,
+        ) = row
 
-    for _, row in combined_encoding.iterrows():
-        row["encoding_type"] = [
-            {
-                "name": encoding,
-                "amount": row["encoding_type"].count(encoding),
-                "compression": row["vector_compression_type"],
+        if table_name not in formatted_results:
+            formatted_results[table_name] = {"size": 0, "number_columns": 0, "data": {}}
+
+        formatted_results[table_name]["size"] += size_in_bytes
+
+        # The data entry inside the tables_name entries contains all information
+        # for the columns.
+        if column_name not in formatted_results[table_name]["data"]:
+            formatted_results[table_name]["number_columns"] += 1
+            # The data entry inside the column entries contains all information
+            # for the column. A column can have multiple encodings. Because every
+            # chunk can have a different encoding.
+            formatted_results[table_name]["data"][column_name] = {
+                "size": 0,
+                "data_type": column_data_type,
+                "encoding": [],
             }
-            for encoding in set(row["encoding_type"])
-        ]
 
-    datatype: DataFrame = meta_segments.reset_index().set_index(
-        ["table_name", "column_name"]
-    )[["column_data_type"]]
+        formatted_results[table_name]["data"][column_name]["size"] += size_in_bytes
 
-    result: DataFrame = size.join(combined_encoding).join(datatype)
-    return result
+        _edit_encoding_entry(
+            formatted_results[table_name]["data"][column_name]["encoding"],
+            encoding_type,
+            occurrences,
+            vector_compression_type,
+        )
 
-
-def _create_storage_data_dictionary(result: DataFrame) -> StorageDataType:
-    """Sort storage data to dictionary."""
-    output: StorageDataType = {}
-    grouped = result.reset_index().groupby("table_name")
-    for column in grouped.groups:
-        output[column] = {"size": 0, "number_columns": 0, "data": {}}
-        for _, row in grouped.get_group(column).iterrows():
-            output[column]["number_columns"] += 1
-            output[column]["size"] += row["estimated_size_in_bytes"]
-            output[column]["data"][row["column_name"]] = {
-                "size": row["estimated_size_in_bytes"],
-                "data_type": row["column_data_type"],
-                "encoding": row["encoding_type"],
-            }
-    return output
+    return formatted_results
 
 
 def update_storage_data(
@@ -77,17 +82,46 @@ def update_storage_data(
     connection_factory,
     storage_connection_factory: StorageConnectionFactory,
 ) -> None:
-    """Get storage data from the database."""
+    """Get the storage information from hyrise.
+
+    This function requests the storage information via SQL.
+    To keep the returned result small we use the group by statement.
+    The occurrences aggregation returns how often the tuple exists and so
+    how often the encoding_type, vector_compression_type combination (for a chunk) for
+    the column_name exists.
+    """
+
+    sql = """SELECT
+                table_name,
+                column_name,
+                column_data_type,
+                encoding_type,
+                vector_compression_type,
+                count(*) AS occurrences,
+                sum(estimated_size_in_bytes) AS size_in_bytes
+            FROM
+                meta_segments
+            GROUP BY
+                table_name,
+                column_name,
+                column_data_type,
+                encoding_type,
+                column_data_type,
+                vector_compression_type;"""
+
+    try:
+        with connection_factory.create_cursor() as cur:
+            cur.execute(sql, None)
+            results = cur.fetchall()
+    except (DatabaseError, InterfaceError):
+        results = []
+
     time_stamp = time_ns()
-    meta_segments = sql_to_data_frame(
-        database_blocked, connection_factory, "SELECT * FROM meta_segments;", None
-    )
+    formatted_results = _format_results(results)
 
     with storage_connection_factory.create_cursor() as log:
-        output = {}
-        if not meta_segments.empty:
-            result = _create_storage_data_dataframe(meta_segments)
-            output = _create_storage_data_dictionary(result)
         log.log_meta_information(
-            "storage", {"storage_meta_information": dumps(output)}, time_stamp
+            "storage",
+            {"storage_meta_information": dumps(formatted_results)},
+            time_stamp,
         )

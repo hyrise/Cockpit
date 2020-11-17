@@ -19,10 +19,13 @@ from hyrisecockpit.database_manager.job.update_workload_operator_information imp
 from hyrisecockpit.database_manager.job.update_workload_statement_information import (
     update_workload_statement_information,
 )
+from hyrisecockpit.database_manager.job.update_memory_footprint import (
+    update_memory_footprint,
+)
 
 
 class TestContinuousJobHandler:
-    """This class tests the continuous job handler."""
+    """Tests the continuous job handler."""
 
     @patch("hyrisecockpit.database_manager.continuous_job_handler.BackgroundScheduler")
     def test_inintializes_continuous_job_handler(
@@ -149,6 +152,15 @@ class TestContinuousJobHandler:
                 ),
             ),
             (
+                update_memory_footprint,
+                "interval",
+                1,
+                (
+                    continuous_job_handler._connection_factory,
+                    continuous_job_handler._storage_connection_factory,
+                ),
+            ),
+            (
                 ping_hyrise,
                 "interval",
                 0.5,
@@ -185,6 +197,7 @@ class TestContinuousJobHandler:
         continuous_job_handler._update_chunks_data_job = MagicMock()
         continuous_job_handler._update_storage_data_job = MagicMock()
         continuous_job_handler._update_plugin_log_job = MagicMock()
+        continuous_job_handler._update_memory_footprint_job = MagicMock()
         continuous_job_handler._ping_hyrise_job = MagicMock()
         continuous_job_handler._update_queue_length_job = MagicMock()
         continuous_job_handler._update_workload_operator_information_job = MagicMock()
@@ -199,4 +212,5 @@ class TestContinuousJobHandler:
         continuous_job_handler._ping_hyrise_job.remove.assert_called_once()
         continuous_job_handler._update_queue_length_job.remove.assert_called_once()
         continuous_job_handler._update_workload_operator_information_job.remove.assert_called_once()
+        continuous_job_handler._update_memory_footprint_job.remove.assert_called_once()
         mock_scheduler.shutdown.assert_called_once()

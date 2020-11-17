@@ -2,56 +2,74 @@
 from json import dumps
 from unittest.mock import patch
 
-from pandas import DataFrame
+from typing import Dict, List, Tuple
 
 from hyrisecockpit.cross_platform_support.testing_support import MagicMock
-from hyrisecockpit.database_manager.job.interfaces import StorageDataType
-from hyrisecockpit.database_manager.job.update_storage_data import update_storage_data
-
-fake_database_blocked = (
-    "Was muss beim Installieren von Windows gedrückt werden? Beide Daumen"
+from hyrisecockpit.database_manager.job.update_storage_data import (
+    update_storage_data,
+    _format_results,
+    _edit_encoding_entry,
 )
-fake_connection_factory = "Wie bezahlen die Dinosaurier? Mit Tyrannosaurus Schecks!"
 
 
 class TestUpdateStorageDataJob:
     """Test update storage data job."""
 
-    @patch("hyrisecockpit.database_manager.job.update_storage_data.sql_to_data_frame")
-    @patch("hyrisecockpit.database_manager.job.update_storage_data.time_ns", lambda: 42)
-    def test_successfully_logs_storage_data(
+    def test_formats_results(
         self,
-        mock_sql_to_data_frame: MagicMock,
     ) -> None:
-        """Test successfully logs storage data."""
-        mock_cursor = MagicMock()
-        mock_storage_connection_factory = MagicMock()
-        mock_storage_connection_factory.create_cursor.return_value.__enter__.return_value = (
-            mock_cursor
-        )
 
-        fake_storage_df: DataFrame = DataFrame(
-            {
-                "table_name": ["customer", "customer", "supplier"],
-                "chunk_id": [0, 0, 0],
-                "column_id": [0, 1, 2],
-                "column_name": ["c_custkey", "c_nationkey", "s_address"],
-                "column_data_type": ["int", "string", "string"],
-                "encoding_type": ["Dictionary", "Dictionary", "Dictionary"],
-                "vector_compression_type": [
-                    "FixedSize2ByteAligned",
-                    "FixedSize2ByteAligned",
-                    "FixedSize2ByteAligned",
-                ],
-                "estimated_size_in_bytes": [9000, 1000, 400],
-            }
-        )
+        sql_results: List[Tuple] = [
+            (
+                "customer",
+                "c_custkey",
+                "int",
+                "Dictionary",
+                "FixedSize2ByteAligned",
+                10,
+                9000,
+            ),
+            (
+                "customer",
+                "c_nationkey",
+                "string",
+                "FixedStringDictionary",
+                "SimdBp128",
+                5,
+                1000,
+            ),
+            (
+                "customer",
+                "c_nationkey",
+                "string",
+                "Dictionary",
+                "SimdBp128",
+                25,
+                1000,
+            ),
+            (
+                "supplier",
+                "s_address",
+                "string",
+                "Dictionary",
+                "FixedSize2ByteAligned",
+                10,
+                400,
+            ),
+            (
+                "supplier",
+                "s_address",
+                "string",
+                "Dictionary",
+                "SimdBp128",
+                9,
+                400,
+            ),
+        ]
 
-        mock_sql_to_data_frame.return_value = fake_storage_df
-
-        expected_storage_dict: StorageDataType = {
+        expected: Dict = {
             "customer": {
-                "size": 10000,
+                "size": 11000,
                 "number_columns": 2,
                 "data": {
                     "c_custkey": {
@@ -60,24 +78,54 @@ class TestUpdateStorageDataJob:
                         "encoding": [
                             {
                                 "name": "Dictionary",
-                                "amount": 1,
+                                "occurrences": 10,
                                 "compression": ["FixedSize2ByteAligned"],
                             }
                         ],
                     },
                     "c_nationkey": {
-                        "size": 1000,
+                        "size": 2000,
                         "data_type": "string",
                         "encoding": [
                             {
+                                "name": "FixedStringDictionary",
+                                "occurrences": 5,
+                                "compression": ["SimdBp128"],
+                            },
+                            {
                                 "name": "Dictionary",
-                                "amount": 1,
-                                "compression": ["FixedSize2ByteAligned"],
-                            }
+                                "occurrences": 25,
+                                "compression": ["SimdBp128"],
+                            },
                         ],
                     },
                 },
             },
+            "supplier": {
+                "size": 800,
+                "number_columns": 1,
+                "data": {
+                    "s_address": {
+                        "size": 800,
+                        "data_type": "string",
+                        "encoding": [
+                            {
+                                "name": "Dictionary",
+                                "occurrences": 19,
+                                "compression": ["FixedSize2ByteAligned", "SimdBp128"],
+                            }
+                        ],
+                    }
+                },
+            },
+        }
+
+        results: Dict = _format_results(sql_results)
+
+        assert results == expected
+
+    def test_adds_encoding_entry_to_formatted_results_if_encoding_exists(self) -> None:
+        formatted_results: Dict = {
             "supplier": {
                 "size": 400,
                 "number_columns": 1,
@@ -88,7 +136,7 @@ class TestUpdateStorageDataJob:
                         "encoding": [
                             {
                                 "name": "Dictionary",
-                                "amount": 1,
+                                "occurrences": 1,
                                 "compression": ["FixedSize2ByteAligned"],
                             }
                         ],
@@ -97,38 +145,143 @@ class TestUpdateStorageDataJob:
             },
         }
 
-        update_storage_data(
-            fake_database_blocked,
-            fake_connection_factory,
-            mock_storage_connection_factory,
+        encoding_type = "Dictionary"
+        occurrences = 10
+        vector_compression_type = "FixedSize2ByteAligned"
+
+        expected_occurrences = 11
+        expected: Dict = {
+            "supplier": {
+                "size": 400,
+                "number_columns": 1,
+                "data": {
+                    "s_address": {
+                        "size": 400,
+                        "data_type": "string",
+                        "encoding": [
+                            {
+                                "name": encoding_type,
+                                "occurrences": expected_occurrences,
+                                "compression": [vector_compression_type],
+                            }
+                        ],
+                    }
+                },
+            },
+        }
+        table_name = "supplier"
+        column_name = "s_address"
+        _edit_encoding_entry(
+            formatted_results[table_name]["data"][column_name]["encoding"],
+            encoding_type,
+            occurrences,
+            vector_compression_type,
         )
 
-        mock_cursor.log_meta_information.assert_called_with(
-            "storage", {"storage_meta_information": dumps(expected_storage_dict)}, 42
+        assert expected == formatted_results
+
+    def test_adds_encoding_entry_to_formatted_results(self) -> None:
+        formatted_results: Dict = {
+            "supplier": {
+                "size": 400,
+                "number_columns": 1,
+                "data": {
+                    "s_address": {
+                        "size": 400,
+                        "data_type": "string",
+                        "encoding": [
+                            {
+                                "name": "Dictionary",
+                                "occurrences": 1,
+                                "compression": ["FixedSize2ByteAligned"],
+                            }
+                        ],
+                    }
+                },
+            },
+        }
+
+        encoding_type = "LZ4"
+        occurrences = 1
+        vector_compression_type = "FixedSize2ByteAligned"
+
+        expected_new_encoding: Dict = {
+            "name": encoding_type,
+            "occurrences": occurrences,
+            "compression": [vector_compression_type],
+        }
+        expected: Dict = {
+            "supplier": {
+                "size": 400,
+                "number_columns": 1,
+                "data": {
+                    "s_address": {
+                        "size": 400,
+                        "data_type": "string",
+                        "encoding": [
+                            {
+                                "name": "Dictionary",
+                                "occurrences": 1,
+                                "compression": ["FixedSize2ByteAligned"],
+                            },
+                            expected_new_encoding,
+                        ],
+                    }
+                },
+            },
+        }
+        table_name = "supplier"
+        column_name = "s_address"
+        _edit_encoding_entry(
+            formatted_results[table_name]["data"][column_name]["encoding"],
+            encoding_type,
+            occurrences,
+            vector_compression_type,
         )
 
-    @patch("hyrisecockpit.database_manager.job.update_storage_data.sql_to_data_frame")
+        assert expected == formatted_results
+
+    @patch("hyrisecockpit.database_manager.job.update_storage_data._format_results")
     @patch("hyrisecockpit.database_manager.job.update_storage_data.time_ns", lambda: 42)
-    def test_logs_empty_storage_data(
+    def test_logs_storage_data(
         self,
-        mock_sql_to_data_frame: MagicMock,
+        mock_format_results: MagicMock,
     ) -> None:
-        """Test doesn't log storage data when it's empty."""
         mock_cursor = MagicMock()
         mock_storage_connection_factory = MagicMock()
         mock_storage_connection_factory.create_cursor.return_value.__enter__.return_value = (
             mock_cursor
         )
 
-        fake_empty_storage_df: DataFrame = DataFrame()
-        mock_sql_to_data_frame.return_value = fake_empty_storage_df
+        storage_results: Dict = {
+            "supplier": {
+                "size": 400,
+                "number_columns": 1,
+                "data": {
+                    "s_address": {
+                        "size": 400,
+                        "data_type": "string",
+                        "encoding": [
+                            {
+                                "name": "Dictionary",
+                                "occurrences": 1,
+                                "compression": ["FixedSize2ByteAligned"],
+                            }
+                        ],
+                    }
+                },
+            },
+        }
+        mock_format_results.return_value = storage_results
 
         update_storage_data(
-            fake_database_blocked,
-            fake_connection_factory,
+            MagicMock(),
+            MagicMock(),
             mock_storage_connection_factory,
         )
 
         mock_cursor.log_meta_information.assert_called_with(
-            "storage", {"storage_meta_information": dumps({})}, 42
+            "storage",
+            {"storage_meta_information": dumps(storage_results)},
+            42,
         )

@@ -1,5 +1,3 @@
-"""This module handles the continuous jobs."""
-
 from multiprocessing import Value
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -18,6 +16,7 @@ from .job.update_workload_operator_information import (
 from .job.update_workload_statement_information import (
     update_workload_statement_information,
 )
+from .job.update_memory_footprint import update_memory_footprint
 from .worker_pool import WorkerPool
 
 
@@ -158,6 +157,15 @@ class ContinuousJobHandler:
                 self._storage_connection_factory,
             ),
         )
+        self._update_memory_footprint_job = self._scheduler.add_job(
+            func=update_memory_footprint,
+            trigger="interval",
+            seconds=1,
+            args=(
+                self._connection_factory,
+                self._storage_connection_factory,
+            ),
+        )
 
     def start(self) -> None:
         """Start background scheduler."""
@@ -176,5 +184,6 @@ class ContinuousJobHandler:
         self._update_plugin_log_job.remove()
         self._update_queue_length_job.remove()
         self._update_workload_operator_information_job.remove()
+        self._update_memory_footprint_job.remove()
         self._ping_hyrise_job.remove()
         self._scheduler.shutdown()

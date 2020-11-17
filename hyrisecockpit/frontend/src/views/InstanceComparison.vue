@@ -15,9 +15,10 @@
       />
       <metrics-comparison-table
         v-if="selectedDatabases.length"
+        class="list"
         :selected-databases="selectedDatabases"
+        :show-details="false"
         :selected-metrics="selectedMetrics"
-        :show-details="true"
       />
     </div>
   </div>

@@ -10,6 +10,8 @@ from hyrisecockpit.api.app.metric.model import (
     Throughput,
     ThroughputEntry,
     TimeInterval,
+    MemoryFootprintEntry,
+    MemoryFootprint,
 )
 
 
@@ -73,3 +75,14 @@ class TestMetricModel:
         """A  queue length  model can be created."""
         queue_length_entry = QueueLengthEntry(timestamp=999999, queue_length=0.12345)
         assert QueueLength(id="hi", queue_length=[queue_length_entry])
+
+    def test_creates_memory_footprint_entry_model(self) -> None:
+        """A queue length entry model can be created."""
+        assert MemoryFootprintEntry(timestamp=999999, memory_footprint=12345)
+
+    def test_creates_memory_footprint_model(self) -> None:
+        """A  queue length  model can be created."""
+        memory_footprint_entry = MemoryFootprintEntry(
+            timestamp=999999, memory_footprint=12345
+        )
+        assert MemoryFootprint(id="hi", memory_footprint=[memory_footprint_entry])
