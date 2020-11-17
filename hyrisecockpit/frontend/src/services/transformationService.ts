@@ -237,7 +237,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
   function getEncodingData(rawData: any): string {
     const totalAmount = rawData.reduce(
       (accumulator: number, currentEncoding: any) =>
-        accumulator + currentEncoding.amount,
+        accumulator + currentEncoding.occurrences,
       0
     );
     return rawData.reduce(
@@ -262,7 +262,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
         return (
           encodingText +
           "<br> " +
-          formatPercentage(currentEncoding.amount, totalAmount) +
+          formatPercentage(currentEncoding.occurrences, totalAmount) +
           "%: " +
           currentEncoding.name +
           "<br> (" +

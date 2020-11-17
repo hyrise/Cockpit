@@ -78,7 +78,7 @@ class TestUpdateStorageDataJob:
                         "encoding": [
                             {
                                 "name": "Dictionary",
-                                "amount": 10,
+                                "occurrences": 10,
                                 "compression": ["FixedSize2ByteAligned"],
                             }
                         ],
@@ -89,12 +89,12 @@ class TestUpdateStorageDataJob:
                         "encoding": [
                             {
                                 "name": "FixedStringDictionary",
-                                "amount": 5,
+                                "occurrences": 5,
                                 "compression": ["SimdBp128"],
                             },
                             {
                                 "name": "Dictionary",
-                                "amount": 25,
+                                "occurrences": 25,
                                 "compression": ["SimdBp128"],
                             },
                         ],
@@ -111,7 +111,7 @@ class TestUpdateStorageDataJob:
                         "encoding": [
                             {
                                 "name": "Dictionary",
-                                "amount": 19,
+                                "occurrences": 19,
                                 "compression": ["FixedSize2ByteAligned", "SimdBp128"],
                             }
                         ],
@@ -136,7 +136,7 @@ class TestUpdateStorageDataJob:
                         "encoding": [
                             {
                                 "name": "Dictionary",
-                                "amount": 1,
+                                "occurrences": 1,
                                 "compression": ["FixedSize2ByteAligned"],
                             }
                         ],
@@ -146,10 +146,10 @@ class TestUpdateStorageDataJob:
         }
 
         encoding_type = "Dictionary"
-        amount = 10
+        occurrences = 10
         vector_compression_type = "FixedSize2ByteAligned"
 
-        expected_amount = 11
+        expected_occurrences = 11
         expected: Dict = {
             "supplier": {
                 "size": 400,
@@ -161,7 +161,7 @@ class TestUpdateStorageDataJob:
                         "encoding": [
                             {
                                 "name": encoding_type,
-                                "amount": expected_amount,
+                                "occurrences": expected_occurrences,
                                 "compression": [vector_compression_type],
                             }
                         ],
@@ -174,7 +174,7 @@ class TestUpdateStorageDataJob:
         _edit_encoding_entry(
             formatted_results[table_name]["data"][column_name]["encoding"],
             encoding_type,
-            amount,
+            occurrences,
             vector_compression_type,
         )
 
@@ -192,7 +192,7 @@ class TestUpdateStorageDataJob:
                         "encoding": [
                             {
                                 "name": "Dictionary",
-                                "amount": 1,
+                                "occurrences": 1,
                                 "compression": ["FixedSize2ByteAligned"],
                             }
                         ],
@@ -202,12 +202,12 @@ class TestUpdateStorageDataJob:
         }
 
         encoding_type = "LZ4"
-        amount = 1
+        occurrences = 1
         vector_compression_type = "FixedSize2ByteAligned"
 
         expected_new_encoding: Dict = {
             "name": encoding_type,
-            "amount": amount,
+            "occurrences": occurrences,
             "compression": [vector_compression_type],
         }
         expected: Dict = {
@@ -221,7 +221,7 @@ class TestUpdateStorageDataJob:
                         "encoding": [
                             {
                                 "name": "Dictionary",
-                                "amount": 1,
+                                "occurrences": 1,
                                 "compression": ["FixedSize2ByteAligned"],
                             },
                             expected_new_encoding,
@@ -235,7 +235,7 @@ class TestUpdateStorageDataJob:
         _edit_encoding_entry(
             formatted_results[table_name]["data"][column_name]["encoding"],
             encoding_type,
-            amount,
+            occurrences,
             vector_compression_type,
         )
 
@@ -264,7 +264,7 @@ class TestUpdateStorageDataJob:
                         "encoding": [
                             {
                                 "name": "Dictionary",
-                                "amount": 1,
+                                "occurrences": 1,
                                 "compression": ["FixedSize2ByteAligned"],
                             }
                         ],

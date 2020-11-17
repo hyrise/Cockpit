@@ -17,7 +17,7 @@ def _edit_encoding_entry(
     """
     for encoding in encodings:
         if encoding_type == encoding["name"]:
-            encoding["amount"] += occurrences
+            encoding["occurrences"] += occurrences
             # If the encoding exists, we need to check if the vector compression type
             # is in the encoding entry. An encoding entry can have multiple
             # vector compression types.
@@ -27,7 +27,7 @@ def _edit_encoding_entry(
     encodings.append(
         {
             "name": encoding_type,
-            "amount": occurrences,
+            "occurrences": occurrences,
             "compression": [vector_compression_type],
         }
     )
