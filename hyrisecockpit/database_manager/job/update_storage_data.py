@@ -8,18 +8,18 @@ from psycopg2 import DatabaseError, InterfaceError
 
 
 def _edit_encoding_entry(
-    encodings: List, encoding_type, amount, vector_compression_type
+    encodings: List, encoding_type, occurrences, vector_compression_type
 ) -> None:
     """
     This method checks if an encoding entry for this encoding type exists.
-    If so it edits the entry by updating the amount and if needed adding
+    If so it edits the entry by updating the occurrences and if needed adding
     a new vector_compression_type to the compression list.
     """
     for encoding in encodings:
         if encoding_type == encoding["name"]:
-            encoding["amount"] += amount
-            # If the encoding exists we need to check if the vector compression type
-            # is in the encoding entry. A encoding entry can have multiple
+            encoding["amount"] += occurrences
+            # If the encoding exists, we need to check if the vector compression type
+            # is in the encoding entry. An encoding entry can have multiple
             # vector compression types.
             if vector_compression_type not in encoding["compression"]:
                 encoding["compression"].append(vector_compression_type)
@@ -27,7 +27,7 @@ def _edit_encoding_entry(
     encodings.append(
         {
             "name": encoding_type,
-            "amount": amount,
+            "amount": occurrences,
             "compression": [vector_compression_type],
         }
     )
@@ -43,7 +43,7 @@ def _format_results(results: List[Tuple]) -> Dict:
             column_data_type,
             encoding_type,
             vector_compression_type,
-            amount,
+            occurrences,
             size_in_bytes,
         ) = row
 
@@ -70,7 +70,7 @@ def _format_results(results: List[Tuple]) -> Dict:
         _edit_encoding_entry(
             formatted_results[table_name]["data"][column_name]["encoding"],
             encoding_type,
-            amount,
+            occurrences,
             vector_compression_type,
         )
 
@@ -86,7 +86,7 @@ def update_storage_data(
 
     This function requests the storage information via SQL.
     To keep the returned result small we use the group by statement.
-    The amount aggregation returns how often the tuple exists and so
+    The occurrences aggregation returns how often the tuple exists and so
     how often the encoding_type, vector_compression_type combination (for a chunk) for
     the column_name exists.
     """
@@ -97,7 +97,7 @@ def update_storage_data(
                 column_data_type,
                 encoding_type,
                 vector_compression_type,
-                count(*) AS amount,
+                count(*) AS occurrences,
                 sum(estimated_size_in_bytes) AS size_in_bytes
             FROM
                 meta_segments
