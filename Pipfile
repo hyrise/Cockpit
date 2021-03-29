@@ -37,6 +37,7 @@ flask-restx = "*"
 werkzeug = "==0.16"
 flask-accepts = "*"
 marshmallow = "*"
+tzlocal = "~=2.0"
 
 [requires]
 python_version = "3.8"
