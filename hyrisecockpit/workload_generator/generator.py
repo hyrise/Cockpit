@@ -65,7 +65,7 @@ class WorkloadGenerator(object):
         return None
 
     def _init_server(self) -> None:
-        self._context = Context(io_threads=1)
+        self._context = Context(io_threads=1)  # type: ignore
         self._pub_socket = self._context.socket(PUB)
         self._pub_socket.bind(
             "tcp://{:s}:{:s}".format(self._workload_listening, self._workload_pub_port)
