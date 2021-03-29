@@ -28,7 +28,7 @@ class Server:
         self._init_server(io_threads)
 
     def _init_server(self, io_threads: int) -> None:
-        self._context = Context(io_threads=io_threads)
+        self._context = Context(io_threads=io_threads)  # type: ignore
         self._socket = self._context.socket(REP)
         self._socket.bind("tcp://{:s}:{:s}".format(self._host, self._port))
 

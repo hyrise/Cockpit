@@ -29,20 +29,20 @@ class BaseSocket:
 
     def open(self) -> None:
         """Open socket connection."""
-        context: Context = Context(io_threads=1)
-        socket: Socket = context.socket(REQ)
+        context = Context(io_threads=1)  # type: ignore
+        socket = context.socket(REQ)
         socket.connect(self._url)
         self._socket: Socket = socket
 
     def close(self) -> None:
         """Close socket connection."""
         self._socket.disconnect(self._url)
-        self._socket.close()
+        self._socket.close()  # type: ignore
 
     def send_req(self, message: Request) -> Response:
         """Send message to socket."""
-        self._socket.send_json(message)
-        response: Response = self._socket.recv_json()
+        self._socket.send_json(message)  # type: ignore
+        response: Response = self._socket.recv_json()  # type: ignore
         return response
 
 

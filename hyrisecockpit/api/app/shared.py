@@ -21,7 +21,7 @@ from hyrisecockpit.settings import (
 )
 from influxdb import InfluxDBClient
 
-context = Context(io_threads=1)
+context = Context(io_threads=1)  # type: ignore
 multiprocess_lock = RLock()
 active_databases: List[str] = []
 
@@ -40,8 +40,8 @@ storage_connection = InfluxDBClient(
 def _send_message(socket: Socket, message: Request) -> Response:
     """Send an IPC message with data to a database interface, return the repsonse."""
     with multiprocess_lock:
-        socket.send_json(message)
-        response: Response = socket.recv_json()
+        socket.send_json(message)  # type: ignore
+        response: Response = socket.recv_json()  # type: ignore
     validate(instance=response, schema=response_schema)
     return response
 
