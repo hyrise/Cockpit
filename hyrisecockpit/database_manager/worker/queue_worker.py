@@ -21,7 +21,7 @@ def fill_queue(
     worker_wait_for_exit_event: EventType,
 ) -> None:
     """Fill the queue."""
-    context = Context()
+    context = Context()  # type: ignore
     sub_socket = context.socket(SUB)
     sub_socket.connect(workload_publisher_url)
     sub_socket.setsockopt_string(SUBSCRIBE, "")
