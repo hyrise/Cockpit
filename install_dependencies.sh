@@ -56,7 +56,7 @@ deactivate
 
 # Reset the frontend absolute path to a relative path. The absolute path in Cockpit/venv/lib/python3.8/site-packages/hyrisecockpit/run.py
 # where the module is installed stays untouched. 
-sed -i "s:$PWD/hyrisecockpit/frontend:hyrisecockpit/frontend:g" hyrisecockpit/run.py 
+sed -i ""  "s:$PWD/hyrisecockpit/frontend:hyrisecockpit/frontend:g" hyrisecockpit/run.py 
 
 echo "Install Frontend"
 cd hyrisecockpit/frontend
