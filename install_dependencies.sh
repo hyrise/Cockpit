@@ -39,11 +39,10 @@ fi
 # in Cockpit/venv/lib/python3.8/site-packages/hyrisecockpit and the frontend lies in Cockpit/hyrisecockpit/frontend. 
 # That's the reason why we need to adjust the frontend relative path variable for the process manager in an absolute path variable.
 if [[ "$unamestr" == 'Darwin' ]]; then
-    sed -i '' 's:hyrisecockpit/frontend:$PWD/hyrisecockpit/frontend:g' hyrisecockpit/run.py
-    done
+    sed -i "" "s:hyrisecockpit/frontend:$PWD/hyrisecockpit/frontend:g" hyrisecockpit/run.py
 elif [[ "$unamestr" == 'Linux' ]]; then
     sed -i "s:hyrisecockpit/frontend:$PWD/hyrisecockpit/frontend:g" hyrisecockpit/run.py
-    done
+fi
 
 echo "Create virtual environment"
 python3 -m venv venv
