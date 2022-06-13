@@ -60,5 +60,5 @@ sed -i "s:$PWD/hyrisecockpit/frontend:hyrisecockpit/frontend:g" hyrisecockpit/ru
 
 echo "Install Frontend"
 cd hyrisecockpit/frontend
-npm install --no-optional && npm audit fix
+npm install --no-optional --force
 npm run build:min
