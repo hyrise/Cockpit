@@ -19,7 +19,6 @@ jobs:
       run: |
         ./install_dependencies_development.sh
 
-jobs:
   backend-install-dependencies-mac:
     name: Install dependencies mac
     runs-on: macos-12 
