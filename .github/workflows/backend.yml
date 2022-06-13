@@ -1,6 +1,10 @@
 name: Backend
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
 
 jobs:
   backend-install-dependencies-ubunut:
