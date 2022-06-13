@@ -7,48 +7,6 @@ on:
   pull_request:
 
 jobs:
-  backend-install-dependencies-ubunut:
-    name: Install dependencies ubuntu
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Run dpendencie script
-      run: |
-        ./install_dependencies.sh
-
-  backend-install-development-dependencies-ubunut:
-    name: Install development dependencies ubuntu
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Run dpendencie script
-      run: |
-        ./install_dependencies_development.sh
-
-  backend-install-dependencies-mac:
-    name: Install dependencies mac
-    runs-on: macos-latest 
-    steps:
-    - uses: actions/checkout@v1
-    - name: Install brew
-      run: |
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    - name: Run dpendencie script
-      run: |
-        ./install_dependencies.sh
-
-  backend-install-development-dependencies-mac:
-    name: Install development dependencies mac
-    runs-on: macos-latest  
-    steps:
-    - uses: actions/checkout@v1
-    - name: Install brew
-      run: |
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    - name: Run dpendencie development script
-      run: |
-        ./install_dependencies_development.sh
-
   backend-test-and-lint:
     name: Backend Test and Lint
     runs-on: ubuntu-latest
