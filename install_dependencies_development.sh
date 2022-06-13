@@ -45,4 +45,4 @@ python3 -m pip install pipenv
 pipenv install --python 3.8
 pipenv sync --dev
 pipenv run pre-commit install
-cd hyrisecockpit/frontend && npm install && npm audit fix
+cd hyrisecockpit/frontend && npm install --force
