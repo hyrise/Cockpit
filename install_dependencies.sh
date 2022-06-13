@@ -1,4 +1,8 @@
 #!/bin/bash
+# We want to cause the shell to exit immediately if a simple command exits with a nonzero exit value
+# and print the tracing information to stderr.
+set -e
+set -x
 
 unamestr=$(uname)
 if [[ "$unamestr" == 'Darwin' ]]; then
@@ -34,7 +38,11 @@ fi
 # The frontend is not part of the hyrisecockpit python module. So the process manager can't use a relative path hyrisecockpit/frontend because it runs 
 # in Cockpit/venv/lib/python3.8/site-packages/hyrisecockpit and the frontend lies in Cockpit/hyrisecockpit/frontend. 
 # That's the reason why we need to adjust the frontend relative path variable for the process manager in an absolute path variable.
-sed -i "s:hyrisecockpit/frontend:$PWD/hyrisecockpit/frontend:g" hyrisecockpit/run.py 
+if [[ "$unamestr" == 'Darwin' ]]; then
+    sed -i ""  "s:hyrisecockpit/frontend:$PWD/hyrisecockpit/frontend:g" hyrisecockpit/run.py
+elif [[ "$unamestr" == 'Linux' ]]; then
+    sed -i "s:hyrisecockpit/frontend:$PWD/hyrisecockpit/frontend:g" hyrisecockpit/run.py
+fi
 
 echo "Create virtual environment"
 python3 -m venv venv
@@ -42,19 +50,23 @@ python3 -m venv venv
 
 echo "Install packages"
 # We use pip to install the cockpit. Pip will use the setup.py for it. Pip also require wheel for the installation process. 
-pip3.8 install wheel
-pip3.8 install -r requirements.txt
+pip3 install wheel
+pip3 install -r requirements.txt
 
 echo "Install Modules"
-pip3.8 install .
+pip3 install .
 
 deactivate
 
 # Reset the frontend absolute path to a relative path. The absolute path in Cockpit/venv/lib/python3.8/site-packages/hyrisecockpit/run.py
-# where the module is installed stays untouched. 
-sed -i "s:$PWD/hyrisecockpit/frontend:hyrisecockpit/frontend:g" hyrisecockpit/run.py 
+# where the module is installed stays untouched.
+if [[ "$unamestr" == 'Darwin' ]]; then
+    sed -i ""  "s:$PWD/hyrisecockpit/frontend:hyrisecockpit/frontend:g" hyrisecockpit/run.py
+elif [[ "$unamestr" == 'Linux' ]]; then
+    sed -i  "s:$PWD/hyrisecockpit/frontend:hyrisecockpit/frontend:g" hyrisecockpit/run.py
+fi
 
 echo "Install Frontend"
 cd hyrisecockpit/frontend
-npm install --no-optional && npm audit fix
+npm install --no-optional --force
 npm run build:min

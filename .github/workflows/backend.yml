@@ -1,9 +1,14 @@
-name: Backend Lint and Test
+name: Backend
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
 
 jobs:
-  build:
+  backend-test-and-lint:
+    name: Backend Test and Lint
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -13,8 +18,12 @@ jobs:
         python-version: 3.8
     - name: Install libpq PostgreSQL client
       run: sudo apt-get -yqq install libpq-dev
+    - name: Install pip
+      run: python3 -m pip install --upgrade pip
     - name: Install pipenv
-      uses: dschep/install-pipenv-action@v1
+      run: python3 -m pip install pipenv
+    - name: Setup pipenv
+      run: pipenv install --python 3.8
     - name: Install pipenv virtual environment with dev dependencies
       run: |
         pipenv sync --dev
