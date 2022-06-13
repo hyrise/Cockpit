@@ -1,4 +1,8 @@
 #!/bin/bash
+# We want to cause the shell to exit immediately if a simple command exits with a nonzero exit value
+# and print the tracing information to stderr.
+set -e
+set -x
 
 unamestr=$(uname)
 if [[ "$unamestr" == 'Darwin' ]]; then
