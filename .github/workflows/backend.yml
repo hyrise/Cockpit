@@ -7,17 +7,19 @@ jobs:
     name: Install dependencies ubuntu
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v1
     - name: Run dpendencie script
       run: |
         ./install_dependencies.sh
 
-  # backend-install-development-dependencies-ubunut:
-  #   name: Install development dependencies ubuntu
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Run dpendencie script
-  #     run: |
-  #       ./install_dependencies_development.sh
+  backend-install-development-dependencies-ubunut:
+    name: Install development dependencies ubuntu
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run dpendencie script
+      run: |
+        ./install_dependencies_development.sh
 
   # backend-install-dependencies-mac:
   #   name: Install dependencies mac
