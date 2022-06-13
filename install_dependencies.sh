@@ -38,7 +38,11 @@ fi
 # The frontend is not part of the hyrisecockpit python module. So the process manager can't use a relative path hyrisecockpit/frontend because it runs 
 # in Cockpit/venv/lib/python3.8/site-packages/hyrisecockpit and the frontend lies in Cockpit/hyrisecockpit/frontend. 
 # That's the reason why we need to adjust the frontend relative path variable for the process manager in an absolute path variable.
-sed -i ""  "s:hyrisecockpit/frontend:$PWD/hyrisecockpit/frontend:g" hyrisecockpit/run.py
+if [[ "$unamestr" == 'Darwin' ]]; then
+    sed -i ""  "s:hyrisecockpit/frontend:$PWD/hyrisecockpit/frontend:g" hyrisecockpit/run.py
+elif [[ "$unamestr" == 'Linux' ]]; then
+    sed -i "s:hyrisecockpit/frontend:$PWD/hyrisecockpit/frontend:g" hyrisecockpit/run.py
+fi
 
 echo "Create virtual environment"
 python3 -m venv venv
@@ -55,8 +59,12 @@ pip3 install .
 deactivate
 
 # Reset the frontend absolute path to a relative path. The absolute path in Cockpit/venv/lib/python3.8/site-packages/hyrisecockpit/run.py
-# where the module is installed stays untouched. 
-sed -i ""  "s:$PWD/hyrisecockpit/frontend:hyrisecockpit/frontend:g" hyrisecockpit/run.py 
+# where the module is installed stays untouched.
+if [[ "$unamestr" == 'Darwin' ]]; then
+    sed -i ""  "s:$PWD/hyrisecockpit/frontend:hyrisecockpit/frontend:g" hyrisecockpit/run.py
+elif [[ "$unamestr" == 'Linux' ]]; then
+    sed -i  "s:$PWD/hyrisecockpit/frontend:hyrisecockpit/frontend:g" hyrisecockpit/run.py
+fi
 
 echo "Install Frontend"
 cd hyrisecockpit/frontend
