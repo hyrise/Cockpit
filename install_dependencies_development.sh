@@ -3,7 +3,7 @@
 unamestr=$(uname)
 if [[ "$unamestr" == 'Darwin' ]]; then
     echo "Installing dependencies (this may take a while)..."
-    for formula in python3.8 libpq postgresql influxdb node; do
+    for formula in python@3.8 libpq postgresql influxdb node; do
         if brew ls --versions $formula > /dev/null; then
             echo "$formula already installed"
             continue
@@ -36,8 +36,8 @@ elif [[ "$unamestr" == 'Linux' ]]; then
     sudo apt-get install -y nodejs
 fi
     
-python3.8 -m pip install --upgrade pip
-python3.8 -m pip install pipenv
+python3 -m pip install --upgrade pip
+python3 -m pip install pipenv
 pipenv install --python 3.8
 pipenv sync --dev
 pipenv run pre-commit install
