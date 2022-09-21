@@ -30,7 +30,7 @@
         "plotly.js": "^1.54.6",
         "vue": "^2.6.11",
         "vue-router": "^3.3.4",
-        "vuetify": "^2.3.4"
+        "vuetify": "^2.6.10"
     },
     "devDependencies": {
         "@cypress/webpack-preprocessor": "^5.4.5",
