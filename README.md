@@ -1,3 +1,6 @@
+**This repository is no longer maintained.**
+
+
 # Hyrise Cockpit
 
 ![Backend Lint and Test](https://github.com/hyrise/Cockpit/workflows/Backend%20Lint%20and%20Test/badge.svg)
